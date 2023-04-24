@@ -1,0 +1,38 @@
+
+
+img{
+    width: 100%;
+
+}
+div#slider-home .carousel-item::before {
+    background: #0000005c;
+    content: "";
+  
+}
+#slider-home h3 {
+    text-transform: capitalize;
+    font-size: 50px;
+}
+
+#slider-home{
+    position: relative;
+    height: 100vh;  
+}
+#slider-home p {
+    font-size: 23px;
+}
+
+#slider-home .btn {
+    background: #f82249;
+    color: #fff;
+    padding: 12px 30px !important;
+    font-size: 18px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+#slider-home .btn:hover{    
+    background: #ffffff;
+    color: #f82249;
+}
