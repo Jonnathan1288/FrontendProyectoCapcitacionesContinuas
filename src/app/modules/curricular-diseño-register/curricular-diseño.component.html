@@ -1,163 +1,247 @@
-<!DOCTYPE html>
-
-<head>
-    <link href='https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css' rel='stylesheet' type='text/css'>
-    <link href='//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.2.0/css/datepicker.min.css' rel='stylesheet'
-        type='text/css'>
-    <link href='//cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/1.8/css/bootstrap-switch.css' rel='stylesheet'
-        type='text/css'>
-    <link href='https://davidstutz.github.io/bootstrap-multiselect/css/bootstrap-multiselect.css' rel='stylesheet'
-        type='text/css'>
-    <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js' type='text/javascript'></script>
-    <script src='//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.0/js/bootstrap.min.js'
-        type='text/javascript'></script>
-    <script src='//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.2.0/js/bootstrap-datepicker.min.js'
-        type='text/javascript'></script>
-    <script src='//cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/1.8/js/bootstrap-switch.min.js'
-        type='text/javascript'></script>
-    <script src='https://davidstutz.github.io/bootstrap-multiselect/js/bootstrap-multiselect.js'
-        type='text/javascript'></script>
-</head>
-
-<body>
-    <div class='container'>
-        <div class='panel dialog-panel' style="background-color: #007FBB;">
-            <div class='panel-heading container-fluid mt-3'>
-
-                <div class="row mx-5 ml-8">
-                    <div class="col-md-5">
-                        <img
-                            src="https://o.remove.bg/downloads/874afb9a-3c2b-4b34-b900-9b641531219b/descarga-removebg-preview.png">
+<div class="card flex justify-content-center">
+    <p-panel header="Silabo">
+        <p-card header="Informacion General del Curso" style="margin: 5px;">
+            <div class="grid">
+                <div class="col-5 flex justify-content-center">
+                    <div style="float: left;">
+                        <p><strong>Area:</strong> Miguel Henry Martins</p>
+                        <p><strong>Nombre del Curso:</strong> Turma B</p>
+                        <p><strong>Fecha de Inicio</strong> Juan Fernando Murilo Cardoso</p>
+                        <div class="distribucion-aprendizaje">
+                            <p><strong>Dsitribucion de Aprendizaje</strong></p>
+                            <p><strong>Docencia:</strong>10</p>
+                            <p><strong>Prácticas:</strong>10</p>
+                            <p><strong>Horas autónomas:</strong>10</p>
+                        </div>
                     </div>
-                    <div class="col-md-5 col-md-offset-2">
-                        <h5 style="font-weight: bold; font-family: Georgia, 'Times New Roman', Times, serif; color: aliceblue;">DIRECCIÓN
-                            DE ACREDITACIÓN Y FORTALECIMIENTO DE LA OFERTA</h5>
-                        <h5 style="font-weight: bold;font-family: Georgia, 'Times New Roman', Times, serif;color: aliceblue">FORMULARIO
-                            DE DISEÑO CURRICULAR</h5>
-                        <h5 style="font-weight: bold;font-family: Georgia, 'Times New Roman', Times, serif;color: aliceblue ">
-                            -CAPACITACIÓN CONTINUA-</h5>
+                </div>
+
+                <div class="col-5 flex justify-content-center">
+                    <div style="float: left;">
+                        <p><strong>Horario:</strong> Miguel Henry Martins</p>
+                        <p><strong>Código del curso: </strong> Turma B</p>
+                        <p><strong>Fecha de Finalización:</strong> Juan Fernando Murilo Cardoso</p>
+                        <p><strong>Horas del curso:</strong> Miguel Henry Martins</p>
+                        <p><strong>Modalidad:</strong> Turma B</p>
+                        <p><strong>Campo de Formación:</strong> Juan Fernando Murilo Cardoso</p>
+                        <p><strong>Docente Responsable:</strong> Miguel Henry Martins</p>
                     </div>
                 </div>
             </div>
+        </p-card>
+
+        <p-card header="Prerrequisitos" class="m-5">
+            <p class="m-0">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae
+                numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis
+                esse, cupiditate neque
+                quas!
+            </p>
+        </p-card>
 
 
-            <div class='panel-body'>
-                <form class='form-horizontal' role='form'>
-                    <div class='form-group'>
-                        <label class='control-label col-md-2 col-md-offset-2' for='id_CURSO'>Id del curso.</label>
-                        <label class='control-label ' for='id_accomodation'>001</label>
-                    </div>
-                    <div class='form-group'>
-                        <label class='control-label col-md-2 col-md-offset-2' for='id_nombre'>Nombre:</label>
-                        <label class='control-label col-md-2 ' for='nombre'>Programación con phyton</label>
-                        <label class='control-label col-md-1 ' for='id_area'>Area:</label>
-                        <label class='control-label' for='area'>Lenguaje de programacion con ...</label>
-                    </div>
-                    <div class='form-group'>
-                        <label class='control-label col-md-2 col-md-offset-2' for='id_adults'>Guests</label>
-                        <div class='col-md-8'>
-                            <div class='col-md-2'>
-                                <div class='form-group internal'>
-                                    <input class='form-control col-md-8' id='id_adults' placeholder='18+ years'
-                                        type='number'>
-                                </div>
-                            </div>
-                            <div class='col-md-3 indent-small'>
-                                <div class='form-group internal'>
-                                    <input class='form-control' id='id_children' placeholder='2-17 years' type='number'>
-                                </div>
-                            </div>
-                            <div class='col-md-3 indent-small'>
-                                <div class='form-group internal'>
-                                    <input class='form-control' id='id_children_free' placeholder='&lt; 2 years'
-                                        type='number'>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class='form-group'>
-                        <label class='control-label col-md-2 col-md-offset-2' for='id_email'>Contact</label>
-                        <div class='col-md-6'>
-                            <div class='form-group'>
-                                <div class='col-md-11'>
-                                    <input class='form-control' id='id_email' placeholder='E-mail' type='text'>
-                                </div>
-                            </div>
-                            <div class='form-group internal'>
-                                <div class='col-md-11'>
-                                    <input class='form-control' id='id_phone' placeholder='Phone: (xxx) - xxx xxxx'
-                                        type='text'>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class='form-group'>
-                        <label class='control-label col-md-2 col-md-offset-2' for='id_nombre'>Nombre</label>
-                        <div class='col-md-8'>
-                            <div class='col-md-3'>
-                                <div class='form-group internal input-group'>
-                                    <input class='form-control datepicker' id='id_checkin'>
-                                    <span class='input-group-addon'>
-                                        <i class='glyphicon glyphicon-calendar'></i>
-                                    </span>
-                                </div>
-                            </div>
-                            <label class='control-label col-md-2' for='id_checkout'>Checkout</label>
-                            <div class='col-md-3'>
-                                <div class='form-group internal input-group'>
-                                    <input class='form-control datepicker' id='id_checkout'>
-                                    <span class='input-group-addon'>
-                                        <i class='glyphicon glyphicon-calendar'></i>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class='form-group'>
-                        <label class='control-label col-md-2 col-md-offset-2' for='id_equipment'>Equipment type</label>
-                        <div class='col-md-8'>
-                            <div class='col-md-3'>
-                                <div class='form-group internal'>
-                                    <select class='form-control' id='id_equipment'>
-                                        <option>Travel trailer</option>
-                                        <option>Fifth wheel</option>
-                                        <option>RV/Motorhome</option>
-                                        <option>Tent trailer</option>
-                                        <option>Pickup camper</option>
-                                        <option>Camper van</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class='form-group'>
-                        <label class='control-label col-md-2 col-md-offset-2' for='id_service'>Required Service</label>
-                        <div class='col-md-8'>
-                            <select class='multiselect' id='id_service' multiple='multiple'>
-                                <option value='hydro'>Hydro</option>
-                                <option value='water'>Water</option>
-                                <option value='sewer'>Sewer</option>
-                            </select>
-                        </div>
-                    </div>
+        <p-card header="Descripción del Curso" class="m-5">
+            <p class="m-0">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae
+                numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis
+                esse, cupiditate neque
+                quas!
+            </p>
+        </p-card>
 
-                    <div class='form-group'>
-                        <label class='control-label col-md-2 col-md-offset-2' for='id_comments'>Comments</label>
-                        <div class='col-md-6'>
-                            <textarea class='form-control' id='id_comments' placeholder='Additional comments'
-                                rows='3'></textarea>
+        <p-card header="Objetivos del Curso" class="m-5">
+            <p class="m-0">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae
+                numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis
+                esse, cupiditate neque
+                quas!
+            </p>
+        </p-card>
+
+        <p-card header="Resultados de Aprendizaje" class="m-5">
+
+            <form novalidate>
+                <div class="grid p-fluid m-5" >
+                    <div class="col-12 md:col-12">
+                        <div class="p-inputgroup">
+                            <span class="p-inputgroup-addon"><i class="icono fas fa-paw"></i></span>
+                            <input type="text" pattern="[A-Za-z]+" pInputText placeholder="Unidades de Competencia" id="nombre"
+                                name="nombre"
+                                onkeypress='return event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 || event.charCode == 32'
+                                required>
                         </div>
                     </div>
-                    <div class='form-group'>
-                        <div class='col-md-offset-4 col-md-3'>
-                            <button class='btn-lg btn-primary' type='submit'>Request Reservation</button>
-                        </div>
-                        <div class='col-md-3'>
-                            <button class='btn-lg btn-danger' style='float:right' type='submit'>Cancel</button>
+                    <div class="col-12 md:col-12">
+                        <div class="p-inputgroup">
+                            <span class="p-inputgroup-addon"><i class="icono fas fa-paw"></i></span>
+                            <input type="text" pattern="[A-Za-z]+" pInputText placeholder="Elementos de Competencia" id="nombre"
+                                name="nombre"
+                                onkeypress='return event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 || event.charCode == 32'
+                                required>
                         </div>
                     </div>
-                </form>
+                    <div class="col-12 md:col-12">
+                        <div class="p-inputgroup">
+                            <span class="p-inputgroup-addon"><i class="icono fas fa-paw"></i></span>
+                            <input type="text" pattern="[A-Za-z]+" pInputText placeholder="Resultados de Aprendizaje" id="nombre"
+                                name="nombre"
+                                onkeypress='return event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 || event.charCode == 32'
+                                required>
+                        </div>
+                    </div>
+                    <div class="col-12 md:col-12">
+                        <div class="p-inputgroup">
+                            <span class="p-inputgroup-addon"><i class="icono fas fa-paw"></i></span>
+                            <input type="text" pattern="[A-Za-z]+" pInputText placeholder="Forma de Evidenciar" id="nombre"
+                                name="nombre"
+                                onkeypress='return event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 || event.charCode == 32'
+                                required>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12" style="text-align: center; margin: 5px;">
+                    <p-button label="Save" icon="pi pi-plus" styleClass="p-button-success  mb-2"></p-button>
+                </div>
+            </form>
+
+            <div class="card">
+                <p-table>
+                    <ng-template pTemplate="header" let-columns>
+                        <tr>
+                            <th>Unidades de Competencia</th>
+                            <th>Elementos de Competencia</th>
+                            <th>Resultados de Arendizaje</th>
+                            <th>Forma de Evidenciar</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData let-columns="columns">
+                        <tr>
+                            <td>
+                                Variables y estructuras de Datos Básicos.
+                            </td>
+                            <td>
+                                Conociendo el lenguaje Python
+                                Tipado básico
+                            </td>
+                            <td>
+                                Entiende el lenguaje Python, los tipos de datos básicos, manipula, conoce y revisa las
+                                principales estructuras de datos.
+                            </td>
+                            <td>
+                                Tiene conocimientos sólidos sobre Variables y estructuras de datos básicos.
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
             </div>
-        </div>
-    </div>
-</body>
+
+        </p-card>
+
+        <p-card header="Contenidos del Curso" class="m-5">
+
+            <form novalidate>
+                <div class="grid p-fluid m-5" >
+                    <div class="col-12 md:col-12">
+                        <div class="p-inputgroup">
+                            <span class="p-inputgroup-addon"><i class="icono fas fa-paw"></i></span>
+                            <input type="text" pattern="[A-Za-z]+" pInputText placeholder="Unidades de Competencia" id="nombre"
+                                name="nombre"
+                                onkeypress='return event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 || event.charCode == 32'
+                                required>
+                        </div>
+                    </div>
+                    <div class="col-12 md:col-12">
+                        <div class="p-inputgroup">
+                            <span class="p-inputgroup-addon"><i class="icono fas fa-paw"></i></span>
+                            <input type="text" pattern="[A-Za-z]+" pInputText placeholder="Elementos de Competencia" id="nombre"
+                                name="nombre"
+                                onkeypress='return event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 || event.charCode == 32'
+                                required>
+                        </div>
+                    </div>
+                    <div class="col-12 md:col-12">
+                        <div class="p-inputgroup">
+                            <span class="p-inputgroup-addon"><i class="icono fas fa-paw"></i></span>
+                            <input type="text" pattern="[A-Za-z]+" pInputText placeholder="Resultados de Aprendizaje" id="nombre"
+                                name="nombre"
+                                onkeypress='return event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 || event.charCode == 32'
+                                required>
+                        </div>
+                    </div>
+                    <div class="col-12 md:col-12">
+                        <div class="p-inputgroup">
+                            <span class="p-inputgroup-addon"><i class="icono fas fa-paw"></i></span>
+                            <input type="text" pattern="[A-Za-z]+" pInputText placeholder="Forma de Evidenciar" id="nombre"
+                                name="nombre"
+                                onkeypress='return event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 || event.charCode == 32'
+                                required>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12" style="text-align: center; margin: 5px;">
+                    <p-button label="Save" icon="pi pi-plus" styleClass="p-button-success  mb-2"></p-button>
+                </div>
+            </form>
+
+            <div class="card">
+                <p-table>
+                    <ng-template pTemplate="header" let-columns>
+                        <tr>
+                            <th>Dia</th>
+                            <th>Contenidos</th>
+                            <th>Horas Clase</th>
+                            <th>Actividades de Docencia</th>
+                            <th>Horas Práctica</th>
+                            <th>Actividades Prácticas</th>
+                            <th>H. de trabajo autónomo</th>
+                            <th>Actividades de Trabajo autónomo</th>
+                            <th>Observaciones </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData let-columns="columns">
+                        <tr>
+                            <td>
+                                1
+                            </td>
+                            <td>
+                                Variables y estructuras de Datos Básicos.
+                            </td>
+                            <td>
+                                Conociendo el lenguaje Python
+                                Tipado básico
+                            </td>
+                            <td>
+                                Entiende el lenguaje Python, los tipos de datos básicos, manipula, conoce y revisa las
+                                principales estructuras de datos.
+                            </td>
+                            <td>
+                                Tiene conocimientos sólidos sobre Variables y estructuras de datos básicos.
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+
+        </p-card>
+
+
+        <p-card header="Estrategias Metodologicas" class="m-5">
+            <p class="m-0">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae
+                numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis
+                esse, cupiditate neque
+                quas!
+            </p>
+        </p-card>
+
+        <p-card header="Bibliografia" class="m-5">
+            <p class="m-0">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae
+                numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis
+                esse, cupiditate neque
+                quas!
+            </p>
+        </p-card>
+
+    </p-panel>
+</div>
