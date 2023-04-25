@@ -235,3 +235,34 @@
   </div>
 </div>
 
+
+<div class="rounded shadow p-2" >
+    <div class="grid p-fluid " style="padding: 50px;"> 
+        <div class="col-12 md:col-12">
+            <div class="p-inputgroup">
+              <span class="p-inputgroup-addon"><i class="pi pi-users"></i></span>
+              <select pInputText placeholder="tipo" id="tipo" name="tipo"
+                required>
+                <option value="">Seleccione la categoría</option>
+                <option ></option>
+              </select>
+
+        
+
+            </div>
+          </div>
+
+          <div class="col-12 md:col-12">
+            <div class="p-inputgroup">
+              <span class="p-inputgroup-addon"><i class="icono fas fa-paw"></i></span>
+              <input type="text" pattern="[A-Za-z]+" pInputText placeholder="Nombre" id="nombre" name="nombre"
+             
+                onkeypress='return event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 || event.charCode == 32'
+                required>
+            </div>
+          </div>
+    </div>
+</div>
+
+
+
