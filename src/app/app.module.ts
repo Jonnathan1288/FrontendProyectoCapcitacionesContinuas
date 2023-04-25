@@ -8,8 +8,10 @@ import { FooterComponent } from './layout/footer/footer.component';
 import { HomeComponent } from './modules/home/home.component';
 import { PrimengModule } from './designs/primeng/primeng.module';
 import { WelcomeComponent } from './modules/welcome/welcome.component';
-import { MatriculaComponent } from './modules/matricula/matricula/matricula.component';
+
 import { RouterModule } from '@angular/router';
+import { MatriculacComponent } from './modules/matriculas/matriculac/matriculac.component';
+import { FormRecord, FormsModule, ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
@@ -17,13 +19,16 @@ import { RouterModule } from '@angular/router';
     FooterComponent,
     HomeComponent,
     WelcomeComponent,
-    MatriculaComponent,
+    MatriculacComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule, 
     PrimengModule,
-    RouterModule
+    RouterModule,
+    ReactiveFormsModule,
+    FormsModule,
+    
   ],
   providers: [],
   bootstrap: [AppComponent]

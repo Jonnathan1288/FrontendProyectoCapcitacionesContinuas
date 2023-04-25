@@ -3,11 +3,11 @@ import { Matricula } from 'src/app/models/matricula';
 import { MatriculaService } from 'src/app/service/matricula.service';
 import Swal from 'sweetalert2';
 @Component({
-  selector: 'app-matricula',
-  templateUrl: './matricula.component.html',
-  styleUrls: ['./matricula.component.css']
+  selector: 'app-matriculac',
+  templateUrl: './matriculac.component.html',
+  styleUrls: ['./matriculac.component.css']
 })
-export class MatriculaComponent {
+export class MatriculacComponent {
   
   estadoMatriculaActivo: boolean=true;
   estadoAporbacion: boolean=true;
@@ -27,13 +27,4 @@ export class MatriculaComponent {
       
     });
   }
-
-
-
-
-
-
-
-
-
 }
