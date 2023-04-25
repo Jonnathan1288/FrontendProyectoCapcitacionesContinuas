@@ -1,11 +1,12 @@
-import java.time.LocalDate;
 
 export class Matricula{
     idMatricula?:number;
 
-   fechaMatricula: LocalDate;
-      estadoAporbacion?:Boolean;
-      estadoMatriculaActivo?:Boolean;
+    fechaMatricula?: Date;
+    estadoAporbacion?:Boolean;
+    estadoMatriculaActivo?:Boolean;
 
+  //curso?:Cusro  idCurso?:number;
+  //usuario?:Usuario  idUsuario?:number;
 
 }

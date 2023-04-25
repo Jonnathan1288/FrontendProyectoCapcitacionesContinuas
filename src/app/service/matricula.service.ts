@@ -15,7 +15,7 @@ export class MatriculaService {
   constructor(private http: HttpClient) { }
 
 
-  save(matricula: Matricula) {
+  savematricula(matricula: Matricula) {
     return this.http.post(`${this.URL}?`, matricula);
   }
 

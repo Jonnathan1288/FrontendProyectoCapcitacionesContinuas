@@ -9,7 +9,7 @@ import { HomeComponent } from './modules/home/home.component';
 import { PrimengModule } from './designs/primeng/primeng.module';
 import { WelcomeComponent } from './modules/welcome/welcome.component';
 import { MatriculaComponent } from './modules/matricula/matricula/matricula.component';
-
+import { RouterModule } from '@angular/router';
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,7 +22,8 @@ import { MatriculaComponent } from './modules/matricula/matricula/matricula.comp
   imports: [
     BrowserModule,
     AppRoutingModule, 
-    PrimengModule
+    PrimengModule,
+    RouterModule
   ],
   providers: [],
   bootstrap: [AppComponent]
