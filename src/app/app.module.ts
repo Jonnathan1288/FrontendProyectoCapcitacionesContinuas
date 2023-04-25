@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -10,8 +11,10 @@ import { PrimengModule } from './designs/primeng/primeng.module';
 import { WelcomeComponent } from './modules/welcome/welcome.component';
 
 import { RouterModule } from '@angular/router';
-import { MatriculacComponent } from './modules/matriculas/matriculac/matriculac.component';
 import { FormRecord, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatriculComponent } from './modules/matricul/matricul.component';
+import { HttpClientModule } from '@angular/common/http';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -19,7 +22,7 @@ import { FormRecord, FormsModule, ReactiveFormsModule } from '@angular/forms';
     FooterComponent,
     HomeComponent,
     WelcomeComponent,
-    MatriculacComponent,
+    MatriculComponent,
   ],
   imports: [
     BrowserModule,
@@ -28,6 +31,9 @@ import { FormRecord, FormsModule, ReactiveFormsModule } from '@angular/forms';
     RouterModule,
     ReactiveFormsModule,
     FormsModule,
+    HttpClientModule,
+    BrowserAnimationsModule
+
     
   ],
   providers: [],

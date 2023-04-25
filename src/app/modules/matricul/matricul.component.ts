@@ -2,12 +2,13 @@ import { Component } from '@angular/core';
 import { Matricula } from 'src/app/models/matricula';
 import { MatriculaService } from 'src/app/service/matricula.service';
 import Swal from 'sweetalert2';
+
 @Component({
-  selector: 'app-matriculac',
-  templateUrl: './matriculac.component.html',
-  styleUrls: ['./matriculac.component.css']
+  selector: 'app-matricul',
+  templateUrl: './matricul.component.html',
+  styleUrls: ['./matricul.component.css']
 })
-export class MatriculacComponent {
+export class MatriculComponent {
   
   estadoMatriculaActivo: boolean=true;
   estadoAporbacion: boolean=true;
