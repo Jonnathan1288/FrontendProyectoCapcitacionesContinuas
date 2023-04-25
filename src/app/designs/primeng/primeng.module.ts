@@ -46,7 +46,6 @@ import { TreeSelectModule } from 'primeng/treeselect';
 import { SpeedDialModule } from 'primeng/speeddial';
 
 import { DividerModule } from 'primeng/divider';
-import { FieldsetModule } from 'primeng/fieldset';
 import { SplitterModule } from 'primeng/splitter';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
@@ -79,7 +78,7 @@ import { AccordionModule } from 'primeng/accordion';
 
 import {SkeletonModule} from 'primeng/skeleton';
 // Fin de primeNG
-
+import { FieldsetModule } from 'primeng/fieldset';
 
 @NgModule({
   declarations: [],
