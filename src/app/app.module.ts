@@ -8,6 +8,8 @@ import { FooterComponent } from './layout/footer/footer.component';
 import { HomeComponent } from './modules/home/home.component';
 import { PrimengModule } from './designs/primeng/primeng.module';
 import { WelcomeComponent } from './modules/welcome/welcome.component';
+import { LoginComponent } from './modules/login/login.component';
+import { RegistrarPersonaComponent } from './modules/registrar-persona/registrar-persona.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +17,9 @@ import { WelcomeComponent } from './modules/welcome/welcome.component';
     HeaderComponent,
     FooterComponent,
     HomeComponent,
-    WelcomeComponent
+    WelcomeComponent,
+    LoginComponent,
+    RegistrarPersonaComponent
   ],
   imports: [
     BrowserModule,

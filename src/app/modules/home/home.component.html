@@ -1,237 +1,99 @@
-
-  <div     class="carousel slide " data-ride="carousel" data-pause="false">
-    <ul class="carousel-indicators">
-        <li data-target="#slider-home" data-slide-to="0" class="active"></li>
-        <li data-target="#slider-home" data-slide-to="1"></li>
-        <li data-target="#slider-home" data-slide-to="2"></li>
-        <li data-target="#slider-home" data-slide-to="3"></li>
-    </ul>
-    <div class="carousel-inner" >
-        <div class="carousel-item active ">
-            <img src="https://i.ibb.co/JRrHmhv/shanghai.jpg" alt="Los Angeles">
-            <div class="carousel-caption">
-                <h3>discover a new you!</h3>
-                <p>Transform your look today with our special offers!</p>
-                <a class="btn" href="#">Make an appointment</a>
-            </div>
+<!-- <router-outlet></router-outlet> -->
+<div *ngIf="!isLogginPresent">
+    <section id="sidebar">
+      <a href="#" class="brand"><i class='bx bxs-smile icon'></i> AdminSite</a>
+      <ul class="side-menu">
+        <li><a href="#" class="active"><i class='bx bxs-dashboard icon'></i> Dashboard</a></li>
+        <li class="divider" data-text="main">Main</li>
+        <li>
+          <a href="#"><i class='bx bxs-inbox icon'></i> Elements <i class='bx bx-chevron-right icon-right'></i></a>
+          <ul class="side-dropdown">
+            <li><a routerLink="/list/person">Alert</a></li>
+            <li><a href="#">Badges</a></li>
+            <li><a href="#">Breadcrumbs</a></li>
+            <li><a href="#">Button</a></li>
+          </ul>
+        </li>
+        <li><a href="#"><i class='bx bxs-chart icon'></i> Charts</a></li>
+        <li><a href="#"><i class='bx bxs-widget icon'></i> Widgets</a></li>
+        <li class="divider" data-text="table and forms">Table and forms</li>
+        <li><a href="#"><i class='bx bx-table icon'></i> Tables</a></li>
+        <li>
+          <a href="#"><i class='bx bxs-notepad icon'></i> Forms <i class='bx bx-chevron-right icon-right'></i></a>
+          <ul class="side-dropdown">
+            <li><a href="#">Basic</a></li>
+            <li><a href="#">Select</a></li>
+            <li><a href="#">Checkbox</a></li>
+            <li><a href="#">Radio</a></li>
+          </ul>
+        </li>
+      </ul>
+      <div class="ads">
+        <div class="wrapper">
+          <a href="#" class="btn-upgrade">Upgrade</a>
+          <p>Become a <span>PRO</span> member and enjoy <span>All Features</span></p>
         </div>
-        <div class="carousel-item">
-            <img src="https://i.ibb.co/JRrHmhv/shanghai.jpg" alt="Chicago">
-            <div class="carousel-caption">
-                <h3>discover a new you!</h3>
-                <p>Transform your look today with our special offers!</p>
-                <a class="btn" href="#">Make an appointment</a>
-            </div>
+      </div>
+    </section>
+    <!-- SIDEBAR -->
+  
+    <!-- NAVBAR -->
+    <section id="content">
+      <!-- NAVBAR -->
+      <nav>
+        <i class='bx bx-menu toggle-sidebar'></i>
+        <form action="#">
+          <div class="form-group">
+            <input type="text" placeholder="Search...">
+            <i class='bx bx-search icon'></i>
+          </div>
+        </form>
+        <a href="#" class="nav-link">
+          <i class='bx bxs-bell icon'></i>
+          <span class="badge">5</span>
+        </a>
+        <a href="#" class="nav-link">
+          <i class='bx bxs-message-square-dots icon'></i>
+          <span class="badge">8</span>
+        </a>
+        <span class="divider"></span>
+        <div class="profile">
+          <img
+            src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cGVvcGxlfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+            alt="">
+          <ul class="profile-link">
+            <li><a href="#"><i class='bx bxs-user-circle icon'></i> Profile</a></li>
+            <li><a href="#"><i class='bx bxs-cog'></i> Settings</a></li>
+            <li><a href="#"><i class='bx bxs-log-out-circle'></i> Logout</a></li>
+          </ul>
         </div>
-        <div class="carousel-item">
-            <img src="https://i.ibb.co/JRrHmhv/shanghai.jpg" alt="New York">
-            <div class="carousel-caption">
-                <h3>discover a new you!</h3>
-                <p>Transform your look today with our special offers!</p>
-                <a class="btn" href="#">Make an appointment</a>
-            </div>
+      </nav>
+      <!-- NAVBAR -->
+  
+      <!-- MAIN -->
+      <main>
+        <h1 class="title">Dashboard</h1>
+        <ul class="breadcrumbs">
+          <li><a href="#">Home</a></li>
+          <li class="divider">/</li>
+          <li><a href="#" class="active">Dashboard</a></li>
+        </ul>
+        <div class="card" style="padding: 10px;">
+          <router-outlet></router-outlet>
+  
         </div>
-        <div class="carousel-item">
-            <img src="https://i.ibb.co/JRrHmhv/shanghai.jpg" alt="New York">
-            <div class="carousel-caption">
-                <h3>discover a new you!</h3>
-                <p>Transform your look today with our special offers!</p>
-                <a class="btn" href="#">Make an appointment</a>
-            </div>
-        </div>
+  
+      </main>
+      <!-- MAIN -->
+    </section>
+    <!-- NAVBAR -->
+  </div>
+  
+  <!-- Cuando el usuario aun no esta logiado, se le mostrara la pantalla de routenig header y footer -->
+  <div *ngIf="isLogginPresent">
+    <app-header></app-header>
+    <div class="main-content">
+      <router-outlet></router-outlet>
     </div>
-    <a class="carousel-control-prev" href="#slider-home" data-slide="prev">
-        <span class="carousel-control-prev-icon"></span>
-    </a>
-    <a class="carousel-control-next" href="#slider-home" data-slide="next">
-        <span class="carousel-control-next-icon"></span>
-    </a>
-</div>
-
-
-<div class="surface-ground px-4 py-8 md:px-6 lg:px-8">
-
-  <div class="surface-section px-4 py-8 md:px-6 lg:px-8 text-center">
-      <div class="mb-3 font-bold text-3xl">
-          <span class="text-900">One Product, </span>
-          <span class="text-blue-600">Many Solutions</span>
-      </div>
-      <div class="text-700 mb-6">Ac turpis egestas maecenas pharetra convallis posuere morbi leo urna.</div>
-      <div class="grid">
-          <div class="col-12 md:col-4 mb-4 px-5">
-              <span class="p-3 shadow-2 mb-3 inline-block surface-card" style="border-radius: 10px">
-                  <i class="pi pi-desktop text-4xl text-blue-500"></i>
-              </span>
-              <div class="text-900 text-xl mb-3 font-medium">Built for Developers</div>
-              <span class="text-700 line-height-3">Duis aute irure dolor in reprehenderit in voluptate velit esse
-                  cillum dolore eu fugiat nulla pariatur.</span>
-          </div>
-          <div class="col-12 md:col-4 mb-4 px-5">
-              <span class="p-3 shadow-2 mb-3 inline-block surface-card" style="border-radius: 10px">
-                  <i class="pi pi-lock text-4xl text-blue-500"></i>
-              </span>
-              <div class="text-900 text-xl mb-3 font-medium">End-to-End Encryption</div>
-              <span class="text-700 line-height-3">Risus nec feugiat in fermentum posuere urna nec. Posuere
-                  sollicitudin aliquam ultrices sagittis.</span>
-          </div>
-          <div class="col-12 md:col-4 mb-4 px-5">
-              <span class="p-3 shadow-2 mb-3 inline-block surface-card" style="border-radius: 10px">
-                  <i class="pi pi-check-circle text-4xl text-blue-500"></i>
-              </span>
-              <div class="text-900 text-xl mb-3 font-medium">Easy to Use</div>
-              <span class="text-700 line-height-3">Ornare suspendisse sed nisi lacus sed viverra tellus. Neque
-                  volutpat ac tincidunt vitae semper.</span>
-          </div>
-          <div class="col-12 md:col-4 mb-4 px-5">
-              <span class="p-3 shadow-2 mb-3 inline-block surface-card" style="border-radius: 10px">
-                  <i class="pi pi-globe text-4xl text-blue-500"></i>
-              </span>
-              <div class="text-900 text-xl mb-3 font-medium">Fast & Global Support</div>
-              <span class="text-700 line-height-3">Fermentum et sollicitudin ac orci phasellus egestas tellus rutrum
-                  tellus.</span>
-          </div>
-          <div class="col-12 md:col-4 mb-4 px-5">
-              <span class="p-3 shadow-2 mb-3 inline-block surface-card" style="border-radius: 10px">
-                  <i class="pi pi-github text-4xl text-blue-500"></i>
-              </span>
-              <div class="text-900 text-xl mb-3 font-medium">Open Source</div>
-              <span class="text-700 line-height-3">Nec tincidunt praesent semper feugiat. Sed adipiscing diam donec
-                  adipiscing tristique risus nec feugiat. </span>
-          </div>
-          <div class="col-12 md:col-4 md:mb-4 mb-0 px-3">
-              <span class="p-3 shadow-2 mb-3 inline-block surface-card" style="border-radius: 10px">
-                  <i class="pi pi-shield text-4xl text-blue-500"></i>
-              </span>
-              <div class="text-900 text-xl mb-3 font-medium">Trusted Securitty</div>
-              <span class="text-700 line-height-3">Mattis rhoncus urna neque viverra justo nec ultrices. Id cursus
-                  metus aliquam eleifend.</span>
-          </div>
-      </div>
+    <app-footer></app-footer>
   </div>
-  <div class="text-900 font-bold text-6xl mb-4 text-center">Pricing Plans</div>
-  <div class="text-700 text-xl mb-6 text-center line-height-3">Lorem ipsum dolor sit, amet consectetur adipisicing
-      elit. Velit numquam eligendi quos.</div>
-
-  <div class="grid">
-      <div class="col-12 lg:col-4">
-          <div class="p-3 h-full">
-              <div class="shadow-2 p-3 h-full flex flex-column surface-card" style="border-radius: 6px">
-                  <div class="text-900 font-medium text-xl mb-2">Basic</div>
-                  <div class="text-600">Plan description</div>
-                  <hr class="my-3 mx-0 border-top-1 border-none surface-border" />
-                  <div class="flex align-items-center">
-                      <span class="font-bold text-2xl text-900">$9</span>
-                      <span class="ml-2 font-medium text-600">per month</span>
-                  </div>
-                  <hr class="my-3 mx-0 border-top-1 border-none surface-border" />
-                  <ul class="list-none p-0 m-0 flex-grow-1">
-                      <li class="flex align-items-center mb-3">
-                          <i class="pi pi-check-circle text-green-500 mr-2"></i>
-                          <span class="text-900">Arcu vitae elementum</span>
-                      </li>
-                      <li class="flex align-items-center mb-3">
-                          <i class="pi pi-check-circle text-green-500 mr-2"></i>
-                          <span class="text-900">Dui faucibus in ornare</span>
-                      </li>
-                      <li class="flex align-items-center mb-3">
-                          <i class="pi pi-check-circle text-green-500 mr-2"></i>
-                          <span class="text-900">Morbi tincidunt augue</span>
-                      </li>
-                  </ul>
-                  <hr class="mb-3 mx-0 border-top-1 border-none surface-border mt-auto" />
-                  <button pButton pRipple label="Buy Now" class="p-3 w-full mt-auto"></button>
-              </div>
-          </div>
-      </div>
-
-      <div class="col-12 lg:col-4">
-          <div class="p-3 h-full">
-              <div class="shadow-2 p-3 h-full flex flex-column surface-card" style="border-radius: 6px">
-                  <div class="text-900 font-medium text-xl mb-2">Premium</div>
-                  <div class="text-600">Plan description</div>
-                  <hr class="my-3 mx-0 border-top-1 border-none surface-border" />
-                  <div class="flex align-items-center">
-                      <span class="font-bold text-2xl text-900">$29</span>
-                      <span class="ml-2 font-medium text-600">per month</span>
-                  </div>
-                  <hr class="my-3 mx-0 border-top-1 border-none surface-border" />
-                  <ul class="list-none p-0 m-0 flex-grow-1">
-                      <li class="flex align-items-center mb-3">
-                          <i class="pi pi-check-circle text-green-500 mr-2"></i>
-                          <span class="text-900">Arcu vitae elementum</span>
-                      </li>
-                      <li class="flex align-items-center mb-3">
-                          <i class="pi pi-check-circle text-green-500 mr-2"></i>
-                          <span class="text-900">Dui faucibus in ornare</span>
-                      </li>
-                      <li class="flex align-items-center mb-3">
-                          <i class="pi pi-check-circle text-green-500 mr-2"></i>
-                          <span class="text-900">Morbi tincidunt augue</span>
-                      </li>
-                      <li class="flex align-items-center mb-3">
-                          <i class="pi pi-check-circle text-green-500 mr-2"></i>
-                          <span class="text-900">Duis ultricies lacus sed</span>
-                      </li>
-                  </ul>
-                  <hr class="mb-3 mx-0 border-top-1 border-none surface-border" />
-                  <button pButton pRipple label="Buy Now" class="p-3 w-full"></button>
-              </div>
-          </div>
-      </div>
-
-      <div class="col-12 lg:col-4">
-          <div class="p-3 h-full">
-              <div class="shadow-2 p-3 flex flex-column surface-card" style="border-radius: 6px">
-                  <div class="text-900 font-medium text-xl mb-2">Enterprise</div>
-                  <div class="text-600">Plan description</div>
-                  <hr class="my-3 mx-0 border-top-1 border-none surface-border" />
-                  <div class="flex align-items-center">
-                      <span class="font-bold text-2xl text-900">$49</span>
-                      <span class="ml-2 font-medium text-600">per month</span>
-                  </div>
-                  <hr class="my-3 mx-0 border-top-1 border-none surface-border" />
-                  <ul class="list-none p-0 m-0 flex-grow-1">
-                      <li class="flex align-items-center mb-3">
-                          <i class="pi pi-check-circle text-green-500 mr-2"></i>
-                          <span class="text-900">Arcu vitae elementum</span>
-                      </li>
-                      <li class="flex align-items-center mb-3">
-                          <i class="pi pi-check-circle text-green-500 mr-2"></i>
-                          <span class="text-900">Dui faucibus in ornare</span>
-                      </li>
-                      <li class="flex align-items-center mb-3">
-                          <i class="pi pi-check-circle text-green-500 mr-2"></i>
-                          <span class="text-900">Morbi tincidunt augue</span>
-                      </li>
-                      <li class="flex align-items-center mb-3">
-                          <i class="pi pi-check-circle text-green-500 mr-2"></i>
-                          <span class="text-900">Duis ultricies lacus sed</span>
-                      </li>
-                      <li class="flex align-items-center mb-3">
-                          <i class="pi pi-check-circle text-green-500 mr-2"></i>
-                          <span class="text-900">Imperdiet proin</span>
-                      </li>
-                      <li class="flex align-items-center mb-3">
-                          <i class="pi pi-check-circle text-green-500 mr-2"></i>
-                          <span class="text-900">Nisi scelerisque</span>
-                      </li>
-                  </ul>
-                  <hr class="mb-3 mx-0 border-top-1 border-none surface-border" />
-                  <button pButton pRipple label="Buy Now" class="p-3 w-full p-button-outlined"></button>
-              </div>
-          </div>
-      </div>
-  </div>
-
-  <div class="surface-section px-4 py-8 md:px-6 lg:px-8">
-      <div class="text-700 text-center">
-          <div class="text-blue-600 font-bold mb-3"><i class="pi pi-discord"></i>&nbsp;POWERED BY DISCORD</div>
-          <div class="text-900 font-bold text-5xl mb-3">Join Our Design Community</div>
-          <div class="text-700 text-2xl mb-5">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Velit numquam
-              eligendi quos.</div>
-          <button pButton pRipple label="Join Now" icon="pi pi-discord"
-              class="font-bold px-5 py-3 p-button-raised p-button-rounded white-space-nowrap"></button>
-      </div>
-  </div>
-</div>
-
