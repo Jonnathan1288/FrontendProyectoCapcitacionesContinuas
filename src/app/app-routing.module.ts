@@ -14,7 +14,7 @@ import { SilaboComponent } from './modules/silabo/silabo.component';
 const routes: Routes = [
   {path: 'login', component:LoginComponent },
   {path: 'registrarPersona', component: registrarPersonaComponent},
-  {path: 'welcome', component: WelcomeComponent}
+  {path: 'welcome', component: WelcomeComponent},
   { path: 'home', component: HomeComponent },
   { path: 'silabo', component: SilaboComponent },
   { path: 'diseño', component: CurricularRegisterComponent },

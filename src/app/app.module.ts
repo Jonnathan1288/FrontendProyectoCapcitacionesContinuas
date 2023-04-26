@@ -17,7 +17,6 @@ import { SilaboComponent } from './modules/silabo/silabo.component';
 import { RouterModule } from '@angular/router';
 import { FormRecord, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatriculComponent } from './modules/matricul/matricul.component';
-import { HttpClientModule } from '@angular/common/http';
 import { CardcursoComponent } from './modules/cardcurso/cardcurso.component';
 import { InfocursoComponent } from './modules/infocurso/infocurso.component';
 
@@ -42,7 +41,7 @@ import { InfocursoComponent } from './modules/infocurso/infocurso.component';
     BrowserModule,
     AppRoutingModule, 
     PrimengModule,
-    HttpClientModule
+    HttpClientModule,
     RouterModule,
     ReactiveFormsModule,
     FormsModule,
