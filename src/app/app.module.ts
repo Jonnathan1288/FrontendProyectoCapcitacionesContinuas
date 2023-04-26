@@ -9,7 +9,8 @@ import { HomeComponent } from './modules/home/home.component';
 import { PrimengModule } from './designs/primeng/primeng.module';
 import { WelcomeComponent } from './modules/welcome/welcome.component';
 import { LoginComponent } from './modules/login/login.component';
-import { RegistrarPersonaComponent } from './modules/registrar-persona/registrar-persona.component';
+import { registrarPersonaComponent } from './modules/registrar-persona/registrar-persona.component';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -19,12 +20,13 @@ import { RegistrarPersonaComponent } from './modules/registrar-persona/registrar
     HomeComponent,
     WelcomeComponent,
     LoginComponent,
-    RegistrarPersonaComponent
+    registrarPersonaComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule, 
-    PrimengModule
+    PrimengModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

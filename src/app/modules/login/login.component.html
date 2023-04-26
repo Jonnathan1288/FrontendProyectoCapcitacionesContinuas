@@ -1,9 +1,8 @@
 <div class="wrapper fadeInDown">
     <div id="formContent">
       <!-- Tabs Titles -->
-      <h2 class="active" routerLink="/log in"> Log in </h2>
+      <h2 class="active" routerLink="/login"> Log in </h2>
       <h2 class="inactive underlineHover" routerLink="/registrarPersona">Sign up </h2>
-      <router-outlet></router-outlet>
   
       <!-- Icon -->
       <div class="fadeIn first">
@@ -11,11 +10,10 @@
       </div>
   
       <!-- Login Form -->
-      <form>
+      <form >
         <input type="text" id="login" class="fadeIn second" name="login" placeholder="Usuario">
         <input type="text" id="password" class="fadeIn third" name="login" placeholder="Contraseña">
         <input type="submit" class="fadeIn fourth" value="Ingresar" routerLink="/home">
-        <router-outlet></router-outlet>
       </form>
   
       <!-- Remind Passowrd -->

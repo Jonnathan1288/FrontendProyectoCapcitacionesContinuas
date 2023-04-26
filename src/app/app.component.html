@@ -1,6 +1,3 @@
-
-<!--<router-outlet></router-outlet>
-<app-login></app-login>-->
 <div *ngIf="!isLogginPresent">
   <section id="sidebar">
     <a href="#" class="brand"><i class='bx bxs-smile icon'></i> AdminSite</a>
@@ -67,7 +64,6 @@
           <li><a href="#"><i class='bx bxs-user-circle icon'></i> Profile</a></li>
           <li><a href="#"><i class='bx bxs-cog'></i> Settings</a></li>
           <li><a routerLink="/login"><i class='bx bxs-log-out-circle'></i> Logout</a></li>
-          <router-outlet></router-outlet>
         </ul>
       </div>
     </nav>
@@ -82,7 +78,7 @@
         <li><a href="#" class="active">Dashboard</a></li>
       </ul>
       <div class="card" style="padding: 10px;">
-        <router-outlet></router-outlet>
+        <!--<router-outlet></router-outlet>-->
 
       </div>
 
@@ -92,7 +88,7 @@
    <!--NAVBAR -->
 </div>
 
-<!--Cuando el usuario aun no esta logiado, se le mostrara la pantalla de routenig header y footer -->
+<!--Cuando el usuario se logeado accede al menu principal-->
 <div *ngIf="isLogginPresent">
   <app-header></app-header>
   <div class="main-content">
