@@ -22,6 +22,8 @@ import { CardcursoComponent } from './modules/cardcurso/cardcurso.component';
 import { InfocursoComponent } from './modules/infocurso/infocurso.component';
 
 
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,6 +31,7 @@ import { InfocursoComponent } from './modules/infocurso/infocurso.component';
     FooterComponent,
     HomeComponent,
     WelcomeComponent,
+    CourseRegisterComponent,
   LoginComponent,
     registrarPersonaComponent,
     CourseRegisterComponent,
@@ -36,7 +39,6 @@ import { InfocursoComponent } from './modules/infocurso/infocurso.component';
     MatriculComponent,
     CardcursoComponent,
     InfocursoComponent,
-
   ],
   imports: [
     BrowserModule,
