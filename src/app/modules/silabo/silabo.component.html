@@ -1,0 +1,439 @@
+<div class="card flex justify-content-center">
+    <p-panel header="Silabo">
+        <p-card header="Informacion General del Curso" style="margin: 5px;">
+            <div class="grid">
+                <div class="col-5 flex justify-content-center">
+                    <div style="float: left;">
+                        <p><strong>Area:</strong> Miguel Henry Martins</p>
+                        <p><strong>Nombre del Curso:</strong> Turma B</p>
+                        <p><strong>Fecha de Inicio</strong> Juan Fernando Murilo Cardoso</p>
+                        <p><strong>Campo de Formación:</strong> Juan Fernando Murilo Cardoso</p>
+                        <p><strong>Docente Responsable:</strong> Miguel Henry Martins</p>
+                    </div>
+                </div>
+
+                <div class="col-5 flex justify-content-center">
+                    <div style="float: left;">
+                        <p><strong>Horario:</strong> Miguel Henry Martins</p>
+                        <p><strong>Código del curso: </strong> Turma B</p>
+                        <p><strong>Fecha de Finalización:</strong> Juan Fernando Murilo Cardoso</p>
+                        <p><strong>Horas del curso:</strong> Miguel Henry Martins</p>
+                        <p><strong>Modalidad:</strong> Turma B</p>
+
+                    </div>
+                </div>
+            </div>
+        </p-card>
+
+        <p-card header="Prerrequisitos" class="m-5">
+            <p class="m-0">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae
+                numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis
+                esse, cupiditate neque
+                quas!
+            </p>
+        </p-card>
+
+
+        <p-card header="Descripción del Curso" class="m-5">
+            <p class="m-0">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae
+                numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis
+                esse, cupiditate neque
+                quas!
+            </p>
+        </p-card>
+
+        <p-card header="Objetivos del Curso" class="m-5">
+            <p class="m-0">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae
+                numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis
+                esse, cupiditate neque
+                quas!
+            </p>
+        </p-card>
+
+        <p-card header="Resultados de Aprendizaje" class="m-5">
+
+            <form novalidate>
+                <div class="grid p-fluid m-3">
+                    <div class="col-12 md:col-12 mt-1">
+                        <div class="p-inputgroup">
+                            <span class="p-float-label">
+                                <input type="text" pattern="[A-Za-z]+" pInputText id="nombre" name="nombre" required>
+                                <label htmlFor="username">Unidades de Competencia</label>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-12 md:col-12 mt-2">
+                        <div class="p-inputgroup">
+                            <span class="p-float-label">
+                                <input type="text" pattern="[A-Za-z]+" pInputText id="nombre" name="nombre" required>
+                                <label htmlFor="username">Elementos de Competencia</label>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-12 md:col-12 mt-2">
+                        <div class="p-inputgroup">
+                            <span class="p-float-label">
+                                <input type="text" pattern="[A-Za-z]+" pInputText id="nombre" name="nombre" required>
+                                <label htmlFor="username">Resultados de Aprendizaje</label>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-12 md:col-12 mt-2">
+                        <div class="p-inputgroup">
+                            <span class="p-float-label">
+                                <input type="text" pattern="[A-Za-z]+" pInputText id="nombre" name="nombre" required>
+                                <label htmlFor="username">Forma de evidenciar</label>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12" style="text-align: center; margin: 5px;">
+                    <p-button label="Agregar" icon="pi pi-plus" styleClass="p-button-success  mb-2"></p-button>
+                </div>
+            </form>
+
+            <div class="card">
+                <p-table>
+                    <ng-template pTemplate="header" let-columns>
+                        <tr>
+                            <th>Unidades de Competencia</th>
+                            <th>Elementos de Competencia</th>
+                            <th>Resultados de Arendizaje</th>
+                            <th>Forma de Evidenciar</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData let-columns="columns">
+                        <tr>
+                            <td>
+                                Variables y estructuras de Datos Básicos.
+                            </td>
+                            <td>
+                                Conociendo el lenguaje Python
+                                Tipado básico
+                            </td>
+                            <td>
+                                Entiende el lenguaje Python, los tipos de datos básicos, manipula, conoce y revisa las
+                                principales estructuras de datos.
+                            </td>
+                            <td>
+                                Tiene conocimientos sólidos sobre Variables y estructuras de datos básicos.
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+
+        </p-card>
+
+        <p-card header="Contenidos del Curso" class="m-5">
+            <form novalidate>
+                <div class="grid p-fluid m-5">
+                    <div class="col-12 md:col-12 mt-1">
+                        <div class="p-inputgroup">
+                            <span class="p-float-label">
+                                <input type="text" pattern="[A-Za-z]+" pInputText id="nombre" name="nombre" required>
+                                <label htmlFor="username">Día</label>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-12 md:col-12 mt-1">
+                        <div class="p-inputgroup">
+                            <span class="p-float-label">
+                                <input type="text" pattern="[A-Za-z]+" pInputText id="nombre" name="nombre" required>
+                                <label htmlFor="username">Contenidos</label>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-12 md:col-12 mt-1">
+                        <div class="p-inputgroup">
+                            <span class="p-float-label">
+                                <input type="text" pattern="[A-Za-z]+" pInputText id="nombre" name="nombre" required>
+                                <label htmlFor="username">Actividades de Docencia</label>
+                                <p-inputNumber class="ml-5" mode="decimal" [showButtons]="true" inputId="minmax-buttons"
+                                    [min]="0" [max]="100"> </p-inputNumber>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-12 md:col-12 mt-1">
+                        <div class="p-inputgroup">
+                            <span class="p-float-label">
+                                <input type="text" pattern="[A-Za-z]+" pInputText id="nombre" name="nombre" required>
+                                <label htmlFor="username">Actividades Prácticas</label>
+                                <p-inputNumber class="ml-5" mode="decimal" [showButtons]="true" inputId="minmax-buttons"
+                                    [min]="0" [max]="100"> </p-inputNumber>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-12 md:col-12 mt-1">
+                        <div class="p-inputgroup">
+                            <span class="p-float-label">
+                                <input type="text" pattern="[A-Za-z]+" pInputText id="nombre" name="nombre" required>
+                                <label htmlFor="username">Actividades de Trabajo autónomo</label>
+                                <p-inputNumber class="ml-5" mode="decimal" [showButtons]="true" inputId="minmax-buttons"
+                                    [min]="0" [max]="100"> </p-inputNumber>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-12 md:col-12 mt-1">
+                        <div class="p-inputgroup">
+                            <span class="p-float-label">
+                                <input type="text" pattern="[A-Za-z]+" pInputText id="nombre" name="nombre" required>
+                                <label htmlFor="username">Observaciones</label>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12" style="text-align: center; margin: 5px;">
+                    <p-button label="Agregar" icon="pi pi-plus" styleClass="p-button-success  mb-2"></p-button>
+                </div>
+            </form>
+
+            <div class="card">
+                <p-table>
+                    <ng-template pTemplate="header" let-columns>
+                        <tr>
+                            <th>Dia</th>
+                            <th>Contenidos</th>
+                            <th>Horas Clase</th>
+                            <th>Actividades de Docencia</th>
+                            <th>Horas Práctica</th>
+                            <th>Actividades Prácticas</th>
+                            <th>H. de trabajo autónomo</th>
+                            <th>Actividades de Trabajo autónomo</th>
+                            <th>Observaciones </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData let-columns="columns">
+                        <tr>
+                            <td>
+                                1
+                            </td>
+                            <td>
+                                Variables y estructuras de Datos Básicos.
+                            </td>
+                            <td>
+                                Conociendo el lenguaje Python
+                                Tipado básico
+                            </td>
+                            <td>
+                                Entiende el lenguaje Python, los tipos de datos básicos, manipula, conoce y revisa las
+                                principales estructuras de datos.
+                            </td>
+                            <td>
+                                Tiene conocimientos sólidos sobre Variables y estructuras de datos básicos.
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+
+        </p-card>
+
+
+        <p-card header="Estrategias Metodologicas" class="m-5">
+            <form novalidate>
+                <div class="grid p-fluid m-3">
+                    <div class="col-12 md:col-12 mt-1">
+                        <div class="p-inputgroup">
+                            <span class="p-float-label">
+                                <input type="text" pattern="[A-Za-z]+" pInputText id="nombre" name="nombre" required>
+                                <label htmlFor="username">Nombre estrategia</label>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-12 md:col-12 mt-2">
+                        <div class="p-inputgroup">
+                            <span class="p-float-label">
+                                <input type="text" pattern="[A-Za-z]+" pInputText id="nombre" name="nombre" required>
+                                <label htmlFor="username">Finalidad</label>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12" style="text-align: center; margin: 5px;">
+                    <p-button label="Agregar" icon="pi pi-plus" styleClass="p-button-success  mb-2"></p-button>
+                </div>
+            </form>
+
+            <div class="card">
+                <p-table>
+                    <ng-template pTemplate="header" let-columns>
+                        <tr>
+                            <th>#</th>
+                            <th>Nombre estrategia</th>
+                            <th>Finalidad</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData let-columns="columns">
+                        <tr>
+                            <td>
+                                Variables y estructuras de Datos Básicos.
+                            </td>
+                            <td>
+                                Conociendo el lenguaje Python
+                                Tipado básico
+                            </td>
+                            <td>
+                                Entiende el lenguaje Python, los tipos de datos básicos, manipula, conoce y revisa las
+                                principales estructuras de datos.
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+
+        </p-card>
+
+        <p-card header="Recursos Didacticos" class="m-5">
+            <p-card header="Materiales Convecionales" class="m-5">
+                <form novalidate>
+                    <div class="grid p-fluid m-3">
+                        <div class="col-12 md:col-12 mt-1">
+                            <div class="p-inputgroup">
+                                <span class="p-float-label">
+                                    <input type="text" pattern="[A-Za-z]+" pInputText id="nombre" name="nombre"
+                                        required>
+                                    <label htmlFor="username">Nombre</label>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-12 md:col-12 mt-2">
+                            <div class="p-inputgroup">
+                                <span class="p-float-label">
+                                    <input type="text" pattern="[A-Za-z]+" pInputText id="nombre" name="nombre"
+                                        required>
+                                    <label htmlFor="username">Descripción</label>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12" style="text-align: center; margin: 5px;">
+                        <p-button label="Agregar" icon="pi pi-plus" styleClass="p-button-success  mb-2"></p-button>
+                    </div>
+                </form>
+
+                <div class="card">
+                    <p-table>
+                        <ng-template pTemplate="header" let-columns>
+                            <tr>
+                                <th>#</th>
+                                <th>Nombre</th>
+                                <th>Descripción</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-rowData let-columns="columns">
+                            <tr>
+                                <td>
+                                    Variables y estructuras de Datos Básicos.
+                                </td>
+                                <td>
+                                    Conociendo el lenguaje Python
+                                    Tipado básico
+                                </td>
+                                <td>
+                                    Entiende el lenguaje Python, los tipos de datos básicos, manipula, conoce y revisa
+                                    las
+                                    principales estructuras de datos.
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+
+            </p-card>
+
+            <p-card header="Materiales Audiovisuales" class="m-5">
+
+                <form novalidate>
+                    <div class="grid p-fluid m-3">
+                        <div class="col-12 md:col-12 mt-1">
+                            <div class="p-inputgroup">
+                                <span class="p-float-label">
+                                    <input type="text" pattern="[A-Za-z]+" pInputText id="nombre" name="nombre"
+                                        required>
+                                    <label htmlFor="username">Nombre</label>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-12 md:col-12 mt-2">
+                            <div class="p-inputgroup">
+                                <span class="p-float-label">
+                                    <input type="text" pattern="[A-Za-z]+" pInputText id="nombre" name="nombre"
+                                        required>
+                                    <label htmlFor="username">Descripción</label>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12" style="text-align: center; margin: 5px;">
+                        <p-button label="Agregar" icon="pi pi-plus" styleClass="p-button-success  mb-2"></p-button>
+                    </div>
+                </form>
+
+                <div class="card">
+                    <p-table>
+                        <ng-template pTemplate="header" let-columns>
+                            <tr>
+                                <th>#</th>
+                                <th>Nombre estrategia</th>
+                                <th>Finalidad</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-rowData let-columns="columns">
+                            <tr>
+                                <td>
+                                    Variables y estructuras de Datos Básicos.
+                                </td>
+                                <td>
+                                    Conociendo el lenguaje Python
+                                    Tipado básico
+                                </td>
+                                <td>
+                                    Entiende el lenguaje Python, los tipos de datos básicos, manipula, conoce y revisa
+                                    las
+                                    principales estructuras de datos.
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+
+            </p-card>
+        </p-card>
+
+        
+        <p-card header="Bibliografia" class="m-5">
+            <textarea rows="5" cols="145" pInputTextarea ></textarea>
+        </p-card>
+
+        <p-card header="Elaboración, Revisión Y Aprobación" class="m-5">
+            <form novalidate>
+                <div class="grid p-fluid m-3">
+                    <div class="col-12 md:col-12 mt-1">
+                        <div class="p-inputgroup">
+                            <span class="p-float-label">
+                                <input type="text" pattern="[A-Za-z]+" pInputText id="nombre" name="nombre" required>
+                                <label htmlFor="username">Nombre del revisador</label>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-12 md:col-12 mt-2">
+                        <div class="p-inputgroup">
+                            <span class="p-float-label">
+                                <input type="text" pattern="[A-Za-z]+" pInputText id="nombre" name="nombre" required>
+                                <label htmlFor="username">Nombre del aprobador</label>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12" style="text-align: center; margin: 5px;">
+                    <p-button label="Generar Silabo" icon="pi pi-book" styleClass="p-button-success  mb-2"></p-button>
+                </div>
+            </form>
+        </p-card>
+
+    </p-panel>
+</div>
