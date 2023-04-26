@@ -48,6 +48,7 @@ import { InfocursoComponent } from './modules/infocurso/infocurso.component';
     FormsModule,
     CommonModule,
     BrowserAnimationsModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent],
