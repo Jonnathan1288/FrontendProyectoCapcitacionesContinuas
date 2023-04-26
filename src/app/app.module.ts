@@ -12,6 +12,13 @@ import { CourseRegisterComponent } from './modules/moduleCourse/course-register/
 import { CommonModule } from '@angular/common';
 import { SilaboComponent } from './modules/silabo/silabo.component';
 
+import { RouterModule } from '@angular/router';
+import { FormRecord, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatriculComponent } from './modules/matricul/matricul.component';
+import { HttpClientModule } from '@angular/common/http';
+import { CardcursoComponent } from './modules/cardcurso/cardcurso.component';
+import { InfocursoComponent } from './modules/infocurso/infocurso.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,16 +27,23 @@ import { SilaboComponent } from './modules/silabo/silabo.component';
     HomeComponent,
     WelcomeComponent,
     CourseRegisterComponent,
-    SilaboComponent
-    
+  SilaboComponent,
+    MatriculComponent,
+    CardcursoComponent,
+    InfocursoComponent,
   ],
   imports: [
     BrowserModule,
-    BrowserAnimationsModule,
-    CommonModule,
-    AppRoutingModule,
+    AppRoutingModule, 
     PrimengModule,
-  
+    RouterModule,
+    ReactiveFormsModule,
+    FormsModule,
+    HttpClientModule,
+    CommonModule,
+    BrowserAnimationsModule
+
+
   ],
   providers: [],
   bootstrap: [AppComponent]
