@@ -11,6 +11,7 @@ import { WelcomeComponent } from './modules/welcome/welcome.component';
 import { CourseRegisterComponent } from './modules/moduleCourse/course-register/course-register.component';
 import { CommonModule } from '@angular/common';
 import { SilaboComponent } from './modules/silabo/silabo.component';
+import {CurricularDiseñoComponent  } from './modules/curricular-diseño-register/curricular-diseño.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { SilaboComponent } from './modules/silabo/silabo.component';
     HomeComponent,
     WelcomeComponent,
     CourseRegisterComponent,
+    CurricularDiseñoComponent,
     SilaboComponent
     
   ],

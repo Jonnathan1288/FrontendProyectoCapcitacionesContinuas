@@ -1,6 +1,8 @@
 <div class="card flex justify-content-center">
-    <p-panel header="Silabo">
-        <p-card header="Informacion General del Curso" style="margin: 5px;">
+
+    <p-panel header="DISEÑO CURRICULAR">
+        <p-card header="Informacion General del Curso"
+            style="margin: 5px; background-color: #fff; border-radius: 10px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);">
             <div class="grid">
                 <div class="col-5 flex justify-content-center">
                     <div style="float: left;">
@@ -57,15 +59,24 @@
                 quas!
             </p>
         </p-card>
+        <p-card header="Contenido del Curso" class="m-5">
+            <p class="m-0">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae
+                numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis
+                esse, cupiditate neque
+                quas!
+            </p>
+        </p-card>
 
-        <p-card header="Resultados de Aprendizaje" class="m-5">
-
+        <p-card header="Temas Transversales" class="m-5">
+            <label for="dropdown" style="font-weight: bold;">Sílabo: </label>&nbsp;
+            <p-dropdown [options]="items" [(ngModel)]="selectedItem"></p-dropdown>
             <form novalidate>
-                <div class="grid p-fluid m-5" >
+                <div class="grid p-fluid m-5">
                     <div class="col-12 md:col-12">
                         <div class="p-inputgroup">
-                            <span class="p-inputgroup-addon"><i class="icono fas fa-paw"></i></span>
-                            <input type="text" pattern="[A-Za-z]+" pInputText placeholder="Unidades de Competencia" id="nombre"
+                            <span class="p-inputgroup-addon"><i class="icono  fas fa-pencil-alt"></i></span>
+                            <input type="text" pattern="[A-Za-z]+" pInputText placeholder="Tema 1" id="nombre"
                                 name="nombre"
                                 onkeypress='return event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 || event.charCode == 32'
                                 required>
@@ -73,8 +84,8 @@
                     </div>
                     <div class="col-12 md:col-12">
                         <div class="p-inputgroup">
-                            <span class="p-inputgroup-addon"><i class="icono fas fa-paw"></i></span>
-                            <input type="text" pattern="[A-Za-z]+" pInputText placeholder="Elementos de Competencia" id="nombre"
+                            <span class="p-inputgroup-addon"><i class="icono  fas fa-marker"></i></span>
+                            <input type="text" pattern="[A-Za-z]+" pInputText placeholder="Tema 2" id="nombre"
                                 name="nombre"
                                 onkeypress='return event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 || event.charCode == 32'
                                 required>
@@ -82,8 +93,8 @@
                     </div>
                     <div class="col-12 md:col-12">
                         <div class="p-inputgroup">
-                            <span class="p-inputgroup-addon"><i class="icono fas fa-paw"></i></span>
-                            <input type="text" pattern="[A-Za-z]+" pInputText placeholder="Resultados de Aprendizaje" id="nombre"
+                            <span class="p-inputgroup-addon"><i class="icono  fas fa-pencil-alt"></i></span>
+                            <input type="text" pattern="[A-Za-z]+" pInputText placeholder="Tema 3" id="nombre"
                                 name="nombre"
                                 onkeypress='return event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 || event.charCode == 32'
                                 required>
@@ -91,8 +102,40 @@
                     </div>
                     <div class="col-12 md:col-12">
                         <div class="p-inputgroup">
-                            <span class="p-inputgroup-addon"><i class="icono fas fa-paw"></i></span>
-                            <input type="text" pattern="[A-Za-z]+" pInputText placeholder="Forma de Evidenciar" id="nombre"
+                            <span class="p-inputgroup-addon"><i class="icono  fas fa-marker"></i></span>
+                            <input type="text" pattern="[A-Za-z]+" pInputText placeholder="Tema 4" id="nombre"
+                                name="nombre"
+                                onkeypress='return event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 || event.charCode == 32'
+                                required>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <h5>Estrategias de Enseñanza</h5>
+            <form novalidate>
+                <div class="grid p-fluid m-5">
+                    <div class="col-12 md:col-12">
+                        <div class="p-inputgroup">
+                            <span class="p-inputgroup-addon"><i class="icono fas fa-duotone fa-file"></i></span>
+                            <input type="text" pattern="[A-Za-z]+" pInputText placeholder="Técnicas expositivas"
+                                id="nombre" name="nombre"
+                                onkeypress='return event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 || event.charCode == 32'
+                                required>
+                        </div>
+                    </div>
+                    <div class="col-12 md:col-12">
+                        <div class="p-inputgroup">
+                            <span class="p-inputgroup-addon"><i class="icono fas fa-duotone fa-book"></i></span>
+                            <input type="text" pattern="[A-Za-z]+" pInputText placeholder="Seminarios-talleres"
+                                id="nombre" name="nombre"
+                                onkeypress='return event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 || event.charCode == 32'
+                                required>
+                        </div>
+                    </div>
+                    <div class="col-12 md:col-12">
+                        <div class="p-inputgroup">
+                            <span class="p-inputgroup-addon"><i class="icono fas fa-duotone fa-briefcase"></i></span>
+                            <input type="text" pattern="[A-Za-z]+" pInputText placeholder="Clases prácticas" id="nombre"
                                 name="nombre"
                                 onkeypress='return event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 || event.charCode == 32'
                                 required>
@@ -104,18 +147,53 @@
                 </div>
             </form>
 
+        </p-card>
+
+        <p-card header="Mecanismos de Evaluación " class="m-5">
+            <h4>Evaluación diagnóstica</h4>
+            <form novalidate>
+                <div class="grid p-fluid m-5">
+                    <div class="col-12 md:col-12">
+                        <div class="p-inputgroup">
+                            <span class="p-inputgroup-addon"><i class="icono fas fa-duotone fa-newspaper"></i></span>
+                            <input type="text" pattern="[A-Za-z]+" pInputText placeholder="Técnica" id="nombre"
+                                name="nombre"
+                                onkeypress='return event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 || event.charCode == 32'
+                                required>
+                        </div>
+                    </div>
+                    <div class="col-12 md:col-12">
+                        <div class="p-inputgroup">
+                            <span class="p-inputgroup-addon"><i class="icono fas fa-duotone fa-lightbulb"
+                                    style="--fa-primary-color: #000000; --fa-secondary-color: #fff700;"></i></span>
+                            <input type="text" pattern="[A-Za-z]+" pInputText placeholder="Instrumento" id="nombre"
+                                name="nombre"
+                                onkeypress='return event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 || event.charCode == 32'
+                                required>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12" style="text-align: center; margin: 5px;">
+                    <p-button label="Save" icon="pi pi-plus" styleClass="p-button-success  mb-2"></p-button>
+                </div>
+            </form>
             <div class="card">
                 <p-table>
                     <ng-template pTemplate="header" let-columns>
                         <tr>
-                            <th>Unidades de Competencia</th>
-                            <th>Elementos de Competencia</th>
-                            <th>Resultados de Arendizaje</th>
-                            <th>Forma de Evidenciar</th>
+                            <th>ID <h6 class="icono fas fa-duotone fa-laptop"></h6>
+                            </th>
+                            <th>TÉCNICA A EVALUAR <h6 class="icono fas fa-duotone fa-newspaper"></h6>
+                            </th>
+                            <th>INSTRUMENTO A EVALUAR <h6 class="icono fas fa-duotone fa-wrench"></h6>
+                            </th>
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="body" let-rowData let-columns="columns">
                         <tr>
+                            <td>
+                                1
+                            </td>
                             <td>
                                 Variables y estructuras de Datos Básicos.
                             </td>
@@ -134,17 +212,15 @@
                     </ng-template>
                 </p-table>
             </div>
-
-        </p-card>
-
-        <p-card header="Contenidos del Curso" class="m-5">
-
+            <br>
+            <br>
+            <h4>Evaluación Final</h4>
             <form novalidate>
-                <div class="grid p-fluid m-5" >
+                <div class="grid p-fluid m-5">
                     <div class="col-12 md:col-12">
                         <div class="p-inputgroup">
-                            <span class="p-inputgroup-addon"><i class="icono fas fa-paw"></i></span>
-                            <input type="text" pattern="[A-Za-z]+" pInputText placeholder="Unidades de Competencia" id="nombre"
+                            <span class="p-inputgroup-addon"><i class="icono fas fa-duotone fa-newspaper"></i></span>
+                            <input type="text" pattern="[A-Za-z]+" pInputText placeholder="Técnica" id="nombre"
                                 name="nombre"
                                 onkeypress='return event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 || event.charCode == 32'
                                 required>
@@ -152,26 +228,9 @@
                     </div>
                     <div class="col-12 md:col-12">
                         <div class="p-inputgroup">
-                            <span class="p-inputgroup-addon"><i class="icono fas fa-paw"></i></span>
-                            <input type="text" pattern="[A-Za-z]+" pInputText placeholder="Elementos de Competencia" id="nombre"
-                                name="nombre"
-                                onkeypress='return event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 || event.charCode == 32'
-                                required>
-                        </div>
-                    </div>
-                    <div class="col-12 md:col-12">
-                        <div class="p-inputgroup">
-                            <span class="p-inputgroup-addon"><i class="icono fas fa-paw"></i></span>
-                            <input type="text" pattern="[A-Za-z]+" pInputText placeholder="Resultados de Aprendizaje" id="nombre"
-                                name="nombre"
-                                onkeypress='return event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 || event.charCode == 32'
-                                required>
-                        </div>
-                    </div>
-                    <div class="col-12 md:col-12">
-                        <div class="p-inputgroup">
-                            <span class="p-inputgroup-addon"><i class="icono fas fa-paw"></i></span>
-                            <input type="text" pattern="[A-Za-z]+" pInputText placeholder="Forma de Evidenciar" id="nombre"
+                            <span class="p-inputgroup-addon"><i class="icono fas fa-duotone fa-lightbulb"
+                                    style="--fa-primary-color: #000000; --fa-secondary-color: #fff700;"></i></span>
+                            <input type="text" pattern="[A-Za-z]+" pInputText placeholder="Instrumento" id="nombre"
                                 name="nombre"
                                 onkeypress='return event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 || event.charCode == 32'
                                 required>
@@ -182,20 +241,91 @@
                     <p-button label="Save" icon="pi pi-plus" styleClass="p-button-success  mb-2"></p-button>
                 </div>
             </form>
-
             <div class="card">
                 <p-table>
                     <ng-template pTemplate="header" let-columns>
                         <tr>
-                            <th>Dia</th>
-                            <th>Contenidos</th>
-                            <th>Horas Clase</th>
-                            <th>Actividades de Docencia</th>
-                            <th>Horas Práctica</th>
-                            <th>Actividades Prácticas</th>
-                            <th>H. de trabajo autónomo</th>
-                            <th>Actividades de Trabajo autónomo</th>
-                            <th>Observaciones </th>
+                            <th>ID <h6 class="icono fas fa-duotone fa-laptop"></h6>
+                            </th>
+                            <th>TÉCNICA FORMATIVA FINAL <h6 class="icono fas fa-duotone fa-newspaper"></h6>
+                            </th>
+                            <th>INSTRUMENTO FORMATIVO FINAL <h6 class="icono fas fa-duotone fa-wrench"></h6>
+                            </th>
+
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData let-columns="columns">
+                        <tr>
+                            <td>
+                                1
+                            </td>
+                            <td>
+                                Variables y estructuras de Datos Básicos.
+                            </td>
+                            <td>
+                                Conociendo el lenguaje Python
+                                Tipado básico
+                            </td>
+                            <td>
+                                Entiende el lenguaje Python, los tipos de datos básicos, manipula, conoce y revisa las
+                                principales estructuras de datos.
+                            </td>
+                            <td>
+                                Tiene conocimientos sólidos sobre Variables y estructuras de datos básicos.
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </p-card>
+
+
+        <p-card header="Entorno de Aprendizaje " class="m-5">
+            <form novalidate>
+                <div class="grid p-fluid m-5">
+                    <div class="col-12 md:col-12">
+                        <div class="p-inputgroup">
+                            <span class="p-inputgroup-addon"><i class="icono fas fa-duotone fa-wrench"></i></span>
+                            <input type="text" pattern="[A-Za-z]+" pInputText placeholder="Instalaciones" id="nombre"
+                                name="nombre"
+                                onkeypress='return event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 || event.charCode == 32'
+                                required>
+                        </div>
+                    </div>
+                    <div class="col-12 md:col-12">
+                        <div class="p-inputgroup">
+                            <span class="p-inputgroup-addon"><i class="icono fas fa-duotone fa-book"></i></span>
+                            <input type="text" pattern="[A-Za-z]+" pInputText placeholder="Fase Teórica" id="nombre"
+                                name="nombre"
+                                onkeypress='return event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 || event.charCode == 32'
+                                required>
+                        </div>
+                    </div>
+                    <div class="col-12 md:col-12">
+                        <div class="p-inputgroup">
+                            <span class="p-inputgroup-addon"><i
+                                    class="icono fas fa-duotone fa-business-time"></i></span>
+                            <input type="text" pattern="[A-Za-z]+" pInputText placeholder="Fase Práctica" id="nombre"
+                                name="nombre"
+                                onkeypress='return event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 || event.charCode == 32'
+                                required>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12" style="text-align: center; margin: 5px;">
+                    <p-button label="Save" icon="pi pi-plus" styleClass="p-button-success  mb-2"></p-button>
+                </div>
+            </form>
+            <div class="card">
+                <p-table>
+                    <ng-template pTemplate="header" let-columns>
+                        <tr>
+                            <th>INSTALACIÓN <h6 class="icono fas fa-duotone fa-wrench"></h6>
+                            </th>
+                            <th>FASE TEÓRICA <h6 class="icono fas fa-duotone fa-book"></h6>
+                            </th>
+                            <th>FASE PRÁCTICA <h6 class="icono fas fa-duotone fa-business-time"></h6>
+                            </th>
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="body" let-rowData let-columns="columns">
@@ -222,25 +352,6 @@
                 </p-table>
             </div>
 
-        </p-card>
-
-
-        <p-card header="Estrategias Metodologicas" class="m-5">
-            <p class="m-0">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae
-                numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis
-                esse, cupiditate neque
-                quas!
-            </p>
-        </p-card>
-
-        <p-card header="Bibliografia" class="m-5">
-            <p class="m-0">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae
-                numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis
-                esse, cupiditate neque
-                quas!
-            </p>
         </p-card>
 
     </p-panel>
