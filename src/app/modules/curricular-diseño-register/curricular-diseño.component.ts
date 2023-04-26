@@ -10,14 +10,14 @@ import { LoadScript } from 'src/app/scripts/load-script';
 })
 export class CurricularDiseñoComponent implements OnInit {
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+
   }
 
   constructor(
-    private _CargarScript: LoadScript,
+   // private _CargarScript: LoadScript,
 
   ) {
-    _CargarScript.Cargar(["curricular-diseño-register"]);
+   // _CargarScript.Cargar(["curricular-diseño-register"]);
   }
 
 }
