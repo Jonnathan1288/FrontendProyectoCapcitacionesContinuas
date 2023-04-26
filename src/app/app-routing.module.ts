@@ -9,7 +9,6 @@ import { WelcomeComponent } from './modules/welcome/welcome.component';
 import { MatriculComponent } from './modules/matricul/matricul.component';
 import { CardcursoComponent } from './modules/cardcurso/cardcurso.component';
 import { InfocursoComponent } from './modules/infocurso/infocurso.component';
-import { CurricularRegisterComponent } from './modules/curricular-diseño-register/curricular-diseño-register.component';
 import { CourseRegisterComponent } from './modules/moduleCourse/course-register/course-register.component';
 import { SilaboComponent } from './modules/silabo/silabo.component';
 import { CurricularDiseñoComponent } from './modules/curricular-diseño-register/curricular-diseño.component';
