@@ -26,3 +26,6 @@ h4 {
     font-weight: 700;
     margin-bottom: 0.5rem;
 }
+.no-resize {
+    resize: none;
+}

@@ -69,44 +69,13 @@
         </p-card>
 
         <p-card header="Temas Transversales" class="m-5">
-            <label for="dropdown" style="font-weight: bold;">Sílabo: </label>&nbsp;
-            <p-dropdown [options]="items" [(ngModel)]="selectedItem"></p-dropdown>
+            
             <form novalidate>
                 <div class="grid p-fluid m-5">
-                    <div class="col-12 md:col-12">
+                    <div class="col-10 md:col-10">
                         <div class="p-inputgroup">
                             <span class="p-inputgroup-addon"><i class="icono  fas fa-pencil-alt"></i></span>
-                            <input type="text" pattern="[A-Za-z]+" pInputText placeholder="Tema 1" id="nombre"
-                                name="nombre"
-                                onkeypress='return event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 || event.charCode == 32'
-                                required>
-                        </div>
-                    </div>
-                    <div class="col-12 md:col-12">
-                        <div class="p-inputgroup">
-                            <span class="p-inputgroup-addon"><i class="icono  fas fa-marker"></i></span>
-                            <input type="text" pattern="[A-Za-z]+" pInputText placeholder="Tema 2" id="nombre"
-                                name="nombre"
-                                onkeypress='return event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 || event.charCode == 32'
-                                required>
-                        </div>
-                    </div>
-                    <div class="col-12 md:col-12">
-                        <div class="p-inputgroup">
-                            <span class="p-inputgroup-addon"><i class="icono  fas fa-pencil-alt"></i></span>
-                            <input type="text" pattern="[A-Za-z]+" pInputText placeholder="Tema 3" id="nombre"
-                                name="nombre"
-                                onkeypress='return event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 || event.charCode == 32'
-                                required>
-                        </div>
-                    </div>
-                    <div class="col-12 md:col-12">
-                        <div class="p-inputgroup">
-                            <span class="p-inputgroup-addon"><i class="icono  fas fa-marker"></i></span>
-                            <input type="text" pattern="[A-Za-z]+" pInputText placeholder="Tema 4" id="nombre"
-                                name="nombre"
-                                onkeypress='return event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 || event.charCode == 32'
-                                required>
+                            <textarea rows="4" cols="35" pInputTextarea class="no-resize"></textarea>
                         </div>
                     </div>
                 </div>
@@ -114,33 +83,14 @@
             <h5>Estrategias de Enseñanza</h5>
             <form novalidate>
                 <div class="grid p-fluid m-5">
-                    <div class="col-12 md:col-12">
+                    <div class="col-10 md:col-10">
                         <div class="p-inputgroup">
                             <span class="p-inputgroup-addon"><i class="icono fas fa-duotone fa-file"></i></span>
-                            <input type="text" pattern="[A-Za-z]+" pInputText placeholder="Técnicas expositivas"
-                                id="nombre" name="nombre"
-                                onkeypress='return event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 || event.charCode == 32'
-                                required>
+                            <textarea rows="4" cols="35" pInputTextarea class="no-re
+                            "></textarea>
                         </div>
                     </div>
-                    <div class="col-12 md:col-12">
-                        <div class="p-inputgroup">
-                            <span class="p-inputgroup-addon"><i class="icono fas fa-duotone fa-book"></i></span>
-                            <input type="text" pattern="[A-Za-z]+" pInputText placeholder="Seminarios-talleres"
-                                id="nombre" name="nombre"
-                                onkeypress='return event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 || event.charCode == 32'
-                                required>
-                        </div>
-                    </div>
-                    <div class="col-12 md:col-12">
-                        <div class="p-inputgroup">
-                            <span class="p-inputgroup-addon"><i class="icono fas fa-duotone fa-briefcase"></i></span>
-                            <input type="text" pattern="[A-Za-z]+" pInputText placeholder="Clases prácticas" id="nombre"
-                                name="nombre"
-                                onkeypress='return event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 || event.charCode == 32'
-                                required>
-                        </div>
-                    </div>
+
                 </div>
                 <div class="col-md-12" style="text-align: center; margin: 5px;">
                     <p-button label="Save" icon="pi pi-plus" styleClass="p-button-success  mb-2"></p-button>

@@ -9,7 +9,6 @@ import { LoadScript } from 'src/app/scripts/load-script';
   styleUrls: ['./curricular-diseño.component.css']
 })
 export class CurricularDiseñoComponent implements OnInit {
-  
   ngOnInit(): void {
     throw new Error('Method not implemented.');
   }
@@ -20,12 +19,5 @@ export class CurricularDiseñoComponent implements OnInit {
   ) {
     _CargarScript.Cargar(["curricular-diseño-register"]);
   }
-  items = [
-    { label: 'Item 1', value: 'item1' },
-    { label: 'Item 2', value: 'item2' },
-    { label: 'Item 3', value: 'item3' }
-  ];
-  selectedItem: any;
-  
 
 }
