@@ -10,7 +10,7 @@ import { LoadScript } from 'src/app/scripts/load-script';
 })
 export class CurricularDiseñoComponent implements OnInit {
   ngOnInit(): void {
-
+alert()
   }
 
   constructor(
