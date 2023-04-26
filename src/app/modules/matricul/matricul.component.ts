@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Matricula } from 'src/app/models/matricula';
+import { Inscrito} from 'src/app/models/inscrito';
 import { MatriculaService } from 'src/app/service/matricula.service';
 import Swal from 'sweetalert2';
 
@@ -16,7 +16,7 @@ export class MatriculComponent {
   constructor(private matriculaService: MatriculaService) {}
 
   async guardarMatricula() {
-    const matricula: Matricula = {
+    const matricula: Inscrito = {
       fechaMatricula: this.fechaMatricula,
       estadoAporbacion: this.estadoAporbacion,
       estadoMatriculaActivo: this.estadoMatriculaActivo

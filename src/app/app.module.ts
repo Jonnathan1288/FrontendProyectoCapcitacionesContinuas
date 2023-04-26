@@ -14,6 +14,8 @@ import { RouterModule } from '@angular/router';
 import { FormRecord, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatriculComponent } from './modules/matricul/matricul.component';
 import { HttpClientModule } from '@angular/common/http';
+import { CardcursoComponent } from './modules/cardcurso/cardcurso.component';
+import { InfocursoComponent } from './modules/infocurso/infocurso.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,8 @@ import { HttpClientModule } from '@angular/common/http';
     HomeComponent,
     WelcomeComponent,
     MatriculComponent,
+    CardcursoComponent,
+    InfocursoComponent,
   ],
   imports: [
     BrowserModule,

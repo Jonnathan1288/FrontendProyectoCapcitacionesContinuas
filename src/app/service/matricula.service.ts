@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Matricula } from '../models/matricula';
+import {  Inscrito } from '../models/inscrito';
+import { map, Observable } from 'rxjs';
 
 
 @Injectable({
@@ -11,13 +12,23 @@ export class MatriculaService {
 
   private URL = "http://localhost:8080/api/matricula/crear/";
 
+  private listar = "http://localhost:8080/api/matricula/listar/";
+
+
 
   constructor(private http: HttpClient) { }
 
 
-  savematricula(matricula: Matricula) {
+  savematricula(matricula: Inscrito) {
     return this.http.post(`${this.URL}?`, matricula);
   }
+
+
+  getMatriculas(): Observable<Inscrito[]> {
+    return this.http
+      .get(this.listar)
+      .pipe(map((response) => response as Inscrito[]));
+  }
 
 
 

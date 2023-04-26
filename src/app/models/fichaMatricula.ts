@@ -1,4 +1,4 @@
-import { Matricula } from "./matricula";
+import { Inscrito } from "./inscrito";
 
 export class FichaMatricula{
     idFichaMatricula?:number;
@@ -13,6 +13,6 @@ export class FichaMatricula{
     informacion8?:string;
     informacion9?:string;
 
-    matricula?:Matricula;
+    matricula?:Inscrito;
 ///matricula?:Ma  idMatricula?: number;
 }

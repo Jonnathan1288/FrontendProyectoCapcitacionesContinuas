@@ -1,5 +1,5 @@
 
-export class Matricula{
+export class Inscrito{
     idMatricula?:number;
 
     fechaMatricula?: Date;
