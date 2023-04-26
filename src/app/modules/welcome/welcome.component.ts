@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./welcome.component.css']
 })
 export class WelcomeComponent {
-
+  public isLogginPresent: boolean = false;
 }
