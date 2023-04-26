@@ -1,0 +1,64 @@
+.indent-small {
+    margin-left: 5px;
+  }
+  .form-group.internal {
+    margin-bottom: 0;
+  }
+  
+  .dialog-panel {
+    margin: 10px;
+  }
+  
+  .datepicker-dropdown {
+    z-index: 200 !important;
+  }
+  
+  .panel-body {  
+    
+    background: #e5e5e5; /* Old browsers */
+    background: -moz-radial-gradient(center, ellipse cover,  #e5e5e5 0%, #ffffff 100%); /* FF3.6+ */
+    background: -webkit-radial-gradient(center, ellipse cover,  #e5e5e5 0%,#ffffff 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-radial-gradient(center, ellipse cover,  #e5e5e5 0%,#ffffff 100%); /* Opera 12+ */
+    background: -ms-radial-gradient(center, ellipse cover,  #e5e5e5 0%,#ffffff 100%); /* IE10+ */
+    background: radial-gradient(ellipse at center,  #e5e5e5 0%,#ffffff 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e5e5e5', endColorstr='#ffffff',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+  
+    font: 600 15px "Open Sans",Arial,sans-serif;
+  }
+  
+  label.control-label {
+    font-weight: 600;
+    color: #777;  
+  }
+
+  .abs-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+   
+  }
+
+  p-table {
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Efecto de profundidad */
+p-table th {
+    background-color: #EEE;
+    border-bottom: 1px solid #DDD;
+    border-right: 1px solid #DDD;
+    box-shadow: inset -1px -1px 0 #FFF, inset 1px 1px 0 #CCC;
+}
+
+p-table td {
+    border-bottom: 1px solid #DDD;
+    border-right: 1px solid #DDD;
+    box-shadow: inset -1px -1px 0 #FFF, inset 1px 1px 0 #CCC;
+}
+table {
+	width: 80%;
+	height: 100px;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+}

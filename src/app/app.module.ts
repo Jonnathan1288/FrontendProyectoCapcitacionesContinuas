@@ -10,6 +10,8 @@ import { PrimengModule } from './designs/primeng/primeng.module';
 import { WelcomeComponent } from './modules/welcome/welcome.component';
 import { CourseRegisterComponent } from './modules/course-register/course-register.component';
 
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -17,7 +19,9 @@ import { CourseRegisterComponent } from './modules/course-register/course-regist
     FooterComponent,
     HomeComponent,
     WelcomeComponent,
-    CourseRegisterComponent
+    CourseRegisterComponent,
+
+   
   ],
   imports: [
     BrowserModule,
