@@ -1,97 +1,93 @@
-<!-- <h5>Addons</h5>
-<div class="grid p-fluid">
-    <div class="col-12 md:col-4">
-        <div class="p-inputgroup">
-            <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
-            <input type="text" pInputText placeholder="Username">         
-        </div>
-    </div>
-    
-    <div class="col-12 md:col-4">
-        <div class="p-inputgroup">
-            <span class="p-inputgroup-addon">$</span>
-            <input type="text" pInputText placeholder="Price">   
-            <span class="p-inputgroup-addon">.00</span>      
-        </div>
-    </div>
-            
-    <div class="col-12 md:col-4">
-        <div class="p-inputgroup">
-            <span class="p-inputgroup-addon">www</span>
-            <input type="text" pInputText placeholder="Website">      
-        </div>
-    </div>
-</div>
-    
-<h5>Multiple Addons</h5>
-<div class="grid">
-    <div class="col-12">
-        <div class="p-inputgroup">
-            <span class="p-inputgroup-addon"><i class="pi pi-tags" style="line-height: 1.25;"></i></span>  
-            <span class="p-inputgroup-addon"><i class="pi pi-shopping-cart" style="line-height: 1.25;"></i></span>   
-            <input type="text" pInputText placeholder="Price"> 
-            <span class="p-inputgroup-addon">$</span>  
-            <span class="p-inputgroup-addon">.00</span>      
-        </div>
-    </div>
+<div>
+    <section style="align-items: center;" class="mb-5">Registro de Cursos de capacitación</section>
 </div>
 
-<h5>Button Addons</h5>
-<div class="grid p-fluid">
-    <div class="col-12 md:col-4">
-        <div class="p-inputgroup">
-            <button type="button" pButton pRipple label="Search"></button>
-            <input type="text" pInputText placeholder="Keyword">         
+<form ngNativeValidate>
+    <div class="grid p-fluid">
+        <div class="field col-12 md:col-4">
+            <span class="p-float-label">
+                <p-dropdown inputId="dropdown" [autoDisplayFirst]="false" optionLabel="name"></p-dropdown>
+                <label for="dropdown">Area de curso</label>
+            </span>
         </div>
-    </div>
-    
-    <div class="col-12 md:col-4">
-        <div class="p-inputgroup">
-            <input type="text" pInputText placeholder="Keyword">   
-            <button type="button" pButton pRipple icon="pi pi-refresh" styleClass="p-button-warn"></button>      
-        </div>
-    </div>
-            
-    <div class="col-12 md:col-4">
-        <div class="p-inputgroup">
-            <button type="button" pButton pRipple icon="pi pi-check" styleClass="p-button-success"></button>    
-            <input type="text" pInputText placeholder="Vote">   
-            <button type="button" pButton pRipple icon="pi pi-times" styleClass="p-button-danger"></button>      
-        </div>
-    </div>
-</div>
 
-<h5>Checkbox and RadioButton</h5>
-<div class="grid p-fluid">
-    <div class="col-12">
-        <div class="p-inputgroup">
-            <span class="p-inputgroup-addon"><p-checkbox></p-checkbox></span>
-            <input type="text" pInputText placeholder="Username">         
+        <div class="field col-12 md:col-4">
+            <span class="p-float-label">
+                <p-dropdown inputId="dropdown" [autoDisplayFirst]="false" optionLabel="name"></p-dropdown>
+                <label for="dropdown">Especialidad de curso</label>
+            </span>
         </div>
-    </div>
-    
-    <div class="col-12">
-        <div class="p-inputgroup">
-            <input type="text" pInputText placeholder="Price">   
-            <span class="p-inputgroup-addon"><p-radioButton name="category" value="price" ></p-radioButton></span>      
-        </div>
-    </div>
-            
-    <div class="col-12">
-        <div class="p-inputgroup">
-            <span class="p-inputgroup-addon"><p-checkbox></p-checkbox></span>
-            <input type="text" pInputText placeholder="Website">      
-            <span class="p-inputgroup-addon"><p-radioButton name="category" value="site"></p-radioButton></span> 
-        </div>
-    </div>
-</div> 
 
- -->
-
- <div class="div">
-    <div class="container">
-        <div class="ul">
-            <li *ngFor="let l of listAreaE">{{l.nombreArea}}</li>
+        <div class="field col-12 md:col-4">
+            <span class="p-float-label">
+                <p-dropdown inputId="dropdown" [autoDisplayFirst]="false" optionLabel="name"></p-dropdown>
+                <label for="dropdown">Programa</label>
+            </span>
         </div>
     </div>
- </div>
+
+    <div class="grid p-fluid">
+        <div class="col-12 md:col-4 mt-2">
+            <span class="p-float-label">
+                <input type="text" id="inputtext" pInputText>
+                <label for="inputtext">Nombre curso</label>
+            </span>
+        </div>
+
+        <div class="col-12 md:col-4 mt-2">
+            <div class="p-inputgroup">
+                <span class="p-float-label">
+                    <p-inputNumber mode="decimal" [showButtons]="true" inputId="minmax-buttons" [min]="0" [max]="100"
+                        placeholder="Duración curso"> </p-inputNumber>
+                </span>
+            </div>
+
+        </div>
+
+        <div class="col-12 md:col-4 mt-2">
+            <div class="p-inputgroup">
+
+                <p-calendar inputId="edad" name="edad" id="edad" class="ng-dirty" [showIcon]="true"
+                    placeholder="Fecha inicio de curso"></p-calendar>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="grid p-fluid">
+        <div class="col-12 md:col-12 mt-2">
+
+
+            <div class="card flex justify-content-center gap-7">
+                <div class="flex align-items-center gap-1">
+                    <p-checkbox name="group1" value="Lunes" inputId="ny"></p-checkbox>
+                    <label for="ny" class="mt-2">Lunes</label>
+
+                    <p-checkbox name="group1" value="Martes" inputId="ny" class="ml-2"></p-checkbox>
+                    <label for="ny" class="mt-2">Martes</label>
+
+                    <p-checkbox name="group1" value="Miercoles" inputId="ny"  class="ml-2"></p-checkbox>
+                    <label for="ny" class="mt-2">Miercoles</label>
+
+                    <p-checkbox name="group1" value="Jueves" inputId="ny"  class="ml-2"></p-checkbox>
+                    <label for="ny" class="mt-2">Jueves</label>
+
+                    <p-checkbox name="group1" value="Viernes" inputId="ny"  class="ml-2"></p-checkbox>
+                    <label for="ny" class="mt-2">Viernes</label>
+
+                    <p-checkbox name="group1" value="Sabado" inputId="ny"  class="ml-2"></p-checkbox>
+                    <label for="ny" class="mt-2">Sabado</label>
+
+                    <p-checkbox name="group1" value="Domingo" inputId="ny"  class="ml-2"></p-checkbox>
+                    <label for="ny" class="mt-2">Domingo</label>
+                </div>
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+</form>
