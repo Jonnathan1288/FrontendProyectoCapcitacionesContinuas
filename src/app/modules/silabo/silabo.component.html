@@ -4,22 +4,21 @@
             <div class="grid">
                 <div class="col-5 flex justify-content-center">
                     <div style="float: left;">
-                        <p><strong>Area:</strong> Miguel Henry Martins</p>
-                        <p><strong>Nombre del Curso:</strong> {{ curso!.nombreCurso }}</p>
-                        <p><strong>Fecha de Inicio</strong> Juan Fernando Murilo Cardoso</p>
-                        <p><strong>Campo de Formación:</strong> Juan Fernando Murilo Cardoso</p>
-                        <p><strong>Docente Responsable:</strong> Miguel Henry Martins</p>
+                        <p><strong>Area:</strong> {{ curso!.especialidad?.area?.nombreArea }}</p>
+                        <p><strong>Nombre del Curso:</strong> {{curso!.nombreCurso }}</p>
+                        <p><strong>Fecha de Inicio</strong> </p>
+                        <p><strong>Número de Cupos:</strong> {{curso!.numeroCuposCurso }}</p>
+                        <p><strong>Docente Responsable:</strong> {{curso!.capacitador?.tipoAbreviaturaTitulo + '.' + curso!.capacitador?.usuario?.persona?.nombre1 }} {{ curso!.capacitador?.usuario?.persona?.nombre2 }} {{ curso!.capacitador?.usuario?.persona?.apellido1 }} {{ curso!.capacitador?.usuario?.persona?.apellido2 }}</p>
                     </div>
                 </div>
 
                 <div class="col-5 flex justify-content-center">
                     <div style="float: left;">
-                        <p><strong>Horario:</strong> Miguel Henry Martins</p>
-                        <p><strong>Código del curso: </strong> Turma B</p>
-                        <p><strong>Fecha de Finalización:</strong> Juan Fernando Murilo Cardoso</p>
-                        <p><strong>Horas del curso:</strong> Miguel Henry Martins</p>
-                        <p><strong>Modalidad:</strong> Turma B</p>
-
+                        <p><strong>Horario:</strong> {{curso!.horarioCurso?.horaInicio + ' a ' + curso.horarioCurso?.horaFin}}</p>
+                        <p><strong>Código del curso: </strong> {{ curso!.especialidad?.codigoEspecialidad }}</p>
+                        <p><strong>Fecha de Finalización:</strong> {{ curso!.nombreCurso }}</p>
+                        <p><strong>Horas del curso:</strong> {{curso!.duracionCurso}}</p>
+                        <p><strong>Modalidad:</strong> {{ curso!.modalidadCurso?.nombreModalidadCurso }}</p>
                     </div>
                 </div>
             </div>
@@ -27,29 +26,20 @@
 
         <p-card header="Prerrequisitos" class="m-5">
             <p class="m-0">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae
-                numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis
-                esse, cupiditate neque
-                quas!
+            
             </p>
         </p-card>
 
 
         <p-card header="Descripción del Curso" class="m-5">
             <p class="m-0">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae
-                numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis
-                esse, cupiditate neque
-                quas!
+                {{ curso!.descripcionCurso }}
             </p>
         </p-card>
 
         <p-card header="Objetivos del Curso" class="m-5">
             <p class="m-0">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae
-                numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis
-                esse, cupiditate neque
-                quas!
+                {{ curso!.objetivoGeneralesCurso }}
             </p>
         </p-card>
 
@@ -268,71 +258,74 @@
 
         <p-card header="Recursos Didacticos" class="m-5">
             <p-card header="Materiales Convecionales" class="m-5">
-                <form novalidate>
-                    <div class="grid p-fluid m-3">
-                        <div class="col-12 md:col-12 mt-2">
-                            <div class="p-inputgroup">
-                                <span class="p-float-label">
-                                    <input type="text"  pInputText id="nombre" name="nombre"  [(ngModel)]="materialesConvecionales.descripcionMaterialConvencional">
-                                    <label htmlFor="username">Descripción</label>
-                                </span>
-                            </div>
+                <div class="grid">
+                    <div class="col-5 align-items-center justify-content-center">
+                        <div class="p-fluid">
+                            <span class="p-float-label">
+                                <input type="text"  pInputText id="nombre" name="nombre"  [(ngModel)]="materialesConvecionales.descripcionMaterialConvencional">
+                                <label htmlFor="username">Descripción</label>
+                            </span>
                         </div>
                     </div>
-                    <div class="col-md-12" style="text-align: center; margin: 5px;">
+                    <div class="col-2">
+                        <p-divider layout="vertical">
+                        </p-divider>
+                    </div>
+                    <div class="col-5  align-items-center justify-content-center">
+                        <p-table [value]="listMaterialConvencionales">
+                            <ng-template pTemplate="header" let-columns>
+                                <tr>
+                                    <th>Descripción</th>
+                                    <th>Quitar</th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-rowData let-columns="columns">
+                                <tr>
+                                    <td>{{ rowData.descripcionMaterialConvencional }}</td>
+                                    <td><button pButton type="button" class="p-button-rounded p-button-danger" icon="pi pi-times" (click)="quitarElementoMateriales(rowData.descripcionMaterialConvencional)"></button></td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                    <div class="col-md-12" style="text-align: center; margin: 8px;">
                         <p-button label="Agregar" icon="pi pi-plus" styleClass="p-button-success  mb-2" (onClick)="almacenarListaMaterialConvencionales()"></p-button>
                     </div>
-                </form>
-                <div class="card">
-                    <p-table [value]="listMaterialConvencionales">
-                        <ng-template pTemplate="header" let-columns>
-                            <tr>
-                                <th>Descripción</th>
-                                <th>Quitar</th>
-                            </tr>
-                        </ng-template>
-                        <ng-template pTemplate="body" let-rowData let-columns="columns">
-                            <tr>
-                                <td>{{ rowData.descripcionMaterialConvencional }}</td>
-                                <td><button pButton type="button" class="p-button-rounded p-button-danger" icon="pi pi-times" (click)="quitarElementoMateriales(rowData.descripcionMaterialConvencional)"></button></td>
-                            </tr>
-                        </ng-template>
-                    </p-table>
                 </div>
             </p-card>
             <p-card header="Materiales Audiovisuales" class="m-5">
-                <form novalidate>
-                    <div class="grid p-fluid m-3">
-                        <div class="col-12 md:col-12 mt-2">
-                            <div class="p-inputgroup">
-                                <span class="p-float-label">
-                                    <input type="text"  pInputText id="nombre" name="nombre" [(ngModel)]="materialesAudiovisuales.descripcionMaterialAudiovisual">
-                                    <label htmlFor="username">Descripción</label>
-                                </span>
-                            </div>
+                <div class="grid">
+                    <div class="col-5 align-items-center justify-content-center">
+                        <div class="p-fluid">
+                            <span class="p-float-label">
+                                <input type="text"  pInputText id="nombre" name="nombre" [(ngModel)]="materialesAudiovisuales.descripcionMaterialAudiovisual">
+                                <label htmlFor="username">Descripción</label>
+                            </span>
                         </div>
+                    </div>
+                    <div class="col-2">
+                        <p-divider layout="vertical">
+                        </p-divider>
+                    </div>
+                    <div class="col-5  align-items-center justify-content-center">
+                        <p-table [value]="listCMaterialAudiovisuales">
+                            <ng-template pTemplate="header" let-columns>
+                                <tr>
+                                    <th>Descripción</th>
+                                    <th>Quitar</th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-rowData let-columns="columns">
+                                <tr>
+                                    <td>{{ rowData.descripcionMaterialAudiovisual }}</td>
+                                    <td><button pButton type="button" class="p-button-rounded p-button-danger" icon="pi pi-times" (click)="quitarElementoConvencional(rowData.descripcionMaterialAudiovisual)"></button></td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
                     </div>
                     <div class="col-md-12" style="text-align: center; margin: 5px;">
                         <p-button label="Agregar" icon="pi pi-plus" styleClass="p-button-success  mb-2" (onClick)="almacenarListaMaterialAudiovisualess()"></p-button>
                     </div>
-                </form>
-                <div class="card">
-                    <p-table [value]="listCMaterialAudiovisuales">
-                        <ng-template pTemplate="header" let-columns>
-                            <tr>
-                                <th>Descripción</th>
-                                <th>Quitar</th>
-                            </tr>
-                        </ng-template>
-                        <ng-template pTemplate="body" let-rowData let-columns="columns">
-                            <tr>
-                                <td>{{ rowData.descripcionMaterialAudiovisual }}</td>
-                                <td><button pButton type="button" class="p-button-rounded p-button-danger" icon="pi pi-times" (click)="quitarElementoConvencional(rowData.descripcionMaterialAudiovisual)"></button></td>
-                            </tr>
-                        </ng-template>
-                    </p-table>
                 </div>
-
             </p-card>
         </p-card>
 

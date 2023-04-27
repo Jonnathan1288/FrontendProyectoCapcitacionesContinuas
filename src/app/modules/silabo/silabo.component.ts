@@ -27,10 +27,10 @@ export class SilaboComponent implements OnInit {
     private silaboService: SilaboService,
     private cursoService: CursoService,
     private estrategiasMetodologicasService: EstrategiaMetodologicaService,
-    private materialesAudivisualesSilabo: MaterialAudiovisualService,
-    private materialesConvencianales: MaterialConvencionalService,
+    private materialesAudivisualesSilaboService: MaterialAudiovisualService,
+    private materialesConvencianalesService: MaterialConvencionalService,
     private resultadosAprendizajeService: ResultadoAprendizajeSilaboService,
-    private contenidoSilabo: ContenidoSilaboService
+    private contenidoSilaboService: ContenidoSilaboService
   ) {
   }
 
@@ -174,6 +174,10 @@ export class SilaboComponent implements OnInit {
         console.log("Data + " + silaboData)
         /* TABLAS */
         this.generarResultadosAprendizaje();
+        this.generarContenidos();
+        this.generarEstetegiasMetodologicas();
+        this.generarMaterialesAudivisuales();
+        this.generarMaterialesConvecionales();
         /* */
         console.log("Silabo generado id->" + this.idSilaboCap )
     })
@@ -185,11 +189,50 @@ export class SilaboComponent implements OnInit {
     for (let resultado of this.listResultadosAprendizajes) {
       resultado.silabo = this.silabo; 
       resultado.estadoUnidadActivo = true;
-      this.resultadosAprendizajeService.saveResultadosArendizaje(resultado).subscribe(dataAprendizaje => {
+      this.resultadosAprendizajeService.saveResultadosArendizaje(resultado).subscribe(data=> {
         console.log("Se creo el resultados =)");
       });
     }
   }
-  
+
+  public generarContenidos(): void {
+    for (let contenidos of this.listContenidosSilabo) {
+      contenidos.silabo = this.silabo; 
+      contenidos.estadoContenido = true;
+      this.contenidoSilaboService.saveContenidosilabos(contenidos).subscribe(data => {
+        console.log("Se creo =)");
+      });
+    }
+  }
+
+  public generarMaterialesConvecionales(): void {
+    for (let convencionales of this.listMaterialConvencionales) {
+      convencionales.silabo = this.silabo; 
+      convencionales.estadoMaterialConvencional = true;
+      this.materialesConvencianalesService.saveMaterialAudiovisuales(convencionales).subscribe(data => {
+        console.log("Se creo =)");
+      });
+    }
+  }
+
+  public generarMaterialesAudivisuales(): void {
+    for (let audiovisuales of this.listCMaterialAudiovisuales) {
+      audiovisuales.silabo = this.silabo; 
+      audiovisuales.estadoMaterialAudiovisual = true;
+      this.materialesAudivisualesSilaboService.saveMaterialAudiovisuales(audiovisuales).subscribe(data => {
+        console.log("Se creo =)");
+      });
+    }
+  }
+
+  public generarEstetegiasMetodologicas(): void {
+    for (let estrategias of this.listEstrategiasMetodologica) {
+      estrategias.silabo = this.silabo; 
+      estrategias.estadoEstrategiaMetodologicaActivo = true;
+      this.estrategiasMetodologicasService.saveEstrategiasMetodologica(estrategias).subscribe(data => {
+        console.log("Se creo =)");
+      });
+    }
+  }
   /* */
 }
