@@ -11,15 +11,15 @@ export class SilaboService {
 
   constructor(private http: HttpClient) { }
 
-  public listListaNecesidadCurso():Observable<Silabo[]>{
-    return this.http.get<Silabo[]>(environment.apiuri+'/silabo/list');
+  public listSilaboo():Observable<Silabo[]>{
+    return this.http.get<Silabo[]>(environment.apiuri+'/silabo/listar');
   }
 
-  public saveListaNecesidadCurso(silabo: Silabo):Observable<Silabo>{
-    return this.http.post<Silabo>(environment.apiuri+'/silabo/save', silabo);
+  public saveSilabo(silabo: Silabo):Observable<Silabo>{
+    return this.http.post<Silabo>(environment.apiuri+'/silabo/crear', silabo);
   }
 
-  public getCursoById(id_curso: number):Observable<Silabo>{
+  public getSilaboById(id_curso: number):Observable<Silabo>{
     return this.http.get<Silabo>(environment.apiuri+'/silabo/findbyId/'+id_curso);
   }
   
