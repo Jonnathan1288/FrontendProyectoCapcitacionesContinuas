@@ -1,7 +1,7 @@
 import { DisenioCurriculares } from "./disenio-curriculares";
 
 export class EvaluacionDiagnosticaCurriculares {
-    idEvaluacionDiagnosticaCurriculares?: number;
+    idEvaluacionDiagnosticaCurricular?: number;
     tecnicaFormativa?: string;
     instrumnetoFormativa?: String;
     disenioCurricular?: DisenioCurriculares;
