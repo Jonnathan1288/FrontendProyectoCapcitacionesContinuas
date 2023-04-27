@@ -7,7 +7,7 @@ import { map, Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class MatriculaService {
+export class inscritosService {
 
 
   private URL = "http://localhost:8080/api/matricula/crear/";

@@ -9,8 +9,8 @@ import { WelcomeComponent } from './modules/welcome/welcome.component';
 })
 export class AppComponent implements OnInit{
   title = 'FrontendProyectoCapcitacionesContinuas';
-  public isLogginPresent: boolean = true;
-  //public isLogginPresent: boolean = false;
+  //public isLogginPresent: boolean = true;
+  public isLogginPresent: boolean = false;
 
   constructor(private scriptC: LoadScript){
     scriptC.Cargar(['dashboard']);
