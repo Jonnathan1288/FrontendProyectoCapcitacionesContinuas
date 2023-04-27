@@ -14,15 +14,12 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { CourseRegisterComponent } from './modules/moduleCourse/course-register/course-register.component';
 import { CommonModule } from '@angular/common';
 import { SilaboComponent } from './modules/silabo/silabo.component';
+import { CurricularDiseñoComponent } from './modules/curricular-diseño-register/curricular-diseño.component';
 import { RouterModule } from '@angular/router';
 import { FormRecord, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatriculComponent } from './modules/matricul/matricul.component';
-import { HttpClientModule } from '@angular/common/http';
 import { CardcursoComponent } from './modules/cardcurso/cardcurso.component';
 import { InfocursoComponent } from './modules/infocurso/infocurso.component';
-
-
-
 
 @NgModule({
   declarations: [
@@ -32,27 +29,28 @@ import { InfocursoComponent } from './modules/infocurso/infocurso.component';
     HomeComponent,
     WelcomeComponent,
     CourseRegisterComponent,
-  LoginComponent,
+    CurricularDiseñoComponent,
+    LoginComponent,
     registrarPersonaComponent,
     CourseRegisterComponent,
-  SilaboComponent,
+    SilaboComponent,
     MatriculComponent,
     CardcursoComponent,
     InfocursoComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule, 
+    AppRoutingModule,
     PrimengModule,
-    HttpClientModule
+    HttpClientModule,
     RouterModule,
     ReactiveFormsModule,
     FormsModule,
     CommonModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
 
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
