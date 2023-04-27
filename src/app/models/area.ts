@@ -3,4 +3,5 @@ export class Area {
   codigoArea?: string;
   nombreArea?: string;
   estadoAreaActivo?: boolean;
+  
 }

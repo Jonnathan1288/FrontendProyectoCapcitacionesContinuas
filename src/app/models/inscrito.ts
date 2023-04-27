@@ -1,12 +1,11 @@
+import { Curso } from './curso';
+import { Usuario } from './usuario';
 
-export class Inscrito{
-    idMatricula?:number;
-
-    fechaMatricula?: Date;
-    estadoAporbacion?:Boolean;
-    estadoMatriculaActivo?:Boolean;
-
-  //curso?:Cusro  idCurso?:number;
-  //usuario?:Usuario  idUsuario?:number;
-
+export class Inscrito {
+  idInscrito?: number;
+  fechaInscrito?: Date;
+  estadoInscrito?: Boolean;
+  estadoInscritoActivo?: Boolean;
+  usuario?: Usuario;
+  curso?: Curso;
 }

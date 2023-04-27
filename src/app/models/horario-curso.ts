@@ -6,5 +6,4 @@ export class HorarioCurso {
   dias?: string;
   horaInicio?: string;
   horaFin?: string;
-  curso?: Curso;
 }
