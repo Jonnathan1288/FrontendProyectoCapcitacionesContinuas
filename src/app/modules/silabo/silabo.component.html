@@ -4,22 +4,21 @@
             <div class="grid">
                 <div class="col-5 flex justify-content-center">
                     <div style="float: left;">
-                        <p><strong>Area:</strong> Miguel Henry Martins</p>
-                        <p><strong>Nombre del Curso:</strong> Turma B</p>
-                        <p><strong>Fecha de Inicio</strong> Juan Fernando Murilo Cardoso</p>
-                        <p><strong>Campo de Formación:</strong> Juan Fernando Murilo Cardoso</p>
-                        <p><strong>Docente Responsable:</strong> Miguel Henry Martins</p>
+                        <p><strong>Area:</strong> {{ curso!.especialidad?.area?.nombreArea }}</p>
+                        <p><strong>Nombre del Curso:</strong> {{curso!.nombreCurso }}</p>
+                        <p><strong>Fecha de Inicio</strong> </p>
+                        <p><strong>Número de Cupos:</strong> {{curso!.numeroCuposCurso }}</p>
+                        <p><strong>Docente Responsable:</strong> {{curso!.capacitador?.tipoAbreviaturaTitulo + '.' + curso!.capacitador?.usuario?.persona?.nombre1 }} {{ curso!.capacitador?.usuario?.persona?.nombre2 }} {{ curso!.capacitador?.usuario?.persona?.apellido1 }} {{ curso!.capacitador?.usuario?.persona?.apellido2 }}</p>
                     </div>
                 </div>
 
                 <div class="col-5 flex justify-content-center">
                     <div style="float: left;">
-                        <p><strong>Horario:</strong> Miguel Henry Martins</p>
-                        <p><strong>Código del curso: </strong> Turma B</p>
-                        <p><strong>Fecha de Finalización:</strong> Juan Fernando Murilo Cardoso</p>
-                        <p><strong>Horas del curso:</strong> Miguel Henry Martins</p>
-                        <p><strong>Modalidad:</strong> Turma B</p>
-
+                        <p><strong>Horario:</strong> {{curso!.horarioCurso?.horaInicio + ' a ' + curso.horarioCurso?.horaFin}}</p>
+                        <p><strong>Código del curso: </strong> {{ curso!.especialidad?.codigoEspecialidad }}</p>
+                        <p><strong>Fecha de Finalización:</strong> {{ curso!.nombreCurso }}</p>
+                        <p><strong>Horas del curso:</strong> {{curso!.duracionCurso}}</p>
+                        <p><strong>Modalidad:</strong> {{ curso!.modalidadCurso?.nombreModalidadCurso }}</p>
                     </div>
                 </div>
             </div>
@@ -27,40 +26,31 @@
 
         <p-card header="Prerrequisitos" class="m-5">
             <p class="m-0">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae
-                numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis
-                esse, cupiditate neque
-                quas!
+            
             </p>
         </p-card>
 
 
         <p-card header="Descripción del Curso" class="m-5">
             <p class="m-0">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae
-                numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis
-                esse, cupiditate neque
-                quas!
+                {{ curso!.descripcionCurso }}
             </p>
         </p-card>
 
         <p-card header="Objetivos del Curso" class="m-5">
             <p class="m-0">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae
-                numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis
-                esse, cupiditate neque
-                quas!
+                {{ curso!.objetivoGeneralesCurso }}
             </p>
         </p-card>
 
         <p-card header="Resultados de Aprendizaje" class="m-5">
 
-            <form novalidate>
+            <!-- <form novalidate> -->
                 <div class="grid p-fluid m-3">
                     <div class="col-12 md:col-12 mt-1">
                         <div class="p-inputgroup">
                             <span class="p-float-label">
-                                <input type="text" pattern="[A-Za-z]+" pInputText id="nombre" name="nombre" required>
+                                <input type="text" pInputText id="temaUnidadSilabo" name="temaUnidadSilabo" [(ngModel)]="resultadoAprendizajeSilabo.temaUnidadSilabo" >
                                 <label htmlFor="username">Unidades de Competencia</label>
                             </span>
                         </div>
@@ -68,7 +58,7 @@
                     <div class="col-12 md:col-12 mt-2">
                         <div class="p-inputgroup">
                             <span class="p-float-label">
-                                <input type="text" pattern="[A-Za-z]+" pInputText id="nombre" name="nombre" required>
+                                <input type="text"  pInputText id="elementosCompetenciaSilabo" name="elementosCompetenciaSilabo" [(ngModel)]="resultadoAprendizajeSilabo.elementosCompetenciaSilabo"  >
                                 <label htmlFor="username">Elementos de Competencia</label>
                             </span>
                         </div>
@@ -76,7 +66,7 @@
                     <div class="col-12 md:col-12 mt-2">
                         <div class="p-inputgroup">
                             <span class="p-float-label">
-                                <input type="text" pattern="[A-Za-z]+" pInputText id="nombre" name="nombre" required>
+                                <input type="text"  pInputText id="activadesResultadoAprendizaje" name="activadesResultadoAprendizaje" [(ngModel)]="resultadoAprendizajeSilabo.activadesResultadoAprendizaje"  >
                                 <label htmlFor="username">Resultados de Aprendizaje</label>
                             </span>
                         </div>
@@ -84,48 +74,48 @@
                     <div class="col-12 md:col-12 mt-2">
                         <div class="p-inputgroup">
                             <span class="p-float-label">
-                                <input type="text" pattern="[A-Za-z]+" pInputText id="nombre" name="nombre" required>
+                                <input type="text"  pInputText id="descripcionUnidadSilabo" name="descripcionUnidadSilabo" [(ngModel)]="resultadoAprendizajeSilabo.descripcionUnidadSilabo" >
+                                <label htmlFor="username">Descripción</label>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-12 md:col-12 mt-2">
+                        <div class="p-inputgroup">
+                            <span class="p-float-label">
+                                <input type="text"  pInputText id="formaEvidenciar" name="formaEvidenciar" [(ngModel)]="resultadoAprendizajeSilabo.formaEvidenciar" >
                                 <label htmlFor="username">Forma de evidenciar</label>
                             </span>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-12" style="text-align: center; margin: 5px;">
-                    <p-button label="Agregar" icon="pi pi-plus" styleClass="p-button-success  mb-2"></p-button>
+                    <p-button label="Agregar" icon="pi pi-plus" styleClass="p-button-success  mb-2"  (click)="almacenarLista()"></p-button>
                 </div>
-            </form>
-
+            <!-- </form> -->
             <div class="card">
-                <p-table>
+                <p-table [value]="listResultadosAprendizajes"  >
                     <ng-template pTemplate="header" let-columns>
                         <tr>
                             <th>Unidades de Competencia</th>
                             <th>Elementos de Competencia</th>
                             <th>Resultados de Arendizaje</th>
+                            <th>Descripción<th>
                             <th>Forma de Evidenciar</th>
+                            <th scope="col">Quitar</th>
                         </tr>
                     </ng-template>
-                    <ng-template pTemplate="body" let-rowData let-columns="columns">
+                    <ng-template pTemplate="body" let-rowData let-columns="columns" let-data>
                         <tr>
-                            <td>
-                                Variables y estructuras de Datos Básicos.
-                            </td>
-                            <td>
-                                Conociendo el lenguaje Python
-                                Tipado básico
-                            </td>
-                            <td>
-                                Entiende el lenguaje Python, los tipos de datos básicos, manipula, conoce y revisa las
-                                principales estructuras de datos.
-                            </td>
-                            <td>
-                                Tiene conocimientos sólidos sobre Variables y estructuras de datos básicos.
-                            </td>
+                            <td>{{ data.temaUnidadSilabo }}</td>
+                            <td>{{ data.elementosCompetenciaSilabo }}</td>
+                            <td>{{ data.activadesResultadoAprendizaje }}</td>
+                            <td>{{ data.formaEvidenciar }}</td>
+                            <td>{{ data.descripcionUnidadSilabo }}</td>
+                            <td><button pButton type="button" class="p-button-rounded p-button-danger" icon="pi pi-times" (click)="quitarElemento(data.temaUnidadSilabo)"></button></td>
                         </tr>
                     </ng-template>
                 </p-table>
             </div>
-
         </p-card>
 
         <p-card header="Contenidos del Curso" class="m-5">
@@ -134,7 +124,7 @@
                     <div class="col-12 md:col-12 mt-1">
                         <div class="p-inputgroup">
                             <span class="p-float-label">
-                                <input type="text" pattern="[A-Za-z]+" pInputText id="nombre" name="nombre" required>
+                                <input type="text"  pInputText id="diaContenido" name="diaContenido"  [(ngModel)]="contenidosSilabo.diaContenido">
                                 <label htmlFor="username">Día</label>
                             </span>
                         </div>
@@ -142,7 +132,7 @@
                     <div class="col-12 md:col-12 mt-1">
                         <div class="p-inputgroup">
                             <span class="p-float-label">
-                                <input type="text" pattern="[A-Za-z]+" pInputText id="nombre" name="nombre" required>
+                                <input type="text"  pInputText id="temaContenido" name="temaContenido"  [(ngModel)]="contenidosSilabo.temaContenido">
                                 <label htmlFor="username">Contenidos</label>
                             </span>
                         </div>
@@ -150,81 +140,69 @@
                     <div class="col-12 md:col-12 mt-1">
                         <div class="p-inputgroup">
                             <span class="p-float-label">
-                                <input type="text" pattern="[A-Za-z]+" pInputText id="nombre" name="nombre" required>
+                                <input type="text"  pInputText id="actividadesDocencia" name="actividadesDocencia"  [(ngModel)]="contenidosSilabo.actividadesDocencia">
                                 <label htmlFor="username">Actividades de Docencia</label>
-                                <p-inputNumber class="ml-5" mode="decimal" [showButtons]="true" inputId="minmax-buttons"
-                                    [min]="0" [max]="100"> </p-inputNumber>
+                                <p-inputNumber class="ml-5" mode="decimal" [showButtons]="true" inputId="minmax-buttons" id="horasClaseContenido" name="horasClaseContenido"
+                                    [min]="0" [max]="100" [(ngModel)]="contenidosSilabo.horasClaseContenido"> </p-inputNumber>
                             </span>
                         </div>
                     </div>
                     <div class="col-12 md:col-12 mt-1">
                         <div class="p-inputgroup">
                             <span class="p-float-label">
-                                <input type="text" pattern="[A-Za-z]+" pInputText id="nombre" name="nombre" required>
+                                <input type="text"  pInputText id="actividadesPracticas" name="actividadesPracticas"  [(ngModel)]="contenidosSilabo.actividadesPracticas">
                                 <label htmlFor="username">Actividades Prácticas</label>
-                                <p-inputNumber class="ml-5" mode="decimal" [showButtons]="true" inputId="minmax-buttons"
-                                    [min]="0" [max]="100"> </p-inputNumber>
+                                <p-inputNumber class="ml-5" mode="decimal" [showButtons]="true" inputId="minmax-buttons" id="horasPracticas" name="horasPracticas"
+                                    [min]="0" [max]="100" [(ngModel)]="contenidosSilabo.horasPracticas"> </p-inputNumber>
                             </span>
                         </div>
                     </div>
                     <div class="col-12 md:col-12 mt-1">
                         <div class="p-inputgroup">
                             <span class="p-float-label">
-                                <input type="text" pattern="[A-Za-z]+" pInputText id="nombre" name="nombre" required>
+                                <input type="text"  pInputText id="actividadesAutonomas" name="actividadesAutonomas"  [(ngModel)]="contenidosSilabo.actividadesAutonomas">
                                 <label htmlFor="username">Actividades de Trabajo autónomo</label>
-                                <p-inputNumber class="ml-5" mode="decimal" [showButtons]="true" inputId="minmax-buttons"
-                                    [min]="0" [max]="100"> </p-inputNumber>
+                                <p-inputNumber class="ml-5" mode="decimal" [showButtons]="true" inputId="minmax-buttons" id="horasAutonomas" name="horasAutonomas"
+                                    [min]="0" [max]="100" [(ngModel)]="contenidosSilabo.horasAutonomas"> </p-inputNumber>
                             </span>
                         </div>
                     </div>
                     <div class="col-12 md:col-12 mt-1">
                         <div class="p-inputgroup">
                             <span class="p-float-label">
-                                <input type="text" pattern="[A-Za-z]+" pInputText id="nombre" name="nombre" required>
+                                <input type="text"  pInputText id="nombre" name="nombre" [(ngModel)]="contenidosSilabo.observaciones">
                                 <label htmlFor="username">Observaciones</label>
                             </span>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-12" style="text-align: center; margin: 5px;">
-                    <p-button label="Agregar" icon="pi pi-plus" styleClass="p-button-success  mb-2"></p-button>
+                    <p-button label="Agregar" icon="pi pi-plus" styleClass="p-button-success  mb-2" (onClick)="almacenarListaContenidos()" ></p-button>
                 </div>
             </form>
 
             <div class="card">
-                <p-table>
-                    <ng-template pTemplate="header" let-columns>
+                <p-table [value]="listContenidosSilabo">
+                    <ng-template pTemplate="header" >
                         <tr>
                             <th>Dia</th>
                             <th>Contenidos</th>
-                            <th>Horas Clase</th>
                             <th>Actividades de Docencia</th>
-                            <th>Horas Práctica</th>
                             <th>Actividades Prácticas</th>
-                            <th>H. de trabajo autónomo</th>
                             <th>Actividades de Trabajo autónomo</th>
                             <th>Observaciones </th>
+                            <th scope="col">Quitar</th>
                         </tr>
                     </ng-template>
-                    <ng-template pTemplate="body" let-rowData let-columns="columns">
+                    <ng-template pTemplate="body" let-columns="columns" let-rowData>
                         <tr>
-                            <td>
-                                1
-                            </td>
-                            <td>
-                                Variables y estructuras de Datos Básicos.
-                            </td>
-                            <td>
-                                Conociendo el lenguaje Python
-                                Tipado básico
-                            </td>
-                            <td>
-                                Entiende el lenguaje Python, los tipos de datos básicos, manipula, conoce y revisa las
-                                principales estructuras de datos.
-                            </td>
-                            <td>
-                                Tiene conocimientos sólidos sobre Variables y estructuras de datos básicos.
-                            </td>
+                            <td>{{ rowData.diaContenido }}</td>
+                            <td>{{ rowData.temaContenido }}</td>
+                            <td>{{ rowData.actividadesDocencia }} <Strong>Horas: </Strong> {{ rowData.horasClaseContenido }}</td>
+                            <td>{{ rowData.actividadesPracticas }} <Strong>Horas: </Strong>  {{ rowData.horasPracticas }}</td>
+                            <td>{{ rowData.actividadesAutonomas }} <Strong>Horas: </Strong> {{ rowData.horasAutonomas }}</td>
+                            <td>{{ rowData.observaciones }}</td>
+                            <td><button pButton type="button" class="p-button-rounded p-button-danger" icon="pi pi-times" (click)="quitarElementoContenido(rowData.temaContenido)"></button></td>
                         </tr>
                     </ng-template>
                 </p-table>
@@ -232,14 +210,13 @@
 
         </p-card>
 
-
         <p-card header="Estrategias Metodologicas" class="m-5">
             <form novalidate>
                 <div class="grid p-fluid m-3">
                     <div class="col-12 md:col-12 mt-1">
                         <div class="p-inputgroup">
                             <span class="p-float-label">
-                                <input type="text" pattern="[A-Za-z]+" pInputText id="nombre" name="nombre" required>
+                                <input type="text"  pInputText id="nombreEstrategiaMetodologica" name="nombreEstrategiaMetodologica"  [(ngModel)]="estrategiasMetodologicas.nombreEstrategiaMetodologica">
                                 <label htmlFor="username">Nombre estrategia</label>
                             </span>
                         </div>
@@ -247,39 +224,31 @@
                     <div class="col-12 md:col-12 mt-2">
                         <div class="p-inputgroup">
                             <span class="p-float-label">
-                                <input type="text" pattern="[A-Za-z]+" pInputText id="nombre" name="nombre" required>
+                                <input type="text"  pInputText id="finalidadEstrategiaMetodologica" name="finalidadEstrategiaMetodologica"  [(ngModel)]="estrategiasMetodologicas.finalidadEstrategiaMetodologica">
                                 <label htmlFor="username">Finalidad</label>
                             </span>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-12" style="text-align: center; margin: 5px;">
-                    <p-button label="Agregar" icon="pi pi-plus" styleClass="p-button-success  mb-2"></p-button>
+                    <p-button label="Agregar" icon="pi pi-plus" styleClass="p-button-success  mb-2" (onClick)="almacenarListaEstrategias()"></p-button>
                 </div>
             </form>
 
             <div class="card">
-                <p-table>
+                <p-table [value]="listEstrategiasMetodologica">
                     <ng-template pTemplate="header" let-columns>
                         <tr>
-                            <th>#</th>
                             <th>Nombre estrategia</th>
                             <th>Finalidad</th>
+                            <th>Quitar</th>
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="body" let-rowData let-columns="columns">
                         <tr>
-                            <td>
-                                Variables y estructuras de Datos Básicos.
-                            </td>
-                            <td>
-                                Conociendo el lenguaje Python
-                                Tipado básico
-                            </td>
-                            <td>
-                                Entiende el lenguaje Python, los tipos de datos básicos, manipula, conoce y revisa las
-                                principales estructuras de datos.
-                            </td>
+                            <td>{{ rowData.nombreEstrategiaMetodologica }}</td>
+                            <td>{{ rowData.finalidadEstrategiaMetodologica }}</td>
+                            <td><button pButton type="button" class="p-button-rounded p-button-danger" icon="pi pi-times" (click)="quitarElementoEstrategias(rowData.nombreEstrategiaMetodologica)"></button></td>
                         </tr>
                     </ng-template>
                 </p-table>
@@ -289,125 +258,88 @@
 
         <p-card header="Recursos Didacticos" class="m-5">
             <p-card header="Materiales Convecionales" class="m-5">
-                <form novalidate>
-                    <div class="grid p-fluid m-3">
-                        <div class="col-12 md:col-12 mt-1">
-                            <div class="p-inputgroup">
-                                <span class="p-float-label">
-                                    <input type="text" pattern="[A-Za-z]+" pInputText id="nombre" name="nombre"
-                                        required>
-                                    <label htmlFor="username">Nombre</label>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="col-12 md:col-12 mt-2">
-                            <div class="p-inputgroup">
-                                <span class="p-float-label">
-                                    <input type="text" pattern="[A-Za-z]+" pInputText id="nombre" name="nombre"
-                                        required>
-                                    <label htmlFor="username">Descripción</label>
-                                </span>
-                            </div>
+                <div class="grid">
+                    <div class="col-5 align-items-center justify-content-center">
+                        <div class="p-fluid">
+                            <span class="p-float-label">
+                                <input type="text"  pInputText id="nombre" name="nombre"  [(ngModel)]="materialesConvecionales.descripcionMaterialConvencional">
+                                <label htmlFor="username">Descripción</label>
+                            </span>
                         </div>
                     </div>
-                    <div class="col-md-12" style="text-align: center; margin: 5px;">
-                        <p-button label="Agregar" icon="pi pi-plus" styleClass="p-button-success  mb-2"></p-button>
+                    <div class="col-2">
+                        <p-divider layout="vertical">
+                        </p-divider>
                     </div>
-                </form>
-
-                <div class="card">
-                    <p-table>
-                        <ng-template pTemplate="header" let-columns>
-                            <tr>
-                                <th>#</th>
-                                <th>Nombre</th>
-                                <th>Descripción</th>
-                            </tr>
-                        </ng-template>
-                        <ng-template pTemplate="body" let-rowData let-columns="columns">
-                            <tr>
-                                <td>
-                                    Variables y estructuras de Datos Básicos.
-                                </td>
-                                <td>
-                                    Conociendo el lenguaje Python
-                                    Tipado básico
-                                </td>
-                                <td>
-                                    Entiende el lenguaje Python, los tipos de datos básicos, manipula, conoce y revisa
-                                    las
-                                    principales estructuras de datos.
-                                </td>
-                            </tr>
-                        </ng-template>
-                    </p-table>
+                    <div class="col-5  align-items-center justify-content-center">
+                        <p-table [value]="listMaterialConvencionales">
+                            <ng-template pTemplate="header" let-columns>
+                                <tr>
+                                    <th>Descripción</th>
+                                    <th>Quitar</th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-rowData let-columns="columns">
+                                <tr>
+                                    <td>{{ rowData.descripcionMaterialConvencional }}</td>
+                                    <td><button pButton type="button" class="p-button-rounded p-button-danger" icon="pi pi-times" (click)="quitarElementoMateriales(rowData.descripcionMaterialConvencional)"></button></td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                    <div class="col-md-12" style="text-align: center; margin: 8px;">
+                        <p-button label="Agregar" icon="pi pi-plus" styleClass="p-button-success  mb-2" (onClick)="almacenarListaMaterialConvencionales()"></p-button>
+                    </div>
                 </div>
-
             </p-card>
-
             <p-card header="Materiales Audiovisuales" class="m-5">
-
-                <form novalidate>
-                    <div class="grid p-fluid m-3">
-                        <div class="col-12 md:col-12 mt-1">
-                            <div class="p-inputgroup">
-                                <span class="p-float-label">
-                                    <input type="text" pattern="[A-Za-z]+" pInputText id="nombre" name="nombre"
-                                        required>
-                                    <label htmlFor="username">Nombre</label>
-                                </span>
-                            </div>
+                <div class="grid">
+                    <div class="col-5 align-items-center justify-content-center">
+                        <div class="p-fluid">
+                            <span class="p-float-label">
+                                <input type="text"  pInputText id="nombre" name="nombre" [(ngModel)]="materialesAudiovisuales.descripcionMaterialAudiovisual">
+                                <label htmlFor="username">Descripción</label>
+                            </span>
                         </div>
-                        <div class="col-12 md:col-12 mt-2">
-                            <div class="p-inputgroup">
-                                <span class="p-float-label">
-                                    <input type="text" pattern="[A-Za-z]+" pInputText id="nombre" name="nombre"
-                                        required>
-                                    <label htmlFor="username">Descripción</label>
-                                </span>
-                            </div>
-                        </div>
+                    </div>
+                    <div class="col-2">
+                        <p-divider layout="vertical">
+                        </p-divider>
+                    </div>
+                    <div class="col-5  align-items-center justify-content-center">
+                        <p-table [value]="listCMaterialAudiovisuales">
+                            <ng-template pTemplate="header" let-columns>
+                                <tr>
+                                    <th>Descripción</th>
+                                    <th>Quitar</th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-rowData let-columns="columns">
+                                <tr>
+                                    <td>{{ rowData.descripcionMaterialAudiovisual }}</td>
+                                    <td><button pButton type="button" class="p-button-rounded p-button-danger" icon="pi pi-times" (click)="quitarElementoConvencional(rowData.descripcionMaterialAudiovisual)"></button></td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
                     </div>
                     <div class="col-md-12" style="text-align: center; margin: 5px;">
-                        <p-button label="Agregar" icon="pi pi-plus" styleClass="p-button-success  mb-2"></p-button>
+                        <p-button label="Agregar" icon="pi pi-plus" styleClass="p-button-success  mb-2" (onClick)="almacenarListaMaterialAudiovisualess()"></p-button>
                     </div>
-                </form>
-
-                <div class="card">
-                    <p-table>
-                        <ng-template pTemplate="header" let-columns>
-                            <tr>
-                                <th>#</th>
-                                <th>Nombre estrategia</th>
-                                <th>Finalidad</th>
-                            </tr>
-                        </ng-template>
-                        <ng-template pTemplate="body" let-rowData let-columns="columns">
-                            <tr>
-                                <td>
-                                    Variables y estructuras de Datos Básicos.
-                                </td>
-                                <td>
-                                    Conociendo el lenguaje Python
-                                    Tipado básico
-                                </td>
-                                <td>
-                                    Entiende el lenguaje Python, los tipos de datos básicos, manipula, conoce y revisa
-                                    las
-                                    principales estructuras de datos.
-                                </td>
-                            </tr>
-                        </ng-template>
-                    </p-table>
                 </div>
-
             </p-card>
         </p-card>
 
         
-        <p-card header="Bibliografia" class="m-5">
-            <textarea rows="5" cols="145" pInputTextarea ></textarea>
-        </p-card>
+        <div class="grid p-fluid">
+            <div class="col-12 md:col-12 mt-2" style="align-items: center;">
+                <div class="card flex justify-content-center">
+                    <span class="p-float-label m-4">
+                        <textarea id="float-input" rows="5" cols="30" pInputTextarea [(ngModel)]="silabo.bibliografia"></textarea>
+                        <label for="float-input">Descripción</label>
+                    </span>
+                </div>
+            </div>
+        </div>
 
         <p-card header="Elaboración, Revisión Y Aprobación" class="m-5">
             <form novalidate>
@@ -415,7 +347,15 @@
                     <div class="col-12 md:col-12 mt-1">
                         <div class="p-inputgroup">
                             <span class="p-float-label">
-                                <input type="text" pattern="[A-Za-z]+" pInputText id="nombre" name="nombre" required>
+                                <input type="text"  pInputText id="nombre" name="nombre" [(ngModel)]="silabo.campoFormacion">
+                                <label htmlFor="username">Campo Formación del Silabo</label>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-12 md:col-12 mt-1">
+                        <div class="p-inputgroup">
+                            <span class="p-float-label">
+                                <input type="text"  pInputText id="nombre" name="nombre" [(ngModel)]="silabo.campoRevisadoPor">
                                 <label htmlFor="username">Nombre del revisador</label>
                             </span>
                         </div>
@@ -423,14 +363,14 @@
                     <div class="col-12 md:col-12 mt-2">
                         <div class="p-inputgroup">
                             <span class="p-float-label">
-                                <input type="text" pattern="[A-Za-z]+" pInputText id="nombre" name="nombre" required>
+                                <input type="text"  pInputText id="nombre" name="nombre" [(ngModel)]="silabo.campoAprovadoPor">
                                 <label htmlFor="username">Nombre del aprobador</label>
                             </span>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-12" style="text-align: center; margin: 5px;">
-                    <p-button label="Generar Silabo" icon="pi pi-book" styleClass="p-button-success  mb-2"></p-button>
+                    <p-button label="Generar Silabo" icon="pi pi-book" styleClass="p-button-success  mb-2" (onClick)="generarSilabo()"></p-button>
                 </div>
             </form>
         </p-card>
