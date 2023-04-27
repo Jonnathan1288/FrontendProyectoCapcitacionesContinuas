@@ -17,8 +17,16 @@ export class HorarioCursoService {
     return this.http.get<HorarioCurso[]>(environment.apiuri+'/horarioCurso/listar');
   }
 
+  public getModalidadCursoById(idHorarioCurso: number):Observable<HorarioCurso>{
+    return this.http.get<HorarioCurso>(environment.apiuri+'/horarioCurso/findbyId/'+idHorarioCurso);
+  }
+
   public crearHorarioCurso(horarioCurso: HorarioCurso):Observable<HorarioCurso>{
     return this.http.post<HorarioCurso>(environment.apiuri+'/horarioCurso/crear', horarioCurso);
+  }
+
+  public updateModalidadCurso(idHorarioCurso:number, horarioCurso: HorarioCurso):Observable<HorarioCurso>{
+    return this.http.put<HorarioCurso>(environment.apiuri+'/horarioCurso/update/'+idHorarioCurso, horarioCurso);
   }
 
 }

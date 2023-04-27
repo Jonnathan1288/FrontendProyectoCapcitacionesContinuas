@@ -18,6 +18,8 @@ export class Curso {
     descripcionCurso?: string;
     objetivoGeneralesCurso?: string;
     numeroCuposCurso?: number;
+    fechaInicioCurso?: Date;
+    fechaFinalizacionCurso?: Date;
     programa?: Programa;
     especialidad?: Especialidad;
     capacitador?: Capacitador;
