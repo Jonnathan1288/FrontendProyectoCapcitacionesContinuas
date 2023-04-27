@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Inscrito} from 'src/app/models/inscrito';
-import { MatriculaService } from 'src/app/service/matricula.service';
+import { inscritosService } from 'src/app/service/inscritos.service';
 
 @Component({
   selector: 'app-matricul',
@@ -12,7 +12,7 @@ export class MatriculComponent {
   estadoMatriculaActivo: boolean=true;
   estadoAporbacion: boolean=true;
   fechaMatricula:Date=new Date();
-  constructor(private matriculaService: MatriculaService) {}
+  constructor(private inscritosService: inscritosService) {}
 
 
 }
