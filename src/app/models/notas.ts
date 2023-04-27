@@ -2,7 +2,7 @@ import { ParticipantesMatriculados } from "./participantesMatriculados";
 
 export class Notas {
     idNota?: number;
-    parcial?: boolean;
+    parcial?: number;
     examenFinal?: string;
     fechaNota?: Date;
     observacion?: string;
