@@ -1,93 +1,215 @@
-<div>
-    <section style="align-items: center;" class="mb-5">Registro de Cursos de capacitación</section>
-</div>
-
-<form ngNativeValidate>
-    <div class="grid p-fluid">
-        <div class="field col-12 md:col-4">
-            <span class="p-float-label">
-                <p-dropdown inputId="dropdown" [autoDisplayFirst]="false" optionLabel="name"></p-dropdown>
-                <label for="dropdown">Area de curso</label>
-            </span>
-        </div>
-
-        <div class="field col-12 md:col-4">
-            <span class="p-float-label">
-                <p-dropdown inputId="dropdown" [autoDisplayFirst]="false" optionLabel="name"></p-dropdown>
-                <label for="dropdown">Especialidad de curso</label>
-            </span>
-        </div>
-
-        <div class="field col-12 md:col-4">
-            <span class="p-float-label">
-                <p-dropdown inputId="dropdown" [autoDisplayFirst]="false" optionLabel="name"></p-dropdown>
-                <label for="dropdown">Programa</label>
-            </span>
-        </div>
-    </div>
-
-    <div class="grid p-fluid">
-        <div class="col-12 md:col-4 mt-2">
-            <span class="p-float-label">
-                <input type="text" id="inputtext" pInputText>
-                <label for="inputtext">Nombre curso</label>
-            </span>
-        </div>
-
-        <div class="col-12 md:col-4 mt-2">
-            <div class="p-inputgroup">
+<p-card header="Temas Transversales" class="m-5">
+    <form ngNativeValidate style="padding: 26px;">
+        <!-- Primer contenedor -->
+        <div class="grid p-fluid">
+            <div class="field col-12 md:col-4">
                 <span class="p-float-label">
-                    <p-inputNumber mode="decimal" [showButtons]="true" inputId="minmax-buttons" [min]="0" [max]="100"
-                        placeholder="Duración curso"> </p-inputNumber>
+                    <p-dropdown [options]="listAreaItem" placeholder="Todas las areas" styleClass="mb-1 md:mb-0"
+                        (onChange)="getEspecialidadesDependenceOfArea($event)"></p-dropdown>
+                    <!-- <p-dropdown inputId="dropdown" [options]="listAreaE" optionLabel="name"></p-dropdown> -->
+                    <label for="dropdown">Area de curso</label>
+
                 </span>
             </div>
 
-        </div>
+            <div class="field col-12 md:col-4">
+                <span class="p-float-label">
+                    <p-dropdown [options]="listEspecialidadItem" styleClass="mb-1 md:mb-0"></p-dropdown>
+                    <label for="dropdown">Especialidad de curso</label>
+                </span>
+            </div>
 
-        <div class="col-12 md:col-4 mt-2">
-            <div class="p-inputgroup">
-
-                <p-calendar inputId="edad" name="edad" id="edad" class="ng-dirty" [showIcon]="true"
-                    placeholder="Fecha inicio de curso"></p-calendar>
+            <div class="field col-12 md:col-4">
+                <span class="p-float-label">
+                    <p-dropdown inputId="dropdown" [autoDisplayFirst]="false" optionLabel="name"></p-dropdown>
+                    <label for="dropdown">Programa</label>
+                </span>
             </div>
         </div>
 
+        <!-- Segundo contenedor -->
+        <div class="grid p-fluid">
+            <div class="col-12 md:col-4 mt-2">
+                <span class="p-float-label">
+                    <input type="text" id="inputtext" pInputText>
+                    <label for="inputtext">Nombre curso</label>
+                </span>
+            </div>
 
-    </div>
+            <div class="field col-12 md:col-4">
+                <div class="p-inputgroup mt-2">
+                    <span class="p-float-label">
+                        <p-inputNumber mode="decimal" [showButtons]="true" inputId="minmax-buttons" [min]="0"
+                            [max]="100" placeholder="Duración curso"> </p-inputNumber>
+                    </span>
+                </div>
+            </div>
 
-    <div class="grid p-fluid">
-        <div class="col-12 md:col-12 mt-2">
+            <div class="field col-12 md:col-4">
+                <div class="p-inputgroup mt-2">
+                    <span class="p-float-label">
+                        <p-inputNumber mode="decimal" [showButtons]="true" inputId="minmax-buttons" [min]="0"
+                            [max]="100" placeholder="Número de cupos"> </p-inputNumber>
+                    </span>
+                </div>
+            </div>
+        </div>
 
+        <!-- Primer contenedor -->
+        <div class="grid p-fluid">
+            <div class="col-12 md:col-4 mt-2">
+                <span class="p-float-label">
+                    <input type="text" id="inputtext" pInputText>
+                    <label for="inputtext">Nombre curso</label>
+                </span>
+            </div>
 
-            <div class="card flex justify-content-center gap-7">
-                <div class="flex align-items-center gap-1">
-                    <p-checkbox name="group1" value="Lunes" inputId="ny"></p-checkbox>
-                    <label for="ny" class="mt-2">Lunes</label>
+            <div class="col-12 md:col-4 mt-2">
+                <div class="p-inputgroup">
+                    <p-calendar inputId="edad" name="edad" id="edad" class="ng-dirty" [showIcon]="true"
+                        placeholder="Fecha inicio de curso"></p-calendar>
+                </div>
 
-                    <p-checkbox name="group1" value="Martes" inputId="ny" class="ml-2"></p-checkbox>
-                    <label for="ny" class="mt-2">Martes</label>
+            </div>
 
-                    <p-checkbox name="group1" value="Miercoles" inputId="ny"  class="ml-2"></p-checkbox>
-                    <label for="ny" class="mt-2">Miercoles</label>
-
-                    <p-checkbox name="group1" value="Jueves" inputId="ny"  class="ml-2"></p-checkbox>
-                    <label for="ny" class="mt-2">Jueves</label>
-
-                    <p-checkbox name="group1" value="Viernes" inputId="ny"  class="ml-2"></p-checkbox>
-                    <label for="ny" class="mt-2">Viernes</label>
-
-                    <p-checkbox name="group1" value="Sabado" inputId="ny"  class="ml-2"></p-checkbox>
-                    <label for="ny" class="mt-2">Sabado</label>
-
-                    <p-checkbox name="group1" value="Domingo" inputId="ny"  class="ml-2"></p-checkbox>
-                    <label for="ny" class="mt-2">Domingo</label>
+            <div class="col-12 md:col-4 mt-2">
+                <div class="p-inputgroup">
+                    <p-calendar inputId="edad" name="edad" id="edad" class="ng-dirty" [showIcon]="true"
+                        placeholder="Fecha fin de curso"></p-calendar>
                 </div>
             </div>
 
 
         </div>
 
+        <!-- Para la modalidad -->
+        <div class="container card mt-4">
+            <div class="checkbox-group" style="padding-top: 5px;">
+                <div>
+                    <p-radioButton name="Precencial" value="Precencial" class="mb-2"
+                        [(ngModel)]="selectedDay"></p-radioButton>
+                    <label for="Precencial" class="ml-2">Precencial</label>
+                </div>
+                <div>
+                    <p-radioButton name="Virtual" value="Virtual" class="mb-2"
+                        [(ngModel)]="selectedDay"></p-radioButton>
+                    <label for="Virtual" class="ml-2">Virtual</label>
+                </div>
+            </div>
+        </div>
 
-    </div>
+        <!-- Para Tipo -->
+        <div class="container card mt-4">
+            <div class="checkbox-group" style="padding-top: 5px;">
+                <div>
+                    <p-radioButton name="Administrativo" value="Administrativo" class="mb-2"
+                        [(ngModel)]="other"></p-radioButton>
+                    <label for="Administrativo" class="ml-2">Administrativo</label>
+                </div>
+                <div>
+                    <p-radioButton name="Técnico" value="Técnico" class="mb-2" [(ngModel)]="other"></p-radioButton>
+                    <label for="Técnico" class="ml-2">Técnico</label>
+                </div>
+            </div>
+        </div>
 
-</form>
+        <!-- Nivel de curso -->
+        <div class="container card mt-4">
+            <div class="checkbox-group" style="padding-top: 5px;">
+                <div>
+                    <p-radioButton name="Básico" value="Básico" class="mb-2" [(ngModel)]="other1"></p-radioButton>
+                    <label for="Básico" class="ml-2">Básico</label>
+                </div>
+                <div>
+                    <p-radioButton name="Intermedio" value="Intermedio" class="mb-2"
+                        [(ngModel)]="other1"></p-radioButton>
+                    <label for="Intermedio" class="ml-2">Intermedio</label>
+                </div>
+                <div>
+                    <p-radioButton name="group1" value="Superior" class="mb-2" [(ngModel)]="other1"></p-radioButton>
+                    <label for="Superior" class="ml-2">Superior</label>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="container card mt-4">
+            <div class="checkbox-group " style="padding-top: 5px;">
+                <div>
+                    <p-checkbox name="group1" value="Lunes" class="mb-2"></p-checkbox>
+                    <label for="ny" class="ml-2">Lunes</label>
+                </div>
+                <div>
+                    <p-checkbox name="group1" value="Martes" class="mb-2"></p-checkbox>
+                    <label for="ny" class="ml-2">Martes</label>
+                </div>
+                <div>
+                    <p-checkbox name="group1" value="Miercoles" class="mb-2"></p-checkbox>
+                    <label for="ny" class="ml-2">Miércoles</label>
+                </div>
+                <div>
+                    <p-checkbox name="group1" value="Jueves" class="mb-2"></p-checkbox>
+                    <label for="ny" class="ml-2">Jueves</label>
+                </div>
+                <div>
+                    <p-checkbox name="group1" value="Viernes" class="mb-2"></p-checkbox>
+                    <label for="ny" class="ml-2">Viernes</label>
+                </div>
+                <div>
+                    <p-checkbox name="group1" value="Sabado" class="mb-2"></p-checkbox>
+                    <label for="ny" class="ml-2">Sábado</label>
+                </div>
+                <div>
+                    <p-checkbox name="group1" value="Domingo" class="mb-2"></p-checkbox>
+                    <label for="ny" class="ml-2">Domingo</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid p-fluid">
+            <div class="col-12 md:col-12 mt-5" style="align-items: center;">
+
+                <div class="card flex justify-content-center">
+                    <span class="p-float-label">
+                        <textarea id="float-input" rows="5" cols="30" pInputTextarea></textarea>
+                        <label for="float-input">Descripción del curso a impartir</label>
+                    </span>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="grid p-fluid">
+            <div class="col-12 md:col-12 mt-5" style="align-items: center;">
+
+                <div class="card flex justify-content-center">
+                    <span class="p-float-label">
+                        <textarea id="float-input" rows="5" cols="30" pInputTextarea></textarea>
+                        <label for="float-input">Objetivo general del curso</label>
+                    </span>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="grid p-fluid">
+            <div class="col-12 md:col-12 mt-5" style="align-items: center;">
+
+                <div class="card flex justify-content-center">
+                    <span class="p-float-label">
+                        <textarea id="float-input" rows="5" cols="30" pInputTextarea></textarea>
+                        <label for="float-input">Observacón del curso</label>
+                    </span>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class=" flex justify-content-center mt-4">
+   
+            <p-button label="Crear Curso" icon="pi pi-check" iconPos="right"></p-button>
+        </div>
+    </form>
+</p-card>
