@@ -13,8 +13,6 @@
     z-index: 200 !important;
   }
   
-  
-  
   .panel-body {  
     
     background: #e5e5e5; /* Old browsers */
@@ -32,14 +30,24 @@
     font-weight: 600;
     color: #777;  
   }
+
+ 
+  .botones-container {
+    display: flex;
+    justify-content: center;
+  }
+
+  table {
+    width: 80%;
+    height: 100px;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .abs-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+   
+  }
   
-  @media screen and(max-width:600px) {
-    h5{
-        font-size: 14px;
-    }
-  }
-  @media screen and(min-width:601px) {
-    h5{
-        font-size: 18px;
-    }
-  }

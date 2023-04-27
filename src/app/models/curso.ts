@@ -1,21 +1,28 @@
+import { Capacitador } from "./capacitador";
+import { Especialidad } from "./especialidad";
+import { HorarioCurso } from "./horario-curso";
+import { ModalidadCurso } from "./modalidad-curso";
+import { NivelCurso } from "./nivel-curso";
+import { Programa } from "./programa";
+import { TipoCurso } from "./tipo-curso";
+
 export class Curso {
     idCurso?: number;
     nombreCurso?: string;
-    periodoCurso?: string;
-    tipoCurso?: string;
     fotoCurso?: string;
     duracionCurso?: number;
-    fechaInicioCuros?: Date;
-    fechaFinCurso?: Date;
-    estadoActivoCurso?: boolean;
     observacionCurso?: string;
     estadoCurso?: boolean;
-    modalidadCurso?: string;
-    prerequisitosCurso?: string;
+    estadoAprovacionCurso?: string;
+    estadoPublicasionCurso?: boolean;
     descripcionCurso?: string;
     objetivoGeneralesCurso?: string;
     numeroCuposCurso?: number;
-    niveles?: string;
-    //Falta las demas atributos apra las relaciones..
-    
+    programa?: Programa;
+    especialidad?: Especialidad;
+    capacitador?: Capacitador;
+    modalidadCurso?: ModalidadCurso;
+    tipoCurso?: TipoCurso
+    nivelCurso?: NivelCurso
+    horarioCurso?: HorarioCurso
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LoadScript } from './scripts/load-script';
+import { WelcomeComponent } from './modules/welcome/welcome.component';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +9,7 @@ import { LoadScript } from './scripts/load-script';
 })
 export class AppComponent implements OnInit{
   title = 'FrontendProyectoCapcitacionesContinuas';
-   //public isLogginPresent: boolean = true;
+  //public isLogginPresent: boolean = true;
   public isLogginPresent: boolean = false;
 
   constructor(private scriptC: LoadScript){
