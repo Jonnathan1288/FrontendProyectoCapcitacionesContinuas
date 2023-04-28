@@ -52,7 +52,7 @@ export class SilaboComponent implements OnInit {
   }
 
   /* TRAER DATOS DEL CURSO*/
-  idCursoCap?: number = 1;
+  idCursoCap?: any = localStorage.getItem('idCurso');;
   CapIdCursoSend?: number;
 
   public obtenerDatosCurso(): void {
