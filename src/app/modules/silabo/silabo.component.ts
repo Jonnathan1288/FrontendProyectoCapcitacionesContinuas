@@ -70,22 +70,22 @@ export class SilaboComponent implements OnInit {
   // TRAER PRE REUISITOS DEL CURSO
   listprerrequisitosCurso: PrerequisitoCurso[] = [];
 
-  obtenerPrerrequisistos(idCurso:number) {
+  obtenerPrerrequisistos(idCurso: number) {
     this.prerrequitsitoCursoService.getPrerequisitoPropiosCurso(idCurso).subscribe(
       data => {
         this.listprerrequisitosCurso = data.map(
           dataTwo => {
             let requisitos = new PrerequisitoCurso;
-                requisitos.idPrerequisitoCurso = dataTwo.idPrerequisitoCurso;
-                requisitos.nombrePrerequisitoCurso = dataTwo.nombrePrerequisitoCurso;
-                requisitos.estadoPrerequisitoCurso = dataTwo.estadoPrerequisitoCurso;
-                return requisitos;
+            requisitos.idPrerequisitoCurso = dataTwo.idPrerequisitoCurso;
+            requisitos.nombrePrerequisitoCurso = dataTwo.nombrePrerequisitoCurso;
+            requisitos.estadoPrerequisitoCurso = dataTwo.estadoPrerequisitoCurso;
+            return requisitos;
           }
         );
       }
     )
   }
-  
+
   /* FIN TRAER DATOS*/
 
   /* CREACION RESULTADOS APRENDIZAJE - ARRAY TEMPORAL*/
@@ -116,7 +116,7 @@ export class SilaboComponent implements OnInit {
   public almacenarListaContenidos(): void {
     if (!this.contenidosSilabo.temaContenido || !this.contenidosSilabo.horasAutonomas ||
       !this.contenidosSilabo.horasPracticas || !this.contenidosSilabo.horasClaseContenido) {
-        alert('vacio')
+      alert('vacio')
     } else {
       this.listContenidosSilabo.push(this.contenidosSilabo);
       this.contenidosSilabo = new Contenidosilabos();
@@ -137,7 +137,7 @@ export class SilaboComponent implements OnInit {
 
   public almacenarListaEstrategias(): void {
     if (!this.estrategiasMetodologicas.nombreEstrategiaMetodologica || !this.estrategiasMetodologicas.finalidadEstrategiaMetodologica) {
-        alert('vacio')
+      alert('vacio')
     } else {
       this.listEstrategiasMetodologica.push(this.estrategiasMetodologicas);
       this.estrategiasMetodologicas = new EstrategiasMetodologica();
@@ -156,7 +156,7 @@ export class SilaboComponent implements OnInit {
 
   public almacenarListaMaterialConvencionales(): void {
     if (!this.materialesConvecionales.descripcionMaterialConvencional) {
-        alert('vacio')
+      alert('vacio')
     } else {
       this.listMaterialConvencionales.push(this.materialesConvecionales);
       this.materialesConvecionales = new MaterialConvencionales();
@@ -174,7 +174,7 @@ export class SilaboComponent implements OnInit {
 
   public almacenarListaMaterialAudiovisualess(): void {
     if (!this.materialesAudiovisuales.descripcionMaterialAudiovisual) {
-        alert('vacio')
+      alert('vacio')
     } else {
       this.listCMaterialAudiovisuales.push(this.materialesAudiovisuales);
       this.materialesAudiovisuales = new MaterialAudiovisuales();
@@ -186,24 +186,24 @@ export class SilaboComponent implements OnInit {
     this.listCMaterialAudiovisuales.splice(index, 1);
   }
   /* */
-  
+
   /* METODO POST */
-  idSilaboCap?:number;
-  
-  public generarSilabo():void{
+  idSilaboCap?: number;
+
+  public generarSilabo(): void {
     this.silabo.curso = this.curso;
-    this.silaboService.saveSilabo(this.silabo).subscribe(silaboData=>{
-        this.silabo = silaboData;
-        this.idSilaboCap = this.silabo.idSilabo;
-        console.log("Data + " + silaboData)
-        /* TABLAS */
-        this.generarResultadosAprendizaje();
-        this.generarContenidos();
-        this.generarEstetegiasMetodologicas();
-        this.generarMaterialesAudivisuales();
-        this.generarMaterialesConvecionales();
-        /* */
-        console.log("Silabo generado id->" + this.idSilaboCap )
+    this.silaboService.saveSilabo(this.silabo).subscribe(silaboData => {
+      this.silabo = silaboData;
+      this.idSilaboCap = this.silabo.idSilabo;
+      console.log("Data + " + silaboData)
+      /* TABLAS */
+      this.generarResultadosAprendizaje();
+      this.generarContenidos();
+      this.generarEstetegiasMetodologicas();
+      this.generarMaterialesAudivisuales();
+      this.generarMaterialesConvecionales();
+      /* */
+      console.log("Silabo generado id->" + this.idSilaboCap)
     })
   }
   /* */
@@ -211,9 +211,9 @@ export class SilaboComponent implements OnInit {
   /* ENTIDADES SEGUIDAS DEL SILABO */
   public generarResultadosAprendizaje(): void {
     for (let resultado of this.listResultadosAprendizajes) {
-      resultado.silabo = this.silabo; 
+      resultado.silabo = this.silabo;
       resultado.estadoUnidadActivo = true;
-      this.resultadosAprendizajeService.saveResultadosArendizaje(resultado).subscribe(data=> {
+      this.resultadosAprendizajeService.saveResultadosArendizaje(resultado).subscribe(data => {
         console.log("Se creo el resultados =)");
       });
     }
@@ -221,7 +221,7 @@ export class SilaboComponent implements OnInit {
 
   public generarContenidos(): void {
     for (let contenidos of this.listContenidosSilabo) {
-      contenidos.silabo = this.silabo; 
+      contenidos.silabo = this.silabo;
       contenidos.estadoContenido = true;
       this.contenidoSilaboService.saveContenidosilabos(contenidos).subscribe(data => {
         console.log("Se creo =)");
@@ -231,7 +231,7 @@ export class SilaboComponent implements OnInit {
 
   public generarMaterialesConvecionales(): void {
     for (let convencionales of this.listMaterialConvencionales) {
-      convencionales.silabo = this.silabo; 
+      convencionales.silabo = this.silabo;
       convencionales.estadoMaterialConvencional = true;
       this.materialesConvencianalesService.saveMaterialAudiovisuales(convencionales).subscribe(data => {
         console.log("Se creo =)");
@@ -241,7 +241,7 @@ export class SilaboComponent implements OnInit {
 
   public generarMaterialesAudivisuales(): void {
     for (let audiovisuales of this.listCMaterialAudiovisuales) {
-      audiovisuales.silabo = this.silabo; 
+      audiovisuales.silabo = this.silabo;
       audiovisuales.estadoMaterialAudiovisual = true;
       this.materialesAudivisualesSilaboService.saveMaterialAudiovisuales(audiovisuales).subscribe(data => {
         console.log("Se creo =)");
@@ -251,7 +251,7 @@ export class SilaboComponent implements OnInit {
 
   public generarEstetegiasMetodologicas(): void {
     for (let estrategias of this.listEstrategiasMetodologica) {
-      estrategias.silabo = this.silabo; 
+      estrategias.silabo = this.silabo;
       estrategias.estadoEstrategiaMetodologicaActivo = true;
       this.estrategiasMetodologicasService.saveEstrategiasMetodologica(estrategias).subscribe(data => {
         console.log("Se creo =)");
@@ -261,12 +261,12 @@ export class SilaboComponent implements OnInit {
   /* */
 
   // ACTUALIZAR SILABO //
-  idSilaboCapEdit?:number = 1;
-  idSilaboCapGlobal?:number;
-  validarIdSilabo:Boolean = false;
-  public traerDatos():void{
+  idSilaboCapEdit?: number = 1;
+  idSilaboCapGlobal?: number;
+  validarIdSilabo: Boolean = false;
+  public traerDatos(): void {
     this.silaboService.getSilaboById(this.idSilaboCapEdit!).subscribe(
-      data =>{
+      data => {
         this.silabo = data;
         this.idSilaboCapGlobal = this.silabo.idSilabo;
         this.traerDatosEstretegiasFull(this.idSilaboCapGlobal!);
@@ -275,9 +275,9 @@ export class SilaboComponent implements OnInit {
     )
   }
 
-  public traerDatosEstretegiasFull(idSilabo:number):void{
+  public traerDatosEstretegiasFull(idSilabo: number): void {
     this.resultadosAprendizajeService.getResultadosPorIdSilabo(idSilabo).subscribe(
-      data=>{
+      data => {
         this.listResultadosAprendizajes = data.map(
           dataTwo => {
             let resultadoAprendizajeSilabo = new ResultadoAprendizajeSilabo();
@@ -290,55 +290,89 @@ export class SilaboComponent implements OnInit {
             resultadoAprendizajeSilabo.estadoUnidadActivo = dataTwo.estadoUnidadActivo;
             return resultadoAprendizajeSilabo;
           }
-        ) 
+        )
       }
     )
   }
 
   // METODO ESTADOS TABLES//
-  public cambiarEstadoResultadosAprensizajeFalse(idResultadoAprendizajeSilabo:number):void{
+  public cambiarEstadoResultadosAprensizajeFalse(idResultadoAprendizajeSilabo: number): void {
     this.resultadosAprendizajeService.getResultadosArendizajeById(idResultadoAprendizajeSilabo).subscribe(
-      data =>{
+      data => {
         this.resultadoAprendizajeSilabo = data;
         this.resultadoAprendizajeSilabo.estadoUnidadActivo = false;
         this.resultadosAprendizajeService.cambiarEstadosResultadosSilaboId(idResultadoAprendizajeSilabo, this.resultadoAprendizajeSilabo).subscribe(
-          dataTwo =>{
+          dataTwo => {
             this.traerDatosEstretegiasFull(this.idSilaboCapGlobal!);
             console.log("Se actualizo")
           }
         )
       }
     )
-    
+
   }
 
-  public cambiarEstadoResultadosAprensizajeTrue(idResultadoAprendizajeSilabo:number):void{
+  public cambiarEstadoResultadosAprensizajeTrue(idResultadoAprendizajeSilabo: number): void {
     this.resultadosAprendizajeService.getResultadosArendizajeById(idResultadoAprendizajeSilabo).subscribe(
-      data =>{
+      data => {
         this.resultadoAprendizajeSilabo = data;
         this.resultadoAprendizajeSilabo.estadoUnidadActivo = true;
         this.resultadosAprendizajeService.cambiarEstadosResultadosSilaboId(idResultadoAprendizajeSilabo, this.resultadoAprendizajeSilabo).subscribe(
-          dataTwo =>{
+          dataTwo => {
             this.traerDatosEstretegiasFull(this.idSilaboCapGlobal!);
             console.log("Se actualizo")
           }
         )
       }
     )
-    
-  }
-  // FIN //
-  
-  public actualizarSilabo():void{
 
   }
-  // FIN //
+
 
   /* MODAL */
   visible?: boolean;
+  visibleTwo?: boolean;
+  idCapModelEdit?: number;
+  public showModalEdit(idResultadoAprendizajeSilabo: number) {
+    this.visible = true;
+      this.resultadosAprendizajeService.getResultadosArendizajeById(idResultadoAprendizajeSilabo).subscribe(
+        data => {
+          this.resultadoAprendizajeSilabo = data;
+          this.idCapModelEdit = this.resultadoAprendizajeSilabo.idResultadoAprendizajeSilabo;
+        }
+      )
+  }
 
-  showDialog() {
-      this.visible = true;
+  public actualizarResultadosEstrategia(): void {
+    this.resultadosAprendizajeService.updateEstadosResultados(this.idCapModelEdit!, this.resultadoAprendizajeSilabo).subscribe(
+      dataTwo => {
+        this.traerDatosEstretegiasFull(this.idSilaboCapGlobal!);
+        console.log("Se actualizo")
+      }
+    )
+  }
+
+  public showModalCreate() {
+    this.visibleTwo = true;
+  }
+
+  public crearResultadosEstrategia(): void {
+    this.resultadoAprendizajeSilabo.silabo = this.silabo;
+    this.resultadoAprendizajeSilabo.estadoUnidadActivo = true;
+    this.resultadosAprendizajeService.saveResultadosArendizaje(this.resultadoAprendizajeSilabo).subscribe(
+      dataTwo => {
+        this.traerDatosEstretegiasFull(this.idSilaboCapGlobal!);
+        console.log("Se creo uno nuevo")
+      }
+    )
   }
   /* */
+
+
+  // FIN //
+
+  public actualizarSilabo(): void {
+
+  }
+  // FIN //
 }

@@ -4,8 +4,8 @@
             <p-button label="Traer Datos" icon="pi pi-pencil" styleClass="p-button-success  mb-2"
                 (onClick)="traerDatos()"></p-button>
         </div>
-        <p-card header="Informacion General del Curso" style="margin: 5px;">
-            <div class="grid">
+        <p-card header="Informacion General del Curso" style="margin: 5px;" *ngIf='validarIdSilabo == false'>
+            <div class="grid" >
                 <div class="col-5 flex justify-content-center">
                     <div style="float: left;">
                         <p><strong>Area:</strong> {{ curso!.especialidad?.area?.nombreArea }}</p>
@@ -33,7 +33,7 @@
             </div>
         </p-card>
 
-        <p-card header="Prerrequisitos" class="m-5">
+        <p-card header="Prerrequisitos" class="m-5" *ngIf='validarIdSilabo == false'>
             <div >
                 <ul *ngFor="let lista of listprerrequisitosCurso" > 
                     <li>{{lista.nombrePrerequisitoCurso}}</li>
@@ -42,13 +42,13 @@
         </p-card>
 
 
-        <p-card header="Descripción del Curso" class="m-5">
+        <p-card header="Descripción del Curso" class="m-5" *ngIf='validarIdSilabo == false'>
             <p class="m-0">
                 {{ curso!.descripcionCurso }}
             </p>
         </p-card>
 
-        <p-card header="Objetivos del Curso" class="m-5">
+        <p-card header="Objetivos del Curso" class="m-5" *ngIf='validarIdSilabo == false'>
             <p class="m-0">
                 {{ curso!.objetivoGeneralesCurso }}
             </p>
@@ -104,9 +104,14 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-12" style="text-align: center; margin: 5px;">
+            <div class="col-md-12" style="text-align: center; margin: 5px;" *ngIf='validarIdSilabo == false'>
                 <p-button label="Agregar" icon="pi pi-plus" styleClass="p-button-success  mb-2"
                     (click)="almacenarLista()"></p-button>
+            </div>
+
+            <div class="col-md-12" style="text-align: center; margin: 5px;" *ngIf='validarIdSilabo == true'>
+                <p-button label="Agregar" icon="pi pi-plus" styleClass="p-button-success  mb-2"
+                (click)="showModalCreate()"></p-button>
             </div>
             <!-- </form> -->
             <div class="card">
@@ -135,7 +140,7 @@
                                 <!-- <button *ngIf='data.idResultadoAprendizajeSilabo == 0' pButton type="button" class="p-button-rounded p-button-danger" icon="pi pi-times" (click)="quitarElemento(data.idResultadoAprendizajeSilabo)"></button> -->
                                 <button *ngIf='data.estadoUnidadActivo == true' pButton type="button" class="p-button-rounded p-button-success" icon="pi pi-check-circle" (click)="cambiarEstadoResultadosAprensizajeFalse(data.idResultadoAprendizajeSilabo)"></button>
                                 <button *ngIf='data.estadoUnidadActivo == false' pButton type="button" class="p-button-rounded p-button-danger" icon="pi pi-power-off" (click)="cambiarEstadoResultadosAprensizajeTrue(data.idResultadoAprendizajeSilabo)"></button>
-                                <button pButton type="button" (click)="showDialog()" class="p-button-rounded p-button-info" icon="pi pi-pencil" ></button>
+                                <button pButton type="button" (click)="showModalEdit(data.idResultadoAprendizajeSilabo)" class="p-button-rounded p-button-info" icon="pi pi-pencil" ></button>
                             </td>
                         </tr>
                     </ng-template>
@@ -143,15 +148,118 @@
             </div>
         </p-card>
 
-        
-        <p-dialog header="Header" [(visible)]="visible" [modal]="true" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
+        <p-dialog header="Resultados de Aprendizaje Silabo" [(visible)]="visibleTwo" [modal]="true"  [style]="{ width: '50vw', height: '450' }" [draggable]="false" [resizable]="false">
             <div class="col-12 md:col-12 mt-1">
-                <div class="p-inputgroup">
-                    <span class="p-float-label">
-                        <input type="text" pInputText id="temaUnidadSilabo" name="temaUnidadSilabo"
-                            [(ngModel)]="resultadoAprendizajeSilabo.temaUnidadSilabo">
-                        <label htmlFor="username">Unidades de Competencia</label>
-                    </span>
+                <div class="grid p-fluid m-3">
+                    <div class="col-12 md:col-12 mt-1">
+                        <div class="p-inputgroup">
+                            <span class="p-float-label">
+                                <input type="text" pInputText id="temaUnidadSilabo" name="temaUnidadSilabo"
+                                    [(ngModel)]="resultadoAprendizajeSilabo.temaUnidadSilabo">
+                                <label htmlFor="username">Unidades de Competencia</label>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-12 md:col-12 mt-2">
+                        <div class="p-inputgroup">
+                            <span class="p-float-label">
+                                <input type="text" pInputText id="elementosCompetenciaSilabo"
+                                    name="elementosCompetenciaSilabo"
+                                    [(ngModel)]="resultadoAprendizajeSilabo.elementosCompetenciaSilabo">
+                                <label htmlFor="username">Elementos de Competencia</label>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-12 md:col-12 mt-2">
+                        <div class="p-inputgroup">
+                            <span class="p-float-label">
+                                <input type="text" pInputText id="activadesResultadoAprendizaje"
+                                    name="activadesResultadoAprendizaje"
+                                    [(ngModel)]="resultadoAprendizajeSilabo.activadesResultadoAprendizaje">
+                                <label htmlFor="username">Resultados de Aprendizaje</label>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-12 md:col-12 mt-2">
+                        <div class="p-inputgroup">
+                            <span class="p-float-label">
+                                <input type="text" pInputText id="formaEvidenciar" name="formaEvidenciar"
+                                    [(ngModel)]="resultadoAprendizajeSilabo.formaEvidenciar">
+                                <label htmlFor="username">Forma de evidenciar</label>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-12 md:col-12 mt-2">
+                        <div class="p-inputgroup">
+                            <span class="p-float-label">
+                                <input type="text" pInputText id="descripcionUnidadSilabo" name="descripcionUnidadSilabo"
+                                    [(ngModel)]="resultadoAprendizajeSilabo.descripcionUnidadSilabo">
+                                <label htmlFor="username">Descripción</label>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12" style="text-align: center; margin: 5px;">
+                    <p-button label="Crear Nuevo" icon="pi pi-check-square" styleClass="p-button-success  mb-2"
+                        (click)="crearResultadosEstrategia()"></p-button>
+                </div>
+            </div>
+        </p-dialog>
+        
+        <p-dialog header="Resultados de Aprendizaje Silabo" [(visible)]="visible" [modal]="true"  [style]="{ width: '50vw', height: '450' }" [draggable]="false" [resizable]="false">
+            <div class="col-12 md:col-12 mt-1">
+                <div class="grid p-fluid m-3">
+                    <div class="col-12 md:col-12 mt-1">
+                        <div class="p-inputgroup">
+                            <span class="p-float-label">
+                                <input type="text" pInputText id="temaUnidadSilabo" name="temaUnidadSilabo"
+                                    [(ngModel)]="resultadoAprendizajeSilabo.temaUnidadSilabo">
+                                <label htmlFor="username">Unidades de Competencia</label>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-12 md:col-12 mt-2">
+                        <div class="p-inputgroup">
+                            <span class="p-float-label">
+                                <input type="text" pInputText id="elementosCompetenciaSilabo"
+                                    name="elementosCompetenciaSilabo"
+                                    [(ngModel)]="resultadoAprendizajeSilabo.elementosCompetenciaSilabo">
+                                <label htmlFor="username">Elementos de Competencia</label>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-12 md:col-12 mt-2">
+                        <div class="p-inputgroup">
+                            <span class="p-float-label">
+                                <input type="text" pInputText id="activadesResultadoAprendizaje"
+                                    name="activadesResultadoAprendizaje"
+                                    [(ngModel)]="resultadoAprendizajeSilabo.activadesResultadoAprendizaje">
+                                <label htmlFor="username">Resultados de Aprendizaje</label>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-12 md:col-12 mt-2">
+                        <div class="p-inputgroup">
+                            <span class="p-float-label">
+                                <input type="text" pInputText id="formaEvidenciar" name="formaEvidenciar"
+                                    [(ngModel)]="resultadoAprendizajeSilabo.formaEvidenciar">
+                                <label htmlFor="username">Forma de evidenciar</label>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-12 md:col-12 mt-2">
+                        <div class="p-inputgroup">
+                            <span class="p-float-label">
+                                <input type="text" pInputText id="descripcionUnidadSilabo" name="descripcionUnidadSilabo"
+                                    [(ngModel)]="resultadoAprendizajeSilabo.descripcionUnidadSilabo">
+                                <label htmlFor="username">Descripción</label>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12" style="text-align: center; margin: 5px;">
+                    <p-button label="Actualizar" icon="pi pi-check-square" styleClass="p-button-success  mb-2"
+                        (click)="actualizarResultadosEstrategia()"></p-button>
                 </div>
             </div>
         </p-dialog>
@@ -453,6 +561,3 @@
                 </div>
             </form>
         </p-card>
-
-    </p-panel>
-</div>
