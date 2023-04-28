@@ -50,7 +50,7 @@ export class CurricularDiseñoComponent implements OnInit {
 
   public obtenerDatosCurso(): void {
     if (this.idSilaboCap != null && this.idSilaboCap != undefined) {
-      this.silaboService.getCursoById(this.idSilaboCap).subscribe((data) => {
+      this.silaboService.getSilaboById(this.idSilaboCap).subscribe((data) => {
         this.silabo = data;
         this.CapIdSilaboSend = this.silabo.idSilabo;
       })
@@ -60,24 +60,45 @@ export class CurricularDiseñoComponent implements OnInit {
   }
   /* FIN TRAER DATOS*/
 
-  /* CREACION RESULTADOS APRENDIZAJE - ARRAY TEMPORAL*/
+  /* CREACION RESULTADOS EVALUACION DIAGNOSTICA- ARRAY TEMPORAL*/
   listEvaluacionDiagnosticaCurricular:EvaluacionDiagnosticaCurriculares[] = [];
 
 
-  public almacenarLista(): void {
-    if (!this.evaluacionDiagnosticoCurricular.instrumnetoFormativa || !this.evaluacionDiagnosticoCurricular.tecnicaFormativa) {
+  public almacenarListaEvaluacionD(): void {
+    if (!this.evaluacionDiagnosticoCurricular.instrumnetoEvaluar || !this.evaluacionDiagnosticoCurricular.tecnicaEvaluar) {
       alert("Campos Vacios")
     } else {
       this.listEvaluacionDiagnosticaCurricular.push(this.evaluacionDiagnosticoCurricular);
       this.evaluacionDiagnosticoCurricular = new EvaluacionDiagnosticaCurriculares();
-      this.evaluacionDiagnosticoCurricular.instrumnetoFormativa = '';
-      this.evaluacionDiagnosticoCurricular.tecnicaFormativa = '';
+      this.evaluacionDiagnosticoCurricular.instrumnetoEvaluar = '';
+      this.evaluacionDiagnosticoCurricular.tecnicaEvaluar = '';
     }
   }
 
-  public quitarElemento(index: number): void {
+  public quitarElementoEvaluacionD(index: number): void {
     this.listEvaluacionDiagnosticaCurricular.splice(index, 1);
   }
 
-  /* FIN RESULTADOS APRENDIZAJE */
+  /* FIN RESULTADOS Evaluacion Diagnostica */
+
+   /* CREACION RESULTADOS EVALUACION FINAL- ARRAY TEMPORAL*/
+   listEvaluacionFinalCurricular:EvaluacionFinalCurriculares[] = [];
+
+
+   public almacenarListaEvaluacionF(): void {
+     if (!this.evaluacionFinalCurricular.instrumnetoFormativaFinal || !this.evaluacionFinalCurricular.tecnicaFormativaFinal) {
+       alert("Campos Vacios")
+     } else {
+       this.listEvaluacionFinalCurricular.push(this.evaluacionFinalCurricular);
+       this.evaluacionFinalCurricular = new EvaluacionFinalCurriculares();
+       this.evaluacionFinalCurricular.instrumnetoFormativaFinal = '';
+       this.evaluacionFinalCurricular.tecnicaFormativaFinal = '';
+     }
+   }
+ 
+   public quitarElementoEvaluacionF(index: number): void {
+     this.listEvaluacionFinalCurricular.splice(index, 1);
+   }
+ 
+   /* FIN RESULTADOS Evaluacion Diagnostica */
 }
