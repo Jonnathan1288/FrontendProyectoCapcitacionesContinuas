@@ -12,6 +12,8 @@ import { InfocursoComponent } from './modules/infocurso/infocurso.component';
 import { CourseRegisterComponent } from './modules/moduleCourse/course-register/course-register.component';
 import { SilaboComponent } from './modules/silabo/silabo.component';
 import { CurricularDiseñoComponent } from './modules/curricular-diseño-register/curricular-diseño.component';
+import { ListCourseComponent } from './modules/moduleCourse/list-course/list-course.component';
+import { RegistroNecesidadComponent } from './modules/moduleCourse/registro-necesidad/registro-necesidad.component';
 
 const routes: Routes = [
   {path: 'login', component:LoginComponent },
@@ -23,6 +25,10 @@ const routes: Routes = [
   { path: 'silabo', component: SilaboComponent },
   { path: 'diseño', component: CurricularDiseñoComponent },
   { path: 'register/course', component: CourseRegisterComponent },
+  { path: 'register/course/:id', component: CourseRegisterComponent },
+  { path: 'list/course', component: ListCourseComponent },
+  { path: 'register/necesidad', component: RegistroNecesidadComponent },
+  { path: 'register/necesidad/:id', component: RegistroNecesidadComponent },
   { path: 'mat', component: MatriculComponent },
   { path: 'cardcu', component: CardcursoComponent },
   { path: 'info', component: InfocursoComponent },

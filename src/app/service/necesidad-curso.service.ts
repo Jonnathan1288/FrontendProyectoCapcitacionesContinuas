@@ -24,6 +24,10 @@ export class NecesidadCursoService {
     return this.http.get<NececidadCurso>(environment.apiuri+'/necesidadCurso/findbyId/'+id_curso);
   }
 
+  public getNecesidadCursoByIdCurso(id_curso: number):Observable<NececidadCurso>{
+    return this.http.get<NececidadCurso>(environment.apiuri+'/necesidadCurso/findbyIdCurso/'+id_curso);
+  }
+
   public updateNecesidadCurso(idNecesidadCurso:number, necesidadCurso: NececidadCurso):Observable<NececidadCurso>{
     return this.http.put<NececidadCurso>(environment.apiuri+'/necesidadCurso/actualizar/'+idNecesidadCurso, necesidadCurso);
   }

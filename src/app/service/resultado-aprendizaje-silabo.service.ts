@@ -30,4 +30,8 @@ export class ResultadoAprendizajeSilaboService {
   public cambiarEstadosResultadosSilaboId(id:number, resultadoAprendizajeSilabo: ResultadoAprendizajeSilabo):Observable<ResultadoAprendizajeSilabo>{
     return this.http.put<ResultadoAprendizajeSilabo>(environment.apiuri+'/resultadoAprendizajeSilabo/actualizar/'+id, resultadoAprendizajeSilabo);
   }
+
+  public updateEstadosResultados(id:number, resultadoAprendizajeSilabo: ResultadoAprendizajeSilabo):Observable<ResultadoAprendizajeSilabo>{
+    return this.http.put<ResultadoAprendizajeSilabo>(environment.apiuri+'/resultadoAprendizajeSilabo/actualizar/'+id, resultadoAprendizajeSilabo);
+  }
 }

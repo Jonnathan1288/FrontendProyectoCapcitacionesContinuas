@@ -11,15 +11,19 @@ export class CursoService {
 
   constructor(private http: HttpClient) { }
 
-  public listListaNecesidadCurso():Observable<Curso[]>{
+  public listCurso():Observable<Curso[]>{
     return this.http.get<Curso[]>(environment.apiuri+'/curso/list');
   }
 
-  public saveListaNecesidadCurso(curso: Curso):Observable<Curso>{
+  public saveCurso(curso: Curso):Observable<Curso>{
     return this.http.post<Curso>(environment.apiuri+'/curso/save', curso);
   }
 
   public getCursoById(id_curso: number):Observable<Curso>{
     return this.http.get<Curso>(environment.apiuri+'/curso/findbyId/'+id_curso);
+  }
+
+  public updateCurso(id_curso: number, curso: Curso):Observable<Curso>{
+    return this.http.put<Curso>(environment.apiuri+'/area/actualizar/'+id_curso, curso);
   }
 }

@@ -15,8 +15,12 @@ export class PrerrequisitosCursoService {
     return this.http.get<any>(environment.apiuri+'/prerequisitoCurso/list');
   }
 
-  public getPrerequisitoCursoById(idMivelCurso: number):Observable<PrerequisitoCurso>{
-    return this.http.get<PrerequisitoCurso>(environment.apiuri+'/prerequisitoCurso/findbyId/'+idMivelCurso);
+  public listPrerequisitoCursoByIdCurso(idPrerequisitoCurso: number):Observable<any>{
+    return this.http.get<any>(environment.apiuri+'/prerequisitoCurso/findbyIdCurso/'+idPrerequisitoCurso);
+  }
+
+  public getPrerequisitoCursoById(idPrerequisito: number):Observable<PrerequisitoCurso>{
+    return this.http.get<PrerequisitoCurso>(environment.apiuri+'/prerequisitoCurso/findbyId/'+idPrerequisito);
   }
 
   public savePrerequisitoCurso(prerequisitoCurso: PrerequisitoCurso):Observable<PrerequisitoCurso>{

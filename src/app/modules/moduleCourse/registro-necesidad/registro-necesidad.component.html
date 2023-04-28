@@ -1,0 +1,100 @@
+<p-card header="Informe de necesidad" class="m-5">
+    <form (ngSubmit)="createNecesidaCurso()" ngNativeValidate>
+        <div class="grid p-fluid m-3">
+            <div class="col-12 md:col-12 mt-1">
+                <div class="p-inputgroup">
+                    <span class="p-float-label">
+                        <input type="text" pInputText id="espacioImpartirNecesidadCurso"
+                            name="espacioImpartirNecesidadCurso" [(ngModel)]="necesidadActivo.espacioImpartirNecesidadCurso"
+                            required>
+                        <label htmlFor="username">Espacio a impartir el curso</label>
+                    </span>
+                </div>
+            </div>
+
+            <div class="col-12 md:col-12 mt-1">
+                <div class="p-inputgroup">
+                    <span class="p-float-label">
+                        <input type="text" pInputText id="resumenCurso" name="resumenCurso"
+                            [(ngModel)]="necesidadActivo.resumenCurso" required>
+                        <label htmlFor="username">Resumen del curso</label>
+                    </span>
+                </div>
+            </div>
+
+            <div class="col-12 md:col-12 mt-1">
+                <div class="p-inputgroup">
+                    <span class="p-float-label">
+                        <input type="text" pInputText id="poblacionDirijida" name="respoblacionDirijidaumenCurso"
+                            [(ngModel)]="necesidadActivo.poblacionDirijida" required>
+                        <label htmlFor="username">Población a la que va dirijida el curso</label>
+                    </span>
+                </div>
+            </div>
+
+        </div>
+
+        <p-card header="Necesidad del Curso (Por que en el sector y por las carreras es necesario el curso)" class="m-5">
+            <form ngNativeValidate>
+                <div class="grid p-fluid m-3">
+                    <div class="col-12 md:col-12 mt-1">
+                        <div class="p-inputgroup">
+                            <span class="p-float-label">
+                                <input type="text" pInputText id="nombrePrerequisitoCurso" name="nombrePrerequisitoCurso"
+                                    [(ngModel)]="listaNece.detalleNececidadCurso" required>
+                                <label htmlFor="username">Detalles para el curso</label>
+                            </span>
+                        </div>
+                    </div>
+    
+                </div>
+                <div class="col-md-12" style="text-align: center; margin: 5px;">
+                    <p-button label="Agregar" (click)="almacenarListaNecedidadDeCurso()" icon="pi pi-plus"
+                        styleClass="p-button-success  mb-2"></p-button>
+                </div>
+            </form>
+    
+            <div class="card">
+                <p-table [value]="listaNecesidadCursoArr">
+                    <ng-template pTemplate="header" let-columns>
+                        <tr>
+    
+                            <th>Detalle</th>
+                            <th>Editar</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-data let-i="index" let-columns="columns">
+                        <tr>
+    
+    
+                            <td>
+                                {{data.detalleNececidadCurso}}
+                            </td>
+                            <td>
+                                <p-button icon="pi pi-pencil" styleClass="p-button-secondary"
+                                    (click)="editListNecesidad(data)"></p-button>
+                                <p-button class="ml-2" icon="pi pi-pencil" styleClass="p-button-secondary"
+                                    (click)="editListNecesidad(data)"></p-button>
+    
+                            </td>
+    
+                        </tr>
+                    </ng-template>
+                </p-table>
+    
+    
+            </div>
+    
+        </p-card>
+        <div class="col-md-12" style="text-align: center; margin: 5px;">
+            <p-button label="GuardarNecesidad" type="ngSubmit" icon="pi pi-save" styleClass="p-button-success  mb-2"></p-button>
+        </div>
+    </form>
+
+    
+</p-card>
+
+
+<div class="container" style="align-items: cencer;">
+    <p-button label='IMPRIMIR NECESIDAD' icon="pi pi-print" styleClass="p-button-success  mb-2"></p-button>
+</div>
