@@ -353,6 +353,7 @@ export class SilaboComponent implements OnInit {
   }
 
   public showModalCreate() {
+    this.limpiarResultadoAprendizaje()
     this.visibleTwo = true;
   }
 
@@ -375,4 +376,12 @@ export class SilaboComponent implements OnInit {
 
   }
   // FIN //
+
+  /* METODOS DE LIMPIAR */
+
+  public limpiarResultadoAprendizaje():void{
+    this.resultadoAprendizajeSilabo = new ResultadoAprendizajeSilabo;
+  }
+
+  /* */
 }
