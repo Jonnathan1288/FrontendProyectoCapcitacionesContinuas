@@ -6,7 +6,8 @@ import { NececidadCurso } from 'src/app/models/nececidad-curso';
 import { CursoService } from 'src/app/service/curso.service';
 import { ListaNecesidadCursoService } from 'src/app/service/lista-necesidad-curso.service';
 import { NecesidadCursoService } from 'src/app/service/necesidad-curso.service';
-
+import { ReportsCapacitacionesService } from 'src/app/service/reports-capacitaciones.service';
+import * as fileSaver from 'file-saver';
 @Component({
   selector: 'app-registro-necesidad',
   templateUrl: './registro-necesidad.component.html',
@@ -22,18 +23,20 @@ export class RegistroNecesidadComponent implements OnInit {
 
   public necesidadActivo = new NececidadCurso();
 
+  idCurso: any;
   constructor(
     private cursoService: CursoService,
     private necesidadSer: NecesidadCursoService,
     private listanecSer: ListaNecesidadCursoService,
     private router: Router,
-    private actiRouter: ActivatedRoute
+    private actiRouter: ActivatedRoute,
+    private reportService: ReportsCapacitacionesService
   ) {}
 
   ngOnInit(): void {
     this.actiRouter.params.subscribe((params) => {
       const id_curso = params['id'];
-
+this.idCurso = id_curso;
       this.traerNecesidadPorCurso(id_curso);
       this.traerCursoAsiganado(id_curso);
     });
@@ -119,5 +122,13 @@ export class RegistroNecesidadComponent implements OnInit {
     this.listaNece = {
       ...listaNecesidad,
     };
+  }
+
+  public getReportNecesidadCurso() {
+    this.reportService.getDownloadReportNecesidadCurso(this.idCurso)
+      .subscribe((r) => {
+        const url = URL.createObjectURL(r);
+        window.open(url, '_blank');
+      });
   }
 }
