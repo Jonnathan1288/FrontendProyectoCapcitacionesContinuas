@@ -6,7 +6,8 @@ import { NececidadCurso } from 'src/app/models/nececidad-curso';
 import { CursoService } from 'src/app/service/curso.service';
 import { ListaNecesidadCursoService } from 'src/app/service/lista-necesidad-curso.service';
 import { NecesidadCursoService } from 'src/app/service/necesidad-curso.service';
-
+import { ReportsCapacitacionesService } from 'src/app/service/reports-capacitaciones.service';
+import * as fileSaver from 'file-saver';
 @Component({
   selector: 'app-registro-necesidad',
   templateUrl: './registro-necesidad.component.html',
@@ -17,38 +18,102 @@ export class RegistroNecesidadComponent implements OnInit {
   public necesidad: NececidadCurso[] = [];
 
   public curso = new Curso();
-  public necesidadc = new NececidadCurso();
   public necesidadcresponse = new NececidadCurso();
   public listaNece = new ListaNecesidadCurso();
 
+  public necesidadActivo = new NececidadCurso();
+
+  idCurso: any;
   constructor(
     private cursoService: CursoService,
     private necesidadSer: NecesidadCursoService,
     private listanecSer: ListaNecesidadCursoService,
     private router: Router,
     private actiRouter: ActivatedRoute,
+    private reportService: ReportsCapacitacionesService
   ) {}
 
   ngOnInit(): void {
     this.actiRouter.params.subscribe((params) => {
-      const id_persona = params['id'];
-      // this.optenerDatos(id_persona);
+      const id_curso = params['id'];
+this.idCurso = id_curso;
+      this.traerNecesidadPorCurso(id_curso);
+      this.traerCursoAsiganado(id_curso);
     });
-
-    this.cursoService.getCursoById(1).subscribe((data) => {
-      this.curso = data;
-    });
-    this.findByAll()
-    this.findById()
   }
 
-  public silabo(idcurso: number){
-    localStorage.setItem('idCurso', String(idcurso));
-    location.replace('/silabo');
+  public traerCursoAsiganado(idCurso: number) {
+    this.cursoService.getCursoById(idCurso).subscribe((data) => {
+      this.curso = data;
+    });
+  }
+
+  public createNecesidaCurso() {
+    this.necesidadActivo.curso = this.curso;
+    this.necesidadSer
+      .crearNecesidadCurso(this.necesidadActivo)
+      .subscribe((data) => {
+        if (data != null) {
+          for (let listaNecesidades of this.listaNecesidadCursoArr) {
+            listaNecesidades.estadoDetalleNecesidad = true;
+            listaNecesidades.necesidadCurso = data;
+            this.listanecSer
+              .saveListaNecesidadCurso(listaNecesidades)
+              .subscribe((data) => {
+                if (data != null) {
+                  alert('Correcto al crear el curso');
+                }
+              });
+          }
+        }
+      });
+  }
+
+  listaNecesidadCursoArr: ListaNecesidadCurso[] = [];
+
+  public almacenarListaNecedidadDeCurso(): void {
+    if (!this.listaNece.detalleNececidadCurso) {
+      alert('vacio');
+    } else {
+      this.listaNecesidadCursoArr.push(this.listaNece);
+      this.listaNece = new ListaNecesidadCurso();
+    }
+  }
+
+  public quitarListaNesesidadCurso(necesidad: any): void {
+    const index = this.listaNecesidadCursoArr.findIndex(
+      (item) => item.detalleNececidadCurso === necesidad
+    );
+    if (index !== -1) {
+      this.listaNecesidadCursoArr.splice(index, 1);
+    }
+  }
+
+  auxiliarVariableParaList: any;
+  public traerNecesidadPorCurso(idNecesidad: number) {
+    this.necesidadSer
+      .getNecesidadCursoByIdCurso(idNecesidad)
+      .subscribe((data) => {
+        if (data != null) {
+          this.necesidadActivo = data;
+          this.auxiliarVariableParaList = this.necesidadActivo.idNecesidadCurso;
+          this.traerListDeNecesidadesComoDeatlle();
+        }
+      });
+  }
+
+  public traerListDeNecesidadesComoDeatlle() {
+    if (this.auxiliarVariableParaList) {
+      this.listanecSer
+        .findByNecesidadCurso_IdNecesidadCurso(this.auxiliarVariableParaList)
+        .subscribe((data) => {
+          this.listaNecesidadCursoArr = data;
+        });
+    }
   }
 
   public editNecesidad(necesidad: any) {
-    this.necesidadc = {
+    this.necesidadActivo = {
       ...necesidad,
     };
   }
@@ -59,57 +124,11 @@ export class RegistroNecesidadComponent implements OnInit {
     };
   }
 
-  findByAll() {
-    this.listanecSer.listListaNecesidadCurso().subscribe((data) => {
-      this.listNecesidadC = data
-    });
-
-    this.necesidadSer
-      .getNecesidadCursoById(1)
-      .subscribe((data) => {
-
+  public getReportNecesidadCurso() {
+    this.reportService.getDownloadReportNecesidadCurso(this.idCurso)
+      .subscribe((r) => {
+        const url = URL.createObjectURL(r);
+        window.open(url, '_blank');
       });
-  }
-
-  createNecesidaCurso() {
-    if (this.necesidadc) {
-      this.necesidadSer
-        .updateNecesidadCurso(
-          this.necesidadc.idNecesidadCurso!,
-          this.necesidadc
-        )
-        .subscribe((data) => {
-          this.necesidadcresponse = data;
-          if (data != null) {
-            this.necesidad = [this.necesidadcresponse];
-          }
-        });
-    } else {
-      this.necesidadSer
-        .crearNecesidadCurso(this.necesidadc)
-        .subscribe((data) => {
-          this.necesidadcresponse = data;
-          if (data != null) {
-            this.necesidad = [this.necesidadcresponse];
-          }
-        });
-    }
-  }
-
-  createListaNecesidad() {
-    
-    this.listanecSer
-      .saveListaNecesidadCurso(this.listaNece)
-      .subscribe((data) => {
-        if (data != null) {
-          alert('bien');
-        }
-      });
-  }
-
-  findById(){
-    this.necesidadSer.getNecesidadCursoById(1).subscribe((data)=>{
-      this.listaNece.necesidadCurso = data;
-    })
   }
 }
