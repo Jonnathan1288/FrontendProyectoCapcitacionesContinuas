@@ -54,7 +54,7 @@ export class CurricularDiseñoComponent implements OnInit {
 
   CapIdSilaboSend?: number;
   idSilaboCap?: any = localStorage.getItem('idSilabo');
-  public obtenerDatosCurso(): void {
+  public obtenerDatosSilabo(): void {
     if (this.idSilaboCap != null && this.idSilaboCap != undefined) {
       this.silaboService.getSilaboById(this.idSilaboCap).subscribe((data) => {
         this.silabo = data;
