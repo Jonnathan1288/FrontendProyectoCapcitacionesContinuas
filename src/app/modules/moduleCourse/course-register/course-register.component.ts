@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PrimeNGConfig, SelectItem } from 'primeng/api';
 import { Area } from 'src/app/models/area';
 import { Capacitador } from 'src/app/models/capacitador';
@@ -7,6 +8,7 @@ import { Especialidad } from 'src/app/models/especialidad';
 import { HorarioCurso } from 'src/app/models/horario-curso';
 import { ModalidadCurso } from 'src/app/models/modalidad-curso';
 import { NivelCurso } from 'src/app/models/nivel-curso';
+import { PrerequisitoCurso } from 'src/app/models/prerequisito-curso';
 import { Programa } from 'src/app/models/programa';
 import { TipoCurso } from 'src/app/models/tipo-curso';
 import { AreaService } from 'src/app/service/area.service';
@@ -16,6 +18,7 @@ import { EspecialidadService } from 'src/app/service/especialidad.service';
 import { HorarioCursoService } from 'src/app/service/horario-curso.service';
 import { ModalidadService } from 'src/app/service/modalidad.service';
 import { NivelCursoService } from 'src/app/service/nivel-curso.service';
+import { PrerrequisitosCursoService } from 'src/app/service/prerrequisitosCurso.service';
 import { ProgramasService } from 'src/app/service/programas.service';
 import { TipoCursoService } from 'src/app/service/tipo-curso.service';
 
@@ -35,6 +38,7 @@ export class CourseRegisterComponent {
   public listNivelCurso: NivelCurso[] = [];
   public listModalidadCurso: ModalidadCurso[] = [];
   public listProgramas: Programa[] = [];
+  public prerequisitoCursoC: PrerequisitoCurso[] = [];
 
   //Para mostrarlos en el combobox con la key: value ->
   public listAreaItem: SelectItem[] = [];
@@ -44,13 +48,16 @@ export class CourseRegisterComponent {
   public especialidad = new Especialidad();
   public area = new Area();
   public curso = new Curso();
+  public curso1 = new Curso();
   public tipo = new TipoCurso();
   public horarioC = new HorarioCurso();
   public capacitador = new Capacitador();
+  public prerequisito = new PrerequisitoCurso();
 
   selectedModalidadCurso!: string;
   selectedTipoCurs!: string;
   selectedNivelCurso!: string;
+  daysOfTheweekV!: string;
 
   //Par el día de la semana
   daysOfTheweek: string[] = [
@@ -65,6 +72,7 @@ export class CourseRegisterComponent {
 
   selectedDays: string[] = [];
 
+  public idCursoUpdate!: any;
   constructor(
     private primengConfig: PrimeNGConfig,
     private areaService: AreaService,
@@ -75,17 +83,103 @@ export class CourseRegisterComponent {
     private nivelCursoService: NivelCursoService,
     private capacitadorService: CapacitadorService,
     private horarioService: HorarioCursoService,
-    private cursoService: CursoService
+    private cursoService: CursoService,
+    private prerequisitoService: PrerrequisitosCursoService,
+    private router: Router,
+    private actiRouter: ActivatedRoute
   ) {}
 
   ngOnInit() {
     this.primengConfig.ripple = true;
+    this.actiRouter.params.subscribe((params) => {
+      const idCurso = params['id'];
+      this.idCursoUpdate = idCurso;
+      if(idCurso){
+        this.findCursoById(idCurso);
+      }
+     
+    });
+
     this.listArea();
     this.allList();
     this.capacitadorService.getCapacitadorById(1).subscribe((data) => {
       console.log({ capacitador: data });
       this.curso.capacitador = data;
     });
+
+    this.listPrerequisitoCurso();
+  }
+
+
+  public findCursoById(idCurso: number) {
+    this.cursoService.getCursoById(idCurso).subscribe((data) => {
+      this.curso = data;
+
+      if (this.curso != null) {
+        if (this.curso.fechaInicioCurso) {
+          this.curso.fechaInicioCurso = new Date(this.curso.fechaInicioCurso);
+        }
+
+        if (this.curso.fechaFinalizacionCurso) {
+          this.curso.fechaFinalizacionCurso = new Date(
+            this.curso.fechaFinalizacionCurso
+          );
+        }
+        alert('Bien');
+      }
+    });
+  }
+  public editPrerequisito(prerequisito: any) {
+    this.prerequisito = {
+      ...prerequisito,
+    };
+  }
+
+  public eliminadologicoDeprerequisito(prerequisito: PrerequisitoCurso) {
+    prerequisito.estadoPrerequisitoCurso = false;
+    this.prerequisitoService
+      .updatePrerequisitoCurso(prerequisito.idPrerequisitoCurso!, prerequisito)
+      .subscribe((data) => {
+        this.listPrerequisitoCurso();
+      });
+  }
+
+  public createPrerequisitoCurso() {
+    this.prerequisito.curso = this.curso;
+    if (this.prerequisito.idPrerequisitoCurso) {
+      this.prerequisitoService
+        .updatePrerequisitoCurso(
+          this.prerequisito.idPrerequisitoCurso,
+          this.prerequisito
+        )
+        .subscribe((data) => {
+          if (data != null) {
+            this.listPrerequisitoCurso();
+          }
+        });
+    } else {
+      this.prerequisito.estadoPrerequisitoCurso = true;
+      this.prerequisitoService
+        .savePrerequisitoCurso(this.prerequisito)
+        .subscribe((data) => {
+          if (data != null) {
+            this.listPrerequisitoCurso();
+          }
+        });
+    }
+    this.prerequisito = new PrerequisitoCurso();
+  }
+
+  public listPrerequisitoCurso() {
+    if(this.idCursoUpdate){
+      this.prerequisitoService.listPrerequisitoCursoByIdCurso(this.idCursoUpdate).subscribe((data) => {
+        this.prerequisitoCursoC = data;
+        this.prerequisitoCursoC = this.prerequisitoCursoC.filter(
+          (prerequisito) => prerequisito.estadoPrerequisitoCurso === true
+        );
+      });
+    }
+    
   }
 
   getTipoView(tipo: TipoCurso) {
@@ -110,12 +204,15 @@ export class CourseRegisterComponent {
 
   //Create horario and curso
   public createHorarioCurso() {
+    this.horarioC.dias = this.daysOfTheweekV;
     this.horarioC.estadoHorarioCurso = true;
     this.horarioService.crearHorarioCurso(this.horarioC).subscribe((data) => {
       if (data != null) {
         this.curso.horarioCurso = data;
         this.cursoService.saveCurso(this.curso).subscribe((data) => {
           if (data != null) {
+            this.curso = data;
+            this.idCursoUpdate = this.curso.idCurso
             alert('Correcto al crear el curso');
           }
         });
@@ -165,7 +262,6 @@ export class CourseRegisterComponent {
   //Método para obtener el programa
   public getObjectprogram(e: any) {
     let codigoPrograma = e.value;
-    alert('codigo-> '+codigoPrograma)
     this.programaService.getProgramaById(codigoPrograma).subscribe((data) => {
       this.curso.programa = data;
       console.log({ espercialida: data });
@@ -199,5 +295,45 @@ export class CourseRegisterComponent {
     this.nivelCursoService.listNivelCurso().subscribe((data) => {
       this.listNivelCurso = data;
     });
+  }
+
+  // Metodos para cargar la foto
+  // foto
+  async subirFoto(event: any) {
+    const file = event.target.files[0];
+    const fileSize = file.size; // tamaño en bytes
+    if (fileSize > 262144) {
+      // mensaje de error al usuario
+      alert('La foto es muy pesada');
+      event.target.value = null;
+    } else {
+      try {
+        this.curso.fotoCurso = await this.convertToBase64(file);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  }
+
+  //carga foto
+  async convertToBase64(file: File): Promise<string> {
+    const reader = new FileReader();
+    return new Promise<string>((resolve, reject) => {
+      reader.onload = () => {
+        const result = btoa(reader.result as string);
+        resolve(result);
+      };
+      reader.onerror = () => {
+        reject(reader.error);
+      };
+      reader.readAsBinaryString(file);
+    });
+  }
+
+
+  public silabo(){
+
+    localStorage.setItem('idCurso', String(this.idCursoUpdate));
+    location.replace('/silabo');
   }
 }
