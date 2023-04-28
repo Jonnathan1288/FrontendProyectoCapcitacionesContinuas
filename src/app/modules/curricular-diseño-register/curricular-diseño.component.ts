@@ -50,7 +50,7 @@ export class CurricularDiseñoComponent implements OnInit {
     this.obtenerDatosSilabo();
   }
 
-  /* TRAER DATOS DEL CURSO*/
+  /* TRAER DATOS DEL SILABO*/
 
   CapIdSilaboSend?: number;
   idSilaboCap?: any = 1;
@@ -195,7 +195,7 @@ export class CurricularDiseñoComponent implements OnInit {
   }
   /* */
 
-  /* ENTIDADES SEGUIDAS DEL SILABO */
+  /* ENTIDADES SEGUIDAS DEL DISEÑO CURRICULAR */
   public generarEvaliacionDiagnostica(): void {
     for (let evaluacionDiagnostica of this.listEvaluacionDiagnosticaCurricular) {
       evaluacionDiagnostica.disenioCurricular = this.disenioCurricular;
@@ -220,7 +220,7 @@ export class CurricularDiseñoComponent implements OnInit {
     for (let evaluacionFinal of this.listEvaluacionFinalCurricular) {
       evaluacionFinal.disenioCurricular = this.disenioCurricular;
       evaluacionFinal.estadoEvaluacionFinal = true;
-      this.evaluacionDiagnosticoCurricularService.saveEvaluacionDiagnosticoCurricular(evaluacionFinal).subscribe(data => {
+      this.evaluacionFinalCurricularService.saveEvaluacionFinalCurricular(evaluacionFinal).subscribe(data => {
         console.log("Se creo Evaluacion Final=)");
       });
     }
