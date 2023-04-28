@@ -1,0 +1,29 @@
+body {
+    position: relative;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+
+h2 {
+    font-size: 2em;
+    margin-top: 1em;
+
+}
+
+th {
+    font-size: 1.1em;
+}
+
+tr {
+    font-weight: 600;
+}
+
+
+
+tr:hover {
+    background-color: rgb(245, 245, 245);
+}
+
+#bntRegistrar:hover {
+    background-color: rgb(21, 125, 60);
+}
