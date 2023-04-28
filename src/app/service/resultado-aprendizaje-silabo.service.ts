@@ -22,4 +22,12 @@ export class ResultadoAprendizajeSilaboService {
   public getResultadosArendizajeById(id_curso: number):Observable<ResultadoAprendizajeSilabo>{
     return this.http.get<ResultadoAprendizajeSilabo>(environment.apiuri+'/resultadoAprendizajeSilabo/findbyId/'+id_curso);
   }
+
+  public getResultadosPorIdSilabo(id: number):Observable<ResultadoAprendizajeSilabo[]>{
+    return this.http.get<ResultadoAprendizajeSilabo[]>(environment.apiuri+'/resultadoAprendizajeSilaboIdSilabo/findbyId/'+id);
+  }
+
+  public cambiarEstadosResultadosSilaboId(id:number, resultadoAprendizajeSilabo: ResultadoAprendizajeSilabo):Observable<ResultadoAprendizajeSilabo>{
+    return this.http.put<ResultadoAprendizajeSilabo>(environment.apiuri+'/resultadoAprendizajeSilabo/actualizar/'+id, resultadoAprendizajeSilabo);
+  }
 }

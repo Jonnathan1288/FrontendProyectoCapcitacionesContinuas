@@ -16,11 +16,12 @@ export class EstrategiaMetodologicaService {
   }
 
   public saveEstrategiasMetodologica(estrategiaMetodologica: EstrategiasMetodologica):Observable<EstrategiasMetodologica>{
-    return this.http.post<EstrategiasMetodologica>(environment.apiuri+'/estrategiaMetodologica/save', estrategiaMetodologica);
+    return this.http.post<EstrategiasMetodologica>(environment.apiuri+'/strategiaMetodologica/save', estrategiaMetodologica);
   }
 
   public getEstrategiasMetodologicaById(id: number):Observable<EstrategiasMetodologica>{
     return this.http.get<EstrategiasMetodologica>(environment.apiuri+'/estrategiaMetodologica/findbyId/'+id);
   }
+
   
 }
