@@ -1,72 +1,7 @@
 <div class="card flex justify-content-center">
 
     <p-panel header="DISEÑO CURRICULAR">
-        <p-card header="Informacion General del Curso"
-            style="margin: 5px; background-color: #fff; border-radius: 10px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);">
-            <div class="grid">
-                <div class="col-5 flex justify-content-center">
-                    <div style="float: left;">
-                        <p><strong>Area:</strong> Miguel Henry Martins</p>
-                        <p><strong>Nombre del Curso:</strong> Turma B</p>
-                        <p><strong>Fecha de Inicio</strong> Juan Fernando Murilo Cardoso</p>
-                        <div class="distribucion-aprendizaje">
-                            <p><strong>Dsitribucion de Aprendizaje</strong></p>
-                            <p><strong>Docencia:</strong>10</p>
-                            <p><strong>Prácticas:</strong>10</p>
-                            <p><strong>Horas autónomas:</strong>10</p>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="col-5 flex justify-content-center">
-                    <div style="float: left;">
-                        <p><strong>Horario:</strong> Miguel Henry Martins</p>
-                        <p><strong>Código del curso: </strong> Turma B</p>
-                        <p><strong>Fecha de Finalización:</strong> Juan Fernando Murilo Cardoso</p>
-                        <p><strong>Horas del curso:</strong> Miguel Henry Martins</p>
-                        <p><strong>Modalidad:</strong> Turma B</p>
-                        <p><strong>Campo de Formación:</strong> Juan Fernando Murilo Cardoso</p>
-                        <p><strong>Docente Responsable:</strong> Miguel Henry Martins</p>
-                    </div>
-                </div>
-            </div>
-        </p-card>
-
-        <p-card header="Prerrequisitos" class="m-5">
-            <p class="m-0">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae
-                numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis
-                esse, cupiditate neque
-                quas!
-            </p>
-        </p-card>
-
-
-        <p-card header="Descripción del Curso" class="m-5">
-            <p class="m-0">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae
-                numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis
-                esse, cupiditate neque
-                quas!
-            </p>
-        </p-card>
-
-        <p-card header="Objetivos del Curso" class="m-5">
-            <p class="m-0">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae
-                numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis
-                esse, cupiditate neque
-                quas!
-            </p>
-        </p-card>
-        <p-card header="Contenido del Curso" class="m-5">
-            <p class="m-0">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae
-                numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis
-                esse, cupiditate neque
-                quas!
-            </p>
-        </p-card>
 
         <p-card header="Temas Transversales" class="m-5">
 
@@ -75,7 +10,9 @@
                     <div class="col-10 md:col-10">
                         <div class="p-inputgroup">
                             <span class="p-inputgroup-addon"><i class="icono  fas fa-pencil-alt"></i></span>
-                            <textarea rows="4" cols="35" pInputTextarea class="no-resize"></textarea>
+                            <textarea rows="4" cols="35" pInputTextarea class="no-resize" type="text"
+                                id="temasTransversales" name="temasTransversales"
+                                [(ngModel)]="disenioCurricular.temasTransversales"></textarea>
                         </div>
                     </div>
                 </div>
@@ -87,7 +24,8 @@
                         <div class="p-inputgroup">
                             <span class="p-inputgroup-addon"><i class="icono fas fa-duotone fa-file"></i></span>
                             <textarea rows="4" cols="35" pInputTextarea class="no-re
-                            "></textarea>
+                            " id="estrategiasAprendizaje" name="estrategiasAprendizaje"
+                                [(ngModel)]="disenioCurricular. estrategiasAprendizaje"></textarea>
                         </div>
                     </div>
 
@@ -338,9 +276,10 @@
             </div>
             <br>
             <br>
+
             <div class="col-md-12" style="text-align: center; margin: 5px;">
-                <p-button label="Save" icon="icono fas fa-duotone fa-save"
-                    styleClass="p-button-success  mb-2"></p-button>
+                <p-button label="Generar Diseño Curricular" icon="icono fas fa-duotone fa-save" styleClass="p-button-success  mb-2"
+                    (onClick)="generarDisenioCurricular()"></p-button>
             </div>
 
         </p-card>

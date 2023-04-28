@@ -6,12 +6,14 @@ import { EvaluacionDiagnosticaCurriculares } from 'src/app/models/evaluacion-dia
 import { EvalucionFormativaCurriculares } from 'src/app/models/evalucion-formativa-curriculares';
 import { EvaluacionFinalCurriculares } from 'src/app/models/evaluacion-final-curriculares';
 import { EntornoAprendizajeCurricular } from 'src/app/models/entorno-aprendizaje-curricular';
+import { PrerequisitoCurso } from 'src/app/models/prerequisito-curso';
 import { SilaboService } from 'src/app/service/silabo.service';
 import { DisenioCurricularService } from 'src/app/service/disenio-curricular.service';
 import { EvaluacionDiagnosticoCurricularService } from 'src/app/service/evaluacion-diagnostico-curricular.service';
 import { EvaluacionFormativaCurricularService } from 'src/app/service/evaluacion-formativa-curricular.service';
 import { EvaluacionFinalCurricularService } from 'src/app/service/evaluacion-final-curricular.service';
 import { EntornoAprendizajeService } from 'src/app/service/entorno-aprendizaje.service';
+import { PrerrequisitosCursoService } from 'src/app/service/prerrequisitosCurso.service';
 import { Router } from '@angular/router';
 import { DisenioCurriculares } from 'src/app/models/disenio-curriculares';
 
@@ -28,6 +30,7 @@ export class CurricularDiseñoComponent implements OnInit {
     private evaluacionDiagnosticoCurricularService: EvaluacionDiagnosticoCurricularService,
     private evaluacionFormativaCurricularService: EvaluacionFormativaCurricularService,
     private evaluacionFinalCurricularService: EvaluacionFinalCurricularService,
+    private prerrequitsitoCursoService: PrerrequisitosCursoService,
     private entornoAprendizajeService: EntornoAprendizajeService
 
   ) {
@@ -40,7 +43,7 @@ export class CurricularDiseñoComponent implements OnInit {
   evaluacionFormativaCurricular: EvalucionFormativaCurriculares = new EvalucionFormativaCurriculares();
   evaluacionFinalCurricular: EvaluacionFinalCurriculares = new EvaluacionFinalCurriculares();
   entornoAprendizajeCurricular: EntornoAprendizajeCurricular = new EntornoAprendizajeCurricular();
-
+  prerrequisitosCurso: PrerequisitoCurso = new PrerequisitoCurso();
 
 
   ngOnInit() {
@@ -49,9 +52,8 @@ export class CurricularDiseñoComponent implements OnInit {
 
   /* TRAER DATOS DEL CURSO*/
 
-  idSilaboCap?: number;
   CapIdSilaboSend?: number;
-
+  idSilaboCap?: any = localStorage.getItem('idSilabo');
   public obtenerDatosCurso(): void {
     if (this.idSilaboCap != null && this.idSilaboCap != undefined) {
       this.silaboService.getSilaboById(this.idSilaboCap).subscribe((data) => {
@@ -62,6 +64,25 @@ export class CurricularDiseñoComponent implements OnInit {
       console.log("Silabo not found =(")
     }
   }
+
+   // TRAER PRE REUISITOS DEL CURSO
+   listprerrequisitosCurso: PrerequisitoCurso[] = [];
+
+   obtenerPrerrequisistos(idCurso: number) {
+     this.prerrequitsitoCursoService.getPrerequisitoPropiosCurso(idCurso).subscribe(
+       data => {
+         this.listprerrequisitosCurso = data.map(
+           dataTwo => {
+             let requisitos = new PrerequisitoCurso;
+             requisitos.idPrerequisitoCurso = dataTwo.idPrerequisitoCurso;
+             requisitos.nombrePrerequisitoCurso = dataTwo.nombrePrerequisitoCurso;
+             requisitos.estadoPrerequisitoCurso = dataTwo.estadoPrerequisitoCurso;
+             return requisitos;
+           }
+         );
+       }
+     )
+   }
   /* FIN TRAER DATOS*/
 
   /* CREACION RESULTADOS EVALUACION DIAGNOSTICA- ARRAY TEMPORAL*/
@@ -152,5 +173,75 @@ export class CurricularDiseñoComponent implements OnInit {
   }
 
   /* FIN RESULTADOS ENTORNO APRENDIZAJE */
+
+  /* METODO POST */
+  idDisenioCurricularCap?: number;
+
+  public generarDisenioCurricular(): void {
+    this.disenioCurricular.silabo = this.silabo;
+    this.disenioCurricularService.saveDisenioCurricular(this.disenioCurricular).subscribe(disenioData => {
+      this.disenioCurricular = disenioData;
+      this.disenioCurricular.estadoDisenioCurricular=true;
+      this.idDisenioCurricularCap = this.disenioCurricular.idDisenioCurricular;
+      console.log("Data + " + disenioData)
+      /* TABLAS */
+      this.generarEvaliacionDiagnostica();
+      this.generarEvaluacionFormativa();
+      this.generarEvaluacionFinal();
+      this.generarEntornoAprendizaje();
+      /* */
+      console.log("Disenio Curricular generado id->" + this.idDisenioCurricularCap)
+    })
+  }
+  /* */
+
+  /* ENTIDADES SEGUIDAS DEL SILABO */
+  public generarEvaliacionDiagnostica(): void {
+    for (let evaluacionDiagnostica of this.listEvaluacionDiagnosticaCurricular) {
+      evaluacionDiagnostica.disenioCurricular = this.disenioCurricular;
+      evaluacionDiagnostica.estadoEvaluacionDiagnostica = true;
+      this.evaluacionDiagnosticoCurricularService.saveEvaluacionDiagnosticoCurricular(evaluacionDiagnostica).subscribe(data => {
+        console.log("Se creo Evaluacion Diagnostica =)");
+      });
+    }
+  }
+
+  public generarEvaluacionFormativa(): void {
+    for (let evaluacionFormativa of this.listEvaluacionFormativaCurricular) {
+      evaluacionFormativa.disenioCurricular = this.disenioCurricular;
+      evaluacionFormativa.estadoEvaluacionFormativa = true;
+      this.evaluacionFormativaCurricularService.saveEvaluacionFormativaCurricular(evaluacionFormativa).subscribe(data => {
+        console.log("Se creo Evaluacion Formativa =)");
+      });
+    }
+  }
+
+  public generarEvaluacionFinal(): void {
+    for (let evaluacionFinal of this.listEvaluacionFinalCurricular) {
+      evaluacionFinal.disenioCurricular = this.disenioCurricular;
+      evaluacionFinal.estadoEvaluacionFinal = true;
+      this.evaluacionDiagnosticoCurricularService.saveEvaluacionDiagnosticoCurricular(evaluacionFinal).subscribe(data => {
+        console.log("Se creo Evaluacion Final=)");
+      });
+    }
+  }
+
+  public generarEntornoAprendizaje(): void {
+    for (let entornoAprendizaje of this.listEntornoAprendizaje) {
+      entornoAprendizaje.disenioCurricular = this.disenioCurricular;
+      entornoAprendizaje.estadoEntornoAprendizaje = true;
+      this.entornoAprendizajeService.saveEntornoAprendizajeCurricular(entornoAprendizaje).subscribe(data => {
+        console.log("Se creo Entorno Aprendizaje =)");
+      });
+    }
+  }
+
+  /* */
+
+  // ACTUALIZAR DISENIO-CURRICULAR //
+  idDisenioCurricularCapEdit?: number = 1;
+  idDisenioCurricularCapGlobal?: number;
+  validarIdDisenioCurricular: Boolean = false;
+
 }
 
