@@ -47,13 +47,13 @@ export class CurricularDiseñoComponent implements OnInit {
 
 
   ngOnInit() {
-
+    this.obtenerDatosSilabo();
   }
 
   /* TRAER DATOS DEL CURSO*/
 
   CapIdSilaboSend?: number;
-  idSilaboCap?: any = localStorage.getItem('idSilabo');
+  idSilaboCap?: any = 1;
   public obtenerDatosSilabo(): void {
     if (this.idSilaboCap != null && this.idSilaboCap != undefined) {
       this.silaboService.getSilaboById(this.idSilaboCap).subscribe((data) => {
