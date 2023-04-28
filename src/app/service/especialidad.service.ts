@@ -23,5 +23,8 @@ export class EspecialidadService {
     return this.http.post<Especialidad>(environment.apiuri+'/especialidad/save', curso);
   }
 
+  public getespecialidadByIdArea(idArea: number):Observable<Especialidad[]>{
+    return this.http.get<Especialidad[]>(environment.apiuri+'/especialidad/findbyIdArea/'+idArea);
+  }
   
 }

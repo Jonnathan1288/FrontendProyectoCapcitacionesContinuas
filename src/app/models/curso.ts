@@ -8,16 +8,18 @@ import { TipoCurso } from "./tipo-curso";
 
 export class Curso {
     idCurso?: number;
-    nombreCurso?: string;
-    fotoCurso?: string;
-    duracionCurso?: number;
-    observacionCurso?: string;
+    nombreCurso?: string; //
+    fotoCurso?: string; //no
+    duracionCurso?: number; //
+    observacionCurso?: string; //
     estadoCurso?: boolean;
     estadoAprovacionCurso?: string;
     estadoPublicasionCurso?: boolean;
     descripcionCurso?: string;
     objetivoGeneralesCurso?: string;
     numeroCuposCurso?: number;
+    fechaInicioCurso?: Date;
+    fechaFinalizacionCurso?: Date;
     programa?: Programa;
     especialidad?: Especialidad;
     capacitador?: Capacitador;
