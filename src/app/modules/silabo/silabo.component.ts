@@ -5,6 +5,7 @@ import { Curso } from 'src/app/models/curso';
 import { EstrategiasMetodologica } from 'src/app/models/estrategias-metodologica';
 import { MaterialAudiovisuales } from 'src/app/models/material-audiovisuales';
 import { MaterialConvencionales } from 'src/app/models/material-convencionales';
+import { PrerequisitoCurso } from 'src/app/models/prerequisito-curso';
 import { ResultadoAprendizajeSilabo } from 'src/app/models/resultado-aprendizaje-silabo';
 import { Silabo } from 'src/app/models/silabo';
 import { ContenidoSilaboService } from 'src/app/service/contenido-silabo.service';
@@ -12,6 +13,7 @@ import { CursoService } from 'src/app/service/curso.service';
 import { EstrategiaMetodologicaService } from 'src/app/service/estrategia-metodologica.service';
 import { MaterialAudiovisualService } from 'src/app/service/material-audiovisual.service';
 import { MaterialConvencionalService } from 'src/app/service/material-convencional.service';
+import { PrerrequisitosCursoService } from 'src/app/service/prerrequisitosCurso.service';
 import { ResultadoAprendizajeSilaboService } from 'src/app/service/resultado-aprendizaje-silabo.service';
 import { SilaboService } from 'src/app/service/silabo.service';
 
@@ -30,7 +32,8 @@ export class SilaboComponent implements OnInit {
     private materialesAudivisualesSilaboService: MaterialAudiovisualService,
     private materialesConvencianalesService: MaterialConvencionalService,
     private resultadosAprendizajeService: ResultadoAprendizajeSilaboService,
-    private contenidoSilaboService: ContenidoSilaboService
+    private contenidoSilaboService: ContenidoSilaboService,
+    private prerrequitsitoCursoService: PrerrequisitosCursoService
   ) {
   }
 
@@ -42,7 +45,7 @@ export class SilaboComponent implements OnInit {
   materialesConvecionales: MaterialConvencionales = new MaterialConvencionales();
   resultadoAprendizajeSilabo: ResultadoAprendizajeSilabo = new ResultadoAprendizajeSilabo();
   contenidosSilabo: Contenidosilabos = new Contenidosilabos();
-
+  prerrequisitosCurso: PrerequisitoCurso = new PrerequisitoCurso();
 
   ngOnInit() {
     this.obtenerDatosCurso();
@@ -57,20 +60,41 @@ export class SilaboComponent implements OnInit {
       this.cursoService.getCursoById(this.idCursoCap).subscribe((data) => {
         this.curso = data;
         this.CapIdCursoSend = this.curso.idCurso;
+        this.obtenerPrerrequisistos(this.CapIdCursoSend!);
       })
     } else {
       console.log("Curso not found =(")
     }
   }
+
+  // TRAER PRE REUISITOS DEL CURSO
+  listprerrequisitosCurso: PrerequisitoCurso[] = [];
+
+  obtenerPrerrequisistos(idCurso:number) {
+    this.prerrequitsitoCursoService.getPrerequisitoPropiosCurso(idCurso).subscribe(
+      data => {
+        this.listprerrequisitosCurso = data.map(
+          dataTwo => {
+            let requisitos = new PrerequisitoCurso;
+                requisitos.idPrerequisitoCurso = dataTwo.idPrerequisitoCurso;
+                requisitos.nombrePrerequisitoCurso = dataTwo.nombrePrerequisitoCurso;
+                requisitos.estadoPrerequisitoCurso = dataTwo.estadoPrerequisitoCurso;
+                return requisitos;
+          }
+        );
+      }
+    )
+  }
+  
   /* FIN TRAER DATOS*/
 
   /* CREACION RESULTADOS APRENDIZAJE - ARRAY TEMPORAL*/
   listResultadosAprendizajes: ResultadoAprendizajeSilabo[] = [];
-
   public almacenarLista(): void {
     if (!this.resultadoAprendizajeSilabo.temaUnidadSilabo || !this.resultadoAprendizajeSilabo.elementosCompetenciaSilabo ||
       !this.resultadoAprendizajeSilabo.activadesResultadoAprendizaje || !this.resultadoAprendizajeSilabo.formaEvidenciar || !this.resultadoAprendizajeSilabo.descripcionUnidadSilabo) {
     } else {
+      this.resultadoAprendizajeSilabo.estadoUnidadActivo = true;
       this.listResultadosAprendizajes.push(this.resultadoAprendizajeSilabo);
       this.resultadoAprendizajeSilabo = new ResultadoAprendizajeSilabo();
       this.resultadoAprendizajeSilabo.temaUnidadSilabo = '';
@@ -233,6 +257,88 @@ export class SilaboComponent implements OnInit {
         console.log("Se creo =)");
       });
     }
+  }
+  /* */
+
+  // ACTUALIZAR SILABO //
+  idSilaboCapEdit?:number = 7;
+  idSilaboCapGlobal?:number;
+  validarIdSilabo:Boolean = false;
+  public traerDatos():void{
+    this.silaboService.getSilaboById(this.idSilaboCapEdit!).subscribe(
+      data =>{
+        this.silabo = data;
+        this.idSilaboCapGlobal = this.silabo.idSilabo;
+        this.traerDatosEstretegiasFull(this.idSilaboCapGlobal!);
+        this.validarIdSilabo = true;
+      }
+    )
+  }
+
+  public traerDatosEstretegiasFull(idSilabo:number):void{
+    this.resultadosAprendizajeService.getResultadosPorIdSilabo(idSilabo).subscribe(
+      data=>{
+        this.listResultadosAprendizajes = data.map(
+          dataTwo => {
+            let resultadoAprendizajeSilabo = new ResultadoAprendizajeSilabo();
+            resultadoAprendizajeSilabo.idResultadoAprendizajeSilabo = dataTwo.idResultadoAprendizajeSilabo;
+            resultadoAprendizajeSilabo.temaUnidadSilabo = dataTwo.temaUnidadSilabo;
+            resultadoAprendizajeSilabo.elementosCompetenciaSilabo = dataTwo.elementosCompetenciaSilabo;
+            resultadoAprendizajeSilabo.activadesResultadoAprendizaje = dataTwo.activadesResultadoAprendizaje;
+            resultadoAprendizajeSilabo.formaEvidenciar = dataTwo.formaEvidenciar;
+            resultadoAprendizajeSilabo.descripcionUnidadSilabo = dataTwo.descripcionUnidadSilabo;
+            resultadoAprendizajeSilabo.estadoUnidadActivo = dataTwo.estadoUnidadActivo;
+            return resultadoAprendizajeSilabo;
+          }
+        ) 
+      }
+    )
+  }
+
+  // METODO ESTADOS TABLES//
+  public cambiarEstadoResultadosAprensizajeFalse(idResultadoAprendizajeSilabo:number):void{
+    this.resultadosAprendizajeService.getResultadosArendizajeById(idResultadoAprendizajeSilabo).subscribe(
+      data =>{
+        this.resultadoAprendizajeSilabo = data;
+        this.resultadoAprendizajeSilabo.estadoUnidadActivo = false;
+        this.resultadosAprendizajeService.cambiarEstadosResultadosSilaboId(idResultadoAprendizajeSilabo, this.resultadoAprendizajeSilabo).subscribe(
+          dataTwo =>{
+            this.traerDatosEstretegiasFull(this.idSilaboCapGlobal!);
+            console.log("Se actualizo")
+          }
+        )
+      }
+    )
+    
+  }
+
+  public cambiarEstadoResultadosAprensizajeTrue(idResultadoAprendizajeSilabo:number):void{
+    this.resultadosAprendizajeService.getResultadosArendizajeById(idResultadoAprendizajeSilabo).subscribe(
+      data =>{
+        this.resultadoAprendizajeSilabo = data;
+        this.resultadoAprendizajeSilabo.estadoUnidadActivo = true;
+        this.resultadosAprendizajeService.cambiarEstadosResultadosSilaboId(idResultadoAprendizajeSilabo, this.resultadoAprendizajeSilabo).subscribe(
+          dataTwo =>{
+            this.traerDatosEstretegiasFull(this.idSilaboCapGlobal!);
+            console.log("Se actualizo")
+          }
+        )
+      }
+    )
+    
+  }
+  // FIN //
+  
+  public actualizarSilabo():void{
+
+  }
+  // FIN //
+
+  /* MODAL */
+  visible?: boolean;
+
+  showDialog() {
+      this.visible = true;
   }
   /* */
 }

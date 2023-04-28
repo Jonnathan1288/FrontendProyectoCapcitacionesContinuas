@@ -26,4 +26,9 @@ export class PrerrequisitosCursoService {
   public updatePrerequisitoCurso(idPrerequisitoCurso:number, prerequisitoCurso: PrerequisitoCurso):Observable<PrerequisitoCurso>{
     return this.http.put<PrerequisitoCurso>(environment.apiuri+'/prerequisitoCurso/actualizar/'+idPrerequisitoCurso, prerequisitoCurso);
   }
+
+  public getPrerequisitoPropiosCurso(idCurso: number):Observable<PrerequisitoCurso[]>{
+    return this.http.get<PrerequisitoCurso[]>(environment.apiuri+'/prerequisitoCurso/findbyIdCurso/'+idCurso);
+  }
+
 }
