@@ -144,15 +144,17 @@
         </p-card>
 
         
-        <div class="card flex justify-content-center">
-            <p-dialog header="Header" [(visible)]="visible" [style]="{width: '50vw'}" [maximizable]="true">
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                </p>
-            </p-dialog>
-        </div>
-
+        <p-dialog header="Header" [(visible)]="visible" [modal]="true" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
+            <div class="col-12 md:col-12 mt-1">
+                <div class="p-inputgroup">
+                    <span class="p-float-label">
+                        <input type="text" pInputText id="temaUnidadSilabo" name="temaUnidadSilabo"
+                            [(ngModel)]="resultadoAprendizajeSilabo.temaUnidadSilabo">
+                        <label htmlFor="username">Unidades de Competencia</label>
+                    </span>
+                </div>
+            </div>
+        </p-dialog>
 
         <p-card header="Contenidos del Curso" class="m-5">
             <form novalidate>
