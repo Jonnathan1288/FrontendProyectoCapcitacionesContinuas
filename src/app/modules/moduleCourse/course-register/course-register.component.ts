@@ -9,7 +9,7 @@ import { HorarioCurso } from 'src/app/models/horario-curso';
 import { ModalidadCurso } from 'src/app/models/modalidad-curso';
 import { NivelCurso } from 'src/app/models/nivel-curso';
 import { PrerequisitoCurso } from 'src/app/models/prerequisito-curso';
-import { Programa } from 'src/app/models/programa';
+import { Programas } from 'src/app/models/programa';
 import { TipoCurso } from 'src/app/models/tipo-curso';
 import { AreaService } from 'src/app/service/area.service';
 import { CapacitadorService } from 'src/app/service/capacitador.service';
@@ -37,7 +37,7 @@ export class CourseRegisterComponent {
   public listTipo: TipoCurso[] = [];
   public listNivelCurso: NivelCurso[] = [];
   public listModalidadCurso: ModalidadCurso[] = [];
-  public listProgramas: Programa[] = [];
+  public listProgramas: Programas[] = [];
   public prerequisitoCursoC: PrerequisitoCurso[] = [];
 
   //Para mostrarlos en el combobox con la key: value ->
@@ -48,7 +48,7 @@ export class CourseRegisterComponent {
   public especialidad = new Especialidad();
   public area = new Area();
   public curso = new Curso();
-  public curso1 = new Curso();
+  public programa = new Programas();
   public tipo = new TipoCurso();
   public horarioC = new HorarioCurso();
   public capacitador = new Capacitador();
@@ -94,10 +94,9 @@ export class CourseRegisterComponent {
     this.actiRouter.params.subscribe((params) => {
       const idCurso = params['id'];
       this.idCursoUpdate = idCurso;
-      if(idCurso){
+      if (idCurso) {
         this.findCursoById(idCurso);
       }
-     
     });
 
     this.listArea();
@@ -106,15 +105,12 @@ export class CourseRegisterComponent {
       console.log({ capacitador: data });
       this.curso.capacitador = data;
     });
-
-    this.listPrerequisitoCurso();
   }
-
 
   public findCursoById(idCurso: number) {
     this.cursoService.getCursoById(idCurso).subscribe((data) => {
       this.curso = data;
-
+      this.listPrerequisitoCurso(this.curso.idCurso!);
       if (this.curso != null) {
         if (this.curso.fechaInicioCurso) {
           this.curso.fechaInicioCurso = new Date(this.curso.fechaInicioCurso);
@@ -125,7 +121,7 @@ export class CourseRegisterComponent {
             this.curso.fechaFinalizacionCurso
           );
         }
-        alert('Bien');
+
       }
     });
   }
@@ -140,7 +136,7 @@ export class CourseRegisterComponent {
     this.prerequisitoService
       .updatePrerequisitoCurso(prerequisito.idPrerequisitoCurso!, prerequisito)
       .subscribe((data) => {
-        this.listPrerequisitoCurso();
+        this.listPrerequisitoCurso(this.idCursoUpdate);
       });
   }
 
@@ -154,7 +150,7 @@ export class CourseRegisterComponent {
         )
         .subscribe((data) => {
           if (data != null) {
-            this.listPrerequisitoCurso();
+            this.listPrerequisitoCurso(this.idCursoUpdate);
           }
         });
     } else {
@@ -163,23 +159,12 @@ export class CourseRegisterComponent {
         .savePrerequisitoCurso(this.prerequisito)
         .subscribe((data) => {
           if (data != null) {
-            this.listPrerequisitoCurso();
+            this.listPrerequisitoCurso(this.idCursoUpdate);
           }
         });
     }
     this.prerequisito = new PrerequisitoCurso();
-  }
-
-  public listPrerequisitoCurso() {
-    if(this.idCursoUpdate){
-      this.prerequisitoService.listPrerequisitoCursoByIdCurso(this.idCursoUpdate).subscribe((data) => {
-        this.prerequisitoCursoC = data;
-        this.prerequisitoCursoC = this.prerequisitoCursoC.filter(
-          (prerequisito) => prerequisito.estadoPrerequisitoCurso === true
-        );
-      });
-    }
-    
+    this.visible = false;
   }
 
   getTipoView(tipo: TipoCurso) {
@@ -209,15 +194,41 @@ export class CourseRegisterComponent {
     this.horarioService.crearHorarioCurso(this.horarioC).subscribe((data) => {
       if (data != null) {
         this.curso.horarioCurso = data;
+        this.curso.programas = this.programa;
+       console.log({ programa: this.curso });
         this.cursoService.saveCurso(this.curso).subscribe((data) => {
           if (data != null) {
             this.curso = data;
-            this.idCursoUpdate = this.curso.idCurso
+            this.idCursoUpdate = this.curso.idCurso;
+            for (let prerequisito of this.listPrerequisitoCurso1) {
+              prerequisito.estadoPrerequisitoCurso = true;
+              prerequisito.curso = this.curso;
+              this.prerequisitoService
+                .savePrerequisitoCurso(prerequisito)
+                .subscribe((data) => {
+                  if (data != null) {
+               
+                  }
+                });
+            }
             alert('Correcto al crear el curso');
           }
         });
       }
     });
+  }
+
+  public listPrerequisitoCurso(idCursoUpdate: number) {
+    if (idCursoUpdate) {
+      this.prerequisitoService
+        .listPrerequisitoCursoByIdCurso(this.idCursoUpdate)
+        .subscribe((data) => {
+          this.listPrerequisitoCurso1 = data;
+          this.listPrerequisitoCurso1 = this.listPrerequisitoCurso1.filter(
+            (prerequisito) => prerequisito.estadoPrerequisitoCurso === true
+          );
+        });
+    }
   }
 
   //Para listar todas las areas..
@@ -262,9 +273,10 @@ export class CourseRegisterComponent {
   //Método para obtener el programa
   public getObjectprogram(e: any) {
     let codigoPrograma = e.value;
+    alert
     this.programaService.getProgramaById(codigoPrograma).subscribe((data) => {
-      this.curso.programa = data;
-      console.log({ espercialida: data });
+      this.programa = data
+      console.log({ programa: this.programa});
     });
   }
 
@@ -330,10 +342,41 @@ export class CourseRegisterComponent {
     });
   }
 
-
-  public silabo(){
-
+  public silabo() {
     localStorage.setItem('idCurso', String(this.idCursoUpdate));
     location.replace('/silabo');
+  }
+
+  public necesidad() {
+    this.router.navigate(['/register/necesidad', this.idCursoUpdate]);
+  }
+
+
+  listPrerequisitoCurso1: PrerequisitoCurso[] = [];
+
+  public almacenarListaDeprerequisitos(): void {
+    if (!this.prerequisito.nombrePrerequisitoCurso) {
+      alert('vacio');
+    } else {
+      this.listPrerequisitoCurso1.push(this.prerequisito);
+      this.prerequisito = new PrerequisitoCurso();
+    }
+  }
+
+  public quitarPrerequisitos(prerequisito: any): void {
+    const index = this.listPrerequisitoCurso1.findIndex(
+      (item) => item.nombrePrerequisitoCurso === prerequisito
+    );
+    if (index !== -1) {
+      this.listPrerequisitoCurso1.splice(index, 1);
+    }
+  }
+
+  //PARA EL MODAL
+
+  visible: boolean = false;
+
+  showDialog() {
+    this.visible = true;
   }
 }
