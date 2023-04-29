@@ -21,7 +21,7 @@ public getMatriculas():Observable<DetalleFichaMatricula[]>{
   return this.http.get<DetalleFichaMatricula[]>(environment.apiuri+'/detalleFichaService/list');
 }
 
-public savematricula(detalle: DetalleFichaMatricula):Observable<DetalleFichaMatricula>{
+public guardarDetalleFichaMatricula(detalle: DetalleFichaMatricula):Observable<DetalleFichaMatricula>{
   return this.http.post<DetalleFichaMatricula>(environment.apiuri+'/detalleFichaService/save', detalle);
 }
 
