@@ -26,8 +26,7 @@ import { TipoCursoService } from 'src/app/service/tipo-curso.service';
   selector: 'app-course-register',
   templateUrl: './course-register.component.html',
   styleUrls: [
-    './course-register.component.css',
-    './course-register.component.scss',
+    './course-register.component.css'
   ],
 })
 export class CourseRegisterComponent {
@@ -70,7 +69,8 @@ export class CourseRegisterComponent {
     'Domingo',
   ];
 
-  selectedDays: string[] = [];
+  //Vamoa a traer al usuario loggiado..
+  idUserLoggin: any;
 
   public idCursoUpdate!: any;
   constructor(
@@ -90,6 +90,7 @@ export class CourseRegisterComponent {
   ) {}
 
   ngOnInit() {
+    this.idUserLoggin = localStorage.getItem('id_username');
     this.primengConfig.ripple = true;
     this.actiRouter.params.subscribe((params) => {
       const idCurso = params['id'];
@@ -98,13 +99,12 @@ export class CourseRegisterComponent {
         this.findCursoById(idCurso);
       }
     });
-
-    this.listArea();
-    this.allList();
-    this.capacitadorService.getCapacitadorById(1).subscribe((data) => {
+    this.capacitadorService.getCapacitadorByUsuarioIdUsuario(this.idUserLoggin).subscribe((data) => {
       console.log({ capacitador: data });
       this.curso.capacitador = data;
     });
+    this.listArea();
+    this.allList();
   }
 
   public findCursoById(idCurso: number) {
@@ -273,7 +273,6 @@ export class CourseRegisterComponent {
   //Método para obtener el programa
   public getObjectprogram(e: any) {
     let codigoPrograma = e.value;
-    alert
     this.programaService.getProgramaById(codigoPrograma).subscribe((data) => {
       this.programa = data
       console.log({ programa: this.programa});
@@ -309,7 +308,7 @@ export class CourseRegisterComponent {
     });
   }
 
-  // Metodos para cargar la foto
+  // Metodos para cargar la fotofilte
   // foto
   async subirFoto(event: any) {
     const file = event.target.files[0];

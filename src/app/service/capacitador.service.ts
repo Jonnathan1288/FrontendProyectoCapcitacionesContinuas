@@ -5,12 +5,19 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CapacitadorService {
+  constructor(private http: HttpClient) {}
+  public getCapacitadorById(idCapacitador: number): Observable<Capacitador> {
+    return this.http.get<Capacitador>(
+      environment.apiuri + '/capacitador/findbyId/' + idCapacitador
+    );
+  }
 
-  constructor(private http: HttpClient) { }
-  public getCapacitadorById(idCapacitador: number):Observable<Capacitador>{
-    return this.http.get<Capacitador>(environment.apiuri+'/capacitador/findbyId/'+idCapacitador);
+  public getCapacitadorByUsuarioIdUsuario(idUsuario: number): Observable<Capacitador> {
+    return this.http.get<Capacitador>(
+      environment.apiuri + '/capacitador/findbyIdUsuario/' + idUsuario
+    );
   }
 }

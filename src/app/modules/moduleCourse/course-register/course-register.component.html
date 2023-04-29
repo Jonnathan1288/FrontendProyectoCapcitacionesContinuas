@@ -275,17 +275,17 @@
                         <tr>
                             <!-- <th>#</th> -->
                             <th>Requisito</th>
-                            <th>Editar</th>
+                            <th style="width:20%; text-align: center;">Editar</th>
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="body" let-data let-i="index" let-columns="columns">
                         <tr>
 
 
-                            <td>
+                            <td style="width:70%; text-align: left;">
                                 {{data.nombrePrerequisitoCurso}}
                             </td>
-                            <td>
+                            <td style="width:20%; text-align: center;">
                                 <p-button icon="pi pi-pencil" styleClass="p-button-secondary"
                                     (click)="editPrerequisito(data)" (click)="showDialog()"
                                     *ngIf="idCursoUpdate"></p-button>

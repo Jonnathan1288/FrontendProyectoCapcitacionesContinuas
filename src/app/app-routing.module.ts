@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { AuthGaurdGuard } from './auth-gaurd.guard';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './modules/home/home.component';
 import { CapacitadorComponent } from './modules/administradormodule/capacitador/capacitador.component';
@@ -24,7 +25,9 @@ const routes: Routes = [
   { path: 'prog', component: ProgramasComponent },
   { path: 'silabo', component: SilaboComponent },
   { path: 'diseño', component: CurricularDiseñoComponent },
-  { path: 'register/course', component: CourseRegisterComponent },
+  // { path: 'register/course', component: CourseRegisterComponent , canActivate: [AuthGaurdGuard], data: {expectedRoles: ['Administrador'] }},
+  { path: 'register/course', component: CourseRegisterComponent},
+
   { path: 'register/course/:id', component: CourseRegisterComponent },
   { path: 'list/course', component: ListCourseComponent },
   { path: 'register/necesidad', component: RegistroNecesidadComponent },
