@@ -6,6 +6,7 @@ export class Inscrito {
   fechaInscrito?: Date;
   estadoInscrito?: Boolean;
   estadoInscritoActivo?: Boolean;
+  
   usuario?: Usuario;
   curso?: Curso;
 }
