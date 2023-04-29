@@ -20,8 +20,8 @@ export class EvaluacionDiagnosticoCurricularService {
     return this.http.get<EvaluacionDiagnosticaCurriculares>(environment.apiuri+'/evaluacionDiacnosticaCurricular/findbyId/'+ idEvaluacionDiagnosticaCurricular);
   }
 
-  public saveEvaluacionDiagnosticoCurricular(listDisenioCurricular: EvaluacionDiagnosticaCurriculares):Observable<EvaluacionDiagnosticaCurriculares>{
-    return this.http.post<EvaluacionDiagnosticaCurriculares>(environment.apiuri+'/evaluacionDiacnosticaCurricular/save',listDisenioCurricular);
+  public saveEvaluacionDiagnosticoCurricular(listaEvaluacionDiagnosticaCurricular: EvaluacionDiagnosticaCurriculares):Observable<EvaluacionDiagnosticaCurriculares>{
+    return this.http.post<EvaluacionDiagnosticaCurriculares>(environment.apiuri+'/evaluacionDiacnosticaCurricular/save',listaEvaluacionDiagnosticaCurricular);
   }
 
   public updateEvaluacionDiagnosticoCurricular(idEvaluacionDiagnosticaCurricular: number, evaluacionDiacnosticaCurricular: EvaluacionDiagnosticaCurriculares): Observable<EvaluacionDiagnosticaCurriculares> {

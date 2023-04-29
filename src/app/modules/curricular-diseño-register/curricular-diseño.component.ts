@@ -185,7 +185,7 @@ export class CurricularDiseñoComponent implements OnInit {
       this.idDisenioCurricularCap = this.disenioCurricular.idCDisenioCurricular;
       console.log("Data + " + disenioData)
       /* TABLAS */
-      this.generarEvaliacionDiagnostica();
+      this.generarEvaluacionDiagnostica();
       this.generarEvaluacionFormativa();
       this.generarEvaluacionFinal();
       this.generarEntornoAprendizaje();
@@ -196,7 +196,7 @@ export class CurricularDiseñoComponent implements OnInit {
   /* */
 
   /* ENTIDADES SEGUIDAS DEL DISEÑO CURRICULAR */
-  public generarEvaliacionDiagnostica(): void {
+  public generarEvaluacionDiagnostica(): void {
     for (let evaluacionDiagnostica of this.listEvaluacionDiagnosticaCurricular) {
       evaluacionDiagnostica.disenioCurricular = this.disenioCurricular;
       evaluacionDiagnostica.estadoEvaluacionDiagnostica = true;
