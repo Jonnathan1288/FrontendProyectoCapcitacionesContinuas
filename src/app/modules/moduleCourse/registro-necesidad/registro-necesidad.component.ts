@@ -8,6 +8,7 @@ import { ListaNecesidadCursoService } from 'src/app/service/lista-necesidad-curs
 import { NecesidadCursoService } from 'src/app/service/necesidad-curso.service';
 import { ReportsCapacitacionesService } from 'src/app/service/reports-capacitaciones.service';
 import * as fileSaver from 'file-saver';
+import { DomSanitizer } from '@angular/platform-browser';
 @Component({
   selector: 'app-registro-necesidad',
   templateUrl: './registro-necesidad.component.html',
@@ -30,7 +31,8 @@ export class RegistroNecesidadComponent implements OnInit {
     private listanecSer: ListaNecesidadCursoService,
     private router: Router,
     private actiRouter: ActivatedRoute,
-    private reportService: ReportsCapacitacionesService
+    private reportService: ReportsCapacitacionesService,
+    public sanitizer: DomSanitizer
   ) {}
 
   ngOnInit(): void {
@@ -130,5 +132,16 @@ this.idCurso = id_curso;
         const url = URL.createObjectURL(r);
         window.open(url, '_blank');
       });
+      this.getPdf()
   }
+
+  //Para el pdf
+  public pdfSrc: any;
+   getPdf() {
+    this.reportService.getDownloadReportNecesidadCurso(this.idCurso).subscribe((r) => {
+
+       const url = URL.createObjectURL(r);
+         this.pdfSrc = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+     });
+   }
 }
