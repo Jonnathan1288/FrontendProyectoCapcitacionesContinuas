@@ -16,11 +16,15 @@ export class AreaService {
     return this.http.get<any>(environment.apiuri+'/area/list');
   }
 
-  public getAreaById(id_area: number):Observable<Area>{
-    return this.http.get<Area>(environment.apiuri+'/area/findbyId/'+id_area);
+  public getAreaById(idArea: number):Observable<Area>{
+    return this.http.get<Area>(environment.apiuri+'/area/findbyId/'+idArea);
   }
 
-  public saveArea(listaNecesidadCurso: Area):Observable<Area>{
-    return this.http.post<Area>(environment.apiuri+'/area/save', listaNecesidadCurso);
+  public saveArea(area: Area):Observable<Area>{
+    return this.http.post<Area>(environment.apiuri+'/area/save', area);
+  }
+
+  public updateArea(idArea:number, area: Area):Observable<Area>{
+    return this.http.put<Area>(environment.apiuri+'/area/actualizar/'+idArea, area);
   }
 }
