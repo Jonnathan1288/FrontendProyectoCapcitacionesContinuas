@@ -20,6 +20,8 @@ import { FormRecord, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatriculComponent } from './modules/matricul/matricul.component';
 import { CardcursoComponent } from './modules/cardcurso/cardcurso.component';
 import { InfocursoComponent } from './modules/infocurso/infocurso.component';
+import { ListCourseComponent } from './modules/moduleCourse/list-course/list-course.component';
+import { RegistroNecesidadComponent } from './modules/moduleCourse/registro-necesidad/registro-necesidad.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +39,8 @@ import { InfocursoComponent } from './modules/infocurso/infocurso.component';
     MatriculComponent,
     CardcursoComponent,
     InfocursoComponent,
+    ListCourseComponent,
+    RegistroNecesidadComponent,
   ],
   imports: [
     BrowserModule,

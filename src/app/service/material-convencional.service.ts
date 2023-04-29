@@ -22,5 +22,12 @@ export class MaterialConvencionalService {
   public getMaterialAudiovisualesById(id: number):Observable<MaterialConvencionales>{
     return this.http.get<MaterialConvencionales>(environment.apiuri+'/materialConvencional/findbyId/'+id);
   }
+
+  public getMaterialConvencionalesPorIdSilabo(id: number):Observable<MaterialConvencionales[]>{
+    return this.http.get<MaterialConvencionales[]>(environment.apiuri+'/materialConvencionalPorSilabo/findbyId/'+id);
+  }
   
+  public updateMaterialConvencionales(id:number, materialesConvecionales: MaterialConvencionales):Observable<MaterialConvencionales>{
+    return this.http.put<MaterialConvencionales>(environment.apiuri+'/materialConvencional/actualizar/'+id, materialesConvecionales);
+  }
 }
