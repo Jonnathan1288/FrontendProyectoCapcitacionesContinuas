@@ -1,36 +1,31 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-
-import { map, Observable } from 'rxjs';
-import { environment } from 'src/environment/enviroment';
+import { Observable } from 'rxjs';
 import { FichaMatricula } from '../models/fichaMatricula';
-import { Inscrito } from '../models/inscrito';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environment/enviroment';
 
 @Injectable({
   providedIn: 'root'
 })
-export class FichaMatriculaService {
+export class inFichaMatriculaService {
 
   constructor(private http: HttpClient) { }
 
+  // public listArea():Observable<any>{
+  //   return this.http.get<any>(environment.apiuri+'/area/list');
+  // }
 
-
-  public getMatriculas():Observable<FichaMatricula[]>{
-    return this.http.get<FichaMatricula[]>(environment.apiuri+'/fichaMatricula/list');
-  }
-  
-  
-  public savefichamatricula(ficha: FichaMatricula, inscrito: Inscrito): Observable<FichaMatricula> {
-    ficha.matricula = inscrito;
-    return this.http.post<FichaMatricula>(environment.apiuri+'/fichaMatricula/save', ficha);
-  }
-
-
-
-
-  public getMatriculasById(idFichaMatricula: number):Observable<FichaMatricula>{
+  public getFichaMatriculaById(idFichaMatricula: number):Observable<FichaMatricula>{
     return this.http.get<FichaMatricula>(environment.apiuri+'/fichaMatricula/findbyId/'+idFichaMatricula);
   }
+
+  public saveFichaMatricula(fichaMatricula: FichaMatricula):Observable<FichaMatricula>{
+    return this.http.post<FichaMatricula>(environment.apiuri+'/fichaMatricula/save', fichaMatricula);
+  }
+
+  // public updateArea(idArea:number, area: Area):Observable<Area>{
+  //   return this.http.put<Area>(environment.apiuri+'/area/actualizar/'+idArea, area);
+  // }
 
 
 }
