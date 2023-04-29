@@ -22,6 +22,7 @@ import { CardcursoComponent } from './modules/cardcurso/cardcurso.component';
 import { InfocursoComponent } from './modules/infocurso/infocurso.component';
 import { ListCourseComponent } from './modules/moduleCourse/list-course/list-course.component';
 import { RegistroNecesidadComponent } from './modules/moduleCourse/registro-necesidad/registro-necesidad.component';
+import { ViewInscritosCursoComponent } from './modules/view-inscritos-curso/view-inscritos-curso.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { RegistroNecesidadComponent } from './modules/moduleCourse/registro-nece
     InfocursoComponent,
     ListCourseComponent,
     RegistroNecesidadComponent,
+    ViewInscritosCursoComponent,
   ],
   imports: [
     BrowserModule,

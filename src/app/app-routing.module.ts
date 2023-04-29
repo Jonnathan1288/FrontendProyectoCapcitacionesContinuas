@@ -15,6 +15,7 @@ import { SilaboComponent } from './modules/silabo/silabo.component';
 import { CurricularDiseñoComponent } from './modules/curricular-diseño-register/curricular-diseño.component';
 import { ListCourseComponent } from './modules/moduleCourse/list-course/list-course.component';
 import { RegistroNecesidadComponent } from './modules/moduleCourse/registro-necesidad/registro-necesidad.component';
+import { ViewInscritosCursoComponent } from './modules/view-inscritos-curso/view-inscritos-curso.component';
 
 const routes: Routes = [
   {path: 'login', component:LoginComponent },
@@ -27,7 +28,7 @@ const routes: Routes = [
   { path: 'diseño', component: CurricularDiseñoComponent },
   // { path: 'register/course', component: CourseRegisterComponent , canActivate: [AuthGaurdGuard], data: {expectedRoles: ['Administrador'] }},
   { path: 'register/course', component: CourseRegisterComponent},
-
+  { path: 'verInscritos/course/:id', component: ViewInscritosCursoComponent},
   { path: 'register/course/:id', component: CourseRegisterComponent },
   { path: 'list/course', component: ListCourseComponent },
   { path: 'register/necesidad', component: RegistroNecesidadComponent },
