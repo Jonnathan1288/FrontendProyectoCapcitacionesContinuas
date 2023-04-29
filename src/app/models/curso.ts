@@ -3,7 +3,7 @@ import { Especialidad } from "./especialidad";
 import { HorarioCurso } from "./horario-curso";
 import { ModalidadCurso } from "./modalidad-curso";
 import { NivelCurso } from "./nivel-curso";
-import { Programas } from "./programa";
+import { Programa } from "./programa";
 import { TipoCurso } from "./tipo-curso";
 
 export class Curso {
@@ -20,7 +20,7 @@ export class Curso {
     numeroCuposCurso?: number;
     fechaInicioCurso?: Date;
     fechaFinalizacionCurso?: Date;
-    programas?: Programas;
+    programa?: Programa;
     especialidad?: Especialidad;
     capacitador?: Capacitador;
     modalidadCurso?: ModalidadCurso;

@@ -138,9 +138,9 @@
                             </td>
                             <td *ngIf='validarIdSilabo == true'>
                                 <!-- <button *ngIf='data.idResultadoAprendizajeSilabo == 0' pButton type="button" class="p-button-rounded p-button-danger" icon="pi pi-times" (click)="quitarElemento(data.idResultadoAprendizajeSilabo)"></button> -->
-                                <button *ngIf='data.estadoUnidadActivo == true' pButton type="button" class="p-button-rounded p-button-success" icon="pi pi-check-circle" style="margin-right: 5px;" (click)="cambiarEstadoResultadosAprensizajeFalse(data.idResultadoAprendizajeSilabo)"></button>
-                                <button *ngIf='data.estadoUnidadActivo == false' pButton type="button" class="p-button-rounded p-button-danger" style="margin-right: 5px;" icon="pi pi-power-off" (click)="cambiarEstadoResultadosAprensizajeTrue(data.idResultadoAprendizajeSilabo)"></button>
-                                <button pButton type="button" (click)="showModalEdit(data.idResultadoAprendizajeSilabo)" class="p-button-rounded p-button-info" icon="pi pi-pencil" style="margin-right: 5px;"></button>
+                                <button *ngIf='data.estadoUnidadActivo == true' pButton type="button" class="p-button-rounded p-button-success" icon="pi pi-check-circle" (click)="cambiarEstadoResultadosAprensizajeFalse(data.idResultadoAprendizajeSilabo)"></button>
+                                <button *ngIf='data.estadoUnidadActivo == false' pButton type="button" class="p-button-rounded p-button-danger" icon="pi pi-power-off" (click)="cambiarEstadoResultadosAprensizajeTrue(data.idResultadoAprendizajeSilabo)"></button>
+                                <button pButton type="button" (click)="showModalEdit(data.idResultadoAprendizajeSilabo)" class="p-button-rounded p-button-info" icon="pi pi-pencil" ></button>
                             </td>
                         </tr>
                     </ng-template>
@@ -578,11 +578,6 @@
                 <div class="col-md-12" style="text-align: center; margin: 5px;">
                     <p-button label="Generar Silabo" icon="pi pi-book" styleClass="p-button-success  mb-2"
                         (onClick)="generarSilabo()"></p-button>
-                </div>
-
-                <div class="col-md-12" style="text-align: center; margin: 5px;">
-                    <p-button label="Generar PDF" icon="pi pi-file-pdf" styleClass="p-button-danger  mb-2"
-                        (onClick)="getReportSilabo()"></p-button>
                 </div>
             </form>
         </p-card>

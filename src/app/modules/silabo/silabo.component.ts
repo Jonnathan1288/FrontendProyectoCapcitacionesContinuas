@@ -14,7 +14,6 @@ import { EstrategiaMetodologicaService } from 'src/app/service/estrategia-metodo
 import { MaterialAudiovisualService } from 'src/app/service/material-audiovisual.service';
 import { MaterialConvencionalService } from 'src/app/service/material-convencional.service';
 import { PrerrequisitosCursoService } from 'src/app/service/prerrequisitosCurso.service';
-import { ReportsCapacitacionesService } from 'src/app/service/reports-capacitaciones.service';
 import { ResultadoAprendizajeSilaboService } from 'src/app/service/resultado-aprendizaje-silabo.service';
 import { SilaboService } from 'src/app/service/silabo.service';
 
@@ -34,8 +33,7 @@ export class SilaboComponent implements OnInit {
     private materialesConvencianalesService: MaterialConvencionalService,
     private resultadosAprendizajeService: ResultadoAprendizajeSilaboService,
     private contenidoSilaboService: ContenidoSilaboService,
-    private prerrequitsitoCursoService: PrerrequisitosCursoService,
-    private reportService: ReportsCapacitacionesService
+    private prerrequitsitoCursoService: PrerrequisitosCursoService
   ) {
   }
 
@@ -519,13 +517,4 @@ export class SilaboComponent implements OnInit {
 
 
   /* */
-
-  // IMPRIMIR
-  public getReportSilabo() {
-    this.reportService.gedownloadSilabo(this.idSilaboCapGlobal!)
-      .subscribe((r) => {
-        const url = URL.createObjectURL(r);
-        window.open(url, '_blank');
-      });
-  }
 }
