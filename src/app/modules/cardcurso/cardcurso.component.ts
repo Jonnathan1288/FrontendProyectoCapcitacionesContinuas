@@ -12,6 +12,7 @@ import { CursoService } from 'src/app/service/curso.service';
 export class CardcursoComponent implements OnInit {
 
 
+
   ngOnInit(): void {
     this.obtenerCursosFull();
   }
@@ -33,6 +34,10 @@ export class CardcursoComponent implements OnInit {
 
   public pasarInfoCurso(idCurso:any):void{
     this.router.navigate(['/cardcu/detalle',idCurso ]);
+  }
+
+  public pasarInfoCursoIsncripcion(idCurso:any):void{
+    this.router.navigate(['/mat', idCurso ]);
   }
 
 }
