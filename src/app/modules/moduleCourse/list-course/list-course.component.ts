@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Capacitador } from 'src/app/models/capacitador';
 import { Curso } from 'src/app/models/curso';
+import { CapacitadorService } from 'src/app/service/capacitador.service';
 import { CursoService } from 'src/app/service/curso.service';
 
 @Component({
@@ -10,6 +12,7 @@ import { CursoService } from 'src/app/service/curso.service';
 })
 export class ListCourseComponent implements OnInit {
   public curso = new Curso();
+  public capacitador = new Capacitador();
 
   public cursoList: Curso[] = [];
 
@@ -17,15 +20,27 @@ export class ListCourseComponent implements OnInit {
 
   rows = 5;
 
+  public idUsuarioIsLoggin: any;
+  public idCapacitador: any;
   constructor(private cursoService: CursoService, private router: Router,
-    private actiRouter: ActivatedRoute) {}
+    private actiRouter: ActivatedRoute, private capacitadorService:CapacitadorService) {}
 
   ngOnInit(): void {
-    this.listCourse();
+    this.idUsuarioIsLoggin = localStorage.getItem('id_username');
+
+    this.capacitadorService.getCapacitadorByUsuarioIdUsuario(this.idUsuarioIsLoggin).subscribe((data)=>{
+      if(data != null){
+        this.capacitador = data;
+        this.idCapacitador = this.capacitador.idCapacitador;
+        this.listCourseporUsuarioLogin(this.idCapacitador);
+      }
+   
+    })
+    
   }
 
-  public listCourse() {
-    this.cursoService.listCurso().subscribe((data) => {
+  public listCourseporUsuarioLogin(idUsuario: number) {
+    this.cursoService.obtenerTodoslosCursosPorIdCapacitador(idUsuario).subscribe((data) => {
       this.cursoList = data;
       console.log(data)
     });

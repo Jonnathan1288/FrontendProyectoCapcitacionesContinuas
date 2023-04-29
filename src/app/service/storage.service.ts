@@ -25,5 +25,6 @@ export class StorageService {
 
   public getRole() {
     return localStorage.getItem(USER_KEY);
+
   }
 }

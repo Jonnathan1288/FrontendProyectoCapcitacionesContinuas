@@ -99,7 +99,7 @@ export class CourseRegisterComponent {
         this.findCursoById(idCurso);
       }
     });
-    this.capacitadorService.getCapacitadorById(this.idUserLoggin).subscribe((data) => {
+    this.capacitadorService.getCapacitadorByUsuarioIdUsuario(this.idUserLoggin).subscribe((data) => {
       console.log({ capacitador: data });
       this.curso.capacitador = data;
     });
