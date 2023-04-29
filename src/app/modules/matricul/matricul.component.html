@@ -1,46 +1,51 @@
+<!-- <form class=" g-3" (ngSubmit)="guardarFichadeMatrircla()">
 
-
- <form class=" g-3" (ngSubmit)="guardarFichadeMatrircla()">
-  
   <div class="col-auto">
     <label for="inputPassword2" class="visually-hidden">Donde trabaja</label>
-    <input type="text" class="form-control" id="pregunta1" name="pregunta1" [(ngModel)]="detallefichaMatricula.pregunta1">
+    <input type="text" class="form-control" id="pregunta1" name="pregunta1"
+      [(ngModel)]="detallefichaMatricula.pregunta1">
   </div>
 
   <div class="col-auto">
     <label for="inputPassword2" class="visually-hidden">Direcion</label>
-    <input type="text" class="form-control" id="pregunta2" name="pregunta2" [(ngModel)]="detallefichaMatricula.pregunta2" >
+    <input type="text" class="form-control" id="pregunta2" name="pregunta2"
+      [(ngModel)]="detallefichaMatricula.pregunta2">
   </div>
   <div class="col-auto">
     <label for="inputPassword2" class="visually-hidden">correo</label>
-    <input type="text" class="form-control" id="pregunta3" name="pregunta3" [(ngModel)]="detallefichaMatricula.pregunta3" >
+    <input type="text" class="form-control" id="pregunta3" name="pregunta3"
+      [(ngModel)]="detallefichaMatricula.pregunta3">
   </div>
 
   <div class="col-auto">
     <label for="inputPassword2" class="visually-hidden">numero tel</label>
-    <input type="text" class="form-control" iid="pregunta4" name="pregunta4" [(ngModel)]="detallefichaMatricula.pregunta4">
+    <input type="text" class="form-control" iid="pregunta4" name="pregunta4"
+      [(ngModel)]="detallefichaMatricula.pregunta4">
   </div>
 
   <div class="col">
     <label for="inputPassword2" class="visually-hidden">Activida de la in</label>
-    <input type="text" class="form-control" id="pregunta5" name="pregunta5" [(ngModel)]="detallefichaMatricula.pregunta5">
+    <input type="text" class="form-control" id="pregunta5" name="pregunta5"
+      [(ngModel)]="detallefichaMatricula.pregunta5">
   </div>
 
   <div class="col">
     <label for="inputPassword2" class="visually-hidden">Actividad de la in</label>
     <div class="form-check">
-        <input class="form-check-input" type="radio" name="actividad" id="radio1" [value]="'Si'" [(ngModel)]="detallefichaMatricula.pregunta6">
-        <label class="form-check-label" for="radio1">
-           SI
-        </label>
+      <input class="form-check-input" type="radio" name="actividad" id="radio1" [value]="'Si'"
+        [(ngModel)]="detallefichaMatricula.pregunta6">
+      <label class="form-check-label" for="radio1">
+        SI
+      </label>
     </div>
     <div class="form-check">
-        <input class="form-check-input" type="radio" name="actividad" id="radio2" [value]="'No'" [(ngModel)]="detallefichaMatricula.pregunta6">
-        <label class="form-check-label" for="radio2">
-            NO
-        </label>
+      <input class="form-check-input" type="radio" name="actividad" id="radio2" [value]="'No'"
+        [(ngModel)]="detallefichaMatricula.pregunta6">
+      <label class="form-check-label" for="radio2">
+        NO
+      </label>
     </div>
-</div>
+  </div>
 
 
 
@@ -56,8 +61,137 @@
 
   <div class="col">
     <label for="inputPassword2" class="visually-hidden">Qu otros cursos le gustario segguir</label>
-    <input type="text" class="form-control" id="pregunta9" name="pregunta9" [(ngModel)]="detallefichaMatricula.pregunta9">
+    <input type="text" class="form-control" id="pregunta9" name="pregunta9"
+      [(ngModel)]="detallefichaMatricula.pregunta9">
   </div>
 
   <button type=" submit">enviar</button>
-</form>
+</form> -->
+
+
+
+<div class="card flex justify-content-center">
+  <p-panel header="INSCRIPCIÓN">
+    <form (ngSubmit)="guardarFichadeMatrircla()" ngNativeValidate>
+
+      <p-card header="INFORMACIÓN LABORAL" class="m-5">
+
+        <div class="grid p-fluid m-3">
+
+          <div class="col-12 md:col-12 mt-2">
+            <div class="p-inputgroup">
+              <span class="p-float-label">
+                <input type="text" pInputText id="pregunta1" name="pregunta1"
+                  [(ngModel)]="detallefichaMatricula.pregunta1">
+                <label htmlFor="username">Institución donde trabaja / Estudia:</label>
+              </span>
+            </div>
+          </div>
+
+          <div class="col-12 md:col-12 mt-2">
+            <div class="p-inputgroup">
+              <span class="p-float-label">
+                <input type="text" pInputText id="pregunta2" name="pregunta2"
+                [(ngModel)]="detallefichaMatricula.pregunta2">
+                <label htmlFor="username">Dirección de la institución:</label>
+              </span>
+            </div>
+          </div>
+
+          <div class="col-12 md:col-12 mt-2">
+            <div class="p-inputgroup">
+              <span class="p-float-label">
+                <input type="text" pInputText id="pregunta3" name="pregunta3"
+                [(ngModel)]="detallefichaMatricula.pregunta3">
+                <label htmlFor="username">Correo electrónico de la institución:</label>
+              </span>
+            </div>
+          </div>
+
+          <div class="col-12 md:col-12 mt-2">
+            <div class="p-inputgroup">
+              <span class="p-float-label">
+                <input type="text" pInputText id="pregunta4" name="pregunta4"
+                [(ngModel)]="detallefichaMatricula.pregunta4">
+                <label htmlFor="username">Número telefónico de la institución:</label>
+              </span>
+            </div>
+          </div>
+
+          <div class="col-12 md:col-12 mt-2">
+            <div class="p-inputgroup">
+              <span class="p-float-label">
+                <input type="text" pInputText id="pregunta5" name="pregunta5"
+                [(ngModel)]="detallefichaMatricula.pregunta5">
+                <label htmlFor="username">Actividad de la institución:</label>
+              </span>
+            </div>
+          </div>
+
+          <div class="col-12 md:col-12 mt-2">
+            <label class="p-inputgroup" for='nombre'>¿El curso es auspiciado por la empresa?:</label>
+            <div class='col-md-6'>
+              <div class='form-group'>
+                <div class='col-md-11'>
+
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
+                    [value]="'Si'"
+                    [(ngModel)]="detallefichaMatricula.pregunta6">
+                    <label class="form-check-label" for="inlineRadio1">Si:</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
+                    [value]="'No'"
+                    [(ngModel)]="detallefichaMatricula.pregunta6">
+                    <label class="form-check-label" for="inlineRadio2">No:</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="col-12 md:col-12">
+            <div class="p-inputgroup">
+              <span class="p-float-label">
+                <input type="text" pInputText id="pregunta7" name="pregunta7"
+                [(ngModel)]="detallefichaMatricula.pregunta7">
+                <label htmlFor="username">Si está auspiciado, indique el nombre de contacto:</label>
+              </span>
+            </div>
+          </div>
+
+
+          <div class="col-12 md:col-12 mt-2">
+            <div class="p-inputgroup">
+              <span class="p-float-label">
+                <input type="text" pInputText id="pregunta8" name="pregunta8"
+                [(ngModel)]="detallefichaMatricula.pregunta8">
+                <label htmlFor="username">¿Cómo se enteró del curso?</label>
+              </span>
+            </div>
+          </div>
+
+          <div class="col-12 md:col-12 mt-2">
+            <div class="p-inputgroup">
+              <span class="p-float-label">
+                <input type="text" pInputText id="pregunta9" name="pregunta9"
+                [(ngModel)]="detallefichaMatricula.pregunta9">
+                <label htmlFor="username">¿Qué otros cursos le gustaría seguir?</label>
+              </span>
+            </div>
+          </div>
+        </div>
+      </p-card>
+      <div class='form-group'>
+        <div class='col-md-offset-4 col-md-3'>
+          <button class='btn-lg btn-primary' type='submit'>Registrar Matricula</button>
+        </div>
+
+      </div>
+    </form>
+
+
+  </p-panel>
+</div>
