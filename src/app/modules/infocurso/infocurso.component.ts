@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Curso } from 'src/app/models/curso';
+import { PrerequisitoCurso } from 'src/app/models/prerequisito-curso';
 import { CursoService } from 'src/app/service/curso.service';
+import { PrerrequisitosCursoService } from 'src/app/service/prerrequisitosCurso.service';
 
 @Component({
   selector: 'app-infocurso',
@@ -15,6 +17,7 @@ export class InfocursoComponent implements OnInit {
     private router: Router,
     private activateRoute: ActivatedRoute,
     private cursoService: CursoService,
+    private prerrequistosService: PrerrequisitosCursoService
   ) {
   }
 
@@ -35,8 +38,18 @@ export class InfocursoComponent implements OnInit {
     this.cursoService.getCursoById(this.idCursoGlobal).subscribe(
       data =>{
         this.dataCurso = data;
+        this.traerPrerequisitosCurso();
       }
     )
+  }
+
+  listPrerrequistos: PrerequisitoCurso[] = [];
+
+  public traerPrerequisitosCurso():void{
+    this.prerrequistosService.getPrerequisitoPropiosCurso(this.idCursoGlobal).subscribe(
+      data => {
+        this.listPrerrequistos = data;
+      })
   }
   
 

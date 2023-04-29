@@ -1,3 +1,4 @@
+
 <div class="job-explain">
     <img class="job-bg" alt="" style="background-color: #007bff;">
     <div class="job-logos">
@@ -14,10 +15,10 @@
         </div>
         <div class="job-subtitle-wrapper">
             <div class="company-name">
-                Patreon <span class="comp-location">Londontowne, MD.</span>
+                Cupos Disponibles: <span class="comp-location">{{dataCurso.numeroCuposCurso}}</span>
             </div>
             <div class="posted">
-                Posted 8 days ago<span class="app-number">98 Application</span>
+                Desde el <strong>{{dataCurso.fechaInicioCurso}}</strong> al <strong>{{dataCurso.fechaFinalizacionCurso}}</strong> 
             </div>
         </div>
         <div class="explain-bar">
@@ -34,8 +35,12 @@
                 <div class="explain-subtitle">{{dataCurso.horarioCurso!.horaInicio}} a {{dataCurso.horarioCurso!.horaFin}}</div>
             </div>
             <div class="explain-contents">
-                <div class="explain-title">Offer Salary</div>
-                <div class="explain-subtitle">$2150.0 / Month</div>
+                <div class="explain-title">Días</div>
+                <div class="explain-subtitle">{{dataCurso.horarioCurso!.dias}}</div>
+            </div>
+            <div class="explain-contents">
+                <div class="explain-title">Docente Capacitador</div>
+                <div class="explain-subtitle">{{dataCurso.capacitador!.tipoAbreviaturaTitulo}}.{{dataCurso.capacitador!.usuario!.persona!.nombre1}} {{dataCurso.capacitador!.usuario!.persona!.nombre2}} {{dataCurso.capacitador!.usuario!.persona!.apellido1}} {{dataCurso.capacitador!.usuario!.persona!.apellido2}}</div>
             </div>
         </div>
         <div class="overview-text">
@@ -44,9 +49,72 @@
         </div>
         <div class="overview-text">
             <div class="overview-text-header">Prerrequisitos</div>
-            <div class="overview-text-item">3+ years working as a product designer.
+            <div class="overview-text-item" *ngFor="let listPrerrequistos of listPrerrequistos">
+                {{listPrerrequistos.nombrePrerequisitoCurso}}
             </div>
+        </div>
+        <div class="container m-3" style="text-align: center;">
+            <button pButton pRipple label="Inscribirme" class="p-button-success"></button>
         </div>
     </div>
     <!-- DETAIL -->
 </div>
+=======
+<div class="card flex justify-content-center">
+    <p-panel header="Informacion General del Curso">
+        <p-card header="Informacion General del Curso" style="margin: 5px;">
+            <div class="grid">
+                <div class="col-5 flex justify-content-center">
+                    <div style="float: left;">
+                        <p><strong>Area:</strong> Miguel Henry Martins</p>
+                        <p><strong>Nombre del Curso:</strong> Turma B</p>
+                        <p><strong>Fecha de Inicio</strong> Juan Fernando Murilo Cardoso</p>
+                        <p><strong>Campo de Formación:</strong> Juan Fernando Murilo Cardoso</p>
+                        <p><strong>Docente Responsable:</strong> Miguel Henry Martins</p>
+                    </div>
+                </div>
+
+                <div class="col-5 flex justify-content-center">
+                    <div style="float: left;">
+                        <p><strong>Horario:</strong> Miguel Henry Martins</p>
+                        <p><strong>Código del curso: </strong> Turma B</p>
+                        <p><strong>Fecha de Finalización:</strong> Juan Fernando Murilo Cardoso</p>
+                        <p><strong>Horas del curso:</strong> Miguel Henry Martins</p>
+                        <p><strong>Modalidad:</strong> Turma B</p>
+
+                    </div>
+                </div>
+            </div>
+        </p-card>
+
+        <p-card header="Prerrequisitos" class="m-5">
+            <p class="m-0">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae
+                numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis
+                esse, cupiditate neque
+                quas!
+            </p>
+        </p-card>
+
+
+        <p-card header="Descripción del Curso" class="m-5">
+            <p class="m-0">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae
+                numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis
+                esse, cupiditate neque
+                quas!
+            </p>
+        </p-card>
+
+        <p-card header="Objetivos del Curso" class="m-5">
+            <p class="m-0">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae
+                numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis
+                esse, cupiditate neque
+                quas!
+            </p>
+        </p-card>
+
+    </p-panel>
+</div> 
+

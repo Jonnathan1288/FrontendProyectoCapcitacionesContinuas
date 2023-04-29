@@ -12,6 +12,7 @@ import { CursoService } from 'src/app/service/curso.service';
 export class CardcursoComponent implements OnInit {
 
 
+
   ngOnInit(): void {
     this.obtenerCursosFull();
   }
