@@ -36,4 +36,8 @@ export class CardcursoComponent implements OnInit {
     this.router.navigate(['/cardcu/detalle',idCurso ]);
   }
 
+  public pasarInfoCursoIsncripcion(idCurso:any):void{
+    this.router.navigate(['/mat', idCurso ]);
+  }
+
 }

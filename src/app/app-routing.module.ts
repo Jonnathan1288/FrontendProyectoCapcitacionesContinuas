@@ -34,6 +34,7 @@ const routes: Routes = [
   { path: 'register/necesidad/:id', component: RegistroNecesidadComponent },
   { path: 'mat', component: MatriculComponent },
   { path: 'cardcu', component: CardcursoComponent },
+  { path: 'mat/:id', component: MatriculComponent },
   { path: 'cardcu/detalle/:id', component: InfocursoComponent },
   { path: 'info', component: InfocursoComponent },
   { path: '**', pathMatch: 'full', redirectTo: 'home' }
