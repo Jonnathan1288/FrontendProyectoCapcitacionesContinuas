@@ -97,31 +97,35 @@
 
         </div>
 
-        <!-- Para la modalidad -->
-        <div class="container card mt-4">
-            <div class="checkbox-group" style="padding-top: 5px;">
+        <p-card header="Tipo de curso" class="m-1">
+            <!-- Para la modalidad -->
+            <div class="container card mt-4">
+                <div class="checkbox-group" style="padding-top: 5px;">
 
-                <div *ngFor="let modalidad of listModalidadCurso">
-                    <p-radioButton name="modalidadCurso" [value]="modalidad.idModalidadCurso"
-                        (ngModelChange)="getmodalidadCursoView(modalidad)" class="mb-2"
-                        [(ngModel)]="selectedModalidadCurso"></p-radioButton>
-                    <label for="modalidadCurso" class="ml-2">{{modalidad.nombreModalidadCurso}}</label>
+                    <div *ngFor="let modalidad of listModalidadCurso">
+                        <p-radioButton name="modalidadCurso" [value]="modalidad.idModalidadCurso"
+                            (ngModelChange)="getmodalidadCursoView(modalidad)" class="mb-2"
+                            [(ngModel)]="selectedModalidadCurso"></p-radioButton>
+                        <label for="modalidadCurso" class="ml-2">{{modalidad.nombreModalidadCurso}}</label>
+                    </div>
+
                 </div>
-
             </div>
-        </div>
+        </p-card>
 
         <!-- Para Tipo -->
-        <div class="container card mt-4">
-            <div class="checkbox-group" style="padding-top: 5px;">
+        <p-card header="Tipo de curso" class="m-1">
+            <div class="container card mt-1">
+                <div class="checkbox-group" style="padding-top: 5px;">
 
-                <div *ngFor="let tipo of listTipo">
-                    <p-radioButton name="tipoCurso" [value]="tipo.idTipoCurso" class="mb-2"
-                        [(ngModel)]="selectedTipoCurs" (ngModelChange)="getTipoView(tipo)"></p-radioButton>
-                    <label for="tipoCurso" class="ml-2">{{tipo.nombreTipoCurso}}</label>
+                    <div *ngFor="let tipo of listTipo">
+                        <p-radioButton name="tipoCurso" [value]="tipo.idTipoCurso" class="mb-2"
+                            [(ngModel)]="selectedTipoCurs" (ngModelChange)="getTipoView(tipo)"></p-radioButton>
+                        <label for="tipoCurso" class="ml-2">{{tipo.nombreTipoCurso}}</label>
+                    </div>
                 </div>
             </div>
-        </div>
+        </p-card>
 
         <!-- Nivel de curso -->
         <div class="container card mt-4">
@@ -275,27 +279,27 @@
                         <tr>
                             <!-- <th>#</th> -->
                             <th>Requisito</th>
-                            <th>Editar</th>
+                            <th style="width:20%; text-align: center;">Editar</th>
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="body" let-data let-i="index" let-columns="columns">
                         <tr>
 
 
-                            <td>
+                            <td style="width:70%; text-align: left;">
                                 {{data.nombrePrerequisitoCurso}}
                             </td>
-                            <td>
+                            <td style="width:20%; text-align: center;">
                                 <p-button icon="pi pi-pencil" styleClass="p-button-secondary"
                                     (click)="editPrerequisito(data)" (click)="showDialog()"
                                     *ngIf="idCursoUpdate"></p-button>
-                                    
-                                <p-button class="mx-2" icon="pi pi-trash" styleClass="p-button-secondary"
-                                    (click)="eliminadologicoDeprerequisito(data)"
-                                    *ngIf="idCursoUpdate"></p-button>
 
                                 <p-button class="mx-2" icon="pi pi-trash" styleClass="p-button-secondary"
-                                    (click)="quitarPrerequisitos(data.nombrePrerequisitoCurso)" *ngIf="!idCursoUpdate"></p-button>
+                                    (click)="eliminadologicoDeprerequisito(data)" *ngIf="idCursoUpdate"></p-button>
+
+                                <p-button class="mx-2" icon="pi pi-trash" styleClass="p-button-secondary"
+                                    (click)="quitarPrerequisitos(data.nombrePrerequisitoCurso)"
+                                    *ngIf="!idCursoUpdate"></p-button>
 
                             </td>
 
@@ -308,7 +312,8 @@
 
         <div class=" flex justify-content-center mt-4">
 
-            <p-button type="ngSubmit" [label]="this.idCursoUpdate ? 'Actualizar Curso' : 'Crear Curso'" icon="pi pi-check" iconPos="right"></p-button>
+            <p-button type="ngSubmit" [label]="this.idCursoUpdate ? 'Actualizar Curso' : 'Crear Curso'"
+                icon="pi pi-check" iconPos="right"></p-button>
         </div>
     </form>
 
@@ -338,8 +343,8 @@
             </div>
         </div>
         <div class="col-md-12" style="text-align: center; margin: 5px;">
-            <p-button [label]="this.prerequisito.idPrerequisitoCurso ? 'Actualizar' : 'Crear'" icon="pi pi-check-square" styleClass="p-button-success  mb-2"
-                (onClick)="createPrerequisitoCurso()"></p-button>
+            <p-button [label]="this.prerequisito.idPrerequisitoCurso ? 'Actualizar' : 'Crear'" icon="pi pi-check-square"
+                styleClass="p-button-success  mb-2" (onClick)="createPrerequisitoCurso()"></p-button>
         </div>
     </div>
 </p-dialog>
