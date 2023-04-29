@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
@@ -22,7 +22,7 @@ import { CardcursoComponent } from './modules/cardcurso/cardcurso.component';
 import { InfocursoComponent } from './modules/infocurso/infocurso.component';
 import { ListCourseComponent } from './modules/moduleCourse/list-course/list-course.component';
 import { RegistroNecesidadComponent } from './modules/moduleCourse/registro-necesidad/registro-necesidad.component';
-
+import { ProgramasComponent } from './modules/programa/programas/programas.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,6 +41,7 @@ import { RegistroNecesidadComponent } from './modules/moduleCourse/registro-nece
     InfocursoComponent,
     ListCourseComponent,
     RegistroNecesidadComponent,
+    ProgramasComponent,
   ],
   imports: [
     BrowserModule,
@@ -53,6 +54,9 @@ import { RegistroNecesidadComponent } from './modules/moduleCourse/registro-nece
     CommonModule,
     BrowserAnimationsModule,
 
+  ],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
   ],
   providers: [],
   bootstrap: [AppComponent],
