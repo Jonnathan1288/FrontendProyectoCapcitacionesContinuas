@@ -77,14 +77,7 @@ export class MatriculComponent implements OnInit {
             this.detallefichaMatricula.fichaMatricula = this.fichaMatricula;
             this.detalleFichaMatriculaService.saveDetalleFichaMatricula(this.detallefichaMatricula).subscribe((data2)=>{
               if(data2 != null){
-                this.participantesMatriculados.estadoParticipanteActivo= true;
-                this.participantesMatriculados.estadoParticipanteAprobacion = 'P';
-                this.participantesMatriculados.inscrito = this.inscritos;
-                this.participantesmatriculadoService.saveParticipantesMatriculados(this.participantesMatriculados).subscribe((datafin)=>{
-                  if(datafin != null){
-                    alert('Inscripcion satisfactoria')
-                  }
-                })
+                alert('Inscrito satisfactoriamente')
               }
             })
           }
@@ -96,6 +89,15 @@ export class MatriculComponent implements OnInit {
     // console.log(this.detallefichaMatricula)
 
   }
+
+  // this.participantesMatriculados.estadoParticipanteActivo= true;
+  //               this.participantesMatriculados.estadoParticipanteAprobacion = 'P';
+  //               this.participantesMatriculados.inscrito = this.inscritos;
+  //               this.participantesmatriculadoService.saveParticipantesMatriculados(this.participantesMatriculados).subscribe((datafin)=>{
+  //                 if(datafin != null){
+  //                   alert('Inscripcion satisfactoria')
+  //                 }
+  //               })
 
 
 }

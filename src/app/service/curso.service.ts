@@ -23,8 +23,8 @@ export class CursoService {
     return this.http.get<Curso>(environment.apiuri+'/curso/findbyId/'+id_curso);
   }
 
-  public obtenerTodoslosCursosPorIdCapacitador(idCapacitador: number):Observable<Curso[]>{
-    return this.http.get<Curso[]>(environment.apiuri+'/curso/findAllIdCapacitador/'+idCapacitador);
+  public obtenerTodoslosCursosPorIdUsuario(idUsuario: number):Observable<Curso[]>{
+    return this.http.get<Curso[]>(environment.apiuri+'/curso/findAllIdUsuario/'+idUsuario);
   }
 
   public updateCurso(id_curso: number, curso: Curso):Observable<Curso>{
