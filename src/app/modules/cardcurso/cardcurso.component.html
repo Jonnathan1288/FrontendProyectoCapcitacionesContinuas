@@ -1,9 +1,50 @@
-<div class="card">
-    <div class="card-body">
-      <h5 class="card-title">titulo</h5>
-      <p class="card-text">descripcion</p>
-      <p class="card-text">precio</p>
-   
+<!-- <div class="cards-list">
+  <div class="card" *ngFor="let list of listCursos">
+    <div class="card_image">
+      <img
+        [src]="'data:image/jpeg;base64,' + list.fotoCurso"
+        alt=""
+        width="50px"
+        height="50px"
+        class="rounded-circle"
+      />
+    </div>
+    <div class="card_title">
+      <p>{{ list.nombreCurso }}</p>
     </div>
   </div>
-  
+</div> -->
+
+<div class="job">
+  <div class="wrapper">
+    <div class="main-container">
+      <div class="searched-jobs">
+        <div class="searched-bar">
+          <div class="searched-show">Showing 46 Jobs</div>
+        </div>
+
+        <!-- CARD -->
+        <div class="job-cards">
+          <div class="job-card" style="background-color: #e0efff;" *ngFor="let list of listCursos">
+
+            <div class="job-card-header" >
+                <img [src]="'data:image/jpeg;base64,' + list.fotoCurso" width="32" height="32" />
+            </div>
+
+            <div class="job-card-title">{{ list.nombreCurso }}</div>
+            <div class="job-card-subtitle">{{ list.descripcionCurso}}</div>
+            <div class="job-detail-buttons m-1" style="text-align: center;">
+              <span class="search-buttons detail-button discount">Cupos: {{list.numeroCuposCurso}}</span>
+            </div>
+            <div class="job-card-buttons">
+              <button class="search-buttons card-buttons" (click)="pasarInfoCurso(list.idCurso)">Detalles</button>
+              <button class="search-buttons card-buttons">Incribirme</button>
+            </div>
+          </div>
+
+        </div>
+        <!-- CARD -->
+      </div>
+    </div>
+  </div>
+</div>
