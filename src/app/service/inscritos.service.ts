@@ -20,4 +20,11 @@ export class inscritosService {
     return this.http.post<Inscrito>(environment.apiuri+'/inscritocurso/crear', inscrito);
   }
 
+  public getInscritosPorCurso(idCurso: number):Observable<Inscrito[]>{
+    return this.http.get<Inscrito[]>(environment.apiuri+'/inscritocursoPorCurso/findbyIdCurso/'+idCurso);
+  }
+
+  public aprbarOdesaprobarInscrito(id:number, inscrito: Inscrito):Observable<Inscrito>{
+    return this.http.put<Inscrito>(environment.apiuri+'/inscritocurso/update/'+id, inscrito);
+  }
 }
