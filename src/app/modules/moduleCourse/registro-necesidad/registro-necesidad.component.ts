@@ -25,6 +25,8 @@ export class RegistroNecesidadComponent implements OnInit {
   public necesidadActivo = new NececidadCurso();
 
   idCurso: any;
+
+  public idCursoUpdate!: any;
   constructor(
     private cursoService: CursoService,
     private necesidadSer: NecesidadCursoService,
@@ -38,7 +40,7 @@ export class RegistroNecesidadComponent implements OnInit {
   ngOnInit(): void {
     this.actiRouter.params.subscribe((params) => {
       const id_curso = params['id'];
-this.idCurso = id_curso;
+      this.idCurso = id_curso;
       this.traerNecesidadPorCurso(id_curso);
       this.traerCursoAsiganado(id_curso);
     });
@@ -110,6 +112,11 @@ this.idCurso = id_curso;
         .findByNecesidadCurso_IdNecesidadCurso(this.auxiliarVariableParaList)
         .subscribe((data) => {
           this.listaNecesidadCursoArr = data;
+          this.listaNecesidadCursoArr = this.listaNecesidadCursoArr.filter(
+            (list) => list.estadoDetalleNecesidad === true
+          );
+     
+          // this.listaNecesidadCursoArr = data;
         });
     }
   }
@@ -127,21 +134,75 @@ this.idCurso = id_curso;
   }
 
   public getReportNecesidadCurso() {
-    this.reportService.getDownloadReportNecesidadCurso(this.idCurso)
+    this.reportService
+      .getDownloadReportNecesidadCurso(this.idCurso)
       .subscribe((r) => {
         const url = URL.createObjectURL(r);
         window.open(url, '_blank');
       });
-      this.getPdf()
+    // this.getPdf()
+  }
+
+  //PARA LA EDICION EN EL MODAL
+
+  visible: boolean = false;
+
+  showDialog() {
+    this.visible = true;
+  }
+
+  //ELIMINADO LOGICO DE DETALLE DE NECESIDAD DE CURSO
+  public eliminadologicoDeInfNecesidadCurso(
+    necesidadCurso: ListaNecesidadCurso
+  ) {
+    
+    necesidadCurso.estadoDetalleNecesidad = false;
+    this.listanecSer
+      .updateListaNecesidadCurso(
+        necesidadCurso.idListaNecesidadCursos!,
+        necesidadCurso
+      )
+      .subscribe((data) => {
+        this.traerListDeNecesidadesComoDeatlle();
+        this.listaNecesidadCursoArr;
+      });
+ 
+  }
+
+  public updateCreate() {
+    this.listaNece.necesidadCurso = this.necesidadActivo;
+
+    if (this.listaNece.idListaNecesidadCursos) {
+     
+      this.listanecSer
+        .updateListaNecesidadCurso(
+          this.listaNece.idListaNecesidadCursos,
+          this.listaNece
+        )
+        .subscribe((data) => {
+          this.traerListDeNecesidadesComoDeatlle();
+          console.log({ lista: this.listaNece });
+        });
+    } else {
+      this.listaNece.estadoDetalleNecesidad = true;
+      this.listanecSer
+        .saveListaNecesidadCurso(this.listaNece)
+        .subscribe((data) => {
+          this.traerListDeNecesidadesComoDeatlle();
+          console.log({ lista: this.listaNece });
+        });
+    }
+    this.listaNece = new ListaNecesidadCurso();
+    this.visible = false;
   }
 
   //Para el pdf
-  public pdfSrc: any;
-   getPdf() {
-    this.reportService.getDownloadReportNecesidadCurso(this.idCurso).subscribe((r) => {
+  // public pdfSrc: any;
+  //  getPdf() {
+  //   this.reportService.getDownloadReportNecesidadCurso(this.idCurso).subscribe((r) => {
 
-       const url = URL.createObjectURL(r);
-         this.pdfSrc = this.sanitizer.bypassSecurityTrustResourceUrl(url);
-     });
-   }
+  //      const url = URL.createObjectURL(r);
+  //        this.pdfSrc = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+  //    });
+  //  }
 }
