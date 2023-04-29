@@ -65,24 +65,24 @@ export class CurricularDiseñoComponent implements OnInit {
     }
   }
 
-   // TRAER PRE REUISITOS DEL CURSO
-   listprerrequisitosCurso: PrerequisitoCurso[] = [];
+  // TRAER PRE REUISITOS DEL CURSO
+  listprerrequisitosCurso: PrerequisitoCurso[] = [];
 
-   obtenerPrerrequisistos(idCurso: number) {
-     this.prerrequitsitoCursoService.getPrerequisitoPropiosCurso(idCurso).subscribe(
-       data => {
-         this.listprerrequisitosCurso = data.map(
-           dataTwo => {
-             let requisitos = new PrerequisitoCurso;
-             requisitos.idPrerequisitoCurso = dataTwo.idPrerequisitoCurso;
-             requisitos.nombrePrerequisitoCurso = dataTwo.nombrePrerequisitoCurso;
-             requisitos.estadoPrerequisitoCurso = dataTwo.estadoPrerequisitoCurso;
-             return requisitos;
-           }
-         );
-       }
-     )
-   }
+  obtenerPrerrequisistos(idCurso: number) {
+    this.prerrequitsitoCursoService.getPrerequisitoPropiosCurso(idCurso).subscribe(
+      data => {
+        this.listprerrequisitosCurso = data.map(
+          dataTwo => {
+            let requisitos = new PrerequisitoCurso;
+            requisitos.idPrerequisitoCurso = dataTwo.idPrerequisitoCurso;
+            requisitos.nombrePrerequisitoCurso = dataTwo.nombrePrerequisitoCurso;
+            requisitos.estadoPrerequisitoCurso = dataTwo.estadoPrerequisitoCurso;
+            return requisitos;
+          }
+        );
+      }
+    )
+  }
   /* FIN TRAER DATOS*/
 
   /* CREACION RESULTADOS EVALUACION DIAGNOSTICA- ARRAY TEMPORAL*/
@@ -179,10 +179,10 @@ export class CurricularDiseñoComponent implements OnInit {
 
   public generarDisenioCurricular(): void {
     this.disenioCurricular.silabo = this.silabo;
+    this.disenioCurricular.estadoDisenioCurricular = true;
     this.disenioCurricularService.saveDisenioCurricular(this.disenioCurricular).subscribe(disenioData => {
       this.disenioCurricular = disenioData;
-      this.disenioCurricular.estadoDisenioCurricular=true;
-      this.idDisenioCurricularCap = this.disenioCurricular.idDisenioCurricular;
+      this.idDisenioCurricularCap = this.disenioCurricular.idCDisenioCurricular;
       console.log("Data + " + disenioData)
       /* TABLAS */
       this.generarEvaliacionDiagnostica();

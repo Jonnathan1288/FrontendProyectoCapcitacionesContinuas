@@ -24,7 +24,8 @@ export class EvaluacionDiagnosticoCurricularService {
     return this.http.post<EvaluacionDiagnosticaCurriculares>(environment.apiuri+'/evaluacionDiacnosticaCurricular/save',listDisenioCurricular);
   }
 
-  public updateEvaluacionDiagnosticoCurricular( idEvaluacionDiagnosticaCurricular: number, evaluacionDiacnosticaCurricular: EvaluacionDiagnosticaCurriculares): Observable<EvaluacionDiagnosticaCurriculares> {
+  public updateEvaluacionDiagnosticoCurricular(idEvaluacionDiagnosticaCurricular: number, evaluacionDiacnosticaCurricular: EvaluacionDiagnosticaCurriculares): Observable<EvaluacionDiagnosticaCurriculares> {
     return this.http.put<EvaluacionDiagnosticaCurriculares>(`${environment.apiuri}/evaluacionDiacnosticaCurricular/update/${ idEvaluacionDiagnosticaCurricular}`, evaluacionDiacnosticaCurricular);
   }
+  
 }

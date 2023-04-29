@@ -25,4 +25,5 @@ export class EvaluacionFormativaCurricularService {
   public updateEvaluacionFormativaCurricular(  idEvalucionFormativaCurricular: number, evaluacionFormativaCurricular: EvalucionFormativaCurriculares): Observable<EvalucionFormativaCurriculares> {
     return this.http.put<EvalucionFormativaCurriculares>(`${environment.apiuri}/evaluacionFormativaCurricular/update/${  idEvalucionFormativaCurricular}`, evaluacionFormativaCurricular);
   }
+  
 }

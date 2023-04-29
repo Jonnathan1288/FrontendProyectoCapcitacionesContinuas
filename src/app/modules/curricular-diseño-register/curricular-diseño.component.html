@@ -10,8 +10,9 @@
                     <div class="col-10 md:col-10">
                         <div class="p-inputgroup">
                             <span class="p-inputgroup-addon"><i class="icono  fas fa-pencil-alt"></i></span>
-                            <textarea id="temasTransversales" rows="5" cols="30" pInputTextarea class="no-resize"
-                                name="temasTransversales" [(ngModel)]="disenioCurricular.temasTransversales"></textarea>
+                            <textarea rows="5" cols="30" pInputTextarea id="temasTransversales"
+                                name="temasTransversales" class="no-resize"
+                                [(ngModel)]="disenioCurricular.temasTransversales"></textarea>
                         </div>
                     </div>
                 </div>
@@ -22,7 +23,8 @@
                     <div class="col-10 md:col-10">
                         <div class="p-inputgroup">
                             <span class="p-inputgroup-addon"><i class="icono fas fa-duotone fa-file"></i></span>
-                            <textarea id="float-input" rows="5" cols="30" pInputTextarea class="no-resize"
+                            <textarea rows="5" cols="30" pInputTextarea id="estrategiasAprendizaje"
+                                name="estrategiasAprendizaje" class="no-resize"
                                 [(ngModel)]="disenioCurricular.estrategiasAprendizaje"></textarea>
                         </div>
                     </div>
@@ -83,7 +85,7 @@
                             <td>{{ data.instrumnetoEvaluar }}</td>
                             <td><button pButton type="button" class="p-button-rounded p-button-danger "
                                     icon="pi pi-times"
-                                    (click)="quitarElementoEvaluacionD(data.tecnicaCurricular)"></button></td>
+                                    (click)="quitarElementoEvaluacionD(data.tecnicaEvaluar)"></button></td>
                         </tr>
                     </ng-template>
                 </p-table>
@@ -196,7 +198,7 @@
                             <td>{{ data.instrumnetoFormativaFinal }}</td>
                             <td><button pButton type="button" class="p-button-rounded p-button-danger"
                                     icon="pi pi-times"
-                                    (click)="quitarElementoEvaluacionF(data.tecnicaCurricular)"></button></td>
+                                    (click)="quitarElementoEvaluacionF(data.tecnicaFormativaFinal)"></button></td>
                         </tr>
                     </ng-template>
                 </p-table>
