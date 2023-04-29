@@ -27,20 +27,19 @@ export class ListCourseComponent implements OnInit {
 
   ngOnInit(): void {
     this.idUsuarioIsLoggin = localStorage.getItem('id_username');
+    this.listCourseporUsuarioLogin(this.idUsuarioIsLoggin);
 
-    this.capacitadorService.getCapacitadorByUsuarioIdUsuario(this.idUsuarioIsLoggin).subscribe((data)=>{
-      if(data != null){
-        this.capacitador = data;
-        this.idCapacitador = this.capacitador.idCapacitador;
-        this.listCourseporUsuarioLogin(this.idCapacitador);
-      }
-   
-    })
+    // this.capacitadorService.getCapacitadorByUsuarioIdUsuario(this.idUsuarioIsLoggin).subscribe((data)=>{
+    //   if(data != null){
+    //     this.capacitador = data;
+    //     this.idCapacitador = this.capacitador.idCapacitador;
+    //   }
+    // })
     
   }
 
   public listCourseporUsuarioLogin(idUsuario: number) {
-    this.cursoService.obtenerTodoslosCursosPorIdCapacitador(idUsuario).subscribe((data) => {
+    this.cursoService.obtenerTodoslosCursosPorIdUsuario(idUsuario).subscribe((data) => {
       this.cursoList = data;
       console.log(data)
     });
