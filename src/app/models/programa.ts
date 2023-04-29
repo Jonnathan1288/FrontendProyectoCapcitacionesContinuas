@@ -1,6 +1,6 @@
 import { PeriodoPrograma } from "./periodo-programa";
 
-export class Programas {
+export class Programa {
     idPrograma?: number;
     nombrePrograma?: string;
     descripcionPrograma?: string;
