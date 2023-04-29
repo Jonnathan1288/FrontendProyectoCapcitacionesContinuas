@@ -2,7 +2,7 @@ import { Curso } from './curso';
 
 export class HorarioCurso {
   idHorarioCurso?: number;
-  estadoHorarioCurso?: string;
+  estadoHorarioCurso?: boolean;
   dias?: string;
   horaInicio?: string;
   horaFin?: string;

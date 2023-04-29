@@ -1,9 +1,29 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environment/enviroment';
+import { Observable } from 'rxjs';
+import { Programas } from '../models/programa';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProgramasService {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
+  
+  public listPrograma():Observable<any>{
+    return this.http.get<any>(environment.apiuri+'/programa/listar');
+  }
+
+  public getProgramaById(idPrograma: number):Observable<Programas>{
+    return this.http.get<Programas>(environment.apiuri+'/programa/findbyId/'+idPrograma);
+  }
+
+  public savePrograma(programa: Programas):Observable<Programas>{
+    return this.http.post<Programas>(environment.apiuri+'/programa/crear', programa);
+  }
+
+  public updatePrograma(idPrograma:number, programa: Programas):Observable<Programas>{
+    return this.http.put<Programas>(environment.apiuri+'/programa/actualizar/'+idPrograma, programa);
+  }
 }

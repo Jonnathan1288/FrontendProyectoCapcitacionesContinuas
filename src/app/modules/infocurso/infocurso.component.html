@@ -1,3 +1,57 @@
+
+<div class="job-explain">
+    <img class="job-bg" alt="" style="background-color: #007bff;">
+    <div class="job-logos">
+        <svg viewBox="0 0 32 32" style="background-color:#9dc1f1">
+          <image [attr.xlink:href]="'data:image/jpeg;base64,' + dataCurso.fotoCurso" width="32" height="32" />
+        </svg>
+      </div>
+
+
+    <!-- DETAIL -->
+    <div class="job-explain-content">
+        <div class="job-title-wrapper">
+            <div class="job-card-title">{{dataCurso.nombreCurso}}</div>
+        </div>
+        <div class="job-subtitle-wrapper">
+            <div class="company-name">
+                Patreon <span class="comp-location">Londontowne, MD.</span>
+            </div>
+            <div class="posted">
+                Posted 8 days ago<span class="app-number">98 Application</span>
+            </div>
+        </div>
+        <div class="explain-bar">
+            <div class="explain-contents">
+                <div class="explain-title">Modalidad</div>
+                <div class="explain-subtitle">{{dataCurso.modalidadCurso!.nombreModalidadCurso}}</div>
+            </div>
+            <div class="explain-contents">
+                <div class="explain-title">Nivel Curso</div>
+                <div class="explain-subtitle">{{dataCurso.nivelCurso!.nombreNivelCurso}}</div>
+            </div>
+            <div class="explain-contents">
+                <div class="explain-title">Horarios</div>
+                <div class="explain-subtitle">{{dataCurso.horarioCurso!.horaInicio}} a {{dataCurso.horarioCurso!.horaFin}}</div>
+            </div>
+            <div class="explain-contents">
+                <div class="explain-title">Offer Salary</div>
+                <div class="explain-subtitle">$2150.0 / Month</div>
+            </div>
+        </div>
+        <div class="overview-text">
+            <div class="overview-text-header">Descripción</div>
+            <div class="overview-text-subheader">{{dataCurso.descripcionCurso}}</div>
+        </div>
+        <div class="overview-text">
+            <div class="overview-text-header">Prerrequisitos</div>
+            <div class="overview-text-item">3+ years working as a product designer.
+            </div>
+        </div>
+    </div>
+    <!-- DETAIL -->
+</div>
+=======
 <div class="card flex justify-content-center">
     <p-panel header="Informacion General del Curso">
         <p-card header="Informacion General del Curso" style="margin: 5px;">
@@ -55,3 +109,4 @@
 
     </p-panel>
 </div> 
+

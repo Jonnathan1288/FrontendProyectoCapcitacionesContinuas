@@ -1,0 +1,53 @@
+<div class="container mt-4">
+    <div class="card text-center mb-2">
+
+        <h5 class="mt-4 ">MIS CURSOS</h5>
+        <div class="mb-3">
+            <p-button type="button" icon="pi pi-chevron-left" (click)="prev()" [disabled]="isFirstPage()"
+                styleClass="p-button-text"></p-button>
+            <p-button type="button" icon="pi pi-refresh" (click)="reset()" styleClass="p-button-text"></p-button>
+            <p-button type="button" icon="pi pi-chevron-right" (click)="next()" [disabled]="isLastPage()"
+                styleClass="p-button-text"></p-button>
+
+        </div>
+        <p-table [value]="cursoList" [paginator]="true" [rows]="rows" [showCurrentPageReport]="true"
+            [(first)]="first" [tableStyle]="{'min-width': '50rem'}"
+            currentPageReportTemplate="Mostrando {first} to {last} of {totalRecords} usuarios"
+            [rowsPerPageOptions]="[5,7,10]">
+            <ng-template pTemplate="header">
+                <tr>
+            
+                    <th style="width:25%">NOMBRE</th>
+                    <th style="width:25%">DURACIÓN</th>
+                    <th style="width:25%">F-INICIO</th>
+                    <th style="width:25%">F-FIN</th>
+                    <th style="width:25%">FOTO</th>
+                    <th style="width:25%">ESTADO</th>
+                    <th style="width:25%">SILABO</th>
+                    <th style="width:25%">NECESIDAD</th>
+                    <th style="width:25%">EDITAR</th>
+
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-data>
+                <tr>
+                    <td>{{data.nombreCurso}}</td>
+                    <td>{{data.duracionCurso}}</td>
+                    <td>{{data.fechaInicioCurso}}</td>
+                    <td>{{data.fechaFinalizacionCurso}}</td>
+                 
+                    <td><img [src]="'data:image/jpeg;base64,' + data.fotoCurso" alt="" width="50px" height="50px"
+                            class="rounded-circle"></td>
+                    <td></td>
+                    <td><p-button type="button" icon="pi pi-eye" styleClass="p-button-text"
+                            (click)="silabo(data.idCurso)"></p-button></td>
+                    <td><p-button type="button" icon="pi pi-send" styleClass="p-button-text"
+                        (click)="editCurso(data.idCurso)" ></p-button></td>
+                    <td><p-button type="button" icon="pi pi-print" styleClass="p-button-text"
+                            ></p-button></td>
+
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>
