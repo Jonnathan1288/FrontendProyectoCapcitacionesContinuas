@@ -107,8 +107,11 @@ export class SilaboComponent implements OnInit {
     }
   }
 
-  public quitarElemento(index: number): void {
-    this.listResultadosAprendizajes.splice(index, 1);
+  public quitarElemento(temaUnidadSilabo: any): void {
+    const index = this.listResultadosAprendizajes.findIndex(item => item.temaUnidadSilabo === temaUnidadSilabo);
+    if (index !== -1) {
+      this.listResultadosAprendizajes.splice(index, 1);
+    }
   }
   /* FIN RESULTADOS APRENDIZAJE */
 
@@ -129,8 +132,11 @@ export class SilaboComponent implements OnInit {
     }
   }
 
-  public quitarElementoContenido(index: number): void {
-    this.listContenidosSilabo.splice(index, 1);
+  public quitarElementoContenido(temaContenido: any): void {
+    const index = this.listContenidosSilabo.findIndex(item => item.temaContenido === temaContenido);
+    if (index !== -1) {
+      this.listContenidosSilabo.splice(index, 1);
+    }
   }
   /* FIN CONTENIDOS */
 
@@ -148,8 +154,11 @@ export class SilaboComponent implements OnInit {
     }
   }
 
-  public quitarElementoEstrategias(index: number): void {
-    this.listEstrategiasMetodologica.splice(index, 1);
+  public quitarElementoEstrategias(nombreEstrategiaMetodologica: any): void {
+    const index = this.listEstrategiasMetodologica.findIndex(item => item.nombreEstrategiaMetodologica === nombreEstrategiaMetodologica);
+    if (index !== -1) {
+      this.listEstrategiasMetodologica.splice(index, 1);
+    }
   }
   /* */
 
@@ -166,8 +175,11 @@ export class SilaboComponent implements OnInit {
     }
   }
 
-  public quitarElementoMateriales(index: number): void {
-    this.listMaterialConvencionales.splice(index, 1);
+  public quitarElementoMateriales(descripcionMaterialConvencional: any): void {
+    const index = this.listMaterialConvencionales.findIndex(item => item.descripcionMaterialConvencional === descripcionMaterialConvencional);
+    if (index !== -1) {
+      this.listMaterialConvencionales.splice(index, 1);
+    }
   }
   /* */
 
@@ -238,7 +250,7 @@ export class SilaboComponent implements OnInit {
     for (let convencionales of this.listMaterialConvencionales) {
       convencionales.silabo = this.silabo;
       convencionales.estadoMaterialConvencional = true;
-      this.materialesConvencianalesService.saveMaterialAudiovisuales(convencionales).subscribe(data => {
+      this.materialesConvencianalesService.saveMaterialConvencional(convencionales).subscribe(data => {
         console.log("Se creo =)");
       });
     }
@@ -412,10 +424,138 @@ export class SilaboComponent implements OnInit {
 
   }
 
+  // CONTENIDOS
+  public cambiarEstadosContenidosTrue(idContenidoSilabo: number):void{
+    this.contenidoSilaboService.getContenidosilabosById(idContenidoSilabo).subscribe(
+      data=>{
+        this.contenidosSilabo = data;
+        this.contenidosSilabo.estadoContenido = true;
+        this.contenidoSilaboService.updateContenidoSilabo(idContenidoSilabo,this.contenidosSilabo).subscribe(
+          data=>{
+            this.traerDatosContenidosFull(this.idSilaboCapGlobal!);
+            console.log("cambio")
+          }
+        )
+      }
+    )
+  }
+
+  public cambiarEstadosContenidosFalse(idContenidoSilabo: number):void{
+    this.contenidoSilaboService.getContenidosilabosById(idContenidoSilabo).subscribe(
+      data=>{
+        this.contenidosSilabo = data;
+        this.contenidosSilabo.estadoContenido = false;
+        this.contenidoSilaboService.updateContenidoSilabo(idContenidoSilabo,this.contenidosSilabo).subscribe(
+          data=>{
+            this.traerDatosContenidosFull(this.idSilaboCapGlobal!);
+            console.log("cambio")
+          }
+        )
+      }
+    )
+  }
+  // FIN CONTENIDOS
+
+  // ESTRATEGIAS
+  public cambiarEstadosEstrategiasTrue(idEstrategiaMetodologica: number):void{
+    this.estrategiasMetodologicasService.getEstrategiasMetodologicaById(idEstrategiaMetodologica).subscribe(
+      data=>{
+        this.estrategiasMetodologicas = data;
+        this.estrategiasMetodologicas.estadoEstrategiaMetodologicaActivo = true;
+        this.estrategiasMetodologicasService.updateEstrategiasSilabo(idEstrategiaMetodologica,this.estrategiasMetodologicas).subscribe(
+          data=>{
+            this.traerDatosEstrategiasFull(this.idSilaboCapGlobal!);
+            console.log("cambio")
+          }
+        )
+      }
+    )
+  }
+
+  public cambiarEstadosEstrategiasFalse(idEstrategiaMetodologica: number):void{
+    this.estrategiasMetodologicasService.getEstrategiasMetodologicaById(idEstrategiaMetodologica).subscribe(
+      data=>{
+        this.estrategiasMetodologicas = data;
+        this.estrategiasMetodologicas.estadoEstrategiaMetodologicaActivo = false;
+        this.estrategiasMetodologicasService.updateEstrategiasSilabo(idEstrategiaMetodologica,this.estrategiasMetodologicas).subscribe(
+          data=>{
+            this.traerDatosEstrategiasFull(this.idSilaboCapGlobal!);
+            console.log("cambio")
+          }
+        )
+      }
+    )
+  }
+  // FIN ESTRATEGIAS
+
+  // CONVECIONLAES
+    public cambiarEstadosConvencionalTrue(idMaterialConvencional: any):void{
+      this.materialesConvencianalesService.getMaterialConvencionaleById(idMaterialConvencional).subscribe(
+        data=>{
+          this.materialesConvecionales = data;
+          this.materialesConvecionales.estadoMaterialConvencional = true;
+          this.materialesConvencianalesService.updateMaterialConvencionales(idMaterialConvencional,this.materialesConvecionales).subscribe(
+            data=>{
+              this.traerDatosMconvencionalesFull(this.idSilaboCapGlobal!);
+              console.log("cambio")
+            }
+          )
+        }
+      )
+    }
+  
+    public cambiarEstadosConvencionalFalse(idMaterialConvencional: any):void{
+      this.materialesConvencianalesService.getMaterialConvencionaleById(idMaterialConvencional).subscribe(
+        data=>{
+          this.materialesConvecionales = data;
+          this.materialesConvecionales.estadoMaterialConvencional = false;
+          this.materialesConvencianalesService.updateMaterialConvencionales(idMaterialConvencional,this.materialesConvecionales).subscribe(
+            data=>{
+              this.traerDatosMconvencionalesFull(this.idSilaboCapGlobal!);
+              console.log("cambio")
+            }
+          )
+        }
+      )
+    }
+  // FIN CONVECIONLAES
+
+  // AUDIVISUALES
+  public cambiarEstadosAudiovisualesTrue(idMaterialAudiovisual: any):void{
+    this.materialesAudivisualesSilaboService.getMaterialAudiovisualesById(idMaterialAudiovisual).subscribe(
+      data=>{
+        this.materialesAudiovisuales = data;
+        this.materialesAudiovisuales.estadoMaterialAudiovisual = true;
+        this.materialesAudivisualesSilaboService.updateEstadosMaterialAudio(idMaterialAudiovisual,this.materialesAudiovisuales).subscribe(
+          data=>{
+            this.traerDatosMaudiovisualesFull(this.idSilaboCapGlobal!);
+            console.log("cambio")
+          }
+        )
+      }
+    )
+  }
+
+  public cambiarEstadosAudiovisualesFalse(idMaterialAudiovisual: any):void{
+    this.materialesAudivisualesSilaboService.getMaterialAudiovisualesById(idMaterialAudiovisual).subscribe(
+      data=>{
+        this.materialesAudiovisuales = data;
+        this.materialesAudiovisuales.estadoMaterialAudiovisual = false;
+        this.materialesAudivisualesSilaboService.updateEstadosMaterialAudio(idMaterialAudiovisual,this.materialesAudiovisuales).subscribe(
+          data=>{
+            this.traerDatosMaudiovisualesFull(this.idSilaboCapGlobal!);
+            console.log("cambio")
+          }
+        )
+      }
+    )
+  }
+// FIN AUDIVISUALES
+
+  // FIN ACTUALIZADOS
 
   /* MODAL */
   visible?: boolean;
-  visibleTree?: boolean;
   idCapModelEdit?: number;
   opcionCapResultado?: string;
 
@@ -458,16 +598,51 @@ export class SilaboComponent implements OnInit {
   }
   // FIN 
 
+
   // CREATE AND UPDATE CONTENIDOS 
+  opcionDelContenido!:string;
+  idCapModelEditContenido?: number;
+  visibleTree?: boolean;
+
   public showModalCreateContenidos() {
-    this.contenidosSilabo = new ResultadoAprendizajeSilabo;
+    this.opcionDelContenido = "C"
+    this.contenidosSilabo = new Contenidosilabos;
     this.visibleTree = true;
+  }
+
+  public showModalEditContenidos(idContenidoSilabo:number) {
+    this.opcionDelContenido = "U"
+    this.visibleTree = true;
+    this.contenidoSilaboService.getContenidosilabosById(idContenidoSilabo).subscribe(
+      data => {
+        this.contenidosSilabo = data;
+        this.idCapModelEditContenido = this.contenidosSilabo.idContenidoSilabo;
+      }
+    )
+  }
+
+  public metodoElejidoContenidos():void{
+    if (this.opcionDelContenido == "C") {
+      this.contenidosSilabo.silabo = this.silabo;
+      this.contenidosSilabo.estadoContenido = true;
+      this.contenidoSilaboService.saveContenidosilabos(this.contenidosSilabo).subscribe(
+      dataTwo => {
+        this.traerDatosContenidosFull(this.idSilaboCapGlobal!);
+        console.log("Se creo uno nuevo")
+      })
+    } else {
+      this.contenidoSilaboService.updateContenidoSilabo(this.idCapModelEditContenido!, this.contenidosSilabo).subscribe(
+        dataTwo => {
+          this.traerDatosContenidosFull(this.idSilaboCapGlobal!);
+          console.log("Se actualizo")
+        }
+      )
+    }
   }
   // FIN
 
   // CREATE AND UPDATE AUDIVISUAL
   visibleFive?: boolean;
-  visibleFiveCreate?: boolean;
   idCapModelEditAudiovisual?: number;
   opcionElegida?: string;
 
@@ -509,16 +684,98 @@ export class SilaboComponent implements OnInit {
   }
   // FIN
 
+  // MODAL CONVENCIONALES
+  visibleSeven?: boolean;
+  opcionEscojidaConvencional?: string;
+  idCaoModelConvencional?: number;
+
+  
+  public showModalEditConvencionales(idMaterialConvencional:number):void{
+    this.visibleSeven = true;
+    this.opcionEscojidaConvencional = "U"
+    this.materialesConvencianalesService.getMaterialConvencionaleById(idMaterialConvencional).subscribe(
+      data => {
+        this.materialesConvecionales = data;
+        this.idCaoModelConvencional = this.materialesConvecionales.idMaterialConvencional;
+      }
+    )
+  }
+
+  public showModalCreateConvencionales() {
+    this.materialesConvecionales = new MaterialConvencionales;
+    this.opcionEscojidaConvencional = "C"
+    this.visibleSeven = true;
+  }
+
+  public opcionAEnviar(): void {
+    if (this.opcionEscojidaConvencional == "C") {
+      this.materialesConvecionales.silabo = this.silabo;
+      this.materialesConvecionales.estadoMaterialConvencional = true;
+      this.materialesConvencianalesService.saveMaterialConvencional(this.materialesConvecionales).subscribe(
+      dataTwo => {
+        this.traerDatosMconvencionalesFull(this.idSilaboCapGlobal!);
+        console.log("Se creo uno nuevo")
+      }
+    )
+    } else {
+      this.materialesConvencianalesService.updateMaterialConvencionales(this.idCaoModelConvencional!, this.materialesConvecionales).subscribe(
+        dataTwo => {
+          this.traerDatosMconvencionalesFull(this.idSilaboCapGlobal!);
+          console.log("Se actualizo")
+        }
+      )
+    }
+  }
+  // FIN CONVE
+
+  // CREATE AND UPDATE ESTRATEGIAS 
+  visibleSixe?: boolean;
+  opcionEscojidaEstrategia?: string;
+  idCapModelEditEstetegia?:number;
+
+  public showModalCreateEstretegias():void{
+    this.estrategiasMetodologicas = new EstrategiasMetodologica;
+    this.opcionEscojidaEstrategia = "C"
+    this.visibleSixe = true;
+  }
+  
+  public showModalEditEstretegias(idEstrategiaMetodologica:number):void{
+    this.visibleSixe = true;
+    this.opcionElegida = "U"
+    this.estrategiasMetodologicasService.getEstrategiasMetodologicaById(idEstrategiaMetodologica).subscribe(
+      data => {
+        this.estrategiasMetodologicas = data;
+        this.idCapModelEditEstetegia = this.estrategiasMetodologicas.idEstrategiaMetodologica;
+      }
+    )
+  }
+
+  public metodoElejidoEstrategias():void{
+    if (this.opcionEscojidaEstrategia == "C") {
+      this.estrategiasMetodologicas.silabo = this.silabo;
+      this.estrategiasMetodologicas.estadoEstrategiaMetodologicaActivo = true;
+      this.estrategiasMetodologicasService.saveEstrategiasMetodologica(this.estrategiasMetodologicas).subscribe(
+      dataTwo => {
+        this.traerDatosEstrategiasFull(this.idSilaboCapGlobal!);
+        console.log("Se creo uno nuevo")
+      })
+    } else {
+      this.estrategiasMetodologicasService.updateEstrategiasSilabo(this.idCapModelEditEstetegia!, this.estrategiasMetodologicas).subscribe(
+        dataTwo => {
+          this.traerDatosEstrategiasFull(this.idSilaboCapGlobal!);
+          console.log("Se actualizo")
+        }
+      )
+    }
+  }
+  // FIN ESTRATEGIAS
+
   // FIN //
   public actualizarSilabo(): void {
 
   }
   // FIN //
 
-  /* METODOS DE LIMPIAR */
-
-
-  /* */
 
   // IMPRIMIR
   public getReportSilabo() {
