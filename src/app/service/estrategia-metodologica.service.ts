@@ -26,5 +26,10 @@ export class EstrategiaMetodologicaService {
   public getEstrategiasMetodologicaPorIdSilabo(id: number):Observable<EstrategiasMetodologica[]>{
     return this.http.get<EstrategiasMetodologica[]>(environment.apiuri+'/strategiaMetodologicaPorSilabo/findbyId/'+id);
   }
+
+  public updateEstrategiasSilabo(id:number, estrategiaMetodologica: EstrategiasMetodologica):Observable<EstrategiasMetodologica>{
+    return this.http.put<EstrategiasMetodologica>(environment.apiuri+'/strategiaMetodologica/update/'+id, estrategiaMetodologica);
+  }
+  
   
 }

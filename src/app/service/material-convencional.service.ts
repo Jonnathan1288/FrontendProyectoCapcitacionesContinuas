@@ -15,11 +15,11 @@ export class MaterialConvencionalService {
     return this.http.get<MaterialConvencionales[]>(environment.apiuri+'/materialConvencional/list');
   }
 
-  public saveMaterialAudiovisuales(materialesConvecionales: MaterialConvencionales):Observable<MaterialConvencionales>{
+  public saveMaterialConvencional(materialesConvecionales: MaterialConvencionales):Observable<MaterialConvencionales>{
     return this.http.post<MaterialConvencionales>(environment.apiuri+'/materialConvencional/save', materialesConvecionales);
   }
 
-  public getMaterialAudiovisualesById(id: number):Observable<MaterialConvencionales>{
+  public getMaterialConvencionaleById(id: number):Observable<MaterialConvencionales>{
     return this.http.get<MaterialConvencionales>(environment.apiuri+'/materialConvencional/findbyId/'+id);
   }
 

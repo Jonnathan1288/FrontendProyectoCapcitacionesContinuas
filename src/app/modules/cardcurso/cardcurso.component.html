@@ -1,30 +1,40 @@
-<div class="job">
-  <div class="wrapper">
-    <div class="main-container">
-      <div class="searched-jobs">
-        <div class="searched-bar">
-          <div class="searched-show">Showing 46 Jobs</div>
-        </div>
-        <!-- CARD -->
-        <div class="job-cards">
-          <div class="job-card" style="background-color: #e0efff;" *ngFor="let list of listCursos">
-            <div class="job-card-header" >
-                <img [src]="'data:image/jpeg;base64,' + list.fotoCurso" width="32" height="32" />
+
+<h1>Progreso del curso</h1>
+<progress [value]="progreso" max="100" ></progress>
+<span>{{progreso.toFixed(0)}}%</span>
+
+
+  <div class="pricing">
+    <div class="container">
+      <div class="pricing__title">Cursos</div>
+      <div class="pricing__grid">
+        <div class="pricing__card pricing-card pricing-card_free" *ngFor="let list of listCursos">
+          <div class="pricing-card__top">
+            <div class="pricing-card__title">Disponible</div>
+            <div class="pricing-card__price">{{list.numeroCuposCurso}}<span> Cupos</span></div>
+          </div>
+          <div class="pricing-card__body">
+            <div class="pricing-card__pluses">
+              <div class="pricing-card__plus">
+                <div class="pricing-card__plus-icon"><i class="material-icons">done_all</i></div>
+                <div class="pricing-card__plus-text">{{list.modalidadCurso!.nombreModalidadCurso}}</div>
+              </div>
+              <div class="pricing-card__plus">
+                <div class="pricing-card__plus-icon"><i class="material-icons">done_all</i></div>
+                <div class="pricing-card__plus-text">{{list.duracionCurso}}h</div>
+              </div>
+              <div class="pricing-card__plus">
+                <div class="pricing-card__plus-icon"><i class="material-icons">done_all</i></div>
+                <div class="pricing-card__plus-text">{{list.horarioCurso!.horaInicio}} a {{list.horarioCurso!.horaFin}}</div>
+              </div>
+              <div class="pricing-card__plus">
+                <div class="pricing-card__plus-icon"><i class="material-icons">done_all</i></div>
+                <div class="pricing-card__plus-text">{{list.horarioCurso!.dias}}</div>
+              </div>
             </div>
-            <div class="job-card-title">{{ list.nombreCurso }}</div>
-            <div class="job-card-subtitle">{{ list.descripcionCurso}}</div>
-            <div class="job-detail-buttons m-1" style="text-align: center;">
-              <span class="search-buttons detail-button discount">Cupos: {{list.numeroCuposCurso}}</span>
-            </div>
-            <div class="job-card-buttons">
-              <button class="search-buttons card-buttons" (click)="pasarInfoCurso(list.idCurso)">Detalles</button>
-              <button class="search-buttons card-buttons" (click)="pasarInfoCursoIsncripcion(list.idCurso)">Incribirme</button>
-            </div>
+            <div class="pricing-card__button"><p-button label="Detalles" (click)="pasarInfoCurso(list.idCurso)"></p-button>
           </div>
         </div>
-        <!-- CARD -->
       </div>
     </div>
   </div>
-</div>
-
