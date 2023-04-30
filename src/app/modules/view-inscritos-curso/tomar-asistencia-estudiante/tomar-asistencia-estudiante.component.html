@@ -1,1 +1,93 @@
-<p>tomar-asistencia-estudiante works!</p>
+<div class="container my-3">
+    
+    <div>{{today}}</div>
+    <div class="shadow-4 rounded-5 overflow-hidden">
+        <div class="table-responsive">
+            <table class="table align-middle mb-0 bg-white">
+                <thead class="bg-light">
+                    <tr>
+                        <th>Nombres</th>
+                        <th>Identificación</th>
+                       
+                        <th>Observacion</th>
+                        <th>Asistencia</th>
+                        <th>Observacion</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let list of listaAsistenciaE">
+
+                        <td>
+                            <div class="d-flex align-items-center">
+
+                                <div>
+                                    <p class="fw-bold mb-1">{{
+                                        list.partipantesMatriculados!.inscrito!.usuario!.persona!.nombre1 }} {{
+                                        list.partipantesMatriculados!.inscrito!.usuario!.persona!.nombre2 }} {{
+                                        list.partipantesMatriculados!.inscrito!.usuario!.persona!.apellido1 }} {{
+                                        list.partipantesMatriculados!.inscrito!.usuario!.persona!.apellido2 }}</p>
+                                    <p class="text-muted mb-0">{{
+                                        list.partipantesMatriculados!.inscrito!.usuario!.persona!.correo }}</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <p class="text-muted mb-0">{{
+                                list.partipantesMatriculados!.inscrito!.usuario!.persona!.identificacion }}</p>
+                        </td>
+
+
+                        <td>
+                            <p class="text-muted mb-0">{{
+                                list.observacionAsistencia }}</p>
+                        </td>
+
+                        <td>
+
+                            <div class="d-flex align-items-center">
+                                <p-button *ngIf='list.estadoAsistencia == true' icon="pi pi-check-square"
+                                    styleClass="p-button-success me-2"
+                                    (click)="estudianteNOAsisteAClase(list.idAsistencia, list)"></p-button>
+                                <p-button *ngIf='list.estadoAsistencia == false' icon="pi pi-times"
+                                    styleClass="p-button-danger me-2"
+                                    (click)="estudianteAsisteClase(list.idAsistencia, list)"></p-button>
+                            </div>
+                           
+                        </td>
+
+                        <td>
+                            <p-button icon="pi pi-eye" (click)="showDialog(list)"></p-button>
+
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+
+
+<p-dialog header="Observacion al estudiante" [(visible)]="visible" [style]="{width: '50vw'}">
+    <div class="grid p-fluid m-5">
+        <div class="col-12 md:col-12 mt-1">
+            <div class="p-inputgroup">
+                <span class="p-float-label">
+                    <input type="text" pInputText id="observacionAsistencia" name="observacionAsistencia"
+                        [(ngModel)]="asistenciaEstudiante.observacionAsistencia" required>
+                    <label htmlFor="username">Prerequisito para el curso</label>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-12" style="text-align: center; margin: 5px;">
+            <p-button [label]="'Aceptar'" icon="pi pi-check-square" (click)="tomarAsistenciaCursoEstudianteCP()"
+                styleClass="p-button-success  mb-2"></p-button>
+        </div>
+    </div>
+</p-dialog>
