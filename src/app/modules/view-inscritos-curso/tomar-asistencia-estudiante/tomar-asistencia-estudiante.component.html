@@ -44,8 +44,16 @@
                         </td>
 
                         <td>
-                            <p-inputSwitch [(ngModel)]="list.estadoAsistencia"
-                                (click)="tomarAsistenciaCursoEstudiante(list.idAsistencia, list)"></p-inputSwitch>
+
+                            <div class="d-flex align-items-center">
+                                <p-button *ngIf='list.estadoAsistencia == true' icon="pi pi-check-square"
+                                    styleClass="p-button-success me-2"
+                                    (click)="estudianteNOAsisteAClase(list.idAsistencia, list)"></p-button>
+                                <p-button *ngIf='list.estadoAsistencia == false' icon="pi pi-times"
+                                    styleClass="p-button-danger me-2"
+                                    (click)="estudianteAsisteClase(list.idAsistencia, list)"></p-button>
+                            </div>
+                           
                         </td>
 
                         <td>

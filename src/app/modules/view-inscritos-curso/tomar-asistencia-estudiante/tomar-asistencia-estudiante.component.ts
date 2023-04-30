@@ -17,6 +17,7 @@ export class TomarAsistenciaEstudianteComponent implements OnInit {
   //Para capturar el id de los matriculados
   public idCursoEstudiantesMatriculados?: number;
 
+  public banderaParaControlAsistencia:boolean =false
 //el array de los estudiantes del curso matriculado
 public listaAsistenciaE: any[] =[];
 
@@ -35,8 +36,17 @@ public listaAsistenciaE: any[] =[];
     this.asistenciaService.generarAsistenciaPorFecha(idCurso).subscribe((data)=>{
       if(data != null){
         this.listaAsistenciaE = data;
+        this.banderaParaControlAsistencia = true
       }
+      this.reloadparaAsistencias()
     })
+    
+  }
+
+  public reloadparaAsistencias(){
+    if(this.banderaParaControlAsistencia == false){
+      window.location.reload();
+    }
   }
 
   public tomarAsistenciaCursoEstudiante(idAsist: any, asistencia: Asistencia){
@@ -54,14 +64,33 @@ public listaAsistenciaE: any[] =[];
 
     this.asistenciaService.updateAsistencia(this.asistenciaEstudiante.idAsistencia!, this.asistenciaEstudiante).subscribe((data)=>{
       if(data != null){
-    
-      
-        alert('Tomado lista')
+        this.traerListadoEstudiantesMatriculadosAsistencia(this.idCursoEstudiantesMatriculados!)
       }
     })
     this.visible = false
   }
 
+  public estudianteAsisteClase(idAsist: any, asistencia: Asistencia):void{
+    asistencia.estadoAsistencia = true;
+    this.asistenciaService.updateAsistencia(idAsist, asistencia).subscribe((data)=>{
+      if(data != null){
+        console.log(data)
+    
+        alert('Tomado lista')
+      }
+    })
+  }
+
+  public estudianteNOAsisteAClase(idAsist: any, asistencia: Asistencia):void{
+    asistencia.estadoAsistencia = false;
+    this.asistenciaService.updateAsistencia(idAsist, asistencia).subscribe((data)=>{
+      if(data != null){
+        console.log(data)
+      
+        alert('Tomado lista')
+      }
+    })
+  }
 
   visible: boolean = false;
 
