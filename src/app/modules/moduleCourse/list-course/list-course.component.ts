@@ -22,43 +22,42 @@ export class ListCourseComponent implements OnInit {
 
   public idUsuarioIsLoggin: any;
   public idCapacitador: any;
-  constructor(private cursoService: CursoService, private router: Router,
-    private actiRouter: ActivatedRoute, private capacitadorService:CapacitadorService) {}
+  constructor(
+    private cursoService: CursoService,
+    private router: Router,
+    private actiRouter: ActivatedRoute,
+    private capacitadorService: CapacitadorService
+  ) {}
 
   ngOnInit(): void {
     this.idUsuarioIsLoggin = localStorage.getItem('id_username');
-
-    this.capacitadorService.getCapacitadorByUsuarioIdUsuario(this.idUsuarioIsLoggin).subscribe((data)=>{
-      if(data != null){
-        this.capacitador = data;
-        this.idCapacitador = this.capacitador.idCapacitador;
-        this.listCourseporUsuarioLogin(this.idCapacitador);
-      }
-   
-    })
-    
+    this.listCourseporUsuarioLogin(this.idUsuarioIsLoggin);
   }
 
   public listCourseporUsuarioLogin(idUsuario: number) {
-    this.cursoService.obtenerTodoslosCursosPorIdCapacitador(idUsuario).subscribe((data) => {
-      this.cursoList = data;
-      console.log(data)
-    });
+    this.cursoService
+      .obtenerTodoslosCursosPorIdUsuario(idUsuario)
+      .subscribe((data) => {
+        this.cursoList = data;
+        console.log(data);
+      });
   }
 
-  public silabo(idcurso: number){
+  public silabo(idcurso: number) {
     localStorage.setItem('idCurso', String(idcurso));
     location.replace('/silabo');
   }
 
-  public editCurso(idcurso: number){
-    // localStorage.setItem('idCurso', String(idcurso));
+  public editCurso(idcurso: number) {
     this.router.navigate(['/register/course', idcurso]);
   }
 
-  public necesidadCurso(idcurso: number){
-    // localStorage.setItem('idCurso', String(idcurso));
+  public necesidadCurso(idcurso: number) {
     this.router.navigate(['/register/necesidad', idcurso]);
+  }
+
+  public VerCursoInicio(idCurso: number) {
+    this.router.navigate(['/verMatriculados/course/inicio', idCurso]);
   }
 
   //Implementacion de la tabla de todo referente a primeng

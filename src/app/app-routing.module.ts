@@ -16,6 +16,8 @@ import { CurricularDiseñoComponent } from './modules/curricular-diseño-registe
 import { ListCourseComponent } from './modules/moduleCourse/list-course/list-course.component';
 import { RegistroNecesidadComponent } from './modules/moduleCourse/registro-necesidad/registro-necesidad.component';
 import { ViewInscritosCursoComponent } from './modules/view-inscritos-curso/view-inscritos-curso.component';
+import { ViewInicioCursoMatriculadosComponent } from './modules/view-inscritos-curso/view-inicio-curso-matriculados/view-inicio-curso-matriculados.component';
+import { TomarAsistenciaEstudianteComponent } from './modules/view-inscritos-curso/tomar-asistencia-estudiante/tomar-asistencia-estudiante.component';
 
 const routes: Routes = [
   {path: 'login', component:LoginComponent },
@@ -28,7 +30,10 @@ const routes: Routes = [
   { path: 'diseño', component: CurricularDiseñoComponent },
   // { path: 'register/course', component: CourseRegisterComponent , canActivate: [AuthGaurdGuard], data: {expectedRoles: ['Administrador'] }},
   { path: 'register/course', component: CourseRegisterComponent},
+  { path: 'asistencia/estudiantes/course/:id', component: TomarAsistenciaEstudianteComponent},
+
   { path: 'verInscritos/course/:id', component: ViewInscritosCursoComponent},
+  { path: 'verMatriculados/course/inicio/:id', component: ViewInicioCursoMatriculadosComponent},
   { path: 'register/course/:id', component: CourseRegisterComponent },
   { path: 'list/course', component: ListCourseComponent },
   { path: 'register/necesidad', component: RegistroNecesidadComponent },
