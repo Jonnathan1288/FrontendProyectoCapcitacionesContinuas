@@ -40,6 +40,10 @@ export class ViewInicioCursoMatriculadosComponent implements OnInit {
     this.router.navigate(['/asistencia/estudiantes/course', 1]);
   }
 
+  public tomarNotasFinalesCurso() {
+    this.router.navigate(['/notas/estudiantes/course', 2]);
+  }
+
   //Control del modal para el registro de la informaicon visible
   //PARA EL MODAL
 

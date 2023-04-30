@@ -3,6 +3,8 @@
         <p-button label="Generar necesidad" icon="pi pi-plus" styleClass="p-button-success  mb-2"
             (onClick)="tomarAsistenciaCurso()"></p-button>
 
+            <p-button label="Generar Notas Finales" icon="pi pi-plus" styleClass="p-button-success  mb-2 m-5"
+            (onClick)="tomarNotasFinalesCurso()"></p-button>
     </div>
     <div class="shadow-4 rounded-5 overflow-hidden">
         <div class="table-responsive">
@@ -19,7 +21,6 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let list of listParticipantesMatriculados">
-                  
                         <td>
                             <div class="d-flex align-items-center">
                             
