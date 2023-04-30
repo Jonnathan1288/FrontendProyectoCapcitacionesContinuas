@@ -1,77 +1,58 @@
-<!-- <form class=" g-3" (ngSubmit)="guardarFichadeMatrircla()">
 
-  <div class="col-auto">
-    <label for="inputPassword2" class="visually-hidden">Donde trabaja</label>
-    <input type="text" class="form-control" id="pregunta1" name="pregunta1"
-      [(ngModel)]="detallefichaMatricula.pregunta1">
-  </div>
-
-  <div class="col-auto">
-    <label for="inputPassword2" class="visually-hidden">Direcion</label>
-    <input type="text" class="form-control" id="pregunta2" name="pregunta2"
-      [(ngModel)]="detallefichaMatricula.pregunta2">
-  </div>
-  <div class="col-auto">
-    <label for="inputPassword2" class="visually-hidden">correo</label>
-    <input type="text" class="form-control" id="pregunta3" name="pregunta3"
-      [(ngModel)]="detallefichaMatricula.pregunta3">
-  </div>
-
-  <div class="col-auto">
-    <label for="inputPassword2" class="visually-hidden">numero tel</label>
-    <input type="text" class="form-control" iid="pregunta4" name="pregunta4"
-      [(ngModel)]="detallefichaMatricula.pregunta4">
-  </div>
-
-  <div class="col">
-    <label for="inputPassword2" class="visually-hidden">Activida de la in</label>
-    <input type="text" class="form-control" id="pregunta5" name="pregunta5"
-      [(ngModel)]="detallefichaMatricula.pregunta5">
-  </div>
-
-  <div class="col">
-    <label for="inputPassword2" class="visually-hidden">Actividad de la in</label>
-    <div class="form-check">
-      <input class="form-check-input" type="radio" name="actividad" id="radio1" [value]="'Si'"
-        [(ngModel)]="detallefichaMatricula.pregunta6">
-      <label class="form-check-label" for="radio1">
-        SI
-      </label>
-    </div>
-    <div class="form-check">
-      <input class="form-check-input" type="radio" name="actividad" id="radio2" [value]="'No'"
-        [(ngModel)]="detallefichaMatricula.pregunta6">
-      <label class="form-check-label" for="radio2">
-        NO
-      </label>
-    </div>
-  </div>
-
-
-
-  <div class="col">
-    <label for="inputPassword2" class="visually-hidden">SI ESTA AUSPICIADO</label>
-    <input type="text" id="pregunta7" name="pregunta7" [(ngModel)]="detallefichaMatricula.pregunta7">
-  </div>
-
-  <div class="col">
-    <label for="inputPassword2" class="visually-hidden">como se entero del curso</label>
-    <input type="text" id="pregunta8" name="pregunta8" [(ngModel)]="detallefichaMatricula.pregunta8">
-  </div>
-
-  <div class="col">
-    <label for="inputPassword2" class="visually-hidden">Qu otros cursos le gustario segguir</label>
-    <input type="text" class="form-control" id="pregunta9" name="pregunta9"
-      [(ngModel)]="detallefichaMatricula.pregunta9">
-  </div>
-
-  <button type=" submit">enviar</button>
-</form> -->
 
 
 
 <div class="card flex justify-content-center">
+
   <p-panel header="INSCRIPCIÓN">
+
+
+    <p-card header="INFORMACIÓN DEL CURSO"
+    style="margin: 5px; background-color: #fff; border-radius: 10px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);">
+    <div class="grid">
+        <div class="col-5 flex justify-content-center">
+            <div style="float: left;">
+              <p><strong>Nombre del curso: </strong> {{ curso!.nombreCurso }}</p>
+                  
+                </div>
+            </div>
+        
+
+        <div class="col-5 flex justify-content-center">
+            <div style="float: left;">
+              <p><strong>Modalidad del curso: </strong> {{ curso!.modalidadCurso!.nombreModalidadCurso }}</p>
+             
+            </div>
+        </div>
+      </div>
+</p-card>
+
+
+<p-card header="DATOS PERSONALES" style="margin: 5px;">
+  <div class="grid" >
+      <div class="col-5 flex justify-content-center">
+          <div style="float: left;">
+
+              <p><strong>Nombres y Apellidos:</strong> {{
+                usuario!.persona!.nombre1 }} {{
+                usuario!.persona!.nombre2 }} {{
+                usuario!.persona!.apellido1 }} {{
+                usuario!.persona!.apellido2 }}</p>
+              <p><strong>Cédula de Ciudadanía:</strong> {{ usuario!.persona!.identificacion}}</p>
+              <p><strong>Correo electrónico: </strong> {{ usuario!.persona!.correo}}</p>
+          </div>
+      </div>
+  </div>
+</p-card>
+
+
+
+
+
+
+
+
+
     <form (ngSubmit)="guardarFichadeMatrircla()" ngNativeValidate>
 
       <p-card header="INFORMACIÓN LABORAL" class="m-5">
