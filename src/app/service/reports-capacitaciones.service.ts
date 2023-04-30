@@ -20,4 +20,9 @@ export class ReportsCapacitacionesService {
   public gedownloadSilabo(idSilabo: number) {
     return this.http.get(environment.apiuri+ '/generarSilabo/downloadSilabo/'+idSilabo, { responseType: 'blob' });
   }
+
+  //Reportes que va tener el admin..
+  public gedownloadFichaDeInscripcion(idFicha: number) {
+    return this.http.get(environment.apiuri+ '/generarFichaInscripcion/downloadFicha/'+idFicha, { responseType: 'blob' });
+  }
 }

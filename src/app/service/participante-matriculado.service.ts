@@ -19,4 +19,14 @@ export class ParticipanteMatriculadoService {
   public saveParticipantesMatriculados(participantesMatriculados: ParticipantesMatriculados):Observable<ParticipantesMatriculados>{
     return this.http.post<ParticipantesMatriculados>(environment.apiuri+'/participantesMatriculados/crear', participantesMatriculados);
   }
+
+  public getParticipantesMatriculadosByIdCurso(idCurso: number):Observable<ParticipantesMatriculados[]>{
+    return this.http.get<ParticipantesMatriculados[]>(environment.apiuri+'/participantesMatriculados/findbyIdCursoMatriculados/'+idCurso);
+  }
+
+  public pasarEstudiantesMatriculados(idCurso: number){
+    return this.http.get(environment.apiuri+'/participantesMatriculados/aceptarInicioCurso/'+idCurso);
+  }
+
+  
 }
