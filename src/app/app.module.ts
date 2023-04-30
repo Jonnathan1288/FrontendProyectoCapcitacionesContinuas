@@ -23,6 +23,8 @@ import { InfocursoComponent } from './modules/infocurso/infocurso.component';
 import { ListCourseComponent } from './modules/moduleCourse/list-course/list-course.component';
 import { RegistroNecesidadComponent } from './modules/moduleCourse/registro-necesidad/registro-necesidad.component';
 import { ViewInscritosCursoComponent } from './modules/view-inscritos-curso/view-inscritos-curso.component';
+import { ViewInicioCursoMatriculadosComponent } from './modules/view-inscritos-curso/view-inicio-curso-matriculados/view-inicio-curso-matriculados.component';
+import { TomarAsistenciaEstudianteComponent } from './modules/view-inscritos-curso/tomar-asistencia-estudiante/tomar-asistencia-estudiante.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +45,8 @@ import { ViewInscritosCursoComponent } from './modules/view-inscritos-curso/view
     ListCourseComponent,
     RegistroNecesidadComponent,
     ViewInscritosCursoComponent,
+    ViewInicioCursoMatriculadosComponent,
+    TomarAsistenciaEstudianteComponent,
   ],
   imports: [
     BrowserModule,

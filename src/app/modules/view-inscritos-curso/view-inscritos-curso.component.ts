@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Curso } from 'src/app/models/curso';
 import { Inscrito } from 'src/app/models/inscrito';
 import { CursoService } from 'src/app/service/curso.service';
 import { inscritosService } from 'src/app/service/inscritos.service';
+import { ParticipanteMatriculadoService } from 'src/app/service/participante-matriculado.service';
 
 @Component({
   selector: 'app-view-inscritos-curso',
@@ -15,7 +16,9 @@ export class ViewInscritosCursoComponent implements OnInit {
   constructor(
     private activateRoute: ActivatedRoute,
     private cursoService: CursoService,
-    private inscritosService: inscritosService
+    private inscritosService: inscritosService,
+    private router: Router,
+    private participantesMatriculadosService: ParticipanteMatriculadoService
   ) {
   }
 
@@ -73,6 +76,14 @@ export class ViewInscritosCursoComponent implements OnInit {
         )
       }
     )
+  }
+
+  public InicioCurso() {
+    this.participantesMatriculadosService.pasarEstudiantesMatriculados(this.idCursoGlobal!).subscribe((data)=>{
+      this.router.navigate(['/verMatriculados/course/inicio', this.idCursoGlobal]);
+    })
+    
+    
   }
 
 

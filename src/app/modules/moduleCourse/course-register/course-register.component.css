@@ -1,21 +1,79 @@
-.checkbox-group {
-    display: flex;
-    flex-wrap: wrap;
-  }
-  
+/* .checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.checkbox-group div {
+  width: 14%;
+}
+
+@media only screen and (max-width: 768px) {
   .checkbox-group div {
-    width: 14%;
+    width: 20%;
   }
-  
-  @media only screen and (max-width: 768px) {
-    .checkbox-group div {
-      width: 20%;
-    }
+}
+
+@media only screen and (max-width: 576px) {
+  .checkbox-group div {
+    width: 33.33%;
   }
-  
-  @media only screen and (max-width: 576px) {
-    .checkbox-group div {
-      width: 33.33%;
-    }
-  }
-  
+} */
+
+
+/*  */
+
+
+/* IMAGEN */
+
+.personal-image {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.personal-image input[type="file"] {
+  display: none;
+}
+
+.personal-figure {
+  position: relative;
+  width: 250px;
+  height: 170px;
+}
+
+.personal-avatar {
+  cursor: pointer;
+  width: 250px;
+  height: 170px;
+  box-sizing: border-box;
+  border: 2px solid transparent;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.2);
+  transition: all ease-in-out .3s;
+}
+
+.personal-avatar:hover {
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.5);
+}
+
+.personal-figcaption {
+  cursor: pointer;
+  position: absolute;
+  top: 0px;
+  width: inherit;
+  height: inherit;
+  opacity: 0;
+  background-color: rgba(0, 0, 0, 0);
+  transition: all ease-in-out .3s;
+}
+
+.personal-figcaption:hover {
+  opacity: 1;
+  background-color: rgba(0, 0, 0, .5);
+}
+
+.personal-figcaption>img {
+  margin-top: 45px;
+  width: 50px;
+  height: 50px;
+}
+
+/* FIN */
