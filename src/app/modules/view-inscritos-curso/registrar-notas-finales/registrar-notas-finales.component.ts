@@ -103,6 +103,5 @@ export class RegistrarNotasFinalesComponent implements OnInit{
     )       
   }
   //
-  
 
 }

@@ -1,0 +1,64 @@
+<p-card header="Registro de evidencias">
+    <form (ngSubmit)="saveEvidenciasRegistrofotografico()" ngNativeValidate style="padding: 15px;">
+        <p-card header="Registro fotografico del curso">
+            <div class="row rounded mb-3">
+
+                <div class="col-md-6">
+
+                    <div class="grid p-fluid">
+                        <div class="col-12 md:col-12" style="align-items: center;">
+
+                            <div class="card flex justify-content-center">
+                                <span class="p-float-label">
+                                    <textarea id="float-input" rows="5" cols="30" pInputTextarea id="descripcionCurso"
+                                        name="descripcionCurso"
+                                        [(ngModel)]="registroFotografico.descripcionFoto"></textarea>
+                                    <label for="float-input">Descripción del curso a impartir</label>
+                                </span>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="grid p-fluid">
+
+                        <div class="col-12 md:col-12 mt-2">
+                            <div class="p-inputgroup">
+                                <p-calendar inputId="edad" class="ng-dirty" [showIcon]="true"
+                                    placeholder="Fecha de evidencia" id="fechaEvidencia" name="fechaEvidencia"
+                                    [(ngModel)]="registroFotografico.fecha"></p-calendar>
+                            </div>
+
+                        </div>
+                    </div>
+
+                   
+
+
+                </div>
+                <div class="col-md-6">
+                    <div class="personal-image">
+                        <label class="label" style="border: black;">
+                            <input type="file" accept="image/jpeg, image/jpg, image/png" (change)="subirFoto($event)" />
+                            <figure class="personal-figure">
+                                <!-- <img class="personal-avatar"  *ngIf="filem" [src]="file" alt="img-avatar"> -->
+                                <img *ngIf="registroFotografico.foto"
+                                    [src]="registroFotografico.foto ? 'data:image/jpeg;base64,' + registroFotografico.foto : '../../../../assets/img/camer.png'"
+                                    class="personal-avatar" alt="logoFundacion" />
+                                <img style="padding: 20px;" *ngIf="!registroFotografico.foto"
+                                    src="./assets/img/camer.png" class="personal-avatar" alt="Logo Fundación" />
+                                <figcaption class="personal-figcaption">
+                                    <img src="./assets/img/camer.png" />
+                                </figcaption>
+                            </figure>
+                        </label>
+                    </div>
+                </div>
+
+            </div>
+        </p-card>
+        <div class="container  text-center mt-4">
+            <p-button label="Guardar" type="ngSubmit" icon="pi pi-save" styleClass="p-button-success"></p-button>
+        </div>
+    </form>
+</p-card>

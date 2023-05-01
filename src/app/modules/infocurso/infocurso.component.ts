@@ -52,5 +52,8 @@ export class InfocursoComponent implements OnInit {
       })
   }
   
+  public pasarInfoCursoIsncripcion(idCurso:any):void{
+    this.router.navigate(['/mat', idCurso ]);
+  }
 
 }

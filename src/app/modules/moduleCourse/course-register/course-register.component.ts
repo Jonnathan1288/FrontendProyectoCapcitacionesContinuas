@@ -251,12 +251,20 @@ export class CourseRegisterComponent {
       (especialidad: any) => especialidad.area.idArea === codigoArea
     );
 
+    // this.listEspecialidadItem = filterEsp.map((esp) => {
+    //   return {
+    //     label: esp.nombreEspecialidad!.slice(0, 40),
+    //     value: esp.idEspecialidad,
+    //   };
+    // });
     this.listEspecialidadItem = filterEsp.map((esp) => {
       return {
-        label: esp.nombreEspecialidad,
+        label: esp.nombreEspecialidad!.slice(0, 40) + '\n' + esp.nombreEspecialidad!.slice(40, 80),
         value: esp.idEspecialidad,
       };
     });
+    
+    
   }
 
   //Método para obtener el objecot por especialidad
@@ -326,7 +334,7 @@ export class CourseRegisterComponent {
     }
   }
 
-  //carga foto
+  //convesion a base 64
   async convertToBase64(file: File): Promise<string> {
     const reader = new FileReader();
     return new Promise<string>((resolve, reject) => {
@@ -341,18 +349,8 @@ export class CourseRegisterComponent {
     });
   }
 
-  public silabo() {
-    localStorage.setItem('idCurso', String(this.idCursoUpdate));
-    location.replace('/silabo');
-  }
-
-  public necesidad() {
-    this.router.navigate(['/register/necesidad', this.idCursoUpdate]);
-  }
-
-
+  
   listPrerequisitoCurso1: PrerequisitoCurso[] = [];
-
   public almacenarListaDeprerequisitos(): void {
     if (!this.prerequisito.nombrePrerequisitoCurso) {
       alert('vacio');
@@ -369,6 +367,17 @@ export class CourseRegisterComponent {
     if (index !== -1) {
       this.listPrerequisitoCurso1.splice(index, 1);
     }
+  }
+
+
+//Ruteo a otras ventanas
+  public silabo() {
+    localStorage.setItem('idCurso', String(this.idCursoUpdate));
+    location.replace('/silabo');
+  }
+
+  public necesidad() {
+    this.router.navigate(['/register/necesidad', this.idCursoUpdate]);
   }
 
   //PARA EL MODAL
