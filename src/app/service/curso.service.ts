@@ -15,6 +15,10 @@ export class CursoService {
     return this.http.get<Curso[]>(environment.apiuri+'/curso/list');
   }
 
+  public listCursoDisponibles():Observable<Curso[]>{
+    return this.http.get<Curso[]>(environment.apiuri+'/cursoDisponibles/list');
+  }
+
   public saveCurso(curso: Curso):Observable<Curso>{
     return this.http.post<Curso>(environment.apiuri+'/curso/save', curso);
   }
