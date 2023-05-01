@@ -26,6 +26,8 @@
                     <th style="width:25%">SILABO</th>
                     <th style="width:25%">NECESIDAD</th>
                     <th style="width:25%">VER-CURSO</th>
+                    <th style="width:25%">INSCRITOS</th>
+                    <th style="width:25%">RegFoto</th>
 
                 </tr>
             </ng-template>
@@ -44,7 +46,11 @@
                     <td><p-button type="button" icon="pi pi-send" styleClass="p-button-text"
                             (click)="editCurso(data.idCurso)"></p-button></td>
                     <td><p-button type="button" icon="pi pi-eye" styleClass="p-button-text"
-                        (click)="VerCursoInicio(data.idCurso)"></p-button></td>
+                            (click)="VerCursoInicio(data.idCurso)"></p-button></td>
+                    <td><p-button type="button" icon="pi pi-eye" styleClass="p-button-text"
+                            (click)="VerParticipantesInscritos(data.idCurso)"></p-button></td>
+                            <td><p-button type="button" icon="pi pi-eye" styleClass="p-button-text"
+                                (click)="VerRegistroFotografico()"></p-button></td>
 
                 </tr>
             </ng-template>

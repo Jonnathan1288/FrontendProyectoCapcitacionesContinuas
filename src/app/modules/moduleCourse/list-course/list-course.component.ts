@@ -60,6 +60,14 @@ export class ListCourseComponent implements OnInit {
     this.router.navigate(['/verMatriculados/course/inicio', idCurso]);
   }
 
+  public VerParticipantesInscritos(idCurso: number) {
+    this.router.navigate(['/verInscritos/course/', idCurso]);
+  }
+
+  public VerRegistroFotografico() {
+    this.router.navigate(['/lef']);
+  }
+
   //Implementacion de la tabla de todo referente a primeng
   next() {
     this.first = this.first + this.rows;
