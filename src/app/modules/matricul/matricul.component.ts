@@ -9,6 +9,7 @@ import { Usuario } from 'src/app/models/usuario';
 import { CursoService } from 'src/app/service/curso.service';
 import { DetalleFichaService } from 'src/app/service/detalle-ficha.service';
 import { inFichaMatriculaService } from 'src/app/service/ficha-matricula.service';
+import { Router } from '@angular/router';
 
 import { inscritosService } from 'src/app/service/inscritos.service';
 import { ParticipanteMatriculadoService } from 'src/app/service/participante-matriculado.service';
@@ -33,7 +34,8 @@ export class MatriculComponent implements OnInit {
   
 
   constructor(private usuarioServie: UsuarioService, private inscritosService: inscritosService, private activateRoute: ActivatedRoute,
-    private cursoService: CursoService, private fichamatriculaService: inFichaMatriculaService, private detalleFichaMatriculaService: DetalleFichaService, private participantesmatriculadoService: ParticipanteMatriculadoService) {}
+    private cursoService: CursoService, private fichamatriculaService: inFichaMatriculaService, private detalleFichaMatriculaService: DetalleFichaService, private participantesmatriculadoService: ParticipanteMatriculadoService,
+    private router: Router) {}
 
   ngOnInit(): void {
     this. idUserLoggin = localStorage.getItem('id_username');
@@ -86,16 +88,102 @@ export class MatriculComponent implements OnInit {
                   }
                 })
               }
+
             })
-          }
+          }   
         })
       }
      
 
-    })
-    // console.log(this.detallefichaMatricula)
+    });
 
   }
+
+
+  editarDetalleFichaMatricula(detalle: DetalleFichaMatricula): void {
+    if (detalle.idDetalleFichaMatricula) {
+      this.detalleFichaMatriculaService.editDetalleFichaMatricula(detalle.idDetalleFichaMatricula, detalle)
+        .subscribe(updatedDetalle => {
+          console.log(`Detalle de ficha de matrícula actualizado: ${updatedDetalle.idDetalleFichaMatricula}`);
+        }, error => {
+          console.error('Error al actualizar el detalle de ficha de matrícula: ', error);
+        });
+    } else {
+      console.error('El ID del detalle de ficha de matrícula es nulo o no definido');
+    }
+  }
+
+
+  public saveFichadeMatrircla() {
+    this.inscritos.curso = this.curso;
+    this.inscritos.usuario = this.usuario;
+    this.inscritos.estadoInscrito = false;
+    this.inscritos.estadoInscritoActivo = true;
+  
+    this.inscritosService.saveInscrioParaCurso(this.inscritos).subscribe((data) => {
+      if (data != null) {
+        this.inscritos = data;
+        this.fichaMatricula.inscrito = this.inscritos;
+  
+        this.fichamatriculaService.saveFichaMatricula(this.fichaMatricula).subscribe((data1) => {
+          if (data1 != null) {
+            this.fichaMatricula = data1;
+            this.detallefichaMatricula.fichaMatricula = this.fichaMatricula;
+  
+            // Verificar si se debe crear o actualizar el detalle
+            if (this.detallefichaMatricula.idDetalleFichaMatricula) {
+              // Actualizar el detalle existente
+              this.detalleFichaMatriculaService.editDetalleFichaMatricula(this.detallefichaMatricula.idDetalleFichaMatricula, this.detallefichaMatricula).subscribe((data2) => {
+                if (data2 != null) {
+                  this.participantesMatriculados.estadoParticipanteActivo = true;
+                  this.participantesMatriculados.estadoParticipanteAprobacion = 'P';
+                  this.participantesMatriculados.inscrito = this.inscritos;
+  
+                  this.participantesmatriculadoService.saveParticipantesMatriculados(this.participantesMatriculados).subscribe((datafin) => {
+                    if (datafin != null) {
+                      if (confirm('¿Desea editar la inscripción?')) {
+                        // Si el usuario confirma que desea editar, redirigir a la vista de edición de inscripción
+                  
+                        this.router.navigate(['/mat', this.inscritos.idInscrito]);
+                      } else {
+                        alert('Inscripción satisfactoria');
+                      }
+                    }
+                  });
+                }
+              });
+            } else {
+              // Crear un nuevo detalle
+              this.detalleFichaMatriculaService.saveDetalleFichaMatricula(this.detallefichaMatricula).subscribe((data2) => {
+                if (data2 != null) {
+                  this.participantesMatriculados.estadoParticipanteActivo = true;
+                  this.participantesMatriculados.estadoParticipanteAprobacion = 'P';
+                  this.participantesMatriculados.inscrito = this.inscritos;
+  
+                  this.participantesmatriculadoService.saveParticipantesMatriculados(this.participantesMatriculados).subscribe((datafin) => {
+                    if (datafin != null) {
+                      if (confirm('¿Desea editar la inscripción?')) {
+                        // Si el usuario confirma que desea editar, redirigir a la vista de edición de inscripción
+               
+                        this.router.navigate(['mat', this.inscritos.idInscrito]);
+                      } else {
+                        alert('Inscripción satisfactoria');
+                      }
+                    }
+                  });
+                }
+              });
+            }
+          }
+        });
+      }
+    });
+  }
+  
+
+
+
+
 
 
 }

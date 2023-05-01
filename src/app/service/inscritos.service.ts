@@ -20,4 +20,7 @@ export class inscritosService {
     return this.http.post<Inscrito>(environment.apiuri+'/inscritocurso/crear', inscrito);
   }
 
+
+  
+
 }
