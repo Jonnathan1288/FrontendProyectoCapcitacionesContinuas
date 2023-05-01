@@ -20,6 +20,7 @@ import { ViewInicioCursoMatriculadosComponent } from './modules/view-inscritos-c
 import { TomarAsistenciaEstudianteComponent } from './modules/view-inscritos-curso/tomar-asistencia-estudiante/tomar-asistencia-estudiante.component';
 import { RegistrarNotasFinalesComponent } from './modules/view-inscritos-curso/registrar-notas-finales/registrar-notas-finales.component';
 import { RegistroFotograficoEvidenciasComponent } from './modules/view-inscritos-curso/registro-fotografico-evidencias/registro-fotografico-evidencias.component';
+import { ViewEvidenciasTableFotofraficasComponent } from './modules/moduleCourse/view-evidencias-table-fotofraficas/view-evidencias-table-fotofraficas.component';
 
 const routes: Routes = [
   {path: 'login', component:LoginComponent },
@@ -39,6 +40,9 @@ const routes: Routes = [
 
   //Registro fotografico
   { path: 'registro/fotografico/curso/:id', component: RegistroFotograficoEvidenciasComponent },
+
+  //Ver vista de las evidencias fotograficas
+  { path: 'lef', component: ViewEvidenciasTableFotofraficasComponent },
 
 
   { path: 'register/course/:id', component: CourseRegisterComponent },

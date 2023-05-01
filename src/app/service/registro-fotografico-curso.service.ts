@@ -15,11 +15,15 @@ export class RegistroFotograficoCursoService {
     return this.http.get<RegistroFotograficoCurso>(environment.apiuri+'/registroFotograficoCurso/findbyId/'+idRegistroFotografico);
   }
 
+  public getRegistroFotograficoCursoAllByIdCurso(idCurso: number):Observable<RegistroFotograficoCurso[]>{
+    return this.http.get<RegistroFotograficoCurso[]>(environment.apiuri+'/registroFotograficoCurso/traerTodosfindbyIdCurso/'+idCurso);
+  }
+
   public saveRegistroFotograficoCurso(registroFotografico: RegistroFotograficoCurso):Observable<RegistroFotograficoCurso>{
     return this.http.post<RegistroFotograficoCurso>(environment.apiuri+'/registroFotograficoCurso/crear', registroFotografico);
   }
 
-  public updateArea(idRegistroFotografico: number, registroFotografico: RegistroFotograficoCurso):Observable<RegistroFotograficoCurso>{
+  public updateRegistroFotografico(idRegistroFotografico: number, registroFotografico: RegistroFotograficoCurso):Observable<RegistroFotograficoCurso>{
     return this.http.put<RegistroFotograficoCurso>(environment.apiuri+'/registroFotograficoCurso/actualizar/'+idRegistroFotografico, registroFotografico);
   }
 }
