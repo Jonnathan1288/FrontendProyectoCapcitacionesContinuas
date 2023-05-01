@@ -7,30 +7,10 @@
         <div class="tasks-wrapper">
             <div class="p" style="text-align: center">
                 <div class="container">
-                    <p style="text-align: center;" *ngIf='progreso <= 100' >Progreso del curso</p>
-                    <p-progressBar *ngIf='progreso <= 100' [value]="progreso.toFixed(0)"></p-progressBar>
-                    <p-progressBar  styleClass="custom-progress-bar" *ngIf='progreso >= 100' [value]="100"></p-progressBar>
+                    <p style="text-align: center;" *ngIf='progreso <= 99' >Progreso del curso</p>
+                    <p-progressBar *ngIf='progreso <= 99' [value]="progreso.toFixed(0)"></p-progressBar>
+                    <p-progressBar *ngIf='progreso >= 99' [value]="100"></p-progressBar>
                     <span style="text-align: center; color: rgb(0, 199, 17);"  *ngIf='progreso >= 100' >Completado</span>
-                </div>
-            </div>
-        </div>
-
-    </div>
-    <div class="right-bar">
-        <div class="top-part">
-            <div class="count">6</div>
-        </div>
-        <div class="header">Participantes</div>
-        <div class="right-content">
-            <div class="task-box yellow">
-                <div class="description-task">
-                    <div class="time">Participante</div>
-                    <div class="task-name">Daniela Armigos</div>
-                </div>
-                <div class="more-button"></div>
-                <div class="members">
-                    <img src="https://images.unsplash.com/photo-1491349174775-aaafddd81942?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=934&q=80"
-                        alt="member">
                 </div>
             </div>
         </div>
