@@ -26,6 +26,7 @@ import { ViewInscritosCursoComponent } from './modules/view-inscritos-curso/view
 import { ViewInicioCursoMatriculadosComponent } from './modules/view-inscritos-curso/view-inicio-curso-matriculados/view-inicio-curso-matriculados.component';
 import { TomarAsistenciaEstudianteComponent } from './modules/view-inscritos-curso/tomar-asistencia-estudiante/tomar-asistencia-estudiante.component';
 import { RegistrarNotasFinalesComponent } from './modules/view-inscritos-curso/registrar-notas-finales/registrar-notas-finales.component';
+import { RegistroFotograficoEvidenciasComponent } from './modules/view-inscritos-curso/registro-fotografico-evidencias/registro-fotografico-evidencias.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { RegistrarNotasFinalesComponent } from './modules/view-inscritos-curso/r
     ViewInicioCursoMatriculadosComponent,
     TomarAsistenciaEstudianteComponent,
     RegistrarNotasFinalesComponent,
+    RegistroFotograficoEvidenciasComponent,
   ],
   imports: [
     BrowserModule,

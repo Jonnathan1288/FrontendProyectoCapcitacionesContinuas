@@ -37,11 +37,11 @@ export class ViewInicioCursoMatriculadosComponent implements OnInit {
   }
 
   public tomarAsistenciaCurso() {
-    this.router.navigate(['/asistencia/estudiantes/course', 1]);
+    this.router.navigate(['/asistencia/estudiantes/course', this.idCursoMatricula]);
   }
 
   public tomarNotasFinalesCurso() {
-    this.router.navigate(['/notas/estudiantes/course', 2]);
+    this.router.navigate(['/notas/estudiantes/course', this.idCursoMatricula]);
   }
 
   //Control del modal para el registro de la informaicon visible
