@@ -27,7 +27,8 @@ export class RegistrarNotasFinalesComponent implements OnInit{
       const idCursoRout = param['id'];
       console.log("Idcurso => " + idCursoRout)
       this.idCursoGlobal = idCursoRout;
-      this.obtenerParticipantesFinales();
+      // this.obtenerParticipantesFinales();
+      this.traerParticipantesMatriculados();
     });
   }
 
@@ -53,6 +54,7 @@ export class RegistrarNotasFinalesComponent implements OnInit{
       this.notasService.saveNotas(notas).subscribe(
         data=>{
           alert("se registró el participante ");
+          this.obtenerParticipantesFinales();
         }
       )
     }
