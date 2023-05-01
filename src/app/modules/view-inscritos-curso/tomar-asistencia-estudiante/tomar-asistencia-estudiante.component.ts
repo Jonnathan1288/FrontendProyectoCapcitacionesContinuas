@@ -35,9 +35,10 @@ public listaAsistenciaE: any[] =[];
   public traerListadoEstudiantesMatriculadosAsistencia(idCurso: number){
     this.asistenciaService.generarAsistenciaPorFecha(idCurso).subscribe((data)=>{
       if(data != null){
-        alert
+        
         this.listaAsistenciaE = data;
         this.banderaParaControlAsistencia = true
+        this.reloadparaAsistencias()
       }
       this.reloadparaAsistencias()
     })
