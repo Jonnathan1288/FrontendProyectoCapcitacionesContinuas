@@ -32,6 +32,7 @@ import { ViewEvidenciasTableFotofraficasComponent } from './modules/moduleCourse
 import { ToastrModule } from 'ngx-toastr';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
