@@ -1,44 +1,36 @@
 <div class="card">
-    <!-- <p-toolbar styleClass="mb-4">
-        <ng-template pTemplate="left">
-            <button pButton pRipple label="Nuevo" icon="pi pi-plus" class="p-button-success mr-2" ></button>
-        </ng-template>
-        <ng-template pTemplate="right">
-            <button pButton pRipple label="Imprimir" icon="pi pi-print" class="p-button-primary mr-2 inline-block"></button>
-            <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button>
-        </ng-template>
-    </p-toolbar> -->
-
-    <p-table #dt [value]="cursosList" [rows]="5" [paginator]="true" [globalFilterFields]="['descripcionFoto','country.name','representative.name','status']" responsiveLayout="scroll"
+    <p-table #dt [value]="cursosList" [rows]="5" [paginator]="true" [globalFilterFields]="['nombreCurso']" responsiveLayout="scroll"
         [rowHover]="true" dataKey="id"
-        currentPageReportTemplate="Mostrando {first} de {last} de {totalRecords} Cusos" [showCurrentPageReport]="true">
+        currentPageReportTemplate="Mostrando {last} de {totalRecords} Cusos" [showCurrentPageReport]="true">
         <ng-template pTemplate="caption">
             <div class="flex align-items-center justify-content-between">
                 <h5 class="m-0">Mis Cursos</h5>
-                <span class="p-input-icon-left">
+                <!-- <span class="p-input-icon-left">
                     <i class="pi pi-search"></i>
                     <input pInputText type="text"  placeholder="Search..." />
-                </span>
+                </span> -->
             </div>
         </ng-template>
         <ng-template pTemplate="header">
             <tr>
-                <th pSortableColumn="nombreCurso">Nombre Curso <p-sortIcon field="nombreCurso"></p-sortIcon></th>
-                <th>Imagen</th>
+                <th pSortableColumn="nombreCurso">Cursos<p-sortIcon field="nombreCurso"></p-sortIcon></th>
+                <th></th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-product>
             <tr>
-                <!-- <td>
-                    <p-tableCheckbox [value]="product"></p-tableCheckbox>
-                </td> -->
-                <td>{{product.nombreCurso}}</td>
-                <td><img [src]="product.fotoCurso ? 'data:image/jpeg;base64,' + product.fotoCurso : '../../../../assets/img/camer.png'" [alt]="product.fotoCurso" width="100" class="shadow-4" /></td>
+                <td>
+                    <img [src]="product.fotoCurso ? 'data:image/jpeg;base64,' + product.fotoCurso : '../../../../assets/img/camer.png'" [alt]="product.fotoCurso" width="100" class="shadow-4 m-4" />
+                    {{product.nombreCurso}}
+                </td>
+                <td>
+                    <button pButton label="Detalles" (click)="verDetallesCurso(product.idCurso)" icon="pi pi-eye" type="button" class="p-button-success p-button-raised p-button-rounded"></button>
+                </td>
             </tr>
         </ng-template>
         <ng-template pTemplate="summary">
             <div class="flex align-items-center justify-content-between">
-                En tienes {{cursosList ? cursosList.length : 0 }} Cursos.
+                Usted tiene {{cursosList ? cursosList.length : 0 }} Cursos.
             </div>
         </ng-template>
     </p-table>

@@ -14,7 +14,7 @@ export class Curso {
     observacionCurso?: string; //
     estadoCurso?: boolean;
     estadoAprovacionCurso?: string;
-    estadoPublicasionCurso?: boolean;
+    estadoPublicasionCurso?: string;
     descripcionCurso?: string;
     objetivoGeneralesCurso?: string;
     numeroCuposCurso?: number;

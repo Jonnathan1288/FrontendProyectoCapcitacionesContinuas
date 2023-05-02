@@ -51,12 +51,32 @@ export class MatriculComponent implements OnInit {
       console.log('Idcurso => ' + idCursoROut);
     });
   }
+  
 
   public traerUsuarioLogin(idUsuario: number) {
     this.usuarioServie.getUsuarioById(idUsuario).subscribe((data) => {
       this.usuario = data;
+      this.idUsuarioLogin = this.usuario.idUsuario!;
     });
   }
+
+  idUsuarioLogin!:number;
+  idUsuarioLoginInvalid:number = 7;
+
+  public verificarOtraerDatosFichaAlmacenados(){
+    this.detalleFichaMatriculaService.getDetalleFichaMatriculaByIdPorUsuario(this.idUsuarioLogin).subscribe(
+      data =>{
+        if (data!) {
+          this.detallefichaMatricula = data
+          console.log("Esto trae -> " + this.detallefichaMatricula.idDetalleFichaMatricula + " respuestas : " + this.detallefichaMatricula.pregunta1);
+        } else {
+          console.log("nuevo")
+          this.detallefichaMatricula = new DetalleFichaMatricula();
+        }
+      }
+    )
+  }
+
 
   public traerDatosCursoId(idCurso: number): void {
     this.cursoService.getCursoById(idCurso).subscribe((data) => {

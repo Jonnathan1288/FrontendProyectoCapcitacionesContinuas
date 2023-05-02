@@ -53,8 +53,11 @@
                 {{listPrerrequistos.nombrePrerequisitoCurso}}
             </div>
         </div>
-        <div class="container m-3" style="text-align: center;">
+        <div *ngIf="isInscritoInCourse == false" class="container m-3" style="text-align: center;">
             <button (click)="pasarInfoCursoIsncripcion(dataCurso.idCurso)" pButton pRipple label="Inscribirme" class="p-button-success"></button>
+        </div>
+        <div *ngIf="isInscritoInCourse == true" class="container m-3" style="text-align: center;">
+            <button pButton pRipple label="Generar Ficha Nuevamente" class="p-button-success"></button>
         </div>
     </div>
     <!-- DETAIL -->

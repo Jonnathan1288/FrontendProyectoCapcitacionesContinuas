@@ -19,6 +19,10 @@ export class CursoService {
     return this.http.get<Curso[]>(environment.apiuri+'/cursoDisponibles/list');
   }
 
+  public listCursoDelParticipante(idUsuarioParticipante:number):Observable<Curso[]>{
+    return this.http.get<Curso[]>(environment.apiuri+'/cursosDelParticipante/list/'+idUsuarioParticipante);
+  }
+
   public saveCurso(curso: Curso):Observable<Curso>{
     return this.http.post<Curso>(environment.apiuri+'/curso/save', curso);
   }
