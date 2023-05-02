@@ -22,10 +22,10 @@
         [showCurrentPageReport]="true">
         <ng-template pTemplate="caption">
             <div class="flex align-items-center justify-content-between">
-                <h5 class="m-0" ><strong>Gestión de docentes capacitadores</strong></h5>
+                <h5 class="m-0"><strong>Gestión de docentes capacitadores</strong></h5>
                 <span class="p-input-icon-left">
                     <i class="pi pi-search"></i>
-                    <input pInputText type="text" placeholder="Search..." />
+                    <input pInputText type="text"  (input)="filterGlobal($event)" placeholder="Search..." />
                 </span>
             </div>
         </ng-template>
@@ -34,8 +34,10 @@
                 <!-- <th style="width: 3rem">
                     <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                 </th> -->
-                <th pSortableColumn="nombrePrograma">Nombre programa <p-sortIcon field="nombrePrograma"></p-sortIcon></th>
-                <th pSortableColumn="periodoPrograma.fechaInicioPeriodoPrograma">Fecha Inicio <p-sortIcon field="periodoPrograma.fechaInicioPeriodoPrograma"></p-sortIcon></th>
+                <th pSortableColumn="nombrePrograma">Nombre programa <p-sortIcon field="nombrePrograma"></p-sortIcon>
+                </th>
+                <th pSortableColumn="periodoPrograma.fechaInicioPeriodoPrograma">Fecha Inicio <p-sortIcon
+                        field="periodoPrograma.fechaInicioPeriodoPrograma"></p-sortIcon></th>
                 <th pSortableColumn="category">Fecha Fin <p-sortIcon field="category"></p-sortIcon></th>
                 <th pSortableColumn="descripcionFoto">PERIODO<p-sortIcon field="descripcionFoto"></p-sortIcon></th>
                 <th pSortableColumn="rating">Descripcion <p-sortIcon field="rating"></p-sortIcon></th>
@@ -46,7 +48,7 @@
         </ng-template>
         <ng-template pTemplate="body" let-programa>
             <tr>
-               
+
                 <td>{{programa.nombrePrograma}}</td>
                 <td>{{programa.periodoPrograma.fechaInicioPeriodoPrograma}}</td>
                 <td>{{programa.periodoPrograma.fechaFinPeriodoPrograma}}</td>
@@ -54,8 +56,9 @@
                 <td>{{programa.descripcionPrograma}}</td>
                 <td>{{programa.estadoProgramaActivo}}</td>
                 <td>
-                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2 mt-1" ></button>
-                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning mt-1" ></button>
+                    <button pButton pRipple icon="pi pi-pencil"
+                        class="p-button-rounded p-button-success mr-2 mt-1"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning mt-1"></button>
                 </td>
             </tr>
         </ng-template>
@@ -66,3 +69,64 @@
         </ng-template>
     </p-table>
 </div>
+
+
+<!-- Creacion de usuario -->
+
+<!-- IMPLEMENTACION DEL MODAL PARA EL INGRESO DE LOS CURSOS -->
+
+<p-dialog header="Contenidos del Curso" [(visible)]="visible" [modal]="true" [style]="{ width: '50vw', height: '250' }"
+    [draggable]="false" [resizable]="false">
+    <form (ngSubmit)="saveDocenteDocenteCapacitadorRol()" ngNativeValidate style="padding: 15px;">
+        <div class="grid p-fluid m-2">
+       
+            <div class="col-12 md:col-12 mt-2">
+                <div class="p-inputgroup">
+                    <span class="p-float-label">
+                        <input type="text" id="inputtext" pInputText id="nombre1"
+                            name="nombre1" [(ngModel)]="this.classPersona.nombre1">
+                        <label for="inputtext">Nombre</label>
+                    </span>
+                </div>
+            </div>
+
+            <div class="col-12 md:col-12 mt-2">
+                <div class="p-inputgroup">
+                    <span class="p-float-label">
+                        <input type="text" id="inputtext" pInputText id="apellido1"
+                            name="apellido1" [(ngModel)]="this.classPersona.apellido1">
+                        <label for="inputtext">Apellido</label>
+                    </span>
+                </div>
+            </div>
+
+            <!-- Directamente del programa ya no del periodo program -->
+
+            <div class="col-12 md:col-12 mt-2">
+                <div class="p-inputgroup">
+                    <span class="p-float-label">
+                        <input type="text" id="inputtext" pInputText id="username"
+                            name="username" [(ngModel)]="this.classUsuario.username">
+                        <label for="inputtext">Nombre de usuario</label>
+                    </span>
+                </div>
+            </div>
+
+            <div class="col-12 md:col-12 mt-2">
+                <div class="p-inputgroup">
+                    <span class="p-float-label">
+                        <input type="text" id="inputtext" pInputText id="password"
+                            name="password" [(ngModel)]="this.classUsuario.password">
+                        <label for="inputtext">Contraseña</label>
+                    </span>
+                </div>
+            </div>
+
+            
+            <!-- Fin del periodo porgrama -->
+            <div class="col-md-12" style="text-align: center; margin: 5px;">
+                <p-button type="ngSubmit" label="Crear Capacitadores" icon="pi pi-save" styleClass="p-button-success  mb-2"></p-button>
+            </div>
+        </div>
+    </form>
+</p-dialog>
