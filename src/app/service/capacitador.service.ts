@@ -10,6 +10,11 @@ import { Observable } from 'rxjs';
 export class CapacitadorService {
 
   constructor(private http: HttpClient) {}
+  
+  public getAllCapacitador(): Observable<Capacitador[]> {
+    return this.http.get<Capacitador[]>(
+      environment.apiuri + '/capacitador/list');
+  }
 
   public getCapacitadorById(idCapacitador: number): Observable<Capacitador> {
     return this.http.get<Capacitador>(
