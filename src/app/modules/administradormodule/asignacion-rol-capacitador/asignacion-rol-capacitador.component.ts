@@ -50,7 +50,7 @@ export class AsignacionRolCapacitadorComponent implements OnInit {
   }
 
   public obtenerRol() {
-    this.rolService.getRolById().subscribe((data) => {
+    this.rolService.getRolById(2).subscribe((data) => {
       if (data != null) {
         this.classRol = data;
         console.log({ rol: data });

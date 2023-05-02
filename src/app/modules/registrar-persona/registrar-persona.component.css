@@ -1,0 +1,12 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* height: 100vh; */
+  }
+  
+  .container .content {
+    max-width: 600px; /* ajusta el ancho máximo según tus necesidades */
+  }
+  
+  

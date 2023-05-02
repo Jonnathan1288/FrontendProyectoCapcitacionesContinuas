@@ -11,7 +11,7 @@ export class RolService {
 
   constructor(private http: HttpClient) { }
 
-  public getRolById():Observable<Rol>{
-    return this.http.get<Rol>(environment.apiuri+'/rol/findbyId/'+2);
+  public getRolById(idRol: number):Observable<Rol>{
+    return this.http.get<Rol>(environment.apiuri+'/rol/findbyId/'+idRol);
   }
 }
