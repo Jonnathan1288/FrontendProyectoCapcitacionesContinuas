@@ -22,7 +22,7 @@
         [showCurrentPageReport]="true">
         <ng-template pTemplate="caption">
             <div class="flex align-items-center justify-content-between">
-                <h5 class="m-0">Manage Products</h5>
+                <h5 class="m-0"><strong>DOCENTES CAPACITADORES</strong></h5>
                 <span class="p-input-icon-left">
                     <i class="pi pi-search"></i>
                     <input pInputText type="text" placeholder="Search..." (input)="filterGlobal($event)"  />
@@ -32,34 +32,39 @@
         <ng-template pTemplate="header">
             <tr>
               
-                <th pSortableColumn="nombrePrograma">Nombre programa <p-sortIcon field="nombrePrograma"></p-sortIcon></th>
-                <th pSortableColumn="periodoPrograma">Fecha Inicio <p-sortIcon field="periodoPrograma"></p-sortIcon></th>
-                <th pSortableColumn="category">Fecha Fin <p-sortIcon field="category"></p-sortIcon></th>
-                <th pSortableColumn="descripcionFoto">PERIODO<p-sortIcon field="descripcionFoto"></p-sortIcon></th>
-                <th pSortableColumn="rating">Descripcion <p-sortIcon field="rating"></p-sortIcon></th>
-                <th pSortableColumn="inventoryStatus">Estado <p-sortIcon field="inventoryStatus"></p-sortIcon></th>
-                <th pSortableColumn="inventoryStatus">Géstion <p-sortIcon field="inventoryStatus"></p-sortIcon></th>
+                <th pSortableColumn="nombrePrograma">NOMRBES <p-sortIcon field="nombrePrograma"></p-sortIcon></th>
+                <th pSortableColumn="periodoPrograma">IDENTIFICASIÓN<p-sortIcon field="periodoPrograma"></p-sortIcon></th>
+                <th pSortableColumn="category">NOMBRE DE CUENTA<p-sortIcon field="category"></p-sortIcon></th>
+                <th pSortableColumn="descripcionFoto">TITÚLO<p-sortIcon field="descripcionFoto"></p-sortIcon></th>
+                <th pSortableColumn="inventoryStatus">ESTADO <p-sortIcon field="inventoryStatus"></p-sortIcon></th>
+                <th pSortableColumn="inventoryStatus">GÉSTION <p-sortIcon field="inventoryStatus"></p-sortIcon></th>
 
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-capacit>
             <tr>
                
+                <td>{{capacit.usuario.persona.nombre1}} {{capacit.usuario.persona.apellido1}}</td>
+                <td>{{capacit.usuario.persona.identificacion}}</td>
                 <td>{{capacit.usuario.username}}</td>
                 <td>{{capacit.tituloCapacitador}}</td>
-                <td>{{capacit.usuario.persona.identificacion}}</td>
-                <td>{{capacit}}</td>
-                <td>{{capacit}}</td>
-                <td>{{capacit}}</td>
+                <!-- <td>{{capacit.estadoActivoCapacitador}}</td> -->
                 <td>
-                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2 mt-1" ></button>
-                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning mt-1" ></button>
+                    <div class="estatus">
+                    <span [ngClass]="{'status-active': capacit.estadoActivoCapacitador, 'status-pending': !capacit.estadoActivoCapacitador}">
+                    {{ capacit.estadoActivoCapacitador ? 'ACTIVO' : 'PENDIENTE' }}
+                  </span>
+                </div>
+                  </td>
+                <td>
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2 mt-1" (click)="cargarDatosDocenteCapacitador(capacit)"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning mt-1" (click)="eliminadoLogicoDelCapacitador(capacit)"></button>
                 </td>
             </tr>
         </ng-template>
         <ng-template pTemplate="summary">
             <div class="flex align-items-center justify-content-between">
-                En total hay {{listClassCapacitador ? listClassCapacitador.length : 0 }} Registros de programas.
+                En total hay {{listClassCapacitador ? listClassCapacitador.length : 0 }} Capacitadores.
             </div>
         </ng-template>
     </p-table>
@@ -75,7 +80,7 @@
 
 <p-dialog header="Contenidos del Curso" [(visible)]="visible" [modal]="true" [style]="{ width: '50vw', height: '250' }"
     [draggable]="false" [resizable]="false">
-    <form (ngSubmit)="saveDocenteDocenteCapacitadorRol()" ngNativeValidate style="padding: 15px;">
+    <form (ngSubmit)="saveUpdateDocenteDocenteCapacitadorRol()" ngNativeValidate style="padding: 15px;">
         <div class="grid p-fluid m-2">
        
             <div class="col-12 md:col-12 mt-2">
@@ -133,7 +138,7 @@
             
             <!-- Fin del periodo porgrama -->
             <div class="col-md-12" style="text-align: center; margin: 5px;">
-                <p-button type="ngSubmit" label="Crear Capacitadores" icon="pi pi-save" styleClass="p-button-success  mb-2"></p-button>
+                <p-button type="ngSubmit" [label]="classCapacitador.idCapacitador? 'Actualizar Capacitador': 'Crear Capacitador'" icon="pi pi-save" styleClass="p-button-success  mb-2"></p-button>
             </div>
         </div>
     </form>
