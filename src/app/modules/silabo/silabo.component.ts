@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Contenidosilabos } from 'src/app/models/contenidosilabos';
 import { Curso } from 'src/app/models/curso';
 import { EstrategiasMetodologica } from 'src/app/models/estrategias-metodologica';
@@ -35,7 +35,8 @@ export class SilaboComponent implements OnInit {
     private resultadosAprendizajeService: ResultadoAprendizajeSilaboService,
     private contenidoSilaboService: ContenidoSilaboService,
     private prerrequitsitoCursoService: PrerrequisitosCursoService,
-    private reportService: ReportsCapacitacionesService
+    private reportService: ReportsCapacitacionesService,
+    private actiRouter: ActivatedRoute,
   ) {
   }
 
@@ -50,11 +51,15 @@ export class SilaboComponent implements OnInit {
   prerrequisitosCurso: PrerequisitoCurso = new PrerequisitoCurso();
 
   ngOnInit() {
-    this.obtenerDatosCurso();
+    this.actiRouter.params.subscribe((params) => {
+      const id_curso = params['id'];
+      this.idCursoCap = id_curso;
+      this.obtenerDatosCurso();
+    });
   }
 
   /* TRAER DATOS DEL CURSO*/
-  idCursoCap?: any = localStorage.getItem('idCurso');;
+  idCursoCap?: any;
   CapIdCursoSend?: number;
 
   public obtenerDatosCurso(): void {
@@ -777,7 +782,7 @@ export class SilaboComponent implements OnInit {
   // FIN //
 
 
-  // IMPRIMIR
+  // IMPRIMIR // VALIDAR idSilaboCapGlobal // idSilaboCap
   public getReportSilabo() {
     this.reportService.gedownloadSilabo(this.idSilaboCapGlobal!)
       .subscribe((r) => {

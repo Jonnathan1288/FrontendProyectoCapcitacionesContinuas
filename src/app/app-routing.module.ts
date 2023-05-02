@@ -33,7 +33,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'cap', component: CapacitadorComponent },
   { path: 'prog', component: ProgramasComponent },
-  { path: 'silabo', component: SilaboComponent },
+  { path: 'silabo/:id', component: SilaboComponent },
   { path: 'diseño', component: CurricularDiseñoComponent },
   // { path: 'register/course', component: CourseRegisterComponent , canActivate: [AuthGaurdGuard], data: {expectedRoles: ['Administrador'] }},
   { path: 'register/course', component: CourseRegisterComponent},
