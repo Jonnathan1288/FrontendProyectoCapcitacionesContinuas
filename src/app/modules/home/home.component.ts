@@ -20,10 +20,13 @@ export class HomeComponent implements OnInit {
 
 
   public idUsuarioIsLoggin: any;
+  public rolNameUser?: any;
 
   ngOnInit(): void {
     this.idUsuarioIsLoggin = localStorage.getItem('id_username');
     this.obternerDatosUsuarioLoggin(this.idUsuarioIsLoggin);
+    this.rolNameUser = localStorage.getItem('rol');
+    this.obternerDatosUsuarioLogginRoles(this.rolNameUser);
   }
 
   usuario: Usuario = new Usuario();
@@ -40,6 +43,33 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['cards/course']).then(() => {
       // window.location.reload();
     });
+  }
+
+  isAdministrador: boolean = false;
+  isCapacitador: boolean = false;
+  isParticipante: boolean = false;
+
+  public obternerDatosUsuarioLogginRoles(nombreRol:any): void {
+    switch (nombreRol) {
+      case 'Administrador':
+        this.isAdministrador = true;
+        this.isCapacitador = false;
+        this.isParticipante = false;
+        break;
+      case 'DocenteCapacitador':
+        this.isAdministrador = false;
+        this.isCapacitador = true;
+        this.isParticipante = false;
+        break;
+      case 'Participante':
+        this.isAdministrador = false;
+        this.isCapacitador = false;
+        this.isParticipante = true;
+        break;
+      default:
+        // alert('ROL DESCONOCIDO');
+        break;
+    };
   }
 
 }
