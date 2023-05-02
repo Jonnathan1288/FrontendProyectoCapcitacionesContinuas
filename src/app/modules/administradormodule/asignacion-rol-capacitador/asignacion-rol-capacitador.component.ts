@@ -45,7 +45,9 @@ export class AsignacionRolCapacitadorComponent implements OnInit {
 
   public saveDocenteDocenteCapacitadorRol() {
     if(this.classDocenteFenix.identificacion){
-      
+      this.classPersona.identificacion = this.classDocenteFenix.identificacion
+    }else{
+
     }
   }
 
