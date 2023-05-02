@@ -169,11 +169,22 @@
     <div>
       <form (ngSubmit)="savePersona()">
         <div class="text-center mb-5">
-          <img
-            src="https://eduv.tecazuay.edu.ec/pluginfile.php/1/theme_academi/logo/1671035251/LOGO%20CUADRADO_SIN%20FONDO.png"
-            alt="Image" height="130" width="170" class="mb-3">
-          <div class="text-900 text-3xl font-medium mb-3">Seleccion foto</div>
-
+          <div class="personal-image">
+            <label class="label" style="border: black;">
+              <input type="file" accept="image/jpeg, image/jpg, image/png" (change)="subirFoto($event)" />
+              <figure class="personal-figure">
+                <!-- <img class="personal-avatar"  *ngIf="filem" [src]="file" alt="img-avatar"> -->
+                <img *ngIf="classUsuario.fotoPerfil"
+                  [src]="classUsuario.fotoPerfil ? 'data:image/jpeg;base64,' + classUsuario.fotoPerfil : '../../../../assets/img/camer.png'"
+                  class="personal-avatar" alt="logoFundacion" />
+                <img style="padding: 20px;" *ngIf="!classUsuario.fotoPerfil" src="./assets/img/camer.png"
+                  class="personal-avatar" alt="Logo Fundación" />
+                <figcaption class="personal-figcaption">
+                  <img src="./assets/img/camer.png" />
+                </figcaption>
+              </figure>
+            </label>
+          </div>
         </div>
 
 
@@ -218,6 +229,18 @@
         <input id="celular" name="celular" type="text" placeholder="celular" pInputText class="w-full mb-3"
           [(ngModel)]="classPersona.celular">
 
+
+          <div class="grid p-fluid">
+
+            <div class="col-12 md:col-12 mt-2">
+                <div class="p-inputgroup">
+                    <p-calendar inputId="edad" class="ng-dirty" [showIcon]="true"
+                        placeholder="Fecha de Nacimiento" id="fechaNacimiento" name="fechaNacimiento"
+                        [(ngModel)]="classPersona.fechaNacimiento"></p-calendar>
+                </div>
+
+            </div>
+        </div>
 
         <div class="col-12 md:col-12 mt-1">
           <label class="p-inputgroup" for='nombre'>Seleccione su genero:</label>
@@ -307,9 +330,9 @@
           [(ngModel)]="classUsuario.username">
 
 
-          <label for="password1" class="block text-900 font-medium mb-2">password</label>
-          <input id="password" name="password" type="password" placeholder="password" pInputText class="w-full mb-3"
-            [(ngModel)]="classUsuario.password">
+        <label for="password1" class="block text-900 font-medium mb-2">password</label>
+        <input id="password" name="password" type="password" placeholder="password" pInputText class="w-full mb-3"
+          [(ngModel)]="classUsuario.password">
 
         <button type="submit" pButton pRipple label="Sign In" icon="pi pi-user" class="w-full"></button>
       </form>

@@ -83,4 +83,5 @@ export class registrarPersonaComponent implements OnInit{
       });
     }
 
+    
 }
