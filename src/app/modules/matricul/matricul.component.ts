@@ -106,7 +106,7 @@ export class MatriculComponent implements OnInit {
                   .saveDetalleFichaMatricula(this.detallefichaMatricula)
                   .subscribe((data2) => {
                     if (data2 != null) {
-                      this.getReportNecesidadCurso(this.inscritos.idInscrito!)
+                      this.getReportNecesidadCurso(this.inscritos.idInscrito!);
                       alert('Inscrito satisfactoriamente');
                     }
                   });
@@ -116,6 +116,31 @@ export class MatriculComponent implements OnInit {
       });
   }
 
+  editarDetalleFichaMatricula(detalle: DetalleFichaMatricula): void {
+    if (detalle.idDetalleFichaMatricula) {
+      this.detalleFichaMatriculaService
+        .editDetalleFichaMatricula(detalle.idDetalleFichaMatricula, detalle)
+        .subscribe(
+          (updatedDetalle) => {
+            console.log(
+              `Detalle de ficha de matrícula actualizado: ${updatedDetalle.idDetalleFichaMatricula}`
+            );
+          },
+          (error) => {
+            console.error(
+              'Error al actualizar el detalle de ficha de matrícula: ',
+              error
+            );
+          }
+        );
+    } else {
+      console.error(
+        'El ID del detalle de ficha de matrícula es nulo o no definido'
+      );
+    }
+  }
+
+  //mATRICULAS
   public getReportNecesidadCurso(idInscripcion: number) {
     this.reportService
       .gedownloadFichaDeInscripcion(idInscripcion)
@@ -123,15 +148,5 @@ export class MatriculComponent implements OnInit {
         const url = URL.createObjectURL(r);
         window.open(url, '_blank');
       });
-    // this.getPdf()
   }
-
-  // this.participantesMatriculados.estadoParticipanteActivo= true;
-  //               this.participantesMatriculados.estadoParticipanteAprobacion = 'P';
-  //               this.participantesMatriculados.inscrito = this.inscritos;
-  //               this.participantesmatriculadoService.saveParticipantesMatriculados(this.participantesMatriculados).subscribe((datafin)=>{
-  //                 if(datafin != null){
-  //                   alert('Inscripcion satisfactoria')
-  //                 }
-  //               })
 }

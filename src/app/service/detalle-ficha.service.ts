@@ -27,7 +27,18 @@ export class DetalleFichaService {
     return this.http.post<DetalleFichaMatricula>(environment.apiuri+'/detalleFichaService/save', detalleFichaMatricula);
   }
 
+
+  public editDetalleFichaMatricula(idDetallefichaMatricula: number,detalleFichaMatricula: DetalleFichaMatricula):Observable<DetalleFichaMatricula>{
+    return this.http.put<DetalleFichaMatricula>(environment.apiuri+'/detalleFichaService/update/'+idDetallefichaMatricula, detalleFichaMatricula);
+  }
+
+
+  
+
   // public updateArea(idArea:number, area: Area):Observable<Area>{
   //   return this.http.put<Area>(environment.apiuri+'/area/actualizar/'+idArea, area);
   // }
+
+
+
 }

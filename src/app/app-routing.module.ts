@@ -22,6 +22,8 @@ import { RegistrarNotasFinalesComponent } from './modules/view-inscritos-curso/r
 import { PanelModuloCursosComponent } from './modules/moduleCourse/panel-modulo-cursos/panel-modulo-cursos.component';
 import { RegistroFotograficoEvidenciasComponent } from './modules/view-inscritos-curso/registro-fotografico-evidencias/registro-fotografico-evidencias.component';
 import { ViewEvidenciasTableFotofraficasComponent } from './modules/moduleCourse/view-evidencias-table-fotofraficas/view-evidencias-table-fotofraficas.component';
+import { ProgramasCapacitacionComponent } from './modules/administradormodule/programas-capacitacion/programas-capacitacion.component';
+import { AsignacionRolCapacitadorComponent } from './modules/administradormodule/asignacion-rol-capacitador/asignacion-rol-capacitador.component';
 import { MisCursosParticipanteComponent } from './modules/participanteModule/mis-cursos-participante/mis-cursos-participante.component';
 
 const routes: Routes = [
@@ -54,6 +56,12 @@ const routes: Routes = [
   { path: 'mat/:id', component: MatriculComponent },
   { path: 'cardcu/detalle/:id', component: InfocursoComponent },
   { path: 'info', component: InfocursoComponent },
+
+  //Programas de capacitacion.
+  { path: 'programas/capacitacion', component: ProgramasCapacitacionComponent },
+  { path: 'asignacion/rol', component: AsignacionRolCapacitadorComponent },
+
+
   { path: '**', pathMatch: 'full', redirectTo: 'home' }
 ];
 

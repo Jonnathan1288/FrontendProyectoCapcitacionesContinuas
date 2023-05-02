@@ -1,0 +1,133 @@
+<div class="card">
+    <p-toolbar styleClass="mb-4">
+        <ng-template pTemplate="left">
+            <button pButton pRipple label="Nuevo" icon="pi pi-plus" class="p-button-success mr-2"
+                (click)="showModaL()"></button>
+
+        </ng-template>
+
+        <ng-template pTemplate="right">
+            <button pButton pRipple label="Imprimir" icon="pi pi-print"
+                class="p-button-primary mr-2 inline-block"></button>
+
+            <!-- <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload> -->
+            <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button>
+        </ng-template>
+    </p-toolbar>
+
+    <p-table #dt [value]="listaProgramas" [rows]="5" [paginator]="true"
+        [globalFilterFields]="['nombrePrograma','periodoPrograma.fechaInicioPeriodoPrograma','representative.name','status']"
+        responsiveLayout="scroll" [rowHover]="true" dataKey="id"
+        currentPageReportTemplate="Mostrando {first} de {last} de {totalRecords} registros fotograficos"
+        [showCurrentPageReport]="true">
+        <ng-template pTemplate="caption">
+            <div class="flex align-items-center justify-content-between">
+                <h5 class="m-0">Manage Products</h5>
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" placeholder="Search..." />
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <!-- <th style="width: 3rem">
+                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                </th> -->
+                <th pSortableColumn="nombrePrograma">Nombre programa <p-sortIcon field="nombrePrograma"></p-sortIcon></th>
+                <th pSortableColumn="periodoPrograma.fechaInicioPeriodoPrograma">Fecha Inicio <p-sortIcon field="periodoPrograma.fechaInicioPeriodoPrograma"></p-sortIcon></th>
+                <th pSortableColumn="category">Fecha Fin <p-sortIcon field="category"></p-sortIcon></th>
+                <th pSortableColumn="descripcionFoto">PERIODO<p-sortIcon field="descripcionFoto"></p-sortIcon></th>
+                <th pSortableColumn="rating">Descripcion <p-sortIcon field="rating"></p-sortIcon></th>
+                <th pSortableColumn="inventoryStatus">Estado <p-sortIcon field="inventoryStatus"></p-sortIcon></th>
+                <th pSortableColumn="inventoryStatus">Géstion <p-sortIcon field="inventoryStatus"></p-sortIcon></th>
+
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-programa>
+            <tr>
+               
+                <td>{{programa.nombrePrograma}}</td>
+                <td>{{programa.periodoPrograma.fechaInicioPeriodoPrograma}}</td>
+                <td>{{programa.periodoPrograma.fechaFinPeriodoPrograma}}</td>
+                <td>{{programa.periodoPrograma.nombrePeriodoPrograma}}</td>
+                <td>{{programa.descripcionPrograma}}</td>
+                <td>{{programa.estadoProgramaActivo}}</td>
+                <td>
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2 mt-1" (click)="cargarDatos(programa)"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning mt-1" (click)="updateProgramasEliminadoLogico(programa)"></button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <div class="flex align-items-center justify-content-between">
+                En total hay {{listaProgramas ? listaProgramas.length : 0 }} Registros de programas.
+            </div>
+        </ng-template>
+    </p-table>
+</div>
+
+
+
+<!-- IMPLEMENTACION DEL MODAL PARA EL INGRESO DE LOS CURSOS -->
+
+<p-dialog header="Contenidos del Curso" [(visible)]="visible" [modal]="true" [style]="{ width: '50vw', height: '250' }"
+    [draggable]="false" [resizable]="false">
+    <form (ngSubmit)="createPrograma()" ngNativeValidate style="padding: 15px;">
+        <div class="grid p-fluid m-2">
+            <div class="col-12 md:col-12 mt-1">
+                <div class="p-inputgroup">
+                    <p-calendar inputId="edad" class="ng-dirty" [showIcon]="true" placeholder="Fecha inicio de curso"
+                        id="fechaInicioPeriodoPrograma" name="fechaInicioPeriodoPrograma"
+                        [(ngModel)]="classPeriodoPrograma.fechaInicioPeriodoPrograma"></p-calendar>
+
+                </div>
+            </div>
+
+            <div class="col-12 md:col-12 mt-1">
+                <div class="p-inputgroup">
+
+                    <p-calendar inputId="edad" class="ng-dirty" [showIcon]="true" placeholder="Fecha fin de curso"
+                        id="fechaFinPeriodoPrograma" name="fechaFinPeriodoPrograma"
+                        [(ngModel)]="classPeriodoPrograma.fechaFinPeriodoPrograma"></p-calendar>
+
+                </div>
+            </div>
+            <div class="col-12 md:col-12 mt-2">
+                <div class="p-inputgroup">
+                    <span class="p-float-label">
+                        <input type="text" id="inputtext" pInputText id="nombrePeriodoPrograma"
+                            name="nombrePeriodoPrograma" [(ngModel)]="classPeriodoPrograma.nombrePeriodoPrograma">
+                        <label for="inputtext">Periodo del programa</label>
+                    </span>
+                </div>
+            </div>
+
+            <!-- Directamente del programa ya no del periodo program -->
+
+            <div class="col-12 md:col-12 mt-2">
+                <div class="p-inputgroup">
+                    <span class="p-float-label">
+                        <input type="text" pInputText id="nombrePrograma" name="nombrePrograma"
+                            [(ngModel)]="classPrograma.nombrePrograma">
+                        <label for="inputtext">Nombre del programa</label>
+                    </span>
+                </div>
+            </div>
+
+            <div class="col-12 md:col-12 mt-2" style="align-items: center;">
+                <div class="card flex justify-content-center">
+                    <span class="p-float-label m-4">
+                        <textarea id="float-input" rows="5" cols="30" pInputTextarea id="descripcionPrograma" name="descripcionPrograma"
+                            [(ngModel)]="classPrograma.descripcionPrograma"></textarea>
+                        <label for="float-input">Descripción del programa</label>
+                    </span>
+                </div>
+            </div>
+            <!-- Fin del periodo porgrama -->
+            <div class="col-md-12" style="text-align: center; margin: 5px;">
+                <p-button type="ngSubmit" label="Guardar Programa" icon="pi pi-save" styleClass="p-button-success  mb-2"></p-button>
+            </div>
+        </div>
+    </form>
+</p-dialog>

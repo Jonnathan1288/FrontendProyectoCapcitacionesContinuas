@@ -23,6 +23,10 @@ export class inFichaMatriculaService {
     return this.http.post<FichaMatricula>(environment.apiuri+'/fichaMatricula/save', fichaMatricula);
   }
 
+
+
+  
+
   // public updateArea(idArea:number, area: Area):Observable<Area>{
   //   return this.http.put<Area>(environment.apiuri+'/area/actualizar/'+idArea, area);
   // }
