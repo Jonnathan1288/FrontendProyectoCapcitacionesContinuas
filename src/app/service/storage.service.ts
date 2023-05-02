@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
 const USER_KEY = 'rol';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -15,8 +16,7 @@ export class StorageService {
 
   public isLoggedIn(): boolean {
     const user = localStorage.getItem(USER_KEY);
-    console.log('En el strorage--> '+user);
-    
+    console.log('En el strorage--> ' + user);
     if (user) {
       return true;
     }
@@ -25,6 +25,5 @@ export class StorageService {
 
   public getRole() {
     return localStorage.getItem(USER_KEY);
-
   }
 }

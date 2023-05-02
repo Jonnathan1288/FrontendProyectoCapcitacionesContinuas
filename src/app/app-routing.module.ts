@@ -24,6 +24,7 @@ import { RegistroFotograficoEvidenciasComponent } from './modules/view-inscritos
 import { ViewEvidenciasTableFotofraficasComponent } from './modules/moduleCourse/view-evidencias-table-fotofraficas/view-evidencias-table-fotofraficas.component';
 import { ProgramasCapacitacionComponent } from './modules/administradormodule/programas-capacitacion/programas-capacitacion.component';
 import { AsignacionRolCapacitadorComponent } from './modules/administradormodule/asignacion-rol-capacitador/asignacion-rol-capacitador.component';
+import { MisCursosParticipanteComponent } from './modules/participanteModule/mis-cursos-participante/mis-cursos-participante.component';
 
 const routes: Routes = [
   {path: 'login', component:LoginComponent },
@@ -41,14 +42,11 @@ const routes: Routes = [
   { path: 'panel/course/:id', component: PanelModuloCursosComponent},
   { path: 'verInscritos/course/:id', component: ViewInscritosCursoComponent},
   { path: 'verMatriculados/course/inicio/:id', component: ViewInicioCursoMatriculadosComponent},
-
+  { path: 'verMisCursos/course', component: MisCursosParticipanteComponent},
   //Registro fotografico
   { path: 'registro/fotografico/curso/:id', component: RegistroFotograficoEvidenciasComponent },
-
   //Ver vista de las evidencias fotograficas
   { path: 'lef', component: ViewEvidenciasTableFotofraficasComponent },
-
-
   { path: 'register/course/:id', component: CourseRegisterComponent },
   { path: 'list/course', component: ListCourseComponent },
   { path: 'register/necesidad', component: RegistroNecesidadComponent },
