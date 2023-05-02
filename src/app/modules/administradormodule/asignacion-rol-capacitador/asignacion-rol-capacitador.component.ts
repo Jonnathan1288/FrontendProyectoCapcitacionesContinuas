@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Capacitador } from 'src/app/models/capacitador';
 import { DocenteFenix } from 'src/app/models/docente-fenix';
 import { Persona } from 'src/app/models/persona';
 import { Rol } from 'src/app/models/rol';
 import { Usuario } from 'src/app/models/usuario';
+import { CapacitadorService } from 'src/app/service/capacitador.service';
 import { DocenteFenixService } from 'src/app/service/docente-fenix.service';
 import { PersonaService } from 'src/app/service/persona.service';
 import { RolService } from 'src/app/service/rol.service';
@@ -19,8 +21,10 @@ export class AsignacionRolCapacitadorComponent implements OnInit {
   public classUsuario = new Usuario();
 
   public classRol = new Rol();
+  public classCapacitador = new Capacitador();
 
   public listClassUsuario: Usuario[] = [];
+  public listClassCapacitador: Capacitador[] = [];
 
   public classDocenteFenix = new DocenteFenix();
 
@@ -28,9 +32,30 @@ export class AsignacionRolCapacitadorComponent implements OnInit {
     private personaService: PersonaService,
     private usuarioService: UsuarioService,
     private rolService: RolService,
-    private docenteFenixService: DocenteFenixService
+    private docenteFenixService: DocenteFenixService,
+    private capacitadorService: CapacitadorService
   ) {}
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.obtenerRol();
+  }
+
+  public filterGlobal(e: any) {
+    let letter = e.target.value;
+    if (letter.length == 10) {
+      this.getodosUsuariocConRolDocenteCapacitador(letter);
+      this.visible = true
+    }
+    console.log(letter);
+  }
+
+  public obtenerRol() {
+    this.rolService.getRolById().subscribe((data) => {
+      if (data != null) {
+        this.classRol = data;
+        console.log({ rol: data });
+      }
+    });
+  }
 
   //Todos con roles de docente capacitador
   public getodosUsuariocConRolDocenteCapacitador(identificasion: string) {
@@ -39,15 +64,57 @@ export class AsignacionRolCapacitadorComponent implements OnInit {
       .subscribe((data) => {
         if (data != null) {
           this.classDocenteFenix = data;
+          this.classPersona.nombre1 = this.classDocenteFenix.nombre1;
+          this.classPersona.apellido1 = this.classDocenteFenix.apellido1;
         }
       });
   }
 
   public saveDocenteDocenteCapacitadorRol() {
-    if(this.classDocenteFenix.identificacion){
-      this.classPersona.identificacion = this.classDocenteFenix.identificacion
-    }else{
+    if (this.classDocenteFenix.identificacion) {
+      this.classPersona.identificacion = this.classDocenteFenix.identificacion;
+      this.classPersona.nombre1 = this.classDocenteFenix.nombre1;
+      this.classPersona.nombre2 = this.classDocenteFenix.nombre2;
+      this.classPersona.apellido1 = this.classDocenteFenix.apellido1;
+      this.classPersona.apellido2 = this.classDocenteFenix.apellido2;
+      this.classPersona.fechaNacimiento =
+        this.classDocenteFenix.fechaNacimiento;
+      this.classPersona.direccion = this.classDocenteFenix.direccion;
+      this.classPersona.correo = this.classDocenteFenix.correo;
+      this.classPersona.telefono = this.classDocenteFenix.telefono;
+      this.classPersona.celular = this.classDocenteFenix.celular;
+      this.classPersona.genero = this.classDocenteFenix.genero;
+      this.classPersona.etnia = this.classDocenteFenix.etnia;
 
+      //Para el servicio
+      this.personaService.savePersona(this.classPersona).subscribe((data) => {
+        if (data != null) {
+          console.log('Bien');
+          this.classUsuario.estadoUsuarioActivo = true;
+          this.classUsuario.persona = data;
+          this.classUsuario.rol = this.classRol;
+          this.usuarioService
+            .saveUsuario(this.classUsuario)
+            .subscribe((data1) => {
+              if (data1 != null) {
+                this.classCapacitador.usuario = data1;
+                this.classCapacitador.tipoAbreviaturaTitulo =
+                  this.classDocenteFenix.tipoAbreviaturaTitulo;
+                this.classCapacitador.tituloCapacitador =
+                  this.classDocenteFenix.tituloCapacitador;
+                this.classCapacitador.estadoActivoCapacitador = true;
+                this.capacitadorService
+                  .saveCapacitador(this.classCapacitador)
+                  .subscribe((data2) => {
+                    if (data2) {
+                      alert('succesful');
+                    }
+                  });
+              }
+            });
+        }
+      });
+    } else {
     }
   }
 
