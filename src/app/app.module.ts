@@ -32,6 +32,8 @@ import { ViewEvidenciasTableFotofraficasComponent } from './modules/moduleCourse
 import { ToastrModule } from 'ngx-toastr';
 import { ProgramasCapacitacionComponent } from './modules/administradormodule/programas-capacitacion/programas-capacitacion.component';
 import { AsignacionRolCapacitadorComponent } from './modules/administradormodule/asignacion-rol-capacitador/asignacion-rol-capacitador.component';
+import { MisCursosParticipanteComponent } from './modules/participanteModule/mis-cursos-participante/mis-cursos-participante.component';
+
 
 
 
@@ -62,6 +64,8 @@ import { AsignacionRolCapacitadorComponent } from './modules/administradormodule
     ViewEvidenciasTableFotofraficasComponent,
     ProgramasCapacitacionComponent,
     AsignacionRolCapacitadorComponent,
+    MisCursosParticipanteComponent,
+
   ],
   imports: [
     BrowserModule,

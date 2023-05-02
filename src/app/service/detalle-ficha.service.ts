@@ -19,6 +19,10 @@ export class DetalleFichaService {
     return this.http.get<DetalleFichaMatricula>(environment.apiuri+'/detalleFichaService/findbyId/'+idDetallefichaMatricula);
   }
 
+  public getDetalleFichaMatriculaByIdPorUsuario(idUsuarioDetalle: number):Observable<DetalleFichaMatricula>{
+    return this.http.get<DetalleFichaMatricula>(environment.apiuri+'/detalleFichaService/findbyIdUsuario/'+idUsuarioDetalle);
+  }
+
   public saveDetalleFichaMatricula(detalleFichaMatricula: DetalleFichaMatricula):Observable<DetalleFichaMatricula>{
     return this.http.post<DetalleFichaMatricula>(environment.apiuri+'/detalleFichaService/save', detalleFichaMatricula);
   }

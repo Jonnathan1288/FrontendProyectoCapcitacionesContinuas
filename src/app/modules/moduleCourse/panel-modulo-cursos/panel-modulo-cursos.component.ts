@@ -10,6 +10,7 @@ import { CursoService } from 'src/app/service/curso.service';
 })
 export class PanelModuloCursosComponent implements OnInit {
 
+
   constructor(
     private cursoService: CursoService,
     private router: Router,
@@ -52,8 +53,19 @@ export class PanelModuloCursosComponent implements OnInit {
         console.log("Dias totales -> " + this.diasTotal)
         console.log("Dias transcurridos -> " + this.diasTranscurridos)
         console.log("Progreso -> " + this.progreso)
+        this.coloresDeProgressVar();
       }
     )
+  }
+
+  progresoBoolean!:boolean;
+
+  coloresDeProgressVar(){
+    if (this.progreso >= 100) {
+      this.progresoBoolean=true;
+    } else {
+      this.progresoBoolean=false;
+    }
   }
 
   // FIN CALCULO
