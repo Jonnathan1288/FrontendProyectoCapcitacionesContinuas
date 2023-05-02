@@ -55,13 +55,14 @@ export class ProgramasCapacitacionComponent implements OnInit {
               .subscribe((data) => {
                 if (data != null) {
                   this.getTodosLosProgramasPorAdministrador();
+                  this.classPeriodoPrograma = new PeriodoPrograma();
+                  this.classPrograma = new Programas();
                   alert('correco en laceacion de la curso');
                 }
               });
           }
         });
-        this.classPeriodoPrograma = new PeriodoPrograma();
-        this.classPrograma = new Programas();
+      
     }
   }
 
@@ -111,8 +112,8 @@ export class ProgramasCapacitacionComponent implements OnInit {
   visible?: boolean;
 
   public showModaL() {
-    this.classPeriodoPrograma = new PeriodoPrograma();
-    this.classPrograma = new Programas();
+    //this.classPeriodoPrograma = new PeriodoPrograma();
+    //this.classPrograma = new Programas();
     this.visible = true;
   }
 }

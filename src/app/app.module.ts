@@ -31,6 +31,7 @@ import { RegistroFotograficoEvidenciasComponent } from './modules/view-inscritos
 import { ViewEvidenciasTableFotofraficasComponent } from './modules/moduleCourse/view-evidencias-table-fotofraficas/view-evidencias-table-fotofraficas.component';
 import { ToastrModule } from 'ngx-toastr';
 import { ProgramasCapacitacionComponent } from './modules/administradormodule/programas-capacitacion/programas-capacitacion.component';
+import { AsignacionRolCapacitadorComponent } from './modules/administradormodule/asignacion-rol-capacitador/asignacion-rol-capacitador.component';
 
 
 
@@ -60,6 +61,7 @@ import { ProgramasCapacitacionComponent } from './modules/administradormodule/pr
     RegistroFotograficoEvidenciasComponent,
     ViewEvidenciasTableFotofraficasComponent,
     ProgramasCapacitacionComponent,
+    AsignacionRolCapacitadorComponent,
   ],
   imports: [
     BrowserModule,

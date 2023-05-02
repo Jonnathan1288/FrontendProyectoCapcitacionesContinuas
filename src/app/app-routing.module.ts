@@ -23,6 +23,7 @@ import { PanelModuloCursosComponent } from './modules/moduleCourse/panel-modulo-
 import { RegistroFotograficoEvidenciasComponent } from './modules/view-inscritos-curso/registro-fotografico-evidencias/registro-fotografico-evidencias.component';
 import { ViewEvidenciasTableFotofraficasComponent } from './modules/moduleCourse/view-evidencias-table-fotofraficas/view-evidencias-table-fotofraficas.component';
 import { ProgramasCapacitacionComponent } from './modules/administradormodule/programas-capacitacion/programas-capacitacion.component';
+import { AsignacionRolCapacitadorComponent } from './modules/administradormodule/asignacion-rol-capacitador/asignacion-rol-capacitador.component';
 
 const routes: Routes = [
   {path: 'login', component:LoginComponent },
@@ -60,6 +61,7 @@ const routes: Routes = [
 
   //Programas de capacitacion.
   { path: 'programas/capacitacion', component: ProgramasCapacitacionComponent },
+  { path: 'asignacion/rol', component: AsignacionRolCapacitadorComponent },
 
 
   { path: '**', pathMatch: 'full', redirectTo: 'home' }
