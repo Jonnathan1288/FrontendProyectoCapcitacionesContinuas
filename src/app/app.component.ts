@@ -25,12 +25,12 @@ export class AppComponent implements OnInit {
   userIsLoggin:any;
 
   ngOnInit(): void {
+    this.rolNameUser = localStorage.getItem('rol');
     if(this.rolNameUser){
       this.isLogginPresent = false;
     }else{
       this.isLogginPresent = true;
     }
-    this.rolNameUser = localStorage.getItem('rol');
     console.log("rolF -> " + this.rolNameUser)
     this.obternerDatosUsuarioLoggin(this.rolNameUser);
   }
