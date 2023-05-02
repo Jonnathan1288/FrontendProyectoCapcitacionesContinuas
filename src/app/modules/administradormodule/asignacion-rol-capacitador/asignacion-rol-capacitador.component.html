@@ -1,3 +1,4 @@
+
 <div class="card">
     <p-toolbar styleClass="mb-4">
         <ng-template pTemplate="left">
@@ -10,34 +11,29 @@
             <button pButton pRipple label="Imprimir" icon="pi pi-print"
                 class="p-button-primary mr-2 inline-block"></button>
 
-            <!-- <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload> -->
             <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button>
         </ng-template>
     </p-toolbar>
 
-    <p-table #dt [value]="listClassUsuario" [rows]="5" [paginator]="true"
+    <p-table #dt [value]="listClassCapacitador" [rows]="5" [paginator]="true"
         [globalFilterFields]="['nombrePrograma','periodoPrograma.fechaInicioPeriodoPrograma','representative.name','status']"
         responsiveLayout="scroll" [rowHover]="true" dataKey="id"
         currentPageReportTemplate="Mostrando {first} de {last} de {totalRecords} registros fotograficos"
         [showCurrentPageReport]="true">
         <ng-template pTemplate="caption">
             <div class="flex align-items-center justify-content-between">
-                <h5 class="m-0"><strong>Gestión de docentes capacitadores</strong></h5>
+                <h5 class="m-0">Manage Products</h5>
                 <span class="p-input-icon-left">
                     <i class="pi pi-search"></i>
-                    <input pInputText type="text"  (input)="filterGlobal($event)" placeholder="Search..." />
+                    <input pInputText type="text" placeholder="Search..." (input)="filterGlobal($event)"  />
                 </span>
             </div>
         </ng-template>
         <ng-template pTemplate="header">
             <tr>
-                <!-- <th style="width: 3rem">
-                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-                </th> -->
-                <th pSortableColumn="nombrePrograma">Nombre programa <p-sortIcon field="nombrePrograma"></p-sortIcon>
-                </th>
-                <th pSortableColumn="periodoPrograma.fechaInicioPeriodoPrograma">Fecha Inicio <p-sortIcon
-                        field="periodoPrograma.fechaInicioPeriodoPrograma"></p-sortIcon></th>
+              
+                <th pSortableColumn="nombrePrograma">Nombre programa <p-sortIcon field="nombrePrograma"></p-sortIcon></th>
+                <th pSortableColumn="periodoPrograma">Fecha Inicio <p-sortIcon field="periodoPrograma"></p-sortIcon></th>
                 <th pSortableColumn="category">Fecha Fin <p-sortIcon field="category"></p-sortIcon></th>
                 <th pSortableColumn="descripcionFoto">PERIODO<p-sortIcon field="descripcionFoto"></p-sortIcon></th>
                 <th pSortableColumn="rating">Descripcion <p-sortIcon field="rating"></p-sortIcon></th>
@@ -46,29 +42,31 @@
 
             </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-programa>
+        <ng-template pTemplate="body" let-capacit>
             <tr>
-
-                <td>{{programa.nombrePrograma}}</td>
-                <td>{{programa.periodoPrograma.fechaInicioPeriodoPrograma}}</td>
-                <td>{{programa.periodoPrograma.fechaFinPeriodoPrograma}}</td>
-                <td>{{programa.periodoPrograma.nombrePeriodoPrograma}}</td>
-                <td>{{programa.descripcionPrograma}}</td>
-                <td>{{programa.estadoProgramaActivo}}</td>
+               
+                <td>{{capacit.usuario.username}}</td>
+                <td>{{capacit.tituloCapacitador}}</td>
+                <td>{{capacit.usuario.persona.identificacion}}</td>
+                <td>{{capacit}}</td>
+                <td>{{capacit}}</td>
+                <td>{{capacit}}</td>
                 <td>
-                    <button pButton pRipple icon="pi pi-pencil"
-                        class="p-button-rounded p-button-success mr-2 mt-1"></button>
-                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning mt-1"></button>
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2 mt-1" ></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning mt-1" ></button>
                 </td>
             </tr>
         </ng-template>
         <ng-template pTemplate="summary">
             <div class="flex align-items-center justify-content-between">
-                En total hay {{listClassUsuario ? listClassUsuario.length : 0 }} Registros de programas.
+                En total hay {{listClassCapacitador ? listClassCapacitador.length : 0 }} Registros de programas.
             </div>
         </ng-template>
     </p-table>
 </div>
+
+
+
 
 
 <!-- Creacion de usuario -->
@@ -83,8 +81,18 @@
             <div class="col-12 md:col-12 mt-2">
                 <div class="p-inputgroup">
                     <span class="p-float-label">
+                        <input type="text" id="inputtext" pInputText id="identificacion"
+                            name="identificacion" [(ngModel)]="classPersona.identificacion">
+                        <label for="inputtext">Identificación</label>
+                    </span>
+                </div>
+            </div>
+
+            <div class="col-12 md:col-12 mt-2">
+                <div class="p-inputgroup">
+                    <span class="p-float-label">
                         <input type="text" id="inputtext" pInputText id="nombre1"
-                            name="nombre1" [(ngModel)]="this.classPersona.nombre1">
+                            name="nombre1" [(ngModel)]="classPersona.nombre1">
                         <label for="inputtext">Nombre</label>
                     </span>
                 </div>
@@ -94,7 +102,7 @@
                 <div class="p-inputgroup">
                     <span class="p-float-label">
                         <input type="text" id="inputtext" pInputText id="apellido1"
-                            name="apellido1" [(ngModel)]="this.classPersona.apellido1">
+                            name="apellido1" [(ngModel)]="classPersona.apellido1">
                         <label for="inputtext">Apellido</label>
                     </span>
                 </div>
@@ -106,7 +114,7 @@
                 <div class="p-inputgroup">
                     <span class="p-float-label">
                         <input type="text" id="inputtext" pInputText id="username"
-                            name="username" [(ngModel)]="this.classUsuario.username">
+                            name="username" [(ngModel)]="classUsuario.username">
                         <label for="inputtext">Nombre de usuario</label>
                     </span>
                 </div>
@@ -116,7 +124,7 @@
                 <div class="p-inputgroup">
                     <span class="p-float-label">
                         <input type="text" id="inputtext" pInputText id="password"
-                            name="password" [(ngModel)]="this.classUsuario.password">
+                            name="password" [(ngModel)]="classUsuario.password">
                         <label for="inputtext">Contraseña</label>
                     </span>
                 </div>

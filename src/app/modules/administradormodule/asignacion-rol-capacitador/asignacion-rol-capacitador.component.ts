@@ -36,6 +36,7 @@ export class AsignacionRolCapacitadorComponent implements OnInit {
     private capacitadorService: CapacitadorService
   ) {}
   ngOnInit(): void {
+    this.listDocentesCapacitadores();
     this.obtenerRol();
   }
 
@@ -115,13 +116,46 @@ export class AsignacionRolCapacitadorComponent implements OnInit {
         }
       });
     } else {
+      this.personaService.savePersona(this.classPersona).subscribe((data) => {
+        if (data != null) {;
+          this.classUsuario.estadoUsuarioActivo = true;
+          this.classUsuario.persona = data;
+          this.classUsuario.rol = this.classRol;
+          this.usuarioService
+            .saveUsuario(this.classUsuario)
+            .subscribe((data1) => {
+              if (data1 != null) {
+                this.classCapacitador.usuario = data1;
+                this.classCapacitador.estadoActivoCapacitador = true;
+                this.capacitadorService
+                  .saveCapacitador(this.classCapacitador)
+                  .subscribe((data2) => {
+                    if (data2) {
+                      alert('succesful');
+                    }
+                  });
+              }
+            });
+        }
+      });
     }
+  }
+
+  //Traer los docetes capacitadores en el sistema..
+  public listDocentesCapacitadores(){
+    this.capacitadorService.getAllCapacitador().subscribe((data)=>{
+      if(data != null){
+        this.listClassCapacitador = data;
+      }
+   
+    })
   }
 
   //vISIVILIADA DEL MODAL
   visible?: boolean;
 
   public showModaL() {
+  
     //this.classPeriodoPrograma = new PeriodoPrograma();
     //this.classPrograma = new Programas();
     this.visible = true;
