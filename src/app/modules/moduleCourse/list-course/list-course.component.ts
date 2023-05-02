@@ -64,8 +64,8 @@ export class ListCourseComponent implements OnInit {
     this.router.navigate(['/verInscritos/course/', idCurso]);
   }
 
-  public VerRegistroFotografico() {
-    this.router.navigate(['/lef']);
+  public VerRegistroFotografico(idCurso: number) {
+    this.router.navigate(['/registro/fotografico/curso/', idCurso]);
   }
 
   //Implementacion de la tabla de todo referente a primeng
