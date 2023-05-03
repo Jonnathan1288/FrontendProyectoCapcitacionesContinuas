@@ -1,3 +1,4 @@
+//import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { NgModule } from '@angular/core';
 import { AuthGaurdGuard } from './auth-gaurd.guard';
 import { RouterModule, Routes } from '@angular/router';
@@ -15,6 +16,7 @@ import { SilaboComponent } from './modules/silabo/silabo.component';
 import { CurricularDiseñoComponent } from './modules/curricular-diseño-register/curricular-diseño.component';
 import { ListCourseComponent } from './modules/moduleCourse/list-course/list-course.component';
 import { RegistroNecesidadComponent } from './modules/moduleCourse/registro-necesidad/registro-necesidad.component';
+import { HojavidaComponent } from './modules/hojavida/hojavida.component';
 import { ViewInscritosCursoComponent } from './modules/view-inscritos-curso/view-inscritos-curso.component';
 import { ViewInicioCursoMatriculadosComponent } from './modules/view-inscritos-curso/view-inicio-curso-matriculados/view-inicio-curso-matriculados.component';
 import { TomarAsistenciaEstudianteComponent } from './modules/view-inscritos-curso/tomar-asistencia-estudiante/tomar-asistencia-estudiante.component';
@@ -26,6 +28,7 @@ import { ProgramasCapacitacionComponent } from './modules/administradormodule/pr
 import { AsignacionRolCapacitadorComponent } from './modules/administradormodule/asignacion-rol-capacitador/asignacion-rol-capacitador.component';
 import { MisCursosParticipanteComponent } from './modules/participanteModule/mis-cursos-participante/mis-cursos-participante.component';
 import { ValidacionCursosCapacitacionComponent } from './modules/administradormodule/validacion-cursos-capacitacion/validacion-cursos-capacitacion.component';
+
 
 const routes: Routes = [
   {path: 'login', component:LoginComponent },
@@ -57,15 +60,12 @@ const routes: Routes = [
   { path: 'mat/:id', component: MatriculComponent },
   { path: 'cardcu/detalle/:id', component: InfocursoComponent },
   { path: 'info', component: InfocursoComponent },
-
+  { path: 'hoja', component:HojavidaComponent},
   //Programas de capacitacion.
   { path: 'programas/capacitacion', component: ProgramasCapacitacionComponent },
   { path: 'asignacion/rol', component: AsignacionRolCapacitadorComponent },
-
-
   //Aplicasion de los filtro de prime
   { path: 'v', component: ValidacionCursosCapacitacionComponent },
-
   { path: '**', pathMatch: 'full', redirectTo: 'home' }
 ];
 

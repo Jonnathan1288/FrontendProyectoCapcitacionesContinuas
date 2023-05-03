@@ -290,7 +290,7 @@ export class CourseRegisterComponent {
   //Método que me cargara toda la view para hacer dinamico
   public allList() {
     this.programaService.listPrograma().subscribe((data) => {
-      this.listProgramas = data;
+     // this.listProgramas = data;
       this.listProgramasItem = this.listProgramas.map((area) => {
         return {
           label: area.nombrePrograma,

@@ -1,165 +1,159 @@
-<!DOCTYPE html>
-<head>
-  <link href='https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css' rel='stylesheet' type='text/css'>
-  <link href='//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.2.0/css/datepicker.min.css' rel='stylesheet' type='text/css'>
-  <link href='//cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/1.8/css/bootstrap-switch.css' rel='stylesheet' type='text/css'>
-  <link href='https://davidstutz.github.io/bootstrap-multiselect/css/bootstrap-multiselect.css' rel='stylesheet' type='text/css'>
-  <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js' type='text/javascript'></script>
-  <script src='//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.0/js/bootstrap.min.js' type='text/javascript'></script>
-  <script src='//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.2.0/js/bootstrap-datepicker.min.js' type='text/javascript'></script>
-  <script src='//cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/1.8/js/bootstrap-switch.min.js' type='text/javascript'></script>
-  <script src='https://davidstutz.github.io/bootstrap-multiselect/js/bootstrap-multiselect.js' type='text/javascript'></script>
-</head>
-<body>
-  <div class='container'>
-    <div class='panel panel-primary dialog-panel'>
-      <div class='panel-heading'>
-    
-        <h5>FORMULARIO DE PROGRAMA</h5>
+<div class="card flex justify-content-center">
 
-      </div>
-      <div class='panel-body'>
-        <form class='form-horizontal' role='form'>
-          
-          <div class='form-group'>
-            <label class='control-label col-md-2 col-md-offset-2' for='cod_curso'>Nombre:</label>
-            <div class='col-md-6'>
-              <div class='form-group'>
-                <div class='col-md-11'>
-                  <input class='form-control' id='abrevia' type='text'>
+  <p-panel header="PROGRAMA">
+      <p-card header="Periodo del Programa " class="m-5">
+          <h4>Ingrese </h4>
+          <form novalidate>
+              <div class="grid p-fluid m-5">
+                  <div class="col-12 md:col-12">
+                      <div class="p-inputgroup">
+                          <span class="p-inputgroup-addon"><i class="icono fas fa-duotone fa-newspaper"></i></span>
+                          <input type="text" pattern="[A-Za-z]+" pInputText placeholder="Estado del Periodo" id="nombre"
+                              name="nombre"
+                              onkeypress='return event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 || event.charCode == 32'
+                              required>
+                      </div>
+                  </div>
+                  <div class="col-12 md:col-12">
+                      <div class="p-inputgroup">
+                          <span class="p-inputgroup-addon"><i class="icono fas fa-duotone fa-lightbulb"
+                                  style="--fa-primary-color: #000000; --fa-secondary-color: #fff700;"></i></span>
+                          <input type="text" pattern="[A-Za-z]+" pInputText placeholder="Fecha Inicio" id="nombre"
+                              name="nombre"
+                              onkeypress='return event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 || event.charCode == 32'
+                              required>
+                      </div>
+                  </div>
+
+                  <div class="col-12 md:col-12">
+                    <div class="p-inputgroup">
+                        <span class="p-inputgroup-addon"><i class="icono fas fa-duotone fa-lightbulb"
+                                style="--fa-primary-color: #000000; --fa-secondary-color: #fff700;"></i></span>
+                        <input type="text" pattern="[A-Za-z]+" pInputText placeholder="Fecha Fin" id="nombre"
+                            name="nombre"
+                            onkeypress='return event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 || event.charCode == 32'
+                            required>
+                    </div>
                 </div>
+
+                <div class="col-12 md:col-12">
+                  <div class="p-inputgroup">
+                      <span class="p-inputgroup-addon"><i class="icono fas fa-duotone fa-lightbulb"
+                              style="--fa-primary-color: #000000; --fa-secondary-color: #fff700;"></i></span>
+                      <input type="text" pattern="[A-Za-z]+" pInputText placeholder="Nombre del Periodo" id="nombre"
+                          name="nombre"
+                          onkeypress='return event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 || event.charCode == 32'
+                          required>
+                  </div>
               </div>
-            </div>
-          </div>
 
-          <div class='form-group'>
-            <label class='control-label col-md-2 col-md-offset-2' for='cod_curso'>Periodo:</label>
-            <div class='col-md-6'>
-              <div class='form-group'>
-                <div class='col-md-11'>
-                  <input class='form-control' id='abrevia' type='text'>
-                </div>
               </div>
-            </div>
-          </div>
-
-          
-   
-
-          <div class='form-group'>
-            <label class='control-label col-md-2 col-md-offset-2' for='id_checkin' >Fecha Inicio:</label>
-            <div class='col-md-8'>
-              <div class='col-md-3'>
-                <div class='form-group internal input-group'>
-                  <input class='form-control datepicker' id='id_checkin' type="date">
-                  <span class='input-group-addon'>
-             
-                  </span>
-                </div>
+              <div class="col-md-12" style="text-align: center; margin: 5px;">
+                  <p-button label="Save" icon="pi pi-plus" styleClass="p-button-success  mb-2"></p-button>
               </div>
-              <label class='control-label col-md-2' for='id_checkout'>Fecha Fin:</label>
-              <div class='col-md-3'>
-                <div class='form-group internal input-group'>
-                  <input class='form-control datepicker' id='id_checkout' type="date">
-                  <span class='input-group-addon'>
-                   
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class='form-group'>
-            <label class='control-label col-md-2 col-md-offset-2' for='id_equipment'>Estado:</label>
-            <div class='col-md-8'>
-              <div class='col-md-3'>
-                <div class='form-group internal'>
-                  <select class='form-control' id='id_equipment'>
-                    <option>Seleccione</option>
-                    <option>Fifth wheel</option>
-                    <option>RV/Motorhome</option>
-                    <option>Tent trailer</option>
-                    <option>Pickup camper</option>
-                    <option>Camper van</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-          </div>
-        
-        
-          <div class='form-group'>
-            <label class='control-label col-md-2 col-md-offset-2' for='id_comments'>Observacion:</label>
-            <div class='col-md-6'>
-              <textarea class='form-control' id='id_comments' placeholder='Additional comments' rows='3'></textarea>
-            </div>
-          </div>
+          </form>
 
-          
-          <div class='container'>
-            <div class="abs-center">
-            <button class="btn-lg btn-primary" type="button">Guardar</button>
-           
-            <button class="btn-lg btn-danger" type="button">Cancelar</button>
+          <div class="card">
+              <p-table>
+                  <ng-template pTemplate="header" let-columns>
+                      <tr>
+                          <th>ID <h6 class="icono fas fa-duotone fa-laptop"></h6>
+                          </th>
+                          <th>ESTADO PERIODO <h6 class="icono fas fa-duotone fa-newspaper"></h6>
+                          </th>
+                          <th>FECHA INICIO <h6 class="icono fas fa-duotone fa-wrench"></h6>
+                          </th>
+                          <th>FECHA FIN <h6 class="icono fas fa-duotone fa-wrench"></h6>
+                          </th>
+                          <th>NOMBRE PERIODO <h6 class="icono fas fa-duotone fa-wrench"></h6>
+                          </th>
+                      </tr>
+                  </ng-template>
+                
+              </p-table>
           </div>
-          </div>
-
-          
-        </form>
-
-        
-      </div>
-      <table class="table">
-        <thead >
-          <tr class="table-primary">
-            <th scope="col">#</th>
-            <th scope="col">IdPrograma</th>
-            <th scope="col">IdUsuario</th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Periodo</th>
-            <th scope="col">Fecha-Inicio</th>
-            <th scope="col">Fecha-Fin</th>
-            <th scope="col">Estado</th>
-            <th scope="col">Observacion</th>
-            <th scope="col">Acciones</th>
-          </tr>
-        </thead>
-        <tbody class="table-group-divider">
-          <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td colspan="2">Larry the Bird</td>
-            <td>@twitter</td>
-          </tr>
-          <tr>
-          
-            <td>
-              <a th:href="@{/clientes/editar/{id}(id=${cliente.id_cliente})}" class="btn btn-info" >Editar</a>
-              <a th:href="@{/clientes/{id}(id=${cliente.id_cliente})}" class="btn btn-danger" >Eliminar</a>
-            </td>
-          </tr>
-       
+          <br>
+          <br>
+      
          
-          
-        </tbody>
-      </table>
-    </div>
+      </p-card>
+
+
+      <p-card header="Programa " class="m-5">
+          <form novalidate (ngSubmit)="Guardar(programa)">
+              <div class="grid p-fluid m-5">
+                  <div class="col-12 md:col-12">
+                      <div class="p-inputgroup">
+                          <span class="p-inputgroup-addon"><i class="icono fas fa-duotone fa-wrench"></i></span>
+                          <input type="text" pattern="[A-Za-z]+" pInputText placeholder="Nombre" id="nombre"
+                              name="nombre"
+                              onkeypress='return event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 || event.charCode == 32'
+                              required>
+                      </div>
+                  </div>
+                  <div class="col-12 md:col-12">
+                      <div class="p-inputgroup">
+                          <span class="p-inputgroup-addon"><i class="icono fas fa-duotone fa-book"></i></span>
+                          <input type="text" pattern="[A-Za-z]+" pInputText placeholder="Estado" id="nombre"
+                              name="nombre"
+                              onkeypress='return event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 || event.charCode == 32'
+                              required>
+                      </div>
+                  </div>
+                  <div class="col-12 md:col-12">
+                      <div class="p-inputgroup">
+                          <span class="p-inputgroup-addon"><i
+                                  class="icono fas fa-duotone fa-business-time"></i></span>
+                          <input type="text" pattern="[A-Za-z]+" pInputText placeholder="Descripcion" id="nombre"
+                              name="nombre"
+                              onkeypress='return event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 || event.charCode == 32'
+                              required>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-md-12" style="text-align: center; margin: 5px;">
+                  <p-button (Click)="Guardar(programa)" label="Save" icon="pi pi-plus" styleClass="p-button-success  mb-2"></p-button>
+              </div>
+          </form>
+          <div class="card">
+              <p-table [value]="programaslist">
+                  <ng-template pTemplate="header" let-columns>
+                      <tr>
+                          <th>ID PROGRAMA <h6 class="icono fas fa-duotone fa-wrench"></h6>
+                          </th>
+                          <th>ID PERIODO <h6 class="icono fas fa-duotone fa-book"></h6>
+                          </th>
+                          <th>NOMBRE <h6 class="icono fas fa-duotone fa-business-time"></h6>
+                          </th>
+                          <th>ESTADO <h6 class="icono fas fa-duotone fa-business-time"></h6>
+                          </th>
+                          <th>DESCRIPCION <h6 class="icono fas fa-duotone fa-business-time"></h6>
+                          </th>
+                          <th>ACCIONES <h6 class="icono fas fa-duotone fa-business-time"></h6>
+                          </th>
+                      </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body"  let-prog let-i="index" let-columns="columns">
+                    <tr>
+
+
+                        <td> {{prog.idPrograma}} </td>
+                        <td> {{prog.nombrePrograma}} </td>
+                        <td> {{prog.descripcionPrograma}} </td>
+                        <td> {{prog.estadoProgramaActivo}} </td>
+                        <td> {{prog.periodoPrograma}} </td>
+                        <td> 
+                            <button type="button" class="btn btn-warning" >Editar</button>
+                            <button type="button" class="btn btn-danger" style="margin-left: 10px;" >Eliminar</button>
     
-    
+                        </td>
+                    </tr>
+                </ng-template>
+               
+              </p-table>
+          </div>
 
+      </p-card>
 
-
-  </div>
-
- 
-</body>
+  </p-panel>
+</div>

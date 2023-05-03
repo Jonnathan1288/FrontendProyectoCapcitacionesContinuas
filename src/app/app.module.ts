@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
@@ -22,6 +22,8 @@ import { CardcursoComponent } from './modules/cardcurso/cardcurso.component';
 import { InfocursoComponent } from './modules/infocurso/infocurso.component';
 import { ListCourseComponent } from './modules/moduleCourse/list-course/list-course.component';
 import { RegistroNecesidadComponent } from './modules/moduleCourse/registro-necesidad/registro-necesidad.component';
+//import { ProgramasComponent } from './modules/programa/programas/programas.component';
+import { HojavidaComponent } from './modules/hojavida/hojavida.component';
 import { ViewInscritosCursoComponent } from './modules/view-inscritos-curso/view-inscritos-curso.component';
 import { ViewInicioCursoMatriculadosComponent } from './modules/view-inscritos-curso/view-inicio-curso-matriculados/view-inicio-curso-matriculados.component';
 import { TomarAsistenciaEstudianteComponent } from './modules/view-inscritos-curso/tomar-asistencia-estudiante/tomar-asistencia-estudiante.component';
@@ -34,8 +36,6 @@ import { ProgramasCapacitacionComponent } from './modules/administradormodule/pr
 import { AsignacionRolCapacitadorComponent } from './modules/administradormodule/asignacion-rol-capacitador/asignacion-rol-capacitador.component';
 import { MisCursosParticipanteComponent } from './modules/participanteModule/mis-cursos-participante/mis-cursos-participante.component';
 import { ValidacionCursosCapacitacionComponent } from './modules/administradormodule/validacion-cursos-capacitacion/validacion-cursos-capacitacion.component';
-
-
 
 
 @NgModule({
@@ -56,6 +56,8 @@ import { ValidacionCursosCapacitacionComponent } from './modules/administradormo
     InfocursoComponent,
     ListCourseComponent,
     RegistroNecesidadComponent,
+    //ProgramasComponent,
+    HojavidaComponent,
     ViewInscritosCursoComponent,
     ViewInicioCursoMatriculadosComponent,
     TomarAsistenciaEstudianteComponent,
@@ -67,7 +69,6 @@ import { ValidacionCursosCapacitacionComponent } from './modules/administradormo
     AsignacionRolCapacitadorComponent,
     MisCursosParticipanteComponent,
     ValidacionCursosCapacitacionComponent,
-
   ],
   imports: [
     BrowserModule,
@@ -82,6 +83,9 @@ import { ValidacionCursosCapacitacionComponent } from './modules/administradormo
     ToastrModule.forRoot(),
 
   ],
+  //schemas: [
+    //CUSTOM_ELEMENTS_SCHEMA
+  //],
   providers: [],
   bootstrap: [AppComponent],
 })
