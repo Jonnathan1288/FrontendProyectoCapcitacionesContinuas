@@ -1,28 +1,31 @@
-<p>view-evidencias-table-fotofraficas works!</p>
 <div class="card">
     <p-toolbar styleClass="mb-4">
         <ng-template pTemplate="left">
-            <button pButton pRipple label="Nuevo" icon="pi pi-plus" class="p-button-success mr-2" ></button>
-            
+            <button pButton pRipple label="Nuevo" icon="pi pi-plus" class="p-button-success mr-2"
+                (click)="showModaL()"></button>
+
         </ng-template>
 
         <ng-template pTemplate="right">
-            <button pButton pRipple label="Imprimir" icon="pi pi-print" class="p-button-primary mr-2 inline-block"></button>
+            <button pButton pRipple label="Imprimir" icon="pi pi-print"
+                class="p-button-primary mr-2 inline-block" (click)="getReportRegistroFotograficoCurso()"></button>
 
             <!-- <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload> -->
             <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button>
         </ng-template>
     </p-toolbar>
 
-    <p-table #dt [value]="lispF" [rows]="5" [paginator]="true" [globalFilterFields]="['descripcionFoto','country.name','representative.name','status']" responsiveLayout="scroll"
-         [rowHover]="true" dataKey="id"
-        currentPageReportTemplate="Mostrando {first} de {last} de {totalRecords} registros fotograficos" [showCurrentPageReport]="true">
+    <p-table #dt [value]="listRegistroFotografico" [rows]="5" [paginator]="true"
+        [globalFilterFields]="['descripcionFoto','fecha','representative.name','status']"
+        responsiveLayout="scroll" [rowHover]="true" dataKey="id"
+        currentPageReportTemplate="Mostrando {first} de {last} de {totalRecords} registros fotograficos"
+        [showCurrentPageReport]="true">
         <ng-template pTemplate="caption">
             <div class="flex align-items-center justify-content-between">
-                <h5 class="m-0">Manage Products</h5>
+                <h5 class="m-0"><strong>Curso: </strong>  {{curso.nombreCurso!}}</h5>
                 <span class="p-input-icon-left">
                     <i class="pi pi-search"></i>
-                    <input pInputText type="text"  placeholder="Search..." />
+                    <input pInputText type="text" placeholder="Search..." />
                 </span>
             </div>
         </ng-template>
@@ -31,37 +34,102 @@
                 <!-- <th style="width: 3rem">
                     <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                 </th> -->
-                <th pSortableColumn="descripcionFoto">Name <p-sortIcon field="descripcionFoto"></p-sortIcon></th>
-                <th>Image</th>
-                <th pSortableColumn="price">Price <p-sortIcon field="price"></p-sortIcon></th>
-                <th pSortableColumn="category">Fecha <p-sortIcon field="category"></p-sortIcon></th>
-                <th pSortableColumn="rating">Reviews <p-sortIcon field="rating"></p-sortIcon></th>
-                <th pSortableColumn="inventoryStatus">Status <p-sortIcon field="inventoryStatus"></p-sortIcon></th>
-                <th pSortableColumn="inventoryStatus">Géstion <p-sortIcon field="inventoryStatus"></p-sortIcon></th>
+                <th>Foto</th>
+
+                <th pSortableColumn="descripcionFoto">Descripción <p-sortIcon field="descripcionFoto"></p-sortIcon></th>
+                <th pSortableColumn="fecha">Fecha <p-sortIcon field="fecha"></p-sortIcon></th>
+
+                <th pSortableColumn="inventoryStatus">Géstion</th>
 
             </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-product>
+        <ng-template pTemplate="body" let-regFotografico>
             <tr>
                 <!-- <td>
                     <p-tableCheckbox [value]="product"></p-tableCheckbox>
                 </td> -->
-                <td>{{product.descripcionFoto}}</td>
-                <td><img [src]="product.foto ? 'data:image/jpeg;base64,' + product.foto : '../../../../assets/img/camer.png'" [alt]="product.name" width="100" class="shadow-4" /></td>
-                <td>holi</td>
-                <td>{{product.fecha}}</td>
-                <td><p-rating [ngModel]="product.rating" [readonly]="true" [cancel]="false"></p-rating></td>
-                <td>Activo</td>
+                <td><img [src]="regFotografico.foto ? 'data:image/jpeg;base64,' + regFotografico.foto : '../../../../assets/img/camer.png'"
+                    [alt]="regFotografico.name" width="100" class="shadow-4" /></td>
+                <td>{{regFotografico.descripcionFoto}}</td>
+                <td>{{regFotografico.fecha}}</td>
                 <td>
-                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"></button>
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="cargarDatosRegistrofotografico(regFotografico)"></button>
                     <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"></button>
                 </td>
             </tr>
         </ng-template>
         <ng-template pTemplate="summary">
             <div class="flex align-items-center justify-content-between">
-                En total hay {{lispF ? lispF.length : 0 }} Registros fotograficos.
+                En total hay {{listRegistroFotografico ? listRegistroFotografico.length : 0 }} Registros fotograficos.
             </div>
         </ng-template>
     </p-table>
 </div>
+
+
+<!-- IMPLEMENTACION DEL MODAL PARA EL INGRESO DE REGISTRO FOTOGRAFICO -->
+<p-dialog header="Contenidos del Curso" [(visible)]="visible" [modal]="true" [style]="{ width: '60vw', height: '280' }"
+    [draggable]="false" [resizable]="false">
+    <form (ngSubmit)="saveEvidenciasRegistrofotografico()" ngNativeValidate style="padding: 15px;">
+
+        <p-card header="Registro fotografico del curso">
+            <div class="row rounded mb-1">
+
+                <div class="col-md-6">
+
+                    <div class="grid p-fluid">
+                        <div class="col-12 md:col-12" style="align-items: center;">
+
+                            <div class="card flex justify-content-center">
+                                <span class="p-float-label">
+                                    <textarea id="float-input" rows="5" cols="30" pInputTextarea id="descripcionCurso"
+                                        name="descripcionCurso"
+                                        [(ngModel)]="registroFotografico.descripcionFoto"></textarea>
+                                    <label for="float-input">Descripción dede la foto</label>
+                                </span>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="grid p-fluid">
+
+                        <div class="col-12 md:col-12 mt-2">
+                            <div class="p-inputgroup">
+                                <p-calendar inputId="edad" class="ng-dirty" [showIcon]="true"
+                                    placeholder="Fecha de evidencia" id="fechaEvidencia" name="fechaEvidencia"
+                                    [(ngModel)]="registroFotografico.fecha"></p-calendar>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="personal-image">
+                        <label class="label" style="border: black;">
+                            <input type="file" accept="image/jpeg, image/jpg, image/png" (change)="subirFoto($event)" />
+                            <figure class="personal-figure">
+                                <!-- <img class="personal-avatar"  *ngIf="filem" [src]="file" alt="img-avatar"> -->
+                                <img *ngIf="registroFotografico.foto"
+                                    [src]="registroFotografico.foto ? 'data:image/jpeg;base64,' + registroFotografico.foto : '../../../../assets/img/camer.png'"
+                                    class="personal-avatar" alt="logoFundacion" />
+                                <img style="padding: 20px;" *ngIf="!registroFotografico.foto"
+                                    src="./assets/img/camer.png" class="personal-avatar" alt="Logo Fundación" />
+                                <figcaption class="personal-figcaption">
+                                    <img src="./assets/img/camer.png" />
+                                </figcaption>
+                            </figure>
+                        </label>
+                    </div>
+                </div>
+
+            </div>
+        </p-card>
+
+        <!-- Fin del periodo porgrama -->
+        <div class="col-md-12 " style="text-align: center; margin: 5px;">
+                <p-button type="ngSubmit" [label]="registroFotografico.idRegistroFotograficoCurso? 'Actualizar': 'Guardar'" icon="pi pi-save" styleClass="p-button-success  mb-2 mt-4"></p-button>
+            </div>
+     
+    </form>
+</p-dialog>

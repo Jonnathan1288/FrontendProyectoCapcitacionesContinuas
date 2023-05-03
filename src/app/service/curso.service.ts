@@ -38,4 +38,6 @@ export class CursoService {
   public updateCurso(id_curso: number, curso: Curso):Observable<Curso>{
     return this.http.put<Curso>(environment.apiuri+'/area/actualizar/'+id_curso, curso);
   }
+
+  //Metodo para mostrar todos los programas
 }

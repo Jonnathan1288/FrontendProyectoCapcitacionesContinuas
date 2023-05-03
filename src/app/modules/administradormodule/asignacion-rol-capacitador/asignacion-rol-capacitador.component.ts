@@ -21,6 +21,7 @@ export class AsignacionRolCapacitadorComponent implements OnInit {
   public classUsuario = new Usuario();
 
   public classRol = new Rol();
+
   public classCapacitador = new Capacitador();
 
   public listClassUsuario: Usuario[] = [];
@@ -44,13 +45,13 @@ export class AsignacionRolCapacitadorComponent implements OnInit {
     let letter = e.target.value;
     if (letter.length == 10) {
       this.getodosUsuariocConRolDocenteCapacitador(letter);
-      this.visible = true
+      this.visible = true;
     }
     console.log(letter);
   }
 
   public obtenerRol() {
-    this.rolService.getRolById().subscribe((data) => {
+    this.rolService.getRolById(2).subscribe((data) => {
       if (data != null) {
         this.classRol = data;
         console.log({ rol: data });
@@ -65,13 +66,47 @@ export class AsignacionRolCapacitadorComponent implements OnInit {
       .subscribe((data) => {
         if (data != null) {
           this.classDocenteFenix = data;
+          this.classPersona.identificacion =
+            this.classDocenteFenix.identificacion;
           this.classPersona.nombre1 = this.classDocenteFenix.nombre1;
           this.classPersona.apellido1 = this.classDocenteFenix.apellido1;
         }
       });
   }
 
-  public saveDocenteDocenteCapacitadorRol() {
+  public cargarDatosDocenteCapacitador(docenteCapacitador: Capacitador) {
+    this.classCapacitador = { ...docenteCapacitador };
+    this.classUsuario = this.classCapacitador.usuario!;
+    this.classPersona = this.classCapacitador.usuario?.persona!;
+    this.visible = true;
+  }
+
+  //Método para guardar todoslos datos de la persona con rol de capacitador..
+  public saveUpdateDocenteDocenteCapacitadorRol() {
+    if (this.classCapacitador.idCapacitador) {
+      this.updateDocenteCapacitador();
+    } else {
+      this.saveDocenteCapacitador();
+    }
+  }
+
+  //Metodo para actualizar al docente Capacitador
+  public updateDocenteCapacitador() {
+    console.log({persona: this.classPersona})
+    this.personaService.updatePersona(this.classPersona.idPersona!, this.classPersona).subscribe((data)=>{
+      if(data != null){
+        this.usuarioService.updateUsuario(this.classUsuario.idUsuario!, this.classUsuario).subscribe((data)=>{
+          if(data != null){
+            alert('update user succesful')
+            this.visible = false;
+          }
+        })
+      }
+    })
+  }
+
+  //Metodo para crear al docente capacitador
+  public saveDocenteCapacitador() {
     if (this.classDocenteFenix.identificacion) {
       this.classPersona.identificacion = this.classDocenteFenix.identificacion;
       this.classPersona.nombre1 = this.classDocenteFenix.nombre1;
@@ -109,6 +144,11 @@ export class AsignacionRolCapacitadorComponent implements OnInit {
                   .subscribe((data2) => {
                     if (data2) {
                       alert('succesful');
+                      this.classCapacitador = new Capacitador();
+                      this.classPersona = new Persona();
+                      this.classUsuario = new Usuario();
+                      this.listDocentesCapacitadores();
+                      this.visible = false;
                     }
                   });
               }
@@ -117,7 +157,7 @@ export class AsignacionRolCapacitadorComponent implements OnInit {
       });
     } else {
       this.personaService.savePersona(this.classPersona).subscribe((data) => {
-        if (data != null) {;
+        if (data != null) {
           this.classUsuario.estadoUsuarioActivo = true;
           this.classUsuario.persona = data;
           this.classUsuario.rol = this.classRol;
@@ -131,6 +171,11 @@ export class AsignacionRolCapacitadorComponent implements OnInit {
                   .saveCapacitador(this.classCapacitador)
                   .subscribe((data2) => {
                     if (data2) {
+                      this.classCapacitador = new Capacitador();
+                      this.classPersona = new Persona();
+                      this.classUsuario = new Usuario();
+                      this.visible = false;
+                      this.listDocentesCapacitadores();
                       alert('succesful');
                     }
                   });
@@ -141,23 +186,33 @@ export class AsignacionRolCapacitadorComponent implements OnInit {
     }
   }
 
-  //Traer los docetes capacitadores en el sistema..
-  public listDocentesCapacitadores(){
-    this.capacitadorService.getAllCapacitador().subscribe((data)=>{
+  //Eliminado logico del sistema
+  public eliminadoLogicoDelCapacitador(capacitador: Capacitador){
+    capacitador.estadoActivoCapacitador = false;
+    this.capacitadorService.updateCapacitador(capacitador.idCapacitador!, capacitador).subscribe((data)=>{
       if(data != null){
+        alert('Succesful delete logical')
+        this.listDocentesCapacitadores();
+      }
+    })
+  }
+
+  //Traer los docetes capacitadores en el sistema..
+  public listDocentesCapacitadores() {
+    this.capacitadorService.getAllCapacitador().subscribe((data) => {
+      if (data != null) {
         this.listClassCapacitador = data;
       }
-   
-    })
+    });
   }
 
   //vISIVILIADA DEL MODAL
   visible?: boolean;
 
   public showModaL() {
-  
-    //this.classPeriodoPrograma = new PeriodoPrograma();
-    //this.classPrograma = new Programas();
+    this.classPersona = new Persona();
+    this.classCapacitador = new Capacitador();
+    this.classUsuario = new Usuario();
     this.visible = true;
   }
 }
