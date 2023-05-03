@@ -58,7 +58,7 @@ const routes: Routes = [
   { path: 'mat/:id', component: MatriculComponent },
   { path: 'cardcu/detalle/:id', component: InfocursoComponent },
   { path: 'info', component: InfocursoComponent },
-  { path: 'hoja', component:HojavidaComponent},
+  { path: 'hojaVida/capacitador', component:HojavidaComponent},
   //Programas de capacitacion.
   { path: 'programas/capacitacion', component: ProgramasCapacitacionComponent },
   { path: 'asignacion/rol', component: AsignacionRolCapacitadorComponent },
