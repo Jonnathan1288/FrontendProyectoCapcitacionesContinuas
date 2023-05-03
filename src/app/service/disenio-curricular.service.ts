@@ -16,16 +16,16 @@ export class DisenioCurricularService {
     return this.http.get<any>(environment.apiuri+'/disenioCurricular/list');
   }
 
-  public getDisenioCurricularById(idCDisenioCurricular: number):Observable<DisenioCurriculares>{
-    return this.http.get<DisenioCurriculares>(environment.apiuri+'/disenioCurricular/findbyId/'+idCDisenioCurricular);
+  public getDisenioCurricularById(idDisenioCurricular: number):Observable<DisenioCurriculares>{
+    return this.http.get<DisenioCurriculares>(environment.apiuri+'/disenioCurricular/findbyId/'+idDisenioCurricular);
   }
 
   public saveDisenioCurricular(listDisenioCurricular: DisenioCurriculares):Observable<DisenioCurriculares>{
     return this.http.post<DisenioCurriculares>(environment.apiuri+'/disenioCurricular/save',listDisenioCurricular);
   }
 
-  public updateDisenioCurricular(idCDisenioCurricular: number, disenioCurricular: DisenioCurriculares): Observable<DisenioCurriculares> {
-    return this.http.put<DisenioCurriculares>(`${environment.apiuri}/disenioCurricular/update/${idCDisenioCurricular}`, disenioCurricular);
+  public updateDisenioCurricular(idDisenioCurricular: number, disenioCurricular: DisenioCurriculares): Observable<DisenioCurriculares> {
+    return this.http.put<DisenioCurriculares>(`${environment.apiuri}/disenioCurricular/update/${idDisenioCurricular}`, disenioCurricular);
   }
   
   

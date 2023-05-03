@@ -1,7 +1,7 @@
 import { Silabo } from "./silabo";
 
 export class DisenioCurriculares {
-    idCDisenioCurricular?: number;
+    idDisenioCurricular?: number;
     temasTransversales?: string;
     estrategiasAprendizaje?: String;
     estadoDisenioCurricular?: Boolean;

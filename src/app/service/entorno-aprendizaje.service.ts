@@ -23,7 +23,15 @@ export class EntornoAprendizajeService {
     return this.http.post<EntornoAprendizajeCurricular>(environment.apiuri+'/entornoAprendizajeCurricular/save',listEvaluacionFinalCurricular);
   }
 
-  public updateEntornoAprendizajeCurricular(  idEntornoCurricular: number,entornoAprendizajeCurricular: EntornoAprendizajeCurricular): Observable<EntornoAprendizajeCurricular> {
-    return this.http.put<EntornoAprendizajeCurricular>(`${environment.apiuri}/entornoAprendizajeCurricular/update/${  idEntornoCurricular}`, entornoAprendizajeCurricular);
+ 
+  public cambiarEstadosEntornoAprendizajeSilaboId(id:number, entornoAprendizajeCurricular: EntornoAprendizajeCurricular):Observable<EntornoAprendizajeCurricular>{
+    return this.http.put<EntornoAprendizajeCurricular>(environment.apiuri+'/entornoAprendizajeCurricular/update/'+id, entornoAprendizajeCurricular);
+  }
+
+  public  updateEntornoAprendizajeCurricular(id:number, entornoAprendizajeCurricular: EntornoAprendizajeCurricular):Observable<EntornoAprendizajeCurricular>{
+    return this.http.put<EntornoAprendizajeCurricular>(environment.apiuri+'/entornoAprendizajeCurricular/update/'+id,entornoAprendizajeCurricular);
+  }
+  public getEntornoAprendizajePorDisenioById(id: number):Observable<EntornoAprendizajeCurricular[]>{
+    return this.http.get<EntornoAprendizajeCurricular[]>(environment.apiuri+'/entornoAprendizajeporDisenioCurricular/findbyId/'+id);
   }
 }

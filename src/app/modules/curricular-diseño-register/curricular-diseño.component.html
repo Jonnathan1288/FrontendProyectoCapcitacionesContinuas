@@ -1,7 +1,60 @@
 <div class="card flex justify-content-center">
 
     <p-panel header="DISEÑO CURRICULAR">
+        <div class="col-md-12" style="text-align: right; margin: 5px;">
+            <p-button label="Traer Datos" icon="pi pi-pencil" styleClass="p-button-success  mb-2"
+                (onClick)="traerDatos()"></p-button>
+        </div>
+        <p-card header="Informacion General del Curso" style="margin: 5px;" *ngIf='validarIdDisenioCurricular == false'>
+            <div class="grid">
+                <div class="col-5 flex justify-content-center">
+                    <div style="float: left;">
+                        <p><strong>Area:</strong> {{ silabo.curso!.especialidad?.area?.nombreArea }}</p>
+                        <p><strong>Nombre del Curso:</strong> {{silabo.curso!.nombreCurso }}</p>
+                        <p><strong>Fecha de Inicio</strong> {{ silabo.curso!.fechaInicioCurso }}</p>
+                        <p><strong>Número de Cupos:</strong> {{silabo.curso!.numeroCuposCurso }}</p>
+                        <p><strong>Docente Responsable:</strong> {{silabo.curso!.capacitador?.tipoAbreviaturaTitulo +
+                            '.' +
+                            silabo.curso!.capacitador?.usuario?.persona?.nombre1 }} {{
+                            silabo.curso!.capacitador?.usuario?.persona?.nombre2 }} {{
+                            silabo.curso!.capacitador?.usuario?.persona?.apellido1 }} {{
+                            silabo.curso!.capacitador?.usuario?.persona?.apellido2 }}</p>
+                    </div>
+                </div>
 
+                <div class="col-5 flex justify-content-center">
+                    <div style="float: left;">
+                        <p><strong>Horario:</strong> {{silabo.curso!.horarioCurso?.horaInicio + ' a ' +
+                            silabo.curso!.horarioCurso?.horaFin}}</p>
+                        <p><strong>Código del curso: </strong> {{ silabo.curso!.especialidad?.codigoEspecialidad }}</p>
+                        <p><strong>Fecha de Finalización:</strong> {{ silabo.curso!.fechaFinalizacionCurso }}</p>
+                        <p><strong>Horas del curso:</strong> {{silabo.curso!.duracionCurso}}</p>
+                        <p><strong>Modalidad:</strong> {{ silabo.curso!.modalidadCurso?.nombreModalidadCurso }}</p>
+                    </div>
+                </div>
+            </div>
+        </p-card>
+
+        <p-card header="Prerrequisitos" class="m-5" *ngIf='validarIdDisenioCurricular == false'>
+            <div>
+                <ul *ngFor="let lista of listprerrequisitosCurso">
+                    <li>{{lista.nombrePrerequisitoCurso}}</li>
+                </ul>
+            </div>
+        </p-card>
+
+
+        <p-card header="Descripción del Curso" class="m-5" *ngIf='validarIdDisenioCurricular == false'>
+            <p class="m-0">
+                {{ silabo.curso!.descripcionCurso }}
+            </p>
+        </p-card>
+
+        <p-card header="Objetivos del Curso" class="m-5" *ngIf='validarIdDisenioCurricular == false'>
+            <p class="m-0">
+                {{ silabo.curso!.objetivoGeneralesCurso }}
+            </p>
+        </p-card>
 
         <p-card header="Temas Transversales" class="m-5">
 
@@ -39,7 +92,7 @@
             <h4>Evaluación diagnóstica</h4>
 
             <!-- <form novalidate> -->
-            <div class="grid p-fluid m-3">
+            <div class="grid p-fluid m-3" *ngIf='validarIdDisenioCurricular == false'>
                 <div class="col-12 md:col-12 mt-1">
                     <div class="p-inputgroup">
                         <span class="p-float-label">
@@ -64,8 +117,13 @@
 
             </div>
             <div class="col-md-12" style="text-align: center; margin: 5px;">
+                <p-button *ngIf='validarIdDisenioCurricular == false' label="Agregar" icon="pi pi-plus"
+                    styleClass="p-button-success  mb-2" (click)="almacenarListaEvaluacionD()"></p-button>
+            </div>
+
+            <div class="col-md-12" style="text-align: center; margin: 5px;" *ngIf='validarIdDisenioCurricular == true'>
                 <p-button label="Agregar" icon="pi pi-plus" styleClass="p-button-success  mb-2"
-                    (click)="almacenarListaEvaluacionD()"></p-button>
+                    (click)="showModalCreateEvaluacionDiagnostica()"></p-button>
             </div>
             <!-- </form> -->
             <div class="card">
@@ -76,25 +134,67 @@
                             </th>
                             <th>INSTRUMENTO A EVALUAR <h6 class="icono fas fa-duotone fa-wrench"></h6>
                             </th>
-                            <th scope="col">Quitar</th>
+                            <th scope="col">ACCIÓN</th>
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="body" let-rowData let-columns="columns" let-data>
                         <tr>
                             <td>{{ data.tecnicaEvaluar }}</td>
                             <td>{{ data.instrumnetoEvaluar }}</td>
-                            <td><button pButton type="button" class="p-button-rounded p-button-danger "
-                                    icon="pi pi-times"
+                            <td *ngIf='validarIdDisenioCurricular== false'><button pButton type="button"
+                                    class="p-button-rounded p-button-danger " icon="pi pi-times"
                                     (click)="quitarElementoEvaluacionD(data.tecnicaEvaluar)"></button></td>
+                            <td *ngIf='validarIdDisenioCurricular == true'>
+                                <!-- <button *ngIf='data.idResultadoAprendizajeSilabo == 0' pButton type="button" class="p-button-rounded p-button-danger" icon="pi pi-times" (click)="quitarElemento(data.idResultadoAprendizajeSilabo)"></button> -->
+
+                                <button pButton type="button"
+                                    (click)="showModalEditEvaluacionDiagnostica(data.idEvaluacionDiagnosticaCurricular)"
+                                    class="p-button-rounded p-button-info" icon="pi pi-pencil"
+                                    style="margin-right: 5px;"></button>
+                            </td>
                         </tr>
                     </ng-template>
                 </p-table>
             </div>
+            <p-dialog header="Evaluacion Diagnostica" [(visible)]="visibleFive" [modal]="true"
+                [style]="{ width: '50vw', height: '450' }" [draggable]="false" [resizable]="false">
+                <div class="col-12 md:col-12 mt-1">
+                    <div class="grid p-fluid m-3">
+                        <div class="col-12 md:col-12 mt-1">
+                            <div class="p-inputgroup">
+                                <span class="p-float-label">
+
+                                    <input type="text" pInputText id="tecnicaEvaluar" name="tecnicaEvaluar"
+                                        [(ngModel)]="evaluacionDiagnosticoCurricular.tecnicaEvaluar">
+                                    <label htmlFor="username"> <i class="icono fas fa-duotone fa-newspaper"></i> Técnica
+                                        Formativa</label>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-12 md:col-12 mt-2">
+                            <div class="p-inputgroup">
+                                <span class="p-float-label">
+                                    <input type="text" pInputText id="instrumnetoEvaluar" name="instrumnetoEvaluar"
+                                        [(ngModel)]="evaluacionDiagnosticoCurricular.instrumnetoEvaluar">
+                                    <label htmlFor="username"><i class="icono fas fa-duotone fa-wrench"></i> Instrumento
+                                        Formativo</label>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12" style="text-align: center; margin: 5px;">
+                        <p-button label="Actualizar" icon="pi pi-check-square" styleClass="p-button-success  mb-2"
+                            (click)="actualizarEvaluacionDiagnostica()"></p-button>
+                    </div>
+                </div>
+            </p-dialog>
+
+
             <br>
             <br>
             <h4> Evaluación proceso formativo</h4>
             <!-- <form novalidate> -->
-            <div class="grid p-fluid m-3">
+            <div class="grid p-fluid m-3" *ngIf='validarIdDisenioCurricular == false'>
                 <div class="col-12 md:col-12 mt-1">
                     <div class="p-inputgroup">
                         <span class="p-float-label">
@@ -119,8 +219,12 @@
 
             </div>
             <div class="col-md-12" style="text-align: center; margin: 5px;">
+                <p-button *ngIf='validarIdDisenioCurricular == false' label="Agregar" icon="pi pi-plus"
+                    styleClass="p-button-success  mb-2" (click)="almacenarListaEvaluacionFormativa()"></p-button>
+            </div>
+            <div class="col-md-12" style="text-align: center; margin: 5px;" *ngIf='validarIdDisenioCurricular == true'>
                 <p-button label="Agregar" icon="pi pi-plus" styleClass="p-button-success  mb-2"
-                    (click)="almacenarListaEvaluacionFormativa()"></p-button>
+                    (click)="showModalCreateEvaluacionFormativa()"></p-button>
             </div>
 
             <!-- </form> -->
@@ -132,25 +236,65 @@
                             </th>
                             <th>INSTRUMENTO FORMATIVO <h6 class="icono fas fa-duotone fa-wrench"></h6>
                             </th>
-                            <th scope="col">Quitar</th>
+                            <th scope="col">ACCIÓN</th>
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="body" let-rowData let-columns="columns" let-data>
                         <tr>
                             <td>{{ data.tecnicaFormativa }}</td>
                             <td>{{ data.instrumnetoFormativa }}</td>
-                            <td><button pButton type="button" class="p-button-rounded p-button-danger"
-                                    icon="pi pi-times"
+                            <td *ngIf='validarIdDisenioCurricular == false'><button pButton type="button"
+                                    class="p-button-rounded p-button-danger" icon="pi pi-times"
                                     (click)="quitarElementoEvaluacionFormativa(data.tecnicaFormativa)"></button></td>
+
+                            <td *ngIf='validarIdDisenioCurricular == true'>
+
+                                <button pButton type="button"
+                                    (click)="showModalEditEvaluacionFormativa(data.idEvalucionFormativaCurricular)"
+                                    class="p-button-rounded p-button-info" icon="pi pi-pencil"
+                                    style="margin-right: 5px;"></button>
+                            </td>
                         </tr>
                     </ng-template>
                 </p-table>
             </div>
+            <p-dialog header="Evaluacion Formativa" [(visible)]="visibleFive1" [modal]="true"
+                [style]="{ width: '50vw', height: '450' }" [draggable]="false" [resizable]="false">
+                <div class="col-12 md:col-12 mt-1">
+                    <div class="grid p-fluid m-3">
+                        <div class="col-12 md:col-12 mt-1">
+                            <div class="p-inputgroup">
+                                <span class="p-float-label">
+
+                                    <input type="text" pInputText id="tecnicaFormativa" name="tecnicaFormativa"
+                                        [(ngModel)]="evaluacionFormativaCurricular.tecnicaFormativa">
+                                    <label htmlFor="username"> <i class="icono fas fa-duotone fa-newspaper"></i> Técnica
+                                        Formativa</label>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-12 md:col-12 mt-2">
+                            <div class="p-inputgroup">
+                                <span class="p-float-label">
+                                    <input type="text" pInputText id="instrumnetoFormativa" name="instrumnetoFormativa"
+                                        [(ngModel)]="evaluacionFormativaCurricular.instrumnetoFormativa">
+                                    <label htmlFor="username"><i class="icono fas fa-duotone fa-wrench"></i> Instrumento
+                                        Formativo</label>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12" style="text-align: center; margin: 5px;">
+                        <p-button label="Actualizar" icon="pi pi-check-square" styleClass="p-button-success  mb-2"
+                            (click)="actualizarEvaluacionFormativa()"></p-button>
+                    </div>
+                </div>
+            </p-dialog>
             <br>
             <br>
             <h4>Evaluación Final</h4>
             <!-- <form novalidate> -->
-            <div class="grid p-fluid m-3">
+            <div class="grid p-fluid m-3" *ngIf='validarIdDisenioCurricular == false'>
                 <div class="col-12 md:col-12 mt-1">
                     <div class="p-inputgroup">
                         <span class="p-float-label">
@@ -176,10 +320,13 @@
 
             </div>
             <div class="col-md-12" style="text-align: center; margin: 5px;">
-                <p-button label="Agregar" icon="pi pi-plus" styleClass="p-button-success  mb-2"
-                    (click)="almacenarListaEvaluacionF()"></p-button>
+                <p-button *ngIf='validarIdDisenioCurricular == false' label="Agregar" icon="pi pi-plus"
+                    styleClass="p-button-success  mb-2" (click)="almacenarListaEvaluacionF()"></p-button>
             </div>
-
+            <div class="col-md-12" style="text-align: center; margin: 5px;" *ngIf='validarIdDisenioCurricular == true'>
+                <p-button label="Agregar" icon="pi pi-plus" styleClass="p-button-success  mb-2"
+                    (click)="showModalCreateEvaluacionFinal()"></p-button>
+            </div>
             <!-- </form> -->
             <div class="card">
                 <p-table [value]="listEvaluacionFinalCurricular">
@@ -189,27 +336,67 @@
                             </th>
                             <th>INSTRUMENTO FORMATIVO FINAL <h6 class="icono fas fa-duotone fa-wrench"></h6>
                             </th>
-                            <th scope="col">Quitar</th>
+                            <th scope="col">ACCIÓN</th>
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="body" let-rowData let-columns="columns" let-data>
                         <tr>
                             <td>{{ data.tecnicaFormativaFinal }}</td>
                             <td>{{ data.instrumnetoFormativaFinal }}</td>
-                            <td><button pButton type="button" class="p-button-rounded p-button-danger"
-                                    icon="pi pi-times"
+                            <td *ngIf='validarIdDisenioCurricular == false'><button pButton type="button"
+                                    class="p-button-rounded p-button-danger" icon="pi pi-times"
                                     (click)="quitarElementoEvaluacionF(data.tecnicaFormativaFinal)"></button></td>
+                            <td *ngIf='validarIdDisenioCurricular == true'>
+
+                                <button pButton type="button"
+                                    (click)="showModalEditEvaluacionFinal(data.idEvaluacionFinal)"
+                                    class="p-button-rounded p-button-info" icon="pi pi-pencil"
+                                    style="margin-right: 5px;"></button>
+                            </td>
                         </tr>
                     </ng-template>
                 </p-table>
             </div>
+            <p-dialog header="Evaluacion Final" [(visible)]="visibleFive2" [modal]="true"
+                [style]="{ width: '50vw', height: '450' }" [draggable]="false" [resizable]="false">
+                <div class="col-12 md:col-12 mt-1">
+                    <div class="grid p-fluid m-3">
+                        <div class="col-12 md:col-12 mt-1">
+                            <div class="p-inputgroup">
+                                <span class="p-float-label">
 
+                                    <input type="text" pInputText id="tecnicaFormativaFinal"
+                                        name="tecnicaFormativaFinal"
+                                        [(ngModel)]="evaluacionFinalCurricular.tecnicaFormativaFinal">
+                                    <label htmlFor="username"> <i class="icono fas fa-duotone fa-newspaper"></i> Técnica
+                                        Formativa</label>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-12 md:col-12 mt-2">
+                            <div class="p-inputgroup">
+                                <span class="p-float-label">
+                                    <input type="text" pInputText id="instrumnetoFormativaFinal"
+                                        name="instrumnetoFormativaFinal"
+                                        [(ngModel)]="evaluacionFinalCurricular.instrumnetoFormativaFinal">
+                                    <label htmlFor="username"><i class="icono fas fa-duotone fa-wrench"></i> Instrumento
+                                        Formativo</label>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12" style="text-align: center; margin: 5px;">
+                        <p-button label="Actualizar" icon="pi pi-check-square" styleClass="p-button-success  mb-2"
+                            (click)="actualizarEvaluacionFinal()"></p-button>
+                    </div>
+                </div>
+            </p-dialog>
         </p-card>
 
 
         <p-card header="Entorno de Aprendizaje " class="m-5">
             <!-- <form novalidate> -->
-            <div class="grid p-fluid m-3">
+            <div class="grid p-fluid m-3" *ngIf='validarIdDisenioCurricular == false'>
                 <div class="col-12 md:col-12 mt-1">
                     <div class="p-inputgroup">
                         <span class="p-float-label">
@@ -244,10 +431,13 @@
 
             </div>
             <div class="col-md-12" style="text-align: center; margin: 5px;">
-                <p-button label="Agregar" icon="pi pi-plus" styleClass="p-button-success  mb-2"
-                    (click)="almacenarEntornoAprendizaje()"></p-button>
+                <p-button *ngIf='validarIdDisenioCurricular == false' label="Agregar" icon="pi pi-plus"
+                    styleClass="p-button-success  mb-2" (click)="almacenarEntornoAprendizaje()"></p-button>
             </div>
-
+            <div class="col-md-12" style="text-align: center; margin: 5px;" *ngIf='validarIdDisenioCurricular == true'>
+                <p-button label="Agregar" icon="pi pi-plus" styleClass="p-button-success  mb-2"
+                    (click)="showModalCreateEntornoAprendizaje()"></p-button>
+            </div>
             <!-- </form> -->
             <div class="card">
                 <p-table [value]="listEntornoAprendizaje">
@@ -259,7 +449,7 @@
                             </th>
                             <th>FASE PRÁCTICA <h6 class="icono fas fa-duotone fa-wrench"></h6>
                             </th>
-                            <th scope="col">Quitar</th>
+                            <th scope="col">ACCIÓN</th>
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="body" let-rowData let-columns="columns" let-data>
@@ -267,8 +457,24 @@
                             <td>{{ data.instalaciones }}</td>
                             <td>{{ data.faseTeorica }}</td>
                             <td>{{ data.fasePractica }}</td>
-                            <td><button pButton type="button" class="p-button-rounded p-button-danger"
-                                    icon="pi pi-times" (click)="quitarEntornoAprendizaje(data.instalaciones)"></button>
+                            <td *ngIf='validarIdDisenioCurricular == false'><button pButton type="button"
+                                    class="p-button-rounded p-button-danger" icon="pi pi-times"
+                                    (click)="quitarEntornoAprendizaje(data.instalaciones)"></button>
+                            </td>
+
+                            <td *ngIf='validarIdDisenioCurricular == true'>
+                                <!-- <button *ngIf='data.idResultadoAprendizajeSilabo == 0' pButton type="button" class="p-button-rounded p-button-danger" icon="pi pi-times" (click)="quitarElemento(data.idResultadoAprendizajeSilabo)"></button> -->
+                                <button *ngIf='data.estadoEntornoAprendizaje == true' pButton type="button"
+                                    class="p-button-rounded p-button-success" icon="pi pi-check-circle"
+                                    style="margin-right: 5px;"
+                                    (click)="cambiarEstadoEntornoAprendizajeCurricularFalse(data.idEntornoCurricular)"></button>
+                                <button *ngIf='data.estadoEntornoAprendizaje == false' pButton type="button"
+                                    class="p-button-rounded p-button-danger" style="margin-right: 5px;"
+                                    icon="pi pi-power-off"
+                                    (click)="cambiarEstadoEntornoAprendizajeCurricularTrue(data.idEntornoCurricular)"></button>
+                                <button pButton type="button" (click)="showModalEdit(data.idEntornoCurricular)"
+                                    class="p-button-rounded p-button-info" icon="pi pi-pencil"
+                                    style="margin-right: 5px;"></button>
                             </td>
                         </tr>
                     </ng-template>
@@ -278,9 +484,52 @@
             <br>
 
             <div class="col-md-12" style="text-align: center; margin: 5px;">
-                <p-button label="Generar Diseño Curricular" icon="icono fas fa-duotone fa-save"
+                <p-button *ngIf='validarIdDisenioCurricular == false' label="Generar Diseño Curricular" icon="icono fas fa-duotone fa-save"
                     styleClass="p-button-success  mb-2" (onClick)="generarDisenioCurricular()"></p-button>
             </div>
+            <p-dialog header="Entorno Aprendizaje Curricular" [(visible)]="visible" [modal]="true"
+                [style]="{ width: '50vw', height: '450' }" [draggable]="false" [resizable]="false">
+                <div class="col-12 md:col-12 mt-1">
+                    <div class="grid p-fluid m-3">
+                        <div class="col-12 md:col-12 mt-1">
+                            <div class="p-inputgroup">
+                                <span class="p-float-label">
+
+                                    <input type="text" pInputText id="instalaciones" name="instalaciones"
+                                        [(ngModel)]="entornoAprendizajeCurricular.instalaciones">
+                                    <label htmlFor="username"> <i class="icono fas fa-duotone fa-newspaper"></i>
+                                        Instalaciones</label>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-12 md:col-12 mt-2">
+                            <div class="p-inputgroup">
+                                <span class="p-float-label">
+                                    <input type="text" pInputText id="faseTeorica" name="faseTeorica"
+                                        [(ngModel)]="entornoAprendizajeCurricular.faseTeorica">
+                                    <label htmlFor="username"><i class="icono fas fa-duotone fa-wrench"></i> Fase
+                                        teórica</label>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-12 md:col-12 mt-2">
+                            <div class="p-inputgroup">
+                                <span class="p-float-label">
+                                    <input type="text" pInputText id="fasePractica" name="fasePractica"
+                                        [(ngModel)]="entornoAprendizajeCurricular.fasePractica">
+                                    <label htmlFor="username"><i class="icono fas fa-duotone fa-wrench"></i> Fase
+                                        práctica</label>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12" style="text-align: center; margin: 5px;">
+                        <p-button label="Actualizar" icon="pi pi-check-square" styleClass="p-button-success  mb-2"
+                            (click)="actualizarEntornoAprendizaje()"></p-button>
+                    </div>
+                </div>
+            </p-dialog>
+
 
         </p-card>
 

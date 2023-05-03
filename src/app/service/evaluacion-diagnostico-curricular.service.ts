@@ -24,8 +24,16 @@ export class EvaluacionDiagnosticoCurricularService {
     return this.http.post<EvaluacionDiagnosticaCurriculares>(environment.apiuri+'/evaluacionDiacnosticaCurricular/save',listDisenioCurricular);
   }
 
-  public updateEvaluacionDiagnosticoCurricular(idEvaluacionDiagnosticaCurricular: number, evaluacionDiacnosticaCurricular: EvaluacionDiagnosticaCurriculares): Observable<EvaluacionDiagnosticaCurriculares> {
-    return this.http.put<EvaluacionDiagnosticaCurriculares>(`${environment.apiuri}/evaluacionDiacnosticaCurricular/update/${ idEvaluacionDiagnosticaCurricular}`, evaluacionDiacnosticaCurricular);
+ 
+  public cambiarEstadosEvaluacioinDiagnosticaDisenioCurricularId(id:number, evaluacionDiacnosticaCurricular: EvaluacionDiagnosticaCurriculares):Observable<EvaluacionDiagnosticaCurriculares>{
+    return this.http.put<EvaluacionDiagnosticaCurriculares>(environment.apiuri+'/evaluacionDiacnosticaCurricular/update/'+id, evaluacionDiacnosticaCurricular);
+  }
+
+  public  updateEvaluacionDiagnosticaCurricular(id:number, evaluacionDiacnosticaCurricular: EvaluacionDiagnosticaCurriculares):Observable< EvaluacionDiagnosticaCurriculares>{
+    return this.http.put< EvaluacionDiagnosticaCurriculares>(environment.apiuri+'/evaluacionDiacnosticaCurricular/update/'+id,evaluacionDiacnosticaCurricular);
+  }
+  public getEvaluacionDiagnosticaCurricularPorDisenioById(id: number):Observable<EvaluacionDiagnosticaCurriculares[]>{
+    return this.http.get<EvaluacionDiagnosticaCurriculares[]>(environment.apiuri+'/evaluacionDiagnosticaporDisenioCurricular/findbyId/'+id);
   }
   
 }
