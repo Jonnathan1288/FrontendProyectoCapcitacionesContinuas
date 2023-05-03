@@ -14,6 +14,7 @@ import { SilaboComponent } from './modules/silabo/silabo.component';
 import { CurricularDiseñoComponent } from './modules/curricular-diseño-register/curricular-diseño.component';
 import { ListCourseComponent } from './modules/moduleCourse/list-course/list-course.component';
 import { RegistroNecesidadComponent } from './modules/moduleCourse/registro-necesidad/registro-necesidad.component';
+import { HojavidaComponent } from './modules/hojavida/hojavida.component';
 
 const routes: Routes = [
   {path: 'login', component:LoginComponent },
@@ -32,6 +33,7 @@ const routes: Routes = [
   { path: 'mat', component: MatriculComponent },
   { path: 'cardcu', component: CardcursoComponent },
   { path: 'info', component: InfocursoComponent },
+  { path: 'hoja', component:HojavidaComponent},
   { path: '**', pathMatch: 'full', redirectTo: 'home' }
 ];
 

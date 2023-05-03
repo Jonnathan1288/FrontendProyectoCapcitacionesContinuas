@@ -23,6 +23,7 @@ import { InfocursoComponent } from './modules/infocurso/infocurso.component';
 import { ListCourseComponent } from './modules/moduleCourse/list-course/list-course.component';
 import { RegistroNecesidadComponent } from './modules/moduleCourse/registro-necesidad/registro-necesidad.component';
 import { ProgramasComponent } from './modules/programa/programas/programas.component';
+import { HojavidaComponent } from './modules/hojavida/hojavida.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,6 +43,7 @@ import { ProgramasComponent } from './modules/programa/programas/programas.compo
     ListCourseComponent,
     RegistroNecesidadComponent,
     ProgramasComponent,
+    HojavidaComponent,
   ],
   imports: [
     BrowserModule,
