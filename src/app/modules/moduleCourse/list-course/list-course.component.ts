@@ -44,8 +44,7 @@ export class ListCourseComponent implements OnInit {
   }
 
   public silabo(idcurso: number) {
-    localStorage.setItem('idCurso', String(idcurso));
-    location.replace('/silabo');
+    this.router.navigate(['/silabo', idcurso]);
   }
 
   public editCurso(idcurso: number) {
