@@ -7,5 +7,7 @@ export class HojaVidaCapacitador {
     experienciaEscolar?: string;
     destrezas?: string;
     idiomas?: string;
+    estadoAprobacion?: string;
+    documento?: any;
     capacitador?: Capacitador;
 }
