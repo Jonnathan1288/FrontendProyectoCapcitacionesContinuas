@@ -370,10 +370,9 @@ export class CourseRegisterComponent {
   }
 
 
-//Ruteo a otras ventanas
+  //Ruteo a otras ventanas
   public silabo() {
-    localStorage.setItem('idCurso', String(this.idCursoUpdate));
-    location.replace('/silabo');
+    this.router.navigate(['/silabo', this.idCursoUpdate]);
   }
 
   public necesidad() {

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Contenidosilabos } from 'src/app/models/contenidosilabos';
 import { Curso } from 'src/app/models/curso';
 import { EstrategiasMetodologica } from 'src/app/models/estrategias-metodologica';
@@ -35,7 +35,8 @@ export class SilaboComponent implements OnInit {
     private resultadosAprendizajeService: ResultadoAprendizajeSilaboService,
     private contenidoSilaboService: ContenidoSilaboService,
     private prerrequitsitoCursoService: PrerrequisitosCursoService,
-    private reportService: ReportsCapacitacionesService
+    private reportService: ReportsCapacitacionesService,
+    private actiRouter: ActivatedRoute,
   ) {
   }
 
@@ -50,19 +51,38 @@ export class SilaboComponent implements OnInit {
   prerrequisitosCurso: PrerequisitoCurso = new PrerequisitoCurso();
 
   ngOnInit() {
-    this.obtenerDatosCurso();
+    this.actiRouter.params.subscribe((params) => {
+      const id_curso = params['id'];
+      this.idCursoCap = id_curso;
+      // this.obtenerDatosCurso();
+      this.validacionDeSilaboExistente();
+    });
+  }
+
+  validacionDeSilaboExistente():void{
+    this.silaboService.getsilabooValidacion(this.idCursoCap).subscribe(
+      data =>{
+        if (data === true) {
+            alert('Ya tiene silabo' + data)
+            this.traerDatos(this.idCursoCap);
+        } else {
+          alert(" no tien silabo")
+          this.obtenerDatosCurso();
+        }
+      }
+    )
   }
 
   /* TRAER DATOS DEL CURSO*/
-  idCursoCap?: any = localStorage.getItem('idCurso');;
-  CapIdCursoSend?: number;
+  idCursoCap?: any;
+  //CapIdCursoSend?: number;
 
   public obtenerDatosCurso(): void {
     if (this.idCursoCap != null && this.idCursoCap != undefined) {
       this.cursoService.getCursoById(this.idCursoCap).subscribe((data) => {
         this.curso = data;
-        this.CapIdCursoSend = this.curso.idCurso;
-        this.obtenerPrerrequisistos(this.CapIdCursoSend!);
+        // this.CapIdCursoSend = this.curso.idCurso;
+        this.obtenerPrerrequisistos( this.curso.idCurso!);
       })
     } else {
       console.log("Curso not found =(")
@@ -205,22 +225,22 @@ export class SilaboComponent implements OnInit {
   /* */
 
   /* METODO POST */
-  idSilaboCap?: number;
-
+  idSilaboCap!: any;
   public generarSilabo(): void {
     this.silabo.curso = this.curso;
-    this.silaboService.saveSilabo(this.silabo).subscribe(silaboData => {
-      this.silabo = silaboData;
-      this.idSilaboCap = this.silabo.idSilabo;
-      console.log("Data + " + silaboData)
-      /* TABLAS */
-      this.generarResultadosAprendizaje();
-      this.generarContenidos();
-      this.generarEstetegiasMetodologicas();
-      this.generarMaterialesAudivisuales();
-      this.generarMaterialesConvecionales();
-      /* */
-      console.log("Silabo generado id->" + this.idSilaboCap)
+    this.silaboService.saveSilabo(this.silabo).subscribe(
+      silaboData => {
+        this.silabo = silaboData;
+        this.idSilaboCap = this.silabo.idSilabo;
+        console.log("Data + " + this.idSilaboCap)
+        /* TABLAS */
+        this.generarResultadosAprendizaje();
+        this.generarContenidos();
+        this.generarEstetegiasMetodologicas();
+        this.generarMaterialesAudivisuales();
+        this.generarMaterialesConvecionales();
+        /* */
+        console.log("Silabo generado id->" + this.idSilaboCap)
     })
   }
   /* */
@@ -278,20 +298,21 @@ export class SilaboComponent implements OnInit {
   /* */
 
   // ACTUALIZAR SILABO //
-  idSilaboCapEdit?: number = 1;
-  idSilaboCapGlobal?: number;
+  // idSilaboCapEdit?: number = 1;
   validarIdSilabo: Boolean = false;
-  public traerDatos(): void {
-    this.silaboService.getSilaboById(this.idSilaboCapEdit!).subscribe(
-      data => {
-        this.silabo = data;
-        this.idSilaboCapGlobal = this.silabo.idSilabo;
-        this.traerDatosEstretegiasFull(this.idSilaboCapGlobal!);
-        this.traerDatosContenidosFull(this.idSilaboCapGlobal!);
-        this.traerDatosEstrategiasFull(this.idSilaboCapGlobal!);
-        this.traerDatosMaudiovisualesFull(this.idSilaboCapGlobal!);
-        this.traerDatosMconvencionalesFull(this.idSilaboCapGlobal!);
-        this.validarIdSilabo = true;
+  idDelSilabo: any;
+  public traerDatos(idCurso:number): void {
+    this.silaboService.getSilaboByIdPorCurso(idCurso).subscribe(
+      data =>{
+          this.silabo = data;
+          this.idDelSilabo = this.silabo.idSilabo;
+          console.log("id del sialbo nuevo -> " + this.idDelSilabo)
+          this.traerDatosEstretegiasFull(this.idDelSilabo!);
+          this.traerDatosContenidosFull(this.idDelSilabo!);
+          this.traerDatosEstrategiasFull(this.idDelSilabo!);
+          this.traerDatosMaudiovisualesFull(this.idDelSilabo!);
+          this.traerDatosMconvencionalesFull(this.idDelSilabo!);
+          this.validarIdSilabo = true;
       }
     )
   }
@@ -399,7 +420,7 @@ export class SilaboComponent implements OnInit {
         this.resultadoAprendizajeSilabo.estadoUnidadActivo = false;
         this.resultadosAprendizajeService.cambiarEstadosResultadosSilaboId(idResultadoAprendizajeSilabo, this.resultadoAprendizajeSilabo).subscribe(
           dataTwo => {
-            this.traerDatosEstretegiasFull(this.idSilaboCapGlobal!);
+            this.traerDatosEstretegiasFull(this.idDelSilabo!);
             console.log("Se actualizo")
           }
         )
@@ -415,7 +436,7 @@ export class SilaboComponent implements OnInit {
         this.resultadoAprendizajeSilabo.estadoUnidadActivo = true;
         this.resultadosAprendizajeService.cambiarEstadosResultadosSilaboId(idResultadoAprendizajeSilabo, this.resultadoAprendizajeSilabo).subscribe(
           dataTwo => {
-            this.traerDatosEstretegiasFull(this.idSilaboCapGlobal!);
+            this.traerDatosEstretegiasFull(this.idDelSilabo!);
             console.log("Se actualizo")
           }
         )
@@ -432,7 +453,7 @@ export class SilaboComponent implements OnInit {
         this.contenidosSilabo.estadoContenido = true;
         this.contenidoSilaboService.updateContenidoSilabo(idContenidoSilabo,this.contenidosSilabo).subscribe(
           data=>{
-            this.traerDatosContenidosFull(this.idSilaboCapGlobal!);
+            this.traerDatosContenidosFull(this.idDelSilabo!);
             console.log("cambio")
           }
         )
@@ -447,7 +468,7 @@ export class SilaboComponent implements OnInit {
         this.contenidosSilabo.estadoContenido = false;
         this.contenidoSilaboService.updateContenidoSilabo(idContenidoSilabo,this.contenidosSilabo).subscribe(
           data=>{
-            this.traerDatosContenidosFull(this.idSilaboCapGlobal!);
+            this.traerDatosContenidosFull(this.idDelSilabo!);
             console.log("cambio")
           }
         )
@@ -464,7 +485,7 @@ export class SilaboComponent implements OnInit {
         this.estrategiasMetodologicas.estadoEstrategiaMetodologicaActivo = true;
         this.estrategiasMetodologicasService.updateEstrategiasSilabo(idEstrategiaMetodologica,this.estrategiasMetodologicas).subscribe(
           data=>{
-            this.traerDatosEstrategiasFull(this.idSilaboCapGlobal!);
+            this.traerDatosEstrategiasFull(this.idDelSilabo!);
             console.log("cambio")
           }
         )
@@ -479,7 +500,7 @@ export class SilaboComponent implements OnInit {
         this.estrategiasMetodologicas.estadoEstrategiaMetodologicaActivo = false;
         this.estrategiasMetodologicasService.updateEstrategiasSilabo(idEstrategiaMetodologica,this.estrategiasMetodologicas).subscribe(
           data=>{
-            this.traerDatosEstrategiasFull(this.idSilaboCapGlobal!);
+            this.traerDatosEstrategiasFull(this.idDelSilabo!);
             console.log("cambio")
           }
         )
@@ -496,7 +517,7 @@ export class SilaboComponent implements OnInit {
           this.materialesConvecionales.estadoMaterialConvencional = true;
           this.materialesConvencianalesService.updateMaterialConvencionales(idMaterialConvencional,this.materialesConvecionales).subscribe(
             data=>{
-              this.traerDatosMconvencionalesFull(this.idSilaboCapGlobal!);
+              this.traerDatosMconvencionalesFull(this.idDelSilabo!);
               console.log("cambio")
             }
           )
@@ -511,7 +532,7 @@ export class SilaboComponent implements OnInit {
           this.materialesConvecionales.estadoMaterialConvencional = false;
           this.materialesConvencianalesService.updateMaterialConvencionales(idMaterialConvencional,this.materialesConvecionales).subscribe(
             data=>{
-              this.traerDatosMconvencionalesFull(this.idSilaboCapGlobal!);
+              this.traerDatosMconvencionalesFull(this.idDelSilabo!);
               console.log("cambio")
             }
           )
@@ -528,7 +549,7 @@ export class SilaboComponent implements OnInit {
         this.materialesAudiovisuales.estadoMaterialAudiovisual = true;
         this.materialesAudivisualesSilaboService.updateEstadosMaterialAudio(idMaterialAudiovisual,this.materialesAudiovisuales).subscribe(
           data=>{
-            this.traerDatosMaudiovisualesFull(this.idSilaboCapGlobal!);
+            this.traerDatosMaudiovisualesFull(this.idDelSilabo!);
             console.log("cambio")
           }
         )
@@ -543,7 +564,7 @@ export class SilaboComponent implements OnInit {
         this.materialesAudiovisuales.estadoMaterialAudiovisual = false;
         this.materialesAudivisualesSilaboService.updateEstadosMaterialAudio(idMaterialAudiovisual,this.materialesAudiovisuales).subscribe(
           data=>{
-            this.traerDatosMaudiovisualesFull(this.idSilaboCapGlobal!);
+            this.traerDatosMaudiovisualesFull(this.idDelSilabo!);
             console.log("cambio")
           }
         )
@@ -583,14 +604,14 @@ export class SilaboComponent implements OnInit {
       this.resultadoAprendizajeSilabo.estadoUnidadActivo = true;
       this.resultadosAprendizajeService.saveResultadosArendizaje(this.resultadoAprendizajeSilabo).subscribe(
         dataTwo => {
-          this.traerDatosEstretegiasFull(this.idSilaboCapGlobal!);
+          this.traerDatosEstretegiasFull(this.idDelSilabo!);
           console.log("Se creo uno nuevo")
         }
       )
     } else {
       this.resultadosAprendizajeService.updateEstadosResultados(this.idCapModelEdit!, this.resultadoAprendizajeSilabo).subscribe(
         dataTwo => {
-          this.traerDatosEstretegiasFull(this.idSilaboCapGlobal!);
+          this.traerDatosEstretegiasFull(this.idDelSilabo!);
           console.log("Se actualizo")
         }
       )
@@ -627,13 +648,13 @@ export class SilaboComponent implements OnInit {
       this.contenidosSilabo.estadoContenido = true;
       this.contenidoSilaboService.saveContenidosilabos(this.contenidosSilabo).subscribe(
       dataTwo => {
-        this.traerDatosContenidosFull(this.idSilaboCapGlobal!);
+        this.traerDatosContenidosFull(this.idDelSilabo!);
         console.log("Se creo uno nuevo")
       })
     } else {
       this.contenidoSilaboService.updateContenidoSilabo(this.idCapModelEditContenido!, this.contenidosSilabo).subscribe(
         dataTwo => {
-          this.traerDatosContenidosFull(this.idSilaboCapGlobal!);
+          this.traerDatosContenidosFull(this.idDelSilabo!);
           console.log("Se actualizo")
         }
       )
@@ -669,14 +690,14 @@ export class SilaboComponent implements OnInit {
       this.materialesAudiovisuales.estadoMaterialAudiovisual = true;
       this.materialesAudivisualesSilaboService.saveMaterialAudiovisuales(this.materialesAudiovisuales).subscribe(
       dataTwo => {
-        this.traerDatosMaudiovisualesFull(this.idSilaboCapGlobal!);
+        this.traerDatosMaudiovisualesFull(this.idDelSilabo!);
         console.log("Se creo uno nuevo")
       }
     )
     } else {
       this.materialesAudivisualesSilaboService.updateEstadosMaterialAudio(this.idCapModelEditAudiovisual!, this.materialesAudiovisuales).subscribe(
         dataTwo => {
-          this.traerDatosMaudiovisualesFull(this.idSilaboCapGlobal!);
+          this.traerDatosMaudiovisualesFull(this.idDelSilabo!);
           console.log("Se actualizo")
         }
       )
@@ -713,14 +734,14 @@ export class SilaboComponent implements OnInit {
       this.materialesConvecionales.estadoMaterialConvencional = true;
       this.materialesConvencianalesService.saveMaterialConvencional(this.materialesConvecionales).subscribe(
       dataTwo => {
-        this.traerDatosMconvencionalesFull(this.idSilaboCapGlobal!);
+        this.traerDatosMconvencionalesFull(this.idDelSilabo!);
         console.log("Se creo uno nuevo")
       }
     )
     } else {
       this.materialesConvencianalesService.updateMaterialConvencionales(this.idCaoModelConvencional!, this.materialesConvecionales).subscribe(
         dataTwo => {
-          this.traerDatosMconvencionalesFull(this.idSilaboCapGlobal!);
+          this.traerDatosMconvencionalesFull(this.idDelSilabo!);
           console.log("Se actualizo")
         }
       )
@@ -756,13 +777,13 @@ export class SilaboComponent implements OnInit {
       this.estrategiasMetodologicas.estadoEstrategiaMetodologicaActivo = true;
       this.estrategiasMetodologicasService.saveEstrategiasMetodologica(this.estrategiasMetodologicas).subscribe(
       dataTwo => {
-        this.traerDatosEstrategiasFull(this.idSilaboCapGlobal!);
+        this.traerDatosEstrategiasFull(this.idDelSilabo!);
         console.log("Se creo uno nuevo")
       })
     } else {
       this.estrategiasMetodologicasService.updateEstrategiasSilabo(this.idCapModelEditEstetegia!, this.estrategiasMetodologicas).subscribe(
         dataTwo => {
-          this.traerDatosEstrategiasFull(this.idSilaboCapGlobal!);
+          this.traerDatosEstrategiasFull(this.idDelSilabo!);
           console.log("Se actualizo")
         }
       )
@@ -770,16 +791,10 @@ export class SilaboComponent implements OnInit {
   }
   // FIN ESTRATEGIAS
 
-  // FIN //
-  public actualizarSilabo(): void {
 
-  }
-  // FIN //
-
-
-  // IMPRIMIR
+  // IMPRIMIR // VALIDAR idSilaboCapGlobal // idSilaboCap
   public getReportSilabo() {
-    this.reportService.gedownloadSilabo(this.idSilaboCapGlobal!)
+    this.reportService.gedownloadSilabo(this.idDelSilabo!)
       .subscribe((r) => {
         const url = URL.createObjectURL(r);
         window.open(url, '_blank');

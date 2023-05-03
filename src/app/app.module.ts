@@ -30,6 +30,11 @@ import { PanelModuloCursosComponent } from './modules/moduleCourse/panel-modulo-
 import { RegistroFotograficoEvidenciasComponent } from './modules/view-inscritos-curso/registro-fotografico-evidencias/registro-fotografico-evidencias.component';
 import { ViewEvidenciasTableFotofraficasComponent } from './modules/moduleCourse/view-evidencias-table-fotofraficas/view-evidencias-table-fotofraficas.component';
 import { ToastrModule } from 'ngx-toastr';
+import { ProgramasCapacitacionComponent } from './modules/administradormodule/programas-capacitacion/programas-capacitacion.component';
+import { AsignacionRolCapacitadorComponent } from './modules/administradormodule/asignacion-rol-capacitador/asignacion-rol-capacitador.component';
+import { MisCursosParticipanteComponent } from './modules/participanteModule/mis-cursos-participante/mis-cursos-participante.component';
+import { ValidacionCursosCapacitacionComponent } from './modules/administradormodule/validacion-cursos-capacitacion/validacion-cursos-capacitacion.component';
+
 
 
 
@@ -58,6 +63,11 @@ import { ToastrModule } from 'ngx-toastr';
     PanelModuloCursosComponent,
     RegistroFotograficoEvidenciasComponent,
     ViewEvidenciasTableFotofraficasComponent,
+    ProgramasCapacitacionComponent,
+    AsignacionRolCapacitadorComponent,
+    MisCursosParticipanteComponent,
+    ValidacionCursosCapacitacionComponent,
+
   ],
   imports: [
     BrowserModule,

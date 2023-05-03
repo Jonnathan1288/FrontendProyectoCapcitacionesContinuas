@@ -27,4 +27,8 @@ export class inscritosService {
   public aprbarOdesaprobarInscrito(id:number, inscrito: Inscrito):Observable<Inscrito>{
     return this.http.put<Inscrito>(environment.apiuri+'/inscritocurso/update/'+id, inscrito);
   }
+
+  public getInscrioValidacion(idCurso:number,idUsario: number){
+    return this.http.get<boolean>(environment.apiuri+'/validarCursoAplicadoUsuario/findbyIdCursoAndIdUsuario/'+idCurso+'/'+idUsario);
+  }
 }

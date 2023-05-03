@@ -1,0 +1,145 @@
+
+<div class="card">
+    <p-toolbar styleClass="mb-4">
+        <ng-template pTemplate="left">
+            <button pButton pRipple label="Nuevo" icon="pi pi-plus" class="p-button-success mr-2"
+                (click)="showModaL()"></button>
+
+        </ng-template>
+
+        <ng-template pTemplate="right">
+            <button pButton pRipple label="Imprimir" icon="pi pi-print"
+                class="p-button-primary mr-2 inline-block"></button>
+
+            <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button>
+        </ng-template>
+    </p-toolbar>
+
+    <p-table #dt [value]="listClassCapacitador" [rows]="5" [paginator]="true"
+        [globalFilterFields]="['nombrePrograma','periodoPrograma.fechaInicioPeriodoPrograma','representative.name','status']"
+        responsiveLayout="scroll" [rowHover]="true" dataKey="id"
+        currentPageReportTemplate="Mostrando {first} de {last} de {totalRecords} registros fotograficos"
+        [showCurrentPageReport]="true">
+        <ng-template pTemplate="caption">
+            <div class="flex align-items-center justify-content-between">
+                <h5 class="m-0"><strong>DOCENTES CAPACITADORES</strong></h5>
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" placeholder="Search..." (input)="filterGlobal($event)"  />
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+              
+                <th pSortableColumn="nombrePrograma">NOMRBES <p-sortIcon field="nombrePrograma"></p-sortIcon></th>
+                <th pSortableColumn="periodoPrograma">IDENTIFICASIÓN<p-sortIcon field="periodoPrograma"></p-sortIcon></th>
+                <th pSortableColumn="category">NOMBRE DE CUENTA<p-sortIcon field="category"></p-sortIcon></th>
+                <th pSortableColumn="descripcionFoto">TITÚLO<p-sortIcon field="descripcionFoto"></p-sortIcon></th>
+                <th pSortableColumn="inventoryStatus">ESTADO <p-sortIcon field="inventoryStatus"></p-sortIcon></th>
+                <th pSortableColumn="inventoryStatus">GÉSTION <p-sortIcon field="inventoryStatus"></p-sortIcon></th>
+
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-capacit>
+            <tr>
+               
+                <td>{{capacit.usuario.persona.nombre1}} {{capacit.usuario.persona.apellido1}}</td>
+                <td>{{capacit.usuario.persona.identificacion}}</td>
+                <td>{{capacit.usuario.username}}</td>
+                <td>{{capacit.tituloCapacitador}}</td>
+                <!-- <td>{{capacit.estadoActivoCapacitador}}</td> -->
+                <td>
+                    <div class="estatus">
+                    <span [ngClass]="{'status-active': capacit.estadoActivoCapacitador, 'status-pending': !capacit.estadoActivoCapacitador}">
+                    {{ capacit.estadoActivoCapacitador ? 'ACTIVO' : 'PENDIENTE' }}
+                  </span>
+                </div>
+                  </td>
+                <td>
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2 mt-1" (click)="cargarDatosDocenteCapacitador(capacit)"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning mt-1" (click)="eliminadoLogicoDelCapacitador(capacit)"></button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <div class="flex align-items-center justify-content-between">
+                En total hay {{listClassCapacitador ? listClassCapacitador.length : 0 }} Capacitadores.
+            </div>
+        </ng-template>
+    </p-table>
+</div>
+
+
+
+
+
+<!-- Creacion de usuario -->
+
+<!-- IMPLEMENTACION DEL MODAL PARA EL INGRESO DE LOS CURSOS -->
+
+<p-dialog header="Contenidos del Curso" [(visible)]="visible" [modal]="true" [style]="{ width: '50vw', height: '250' }"
+    [draggable]="false" [resizable]="false">
+    <form (ngSubmit)="saveUpdateDocenteDocenteCapacitadorRol()" ngNativeValidate style="padding: 15px;">
+        <div class="grid p-fluid m-2">
+       
+            <div class="col-12 md:col-12 mt-2">
+                <div class="p-inputgroup">
+                    <span class="p-float-label">
+                        <input type="text" id="inputtext" pInputText id="identificacion"
+                            name="identificacion" [(ngModel)]="classPersona.identificacion">
+                        <label for="inputtext">Identificación</label>
+                    </span>
+                </div>
+            </div>
+
+            <div class="col-12 md:col-12 mt-2">
+                <div class="p-inputgroup">
+                    <span class="p-float-label">
+                        <input type="text" id="inputtext" pInputText id="nombre1"
+                            name="nombre1" [(ngModel)]="classPersona.nombre1">
+                        <label for="inputtext">Nombre</label>
+                    </span>
+                </div>
+            </div>
+
+            <div class="col-12 md:col-12 mt-2">
+                <div class="p-inputgroup">
+                    <span class="p-float-label">
+                        <input type="text" id="inputtext" pInputText id="apellido1"
+                            name="apellido1" [(ngModel)]="classPersona.apellido1">
+                        <label for="inputtext">Apellido</label>
+                    </span>
+                </div>
+            </div>
+
+            <!-- Directamente del programa ya no del periodo program -->
+
+            <div class="col-12 md:col-12 mt-2">
+                <div class="p-inputgroup">
+                    <span class="p-float-label">
+                        <input type="text" id="inputtext" pInputText id="username"
+                            name="username" [(ngModel)]="classUsuario.username">
+                        <label for="inputtext">Nombre de usuario</label>
+                    </span>
+                </div>
+            </div>
+
+            <div class="col-12 md:col-12 mt-2">
+                <div class="p-inputgroup">
+                    <span class="p-float-label">
+                        <input type="text" id="inputtext" pInputText id="password"
+                            name="password" [(ngModel)]="classUsuario.password">
+                        <label for="inputtext">Contraseña</label>
+                    </span>
+                </div>
+            </div>
+
+            
+            <!-- Fin del periodo porgrama -->
+            <div class="col-md-12" style="text-align: center; margin: 5px;">
+                <p-button type="ngSubmit" [label]="classCapacitador.idCapacitador? 'Actualizar Capacitador': 'Crear Capacitador'" icon="pi pi-save" styleClass="p-button-success  mb-2"></p-button>
+            </div>
+        </div>
+    </form>
+</p-dialog>

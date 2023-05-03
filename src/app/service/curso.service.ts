@@ -15,6 +15,14 @@ export class CursoService {
     return this.http.get<Curso[]>(environment.apiuri+'/curso/list');
   }
 
+  public listCursoDisponibles():Observable<Curso[]>{
+    return this.http.get<Curso[]>(environment.apiuri+'/cursoDisponibles/list');
+  }
+
+  public listCursoDelParticipante(idUsuarioParticipante:number):Observable<Curso[]>{
+    return this.http.get<Curso[]>(environment.apiuri+'/cursosDelParticipante/list/'+idUsuarioParticipante);
+  }
+
   public saveCurso(curso: Curso):Observable<Curso>{
     return this.http.post<Curso>(environment.apiuri+'/curso/save', curso);
   }
@@ -30,4 +38,6 @@ export class CursoService {
   public updateCurso(id_curso: number, curso: Curso):Observable<Curso>{
     return this.http.put<Curso>(environment.apiuri+'/area/actualizar/'+id_curso, curso);
   }
+
+  //Metodo para mostrar todos los programas
 }

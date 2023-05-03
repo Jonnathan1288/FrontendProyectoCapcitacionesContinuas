@@ -22,6 +22,10 @@ import { RegistrarNotasFinalesComponent } from './modules/view-inscritos-curso/r
 import { PanelModuloCursosComponent } from './modules/moduleCourse/panel-modulo-cursos/panel-modulo-cursos.component';
 import { RegistroFotograficoEvidenciasComponent } from './modules/view-inscritos-curso/registro-fotografico-evidencias/registro-fotografico-evidencias.component';
 import { ViewEvidenciasTableFotofraficasComponent } from './modules/moduleCourse/view-evidencias-table-fotofraficas/view-evidencias-table-fotofraficas.component';
+import { ProgramasCapacitacionComponent } from './modules/administradormodule/programas-capacitacion/programas-capacitacion.component';
+import { AsignacionRolCapacitadorComponent } from './modules/administradormodule/asignacion-rol-capacitador/asignacion-rol-capacitador.component';
+import { MisCursosParticipanteComponent } from './modules/participanteModule/mis-cursos-participante/mis-cursos-participante.component';
+import { ValidacionCursosCapacitacionComponent } from './modules/administradormodule/validacion-cursos-capacitacion/validacion-cursos-capacitacion.component';
 
 const routes: Routes = [
   {path: 'login', component:LoginComponent },
@@ -30,7 +34,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'cap', component: CapacitadorComponent },
   { path: 'prog', component: ProgramasComponent },
-  { path: 'silabo', component: SilaboComponent },
+  { path: 'silabo/:id', component: SilaboComponent },
   { path: 'diseño', component: CurricularDiseñoComponent },
   // { path: 'register/course', component: CourseRegisterComponent , canActivate: [AuthGaurdGuard], data: {expectedRoles: ['Administrador'] }},
   { path: 'register/course', component: CourseRegisterComponent},
@@ -39,14 +43,11 @@ const routes: Routes = [
   { path: 'panel/course/:id', component: PanelModuloCursosComponent},
   { path: 'verInscritos/course/:id', component: ViewInscritosCursoComponent},
   { path: 'verMatriculados/course/inicio/:id', component: ViewInicioCursoMatriculadosComponent},
-
+  { path: 'verMisCursos/course', component: MisCursosParticipanteComponent},
   //Registro fotografico
-  { path: 'registro/fotografico/curso/:id', component: RegistroFotograficoEvidenciasComponent },
-
+  // { path: 'registro/fotografico/curso/:id', component: RegistroFotograficoEvidenciasComponent },
   //Ver vista de las evidencias fotograficas
-  { path: 'lef', component: ViewEvidenciasTableFotofraficasComponent },
-
-
+  { path: 'registro/fotografico/curso/:id', component: ViewEvidenciasTableFotofraficasComponent },
   { path: 'register/course/:id', component: CourseRegisterComponent },
   { path: 'list/course', component: ListCourseComponent },
   { path: 'register/necesidad', component: RegistroNecesidadComponent },
@@ -56,6 +57,15 @@ const routes: Routes = [
   { path: 'mat/:id', component: MatriculComponent },
   { path: 'cardcu/detalle/:id', component: InfocursoComponent },
   { path: 'info', component: InfocursoComponent },
+
+  //Programas de capacitacion.
+  { path: 'programas/capacitacion', component: ProgramasCapacitacionComponent },
+  { path: 'asignacion/rol', component: AsignacionRolCapacitadorComponent },
+
+
+  //Aplicasion de los filtro de prime
+  { path: 'v', component: ValidacionCursosCapacitacionComponent },
+
   { path: '**', pathMatch: 'full', redirectTo: 'home' }
 ];
 

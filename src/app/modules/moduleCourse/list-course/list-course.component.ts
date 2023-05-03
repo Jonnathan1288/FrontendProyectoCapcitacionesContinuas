@@ -44,8 +44,7 @@ export class ListCourseComponent implements OnInit {
   }
 
   public silabo(idcurso: number) {
-    localStorage.setItem('idCurso', String(idcurso));
-    location.replace('/silabo');
+    this.router.navigate(['/silabo', idcurso]);
   }
 
   public editCurso(idcurso: number) {
@@ -64,8 +63,8 @@ export class ListCourseComponent implements OnInit {
     this.router.navigate(['/verInscritos/course/', idCurso]);
   }
 
-  public VerRegistroFotografico() {
-    this.router.navigate(['/lef']);
+  public VerRegistroFotografico(idCurso: number) {
+    this.router.navigate(['/registro/fotografico/curso/', idCurso]);
   }
 
   //Implementacion de la tabla de todo referente a primeng
