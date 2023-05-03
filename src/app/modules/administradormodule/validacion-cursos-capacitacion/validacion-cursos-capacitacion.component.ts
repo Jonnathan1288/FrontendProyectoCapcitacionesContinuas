@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Table } from 'primeng/table';
+import { Curso } from 'src/app/models/curso';
 import { Persona } from 'src/app/models/persona';
 import { Programas } from 'src/app/models/programa';
+import { CursoService } from 'src/app/service/curso.service';
 import { PeriodoProgramaService } from 'src/app/service/periodo-programa.service';
 import { PersonaService } from 'src/app/service/persona.service';
 import { ProgramasService } from 'src/app/service/programas.service';
@@ -18,20 +20,28 @@ export class ValidacionCursosCapacitacionComponent implements OnInit {
 
   statuses: any[] = [];
 
-  loading: boolean = true;
+  loading: boolean = false;
 
   activityValues: number[] = [0, 100];
 
   public listP: Persona[] = [];
+
+
+
+  public listCursos: Curso[] =[];
+
+
   constructor(
     private periodoProgramaService: PeriodoProgramaService,
     private programaService: ProgramasService,
-    private P: PersonaService
+    private P: PersonaService,
+    private cursoService: CursoService
   ) {}
   ngOnInit(): void {
     // this.getTodosLosProgramasPorAdministrador();
 
-    this.getpersona();
+    // this.getpersona();
+    this.obtenerTodosLosCursos();
   }
 
   public getTodosLosProgramasPorAdministrador() {
@@ -48,10 +58,7 @@ export class ValidacionCursosCapacitacionComponent implements OnInit {
   public getpersona() {
     this.P.getListaPersonas().subscribe((data) => {
       this.listP = data;
-      setTimeout(() => {
-
-        this.loading = false
-      }, 50);
+  
 
     });
   }
@@ -63,6 +70,12 @@ export class ValidacionCursosCapacitacionComponent implements OnInit {
   //Implementtacion de lso metodos para validar los cursos
 
   public obtenerTodosLosCursos(){
-    
+    this.cursoService.listCurso().subscribe((data)=>{
+      if(data != null){
+
+        // this.loading = false
+        this.listCursos = data;
+      }
+    })
   }
 }
