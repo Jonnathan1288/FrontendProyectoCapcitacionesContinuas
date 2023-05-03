@@ -23,4 +23,11 @@ export class SilaboService {
     return this.http.get<Silabo>(environment.apiuri+'/silabo/findbyId/'+id_curso);
   }
   
+  public getSilaboByIdPorCurso(id_curso: number):Observable<Silabo>{
+    return this.http.get<Silabo>(environment.apiuri+'/silabo/findbyIdCursoPorSilabo/'+id_curso);
+  }
+  
+  public getsilabooValidacion(idCurso:number){
+    return this.http.get<boolean>(environment.apiuri+'/silabo/findbyIdCurso/'+idCurso);
+  }
 }
