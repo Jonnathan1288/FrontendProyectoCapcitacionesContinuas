@@ -1,0 +1,61 @@
+
+<button (click)="guardarDatosVacios()">vacio</button>
+
+<p-table [value]="listNotas" [tableStyle]="{'min-width': '50rem'}">
+    <ng-template pTemplate="header">
+        <tr>
+            <th style="width:20%">Identificación</th>
+            <th style="width:20%">Cedula</th>
+            <th style="width:20%">Nota Parcial</th>
+            <th style="width:20%">Nota Examén Final</th>
+            <th style="width:20%">Observación</th>
+            <th style="width:20%"></th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-product>
+        <tr>
+            <td>{{product.partipantesMatriculados!.inscrito!.usuario!.persona!.identificacion}} </td>
+            <td>{{product.partipantesMatriculados!.inscrito!.usuario!.persona.nombre1}} {{product.partipantesMatriculados!.inscrito!.usuario!.persona.nombre2}} {{product.partipantesMatriculados!.inscrito!.usuario!.persona!.apellido1}} {{product.partipantesMatriculados!.inscrito!.usuario!.persona!.apellido2}}</td>
+            <td>{{product.parcial}}</td>
+            <td>{{product.examenFinal}}</td>
+            <td>{{product.observacion}}</td>
+            <td><button pButton  type="button" icon="pi pi-book" (click)="showModalNotas(product.idNota)" class="p-button-rounded p-button-text"></button></td>
+        </tr>
+    </ng-template>
+</p-table>
+
+<p-dialog header="Contenidos del Curso" [(visible)]="visible" [modal]="true"  [style]="{ width: '50vw', height: '450' }" [draggable]="false" [resizable]="false">
+    <div class="grid p-fluid m-5">
+        <div class="col-12 md:col-12 mt-3">
+            <div class="p-inputgroup">
+                <span class="p-float-label">
+                    <input type="text" pInputText id="nombre" name="nombre"
+                        [(ngModel)]="notas.parcial">
+                    <label htmlFor="username">Nota Parcial</label>
+                </span>
+            </div>
+        </div>
+        <div class="col-12 md:col-12 mt-3">
+            <div class="p-inputgroup">
+                <span class="p-float-label">
+                    <input type="text" pInputText id="nombre" name="nombre"
+                        [(ngModel)]="notas.examenFinal">
+                    <label htmlFor="username">Nota Exámen Final</label>
+                </span>
+            </div>
+        </div>
+        <div class="col-12 md:col-12 mt-3">
+            <div class="p-inputgroup">
+                <span class="p-float-label">
+                    <input type="text" pInputText id="nombre" name="nombre"
+                        [(ngModel)]="notas.observacion">
+                    <label htmlFor="username">observación</label>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-12" style="text-align: center; margin: 5px;">
+            <p-button label="Guardar Nota" icon="pi pi-check-square" styleClass="p-button-success  mb-2"
+                (click)="guardarNotaPorEstudiante()"></p-button>
+        </div>
+    </div>
+</p-dialog>

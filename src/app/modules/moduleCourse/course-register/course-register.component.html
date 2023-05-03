@@ -1,202 +1,201 @@
 <p-card header="Registro de curso" class="m-5">
-    <form (ngSubmit)="createHorarioCurso()" ngNativeValidate style="padding: 26px;">
+    <form (ngSubmit)="createHorarioCurso()" ngNativeValidate style="padding: 15px;">
+        <p-card header="Infórme para la creación del curso" class="m-1">
+            <div class="personal-image">
+                <label class="label" style="border: black;">
+                    <input type="file" accept="image/jpeg, image/jpg, image/png" (change)="subirFoto($event)" />
+                    <figure class="personal-figure">
+                        <!-- <img class="personal-avatar"  *ngIf="filem" [src]="file" alt="img-avatar"> -->
+                        <img *ngIf="curso.fotoCurso"
+                            [src]="curso.fotoCurso ? 'data:image/jpeg;base64,' + curso.fotoCurso : '../../../../assets/img/camer.png'"
+                            class="personal-avatar" alt="logoFundacion" />
+                        <img style="padding: 20px;" *ngIf="!curso.fotoCurso" src="./assets/img/camer.png"
+                            class="personal-avatar" alt="Logo Fundación" />
+                        <figcaption class="personal-figcaption">
+                            <img src="./assets/img/camer.png" />
+                        </figcaption>
+                    </figure>
+                </label>
+            </div>
 
-        <div class="container mb-5">
-            <div class="row" style="text-align: center;">
-                <div class="col-md-12 d-flex justify-content-center align-items-center">
-                    <div class="text-center" style="border: 3px solid black;" class="row rounded"
-                        style="box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);">
-                        <img [src]="curso.fotoCurso ? 'data:image/jpeg;base64,' + curso.fotoCurso : '../../../../assets/img/calculator.png'"
-                            alt="" (click)="fileInput.click()" [style.max-height]="'150px'"
-                            [style.min-height]="'150px'">
-                        <input type="file" #fileInput style="display: none;" accept="image/jpeg, image/jpg, image/png"
-                            (change)="subirFoto($event)">
+
+
+            <!-- Primer contenedor -->
+            <div class="grid p-fluid">
+                <div class="field col-12 md:col-4">
+                    <span class="p-float-label">
+                        <p-dropdown [options]="listAreaItem" placeholder="Todas las areas" styleClass="mb-1 md:mb-0"
+                            (onChange)="getEspecialidadesDependenceOfArea($event)"></p-dropdown>
+                        <label for="dropdown">Area de curso</label>
+
+                    </span>
+                </div>
+
+                <div class="field col-12 md:col-4">
+                    <span class="p-float-label">
+                        <p-dropdown [options]="listEspecialidadItem" styleClass="mb-1 md:mb-0"
+                        (onChange)="getObjectEspecialidad($event)" [itemSize]="10"></p-dropdown>
+                    
+                    </span>
+                </div>
+
+                <div class="field col-12 md:col-4">
+                    <span class="p-float-label">
+                        <p-dropdown [options]="listProgramasItem" (onChange)="getObjectprogram($event)"
+                            placeholder="Programas disponibles" styleClass="mb-1 md:mb-0"></p-dropdown>
+                        <label for="dropdown">Programas diponibles</label>
+                    </span>
+                </div>
+            </div>
+
+            <!-- Segundo contenedor -->
+            <div class="grid p-fluid">
+                <div class="col-12 md:col-4 mt-2">
+                    <span class="p-float-label">
+                        <input type="text" id="inputtext" pInputText id="nombreCurso" name="nombreCurso"
+                            [(ngModel)]="curso.nombreCurso">
+                        <label for="inputtext">Nombre curso</label>
+                    </span>
+                </div>
+
+                <div class="field col-12 md:col-4">
+                    <div class="p-inputgroup mt-2">
+                        <span class="p-float-label">
+                            <p-inputNumber mode="decimal" [showButtons]="true" inputId="minmax-buttons" [min]="0"
+                                [max]="50" placeholder="Duración curso" id="duracionCurso" name="duracionCurso"
+                                [(ngModel)]="curso.duracionCurso"> </p-inputNumber>
+                        </span>
                     </div>
                 </div>
 
-            </div>
-        </div>
-        <!-- Primer contenedor -->
-        <div class="grid p-fluid">
-            <div class="field col-12 md:col-4">
-                <span class="p-float-label">
-                    <p-dropdown [options]="listAreaItem" placeholder="Todas las areas" styleClass="mb-1 md:mb-0"
-                        (onChange)="getEspecialidadesDependenceOfArea($event)"></p-dropdown>
-                    <label for="dropdown">Area de curso</label>
-
-                </span>
-            </div>
-
-            <div class="field col-12 md:col-4">
-                <span class="p-float-label">
-                    <p-dropdown [options]="listEspecialidadItem" styleClass="mb-1 md:mb-0"
-                        (onChange)="getObjectEspecialidad($event)"></p-dropdown>
-                    <label for="dropdown">Especialidad de curso</label>
-                </span>
-            </div>
-
-            <div class="field col-12 md:col-4">
-                <span class="p-float-label">
-                    <p-dropdown [options]="listProgramasItem" (onChange)="getObjectprogram($event)"
-                        placeholder="Programas disponibles" styleClass="mb-1 md:mb-0"></p-dropdown>
-                    <label for="dropdown">Programas diponibles</label>
-                </span>
-            </div>
-        </div>
-
-        <!-- Segundo contenedor -->
-        <div class="grid p-fluid">
-            <div class="col-12 md:col-4 mt-2">
-                <span class="p-float-label">
-                    <input type="text" id="inputtext" pInputText id="nombreCurso" name="nombreCurso"
-                        [(ngModel)]="curso.nombreCurso">
-                    <label for="inputtext">Nombre curso</label>
-                </span>
-            </div>
-
-            <div class="field col-12 md:col-4">
-                <div class="p-inputgroup mt-2">
-                    <span class="p-float-label">
-                        <p-inputNumber mode="decimal" [showButtons]="true" inputId="minmax-buttons" [min]="0" [max]="50"
-                            placeholder="Duración curso" id="duracionCurso" name="duracionCurso"
-                            [(ngModel)]="curso.duracionCurso"> </p-inputNumber>
-                    </span>
+                <div class="field col-12 md:col-4">
+                    <div class="p-inputgroup mt-2">
+                        <span class="p-float-label">
+                            <p-inputNumber mode="decimal" [showButtons]="true" inputId="minmax-buttons" [min]="0"
+                                [max]="50" placeholder="Número de cupos" id="numeroCuposCurso" name="numeroCuposCurso"
+                                [(ngModel)]="curso.numeroCuposCurso"> </p-inputNumber>
+                        </span>
+                    </div>
                 </div>
             </div>
 
-            <div class="field col-12 md:col-4">
-                <div class="p-inputgroup mt-2">
-                    <span class="p-float-label">
-                        <p-inputNumber mode="decimal" [showButtons]="true" inputId="minmax-buttons" [min]="0" [max]="50"
-                            placeholder="Número de cupos" id="numeroCuposCurso" name="numeroCuposCurso"
-                            [(ngModel)]="curso.numeroCuposCurso"> </p-inputNumber>
-                    </span>
-                </div>
-            </div>
-        </div>
+            <!-- Primer contenedor -->
+            <div class="grid p-fluid">
 
-        <!-- Primer contenedor -->
-        <div class="grid p-fluid">
+                <div class="col-12 md:col-4 mt-2">
+                    <div class="p-inputgroup">
+                        <p-calendar inputId="edad" class="ng-dirty" [showIcon]="true"
+                            placeholder="Fecha inicio de curso" id="fechaInicioCurso" name="fechaInicioCurso"
+                            [(ngModel)]="curso.fechaInicioCurso"></p-calendar>
+                    </div>
 
-            <div class="col-12 md:col-4 mt-2">
-                <div class="p-inputgroup">
-                    <p-calendar inputId="edad" class="ng-dirty" [showIcon]="true" placeholder="Fecha inicio de curso"
-                        id="fechaInicioCurso" name="fechaInicioCurso" [(ngModel)]="curso.fechaInicioCurso"></p-calendar>
                 </div>
 
-            </div>
-
-            <div class="col-12 md:col-4 mt-2">
-                <div class="p-inputgroup">
-                    <p-calendar inputId="edad" class="ng-dirty" [showIcon]="true" placeholder="Fecha fin de curso"
-                        id="fechaFinalizacionCurso" name="fechaFinalizacionCurso"
-                        [(ngModel)]="curso.fechaFinalizacionCurso"></p-calendar>
+                <div class="col-12 md:col-4 mt-2">
+                    <div class="p-inputgroup">
+                        <p-calendar inputId="edad" class="ng-dirty" [showIcon]="true" placeholder="Fecha fin de curso"
+                            id="fechaFinalizacionCurso" name="fechaFinalizacionCurso"
+                            [(ngModel)]="curso.fechaFinalizacionCurso"></p-calendar>
+                    </div>
                 </div>
             </div>
+        </p-card>
 
+        <p-card header="Modalidad de curso" class="m-1">
+            <!-- Para la modalidad -->
+            <div class="container card">
+                <div class="checkbox-group" style="padding-top: 5px;">
 
-        </div>
+                    <div *ngFor="let modalidad of listModalidadCurso">
+                        <p-radioButton name="modalidadCurso" [value]="modalidad.idModalidadCurso"
+                            (ngModelChange)="getmodalidadCursoView(modalidad)" class="mb-2"
+                            [(ngModel)]="selectedModalidadCurso"></p-radioButton>
+                        <label for="modalidadCurso" class="ml-2">{{modalidad.nombreModalidadCurso}}</label>
+                    </div>
 
-        <!-- Para la modalidad -->
-        <div class="container card mt-4">
-            <div class="checkbox-group" style="padding-top: 5px;">
-
-                <div *ngFor="let modalidad of listModalidadCurso">
-                    <p-radioButton name="modalidadCurso" [value]="modalidad.idModalidadCurso"
-                        (ngModelChange)="getmodalidadCursoView(modalidad)" class="mb-2"
-                        [(ngModel)]="selectedModalidadCurso"></p-radioButton>
-                    <label for="modalidadCurso" class="ml-2">{{modalidad.nombreModalidadCurso}}</label>
                 </div>
-
             </div>
-        </div>
+        </p-card>
+
 
         <!-- Para Tipo -->
-        <div class="container card mt-4">
-            <div class="checkbox-group" style="padding-top: 5px;">
+        <p-card header="Tipo de curso" class="m-1">
+            <div class="container card mt-1">
+                <div class="checkbox-group" style="padding-top: 5px;">
 
-                <div *ngFor="let tipo of listTipo">
-                    <p-radioButton name="tipoCurso" [value]="tipo.idTipoCurso" class="mb-2"
-                        [(ngModel)]="selectedTipoCurs" (ngModelChange)="getTipoView(tipo)"></p-radioButton>
-                    <label for="tipoCurso" class="ml-2">{{tipo.nombreTipoCurso}}</label>
+                    <div *ngFor="let tipo of listTipo">
+                        <p-radioButton name="tipoCurso" [value]="tipo.idTipoCurso" class="mb-2"
+                            [(ngModel)]="selectedTipoCurs" (ngModelChange)="getTipoView(tipo)"></p-radioButton>
+                        <label for="tipoCurso" class="ml-2">{{tipo.nombreTipoCurso}}</label>
+                    </div>
                 </div>
             </div>
-        </div>
+        </p-card>
 
         <!-- Nivel de curso -->
-        <div class="container card mt-4">
-            <div class="checkbox-group" style="padding-top: 5px;">
+        <p-card header="Niveles" class="m-1">
+            <div class="container card">
+                <div class="checkbox-group" style="padding-top: 5px;">
 
-                <div *ngFor="let nivel of listNivelCurso">
-                    <p-radioButton name="nivelCurso" [value]="nivel.idNivelCurso" class="mb-2"
-                        [(ngModel)]="selectedNivelCurso" (ngModelChange)="getnivelCursoView(nivel)"></p-radioButton>
-                    <label for="nivelCurso" class="ml-2">{{nivel.nombreNivelCurso}}</label>
+                    <div *ngFor="let nivel of listNivelCurso">
+                        <p-radioButton name="nivelCurso" [value]="nivel.idNivelCurso" class="mb-2"
+                            [(ngModel)]="selectedNivelCurso" (ngModelChange)="getnivelCursoView(nivel)"></p-radioButton>
+                        <label for="nivelCurso" class="ml-2">{{nivel.nombreNivelCurso}}</label>
+                    </div>
                 </div>
             </div>
-        </div>
+        </p-card>
 
-        <!-- La que vamos a iterar para ir a la otra tabla----------------------------------- -->
-        <div class="grid p-fluid mt-3">
-            <div class="col-12 md:col-6 mt-2">
+        <p-card header="Horario del curso" class="m-1">
+            <!-- La que vamos a iterar para ir a la otra tabla----------------------------------- -->
+            <div class="grid p-fluid ">
+                <div class="col-12 md:col-6 mt-2">
 
-                <span class="p-float-label">
-                    <input type="text" pInputText id="horaInicio" name="horaInicio" [(ngModel)]="horarioC.horaInicio">
-                    <label for="inputtext">Hora de inicio</label>
-                </span>
-            </div>
+                    <span class="p-float-label">
+                        <input type="text" pInputText id="horaInicio" name="horaInicio"
+                            [(ngModel)]="horarioC.horaInicio">
+                        <label for="inputtext">Hora de inicio</label>
+                    </span>
+                </div>
 
-            <div class="col-12 md:col-6 mt-2">
+                <div class="col-12 md:col-6 mt-2">
 
-                <span class="p-float-label">
-                    <input type="text" id="inputtext" pInputText id="horaFin" name="horaFin"
-                        [(ngModel)]="horarioC.horaFin">
-                    <label for="inputtext">Hora de fin</label>
-                </span>
+                    <span class="p-float-label">
+                        <input type="text" id="inputtext" pInputText id="horaFin" name="horaFin"
+                            [(ngModel)]="horarioC.horaFin">
+                        <label for="inputtext">Hora de fin</label>
+                    </span>
 
-            </div>
-        </div>
-
-        <!-- Nivel de curso -->
-        <!-- <div class="container card mt-4">
-            <div class="checkbox-group" style="padding-top: 5px;">
-
-                <div *ngFor="let nivel of listNivelCurso">
-                    <p-radioButton name="nivelCurso" [value]="nivel.idNivelCurso" class="mb-2"
-                        [(ngModel)]="selectedNivelCurso" (ngModelChange)="getnivelCursoView(nivel)"></p-radioButton>
-                    <label for="nivelCurso" class="ml-2">{{nivel.nombreNivelCurso}}</label>
                 </div>
             </div>
-        </div> -->
 
-        <div class="container card mt-1">
-            <div class="checkbox-group" style="padding-top: 5px;">
-                <div>
-                    <p-radioButton name="group1" value="Lunes-Viernes" class="mb-2"
-                        [(ngModel)]="daysOfTheweekV"></p-radioButton>
-                    <label for="Lunes-Viernes" class="ml-2">Lunes-Viernes</label>
+            <div class="container card mt-1">
+                <div class="checkbox-group" style="padding-top: 5px;">
+                    <div>
+                        <p-radioButton name="group1" value="Lunes-Viernes" class="mb-2"
+                            [(ngModel)]="daysOfTheweekV"></p-radioButton>
+                        <label for="Lunes-Viernes" class="ml-2">Lunes-Viernes</label>
+                    </div>
+                    <div>
+                        <p-radioButton name="group1" value="Sábados" class="mb-2"
+                            [(ngModel)]="daysOfTheweekV"></p-radioButton>
+                        <label for="Sabados" class="ml-2">Sábados</label>
+                    </div>
+
+                    <div>
+                        <p-radioButton name="group1" value="Lunes-Domingo" class="mb-2"
+                            [(ngModel)]="daysOfTheweekV"></p-radioButton>
+                        <label for="Lunes-Domingo" class="ml-2">Lunes-Domingo</label>
+                    </div>
+
+                    <div>
+                        <p-radioButton name="group1" value="Domingos" class="mb-2"
+                            [(ngModel)]="daysOfTheweekV"></p-radioButton>
+                        <label for="Domingos" class="ml-2">Domingos</label>
+                    </div>
                 </div>
-                <div>
-                    <p-radioButton name="group1" value="Sábados" class="mb-2"
-                        [(ngModel)]="daysOfTheweekV"></p-radioButton>
-                    <label for="Sabados" class="ml-2">Sabados</label>
-                </div>
-
-                <div>
-                    <p-radioButton name="group1" value="Lunes-Domingo" class="mb-2"
-                        [(ngModel)]="daysOfTheweekV"></p-radioButton>
-                    <label for="Lunes-Domingo" class="ml-2">Domingos</label>
-                </div>
-
-                <div>
-                    <p-radioButton name="group1" value="Domingos" class="mb-2"
-                        [(ngModel)]="daysOfTheweekV"></p-radioButton>
-                    <label for="Domingos" class="ml-2">Domingos</label>
-                </div>
-
-
             </div>
-        </div>
-
+        </p-card>
 
 
         <!-- Fin de lo que vamos hacer para que creer el horario del curso para que se evaya a las diferentes tablas -->
@@ -275,27 +274,27 @@
                         <tr>
                             <!-- <th>#</th> -->
                             <th>Requisito</th>
-                            <th>Editar</th>
+                            <th style="width:20%; text-align: center;">Editar</th>
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="body" let-data let-i="index" let-columns="columns">
                         <tr>
 
 
-                            <td>
+                            <td style="width:70%; text-align: left;">
                                 {{data.nombrePrerequisitoCurso}}
                             </td>
-                            <td>
+                            <td style="width:20%; text-align: center;">
                                 <p-button icon="pi pi-pencil" styleClass="p-button-secondary"
                                     (click)="editPrerequisito(data)" (click)="showDialog()"
                                     *ngIf="idCursoUpdate"></p-button>
-                                    
-                                <p-button class="mx-2" icon="pi pi-trash" styleClass="p-button-secondary"
-                                    (click)="eliminadologicoDeprerequisito(data)"
-                                    *ngIf="idCursoUpdate"></p-button>
 
                                 <p-button class="mx-2" icon="pi pi-trash" styleClass="p-button-secondary"
-                                    (click)="quitarPrerequisitos(data.nombrePrerequisitoCurso)" *ngIf="!idCursoUpdate"></p-button>
+                                    (click)="eliminadologicoDeprerequisito(data)" *ngIf="idCursoUpdate"></p-button>
+
+                                <p-button class="mx-2" icon="pi pi-trash" styleClass="p-button-secondary"
+                                    (click)="quitarPrerequisitos(data.nombrePrerequisitoCurso)"
+                                    *ngIf="!idCursoUpdate"></p-button>
 
                             </td>
 
@@ -308,7 +307,8 @@
 
         <div class=" flex justify-content-center mt-4">
 
-            <p-button type="ngSubmit" [label]="this.idCursoUpdate ? 'Actualizar Curso' : 'Crear Curso'" icon="pi pi-check" iconPos="right"></p-button>
+            <p-button type="ngSubmit" [label]="this.idCursoUpdate ? 'Actualizar Curso' : 'Crear Curso'"
+                icon="pi pi-check" iconPos="right"></p-button>
         </div>
     </form>
 
@@ -338,8 +338,8 @@
             </div>
         </div>
         <div class="col-md-12" style="text-align: center; margin: 5px;">
-            <p-button [label]="this.prerequisito.idPrerequisitoCurso ? 'Actualizar' : 'Crear'" icon="pi pi-check-square" styleClass="p-button-success  mb-2"
-                (onClick)="createPrerequisitoCurso()"></p-button>
+            <p-button [label]="this.prerequisito.idPrerequisitoCurso ? 'Actualizar' : 'Crear'" icon="pi pi-check-square"
+                styleClass="p-button-success  mb-2" (onClick)="createPrerequisitoCurso()"></p-button>
         </div>
     </div>
 </p-dialog>

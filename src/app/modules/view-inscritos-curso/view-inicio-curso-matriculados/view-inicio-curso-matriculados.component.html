@@ -1,0 +1,80 @@
+<div class="container my-3">
+    <div class="container">
+        <p-button label="Tomar Asistencia" icon="pi pi-calendar-minus" styleClass="p-button-success  mb-2"
+            (onClick)="tomarAsistenciaCurso()"></p-button>
+
+            <p-button label="Generar Notas Finales" icon="pi pi-plus" styleClass="p-button-success  mb-2 m-5"
+            (onClick)="tomarNotasFinalesCurso()"></p-button>
+    </div>
+    <div class="shadow-4 rounded-5 overflow-hidden">
+        <div class="table-responsive">
+            <table class="table align-middle mb-0 bg-white">
+                <thead class="bg-light">
+                    <tr>
+                        <th>Nombres</th>
+                        <th>Identificación</th>
+                        <th>Celular</th>
+                        <th>Fecha Nacimiento</th>
+                        <th>Genero</th>
+                        <th>Edad</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let list of listParticipantesMatriculados">
+                        <td>
+                            <div class="d-flex align-items-center">
+                            
+                                <div>
+                                    <p class="fw-bold mb-1">{{ list.inscrito!.usuario!.persona!.nombre1 }} {{
+                                        list.inscrito!.usuario!.persona!.nombre2 }} {{ list.inscrito!.usuario!.persona!.apellido1 }} {{
+                                            list.inscrito!.usuario!.persona!.apellido2 }}</p>
+                                    <p class="text-muted mb-0">{{ list.inscrito!.usuario!.persona!.correo }}</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <p class="text-muted mb-0">{{ list.inscrito!.usuario!.persona!.identificacion }}</p>
+                        </td>
+                      
+                  
+                        <td>
+                            <p class="text-muted mb-0">{{ list.inscrito!.usuario!.persona!.celular }}</p>
+                        </td>
+                        <td>
+                            <p class="text-muted mb-0">{{ list.inscrito!.usuario!.persona!.fechaNacimiento }}</p>
+                        </td>
+                        <td>
+                            <p class="text-muted mb-0">{{ list.inscrito!.usuario!.persona!.genero }}</p>
+                        </td>
+                        <td>
+                            <p class="text-muted mb-0">{{ list.inscrito!.usuario!.persona!.fechaNacimiento }}</p>
+                        </td>
+                      
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+  
+</div>
+
+<!-- Implementacion de la parte de la que vamos a poner la asistencia -->
+
+<p-dialog header="Header" [(visible)]="visible" [style]="{width: '50vw'}">
+    <div class="grid p-fluid m-5">
+        <div class="col-12 md:col-12 mt-1">
+            <div class="p-inputgroup">
+                <span class="p-float-label">
+                    <input type="text" pInputText id="observacionAsistencia" name="observacionAsistencia"
+                        [(ngModel)]="asistenciaEstudiante.observacionAsistencia" required>
+                    <label htmlFor="username">Prerequisito para el curso</label>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-12" style="text-align: center; margin: 5px;">
+            <p-button [label]="'Aceptar'" icon="pi pi-check-square"
+                styleClass="p-button-success  mb-2" ></p-button>
+        </div>
+    </div>
+</p-dialog>

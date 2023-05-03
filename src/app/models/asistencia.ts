@@ -5,5 +5,5 @@ export class Asistencia {
   fechaAsistencia?: Date;
   estadoAsistencia?: boolean;
   observacionAsistencia?: string;
-  participantesMatriculados?: ParticipantesMatriculados;
+  partipantesMatriculados?: ParticipantesMatriculados;
 }

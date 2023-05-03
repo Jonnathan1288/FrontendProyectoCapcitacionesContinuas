@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Capacitador } from 'src/app/models/capacitador';
 import { Curso } from 'src/app/models/curso';
+import { CapacitadorService } from 'src/app/service/capacitador.service';
 import { CursoService } from 'src/app/service/curso.service';
 
 @Component({
@@ -10,6 +12,7 @@ import { CursoService } from 'src/app/service/curso.service';
 })
 export class ListCourseComponent implements OnInit {
   public curso = new Curso();
+  public capacitador = new Capacitador();
 
   public cursoList: Curso[] = [];
 
@@ -17,33 +20,51 @@ export class ListCourseComponent implements OnInit {
 
   rows = 5;
 
-  constructor(private cursoService: CursoService, private router: Router,
-    private actiRouter: ActivatedRoute) {}
+  public idUsuarioIsLoggin: any;
+  public idCapacitador: any;
+  constructor(
+    private cursoService: CursoService,
+    private router: Router,
+    private actiRouter: ActivatedRoute,
+    private capacitadorService: CapacitadorService
+  ) {}
 
   ngOnInit(): void {
-    this.listCourse();
+    this.idUsuarioIsLoggin = localStorage.getItem('id_username');
+    this.listCourseporUsuarioLogin(this.idUsuarioIsLoggin);
   }
 
-  public listCourse() {
-    this.cursoService.listCurso().subscribe((data) => {
-      this.cursoList = data;
-      console.log(data)
-    });
+  public listCourseporUsuarioLogin(idUsuario: number) {
+    this.cursoService
+      .obtenerTodoslosCursosPorIdUsuario(idUsuario)
+      .subscribe((data) => {
+        this.cursoList = data;
+        console.log(data);
+      });
   }
 
-  public silabo(idcurso: number){
-    localStorage.setItem('idCurso', String(idcurso));
-    location.replace('/silabo');
+  public silabo(idcurso: number) {
+    this.router.navigate(['/silabo', idcurso]);
   }
 
-  public editCurso(idcurso: number){
-    // localStorage.setItem('idCurso', String(idcurso));
+  public editCurso(idcurso: number) {
     this.router.navigate(['/register/course', idcurso]);
   }
 
-  public necesidadCurso(idcurso: number){
-    // localStorage.setItem('idCurso', String(idcurso));
+  public necesidadCurso(idcurso: number) {
     this.router.navigate(['/register/necesidad', idcurso]);
+  }
+
+  public VerCursoInicio(idCurso: number) {
+    this.router.navigate(['/verMatriculados/course/inicio', idCurso]);
+  }
+
+  public VerParticipantesInscritos(idCurso: number) {
+    this.router.navigate(['/verInscritos/course/', idCurso]);
+  }
+
+  public VerRegistroFotografico(idCurso: number) {
+    this.router.navigate(['/registro/fotografico/curso/', idCurso]);
   }
 
   //Implementacion de la tabla de todo referente a primeng
