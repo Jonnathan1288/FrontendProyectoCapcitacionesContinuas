@@ -241,6 +241,11 @@ export class SilaboComponent implements OnInit {
         this.generarMaterialesConvecionales();
         /* */
         console.log("Silabo generado id->" + this.idSilaboCap)
+        this.reportService.gedownloadSilabo(this.idSilaboCap!)
+        .subscribe((r) => {
+          const url = URL.createObjectURL(r);
+          window.open(url, '_blank');
+        });
     })
   }
   /* */
