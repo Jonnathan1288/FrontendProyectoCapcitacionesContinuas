@@ -22,8 +22,22 @@ import { CardcursoComponent } from './modules/cardcurso/cardcurso.component';
 import { InfocursoComponent } from './modules/infocurso/infocurso.component';
 import { ListCourseComponent } from './modules/moduleCourse/list-course/list-course.component';
 import { RegistroNecesidadComponent } from './modules/moduleCourse/registro-necesidad/registro-necesidad.component';
-import { ProgramasComponent } from './modules/programa/programas/programas.component';
+//import { ProgramasComponent } from './modules/programa/programas/programas.component';
 import { HojavidaComponent } from './modules/hojavida/hojavida.component';
+import { ViewInscritosCursoComponent } from './modules/view-inscritos-curso/view-inscritos-curso.component';
+import { ViewInicioCursoMatriculadosComponent } from './modules/view-inscritos-curso/view-inicio-curso-matriculados/view-inicio-curso-matriculados.component';
+import { TomarAsistenciaEstudianteComponent } from './modules/view-inscritos-curso/tomar-asistencia-estudiante/tomar-asistencia-estudiante.component';
+import { RegistrarNotasFinalesComponent } from './modules/view-inscritos-curso/registrar-notas-finales/registrar-notas-finales.component';
+import { PanelModuloCursosComponent } from './modules/moduleCourse/panel-modulo-cursos/panel-modulo-cursos.component';
+import { RegistroFotograficoEvidenciasComponent } from './modules/view-inscritos-curso/registro-fotografico-evidencias/registro-fotografico-evidencias.component';
+import { ViewEvidenciasTableFotofraficasComponent } from './modules/moduleCourse/view-evidencias-table-fotofraficas/view-evidencias-table-fotofraficas.component';
+import { ToastrModule } from 'ngx-toastr';
+import { ProgramasCapacitacionComponent } from './modules/administradormodule/programas-capacitacion/programas-capacitacion.component';
+import { AsignacionRolCapacitadorComponent } from './modules/administradormodule/asignacion-rol-capacitador/asignacion-rol-capacitador.component';
+import { MisCursosParticipanteComponent } from './modules/participanteModule/mis-cursos-participante/mis-cursos-participante.component';
+import { ValidacionCursosCapacitacionComponent } from './modules/administradormodule/validacion-cursos-capacitacion/validacion-cursos-capacitacion.component';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,8 +56,19 @@ import { HojavidaComponent } from './modules/hojavida/hojavida.component';
     InfocursoComponent,
     ListCourseComponent,
     RegistroNecesidadComponent,
-    ProgramasComponent,
+    //ProgramasComponent,
     HojavidaComponent,
+    ViewInscritosCursoComponent,
+    ViewInicioCursoMatriculadosComponent,
+    TomarAsistenciaEstudianteComponent,
+    RegistrarNotasFinalesComponent,
+    PanelModuloCursosComponent,
+    RegistroFotograficoEvidenciasComponent,
+    ViewEvidenciasTableFotofraficasComponent,
+    ProgramasCapacitacionComponent,
+    AsignacionRolCapacitadorComponent,
+    MisCursosParticipanteComponent,
+    ValidacionCursosCapacitacionComponent,
   ],
   imports: [
     BrowserModule,
@@ -55,11 +80,12 @@ import { HojavidaComponent } from './modules/hojavida/hojavida.component';
     FormsModule,
     CommonModule,
     BrowserAnimationsModule,
+    ToastrModule.forRoot(),
 
   ],
-  schemas: [
-    CUSTOM_ELEMENTS_SCHEMA
-  ],
+  //schemas: [
+    //CUSTOM_ELEMENTS_SCHEMA
+  //],
   providers: [],
   bootstrap: [AppComponent],
 })

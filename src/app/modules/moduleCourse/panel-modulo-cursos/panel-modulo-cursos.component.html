@@ -1,0 +1,58 @@
+
+    <!-- HEADER -->
+    <img [src]="curso.fotoCurso ? 'data:image/jpeg;base64,' + curso.fotoCurso : '../../../../assets/img/camer.png'" class="job-bg" alt="" >
+    <div class="job-logos">
+    </div>
+
+    <!-- DETAIL -->
+    <div class="job-explain-content">
+        <div class="job-title-wrapper">
+            <div class="job-card-title">{{curso.nombreCurso}}</div>
+        </div>
+        <div class="job-subtitle-wrapper">
+            <div class="company-name">
+                Desde el <strong>{{curso.fechaInicioCurso}}</strong> al <strong>{{curso.fechaFinalizacionCurso}}</strong> 
+            </div>
+        </div>
+        <div class="explain-bar">
+            <div class="explain-contents">
+                <div class="explain-title">Modalidad</div>
+                <div class="explain-subtitle">{{curso.modalidadCurso!.nombreModalidadCurso}}</div>
+            </div>
+            <div class="explain-contents">
+                <div class="explain-title">Nivel Curso</div>
+                <div class="explain-subtitle">{{curso.nivelCurso!.nombreNivelCurso}}</div>
+            </div>
+            <div class="explain-contents">
+                <div class="explain-title">Horarios</div>
+                <div class="explain-subtitle">{{curso.horarioCurso!.horaInicio}} a {{curso.horarioCurso!.horaFin}}</div>
+            </div>
+            <div class="explain-contents">
+                <div class="explain-title">Días</div>
+                <div class="explain-subtitle">{{curso.horarioCurso!.dias}}</div>
+            </div>
+            <div class="explain-contents">
+                <div class="explain-title">Docente Capacitador</div>
+                <div class="explain-subtitle">{{curso.capacitador!.tipoAbreviaturaTitulo}}.{{curso.capacitador!.usuario!.persona!.nombre1}} {{curso.capacitador!.usuario!.persona!.nombre2}} {{curso.capacitador!.usuario!.persona!.apellido1}} {{curso.capacitador!.usuario!.persona!.apellido2}}</div>
+            </div>
+        </div>
+        <div class="overview-text">
+            <div class="overview-text-header">Descripción</div>
+            <div class="overview-text-subheader">{{curso.descripcionCurso}}</div>
+        </div>
+
+        <div class="p m-5" style="text-align: center">
+            <div class="container">
+                <p style="text-align: center;" *ngIf='progreso <= 99' >Progreso del curso</p>
+                <p-progressBar *ngIf='progreso <= 99' [value]="progreso.toFixed(0)"></p-progressBar>
+                <p-progressBar *ngIf='progreso >= 99' [value]="100"></p-progressBar>
+                <img *ngIf='progreso >= 100' src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/169963/Screenshot_2015-10-11_21.43.12.png" alt="" class="m-1">
+                <div>
+                    <span style="text-align: center; color: rgb(196, 199, 0);"  *ngIf='progreso >= 100'><strong>Felicitaciones</strong></span>
+                </div>
+            </div>
+        </div>
+        <div  *ngIf='progreso >= 100' class="overview-text" style="text-align: center;">
+            <button pButton type="button" label="Danger" class="p-button-warning" label="Ver Certificado"><i class="pi pi-file-pdf m-2"></i></button>
+        </div>
+    </div>

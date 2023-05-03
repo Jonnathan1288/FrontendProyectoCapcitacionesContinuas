@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <head>
   <link href='https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css' rel='stylesheet' type='text/css'>
   <link href='//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.2.0/css/datepicker.min.css' rel='stylesheet' type='text/css'>
@@ -147,4 +147,195 @@
       </div>
     </div>
   </div>
-</body>
+</body> -->
+
+
+<!-- <p-card header="Registro de curso" class="m-5">
+  <form ngNativeValidate style="padding: 15px;"> </form>
+
+</p-card> -->
+
+
+
+
+
+
+<div class="container p-6">
+
+
+  <div class="surface-card p-4 shadow-2 border-round w-full lg:w-6">
+
+
+    <div>
+      <form (ngSubmit)="savePersona()">
+        <div class="text-center mb-5">
+          <div class="personal-image">
+            <label class="label" style="border: black;">
+              <input type="file" accept="image/jpeg, image/jpg, image/png" (change)="subirFoto($event)" />
+              <figure class="personal-figure">
+                <!-- <img class="personal-avatar"  *ngIf="filem" [src]="file" alt="img-avatar"> -->
+                <img *ngIf="classUsuario.fotoPerfil"
+                  [src]="classUsuario.fotoPerfil ? 'data:image/jpeg;base64,' + classUsuario.fotoPerfil : '../../../../assets/img/camer.png'"
+                  class="personal-avatar" alt="logoFundacion" />
+                <img style="padding: 20px;" *ngIf="!classUsuario.fotoPerfil" src="./assets/img/camer.png"
+                  class="personal-avatar" alt="Logo Fundación" />
+                <figcaption class="personal-figcaption">
+                  <img src="./assets/img/camer.png" />
+                </figcaption>
+              </figure>
+            </label>
+          </div>
+        </div>
+
+
+        <label for="email1" class="block text-900 font-medium mb-2">Identificación</label>
+        <input id="identificacion" name="identificacion" type="text" placeholder="Identificación" pInputText
+          class="w-full mb-3" [(ngModel)]="classPersona.identificacion" required>
+
+        <label for="password1" class="block text-900 font-medium mb-2">Primer nombre</label>
+        <input id="nombre1" name="nombre1" type="text" placeholder="Primer nombre" pInputText class="w-full mb-3"
+          [(ngModel)]="classPersona.nombre1">
+
+        <!--  -->
+        <label for="password1" class="block text-900 font-medium mb-2">Segundo nombre</label>
+        <input id="nombre2" name="nombre2" type="text" placeholder="Segundo nombre" pInputText class="w-full mb-3"
+          [(ngModel)]="classPersona.nombre2">
+
+
+        <label for="password1" class="block text-900 font-medium mb-2">Primer apellido</label>
+        <input id="apellido1" name="apellido1" type="text" placeholder="Primer apellido" pInputText class="w-full mb-3"
+          [(ngModel)]="classPersona.apellido1">
+
+
+        <label for="password1" class="block text-900 font-medium mb-2">Segundo apellido</label>
+        <input id="apellido2" name="apellido2" type="text" placeholder="Segundo apellido2" pInputText
+          class="w-full mb-3" [(ngModel)]="classPersona.apellido2">
+
+        <label for="password1" class="block text-900 font-medium mb-2">Segundo apellido</label>
+        <input id="correo" name="correo" type="email" placeholder="Correo" pInputText class="w-full mb-3"
+          [(ngModel)]="classPersona.correo">
+
+
+        <label for="password1" class="block text-900 font-medium mb-2">Dirección</label>
+        <input id="direccion" name="direccion" type="text" placeholder="Dirección" pInputText class="w-full mb-3"
+          [(ngModel)]="classPersona.direccion">
+
+        <label for="password1" class="block text-900 font-medium mb-2">telefono</label>
+        <input id="telefono" name="telefono" type="text" placeholder="telefono" pInputText class="w-full mb-3"
+          [(ngModel)]="classPersona.telefono">
+
+
+        <label for="password1" class="block text-900 font-medium mb-2">celular</label>
+        <input id="celular" name="celular" type="text" placeholder="celular" pInputText class="w-full mb-3"
+          [(ngModel)]="classPersona.celular">
+
+
+          <div class="grid p-fluid">
+
+            <div class="col-12 md:col-12 mt-2">
+                <div class="p-inputgroup">
+                    <p-calendar inputId="edad" class="ng-dirty" [showIcon]="true"
+                        placeholder="Fecha de Nacimiento" id="fechaNacimiento" name="fechaNacimiento"
+                        [(ngModel)]="classPersona.fechaNacimiento"></p-calendar>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-12 md:col-12 mt-1">
+          <label class="p-inputgroup" for='nombre'>Seleccione su genero:</label>
+          <div class='col-md-6'>
+            <div class='form-group'>
+              <div class='col-md-11'>
+
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
+                    [value]="'Masculino'" [(ngModel)]="classPersona.genero">
+                  <label class="form-check-label" for="inlineRadio1">Masculino</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
+                    [value]="'Femenino'" [(ngModel)]="classPersona.genero">
+                  <label class="form-check-label" for="inlineRadio2">Femenino</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- Para la etnia -->
+
+        <div class="col-12 md:col-12 mt-1">
+          <label class="p-inputgroup" for='nombre'>Seleccione su entia:</label>
+          <div class='col-md-6'>
+            <div class='form-group'>
+              <div class='col-md-11'>
+
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
+                    [value]="'Mestizo'" [(ngModel)]="classPersona.etnia">
+                  <label class="form-check-label" for="inlineRadio1">Mestizo</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
+                    [value]="'Blanco'" [(ngModel)]="classPersona.etnia">
+                  <label class="form-check-label" for="inlineRadio2">Blanco</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-12 md:col-12 mt-1">
+          <label class="p-inputgroup" for='nombre'>Seleccione su nivel de instruccion:</label>
+          <div class='col-md-6'>
+            <div class='form-group'>
+              <div class='col-md-11'>
+
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
+                    [value]="'Primaria'" [(ngModel)]="classPersona.nivelInstruccion">
+                  <label class="form-check-label" for="inlineRadio1">Primaria</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
+                    [value]="'Secundaria'" [(ngModel)]="classPersona.nivelInstruccion">
+                  <label class="form-check-label" for="inlineRadio2">Secundaria</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
+                    [value]="'Superior'" [(ngModel)]="classPersona.nivelInstruccion">
+                  <label class="form-check-label" for="inlineRadio2">Superior</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- <div class="flex align-items-center justify-content-between mb-6">
+          <div class="flex align-items-center">
+            <p-checkbox id="rememberme" [binary]="true" styleClass="mr-2"></p-checkbox>
+            <label for="rememberme1">Remember me</label>
+          </div>
+          <a class="font-medium no-underline ml-2 text-blue-500 text-right cursor-pointer">Forgot password?</a>
+        </div> -->
+
+
+        <label for="password1" class="block text-900 font-medium mb-2">username</label>
+        <input id="username" name="username" type="text" placeholder="username" pInputText class="w-full mb-3"
+          [(ngModel)]="classUsuario.username">
+
+
+        <label for="password1" class="block text-900 font-medium mb-2">password</label>
+        <input id="password" name="password" type="password" placeholder="password" pInputText class="w-full mb-3"
+          [(ngModel)]="classUsuario.password">
+
+        <button type="submit" pButton pRipple label="Sign In" icon="pi pi-user" class="w-full"></button>
+      </form>
+    </div>
+  </div>
+</div>

@@ -15,8 +15,8 @@ export class ContenidoSilaboService {
     return this.http.get<Contenidosilabos[]>(environment.apiuri+'/contenidosilabo/list');
   }
 
-  public saveContenidosilabos(materialesAudiovisuales: Contenidosilabos):Observable<Contenidosilabos>{
-    return this.http.post<Contenidosilabos>(environment.apiuri+'/contenidosilabo/save', materialesAudiovisuales);
+  public saveContenidosilabos(contenidosSilabo: Contenidosilabos):Observable<Contenidosilabos>{
+    return this.http.post<Contenidosilabos>(environment.apiuri+'/contenidosilabo/save', contenidosSilabo);
   }
 
   public getContenidosilabosById(id: number):Observable<Contenidosilabos>{
@@ -26,6 +26,10 @@ export class ContenidoSilaboService {
   
   public getContenidoSilaboPorIdSilabo(id: number):Observable<Contenidosilabos[]>{
     return this.http.get<Contenidosilabos[]>(environment.apiuri+'/contenidosilaboPorSilabo/findbyId/'+id);
+  }
+
+  public updateContenidoSilabo(id:number, contenidosSilabo: Contenidosilabos):Observable<Contenidosilabos>{
+    return this.http.put<Contenidosilabos>(environment.apiuri+'/contenidosilabo/actualizar/'+id, contenidosSilabo);
   }
   
   

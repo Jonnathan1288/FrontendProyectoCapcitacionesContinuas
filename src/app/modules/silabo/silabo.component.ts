@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Contenidosilabos } from 'src/app/models/contenidosilabos';
 import { Curso } from 'src/app/models/curso';
 import { EstrategiasMetodologica } from 'src/app/models/estrategias-metodologica';
@@ -35,7 +35,8 @@ export class SilaboComponent implements OnInit {
     private resultadosAprendizajeService: ResultadoAprendizajeSilaboService,
     private contenidoSilaboService: ContenidoSilaboService,
     private prerrequitsitoCursoService: PrerrequisitosCursoService,
-    private reportService: ReportsCapacitacionesService
+    private reportService: ReportsCapacitacionesService,
+    private actiRouter: ActivatedRoute,
   ) {
   }
 
@@ -50,19 +51,38 @@ export class SilaboComponent implements OnInit {
   prerrequisitosCurso: PrerequisitoCurso = new PrerequisitoCurso();
 
   ngOnInit() {
-    this.obtenerDatosCurso();
+    this.actiRouter.params.subscribe((params) => {
+      const id_curso = params['id'];
+      this.idCursoCap = id_curso;
+      // this.obtenerDatosCurso();
+      this.validacionDeSilaboExistente();
+    });
+  }
+
+  validacionDeSilaboExistente():void{
+    this.silaboService.getsilabooValidacion(this.idCursoCap).subscribe(
+      data =>{
+        if (data === true) {
+            alert('Ya tiene silabo' + data)
+            this.traerDatos(this.idCursoCap);
+        } else {
+          alert(" no tien silabo")
+          this.obtenerDatosCurso();
+        }
+      }
+    )
   }
 
   /* TRAER DATOS DEL CURSO*/
-  idCursoCap?: any = localStorage.getItem('idCurso');;
-  CapIdCursoSend?: number;
+  idCursoCap?: any;
+  //CapIdCursoSend?: number;
 
   public obtenerDatosCurso(): void {
     if (this.idCursoCap != null && this.idCursoCap != undefined) {
       this.cursoService.getCursoById(this.idCursoCap).subscribe((data) => {
         this.curso = data;
-        this.CapIdCursoSend = this.curso.idCurso;
-        this.obtenerPrerrequisistos(this.CapIdCursoSend!);
+        // this.CapIdCursoSend = this.curso.idCurso;
+        this.obtenerPrerrequisistos( this.curso.idCurso!);
       })
     } else {
       console.log("Curso not found =(")
@@ -107,8 +127,11 @@ export class SilaboComponent implements OnInit {
     }
   }
 
-  public quitarElemento(index: number): void {
-    this.listResultadosAprendizajes.splice(index, 1);
+  public quitarElemento(temaUnidadSilabo: any): void {
+    const index = this.listResultadosAprendizajes.findIndex(item => item.temaUnidadSilabo === temaUnidadSilabo);
+    if (index !== -1) {
+      this.listResultadosAprendizajes.splice(index, 1);
+    }
   }
   /* FIN RESULTADOS APRENDIZAJE */
 
@@ -129,8 +152,11 @@ export class SilaboComponent implements OnInit {
     }
   }
 
-  public quitarElementoContenido(index: number): void {
-    this.listContenidosSilabo.splice(index, 1);
+  public quitarElementoContenido(temaContenido: any): void {
+    const index = this.listContenidosSilabo.findIndex(item => item.temaContenido === temaContenido);
+    if (index !== -1) {
+      this.listContenidosSilabo.splice(index, 1);
+    }
   }
   /* FIN CONTENIDOS */
 
@@ -148,8 +174,11 @@ export class SilaboComponent implements OnInit {
     }
   }
 
-  public quitarElementoEstrategias(index: number): void {
-    this.listEstrategiasMetodologica.splice(index, 1);
+  public quitarElementoEstrategias(nombreEstrategiaMetodologica: any): void {
+    const index = this.listEstrategiasMetodologica.findIndex(item => item.nombreEstrategiaMetodologica === nombreEstrategiaMetodologica);
+    if (index !== -1) {
+      this.listEstrategiasMetodologica.splice(index, 1);
+    }
   }
   /* */
 
@@ -166,8 +195,11 @@ export class SilaboComponent implements OnInit {
     }
   }
 
-  public quitarElementoMateriales(index: number): void {
-    this.listMaterialConvencionales.splice(index, 1);
+  public quitarElementoMateriales(descripcionMaterialConvencional: any): void {
+    const index = this.listMaterialConvencionales.findIndex(item => item.descripcionMaterialConvencional === descripcionMaterialConvencional);
+    if (index !== -1) {
+      this.listMaterialConvencionales.splice(index, 1);
+    }
   }
   /* */
 
@@ -193,22 +225,22 @@ export class SilaboComponent implements OnInit {
   /* */
 
   /* METODO POST */
-  idSilaboCap?: number;
-
+  idSilaboCap!: any;
   public generarSilabo(): void {
     this.silabo.curso = this.curso;
-    this.silaboService.saveSilabo(this.silabo).subscribe(silaboData => {
-      this.silabo = silaboData;
-      this.idSilaboCap = this.silabo.idSilabo;
-      console.log("Data + " + silaboData)
-      /* TABLAS */
-      this.generarResultadosAprendizaje();
-      this.generarContenidos();
-      this.generarEstetegiasMetodologicas();
-      this.generarMaterialesAudivisuales();
-      this.generarMaterialesConvecionales();
-      /* */
-      console.log("Silabo generado id->" + this.idSilaboCap)
+    this.silaboService.saveSilabo(this.silabo).subscribe(
+      silaboData => {
+        this.silabo = silaboData;
+        this.idSilaboCap = this.silabo.idSilabo;
+        console.log("Data + " + this.idSilaboCap)
+        /* TABLAS */
+        this.generarResultadosAprendizaje();
+        this.generarContenidos();
+        this.generarEstetegiasMetodologicas();
+        this.generarMaterialesAudivisuales();
+        this.generarMaterialesConvecionales();
+        /* */
+        console.log("Silabo generado id->" + this.idSilaboCap)
     })
   }
   /* */
@@ -238,7 +270,7 @@ export class SilaboComponent implements OnInit {
     for (let convencionales of this.listMaterialConvencionales) {
       convencionales.silabo = this.silabo;
       convencionales.estadoMaterialConvencional = true;
-      this.materialesConvencianalesService.saveMaterialAudiovisuales(convencionales).subscribe(data => {
+      this.materialesConvencianalesService.saveMaterialConvencional(convencionales).subscribe(data => {
         console.log("Se creo =)");
       });
     }
@@ -265,21 +297,20 @@ export class SilaboComponent implements OnInit {
   }
   /* */
 
-  // ACTUALIZAR SILABO //
-  idSilaboCapEdit?: number = 1;
-  idSilaboCapGlobal?: number;
   validarIdSilabo: Boolean = false;
-  public traerDatos(): void {
-    this.silaboService.getSilaboById(this.idSilaboCapEdit!).subscribe(
-      data => {
-        this.silabo = data;
-        this.idSilaboCapGlobal = this.silabo.idSilabo;
-        this.traerDatosEstretegiasFull(this.idSilaboCapGlobal!);
-        this.traerDatosContenidosFull(this.idSilaboCapGlobal!);
-        this.traerDatosEstrategiasFull(this.idSilaboCapGlobal!);
-        this.traerDatosMaudiovisualesFull(this.idSilaboCapGlobal!);
-        this.traerDatosMconvencionalesFull(this.idSilaboCapGlobal!);
-        this.validarIdSilabo = true;
+  idDelSilabo: any;
+  public traerDatos(idCurso:number): void {
+    this.silaboService.getSilaboByIdPorCurso(idCurso).subscribe(
+      data =>{
+          this.silabo = data;
+          this.idDelSilabo = this.silabo.idSilabo;
+          console.log("id del sialbo nuevo -> " + this.idDelSilabo)
+          this.traerDatosEstretegiasFull(this.idDelSilabo!);
+          this.traerDatosContenidosFull(this.idDelSilabo!);
+          this.traerDatosEstrategiasFull(this.idDelSilabo!);
+          this.traerDatosMaudiovisualesFull(this.idDelSilabo!);
+          this.traerDatosMconvencionalesFull(this.idDelSilabo!);
+          this.validarIdSilabo = true;
       }
     )
   }
@@ -387,7 +418,7 @@ export class SilaboComponent implements OnInit {
         this.resultadoAprendizajeSilabo.estadoUnidadActivo = false;
         this.resultadosAprendizajeService.cambiarEstadosResultadosSilaboId(idResultadoAprendizajeSilabo, this.resultadoAprendizajeSilabo).subscribe(
           dataTwo => {
-            this.traerDatosEstretegiasFull(this.idSilaboCapGlobal!);
+            this.traerDatosEstretegiasFull(this.idDelSilabo!);
             console.log("Se actualizo")
           }
         )
@@ -403,7 +434,7 @@ export class SilaboComponent implements OnInit {
         this.resultadoAprendizajeSilabo.estadoUnidadActivo = true;
         this.resultadosAprendizajeService.cambiarEstadosResultadosSilaboId(idResultadoAprendizajeSilabo, this.resultadoAprendizajeSilabo).subscribe(
           dataTwo => {
-            this.traerDatosEstretegiasFull(this.idSilaboCapGlobal!);
+            this.traerDatosEstretegiasFull(this.idDelSilabo!);
             console.log("Se actualizo")
           }
         )
@@ -412,10 +443,138 @@ export class SilaboComponent implements OnInit {
 
   }
 
+  // CONTENIDOS
+  public cambiarEstadosContenidosTrue(idContenidoSilabo: number):void{
+    this.contenidoSilaboService.getContenidosilabosById(idContenidoSilabo).subscribe(
+      data=>{
+        this.contenidosSilabo = data;
+        this.contenidosSilabo.estadoContenido = true;
+        this.contenidoSilaboService.updateContenidoSilabo(idContenidoSilabo,this.contenidosSilabo).subscribe(
+          data=>{
+            this.traerDatosContenidosFull(this.idDelSilabo!);
+            console.log("cambio")
+          }
+        )
+      }
+    )
+  }
+
+  public cambiarEstadosContenidosFalse(idContenidoSilabo: number):void{
+    this.contenidoSilaboService.getContenidosilabosById(idContenidoSilabo).subscribe(
+      data=>{
+        this.contenidosSilabo = data;
+        this.contenidosSilabo.estadoContenido = false;
+        this.contenidoSilaboService.updateContenidoSilabo(idContenidoSilabo,this.contenidosSilabo).subscribe(
+          data=>{
+            this.traerDatosContenidosFull(this.idDelSilabo!);
+            console.log("cambio")
+          }
+        )
+      }
+    )
+  }
+  // FIN CONTENIDOS
+
+  // ESTRATEGIAS
+  public cambiarEstadosEstrategiasTrue(idEstrategiaMetodologica: number):void{
+    this.estrategiasMetodologicasService.getEstrategiasMetodologicaById(idEstrategiaMetodologica).subscribe(
+      data=>{
+        this.estrategiasMetodologicas = data;
+        this.estrategiasMetodologicas.estadoEstrategiaMetodologicaActivo = true;
+        this.estrategiasMetodologicasService.updateEstrategiasSilabo(idEstrategiaMetodologica,this.estrategiasMetodologicas).subscribe(
+          data=>{
+            this.traerDatosEstrategiasFull(this.idDelSilabo!);
+            console.log("cambio")
+          }
+        )
+      }
+    )
+  }
+
+  public cambiarEstadosEstrategiasFalse(idEstrategiaMetodologica: number):void{
+    this.estrategiasMetodologicasService.getEstrategiasMetodologicaById(idEstrategiaMetodologica).subscribe(
+      data=>{
+        this.estrategiasMetodologicas = data;
+        this.estrategiasMetodologicas.estadoEstrategiaMetodologicaActivo = false;
+        this.estrategiasMetodologicasService.updateEstrategiasSilabo(idEstrategiaMetodologica,this.estrategiasMetodologicas).subscribe(
+          data=>{
+            this.traerDatosEstrategiasFull(this.idDelSilabo!);
+            console.log("cambio")
+          }
+        )
+      }
+    )
+  }
+  // FIN ESTRATEGIAS
+
+  // CONVECIONLAES
+    public cambiarEstadosConvencionalTrue(idMaterialConvencional: any):void{
+      this.materialesConvencianalesService.getMaterialConvencionaleById(idMaterialConvencional).subscribe(
+        data=>{
+          this.materialesConvecionales = data;
+          this.materialesConvecionales.estadoMaterialConvencional = true;
+          this.materialesConvencianalesService.updateMaterialConvencionales(idMaterialConvencional,this.materialesConvecionales).subscribe(
+            data=>{
+              this.traerDatosMconvencionalesFull(this.idDelSilabo!);
+              console.log("cambio")
+            }
+          )
+        }
+      )
+    }
+  
+    public cambiarEstadosConvencionalFalse(idMaterialConvencional: any):void{
+      this.materialesConvencianalesService.getMaterialConvencionaleById(idMaterialConvencional).subscribe(
+        data=>{
+          this.materialesConvecionales = data;
+          this.materialesConvecionales.estadoMaterialConvencional = false;
+          this.materialesConvencianalesService.updateMaterialConvencionales(idMaterialConvencional,this.materialesConvecionales).subscribe(
+            data=>{
+              this.traerDatosMconvencionalesFull(this.idDelSilabo!);
+              console.log("cambio")
+            }
+          )
+        }
+      )
+    }
+  // FIN CONVECIONLAES
+
+  // AUDIVISUALES
+  public cambiarEstadosAudiovisualesTrue(idMaterialAudiovisual: any):void{
+    this.materialesAudivisualesSilaboService.getMaterialAudiovisualesById(idMaterialAudiovisual).subscribe(
+      data=>{
+        this.materialesAudiovisuales = data;
+        this.materialesAudiovisuales.estadoMaterialAudiovisual = true;
+        this.materialesAudivisualesSilaboService.updateEstadosMaterialAudio(idMaterialAudiovisual,this.materialesAudiovisuales).subscribe(
+          data=>{
+            this.traerDatosMaudiovisualesFull(this.idDelSilabo!);
+            console.log("cambio")
+          }
+        )
+      }
+    )
+  }
+
+  public cambiarEstadosAudiovisualesFalse(idMaterialAudiovisual: any):void{
+    this.materialesAudivisualesSilaboService.getMaterialAudiovisualesById(idMaterialAudiovisual).subscribe(
+      data=>{
+        this.materialesAudiovisuales = data;
+        this.materialesAudiovisuales.estadoMaterialAudiovisual = false;
+        this.materialesAudivisualesSilaboService.updateEstadosMaterialAudio(idMaterialAudiovisual,this.materialesAudiovisuales).subscribe(
+          data=>{
+            this.traerDatosMaudiovisualesFull(this.idDelSilabo!);
+            console.log("cambio")
+          }
+        )
+      }
+    )
+  }
+// FIN AUDIVISUALES
+
+  // FIN ACTUALIZADOS
 
   /* MODAL */
   visible?: boolean;
-  visibleTree?: boolean;
   idCapModelEdit?: number;
   opcionCapResultado?: string;
 
@@ -443,14 +602,14 @@ export class SilaboComponent implements OnInit {
       this.resultadoAprendizajeSilabo.estadoUnidadActivo = true;
       this.resultadosAprendizajeService.saveResultadosArendizaje(this.resultadoAprendizajeSilabo).subscribe(
         dataTwo => {
-          this.traerDatosEstretegiasFull(this.idSilaboCapGlobal!);
+          this.traerDatosEstretegiasFull(this.idDelSilabo!);
           console.log("Se creo uno nuevo")
         }
       )
     } else {
       this.resultadosAprendizajeService.updateEstadosResultados(this.idCapModelEdit!, this.resultadoAprendizajeSilabo).subscribe(
         dataTwo => {
-          this.traerDatosEstretegiasFull(this.idSilaboCapGlobal!);
+          this.traerDatosEstretegiasFull(this.idDelSilabo!);
           console.log("Se actualizo")
         }
       )
@@ -458,16 +617,51 @@ export class SilaboComponent implements OnInit {
   }
   // FIN 
 
+
   // CREATE AND UPDATE CONTENIDOS 
+  opcionDelContenido!:string;
+  idCapModelEditContenido?: number;
+  visibleTree?: boolean;
+
   public showModalCreateContenidos() {
-    this.contenidosSilabo = new ResultadoAprendizajeSilabo;
+    this.opcionDelContenido = "C"
+    this.contenidosSilabo = new Contenidosilabos;
     this.visibleTree = true;
+  }
+
+  public showModalEditContenidos(idContenidoSilabo:number) {
+    this.opcionDelContenido = "U"
+    this.visibleTree = true;
+    this.contenidoSilaboService.getContenidosilabosById(idContenidoSilabo).subscribe(
+      data => {
+        this.contenidosSilabo = data;
+        this.idCapModelEditContenido = this.contenidosSilabo.idContenidoSilabo;
+      }
+    )
+  }
+
+  public metodoElejidoContenidos():void{
+    if (this.opcionDelContenido == "C") {
+      this.contenidosSilabo.silabo = this.silabo;
+      this.contenidosSilabo.estadoContenido = true;
+      this.contenidoSilaboService.saveContenidosilabos(this.contenidosSilabo).subscribe(
+      dataTwo => {
+        this.traerDatosContenidosFull(this.idDelSilabo!);
+        console.log("Se creo uno nuevo")
+      })
+    } else {
+      this.contenidoSilaboService.updateContenidoSilabo(this.idCapModelEditContenido!, this.contenidosSilabo).subscribe(
+        dataTwo => {
+          this.traerDatosContenidosFull(this.idDelSilabo!);
+          console.log("Se actualizo")
+        }
+      )
+    }
   }
   // FIN
 
   // CREATE AND UPDATE AUDIVISUAL
   visibleFive?: boolean;
-  visibleFiveCreate?: boolean;
   idCapModelEditAudiovisual?: number;
   opcionElegida?: string;
 
@@ -494,14 +688,14 @@ export class SilaboComponent implements OnInit {
       this.materialesAudiovisuales.estadoMaterialAudiovisual = true;
       this.materialesAudivisualesSilaboService.saveMaterialAudiovisuales(this.materialesAudiovisuales).subscribe(
       dataTwo => {
-        this.traerDatosMaudiovisualesFull(this.idSilaboCapGlobal!);
+        this.traerDatosMaudiovisualesFull(this.idDelSilabo!);
         console.log("Se creo uno nuevo")
       }
     )
     } else {
       this.materialesAudivisualesSilaboService.updateEstadosMaterialAudio(this.idCapModelEditAudiovisual!, this.materialesAudiovisuales).subscribe(
         dataTwo => {
-          this.traerDatosMaudiovisualesFull(this.idSilaboCapGlobal!);
+          this.traerDatosMaudiovisualesFull(this.idDelSilabo!);
           console.log("Se actualizo")
         }
       )
@@ -509,20 +703,96 @@ export class SilaboComponent implements OnInit {
   }
   // FIN
 
-  // FIN //
-  public actualizarSilabo(): void {
+  // MODAL CONVENCIONALES
+  visibleSeven?: boolean;
+  opcionEscojidaConvencional?: string;
+  idCaoModelConvencional?: number;
 
+  
+  public showModalEditConvencionales(idMaterialConvencional:number):void{
+    this.visibleSeven = true;
+    this.opcionEscojidaConvencional = "U"
+    this.materialesConvencianalesService.getMaterialConvencionaleById(idMaterialConvencional).subscribe(
+      data => {
+        this.materialesConvecionales = data;
+        this.idCaoModelConvencional = this.materialesConvecionales.idMaterialConvencional;
+      }
+    )
   }
-  // FIN //
 
-  /* METODOS DE LIMPIAR */
+  public showModalCreateConvencionales() {
+    this.materialesConvecionales = new MaterialConvencionales;
+    this.opcionEscojidaConvencional = "C"
+    this.visibleSeven = true;
+  }
+
+  public opcionAEnviar(): void {
+    if (this.opcionEscojidaConvencional == "C") {
+      this.materialesConvecionales.silabo = this.silabo;
+      this.materialesConvecionales.estadoMaterialConvencional = true;
+      this.materialesConvencianalesService.saveMaterialConvencional(this.materialesConvecionales).subscribe(
+      dataTwo => {
+        this.traerDatosMconvencionalesFull(this.idDelSilabo!);
+        console.log("Se creo uno nuevo")
+      }
+    )
+    } else {
+      this.materialesConvencianalesService.updateMaterialConvencionales(this.idCaoModelConvencional!, this.materialesConvecionales).subscribe(
+        dataTwo => {
+          this.traerDatosMconvencionalesFull(this.idDelSilabo!);
+          console.log("Se actualizo")
+        }
+      )
+    }
+  }
+  // FIN CONVE
+
+  // CREATE AND UPDATE ESTRATEGIAS 
+  visibleSixe?: boolean;
+  opcionEscojidaEstrategia?: string;
+  idCapModelEditEstetegia?:number;
+
+  public showModalCreateEstretegias():void{
+    this.estrategiasMetodologicas = new EstrategiasMetodologica;
+    this.opcionEscojidaEstrategia = "C"
+    this.visibleSixe = true;
+  }
+  
+  public showModalEditEstretegias(idEstrategiaMetodologica:number):void{
+    this.visibleSixe = true;
+    this.opcionElegida = "U"
+    this.estrategiasMetodologicasService.getEstrategiasMetodologicaById(idEstrategiaMetodologica).subscribe(
+      data => {
+        this.estrategiasMetodologicas = data;
+        this.idCapModelEditEstetegia = this.estrategiasMetodologicas.idEstrategiaMetodologica;
+      }
+    )
+  }
+
+  public metodoElejidoEstrategias():void{
+    if (this.opcionEscojidaEstrategia == "C") {
+      this.estrategiasMetodologicas.silabo = this.silabo;
+      this.estrategiasMetodologicas.estadoEstrategiaMetodologicaActivo = true;
+      this.estrategiasMetodologicasService.saveEstrategiasMetodologica(this.estrategiasMetodologicas).subscribe(
+      dataTwo => {
+        this.traerDatosEstrategiasFull(this.idDelSilabo!);
+        console.log("Se creo uno nuevo")
+      })
+    } else {
+      this.estrategiasMetodologicasService.updateEstrategiasSilabo(this.idCapModelEditEstetegia!, this.estrategiasMetodologicas).subscribe(
+        dataTwo => {
+          this.traerDatosEstrategiasFull(this.idDelSilabo!);
+          console.log("Se actualizo")
+        }
+      )
+    }
+  }
+  // FIN ESTRATEGIAS
 
 
-  /* */
-
-  // IMPRIMIR
+  // IMPRIMIR // VALIDAR idSilaboCapGlobal // idSilaboCap
   public getReportSilabo() {
-    this.reportService.gedownloadSilabo(this.idSilaboCapGlobal!)
+    this.reportService.gedownloadSilabo(this.idDelSilabo!)
       .subscribe((r) => {
         const url = URL.createObjectURL(r);
         window.open(url, '_blank');

@@ -3,9 +3,9 @@ import { ParticipantesMatriculados } from "./participantesMatriculados";
 export class Notas {
     idNota?: number;
     parcial?: number;
-    examenFinal?: string;
+    examenFinal?: number;
     fechaNota?: Date;
     observacion?: string;
-    participanteMatriculado?: ParticipantesMatriculados;
+    partipantesMatriculados?: ParticipantesMatriculados;
 }
 

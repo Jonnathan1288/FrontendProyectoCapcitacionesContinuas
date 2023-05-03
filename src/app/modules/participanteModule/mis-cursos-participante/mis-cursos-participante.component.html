@@ -1,0 +1,37 @@
+<div class="card">
+    <p-table #dt [value]="cursosList" [rows]="5" [paginator]="true" [globalFilterFields]="['nombreCurso']" responsiveLayout="scroll"
+        [rowHover]="true" dataKey="id"
+        currentPageReportTemplate="Mostrando {last} de {totalRecords} Cusos" [showCurrentPageReport]="true">
+        <ng-template pTemplate="caption">
+            <div class="flex align-items-center justify-content-between">
+                <h5 class="m-0">Mis Cursos</h5>
+                <!-- <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text"  placeholder="Search..." />
+                </span> -->
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="nombreCurso">Cursos<p-sortIcon field="nombreCurso"></p-sortIcon></th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product>
+            <tr>
+                <td>
+                    <img [src]="product.fotoCurso ? 'data:image/jpeg;base64,' + product.fotoCurso : '../../../../assets/img/camer.png'" [alt]="product.fotoCurso" width="100" class="shadow-4 m-4" />
+                    {{product.nombreCurso}}
+                </td>
+                <td>
+                    <button pButton label="Detalles" (click)="verDetallesCurso(product.idCurso)" icon="pi pi-eye" type="button" class="p-button-success p-button-raised p-button-rounded"></button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <div class="flex align-items-center justify-content-between">
+                Usted tiene {{cursosList ? cursosList.length : 0 }} Cursos.
+            </div>
+        </ng-template>
+    </p-table>
+</div>

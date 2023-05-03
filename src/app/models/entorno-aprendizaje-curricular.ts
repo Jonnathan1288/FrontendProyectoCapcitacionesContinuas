@@ -5,5 +5,6 @@ export class EntornoAprendizajeCurricular {
     instalaciones?: string;
     faseTeorica?: String;
     fasePractica?: String;
+    estadoEntornoAprendizaje?: Boolean;
     disenioCurricular?: DisenioCurriculares;
 }
