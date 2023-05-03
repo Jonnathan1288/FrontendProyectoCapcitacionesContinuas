@@ -1,175 +1,3 @@
-<div class="card">
-
-    <p-toolbar styleClass="mb-4">
-        <ng-template pTemplate="left">
-            <h5>Filter Menu</h5>
-            <!-- <p>Filters are displayed in an overlay.</p> -->
-
-        </ng-template>
-
-        <ng-template pTemplate="right">
-            <button pButton pRipple label="Imprimir" icon="pi pi-print"
-                class="p-button-primary mr-2 inline-block"></button>
-
-            <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button>
-        </ng-template>
-    </p-toolbar>
-
-
-
-
-    <p-table #dt1 [value]="listCursos" dataKey="id" [rows]="10" [showCurrentPageReport]="true"
-        [rowsPerPageOptions]="[10,25,50]" [loading]="loading" [paginator]="true"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-        [globalFilterFields]="['nombre1','country.name','representative.name','status']">
-        <ng-template pTemplate="caption">
-            <div class="flex">
-                <!-- <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt1)"></button> -->
-                <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"
-                    (click)="clear(dt1)"></button>
-
-                <span class="p-input-icon-left ml-auto">
-                    <i class="pi pi-search"></i>
-                    <!-- <input pInputText type="text" (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword" /> -->
-                    <!-- (input)="dt.filterGlobal($any($event.target).value, 'contains')" -->
-                    <input pInputText type="text" (input)="dt1.filterGlobal($any($event.target).value, 'contains')"
-                        placeholder="Search keyword" />
-
-                </span>
-            </div>
-        </ng-template>
-        <ng-template pTemplate="header">
-            <tr>
-                <th style="min-width:15rem">
-                    <div class="flex justify-content-center align-items-center">
-                        Name
-                        <p-columnFilter type="text" field="nombre1" display="menu"></p-columnFilter>
-                    </div>
-                </th>
-                <th style="min-width:15rem">
-                    <div class="flex justify-content-center align-items-center">
-                        Country
-                        <p-columnFilter type="text" field="country.name" display="menu"></p-columnFilter>
-                    </div>
-                </th>
-                <th style="min-width:15rem">
-                    <div class="flex justify-content-center align-items-center">
-                        Agent
-                        <p-columnFilter field="representative" matchMode="in" display="menu" [showMatchModes]="false"
-                            [showOperator]="false" [showAddButton]="false">
-                            <ng-template pTemplate="header">
-                                <div class="px-3 pt-3 pb-0">
-                                    <span class="font-bold">Agent Picker</span>
-                                </div>
-                            </ng-template>
-                            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                                <p-multiSelect [ngModel]="value" [options]="listaProgramas" placeholder="Any"
-                                    optionLabel="name">
-                                    <ng-template let-option pTemplate="item">
-                                        <div class="p-multiselect-representative-option">
-                                            <img [alt]="option.label"
-                                                src="assets/showcase/images/demo/avatar/{{option.image}}" width="32"
-                                                style="vertical-align: middle" />
-                                            <span class="ml-1">{{option.name}}</span>
-                                        </div>
-                                    </ng-template>
-                                </p-multiSelect>
-                            </ng-template>
-                        </p-columnFilter>
-                    </div>
-                </th>
-                <th style="min-width:10rem">
-                    <div class="flex justify-content-center align-items-center">
-                        Date
-                        <p-columnFilter type="date" field="date" display="menu"></p-columnFilter>
-                    </div>
-                </th>
-                <th style="min-width:10rem">
-                    <div class="flex justify-content-center align-items-center">
-                        Balance
-                        <p-columnFilter type="numeric" field="balance" display="menu" currency="USD"></p-columnFilter>
-                    </div>
-                </th>
-                <th style="min-width:10rem">
-                    <div class="flex justify-content-center align-items-center">
-                        Status
-                        <p-columnFilter field="status" matchMode="equals" display="menu">
-                            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                                <p-dropdown [ngModel]="value" [options]="statuses" placeholder="Any">
-                                    <ng-template let-option pTemplate="item">
-                                        <span [class]="'customer-badge status-' + option.value">{{option.label}}</span>
-                                    </ng-template>
-                                </p-dropdown>
-                            </ng-template>
-                        </p-columnFilter>
-                    </div>
-                </th>
-                <th style="min-width:10rem">
-                    <div class="flex justify-content-center align-items-center">
-                        Activity
-                        <p-columnFilter field="activity" matchMode="between" display="menu" [showMatchModes]="false"
-                            [showOperator]="false" [showAddButton]="false">
-                            <ng-template pTemplate="filter" let-filter="filterCallback">
-                                <p-slider [ngModel]="activityValues" [range]="true" styleClass="m-3"></p-slider>
-                                <div class="flex align-items-center justify-content-center px-2">
-                                    <span>{{activityValues[0]}}</span>
-                                    <span>{{activityValues[1]}}</span>
-                                </div>
-                            </ng-template>
-                        </p-columnFilter>
-                    </div>
-                </th>
-                <th style="width: 3rem">
-                    <div class="flex justify-content-center align-items-center">
-                        Verified
-                        <p-columnFilter type="boolean" field="verified" display="menu"></p-columnFilter>
-                    </div>
-                </th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-customer>
-            <tr>
-                <td>
-                    {{customer.nombre1}}
-                </td>
-                <td>
-                    {{customer.apellido1}}
-                    <!-- <img src="assets/showcase/images/demo/flag/flag_placeholder.png" [class]="'flag flag-' + customer.country.code" width="30">
-                    <span class="image-text">{{customer.country.name}}</span> -->
-                </td>
-                <td>
-                    {{customer.identificacion}}
-                    <!-- <img [alt]="customer.representative.name" src="assets/showcase/images/demo/avatar/{{customer.representative.image}}" width="32" style="vertical-align: middle" />
-                    <span class="image-text">{{customer.representative.name}}</span> -->
-                </td>
-                <td>
-                    <!-- {{customer.date | date: 'MM/dd/yyyy'}} -->
-                </td>
-                <td>
-                    <!-- {{customer.balance | currency:'USD':'symbol'}} -->
-                </td>
-                <td>
-                    <!-- <span [class]="'customer-badge status-' + customer.status">{{customer.status}}</span> -->
-                </td>
-                <td>
-                    <p-progressBar [value]="customer.activity" [showValue]="false"></p-progressBar>
-                </td>
-                <td class="text-center">
-                    <i class="pi"
-                        [ngClass]="{'true-icon pi-check-circle': true, 'false-icon pi-times-circle': !false}"></i>
-                </td>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="emptymessage">
-            <tr>
-                <td colspan="7">No customers found.</td>
-            </tr>
-        </ng-template>
-    </p-table>
-</div>
-
-
-
 <!-- <div class="con" *ngFor="let i of listP">{{i}}</div> -->
 
 
@@ -178,163 +6,332 @@
 <!-- <p-table #dt [value]="listP" [(selection)]="selectedCustomers" dataKey="id" styleClass="p-datatable-customers" [rowHover]="true" -->
 
 <div class="container mt-5"></div>
-<p-table #dt [value]="listCursos" dataKey="id" styleClass="p-datatable-customers" [rowHover]="true" [rows]="10"
-    [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading" responsiveLayout="scroll"
-    [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
-    [globalFilterFields]="['nombreCurso','country.name','representative.name','status']">
-    <ng-template pTemplate="caption">
-        <div class="table-header">
-            List of Customers
-            <span class="p-input-icon-left">
-                <i class="pi pi-search"></i>
-                <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
-                    placeholder="Global Search" />
-            </span>
+<div class="card">
+    <p-table #dt [value]="listCursos" dataKey="id" styleClass="p-datatable-customers" [rowHover]="true" [rows]="10"
+        [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading" responsiveLayout="scroll"
+        [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [filterDelay]="0" [globalFilterFields]="['nombreCurso','country.name','representative.name','status']">
+        <ng-template pTemplate="caption">
+            <div class="table-header">
+                List of Customers
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                        placeholder="Global Search" />
+                </span>
+            </div>
+        </ng-template>
+
+        <ng-template pTemplate="caption">
+            <div class="flex">
+                <!-- <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt1)"></button> -->
+                <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"
+                    (click)="clear(dt)"></button>
+
+                <span class="p-input-icon-left ml-auto">
+                    <i class="pi pi-search"></i>
+                    <!-- <input pInputText type="text" (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword" /> -->
+                    <!-- (input)="dt.filterGlobal($any($event.target).value, 'contains')" -->
+                    <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                        placeholder="Search keyword" />
+
+                </span>
+            </div>
+        </ng-template>
+
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width: 3rem">
+                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                </th>
+                <th pSortableColumn="programas.nombrePrograma">
+                    <div class="flex justify-content-between align-items-center">
+                        Periodo
+                        <p-sortIcon field="programas.nombrePrograma"></p-sortIcon>
+                        <p-columnFilter field="programas" matchMode="equals" display="menu" class="ml-auto">
+                            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                <p-dropdown [ngModel]="value" [options]="listaProgramas"
+                                    (onChange)="filter($event.value)" optionLabel="nombrePrograma" placeholder="Any">
+                                    <ng-template let-option pTemplate="item">
+                                        <span class="ml-1">{{option.username}}</span>
+                                        <!-- <span [class]="'customer-badge status-' + option.nombrePrograma">{{option.nombrePrograma}}</span> -->
+                                    </ng-template>
+                                </p-dropdown>
+                            </ng-template>
+                        </p-columnFilter>
+                    </div>
+                </th>
+
+
+                <th pSortableColumn="capacitador.usuario.username">
+                    <div class="flex justify-content-between align-items-center">
+                        Capacitador
+                        <p-sortIcon field="capacitador.usuario.username"></p-sortIcon>
+                        <p-columnFilter field="capacitador.usuario" matchMode="in" display="menu"
+                            [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" class="ml-auto">
+                            <ng-template pTemplate="header">
+                                <div class="px-3 pt-3 pb-0">
+                                    <span class="font-bold">Agent Picker</span>
+                                </div>
+                            </ng-template>
+                            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                <p-multiSelect [ngModel]="value" [options]="listUsuario" placeholder="Any"
+                                    (onChange)="filter($event.value)" optionLabel="username">
+                                    <!-- <p-multiSelect placeholder="Any" (onChange)="filter($event.value)" optionLabel="name"> -->
+
+                                    <ng-template let-option pTemplate="item">
+                                        <div class="p-multiselect-representative-option">
+                                            <img [alt]="option.label"
+                                                src="assets/showcase/images/demo/avatar/{{option.image}}" width="32"
+                                                style="vertical-align: middle" />
+                                            <span class="ml-1">{{option.username}}</span>
+                                        </div>
+                                    </ng-template>
+                                </p-multiSelect>
+                            </ng-template>
+                        </p-columnFilter>
+                    </div>
+                </th>
+
+                <th pSortableColumn="nombreCurso">
+                    <div class="flex justify-content-between align-items-center">
+                        Nombre curso
+                        <p-sortIcon field="nombreCurso"></p-sortIcon>
+                        <p-columnFilter type="text" field="nombreCurso" display="menu" class="ml-auto"></p-columnFilter>
+                    </div>
+                </th>
+                <!-- <th pSortableColumn="fechaInicioCurso">
+                    <div class="flex justify-content-between align-items-center">
+                        Inicio
+                        <p-sortIcon field="fechaInicioCurso"></p-sortIcon>
+                        <p-columnFilter type="date" field="fechaInicioCurso" display="menu" class="ml-auto"></p-columnFilter>
+                    </div>
+                </th> -->
+
+                <th pSortableColumn="fechaInicioCurso">
+                    <div class="flex justify-content-between align-items-center">
+                        Inicio
+                        <p-sortIcon field="fechaInicioCurso"></p-sortIcon>
+                        <p-columnFilter type="date" field="fechaInicioCurso" display="menu"
+                            class="ml-auto"></p-columnFilter>
+                    </div>
+                </th>
+
+
+                <th pSortableColumn="fechaFinalizacionCurso">
+                    <div class="flex justify-content-between align-items-center">
+                        Fin
+                        <p-sortIcon field="fechaFinalizacionCurso"></p-sortIcon>
+                        <p-columnFilter type="date" field="fechaFinalizacionCurso" display="menu"
+                            class="ml-auto"></p-columnFilter>
+                    </div>
+                </th>
+
+                <th pSortableColumn="country.name">
+                    <div class="flex justify-content-between align-items-center">
+                        Curso
+                        <p-sortIcon field="country.name"></p-sortIcon>
+                        <p-columnFilter type="text" field="country.name" display="menu"
+                            class="ml-auto"></p-columnFilter>
+                    </div>
+                </th>
+
+                <!-- <th pSortableColumn="activity">
+                    <div class="flex justify-content-between align-items-center">
+                        Activity
+                        <p-sortIcon field="activity"></p-sortIcon>
+                        <p-columnFilter field="activity" matchMode="between" display="menu" [showMatchModes]="false"
+                            [showOperator]="false" [showAddButton]="false" class="ml-auto">
+                            <ng-template pTemplate="filter" let-filter="filterCallback">
+                                <p-slider [ngModel]="activityValues" [range]="true" (onSlideEnd)="filter($event.values)"
+                                    styleClass="m-3"></p-slider>
+                                <div class="flex align-items-center justify-content-between px-2">
+                                    <span>{{activityValues[0]}}</span>
+                                    <span>{{activityValues[1]}}</span>
+                                </div>
+                            </ng-template>
+                        </p-columnFilter>
+                    </div>
+                </th> -->
+
+                <th pSortableColumn="activity">
+                    <div class="flex justify-content-between align-items-center">
+                        Estado
+                        <p-sortIcon field="activity"></p-sortIcon>
+
+                        <p-columnFilter type="boolean" field="estadoCurso" display="menu"></p-columnFilter>
+
+                    </div>
+                </th>
+
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-curso>
+            <tr class="p-selectable-row">
+                <td>
+                    <p-tableCheckbox [value]="curso"></p-tableCheckbox>
+                </td>
+                <td>
+                    <span class="p-column-title">Status</span>
+                    {{curso.programas.nombrePrograma}}
+                    <!-- <span [class]="'customer-badge status-' + curso.programas.nombrePrograma">{{curso.programas.nombrePrograma}}</span> -->
+                </td>
+
+
+                <td>
+                    <span class="p-column-title">Representative</span>
+                    <!-- style="vertical-align: midle rounded-circle" -->
+                    <img [alt]="" [src]="'data:image/jpeg;base64,' + curso.fotoCurso" width="32" class="rounded-circle">
+
+                    <!-- <img [alt]="customer.representative.name" src="assets/showcase/images/demo/avatar/{{customer.representative.image}}" width="32" style="vertical-align: middle" /> -->
+                    <span class="image-text"> {{curso.capacitador.usuario.username}}</span>
+                </td>
+
+                <td>
+                    <span class="p-column-title">Name</span>
+                    {{curso.nombreCurso}}
+                </td>
+                <td>
+                    <span class="p-column-title">Date</span>
+                    <!-- {{curso.fechaInicioCurso}} -->
+                    {{curso.fechaInicioCurso | date: 'MM/dd/yyyy'}}
+                </td>
+                <td>
+                    {{curso.fechaFinalizacionCurso | date: 'MM/dd/yyyy'}}
+                    <!-- {{customer.balance | currency:'USD':'symbol'}} -->
+                </td>
+                <td style="text-align: center">
+                    <span class="p-column-title">Country</span>
+
+                    <!-- <button pButton type="button" class="p-button-secondary" icon="pi pi-file"
+                        (click)="validarHojaDeVida(curso)"></button> -->
+
+                    <!-- <i class="pi pi-file" 
+                        [ngStyle]="{'color': curso.estadoAprovacionCurso ? 'black' : 'red'}"></i> -->
+                    <!-- <i class="pi pi-file" [ngClass]="{'pi-button': true}"
+                        [ngStyle]="{'color': curso.estadoAprovacionCurso ? 'black' : 'red'}"
+                        (click)="validarHojaDeVida(curso)">
+                    </i> -->
+
+                    <button class="custom-button" (click)="validarHojaDeVida(curso)">
+                        <i class="pi pi-file" [ngClass]="{'pi-button': true}"></i>
+                      </button>
+                      
+
+
+                </td>
+                <td class="text-center">
+                    <span class="p-column-title">Activity</span>
+
+                    <!-- <i class="pi" [ngClass]="{'true-icon pi-check-circle': curso.estadoCurso, 'false-icon pi-times-circle': !curso.estadoCurso}"></i> -->
+                    <i class="pi"
+                        [ngClass]="{'true-icon pi-check-circle': curso.estadoCurso , 'false-icon pi-times-circle': !curso.estadoCurso}"
+                        [ngStyle]="{'color': curso.estadoCurso ? 'green' : 'red'}"></i>
+
+                    <!-- <p-progressBar [value]="customer.activity" [showValue]="false"></p-progressBar> -->
+
+
+                    <!-- <i class="pi" [ngClass]="{
+                        'true-icon pi-check-circle': curso.estadoCurso === 'aprobado',
+                        'false-icon pi-times-circle': curso.estadoCurso === 'reprobado',
+                        'unknown-icon pi-question-circle': curso.estadoCurso === 'pendiente'
+                      }" [ngStyle]="{
+                        'color': curso.estadoCurso === 'aprobado' ? 'green' : (curso.estadoCurso === 'reprobado' ? 'red' : 'grey')
+                      }">
+                    </i> -->
+
+                </td>
+
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="8">No customers found.</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+
+
+<!-- IMPLEMENTACION PARA QUE SEA VISIBLE EL CURSO -->
+
+<!-- IMPLEMENTACION DE HOJA DE VIDA PARA VISUALIZAR -->
+<p-dialog header="Contenidos del Curso" [(visible)]="visibleCursoDeCapacitacion" [modal]="true"
+    [style]="{ width: '50vw', height: '250' }" [draggable]="false" [resizable]="false">
+    <div class="grid p-fluid m-2">
+
+        <div class="col-12 md:col-12 mt-2">
+            <div class="p-inputgroup">
+                <span class="p-float-label">
+                    <input type="text" id="inputtext" pInputText id="nombreCurso" name="nombreCurso"
+                        [(ngModel)]="classCursoValidanew.nombreCurso">
+                    <label for="inputtext">nombreCurso</label>
+                </span>
+            </div>
         </div>
-    </ng-template>
+
+        <div class="col-12 md:col-12 mt-2">
+            <div class="p-inputgroup">
+                <span class="p-float-label">
+                    <input type="text" id="inputtext" pInputText id="estadoAprovacionCurso" name="estadoAprovacionCurso"
+                        [(ngModel)]="classCursoValidanew.estadoAprovacionCurso">
+                    <label for="inputtext">estadoAprovacionCurso</label>
+                </span>
+            </div>
+        </div>
 
 
-   
-    <ng-template pTemplate="header">
-        <tr>
-            <th style="width: 3rem">
-                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-            </th>
-            <th pSortableColumn="nombreCurso">
-                <div class="flex justify-content-between align-items-center">
-                    Name
-                    <p-sortIcon field="nombreCurso"></p-sortIcon>
-                    <p-columnFilter type="text" field="nombreCurso" display="menu" class="ml-auto"></p-columnFilter>
-                </div>
-            </th>
-            <th pSortableColumn="country.name">
-                <div class="flex justify-content-between align-items-center">
-                    Country
-                    <p-sortIcon field="country.name"></p-sortIcon>
-                    <p-columnFilter type="text" field="country.name" display="menu" class="ml-auto"></p-columnFilter>
-                </div>
-            </th>
-            <th pSortableColumn="representative.name">
-                <div class="flex justify-content-between align-items-center">
-                    Agent
-                    <p-sortIcon field="representative.name"></p-sortIcon>
-                    <p-columnFilter field="representative" matchMode="in" display="menu" [showMatchModes]="false"
-                        [showOperator]="false" [showAddButton]="false" class="ml-auto">
-                        <ng-template pTemplate="header">
-                            <div class="px-3 pt-3 pb-0">
-                                <span class="font-bold">Agent Picker</span>
-                            </div>
-                        </ng-template>
-                        <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                            <!-- <p-multiSelect [ngModel]="value" [options]="representatives" placeholder="Any" (onChange)="filter($event.value)" optionLabel="name"> -->
-                            <p-multiSelect placeholder="Any" (onChange)="filter($event.value)" optionLabel="name">
 
-                                <ng-template let-option pTemplate="item">
-                                    <div class="p-multiselect-representative-option">
-                                        <img [alt]="option.label"
-                                            src="assets/showcase/images/demo/avatar/{{option.image}}" width="32"
-                                            style="vertical-align: middle" />
-                                        <span class="ml-1">{{option.name}}</span>
-                                    </div>
-                                </ng-template>
-                            </p-multiSelect>
-                        </ng-template>
-                    </p-columnFilter>
+        <!-- Fin del periodo porgrama -->
+
+
+    </div>
+
+    <div class="valida">
+        <div *ngIf="classHojaVidaDocenteCapacitador.estadoAprobacion === 'A'">
+            <p>El valor de idpersona es: {{ this.classHojaVidaDocenteCapacitador }}</p>
+        </div>
+
+        <div *ngIf="classHojaVidaDocenteCapacitador.estadoAprobacion === 'P'">
+            <p>Esta pendiente</p>
+        </div>
+
+        <div *ngIf="classHojaVidaDocenteCapacitador.estadoAprobacion === 'R'">
+            <p>Recahzado</p>
+        </div>
+
+        <div *ngIf="!classHojaVidaDocenteCapacitador.estadoAprobacion">
+            <p>NO hay hoja de vida</p>
+        </div>
+
+
+        <!-- <p-button type="ngSubmit" [label]="classHojaVidaDocenteCapacitador.idHojaVida? 'Actualizar Capacitador': 'Crear Capacitador'" icon="pi pi-save" styleClass="p-button-success  mb-2"></p-button> -->
+
+        <!-- <label [label"classHojaVidaDocenteCapacitador.idHojaVida? 'si' : 'no'">Contenido del label</label> -->
+
+
+    </div>
+
+    <div class="grid p-fluid m-2">
+        <div class="col-12 md:col-6 mt-2">
+            <div class="p-inputgroup">
+                <div class="col-md-12" style="text-align: center; margin: 5px;">
+                    <p-button type="ngSubmit" [label]="'Aceptar'" icon="pi pi-save" styleClass="p-button-success  mb-2"
+                        (onClick)="UpdateValidacionCurso(1)"></p-button>
+
                 </div>
-            </th>
-            <th pSortableColumn="date">
-                <div class="flex justify-content-between align-items-center">
-                    Date
-                    <p-sortIcon field="date"></p-sortIcon>
-                    <p-columnFilter type="date" field="date" display="menu" class="ml-auto"></p-columnFilter>
+            </div>
+        </div>
+        <div class="col-12 md:col-6 mt-2">
+            <div class="p-inputgroup">
+                <div class="col-md-12" style="text-align: center; margin: 5px;">
+                    <p-button type="ngSubmit" [label]="'Rechazar'" icon="pi pi-save" styleClass="p-button-success  mb-2"
+                        (onClick)="UpdateValidacionCurso(2)"></p-button>
+
                 </div>
-            </th>
-            <th pSortableColumn="balance">
-                <div class="flex justify-content-between align-items-center">
-                    Balance
-                    <p-sortIcon field="balance"></p-sortIcon>
-                    <p-columnFilter type="numeric" field="balance" display="menu" currency="USD"
-                        class="ml-auto"></p-columnFilter>
-                </div>
-            </th>
-            <th pSortableColumn="status">
-                <div class="flex justify-content-between align-items-center">
-                    Status
-                    <p-sortIcon field="status"></p-sortIcon>
-                    <p-columnFilter field="status" matchMode="equals" display="menu" class="ml-auto">
-                        <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                            <p-dropdown [ngModel]="value" [options]="statuses" (onChange)="filter($event.value)"
-                                placeholder="Any">
-                                <ng-template let-option pTemplate="item">
-                                    <span [class]="'customer-badge status-' + option.value">{{option.label}}</span>
-                                </ng-template>
-                            </p-dropdown>
-                        </ng-template>
-                    </p-columnFilter>
-                </div>
-            </th>
-            <th pSortableColumn="activity">
-                <div class="flex justify-content-between align-items-center">
-                    Activity
-                    <p-sortIcon field="activity"></p-sortIcon>
-                    <p-columnFilter field="activity" matchMode="between" display="menu" [showMatchModes]="false"
-                        [showOperator]="false" [showAddButton]="false" class="ml-auto">
-                        <ng-template pTemplate="filter" let-filter="filterCallback">
-                            <p-slider [ngModel]="activityValues" [range]="true" (onSlideEnd)="filter($event.values)"
-                                styleClass="m-3"></p-slider>
-                            <div class="flex align-items-center justify-content-between px-2">
-                                <span>{{activityValues[0]}}</span>
-                                <span>{{activityValues[1]}}</span>
-                            </div>
-                        </ng-template>
-                    </p-columnFilter>
-                </div>
-            </th>
-            <th style="width: 8rem"></th>
-        </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-curso>
-        <tr class="p-selectable-row">
-            <td>
-                <p-tableCheckbox [value]="curso"></p-tableCheckbox>
-            </td>
-            <td>
-                <span class="p-column-title">Name</span>
-                {{curso.nombreCurso}}
-            </td>
-            <td>
-                <span class="p-column-title">Country</span>
-                <!-- <img src="assets/showcase/images/demo/flag/flag_placeholder.png" [class]="'flag flag-' + customer.country.code" width="30">
-                <span class="image-text">{{customer.country.name}}</span> -->
-            </td>
-            <td>
-                <span class="p-column-title">Representative</span>
-                <!-- <img [alt]="customer.representative.name" src="assets/showcase/images/demo/avatar/{{customer.representative.image}}" width="32" style="vertical-align: middle" />
-                <span class="image-text">{{customer.representative.name}}</span> -->
-            </td>
-            <td>
-                <span class="p-column-title">Date</span>
-                <!-- {{customer.date | date: 'MM/dd/yyyy'}} -->
-            </td>
-            <td>
-                <!-- {{customer.balance | currency:'USD':'symbol'}} -->
-            </td>
-            <td>
-                <span class="p-column-title">Status</span>
-                <!-- <span [class]="'customer-badge status-' + customer.status">{{customer.status}}</span> -->
-            </td>
-            <td>
-                <span class="p-column-title">Activity</span>
-                <!-- <p-progressBar [value]="customer.activity" [showValue]="false"></p-progressBar> -->
-            </td>
-            <td style="text-align: center">
-                <button pButton type="button" class="p-button-secondary" icon="pi pi-cog"></button>
-            </td>
-        </tr>
-    </ng-template>
-    <ng-template pTemplate="emptymessage">
-        <tr>
-            <td colspan="8">No customers found.</td>
-        </tr>
-    </ng-template>
-</p-table>
+            </div>
+        </div>
+    </div>
+
+</p-dialog>

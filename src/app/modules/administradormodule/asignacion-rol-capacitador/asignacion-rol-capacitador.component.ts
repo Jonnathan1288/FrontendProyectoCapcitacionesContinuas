@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Capacitador } from 'src/app/models/capacitador';
 import { DocenteFenix } from 'src/app/models/docente-fenix';
+import { HojaVidaCapacitador } from 'src/app/models/hoja-vida-capacitador';
 import { Persona } from 'src/app/models/persona';
 import { Rol } from 'src/app/models/rol';
 import { Usuario } from 'src/app/models/usuario';
 import { CapacitadorService } from 'src/app/service/capacitador.service';
 import { DocenteFenixService } from 'src/app/service/docente-fenix.service';
+import { HojaVidaCapacitadorService } from 'src/app/service/hoja-vida-capacitador.service';
 import { PersonaService } from 'src/app/service/persona.service';
 import { RolService } from 'src/app/service/rol.service';
 import { UsuarioService } from 'src/app/service/usuario.service';
@@ -34,7 +36,8 @@ export class AsignacionRolCapacitadorComponent implements OnInit {
     private usuarioService: UsuarioService,
     private rolService: RolService,
     private docenteFenixService: DocenteFenixService,
-    private capacitadorService: CapacitadorService
+    private capacitadorService: CapacitadorService,
+    private hojadeVidaServcie: HojaVidaCapacitadorService
   ) {}
   ngOnInit(): void {
     this.listDocentesCapacitadores();
@@ -92,17 +95,21 @@ export class AsignacionRolCapacitadorComponent implements OnInit {
 
   //Metodo para actualizar al docente Capacitador
   public updateDocenteCapacitador() {
-    console.log({persona: this.classPersona})
-    this.personaService.updatePersona(this.classPersona.idPersona!, this.classPersona).subscribe((data)=>{
-      if(data != null){
-        this.usuarioService.updateUsuario(this.classUsuario.idUsuario!, this.classUsuario).subscribe((data)=>{
-          if(data != null){
-            alert('update user succesful')
-            this.visible = false;
-          }
-        })
-      }
-    })
+    console.log({ persona: this.classPersona });
+    this.personaService
+      .updatePersona(this.classPersona.idPersona!, this.classPersona)
+      .subscribe((data) => {
+        if (data != null) {
+          this.usuarioService
+            .updateUsuario(this.classUsuario.idUsuario!, this.classUsuario)
+            .subscribe((data) => {
+              if (data != null) {
+                alert('update user succesful');
+                this.visible = false;
+              }
+            });
+        }
+      });
   }
 
   //Metodo para crear al docente capacitador
@@ -187,14 +194,16 @@ export class AsignacionRolCapacitadorComponent implements OnInit {
   }
 
   //Eliminado logico del sistema
-  public eliminadoLogicoDelCapacitador(capacitador: Capacitador){
+  public eliminadoLogicoDelCapacitador(capacitador: Capacitador) {
     capacitador.estadoActivoCapacitador = false;
-    this.capacitadorService.updateCapacitador(capacitador.idCapacitador!, capacitador).subscribe((data)=>{
-      if(data != null){
-        alert('Succesful delete logical')
-        this.listDocentesCapacitadores();
-      }
-    })
+    this.capacitadorService
+      .updateCapacitador(capacitador.idCapacitador!, capacitador)
+      .subscribe((data) => {
+        if (data != null) {
+          alert('Succesful delete logical');
+          this.listDocentesCapacitadores();
+        }
+      });
   }
 
   //Traer los docetes capacitadores en el sistema..
@@ -206,6 +215,37 @@ export class AsignacionRolCapacitadorComponent implements OnInit {
     });
   }
 
+  //Parte para aprobar la hoja de vida del docente capacitador.
+  public classHojaDevida = new HojaVidaCapacitador();
+  visibleHojaVida?: boolean;
+  public showModaLHojaVidaCapacitador(idCapacitador: number) {
+    this.hojadeVidaServcie
+      .getHojaVidaCapacitadorByIdCapacitador(idCapacitador)
+      .subscribe((data) => {
+        if (data != null) {
+          this.classHojaDevida = data;
+          this.visibleHojaVida = true;
+        }
+      });
+    
+  }
+
+  //Validar hoja de vida.
+  public validarHojaDeVida(estado: number) {
+    if(estado == 1){
+      this.classHojaDevida.estadoAprobacion = 'A'
+    }else{
+      this.classHojaDevida.estadoAprobacion = 'R'
+    }
+    console.log({hojaVida: this.classHojaDevida})
+    this.hojadeVidaServcie.updateHojaDeVida(this.classHojaDevida.idHojaVida!, this.classHojaDevida).subscribe((data)=>{
+      if(data != null){
+        alert('Succesful')
+        console.log({hojaVida: data})
+      }
+    })
+  }
+
   //vISIVILIADA DEL MODAL
   visible?: boolean;
 
@@ -215,4 +255,6 @@ export class AsignacionRolCapacitadorComponent implements OnInit {
     this.classUsuario = new Usuario();
     this.visible = true;
   }
+
+
 }
