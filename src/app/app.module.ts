@@ -33,6 +33,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { ProgramasCapacitacionComponent } from './modules/administradormodule/programas-capacitacion/programas-capacitacion.component';
 import { AsignacionRolCapacitadorComponent } from './modules/administradormodule/asignacion-rol-capacitador/asignacion-rol-capacitador.component';
 import { MisCursosParticipanteComponent } from './modules/participanteModule/mis-cursos-participante/mis-cursos-participante.component';
+import { ValidacionCursosCapacitacionComponent } from './modules/administradormodule/validacion-cursos-capacitacion/validacion-cursos-capacitacion.component';
 
 
 
@@ -65,6 +66,7 @@ import { MisCursosParticipanteComponent } from './modules/participanteModule/mis
     ProgramasCapacitacionComponent,
     AsignacionRolCapacitadorComponent,
     MisCursosParticipanteComponent,
+    ValidacionCursosCapacitacionComponent,
 
   ],
   imports: [

@@ -92,11 +92,13 @@ export class AsignacionRolCapacitadorComponent implements OnInit {
 
   //Metodo para actualizar al docente Capacitador
   public updateDocenteCapacitador() {
+    console.log({persona: this.classPersona})
     this.personaService.updatePersona(this.classPersona.idPersona!, this.classPersona).subscribe((data)=>{
       if(data != null){
         this.usuarioService.updateUsuario(this.classUsuario.idUsuario!, this.classUsuario).subscribe((data)=>{
           if(data != null){
             alert('update user succesful')
+            this.visible = false;
           }
         })
       }
@@ -142,6 +144,11 @@ export class AsignacionRolCapacitadorComponent implements OnInit {
                   .subscribe((data2) => {
                     if (data2) {
                       alert('succesful');
+                      this.classCapacitador = new Capacitador();
+                      this.classPersona = new Persona();
+                      this.classUsuario = new Usuario();
+                      this.listDocentesCapacitadores();
+                      this.visible = false;
                     }
                   });
               }
@@ -164,6 +171,11 @@ export class AsignacionRolCapacitadorComponent implements OnInit {
                   .saveCapacitador(this.classCapacitador)
                   .subscribe((data2) => {
                     if (data2) {
+                      this.classCapacitador = new Capacitador();
+                      this.classPersona = new Persona();
+                      this.classUsuario = new Usuario();
+                      this.visible = false;
+                      this.listDocentesCapacitadores();
                       alert('succesful');
                     }
                   });
