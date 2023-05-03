@@ -297,8 +297,6 @@ export class SilaboComponent implements OnInit {
   }
   /* */
 
-  // ACTUALIZAR SILABO //
-  // idSilaboCapEdit?: number = 1;
   validarIdSilabo: Boolean = false;
   idDelSilabo: any;
   public traerDatos(idCurso:number): void {
