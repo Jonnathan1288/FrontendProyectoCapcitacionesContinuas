@@ -4,7 +4,6 @@ import { AuthGaurdGuard } from './auth-gaurd.guard';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './modules/home/home.component';
 import { CapacitadorComponent } from './modules/administradormodule/capacitador/capacitador.component';
-import { ProgramasComponent } from './modules/programa/programas/programas.component';
 import { LoginComponent } from './modules/login/login.component';
 import { registrarPersonaComponent } from './modules/registrar-persona/registrar-persona.component';
 import { WelcomeComponent } from './modules/welcome/welcome.component';
@@ -36,7 +35,6 @@ const routes: Routes = [
   {path: 'welcome', component: WelcomeComponent},
   { path: 'home', component: HomeComponent },
   { path: 'cap', component: CapacitadorComponent },
-  { path: 'prog', component: ProgramasComponent },
   { path: 'silabo/:id', component: SilaboComponent },
   { path: 'diseño', component: CurricularDiseñoComponent },
   // { path: 'register/course', component: CourseRegisterComponent , canActivate: [AuthGaurdGuard], data: {expectedRoles: ['Administrador'] }},
