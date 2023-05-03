@@ -1,4 +1,17 @@
-<p-card header="Registro de curso" class="m-5">
+
+<div class="container" *ngIf="estadoHojaVida == ''">
+    Aun no tiene una hoja de vida
+</div>
+
+<div class="container" *ngIf="estadoHojaVida == 'P'">
+    validar
+</div>
+
+<div class="container" *ngIf="estadoHojaVida == 'R'">
+    Su hoja de vida a sido rechazada
+</div>
+
+<p-card header="Registro de curso" class="m-5" *ngIf="estadoHojaVida == 'A'">
     <form (ngSubmit)="createHorarioCurso()" ngNativeValidate style="padding: 15px;">
         <p-card header="Infórme para la creación del curso" class="m-1">
             <div class="personal-image">

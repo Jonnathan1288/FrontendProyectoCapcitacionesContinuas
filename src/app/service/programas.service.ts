@@ -10,10 +10,9 @@ import { Programas } from '../models/programa';
 export class ProgramasService {
 
   constructor(private http: HttpClient) { }
-   programaslist:Programas[] = [];
-
+  
   public listPrograma():Observable<any>{
-    return this.http.get<Programas>(environment.apiuri+'/programa/listar');
+    return this.http.get<any>(environment.apiuri+'/programa/listar');
   }
 
   public getProgramaById(idPrograma: number):Observable<Programas>{

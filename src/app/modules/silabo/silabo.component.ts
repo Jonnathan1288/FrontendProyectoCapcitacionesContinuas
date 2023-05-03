@@ -241,11 +241,6 @@ export class SilaboComponent implements OnInit {
         this.generarMaterialesConvecionales();
         /* */
         console.log("Silabo generado id->" + this.idSilaboCap)
-        this.reportService.gedownloadSilabo(this.idSilaboCap!)
-        .subscribe((r) => {
-          const url = URL.createObjectURL(r);
-          window.open(url, '_blank');
-        });
     })
   }
   /* */
@@ -302,6 +297,8 @@ export class SilaboComponent implements OnInit {
   }
   /* */
 
+  // ACTUALIZAR SILABO //
+  // idSilaboCapEdit?: number = 1;
   validarIdSilabo: Boolean = false;
   idDelSilabo: any;
   public traerDatos(idCurso:number): void {
