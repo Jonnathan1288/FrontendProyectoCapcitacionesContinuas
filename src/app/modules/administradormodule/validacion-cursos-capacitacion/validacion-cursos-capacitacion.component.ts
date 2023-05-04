@@ -109,9 +109,10 @@ export class ValidacionCursosCapacitacionComponent implements OnInit {
   //IMPLEMENTACION PARA HACER QUE EL CURSO SE ACEPTE
   public classCursoValidanew = new Curso();
   visibleCursoDeCapacitacion?: boolean;
-  public validarHojaDeVida(curso: Curso) {
+  public validarHojaDeVida(curso: Curso, idCurso: number) {
     this.classCursoValidanew = { ...curso };
     this.obtenerHojaVidaCapacitador(this.classCursoValidanew.capacitador!.idCapacitador!)
+    this.obtenerReportesValidacion(idCurso)
     this.visibleCursoDeCapacitacion = true;
 
   }

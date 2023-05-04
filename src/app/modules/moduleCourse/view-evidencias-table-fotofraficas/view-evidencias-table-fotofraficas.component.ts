@@ -86,6 +86,7 @@ export class ViewEvidenciasTableFotofraficasComponent implements OnInit {
       .subscribe((data) => {
         this.listRegistroFotografico = data;
       });
+      // getRegistroFotograficoCursoAllByIdCurso
   }
 
   //Método para traer el curso por la id que ingresa
