@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { PeriodoPrograma } from 'src/app/models/periodo-programa';
 import { Programas } from 'src/app/models/programa';
 import { PeriodoProgramaService } from 'src/app/service/periodo-programa.service';
 import { ProgramasService } from 'src/app/service/programas.service';
+import { ReportsCapacitacionesService } from 'src/app/service/reports-capacitaciones.service';
 
 @Component({
   selector: 'app-programas-capacitacion',
@@ -18,30 +20,45 @@ export class ProgramasCapacitacionComponent implements OnInit {
   public classPeriodoPrograma = new PeriodoPrograma();
   public classPrograma = new Programas();
 
+  private sanitizer!: DomSanitizer;
   constructor(
     private periodoProgramaService: PeriodoProgramaService,
-    private programaService: ProgramasService
-  ) {}
+    private programaService: ProgramasService,
+    sanitizer: DomSanitizer,
+    private reportService: ReportsCapacitacionesService
+  ) {
+    this.sanitizer = sanitizer
+    
+  }
   ngOnInit(): void {
     this.getTodosLosProgramasPorAdministrador();
   }
 
   public createPrograma() {
     if (this.classPeriodoPrograma.idPeriodoPrograma) {
-      this.periodoProgramaService.updatePeriodoPrograma(this.classPeriodoPrograma.idPeriodoPrograma, this.classPeriodoPrograma).subscribe((data)=>{
-        if(data != null){
-          this.programaService.updatePrograma(this.classPrograma.idPrograma!, this.classPrograma).subscribe((data)=>{
-            if(data != null){
-              alert("datos actualizados")
-              this.getTodosLosProgramasPorAdministrador();
-              this.visible=false;
-              this.classPeriodoPrograma = new PeriodoPrograma();
-              this.classPrograma = new Programas();
-              
-            }
-          })
-        }
-      })
+      this.periodoProgramaService
+        .updatePeriodoPrograma(
+          this.classPeriodoPrograma.idPeriodoPrograma,
+          this.classPeriodoPrograma
+        )
+        .subscribe((data) => {
+          if (data != null) {
+            this.programaService
+              .updatePrograma(
+                this.classPrograma.idPrograma!,
+                this.classPrograma
+              )
+              .subscribe((data) => {
+                if (data != null) {
+                  alert('datos actualizados');
+                  this.getTodosLosProgramasPorAdministrador();
+                  this.visible = false;
+                  this.classPeriodoPrograma = new PeriodoPrograma();
+                  this.classPrograma = new Programas();
+                }
+              });
+          }
+        });
     } else {
       this.classPeriodoPrograma.estadoPeriodoPrograma = true;
       this.periodoProgramaService
@@ -62,7 +79,6 @@ export class ProgramasCapacitacionComponent implements OnInit {
               });
           }
         });
-      
     }
   }
 
@@ -116,4 +132,36 @@ export class ProgramasCapacitacionComponent implements OnInit {
     //this.classPrograma = new Programas();
     this.visible = true;
   }
+
+  //Implementacion de la fecha para extraer por mes
+  public visiblePeriodoMensual?: boolean = false;
+  public palabras: any;
+  public showModaLImprimirMensal() {
+    this.visiblePeriodoMensual = true;
+  }
+
+
+  //Implementacion del evento de la fecha
+  public pdfSrc: any;
+  onDateSelect(event: any) {
+    const selectedDate: Date = event;
+  
+    const year = selectedDate.getFullYear();
+    const month = selectedDate.getMonth() + 1;
+
+    // alert('Año: ' + year);
+    // alert('Mes: ' + month);
+
+    this.reportService.downloadProgramacionMensul(month, year).subscribe((data)=>{
+      if(data != null){
+        // alert(data)
+        const url = URL.createObjectURL(data);
+        this.pdfSrc = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+      }
+    }, (err)=>{
+      alert('err')
+    })
+  }
+
+  
 }

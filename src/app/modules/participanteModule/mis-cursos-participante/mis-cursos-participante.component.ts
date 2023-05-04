@@ -11,6 +11,7 @@ import { CursoService } from 'src/app/service/curso.service';
 export class MisCursosParticipanteComponent implements OnInit {
 
 
+  //Implementacion de el servicio para que el usuario 
   constructor(
     private cursosService: CursoService,
     private router: Router,
@@ -32,8 +33,6 @@ export class MisCursosParticipanteComponent implements OnInit {
       }
     )
   }
-
-
   verDetallesCurso(idCurso:any){
     this.router.navigate(['panel/course/' + idCurso]).then(() => {
       // window.location.reload();

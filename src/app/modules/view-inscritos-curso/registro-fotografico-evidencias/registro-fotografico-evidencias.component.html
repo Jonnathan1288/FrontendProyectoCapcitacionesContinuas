@@ -1,4 +1,4 @@
-<p-card header="Registro de evidencias">
+<!-- <p-card header="Registro de evidencias">
     <form (ngSubmit)="saveEvidenciasRegistrofotografico()" ngNativeValidate style="padding: 15px;">
         <p-card header="Registro fotografico del curso">
             <div class="row rounded mb-3">
@@ -41,7 +41,6 @@
                         <label class="label" style="border: black;">
                             <input type="file" accept="image/jpeg, image/jpg, image/png" (change)="subirFoto($event)" />
                             <figure class="personal-figure">
-                                <!-- <img class="personal-avatar"  *ngIf="filem" [src]="file" alt="img-avatar"> -->
                                 <img *ngIf="registroFotografico.foto"
                                     [src]="registroFotografico.foto ? 'data:image/jpeg;base64,' + registroFotografico.foto : '../../../../assets/img/camer.png'"
                                     class="personal-avatar" alt="logoFundacion" />
@@ -61,4 +60,32 @@
             <p-button label="Guardar" type="ngSubmit" icon="pi pi-save" styleClass="p-button-success"></p-button>
         </div>
     </form>
-</p-card>
+</p-card> -->
+
+
+
+
+<p-table #dt [columns]="cols" [value]="lisp" selectionMode="multiple"  responsiveLayout="scroll" [exportHeader]="'customExportHeader'">
+    <ng-template pTemplate="caption">
+        <div class="flex">
+            <button type="button" pButton pRipple icon="pi pi-file" (click)="dt.exportCSV()" class="mr-2" pTooltip="CSV" tooltipPosition="bottom"></button>
+            <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success mr-2"  pTooltip="XLS" tooltipPosition="bottom"></button>
+            <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="exportPdf()" class="p-button-warning mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
+            <button type="button" pButton pRipple icon="pi pi-filter" (click)="dt.exportCSV({selectionOnly:true})" class="p-button-info ml-auto" pTooltip="Selection Only" tooltipPosition="bottom"></button>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+        <tr>
+            <th *ngFor="let col of columns">
+                {{col.header}}
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr [pSelectableRow]="rowData">
+            <td *ngFor="let col of columns">
+                {{rowData[col.field]}}
+            </td>
+        </tr>
+    </ng-template>
+</p-table>

@@ -6,4 +6,5 @@ export class RegistroFotograficoCurso {
     foto?: string;
     fecha?: Date;
     curso?: Curso;
+    estado?: boolean;
 }

@@ -7,8 +7,8 @@
         </ng-template>
 
         <ng-template pTemplate="right">
-            <button pButton pRipple label="Imprimir" icon="pi pi-print"
-                class="p-button-primary mr-2 inline-block"></button>
+            <button pButton pRipple label="Imprimir" icon="pi pi-print" class="p-button-primary mr-2 inline-block"
+                (click)="showModaLImprimirMensal()"></button>
 
             <!-- <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload> -->
             <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button>
@@ -34,8 +34,10 @@
                 <!-- <th style="width: 3rem">
                     <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                 </th> -->
-                <th pSortableColumn="nombrePrograma">Nombre programa <p-sortIcon field="nombrePrograma"></p-sortIcon></th>
-                <th pSortableColumn="periodoPrograma.fechaInicioPeriodoPrograma">Fecha Inicio <p-sortIcon field="periodoPrograma.fechaInicioPeriodoPrograma"></p-sortIcon></th>
+                <th pSortableColumn="nombrePrograma">Nombre programa <p-sortIcon field="nombrePrograma"></p-sortIcon>
+                </th>
+                <th pSortableColumn="periodoPrograma.fechaInicioPeriodoPrograma">Fecha Inicio <p-sortIcon
+                        field="periodoPrograma.fechaInicioPeriodoPrograma"></p-sortIcon></th>
                 <th pSortableColumn="category">Fecha Fin <p-sortIcon field="category"></p-sortIcon></th>
                 <th pSortableColumn="descripcionFoto">PERIODO<p-sortIcon field="descripcionFoto"></p-sortIcon></th>
                 <th pSortableColumn="rating">Descripcion <p-sortIcon field="rating"></p-sortIcon></th>
@@ -46,7 +48,7 @@
         </ng-template>
         <ng-template pTemplate="body" let-programa>
             <tr>
-               
+
                 <td>{{programa.nombrePrograma}}</td>
                 <td>{{programa.periodoPrograma.fechaInicioPeriodoPrograma}}</td>
                 <td>{{programa.periodoPrograma.fechaFinPeriodoPrograma}}</td>
@@ -54,8 +56,10 @@
                 <td>{{programa.descripcionPrograma}}</td>
                 <td>{{programa.estadoProgramaActivo}}</td>
                 <td>
-                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2 mt-1" (click)="cargarDatos(programa)"></button>
-                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning mt-1" (click)="updateProgramasEliminadoLogico(programa)"></button>
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2 mt-1"
+                        (click)="cargarDatos(programa)"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning mt-1"
+                        (click)="updateProgramasEliminadoLogico(programa)"></button>
                 </td>
             </tr>
         </ng-template>
@@ -118,16 +122,52 @@
             <div class="col-12 md:col-12 mt-2" style="align-items: center;">
                 <div class="card flex justify-content-center">
                     <span class="p-float-label m-4">
-                        <textarea id="float-input" rows="5" cols="30" pInputTextarea id="descripcionPrograma" name="descripcionPrograma"
-                            [(ngModel)]="classPrograma.descripcionPrograma"></textarea>
+                        <textarea id="float-input" rows="5" cols="30" pInputTextarea id="descripcionPrograma"
+                            name="descripcionPrograma" [(ngModel)]="classPrograma.descripcionPrograma"></textarea>
                         <label for="float-input">Descripción del programa</label>
                     </span>
                 </div>
             </div>
             <!-- Fin del periodo porgrama -->
             <div class="col-md-12" style="text-align: center; margin: 5px;">
-                <p-button type="ngSubmit" label="Guardar Programa" icon="pi pi-save" styleClass="p-button-success  mb-2"></p-button>
+                <p-button type="ngSubmit" label="Guardar Programa" icon="pi pi-save"
+                    styleClass="p-button-success  mb-2"></p-button>
             </div>
         </div>
     </form>
+</p-dialog>
+
+
+
+<!-- IMPLEMENTACION DEL MODAL PARA EL INGRESO DE LOS CURSOS -->
+
+<p-dialog header="Reporte de programcion mensual" [(visible)]="visiblePeriodoMensual" [modal]="true"
+    [style]="{ width: '70vw', height: '250' }" [draggable]="false" [resizable]="false">
+    <div class="grid p-fluid m-2">
+        <div class="col-12 md:col-12 ">
+            <div class="p-inputgroup">
+                <p-calendar inputId="edad" class="ng-dirty" [showIcon]="true"
+                    placeholder="Año y mes por el cual se mostrara el reporte" id="fechaEvidencia" name="fechaEvidencia"
+                    (onSelect)="onDateSelect($event)"></p-calendar>
+            </div>
+        </div>
+    </div>
+
+    <div class="container"  *ngIf="!pdfSrc">
+        
+            <img src="../../../../assets/img/istap.png" alt="">
+    
+    
+    </div>
+    <div class="mx-2" *ngIf="pdfSrc">
+        <embed style="border-radius: 10px; " [src]="pdfSrc" type="application/pdf" width="100%" height="500px" />
+    </div>
+
+    <div class="grid p-fluid m-1">
+        <!-- Fin del periodo porgrama -->
+        <div class="col-md-12" style="text-align: center; margin: 5px;">
+            <p-button type="ngSubmit" label="Aceptar" icon="pi pi-check" styleClass="p-button-success  mb-2"></p-button>
+        </div>
+    </div>
+
 </p-dialog>
