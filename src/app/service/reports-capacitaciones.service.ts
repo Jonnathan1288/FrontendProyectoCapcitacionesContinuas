@@ -30,4 +30,9 @@ export class ReportsCapacitacionesService {
   public gedownloadRegistroFotograficoCurso(idCurso: number) {
     return this.http.get(environment.apiuri+ '/generarRegisroFotografico/downloadRegistroFotografico/'+idCurso, { responseType: 'blob' });
   }
+
+  //Reportes que va tener el admin..
+  public gedownloadHojaVida(idCapacitador: number) {
+    return this.http.get(environment.apiuri+ '/generarHojaVida/Docente/download/'+idCapacitador, { responseType: 'blob' });
+  }
 }

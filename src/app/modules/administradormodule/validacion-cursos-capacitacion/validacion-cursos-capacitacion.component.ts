@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { Table } from 'primeng/table';
 import { Curso } from 'src/app/models/curso';
 import { HojaVidaCapacitador } from 'src/app/models/hoja-vida-capacitador';
@@ -10,6 +11,7 @@ import { HojaVidaCapacitadorService } from 'src/app/service/hoja-vida-capacitado
 import { PeriodoProgramaService } from 'src/app/service/periodo-programa.service';
 import { PersonaService } from 'src/app/service/persona.service';
 import { ProgramasService } from 'src/app/service/programas.service';
+import { ReportsCapacitacionesService } from 'src/app/service/reports-capacitaciones.service';
 import { UsuarioService } from 'src/app/service/usuario.service';
 
 @Component({
@@ -21,7 +23,7 @@ import { UsuarioService } from 'src/app/service/usuario.service';
   ],
 })
 export class ValidacionCursosCapacitacionComponent implements OnInit {
-  public listaProgramas: any[] = [];
+  public listaProgramas: Programas[] = [];
 
   //Declaracion de las clases que vamos a usar
 
@@ -37,31 +39,39 @@ export class ValidacionCursosCapacitacionComponent implements OnInit {
 
   activityValues: number[] = [0, 100];
 
+  private sanitizer!: DomSanitizer;
+
   constructor(
     private periodoProgramaService: PeriodoProgramaService,
     private programaService: ProgramasService,
     private P: PersonaService,
     private cursoService: CursoService,
     private userService: UsuarioService,
-    private hojaVidaService: HojaVidaCapacitadorService
-  ) {}
+    private hojaVidaService: HojaVidaCapacitadorService,
+    sanitizer: DomSanitizer,
+    private reportService: ReportsCapacitacionesService
+  ) {
+    this.sanitizer = sanitizer
+  }
   ngOnInit(): void {
     // this.getTodosLosProgramasPorAdministrador();
 
     // this.getpersona();
-    this.getTodosLosProgramasPorAdministrador();
+
     this.getpersona();
+    this.getTodosLosProgramasPorAdministrador();
     this.obtenerTodosLosCursos();
   }
 
   public getTodosLosProgramasPorAdministrador() {
     this.programaService.listPrograma().subscribe((data) => {
-      if (data != null) {
+      // if (data != null) {
         this.listaProgramas = data;
+        console.log({list: this.listaProgramas})
         //  = data.filter(
         //   (programa: any) => programa.estadoProgramaActivo === true
         // );
-      }
+      // }
     });
   }
 
@@ -130,6 +140,34 @@ export class ValidacionCursosCapacitacionComponent implements OnInit {
       }
   
     })
+  }
+
+  public pdfSrc: any;
+  public obtenerReportesValidacion(idCurso: number){
+    switch(idCurso){
+      case 1:
+        this.reportService.gedownloadSilabo(idCurso).subscribe((data)=>{
+          if(data != null){
+            const url = URL.createObjectURL(data);
+            this.pdfSrc = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+          }
+        })
+        break;
+
+      case 2:
+        this.reportService.getDownloadReportNecesidadCurso(idCurso).subscribe((data)=>{
+          if(data != null){
+            const url = URL.createObjectURL(data);
+            this.pdfSrc = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+          }
+        })
+        break;
+
+      case 3:
+        
+        break;
+    }
+
   }
 
   //Implementacion de los filtros
