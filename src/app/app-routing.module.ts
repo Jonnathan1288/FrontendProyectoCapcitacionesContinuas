@@ -63,7 +63,7 @@ const routes: Routes = [
   { path: 'programas/capacitacion', component: ProgramasCapacitacionComponent },
   { path: 'asignacion/rol', component: AsignacionRolCapacitadorComponent },
   //Aplicasion de los filtro de prime
-  { path: 'v', component: ValidacionCursosCapacitacionComponent },
+  { path: 'gestion/validacion/cursos/capacitacion', component: ValidacionCursosCapacitacionComponent },
   { path: '**', pathMatch: 'full', redirectTo: 'home' }
 ];
 
