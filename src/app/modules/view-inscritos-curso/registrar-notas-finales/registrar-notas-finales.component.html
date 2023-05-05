@@ -24,6 +24,11 @@
     </ng-template>
 </p-table>
 
+<p-button label="Validar Notas" icon="pi pi-calendar-minus" styleClass="p-button-success  mb-2 m-5" style="text-align: center;" (click)="vaidarNotasEstudiantesFinales()" ></p-button>
+<p-button label="Generar Reporte" icon="pi pi-calendar-minus" styleClass="p-button-success  mb-2 m-5" style="text-align: center;" (click)="generarReporteAsitenciaEvaluacion()" ></p-button>
+
+<!-- MODAL -->
+
 <p-dialog header="Contenidos del Curso" [(visible)]="visible" [modal]="true"  [style]="{ width: '50vw', height: '450' }" [draggable]="false" [resizable]="false">
     <div class="grid p-fluid m-5">
         <div class="col-12 md:col-12 mt-3">

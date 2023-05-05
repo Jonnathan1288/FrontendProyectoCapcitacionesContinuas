@@ -40,4 +40,9 @@ export class ReportsCapacitacionesService {
   public downloadProgramacionMensul(month: number, year: number) {
     return this.http.get(environment.apiuri+ '/programacionMensual/download/'+month+'/'+year, { responseType: 'blob' });
   }
+
+    //Reportes que va tener el asisteciaEvalucion.
+    public downloadAsistenciaEvaluacion(idCurso: number) {
+      return this.http.get(environment.apiuri+ '/generarRegistroAsistenciaEvaluacion/download/' + idCurso, { responseType: 'blob' });
+    }
 }
