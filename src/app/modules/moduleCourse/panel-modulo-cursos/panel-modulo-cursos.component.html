@@ -48,10 +48,13 @@
                 <p-progressBar *ngIf='progreso >= 99' [value]="100"></p-progressBar>
                 <img *ngIf='progreso >= 100' src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/169963/Screenshot_2015-10-11_21.43.12.png" alt="" class="m-1">
                 <div>
-                    <span style="text-align: center; color: rgb(196, 199, 0);"  *ngIf='progreso >= 100'><strong>Felicitaciones</strong></span>
+                    <span style="text-align: center; color: rgb(189, 193, 0);"  *ngIf='progreso >= 100'><strong>
+                        <i class="fas fa-star"></i>Felicitaciones</strong></span>
                 </div>
             </div>
         </div>
+        <!-- <canvas id="confetti"></canvas> -->
+
         <div  *ngIf='progreso >= 100' class="overview-text" style="text-align: center;">
             <button pButton type="button" label="Danger" class="p-button-warning" label="Ver Certificado"><i class="pi pi-file-pdf m-2"></i></button>
         </div>
