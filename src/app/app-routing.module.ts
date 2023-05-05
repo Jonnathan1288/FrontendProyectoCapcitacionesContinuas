@@ -36,7 +36,8 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'cap', component: CapacitadorComponent },
   { path: 'silabo/:id', component: SilaboComponent },
-  { path: 'diseño', component: CurricularDiseñoComponent },
+  // { path: 'diseño', component: CurricularDiseñoComponent }, ELIMINADO
+  { path: 'diseño/:id', component: CurricularDiseñoComponent },
   // { path: 'register/course', component: CourseRegisterComponent , canActivate: [AuthGaurdGuard], data: {expectedRoles: ['Administrador'] }},
   { path: 'register/course', component: CourseRegisterComponent},
   { path: 'asistencia/estudiantes/course/:id', component: TomarAsistenciaEstudianteComponent},
@@ -46,7 +47,7 @@ const routes: Routes = [
   { path: 'verMatriculados/course/inicio/:id', component: ViewInicioCursoMatriculadosComponent},
   { path: 'verMisCursos/course', component: MisCursosParticipanteComponent},
   //Registro fotografico
-  // { path: 'registro/fotografico/curso/:id', component: RegistroFotograficoEvidenciasComponent },
+  { path: 'registro/fo', component: RegistroFotograficoEvidenciasComponent },
   //Ver vista de las evidencias fotograficas
   { path: 'registro/fotografico/curso/:id', component: ViewEvidenciasTableFotofraficasComponent },
   { path: 'register/course/:id', component: CourseRegisterComponent },
@@ -62,6 +63,10 @@ const routes: Routes = [
   //Programas de capacitacion.
   { path: 'programas/capacitacion', component: ProgramasCapacitacionComponent },
   { path: 'asignacion/rol', component: AsignacionRolCapacitadorComponent },
+
+  //
+
+
   //Aplicasion de los filtro de prime
   { path: 'gestion/validacion/cursos/capacitacion', component: ValidacionCursosCapacitacionComponent },
   { path: '**', pathMatch: 'full', redirectTo: 'home' }

@@ -35,4 +35,9 @@ export class ReportsCapacitacionesService {
   public gedownloadHojaVida(idCapacitador: number) {
     return this.http.get(environment.apiuri+ '/generarHojaVida/Docente/download/'+idCapacitador, { responseType: 'blob' });
   }
+
+  //Reportes que va tener el admin..
+  public downloadProgramacionMensul(month: number, year: number) {
+    return this.http.get(environment.apiuri+ '/programacionMensual/download/'+month+'/'+year, { responseType: 'blob' });
+  }
 }

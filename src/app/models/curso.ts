@@ -26,5 +26,6 @@ export class Curso {
     modalidadCurso?: ModalidadCurso;
     tipoCurso?: TipoCurso
     nivelCurso?: NivelCurso
-    horarioCurso?: HorarioCurso
+    horarioCurso?: HorarioCurso;
+    iniciocurso?: boolean
 }

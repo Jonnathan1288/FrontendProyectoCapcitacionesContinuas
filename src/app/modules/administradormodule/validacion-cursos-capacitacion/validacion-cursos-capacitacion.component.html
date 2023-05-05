@@ -239,7 +239,7 @@
                         (click)="validarHojaDeVida(curso)">
                     </i> -->
 
-                    <button class="custom-button" (click)="validarHojaDeVida(curso)">
+                    <button class="custom-button" (click)="validarHojaDeVida(curso, 2)">
                         <i class="pi pi-file" [ngClass]="{'pi-button': true}"></i>
                       </button>
                       
@@ -289,7 +289,7 @@
 
 <!-- IMPLEMENTACION DE HOJA DE VIDA PARA VISUALIZAR -->
 <p-dialog [header]="classCursoValidanew!.nombreCurso! + ' - ' + classCursoValidanew?.capacitador?.tipoAbreviaturaTitulo +' '+ classCursoValidanew?.capacitador?.usuario?.persona?.nombre1 +' '+ classCursoValidanew?.capacitador?.usuario?.persona?.apellido1" [(visible)]="visibleCursoDeCapacitacion" [modal]="true"
-    [style]="{ width: '50vw', height: '250' }" [draggable]="false" [resizable]="false">
+    [style]="{ width: '60vw', height: '250' }" [draggable]="false" [resizable]="false">
     <div class="grid p-fluid m-2">
 
         <div class="col-12 md:col-4 ">

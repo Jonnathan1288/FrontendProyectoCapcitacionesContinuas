@@ -9,82 +9,86 @@ import { ParticipanteMatriculadoService } from 'src/app/service/participante-mat
 @Component({
   selector: 'app-view-inscritos-curso',
   templateUrl: './view-inscritos-curso.component.html',
-  styleUrls: ['./view-inscritos-curso.component.css']
+  styleUrls: ['./view-inscritos-curso.component.css'],
 })
 export class ViewInscritosCursoComponent implements OnInit {
-
   constructor(
     private activateRoute: ActivatedRoute,
     private cursoService: CursoService,
     private inscritosService: inscritosService,
     private router: Router,
     private participantesMatriculadosService: ParticipanteMatriculadoService
-  ) {
-  }
+  ) {}
 
   idCursoGlobal?: number;
 
   ngOnInit(): void {
-    this.activateRoute.params.subscribe( (param) =>{
+    this.activateRoute.params.subscribe((param) => {
       const idCursoRout = param['id'];
-      console.log("Idcurso => " + idCursoRout)
+      console.log('Idcurso => ' + idCursoRout);
       this.idCursoGlobal = idCursoRout;
       this.traerInscirtosPorCurso();
     });
   }
 
-  
   listaInscritos: Inscrito[] = [];
-  public traerInscirtosPorCurso():void{
-    this.inscritosService.getInscritosPorCurso(this.idCursoGlobal!).subscribe(
-      data =>{
+  public traerInscirtosPorCurso(): void {
+    this.inscritosService
+      .getInscritosPorCurso(this.idCursoGlobal!)
+      .subscribe((data) => {
         this.listaInscritos = data;
-        console.log("dd " + this.listaInscritos)
-      }
-    )
+        console.log('dd ' + this.listaInscritos);
+      });
   }
 
   // APROBAR O NO APROBAR INSCRITOS
   inscrito: Inscrito = new Inscrito();
   opcionSelecionada?: string;
 
-  public aprobarParticipante(idInscrito:any):void{
-    this.inscritosService.getInscrioParaCursoById(idInscrito).subscribe(
-      data=>{
+  public aprobarParticipante(idInscrito: any): void {
+    this.inscritosService
+      .getInscrioParaCursoById(idInscrito)
+      .subscribe((data) => {
         this.inscrito = data;
         this.inscrito.estadoInscrito = true;
-        this.inscritosService.aprbarOdesaprobarInscrito(this.inscrito.idInscrito!,this.inscrito).subscribe(
-          dataTwo =>{
-            alert("se aprobo")
+        this.inscritosService
+          .aprbarOdesaprobarInscrito(this.inscrito.idInscrito!, this.inscrito)
+          .subscribe((dataTwo) => {
+            alert('se aprobo');
             this.traerInscirtosPorCurso();
-          }
-        )
-      }
-    )
+          });
+      });
   }
 
-  public NoAprobarParticipante(idInscrito:any):void{
-    this.inscritosService.getInscrioParaCursoById(idInscrito).subscribe(
-      data=>{
+  public NoAprobarParticipante(idInscrito: any): void {
+    this.inscritosService
+      .getInscrioParaCursoById(idInscrito)
+      .subscribe((data) => {
         this.inscrito = data;
         this.inscrito.estadoInscrito = false;
-        this.inscritosService.aprbarOdesaprobarInscrito(this.inscrito.idInscrito!,this.inscrito).subscribe(
-          dataTwo =>{
-            alert("no se aprobo")
+        this.inscritosService
+          .aprbarOdesaprobarInscrito(this.inscrito.idInscrito!, this.inscrito)
+          .subscribe((dataTwo) => {
+            alert('no se aprobo');
             this.traerInscirtosPorCurso();
-          }
-        )
-      }
-    )
+          });
+      });
   }
 
   public InicioCurso() {
-    this.participantesMatriculadosService.pasarEstudiantesMatriculados(this.idCursoGlobal!).subscribe((data)=>{
-      this.router.navigate(['/verMatriculados/course/inicio', this.idCursoGlobal]);
-    })
-    
-    
+    this.participantesMatriculadosService
+      .pasarEstudiantesMatriculados(this.idCursoGlobal!)
+      .subscribe((data) => {
+        this.router.navigate([
+          '/verMatriculados/course/inicio',
+          this.idCursoGlobal,
+        ]);
+      }, (err)=>{
+        alert('Curso iniciado no puede hacer mas acciones')
+        this.router.navigate([
+          '/verMatriculados/course/inicio',
+          this.idCursoGlobal,
+        ]);
+      });
   }
-
-
 }
