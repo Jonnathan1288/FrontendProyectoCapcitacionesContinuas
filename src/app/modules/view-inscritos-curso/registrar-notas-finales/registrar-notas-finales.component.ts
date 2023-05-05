@@ -138,7 +138,7 @@ export class RegistrarNotasFinalesComponent implements OnInit{
       const parcial = participante.parcial!;
       const examen = participante.examenFinal!;
       this.idParticpanteNota = participante.partipantesMatriculados!.idParticipanteMatriculado!;
-      const notaFinal = (parcial * 0.40) + (examen * 0.70);
+      const notaFinal = (parcial * 0.40) + (examen * 0.60);
       console.log(" Esta es su nota final -> " + notaFinal )
 
       this.participantesMatriculadosService.getParticipantesMatriculadosById(this.idParticpanteNota).subscribe(

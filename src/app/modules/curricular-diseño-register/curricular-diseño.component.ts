@@ -118,8 +118,16 @@ export class CurricularDiseñoComponent implements OnInit {
     }
   }
 
-  public quitarElementoEvaluacionD(index: number): void {
-    this.listEvaluacionDiagnosticaCurricular.splice(index, 1);
+  public quitarElementoEvaluacionD(indx: any): void {
+    const index = this.listEvaluacionDiagnosticaCurricular.findIndex(
+      (item) => item.tecnicaEvaluar === indx
+    );
+    if (index !== -1) {
+      this.listEvaluacionDiagnosticaCurricular.splice(index, 1);
+    }
+
+
+    // this.listEvaluacionDiagnosticaCurricular.splice(index, 1);
   }
 
   /* FIN RESULTADOS Evaluacion Diagnostica */
@@ -140,8 +148,14 @@ export class CurricularDiseñoComponent implements OnInit {
     }
   }
 
-  public quitarElementoEvaluacionFormativa(index: number): void {
-    this.listEvaluacionFormativaCurricular.splice(index, 1);
+  public quitarElementoEvaluacionFormativa(inde: any): void {
+    // this.listEvaluacionFormativaCurricular.splice(index, 1);
+    const index = this.listEvaluacionFormativaCurricular.findIndex(
+      (item) => item.tecnicaFormativa === inde
+    );
+    if (index !== -1) {
+      this.listEvaluacionFormativaCurricular.splice(index, 1);
+    }
   }
 
   /* FIN RESULTADOS Evaluacion FORMATIVA */
@@ -162,8 +176,15 @@ export class CurricularDiseñoComponent implements OnInit {
     }
   }
 
-  public quitarElementoEvaluacionF(index: number): void {
-    this.listEvaluacionFinalCurricular.splice(index, 1);
+  public quitarElementoEvaluacionF(inde: any): void {
+    // this.listEvaluacionFinalCurricular.splice(index, 1);
+
+    const index = this.listEvaluacionFinalCurricular.findIndex(
+      (item) => item.tecnicaFormativaFinal === inde
+    );
+    if (index !== -1) {
+      this.listEvaluacionFinalCurricular.splice(index, 1);
+    }
   }
 
   /* FIN RESULTADOS Evaluacion FINAL */
@@ -186,8 +207,14 @@ export class CurricularDiseñoComponent implements OnInit {
     }
   }
 
-  public quitarEntornoAprendizaje(index: number): void {
-    this.listEntornoAprendizaje.splice(index, 1);
+  public quitarEntornoAprendizaje(inde: any): void {
+    // this.listEntornoAprendizaje.splice(index, 1);
+    const index = this.listEntornoAprendizaje.findIndex(
+      (item) => item.instalaciones === inde
+    );
+    if (index !== -1) {
+      this.listEntornoAprendizaje.splice(index, 1);
+    }
   }
 
   /* FIN RESULTADOS ENTORNO APRENDIZAJE */
@@ -411,7 +438,10 @@ export class CurricularDiseñoComponent implements OnInit {
   
     this.disenioCurricularService.updateDisenioCurricular(this.idDelDisenio!, nuevoDisenioCurricular).subscribe(
       data => {
-        this.traerDatos(this.idDelDisenio!);
+        console.log('idO-> '+data.idDisenioCurricular!)
+        console.log('id-> '+this.idDelDisenio!)
+        //ID DEL DISEÑO CURRICULAR DE OTRA PARTE QUE RECIBE DEL DEÑO MAS NO DEL ID DEL SILABO
+        this.traerDatos(this.idSilaboCap!);
         console.log("Se actualizó el Diseño Curricular");
       }
     );
