@@ -103,4 +103,18 @@ export class ListCourseComponent implements OnInit {
   isFirstPage(): boolean {
     return this.cursoList ? this.first === 0 : true;
   }
+
+
+  //IMPLEMENTACION DEL MODAL PARA VISULIZAR 
+  public visibleCursoPublicar?: boolean = false;
+  public cursoViewPublished = new Curso();
+  // public palabras: any;
+  public showModaLPublisedCourse(curso: Curso) {
+    this.cursoViewPublished = {...curso}
+    this.visibleCursoPublicar = true;
+  }
+
+  public closeModalView(){
+    this.visibleCursoPublicar = false;
+  }
 }
