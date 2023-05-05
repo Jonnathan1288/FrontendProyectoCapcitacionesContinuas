@@ -65,8 +65,8 @@
                     <div class="flex justify-content-between align-items-center">
                         Capacitador
                         <p-sortIcon field="programas.nombrePrograma"></p-sortIcon>
-                        <p-columnFilter field="nombrePrograma" matchMode="in" display="menu"
-                            [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" class="ml-auto">
+                        <p-columnFilter field="nombrePrograma" matchMode="in" display="menu" [showMatchModes]="false"
+                            [showOperator]="false" [showAddButton]="false" class="ml-auto">
                             <ng-template pTemplate="header">
                                 <div class="px-3 pt-3 pb-0">
                                     <span class="font-bold">Agent Picker</span>
@@ -74,12 +74,12 @@
                             </ng-template>
                             <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                                 <p-multiSelect [ngModel]="value" [options]="listaProgramas" placeholder="Any"
-                                    (onChange)="filter($event.value)" optionLabel="nombrePrograma" >
+                                    (onChange)="filter($event.value)" optionLabel="nombrePrograma">
                                     <!-- <p-multiSelect placeholder="Any" (onChange)="filter($event.value)" optionLabel="name"> -->
 
                                     <ng-template let-option pTemplate="item">
                                         <div class="p-multiselect-representative-option">
-                                           
+
                                             <span class="ml-1">{{option.nombrePrograma}}</span>
                                         </div>
                                     </ng-template>
@@ -241,8 +241,8 @@
 
                     <button class="custom-button" (click)="validarHojaDeVida(curso, 2)">
                         <i class="pi pi-file" [ngClass]="{'pi-button': true}"></i>
-                      </button>
-                      
+                    </button>
+
 
 
                 </td>
@@ -280,23 +280,20 @@
 
 
 
-
-
-
-
-
 <!-- IMPLEMENTACION PARA QUE SEA VISIBLE EL CURSO -->
 
 <!-- IMPLEMENTACION DE HOJA DE VIDA PARA VISUALIZAR -->
-<p-dialog [header]="classCursoValidanew!.nombreCurso! + ' - ' + classCursoValidanew?.capacitador?.tipoAbreviaturaTitulo +' '+ classCursoValidanew?.capacitador?.usuario?.persona?.nombre1 +' '+ classCursoValidanew?.capacitador?.usuario?.persona?.apellido1" [(visible)]="visibleCursoDeCapacitacion" [modal]="true"
-    [style]="{ width: '60vw', height: '250' }" [draggable]="false" [resizable]="false">
-    <div class="grid p-fluid m-2">
+<p-dialog
+    [header]="classCursoValidanew!.nombreCurso! + ' - ' + classCursoValidanew?.capacitador?.tipoAbreviaturaTitulo +' '+ classCursoValidanew?.capacitador?.usuario?.persona?.nombre1 +' '+ classCursoValidanew?.capacitador?.usuario?.persona?.apellido1"
+    [(visible)]="visibleCursoDeCapacitacion" [modal]="true" [style]="{ width: '60vw', height: '250' }"
+    [draggable]="false" [resizable]="false">
+    <div class="grid p-fluid m-1">
 
         <div class="col-12 md:col-4 ">
             <div class="p-inputgroup">
                 <div class="col-md-12" style="text-align: center; margin: 5px;">
-                    <p-button type="ngSubmit" [label]="'NECESIDAD'" icon="pi pi-save" styleClass="p-button-success  mb-2"
-                        (onClick)="obtenerReportesValidacion(2)"></p-button>
+                    <p-button type="ngSubmit" [label]="'NECESIDAD'" icon="pi pi-save"
+                        styleClass="p-button-success  mb-2" (onClick)="obtenerReportesValidacion(2)"></p-button>
 
                 </div>
             </div>
@@ -306,7 +303,7 @@
             <div class="p-inputgroup">
                 <div class="col-md-12" style="text-align: center; margin: 5px;">
                     <p-button type="ngSubmit" [label]="'SILABO'" icon="pi pi-save" styleClass="p-button-success  mb-2"
-                    (onClick)="obtenerReportesValidacion(1)"></p-button>
+                        (onClick)="obtenerReportesValidacion(1)"></p-button>
 
                 </div>
             </div>
@@ -315,14 +312,34 @@
         <div class="col-12 md:col-4 ">
             <div class="p-inputgroup">
                 <div class="col-md-12" style="text-align: center; margin: 5px;">
-                    <p-button type="ngSubmit" [label]="'Aceptar'" icon="pi pi-save" styleClass="p-button-success  mb-2"
-                        ></p-button>
+                    <p-button type="ngSubmit" [label]="'Aceptar'" icon="pi pi-save"
+                        styleClass="p-button-success  mb-2"></p-button>
 
                 </div>
             </div>
         </div>
 
     </div>
+
+
+    <div class="container mt-1" *ngIf="classCursoValidanew!.estadoAprovacionCurso === 'A'">
+        <div class="alert alert-success" role="alert">
+            <h4 class="alert-heading">Este curso ya ha sido aprobado</h4>
+            <p>Este curso ha sido aprobado y no se puede editar.</p>
+            <!-- <hr> -->
+            <!-- <p class="mb-0">Si necesita hacer cambios en el curso, comuníquese con el administrador del sistema.</p> -->
+        </div>
+    </div>
+
+    <div class="container mt-1" *ngIf="classCursoValidanew!.estadoAprovacionCurso === 'R'">
+        <div class="alert alert-warning" role="alert">
+            <h4 class="alert-heading">Este curso no fue aprovado con anterioridad</h4>
+            <p>Revise los contenidos y la información respectiva para su posterior aceptación.</p>
+            <!-- <hr> -->
+            <!-- <p class="mb-0">Si necesita hacer cambios en el curso, comuníquese con el administrador del sistema.</p> -->
+        </div>
+    </div>
+
     <div class="mx-2" *ngIf="pdfSrc">
         <embed style="border-radius: 10px; " [src]="pdfSrc" type="application/pdf" width="100%" height="500px" />
     </div>
@@ -331,7 +348,9 @@
         <div class="col-12 md:col-6 mt-2">
             <div class="p-inputgroup">
                 <div class="col-md-12" style="text-align: center; margin: 5px;">
-                    <p-button type="ngSubmit" [label]="'Aceptar'" icon="pi pi-save" styleClass="p-button-success  mb-2" [disabled]="classCursoValidanew!.estadoAprovacionCurso! == 'A'"
+                    <p-button type="ngSubmit" [label]="'Aprovar'" icon="pi pi-check"
+                        [styleClass]="classCursoValidanew!.estadoAprovacionCurso! === 'A' ? 'p-button-success mb-2' : 'p-button-primary mb-2'"
+                        [disabled]="classCursoValidanew!.estadoAprovacionCurso! == 'A'"
                         (onClick)="UpdateValidacionCurso(1)"></p-button>
 
                 </div>
@@ -340,8 +359,9 @@
         <div class="col-12 md:col-6 mt-2">
             <div class="p-inputgroup">
                 <div class="col-md-12" style="text-align: center; margin: 5px;">
-                    <p-button type="ngSubmit" [label]="'Rechazar'" icon="pi pi-save" styleClass="p-button-success  mb-2"
-                        (onClick)="UpdateValidacionCurso(2)"></p-button>
+                    <p-button type="ngSubmit" [label]="'Rechazar'" icon="pi pi-times" styleClass="p-button-warning mb-2"
+                        (onClick)="UpdateValidacionCurso(2)"
+                        [disabled]="classCursoValidanew!.estadoAprovacionCurso! == 'A'"></p-button>
 
                 </div>
             </div>

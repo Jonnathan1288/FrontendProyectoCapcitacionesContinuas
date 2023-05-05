@@ -79,66 +79,71 @@
 <!-- <p-dialog header="{{cursoViewPublished.nombreCurso}}" [(visible)]="visibleCursoPublicar" [modal]="true"
     [style]="{ width: '70vw', height: '250' }" [draggable]="false" [resizable]="false"> -->
 
-    <!--  estadoPublicasionCurso : V: visible ; O: Oculto --  estadoAprovacionCurso -> D: Default ;  A: Aprovado ; R: Rechazado -->
+<!--  estadoPublicasionCurso : V: visible ; O: Oculto --  estadoAprovacionCurso -> D: Default ;  A: Aprovado ; R: Rechazado -->
 
 
-<p-dialog [header]="cursoViewPublished.nombreCurso + ' - ' + (cursoViewPublished.estadoPublicasionCurso === 'V' ? 'Publicado' : cursoViewPublished.estadoAprovacionCurso === 'A' ? 'Listo para publicar' : cursoViewPublished.estadoAprovacionCurso === 'P' ? 'Estado de validación' : cursoViewPublished.estadoAprovacionCurso === 'R' ? 'Rechazado': 'Rechazado') "
-  [(visible)]="visibleCursoPublicar" [modal]="true" [style]="{ width: '70vw', height: '250' }" [draggable]="false" [resizable]="false">
+<p-dialog
+    [header]="cursoViewPublished.nombreCurso + ' - ' + (cursoViewPublished.estadoPublicasionCurso === 'V' ? 'Publicado' : cursoViewPublished.estadoAprovacionCurso === 'A' ? 'Listo para publicar' : cursoViewPublished.estadoAprovacionCurso === 'P' ? 'Estado de validación' : cursoViewPublished.estadoAprovacionCurso === 'R' ? 'Rechazado': 'Rechazado') "
+    [(visible)]="visibleCursoPublicar" [modal]="true" [style]="{ width: '70vw', height: '250' }" [draggable]="false"
+    [resizable]="false">
 
-   
+
+    <div class="container" [class.alert-success]="cursoViewPublished.estadoPublicasionCurso === 'V'"
+        [class.alert-primary]="cursoViewPublished.estadoAprovacionCurso === 'A'" [class.alert-warning]="cursoViewPublished.estadoAprovacionCurso === 'P'" [class.alert-danger]="cursoViewPublished.estadoAprovacionCurso === 'R'"> 
+        <div class="alert-heading" style="text-align: center;"> <strong>{{cursoViewPublished.estadoPublicasionCurso === 'V' ? 'Curso publicado' : cursoViewPublished.estadoAprovacionCurso === 'A' ? 'Curso listo para ser publicado': cursoViewPublished.estadoAprovacionCurso === 'P' ? 'En este momento se encuentra validando su curso': cursoViewPublished.estadoAprovacionCurso === 'R' ? 'Curso rechazado' : 'Este curso no fue aprobado con anterioridad'}} </strong></div>
+        <hr>
+        <p class="mb-0" *ngIf="cursoViewPublished.estadoAprovacionCurso === 'R'">Lo sentimos su curso no fue aprovado, comuníquese con el administrador del sistema.</p>
+    </div>
+
+
+
+    <p-card header="Informacion General del Curso" style="margin: 1px;">
+
+
+
+        <div class="grid" style="margin: 2px;">
+            <div class="col-5 flex justify-content-center">
+                <div style="float: left;">
+                    <p><strong>Area:</strong> {{ cursoViewPublished!.especialidad?.area?.nombreArea }}</p>
+                    <!-- <p><strong>Nombre del Curso:</strong> {{cursoViewPublished!.nombreCurso }}</p> -->
+                    <p><strong>Fecha de Inicio</strong> {{ cursoViewPublished!.fechaInicioCurso }}</p>
+                    <p><strong>Número de Cupos:</strong> {{cursoViewPublished!.numeroCuposCurso }}</p>
+            
+                    <p><strong>Horario:</strong> {{cursoViewPublished!.horarioCurso?.horaInicio + ' a ' +
+                        curso.horarioCurso?.horaFin}}</p>
+                </div>
+            </div>
+
+            <div class="col-5 flex justify-content-center">
+                <div style="float: left;">
+
+                    <p><strong>Código del curso: </strong> {{ cursoViewPublished!.especialidad?.codigoEspecialidad
+                        }}</p>
+                    <p><strong>Fecha de Finalización:</strong> {{ cursoViewPublished!.fechaFinalizacionCurso }}</p>
+                    <p><strong>Horas del curso:</strong> {{cursoViewPublished!.duracionCurso}}</p>
+                    <p><strong>Modalidad:</strong> {{ cursoViewPublished!.modalidadCurso?.nombreModalidadCurso }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </p-card>
 
     <ng-template pTemplate="footer">
         <div class="p-grid p-justify-end">
-          <!-- <button type="button" pButton label="Cancelar" class="p-button-secondary" ></button> -->
-          <p-button label="Editar" icon="pi pi-pencil" styleClass="p-button-secondary mb-2"></p-button>
-          <p-button label="Publicar" icon="pi pi-send" styleClass="p-button-primary mb-2"></p-button>
-          <!-- <button type="button" pButton label="Guardar" class="p-button-success" ></button> -->
+            <p-button label="Editar" icon="pi pi-pencil" styleClass="p-button-secondary mb-2" (onClick)="editarCursoCapacitadionContinua()"></p-button>
+            <p-button label="Publicar" icon="pi pi-send" styleClass="p-button-primary mb-2" *ngIf="cursoViewPublished.estadoPublicasionCurso !== 'V'" [disabled]="cursoViewPublished.estadoAprovacionCurso !== 'A'" (onClick)="updatePublicCursosCapacitacion()"></p-button>
+            <p-button label="Publicado" icon="pi pi-check" styleClass="p-button-success mb-2" *ngIf="cursoViewPublished.estadoPublicasionCurso === 'V'" [disabled]="cursoViewPublished.estadoPublicasionCurso === 'V'"></p-button>
         </div>
-      </ng-template>
-      
-        <p-card header="Informacion General del Curso" style="margin: 5px;" >
-      
-
-           
-            <div class="grid">
-                <div class="col-5 flex justify-content-center">
-                    <div style="float: left;">
-                        <p><strong>Area:</strong> {{ cursoViewPublished!.especialidad?.area?.nombreArea }}</p>
-                        <!-- <p><strong>Nombre del Curso:</strong> {{cursoViewPublished!.nombreCurso }}</p> -->
-                        <p><strong>Fecha de Inicio</strong> {{ cursoViewPublished!.fechaInicioCurso }}</p>
-                        <p><strong>Número de Cupos:</strong> {{cursoViewPublished!.numeroCuposCurso }}</p>
-                        <p><strong>Docente Responsable:</strong>
-                            {{cursoViewPublished!.capacitador?.tipoAbreviaturaTitulo + '.' +
-                            cursoViewPublished!.capacitador?.usuario?.persona?.nombre1 }} {{
-                            cursoViewPublished!.capacitador?.usuario?.persona?.nombre2 }} {{
-                            cursoViewPublished!.capacitador?.usuario?.persona?.apellido1 }} {{
-                            cursoViewPublished!.capacitador?.usuario?.persona?.apellido2 }}</p>
-                            <p><strong>Horario:</strong> {{cursoViewPublished!.horarioCurso?.horaInicio + ' a ' +
-                                curso.horarioCurso?.horaFin}}</p>
-                    </div>
-                </div>
-
-                <div class="col-5 flex justify-content-center">
-                    <div style="float: left;">
-                       
-                        <p><strong>Código del curso: </strong> {{ cursoViewPublished!.especialidad?.codigoEspecialidad
-                            }}</p>
-                        <p><strong>Fecha de Finalización:</strong> {{ cursoViewPublished!.fechaFinalizacionCurso }}</p>
-                        <p><strong>Horas del curso:</strong> {{cursoViewPublished!.duracionCurso}}</p>
-                        <p><strong>Modalidad:</strong> {{ cursoViewPublished!.modalidadCurso?.nombreModalidadCurso }}
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </p-card>
+    </ng-template>
     <!-- </div> -->
 
 
 
     <div class="grid p-fluid m-1">
- 
+
         <div class="col-md-12" style="text-align: center; margin: 5px;">
-            <p-button (onClick)="closeModalView()"  label="Aceptar" icon="pi pi-check" styleClass="p-button-success  mb-2"></p-button>
+            <p-button (onClick)="closeModalView()" label="Aceptar" icon="pi pi-check"
+                styleClass="p-button-success  mb-2"></p-button>
         </div>
     </div>
 
