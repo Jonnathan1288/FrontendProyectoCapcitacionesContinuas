@@ -8,6 +8,8 @@ import { PersonaService } from 'src/app/service/persona.service';
 import { RegistroFotograficoCursoService } from 'src/app/service/registro-fotografico-curso.service';
 import * as fileSaver from 'file-saver';
 import { DomSanitizer } from '@angular/platform-browser';
+
+
 @Component({
   selector: 'app-registro-fotografico-evidencias',
   templateUrl: './registro-fotografico-evidencias.component.html',
@@ -58,6 +60,10 @@ export class RegistroFotograficoEvidenciasComponent implements OnInit {
     }));
   }
 
+  imprimirTabla() {
+    window.print();
+  }
+
   exportPdf() {
     // import('jspdf').then((jsPDF) => {
     //   import('jspdf-autotable').then((x) => {
@@ -68,27 +74,27 @@ export class RegistroFotograficoEvidenciasComponent implements OnInit {
     // });
   }
 
-  exportExcel() {
-    // import("xlsx").then(xlsx => {
-    //     const worksheet = xlsx.utils.json_to_sheet(this.products);
-    //     const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
-    //     const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
-    //     this.saveAsExcelFile(excelBuffer, "products");
-    // });
-  }
+  // exportExcel() {
+  //   import().then(xlsx => {
+  //       const worksheet = xlsx.utils.json_to_sheet(this.products);
+  //       const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
+  //       const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
+  //       this.saveAsExcelFile(excelBuffer, "products");
+  //   });
+  // }
 
-  saveAsExcelFile(buffer: any, fileName: string): void {
-    let EXCEL_TYPE =
-      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
-    let EXCEL_EXTENSION = '.xlsx';
-    const data: Blob = new Blob([buffer], {
-      type: EXCEL_TYPE,
-    });
-    fileSaver.saveAs(
-      data,
-      fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION
-    );
-  }
+  // saveAsExcelFile(buffer: any, fileName: string): void {
+  //   let EXCEL_TYPE =
+  //     'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+  //   let EXCEL_EXTENSION = '.xlsx';
+  //   const data: Blob = new Blob([buffer], {
+  //     type: EXCEL_TYPE,
+  //   });
+  //   fileSaver.saveAs(
+  //     data,
+  //     fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION
+  //   );
+  // }
 
   //Método para traer el curso por la id que ingresa
   // public obtenerCursoPorId(idCurso: number){
