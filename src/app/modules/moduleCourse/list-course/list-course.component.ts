@@ -103,4 +103,34 @@ export class ListCourseComponent implements OnInit {
   isFirstPage(): boolean {
     return this.cursoList ? this.first === 0 : true;
   }
+
+
+  //IMPLEMENTACION DEL MODAL PARA VISULIZAR 
+  public visibleCursoPublicar?: boolean = false;
+  public cursoViewPublished = new Curso();
+  // public palabras: any;
+  public showModaLPublisedCourse(curso: Curso) {
+    this.cursoViewPublished = {...curso}
+    this.visibleCursoPublicar = true;
+  }
+
+  public closeModalView(){
+    this.visibleCursoPublicar = false;
+  }
+
+
+  //IMPLEMENTACION PARA LA IDICIÓN DEL CURSO-------------------------------------
+  public editarCursoCapacitadionContinua(){
+      this.router.navigate(['/register/course', this.cursoViewPublished.idCurso]);
+  }
+
+  public updatePublicCursosCapacitacion(){
+    this.cursoViewPublished.estadoPublicasionCurso = 'V'
+    this.cursoViewPublished.estadoCurso = true
+    this.cursoService.updateCurso(this.cursoViewPublished.idCurso!, this.cursoViewPublished).subscribe((data)=>{
+      if(data != null){
+        alert('Succesful published course')
+      }
+    })
+  }
 }
