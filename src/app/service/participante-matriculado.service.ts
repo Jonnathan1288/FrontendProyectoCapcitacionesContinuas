@@ -28,5 +28,8 @@ export class ParticipanteMatriculadoService {
     return this.http.get(environment.apiuri+'/participantesMatriculados/aceptarInicioCurso/'+idCurso);
   }
 
+  public updateParticipantesMatriculados(idPatMatriculado:number,participantesMatriculados: ParticipantesMatriculados):Observable<ParticipantesMatriculados>{
+    return this.http.put<ParticipantesMatriculados>(environment.apiuri +'/participantesMatriculados/actualizar/' + idPatMatriculado , participantesMatriculados);
+  }
   
 }

@@ -31,4 +31,8 @@ export class NotasService {
     return this.http.get<Notas[]>(environment.apiuri+'/notas/findbyIdMatriculado/'+idNota);
   }
 
+  public validarExistenciaDatos(idCurso: number){
+    return this.http.get<boolean>(environment.apiuri+'/validarExistenciNotas/findbyIdCurso/'+idCurso);
+  }
+
 }

@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Asistencia } from 'src/app/models/asistencia';
+import { Curso } from 'src/app/models/curso';
 import { ParticipantesMatriculados } from 'src/app/models/participantesMatriculados';
+import { CursoService } from 'src/app/service/curso.service';
+import { NotasService } from 'src/app/service/notas.service';
 import { ParticipanteMatriculadoService } from 'src/app/service/participante-matriculado.service';
 
 @Component({
@@ -18,14 +21,54 @@ export class ViewInicioCursoMatriculadosComponent implements OnInit {
   constructor(
     private participantesMatriculadosService: ParticipanteMatriculadoService,
     private activateRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private cursosService: CursoService,
+    private notasService:NotasService
   ) {}
   ngOnInit(): void {
     this.activateRoute.params.subscribe((param) => {
       const idCursoRout = param['id'];
       this.idCursoMatricula = idCursoRout;
       this.traerParticipantesMatriculados(this.idCursoMatricula!);
+      this.validarNotasFinales3Dias();
     });
+  }
+
+  curso: Curso =  new Curso();
+  isFalstanTresDias!: boolean;
+  diasFaltantes!:any;
+  fechaActual = new Date();
+  public validarNotasFinales3Dias():void{
+    this.cursosService.getCursoById(this.idCursoMatricula!).subscribe(
+      data =>{
+        this.curso = data;
+        const fechaFin = new Date(this.curso.fechaFinalizacionCurso!);
+        this.diasFaltantes = Math.round(Math.abs((this.fechaActual.getTime() - fechaFin.getTime()) / (24 * 60 * 60 * 1000))) + 1;
+        console.log("Dias q termina >" + fechaFin + " la actual " + this.fechaActual)
+        console.log("Dias restantes ->" + this.diasFaltantes)
+        if (this.diasFaltantes <= 3) {
+          this.isFalstanTresDias = true;
+        } else {
+          this.isFalstanTresDias = false;
+        }
+        this.validarExistenciaDeRegistros();
+      }
+    )
+  }
+
+  isValidateExistenciaNotas!: boolean;
+  public validarExistenciaDeRegistros():void{
+    this.notasService.validarExistenciaDatos(this.idCursoMatricula!).subscribe(
+      data=>{
+        if (data == false) {
+          // SI HAY DATOS
+          this.isValidateExistenciaNotas = false;
+        } else {
+          // NO HAY DATOS
+          this.isValidateExistenciaNotas = true;
+        }
+      }
+    )
   }
 
   public traerParticipantesMatriculados(idCurso: number) {

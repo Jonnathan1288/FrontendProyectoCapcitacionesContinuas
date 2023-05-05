@@ -12,7 +12,6 @@ import { CursoService } from 'src/app/service/curso.service';
 export class CardcursoComponent implements OnInit {
 
 
-
   ngOnInit(): void {
     this.obtenerCursosFull();
   }
@@ -24,13 +23,16 @@ export class CardcursoComponent implements OnInit {
   }
 
   listCursos: Curso[] = [];
+  listCursosOriginal: Curso[] = [];
 
   public obtenerCursosFull():void{
     this.cursoService.listCursoDisponibles().subscribe( 
-      data=>{
-      this.listCursos = data
+      (data: Curso[]) => {
+      this.listCursos = data;
+      this.listCursosOriginal = data;
     })
   }
+
 
   public pasarInfoCurso(idCurso:any):void{
     this.router.navigate(['/cardcu/detalle',idCurso ]);
@@ -39,5 +41,51 @@ export class CardcursoComponent implements OnInit {
   public pasarInfoCursoIsncripcion(idCurso:any):void{
     this.router.navigate(['/mat', idCurso ]);
   }
+
+  // FILTROS
+  filtrarPorModalidadVirtual() {
+    this.listCursos = this.listCursosOriginal.filter(curso => curso.modalidadCurso!.nombreModalidadCurso === 'Virtual');
+  }
+
+  filtrarPorModalidadPresencial() {
+    this.listCursos = this.listCursosOriginal.filter(curso => curso.modalidadCurso!.nombreModalidadCurso === 'Presencial');
+  }
+
+  filtrarPorModalidadTecnico() {
+    this.listCursos = this.listCursosOriginal.filter(curso => curso.tipoCurso!.nombreTipoCurso === 'Técnico');
+  }
+
+  filtrarPorModalidadAdministrativo() {
+    this.listCursos = this.listCursosOriginal.filter(curso => curso.tipoCurso!.nombreTipoCurso === 'Administrativo');
+  }
+
+  filtrarPorModalidadBasicos() {
+    this.listCursos = this.listCursosOriginal.filter(curso => curso.nivelCurso!.nombreNivelCurso === 'Basico');
+  }
+
+  filtrarPorModalidadSuperior() {
+    this.listCursos = this.listCursosOriginal.filter(curso => curso.nivelCurso!.nombreNivelCurso === 'Superior');
+  }
+
+  filtrarPorModalidadIntermedios() {
+    this.listCursos = this.listCursosOriginal.filter(curso => curso.nivelCurso!.nombreNivelCurso === 'Intermedio');
+  }
+
+  filtrarPorModalidadManana() {
+    this.listCursos = this.listCursosOriginal.filter(curso => {
+      const horaInicio = parseInt(curso.horarioCurso!.horaInicio!.split(':')[0]);
+      const horaFin = parseInt(curso.horarioCurso!.horaFin!.split(':')[0]);
+      return horaInicio >= 7 && horaFin <= 12;
+    });
+  }
+
+  filtrarPorModalidadTarde() {
+    this.listCursos = this.listCursosOriginal.filter(curso => {
+      const horaInicio = parseInt(curso.horarioCurso!.horaInicio!.split(':')[0]);
+      const horaFin = parseInt(curso.horarioCurso!.horaFin!.split(':')[0]);
+      return horaInicio >= 12 && horaFin <= 23;
+    });
+  }
+
 
 }

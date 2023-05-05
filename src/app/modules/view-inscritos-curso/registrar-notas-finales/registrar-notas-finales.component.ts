@@ -5,6 +5,7 @@ import { ParticipantesMatriculados } from 'src/app/models/participantesMatricula
 import { CursoService } from 'src/app/service/curso.service';
 import { NotasService } from 'src/app/service/notas.service';
 import { ParticipanteMatriculadoService } from 'src/app/service/participante-matriculado.service';
+import { ReportsCapacitacionesService } from 'src/app/service/reports-capacitaciones.service';
 
 @Component({
   selector: 'app-registrar-notas-finales',
@@ -17,19 +18,39 @@ export class RegistrarNotasFinalesComponent implements OnInit{
     private activateRoute: ActivatedRoute,
     private router: Router,
     private participantesMatriculadosService: ParticipanteMatriculadoService,
-    private notasService: NotasService
+    private notasService: NotasService,
+    private resportService: ReportsCapacitacionesService
   ) {}
 
   idCursoGlobal?: number;
+
 
   ngOnInit(): void {
     this.activateRoute.params.subscribe( (param) =>{
       const idCursoRout = param['id'];
       console.log("Idcurso => " + idCursoRout)
       this.idCursoGlobal = idCursoRout;
-      // this.obtenerParticipantesFinales();
-      this.traerParticipantesMatriculados();
+      this.validarExistenciaDeRegistros();
     });
+  }
+
+  isValidateExistenciaNotas!: boolean;
+  public validarExistenciaDeRegistros():void{
+    this.notasService.validarExistenciaDatos(this.idCursoGlobal!).subscribe(
+      data=>{
+        if (data == false) {
+          // SI HAY DATOS
+          alert("si hay")
+          this.isValidateExistenciaNotas = false;
+          this.obtenerParticipantesFinales();
+        } else {
+          // NO HAY DATOS
+          alert("no hay")
+          this.isValidateExistenciaNotas = true;
+          this.traerParticipantesMatriculados();
+        }
+      }
+    )
   }
 
   listaParticipantesMatriculados: ParticipantesMatriculados [] = [];
@@ -38,6 +59,8 @@ export class RegistrarNotasFinalesComponent implements OnInit{
     this.participantesMatriculadosService.getParticipantesMatriculadosByIdCurso(this.idCursoGlobal!).subscribe(
       data => {
         this.listaParticipantesMatriculados = data;
+        console.log("trayendo -> " + this.listaParticipantesMatriculados)
+        this.guardarDatosVacios();
       }
     )
   }
@@ -104,4 +127,46 @@ export class RegistrarNotasFinalesComponent implements OnInit{
   }
   //
 
+
+  // VALIDAR LAS NOTAS FINALES 
+  // A:APROBADOS R:REPROBADOS X:RETIRADOS
+  participantesMatriculado: ParticipantesMatriculados = new ParticipantesMatriculados();
+  idParticpanteNota!:number;
+  public vaidarNotasEstudiantesFinales():void{
+    console.log("CLICk")
+    for (let participante of this.listNotas) {
+      const parcial = participante.parcial!;
+      const examen = participante.examenFinal!;
+      this.idParticpanteNota = participante.partipantesMatriculados!.idParticipanteMatriculado!;
+      const notaFinal = (parcial * 0.40) + (examen * 0.70);
+      console.log(" Esta es su nota final -> " + notaFinal )
+
+      this.participantesMatriculadosService.getParticipantesMatriculadosById(this.idParticpanteNota).subscribe(
+        data =>{
+          this.participantesMatriculado = data;
+          if (notaFinal >= 7) {
+            console.log("APROBADO");
+            this.participantesMatriculado.estadoParticipanteAprobacion = "A";
+          } else {
+            console.log("NO APROBADO")
+            this.participantesMatriculado.estadoParticipanteAprobacion = "R";
+          }
+          this.participantesMatriculadosService.updateParticipantesMatriculados(this.idParticpanteNota, this.participantesMatriculado).subscribe(
+            data =>{
+              console.log("Se actulizo su estado APROBACION")
+            }
+          )
+        }
+      )
+      
+    }
+  }
+
+  public generarReporteAsitenciaEvaluacion():void{
+    this.resportService.downloadAsistenciaEvaluacion(this.idCursoGlobal!)
+      .subscribe((r) => {
+        const url = URL.createObjectURL(r);
+        window.open(url, '_blank');
+      });
+  }
 }
