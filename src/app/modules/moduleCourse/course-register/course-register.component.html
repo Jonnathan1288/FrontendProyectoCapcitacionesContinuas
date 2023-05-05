@@ -1,4 +1,72 @@
-<p-card header="Registro de curso" class="m-5">
+
+<div class="container" *ngIf="estadoHojaVida == ''">
+    Aun no tiene una hoja de vida
+</div>
+
+<div class="container" *ngIf="estadoHojaVida == 'P'">
+   
+<div class="surface-section px-4 py-8 md:px-6 lg:px-8">
+    <div class="text-700 text-center">
+        <div class="text-blue-600 font-bold mb-3"><i class="pi pi-discord"></i>&nbsp;SISTEMA DE CAPACITACIONES CONTINUAS</div>
+        <div class="text-900 font-bold text-5xl mb-3">Proceso de validación</div>
+        <div class="text-700 text-2xl mb-5">Le informamos que en este momento su hoja de vida se encuentra validando, esperenos!!.</div>
+        <button pButton pRipple label="Join Now" icon="pi pi-discord" class="font-bold px-5 py-3 p-button-raised p-button-rounded white-space-nowrap"></button>
+    </div>
+</div>
+</div>
+
+
+<!-- VALIDAMOS SI LA HOJA DE VIDA A SIDO RECHAZADA -->
+<div class="container" *ngIf="estadoHojaVida == 'R'">
+
+
+
+
+
+    <div class="grid grid-nogutter surface-section text-800">
+        <div class="col-12 md:col-12 p-6 text-center md:text-left flex align-items-center ">
+            <section>
+                <span class="block text-6xl font-bold mb-1">Rechazado</span>
+                <div class="text-6xl text-primary font-bold mb-3">Su hoja de vida no cumple los parametros</div>
+                <p class="mt-0 mb-4 text-700 line-height-3">Le comentamos que su hoja de vida no cumple los requerimientos para que pueda usted crear cursos de capacitación, actualice su información.</p>
+                
+                <button pButton pRipple label="Learn More" type="button" class="mr-3 p-button-raised"></button>
+                <button pButton pRipple label="Live Demo" type="button" class="p-button-outlined"></button>
+            </section>
+        </div>
+        <!-- <div class="col-12 md:col-6 overflow-hidden">
+            <img src="assets/images/blocks/hero/hero-1.png" alt="Image" class="md:ml-auto block md:h-full" style="clip-path: polygon(8% 0, 100% 0%, 100% 100%, 0 100%)">
+        </div> -->
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+<p-card header="Registro de curso" class="m-5" *ngIf="estadoHojaVida == 'A'">
     <form (ngSubmit)="createHorarioCurso()" ngNativeValidate style="padding: 15px;">
         <p-card header="Infórme para la creación del curso" class="m-1">
             <div class="personal-image">

@@ -1,58 +1,86 @@
-<head>
-    <link type="text/css" rel="stylesheet" href="hojavida.component.css"/>
-    <title></title>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js" integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ" crossorigin="anonymous"></script>
-</head>
-
-<div class="card flex justify-content-center">
-    <p-panel >
-      <h2>MI HOJA DE VIDA</h2>
-            <div >
-                <p-card class="card-izquierda">
-                    <img src="https://img.freepik.com/foto-gratis/concepto-emociones-personas-foto-cabeza-hombre-guapo-aspecto-serio-barba-confiado-decidido_1258-26730.jpg" alt="Img Capacitador" width="300" height="300">
-                  
-                  </p-card>
 
 
-                 <p-card class="card-derecha">
-                    <h4>SOBRE MI</h4>
-                    <div class="form-floating">
-                        <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 97px"></textarea>
-                     
-                      </div>
-                   
-                    <h4>EXPERIENCIA LABORAL</h4>
-                    <div class="form-floating">
-                        <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 97px"></textarea>
-                      
-                      </div>
-                    <h4>EXPERIENCIA ESCOLAR</h4>
-                    <div class="form-floating">
-                        <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 97px"></textarea>
-                       
-                      </div>
-                    <h4>DESTREZAS</h4>
-                    <div class="form-floating">
-                        <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 97px"></textarea>
-                       
-                      </div>
-                      <br>
-                 </p-card> 
-                  
-                 <br>
-                 
-                </div>
-           
-    </p-panel>
-   
-                <div class="container">
-                    <div class="abs-center">
-                    <button class="btn-lg btn-primary" type="button">Guardar</button>
-                   
-                    <button class="btn-lg btn-danger" type="button">Cancelar</button>
-                  </div>
-                </div>
-                <br>
+  <p-button label="Subir Hoja de Vida" style="margin: 5px;" (onClick)="SubirHojaVida()"></p-button>
+  <p-button label="Generar Hoja de Vida"  style="margin: 5px;" (onClick)="generarHojaVida()" styleClass="p-button-success"></p-button>
+
+
+<p-card header="Subir Hoja de Vida" *ngIf="idUploadHojaVida" class="m-5">
+
+  <div class="col-md-7 d-flex flex-column justify-content-center align-items-center"
+    style="min-height: 630px; background-color: rgb(240, 249, 250); position: relative; border-radius: 20px;   max-width: 100%;">
+    <div class="form-group mb-5" style="border: 2px dashed #ccc; padding: 30px; border-radius: 10px;"
+      *ngIf="isTieneArchivo === false">
+      <label for="archivo" class="font-weight-bold mb-3">Seleccionar archivo PDF:</label>
+
+      <div class="custom-file">
+        <input type="file" #fileIn accept="application/pdf" id="archivo" (change)="onFileSelected($event)">
+      </div>
+
+    </div>
+    <div class="mt-5">
+      <i class="fa fa-upload fa-3x"></i>
+    </div>
+
+    <div class="mx-2" *ngIf="fileUrl" style="position: absolute; left: 0; right: 0; top: 0; bottom: 0;">
+      <embed style="border-radius: 10px; " [src]="fileUrl" type="application/pdf" width="100%" height="100%" />
+    </div>
+
   </div>
 
+  <p-button label="Guardar" *ngIf="fileUrl && isExiste === false"  (onClick)="subirHojaVida()" styleClass="p-button-success" ></p-button>
+  <p-button label="Actualizar" *ngIf="fileUrl  && isExiste === true" (onClick)="subirHojaVida()" styleClass="p-button-success" ></p-button>
+
+</p-card>
+
+
+<!-- HOJA VIDA -->
+
+<div class="card flex justify-content-center m-5"  *ngIf="idNewHojaVida">
+  <p-panel>
+    <h2>MI HOJA DE VIDA</h2>
+      <p-card style="margin: 5px;">
+        <img
+          src="https://img.freepik.com/foto-gratis/concepto-emociones-personas-foto-cabeza-hombre-guapo-aspecto-serio-barba-confiado-decidido_1258-26730.jpg"
+          alt="Img Capacitador" width="300" height="300">
+      </p-card>
+      <p-card style="margin: 5px;">
+        <h4>SOBRE MI</h4>
+        <div class="form-floating">
+          <textarea class="form-control" placeholder="Leave a comment here" id="sobreMi" name="sobreMi"
+            style="height: 97px"   [(ngModel)]="hojaVidaCapacitador.sobreMi"></textarea>
+        </div>
+        <h4>EXPERIENCIA LABORAL</h4>
+        <div class="form-floating">
+          <textarea class="form-control" placeholder="Leave a comment here" id="experiencialLaboral" name="experiencialLaboral"
+            style="height: 97px" [(ngModel)]="hojaVidaCapacitador.experiencialLaboral"></textarea>
+        </div>
+        <h4>EXPERIENCIA ESCOLAR</h4>
+        <div class="form-floating">
+          <textarea class="form-control" placeholder="Leave a comment here" id="experienciaEscolar" name="experienciaEscolar"
+            style="height: 97px" [(ngModel)]="hojaVidaCapacitador.experienciaEscolar" ></textarea>
+        </div>
+        <h4>DESTREZAS</h4>
+        <div class="form-floating">
+          <textarea class="form-control" placeholder="Leave a comment here" id="destrezas" name="destrezas"
+            style="height: 97px" [(ngModel)]="hojaVidaCapacitador.destrezas"></textarea>
+        </div>
+        <br>
+        <h4>IDIOMAS</h4>
+        <div class="form-floating">
+          <textarea class="form-control" placeholder="Leave a comment here" id="idiomas" name="idiomas"
+            style="height: 97px" [(ngModel)]="hojaVidaCapacitador.idiomas"></textarea>
+        </div>
+        <br>
+
+      <br>
+
+  </p-card>
+
+    <div class="r" style="margin: 5px; text-align: center;">
+      <p-button *ngIf="isExiste === false" label="Guardar Hoja de Vida" (onClick)="guardarHojaVida()" styleClass="p-button-success"></p-button>
+      <p-button *ngIf="isExiste === true" label="Actualizar Hoja de Vida" (onClick)="actulizarHojaVida()" styleClass="p-button-success"></p-button>
+    </div>
+
+  </p-panel>
+
+</div>

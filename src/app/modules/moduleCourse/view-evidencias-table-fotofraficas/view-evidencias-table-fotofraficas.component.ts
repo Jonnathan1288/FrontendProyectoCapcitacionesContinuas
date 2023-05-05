@@ -76,18 +76,22 @@ export class ViewEvidenciasTableFotofraficasComponent implements OnInit {
       const id_curso = params['id'];
       this.idCursoRouter = id_curso;
       this.obtenerCursoPorId(id_curso);
+      this.obtenerTodosRegistrofotograficosPorCurso(id_curso);
     });
-    this.obtenerTodosRegistrofotograficosPorCurso();
+    
   }
 
-  public obtenerTodosRegistrofotograficosPorCurso() {
+  public obtenerTodosRegistrofotograficosPorCurso(idRegistroFoto: number) {
     this.regfService
-      .getRegistroFotograficoCursoAllByIdCurso(1)
+      .getRegistroFotograficoCursoAllByIdCurso(idRegistroFoto)
       .subscribe((data) => {
-        this.listRegistroFotografico = data;
+        this.listRegistroFotografico = data.filter((regf)=>
+          regf.estado === true
+        )
+        //this.listRegistroFotografico = data;
       });
+      // getRegistroFotograficoCursoAllByIdCurso
   }
-
   //Método para traer el curso por la id que ingresa
   public obtenerCursoPorId(idCurso: number) {
     this.cursoService.getCursoById(idCurso).subscribe((data) => {
@@ -107,7 +111,7 @@ export class ViewEvidenciasTableFotofraficasComponent implements OnInit {
         .subscribe((data) => {
           if (data != null) {
             alert('succesful update');
-            this.obtenerTodosRegistrofotograficosPorCurso();
+            this.obtenerTodosRegistrofotograficosPorCurso(this.idCursoRouter!);
             this.registroFotografico = new RegistroFotograficoCurso();
             this.visible = false;
           }
@@ -121,11 +125,22 @@ export class ViewEvidenciasTableFotofraficasComponent implements OnInit {
             alert('fuccesful');
             this.visible = false;
             this.registroFotografico = new RegistroFotograficoCurso();
-            this.obtenerTodosRegistrofotograficosPorCurso();
+            this.obtenerTodosRegistrofotograficosPorCurso(this.idCursoRouter!);
           }
         });
     }
   }
+
+  public eliminadoLogicoDelregistroFotografico(registroFotografico: RegistroFotograficoCurso){
+    registroFotografico.estado = false;
+    this.registroFotograficoService.updateRegistroFotografico(registroFotografico.idRegistroFotograficoCurso!, registroFotografico).subscribe((data)=>{
+      if(data != null){
+        this.obtenerTodosRegistrofotograficosPorCurso(this.idCursoRouter!);
+      }
+    })
+  }
+
+  
 
   //VISIVILIADA DEL MODAL
   visible?: boolean;

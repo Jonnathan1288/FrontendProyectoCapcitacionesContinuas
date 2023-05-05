@@ -14,7 +14,7 @@ import { EvaluacionFormativaCurricularService } from 'src/app/service/evaluacion
 import { EvaluacionFinalCurricularService } from 'src/app/service/evaluacion-final-curricular.service';
 import { EntornoAprendizajeService } from 'src/app/service/entorno-aprendizaje.service';
 import { PrerrequisitosCursoService } from 'src/app/service/prerrequisitosCurso.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DisenioCurriculares } from 'src/app/models/disenio-curriculares';
 
 @Component({
@@ -31,8 +31,8 @@ export class CurricularDiseñoComponent implements OnInit {
     private evaluacionFormativaCurricularService: EvaluacionFormativaCurricularService,
     private evaluacionFinalCurricularService: EvaluacionFinalCurricularService,
     private prerrequitsitoCursoService: PrerrequisitosCursoService,
-    private entornoAprendizajeService: EntornoAprendizajeService
-
+    private entornoAprendizajeService: EntornoAprendizajeService,
+    private actiRouter: ActivatedRoute,
   ) {
   }
 
@@ -47,18 +47,36 @@ export class CurricularDiseñoComponent implements OnInit {
 
 
   ngOnInit() {
-    this.obtenerDatosSilabo();
+    this.actiRouter.params.subscribe((params) => {
+      const id_silabo = params['id'];
+      this.idSilaboCap = id_silabo;
+      // this.obtenerDatosCurso();
+      this.validacionDeDisenioExistente();
+    });
   }
-
+  validacionDeDisenioExistente(): void {
+    this.disenioCurricularService.getDisenioCurricularValidacion(this.idSilaboCap).subscribe(
+      data => {
+        if (data === true) {
+          alert('Ya tiene disenio Curricular' + data)
+          this.traerDatos(this.idSilaboCap);
+        } else {
+          alert(" no tien Disenio Curricular")
+          this.obtenerDatosSilabo();
+        }
+      }
+    )
+  }
   /* TRAER DATOS DEL SILABO*/
 
-  CapIdSilaboSend?: number;
-  idSilaboCap?: any = 2;
+
+  idSilaboCap?: any;
   public obtenerDatosSilabo(): void {
     if (this.idSilaboCap != null && this.idSilaboCap != undefined) {
       this.silaboService.getSilaboById(this.idSilaboCap).subscribe((data) => {
         this.silabo = data;
-        this.CapIdSilaboSend = this.silabo.idSilabo;
+        //this.CapIdSilaboSend = this.silabo.idSilabo;
+        this.obtenerPrerrequisistos(this.silabo.curso?.idCurso!);
       })
     } else {
       console.log("Silabo not found =(")
@@ -189,6 +207,8 @@ export class CurricularDiseñoComponent implements OnInit {
       this.generarEvaluacionFormativa();
       this.generarEvaluacionFinal();
       this.generarEntornoAprendizaje();
+      alert('Guardado exitoso');
+
       /* */
       console.log("Disenio Curricular generado id->" + this.idDisenioCurricularCap)
     })
@@ -238,19 +258,19 @@ export class CurricularDiseñoComponent implements OnInit {
 
   /* */
   // ACTUALIZAR DISEÑO CURRICULAR //
-  idDisenioCurricularCapEdit?: number = 1;
-  idDisenioCurricularCapGlobal?: number;
+
   validarIdDisenioCurricular: Boolean = false;
-  public traerDatos(): void {
-    this.disenioCurricularService.getDisenioCurricularById(this.idDisenioCurricularCapEdit!).subscribe(
+  idDelDisenio: any;
+  public traerDatos(idSilabo: number): void {
+    this.disenioCurricularService.getDisenioCurricularByIdPorSilabo(idSilabo).subscribe(
       data => {
         this.disenioCurricular = data;
-        this.idDisenioCurricularCapGlobal = this.disenioCurricular.idDisenioCurricular;
-
-        this.traerDatosEvaluacionDiagnosticaFull(this.idDisenioCurricularCapGlobal!);
-        this.traerDatosEvaluacionFormativaFull(this.idDisenioCurricularCapGlobal!);
-        this.traerDatosEvaluacionFinalFull(this.idDisenioCurricularCapGlobal!);
-        this.traerDatosEntornoAprendizajeFull(this.idDisenioCurricularCapGlobal!);
+        this.idDelDisenio = this.disenioCurricular.idDisenioCurricular;
+        console.log("id del disenio curricular nuevo -> " + this.idDelDisenio)
+        this.traerDatosEvaluacionDiagnosticaFull(this.idDelDisenio!);
+        this.traerDatosEvaluacionFormativaFull(this.idDelDisenio!);
+        this.traerDatosEvaluacionFinalFull(this.idDelDisenio!);
+        this.traerDatosEntornoAprendizajeFull(this.idDelDisenio!);
         this.validarIdDisenioCurricular = true;
       }
     )
@@ -313,7 +333,7 @@ export class CurricularDiseñoComponent implements OnInit {
           dataTwo => {
             let entornoAprendizajeCurricular = new EntornoAprendizajeCurricular();
             entornoAprendizajeCurricular.idEntornoCurricular = dataTwo.idEntornoCurricular;
-            entornoAprendizajeCurricular.instalaciones=dataTwo.instalaciones;
+            entornoAprendizajeCurricular.instalaciones = dataTwo.instalaciones;
             entornoAprendizajeCurricular.faseTeorica = dataTwo.faseTeorica;
             entornoAprendizajeCurricular.fasePractica = dataTwo.fasePractica;
             entornoAprendizajeCurricular.estadoEntornoAprendizaje = dataTwo.estadoEntornoAprendizaje;
@@ -334,7 +354,7 @@ export class CurricularDiseñoComponent implements OnInit {
         this.entornoAprendizajeCurricular.estadoEntornoAprendizaje = false;
         this.entornoAprendizajeService.cambiarEstadosEntornoAprendizajeSilaboId(idEntornoCurricular, this.entornoAprendizajeCurricular).subscribe(
           dataTwo => {
-            this.traerDatosEntornoAprendizajeFull(this.idDisenioCurricularCapGlobal!);
+            this.traerDatosEntornoAprendizajeFull(this.idDelDisenio!);
             console.log("Se actualizo")
           }
         )
@@ -350,7 +370,7 @@ export class CurricularDiseñoComponent implements OnInit {
         this.entornoAprendizajeCurricular.estadoEntornoAprendizaje = true;
         this.entornoAprendizajeService.cambiarEstadosEntornoAprendizajeSilaboId(idEntornoCurricular, this.entornoAprendizajeCurricular).subscribe(
           dataTwo => {
-            this.traerDatosEntornoAprendizajeFull(this.idDisenioCurricularCapGlobal!);
+            this.traerDatosEntornoAprendizajeFull(this.idDelDisenio!);
             console.log("Se actualizo")
           }
         )
@@ -383,20 +403,36 @@ export class CurricularDiseñoComponent implements OnInit {
     this.visible = true;
   }
 
+  public actualizarDisenioCurricular(): void {
+    const nuevoDisenioCurricular: DisenioCurriculares = {
+      ...this.disenioCurricular, // copiar todos los valores existentes de this.disenioCurricular
+      estadoDisenioCurricular: true // sobrescribir el valor de estadoDisenioCurricular con true
+    };
+  
+    this.disenioCurricularService.updateDisenioCurricular(this.idDelDisenio!, nuevoDisenioCurricular).subscribe(
+      data => {
+        this.traerDatos(this.idDelDisenio!);
+        console.log("Se actualizó el Diseño Curricular");
+      }
+    );
+  }
+  
+  
+
   public actualizarEntornoAprendizaje(): void {
     if (this.opcionCapEntornoAprendizaje == "C") {
       this.entornoAprendizajeCurricular.disenioCurricular = this.disenioCurricular;
       this.entornoAprendizajeCurricular.estadoEntornoAprendizaje = true;
       this.entornoAprendizajeService.saveEntornoAprendizajeCurricular(this.entornoAprendizajeCurricular).subscribe(
         dataTwo => {
-          this.traerDatosEntornoAprendizajeFull(this.idDisenioCurricularCapGlobal!);
+          this.traerDatosEntornoAprendizajeFull(this.idDelDisenio!);
           console.log("Se creo uno nuevo EA")
         }
       )
     } else {
       this.entornoAprendizajeService.updateEntornoAprendizajeCurricular(this.idCapModelEdit!, this.entornoAprendizajeCurricular).subscribe(
         dataTwo => {
-          this.traerDatosEntornoAprendizajeFull(this.idDisenioCurricularCapGlobal!);
+          this.traerDatosEntornoAprendizajeFull(this.idDelDisenio!);
           console.log("Se actualizo EA")
         }
       )
@@ -434,14 +470,14 @@ export class CurricularDiseñoComponent implements OnInit {
       this.evaluacionDiagnosticoCurricular.estadoEvaluacionDiagnostica = true;
       this.evaluacionDiagnosticoCurricularService.saveEvaluacionDiagnosticoCurricular(this.evaluacionDiagnosticoCurricular).subscribe(
         dataTwo => {
-          this.traerDatosEvaluacionDiagnosticaFull(this.idDisenioCurricularCapGlobal!);
+          this.traerDatosEvaluacionDiagnosticaFull(this.idDelDisenio!);
           console.log("Se creo uno nuevo ED")
         }
       )
     } else {
       this.evaluacionDiagnosticoCurricularService.updateEvaluacionDiagnosticaCurricular(this.idCapModelEditEvaluacionDiagnostica!, this.evaluacionDiagnosticoCurricular).subscribe(
         dataTwo => {
-          this.traerDatosEvaluacionDiagnosticaFull(this.idDisenioCurricularCapGlobal!);
+          this.traerDatosEvaluacionDiagnosticaFull(this.idDelDisenio!);
           console.log("Se actualizo ED")
         }
       )
@@ -476,14 +512,14 @@ export class CurricularDiseñoComponent implements OnInit {
       this.evaluacionFormativaCurricular.estadoEvaluacionFormativa = true;
       this.evaluacionFormativaCurricularService.saveEvaluacionFormativaCurricular(this.evaluacionFormativaCurricular).subscribe(
         dataTwo => {
-          this.traerDatosEvaluacionFormativaFull(this.idDisenioCurricularCapGlobal!);
+          this.traerDatosEvaluacionFormativaFull(this.idDelDisenio!);
           console.log("Se creo uno nuevo EFC")
         }
       )
     } else {
       this.evaluacionFormativaCurricularService.updateEvaluacionFormativaCurricular(this.idCapModelEditEvaluacionFormativa!, this.evaluacionFormativaCurricular).subscribe(
         dataTwo => {
-          this.traerDatosEvaluacionFormativaFull(this.idDisenioCurricularCapGlobal!);
+          this.traerDatosEvaluacionFormativaFull(this.idDelDisenio!);
           console.log("Se actualizo EFC")
         }
       )
@@ -508,7 +544,7 @@ export class CurricularDiseñoComponent implements OnInit {
     this.evaluacionFinalCurricularService.getEvaluacionFinalCurricularById(idEvaluacionFinal).subscribe(
       data => {
         this.evaluacionFinalCurricular = data;
-        this.idCapModelEditEvaluacionFinal= this.evaluacionFinalCurricular.idEvaluacionFinal;
+        this.idCapModelEditEvaluacionFinal = this.evaluacionFinalCurricular.idEvaluacionFinal;
       }
     )
   }
@@ -519,14 +555,14 @@ export class CurricularDiseñoComponent implements OnInit {
       this.evaluacionFinalCurricular.estadoEvaluacionFinal = true;
       this.evaluacionFinalCurricularService.saveEvaluacionFinalCurricular(this.evaluacionFinalCurricular).subscribe(
         dataTwo => {
-          this.traerDatosEvaluacionFinalFull(this.idDisenioCurricularCapGlobal!);
+          this.traerDatosEvaluacionFinalFull(this.idDelDisenio!);
           console.log("Se creo uno nuevo EFINAL")
         }
       )
     } else {
       this.evaluacionFinalCurricularService.updateEvaluacionFinalCurricular(this.idCapModelEditEvaluacionFinal!, this.evaluacionFinalCurricular).subscribe(
         dataTwo => {
-          this.traerDatosEvaluacionFinalFull(this.idDisenioCurricularCapGlobal!);
+          this.traerDatosEvaluacionFinalFull(this.idDelDisenio!);
           console.log("Se actualizo EFINAL")
         }
       )
@@ -547,4 +583,3 @@ export class CurricularDiseñoComponent implements OnInit {
   /* */
 
 }
-

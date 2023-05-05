@@ -28,5 +28,11 @@ export class DisenioCurricularService {
     return this.http.put<DisenioCurriculares>(`${environment.apiuri}/disenioCurricular/update/${idDisenioCurricular}`, disenioCurricular);
   }
   
+  public getDisenioCurricularValidacion(idSilabo:number){
+    return this.http.get<boolean>(environment.apiuri+'/disenioCurricular/findbyIdSilabo/'+idSilabo);
+  }
+  public getDisenioCurricularByIdPorSilabo(id_silabo: number):Observable<DisenioCurriculares>{
+    return this.http.get<DisenioCurriculares>(environment.apiuri+'/disenioCurricular/findbyIdSilaboPorDisenioCurricular/'+id_silabo);
+  }
   
 }

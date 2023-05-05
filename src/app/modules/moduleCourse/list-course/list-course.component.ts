@@ -67,6 +67,20 @@ export class ListCourseComponent implements OnInit {
     this.router.navigate(['/registro/fotografico/curso/', idCurso]);
   }
 
+  //Actualizar el curso para que sea publico
+  public updateEstadoPublico(curso: Curso){
+    curso.estadoPublicasionCurso = 'V';
+    curso.estadoCurso = true;
+    console.log({datapreview: curso})
+    this.cursoService.updateCurso(curso.idCurso!, curso).subscribe((data)=>{
+      if(data != null){
+        console.log({json: data})
+        alert('Succesful published')
+      }
+    })
+    
+  }
+
   //Implementacion de la tabla de todo referente a primeng
   next() {
     this.first = this.first + this.rows;

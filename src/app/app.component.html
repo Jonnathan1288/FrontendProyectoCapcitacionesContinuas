@@ -19,7 +19,7 @@
       <!-- VA NECECESIDAD/ SILABO/ CURRICULO -->
       <li *ngIf='isCapacitador'><a routerLink="list/course"><i class='bx bxs-widget icon'></i> Mis cursos</a></li>
       <!-- TOMAR ASISTENCI Y NOTAS FINALES MAS REPORTES Y FOTOGRAFICo -->
-      <li *ngIf='isCapacitador'><a routerLink="/"><i class='bx bxs-widget icon'></i> Hoja de Vida</a></li>
+      <li *ngIf='isCapacitador'><a routerLink="hojaVida/capacitador" ><i class='bx bxs-widget icon'></i> Hoja de Vida</a></li>
       <!-- CREAR O SUBIR HOJAS -->
 
       <!-- PARTICIPANTE -->
@@ -30,6 +30,7 @@
       <li *ngIf='isAdministrador'><a routerLink="programas/capacitacion"><i class='bx bxs-notepad icon'></i> Programas</a></li>
       <li *ngIf='isAdministrador'><a routerLink="asignacion/rol"><i class='bx bxs-widget icon'></i> Capacitadores</a></li>
       <li *ngIf='isAdministrador'><a routerLink="/lef"><i class='bx bxs-widget icon'></i> Reportes</a></li>
+      <li *ngIf='isAdministrador'><a routerLink="/gestion/validacion/cursos/capacitacion"><i class='bx bxs-widget icon'></i> Validación</a></li>
       <!-- <li class="divider" data-text="table and forms">Table and forms</li>
       <li><a href="#"><i class='bx bx-table icon'></i> Tables</a></li>
       <li>

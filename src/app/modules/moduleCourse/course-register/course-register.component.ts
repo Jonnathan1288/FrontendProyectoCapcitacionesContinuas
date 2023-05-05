@@ -15,6 +15,7 @@ import { AreaService } from 'src/app/service/area.service';
 import { CapacitadorService } from 'src/app/service/capacitador.service';
 import { CursoService } from 'src/app/service/curso.service';
 import { EspecialidadService } from 'src/app/service/especialidad.service';
+import { HojaVidaCapacitadorService } from 'src/app/service/hoja-vida-capacitador.service';
 import { HorarioCursoService } from 'src/app/service/horario-curso.service';
 import { ModalidadService } from 'src/app/service/modalidad.service';
 import { NivelCursoService } from 'src/app/service/nivel-curso.service';
@@ -85,12 +86,14 @@ export class CourseRegisterComponent {
     private horarioService: HorarioCursoService,
     private cursoService: CursoService,
     private prerequisitoService: PrerrequisitosCursoService,
+    private hojaVidaService: HojaVidaCapacitadorService,
     private router: Router,
     private actiRouter: ActivatedRoute
   ) {}
 
   ngOnInit() {
     this.idUserLoggin = localStorage.getItem('id_username');
+    this.validarHojaVidaByIdCapacitdor(this.idUserLoggin);
     this.primengConfig.ripple = true;
     this.actiRouter.params.subscribe((params) => {
       const idCurso = params['id'];
@@ -105,6 +108,16 @@ export class CourseRegisterComponent {
     });
     this.listArea();
     this.allList();
+  }
+
+  //PARA VALIDAR LA HOJA DE VIDA Y DARLE LAS DIFERENTES VISTAS
+  public estadoHojaVida: string= '';
+  public validarHojaVidaByIdCapacitdor(idCapacitador: number){
+    this.hojaVidaService.getHojadeVidaByIdUsuarioLoggin(idCapacitador).subscribe((data)=>{
+      if(data != null){
+        this.estadoHojaVida = data.estadoAprobacion!
+      }
+    })
   }
 
   public findCursoById(idCurso: number) {
@@ -290,7 +303,7 @@ export class CourseRegisterComponent {
   //Método que me cargara toda la view para hacer dinamico
   public allList() {
     this.programaService.listPrograma().subscribe((data) => {
-     // this.listProgramas = data;
+      this.listProgramas = data;
       this.listProgramasItem = this.listProgramas.map((area) => {
         return {
           label: area.nombrePrograma,

@@ -7,10 +7,8 @@ import { CursoService } from 'src/app/service/curso.service';
 import { ListaNecesidadCursoService } from 'src/app/service/lista-necesidad-curso.service';
 import { NecesidadCursoService } from 'src/app/service/necesidad-curso.service';
 import { ReportsCapacitacionesService } from 'src/app/service/reports-capacitaciones.service';
-
-//import * as fileSaver from 'file-saver';
+import * as fileSaver from 'file-saver';
 import { DomSanitizer } from '@angular/platform-browser';
-
 @Component({
   selector: 'app-registro-necesidad',
   templateUrl: './registro-necesidad.component.html',
