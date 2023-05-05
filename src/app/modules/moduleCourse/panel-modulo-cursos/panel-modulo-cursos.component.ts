@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Curso } from 'src/app/models/curso';
+import { LoadScript } from 'src/app/scripts/load-script';
 import { CursoService } from 'src/app/service/curso.service';
 
 @Component({
@@ -15,7 +16,10 @@ export class PanelModuloCursosComponent implements OnInit {
     private cursoService: CursoService,
     private router: Router,
     private activateRoute: ActivatedRoute,
-  ) {}
+    private loadScrip: LoadScript,
+  ) {
+    loadScrip.Cargar(["winner"]);
+  }
 
   idCursoGlobal?:number;
 
@@ -69,6 +73,5 @@ export class PanelModuloCursosComponent implements OnInit {
   }
 
   // FIN CALCULO
-
 
 }
