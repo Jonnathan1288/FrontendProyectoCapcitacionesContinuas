@@ -22,13 +22,32 @@ export class RegistrarNotasFinalesComponent implements OnInit{
 
   idCursoGlobal?: number;
 
+  
+  isValidateExistenciaNotas!: boolean;
+  public validarExistenciaDeRegistros():void{
+    this.notasService.validarExistenciaDatos(this.idCursoGlobal!).subscribe(
+      data=>{
+        if (data == false) {
+          // SI HAY DATOS
+          alert("si hay")
+          this.isValidateExistenciaNotas = false;
+          this.obtenerParticipantesFinales();
+        } else {
+          // NO HAY DATOS
+          alert("no hay")
+          this.isValidateExistenciaNotas = true;
+          this.traerParticipantesMatriculados();
+        }
+      }
+    )
+  }
+
   ngOnInit(): void {
     this.activateRoute.params.subscribe( (param) =>{
       const idCursoRout = param['id'];
       console.log("Idcurso => " + idCursoRout)
       this.idCursoGlobal = idCursoRout;
-      // this.obtenerParticipantesFinales();
-      this.traerParticipantesMatriculados();
+      this.validarExistenciaDeRegistros();
     });
   }
 
@@ -38,6 +57,8 @@ export class RegistrarNotasFinalesComponent implements OnInit{
     this.participantesMatriculadosService.getParticipantesMatriculadosByIdCurso(this.idCursoGlobal!).subscribe(
       data => {
         this.listaParticipantesMatriculados = data;
+        console.log("trayendo -> " + this.listaParticipantesMatriculados)
+        this.guardarDatosVacios();
       }
     )
   }
