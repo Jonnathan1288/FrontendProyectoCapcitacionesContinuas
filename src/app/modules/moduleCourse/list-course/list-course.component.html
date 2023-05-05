@@ -83,16 +83,25 @@
 
 
 <p-dialog
-    [header]="cursoViewPublished.nombreCurso + ' - ' + (cursoViewPublished.estadoPublicasionCurso === 'V' ? 'Publicado' : cursoViewPublished.estadoAprovacionCurso === 'A' ? 'Listo para publicar' : cursoViewPublished.estadoAprovacionCurso === 'P' ? 'Estado de validación' : cursoViewPublished.estadoAprovacionCurso === 'R' ? 'Rechazado': 'Rechazado') "
+    [header]="cursoViewPublished.nombreCurso + ' - ' + (cursoViewPublished.estadoPublicasionCurso === 'I' ? 'Iniciado': cursoViewPublished.estadoPublicasionCurso === 'V' ? 'Publicado' : cursoViewPublished.estadoAprovacionCurso === 'A' ? 'Listo para publicar' : cursoViewPublished.estadoAprovacionCurso === 'P' ? 'Estado de validación' : cursoViewPublished.estadoAprovacionCurso === 'R' ? 'Rechazado': 'Rechazado') "
     [(visible)]="visibleCursoPublicar" [modal]="true" [style]="{ width: '70vw', height: '250' }" [draggable]="false"
     [resizable]="false">
 
 
     <div class="container" [class.alert-success]="cursoViewPublished.estadoPublicasionCurso === 'V'"
-        [class.alert-primary]="cursoViewPublished.estadoAprovacionCurso === 'A'" [class.alert-warning]="cursoViewPublished.estadoAprovacionCurso === 'P'" [class.alert-danger]="cursoViewPublished.estadoAprovacionCurso === 'R'"> 
-        <div class="alert-heading" style="text-align: center;"> <strong>{{cursoViewPublished.estadoPublicasionCurso === 'V' ? 'Curso publicado' : cursoViewPublished.estadoAprovacionCurso === 'A' ? 'Curso listo para ser publicado': cursoViewPublished.estadoAprovacionCurso === 'P' ? 'En este momento se encuentra validando su curso': cursoViewPublished.estadoAprovacionCurso === 'R' ? 'Curso rechazado' : 'Este curso no fue aprobado con anterioridad'}} </strong></div>
+        [class.alert-success]="cursoViewPublished.estadoPublicasionCurso === 'I'"
+        [class.alert-primary]="cursoViewPublished.estadoAprovacionCurso === 'A'"
+        [class.alert-warning]="cursoViewPublished.estadoAprovacionCurso === 'P'"
+        [class.alert-danger]="cursoViewPublished.estadoAprovacionCurso === 'R'">
+        <div class="alert-heading" style="text-align: center;"> <strong>{{ cursoViewPublished.estadoPublicasionCurso ===
+                'I' ? 'Curso Iniciado': cursoViewPublished.estadoPublicasionCurso ===
+                'V' ? 'Curso publicado' : cursoViewPublished.estadoAprovacionCurso === 'A' ? 'Curso listo para ser
+                publicado': cursoViewPublished.estadoAprovacionCurso === 'P' ? 'En este momento se encuentra validando
+                su curso': cursoViewPublished.estadoAprovacionCurso === 'R' ? 'Curso rechazado' : 'Este curso no fue
+                aprobado con anterioridad'}} </strong></div>
         <hr>
-        <p class="mb-0" *ngIf="cursoViewPublished.estadoAprovacionCurso === 'R'">Lo sentimos su curso no fue aprovado, comuníquese con el administrador del sistema.</p>
+        <p class="mb-0" *ngIf="cursoViewPublished.estadoAprovacionCurso === 'R'">Lo sentimos su curso no fue aprovado,
+            comuníquese con el administrador del sistema.</p>
     </div>
 
 
@@ -108,7 +117,7 @@
                     <!-- <p><strong>Nombre del Curso:</strong> {{cursoViewPublished!.nombreCurso }}</p> -->
                     <p><strong>Fecha de Inicio</strong> {{ cursoViewPublished!.fechaInicioCurso }}</p>
                     <p><strong>Número de Cupos:</strong> {{cursoViewPublished!.numeroCuposCurso }}</p>
-            
+
                     <p><strong>Horario:</strong> {{cursoViewPublished!.horarioCurso?.horaInicio + ' a ' +
                         curso.horarioCurso?.horaFin}}</p>
                 </div>
@@ -130,12 +139,16 @@
 
     <ng-template pTemplate="footer">
         <div class="p-grid p-justify-end">
-            <p-button label="Editar" icon="pi pi-pencil" styleClass="p-button-secondary mb-2" (onClick)="editarCursoCapacitadionContinua()"></p-button>
-            <p-button label="Publicar" icon="pi pi-send" styleClass="p-button-primary mb-2" *ngIf="cursoViewPublished.estadoPublicasionCurso !== 'V'" [disabled]="cursoViewPublished.estadoAprovacionCurso !== 'A'" (onClick)="updatePublicCursosCapacitacion()"></p-button>
-            <p-button label="Publicado" icon="pi pi-check" styleClass="p-button-success mb-2" *ngIf="cursoViewPublished.estadoPublicasionCurso === 'V'" [disabled]="cursoViewPublished.estadoPublicasionCurso === 'V'"></p-button>
+            <p-button label="Editar" icon="pi pi-pencil" styleClass="p-button-secondary mb-2"
+                (onClick)="editarCursoCapacitadionContinua()"></p-button>
+
+            <p-button label="Publicar" icon="pi pi-send" styleClass="p-button-primary mb-2"
+                [disabled]="cursoViewPublished.estadoAprovacionCurso !== 'A' || cursoViewPublished.estadoPublicasionCurso === 'V' || cursoViewPublished.estadoPublicasionCurso === 'I'"
+                (onClick)="updatePublicCursosCapacitacion()"></p-button>
+
         </div>
     </ng-template>
-    <!-- </div> -->
+    <!-- </div>  -->
 
 
 
