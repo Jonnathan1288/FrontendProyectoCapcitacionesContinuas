@@ -59,6 +59,13 @@ export class SilaboComponent implements OnInit {
     });
   }
 
+  //IMPLEMENTACION DEL ROUTENIG PARA EL DISEÑO CURRICULAR
+  verDetallesCurso(idCurso:any){
+    this.router.navigate(['/diseño' + this.idCursoCap]).then(() => {
+      // window.location.reload();
+    });
+  }
+
   validacionDeSilaboExistente():void{
     this.silaboService.getsilabooValidacion(this.idCursoCap).subscribe(
       data =>{
