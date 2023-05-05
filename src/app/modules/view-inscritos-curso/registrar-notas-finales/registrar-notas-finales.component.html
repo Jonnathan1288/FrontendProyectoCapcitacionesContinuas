@@ -25,7 +25,8 @@
 </p-table>
 
 <p-button label="Validar Notas" icon="pi pi-calendar-minus" styleClass="p-button-success  mb-2 m-5" style="text-align: center;" (click)="vaidarNotasEstudiantesFinales()" ></p-button>
-<p-button label="Generar Reporte" icon="pi pi-calendar-minus" styleClass="p-button-success  mb-2 m-5" style="text-align: center;" (click)="generarReporteAsitenciaEvaluacion()" ></p-button>
+<!-- <p-button label="Generar Reporte" icon="pi pi-calendar-minus" styleClass="p-button-success  mb-2 m-5" style="text-align: center;" (click)="generarReporteAsitenciaEvaluacion()" ></p-button> -->
+<p-button label="Generar Reporte" icon="pi pi-calendar-minus" styleClass="p-button-success  mb-2 m-5" style="text-align: center;" (click)="showModalFinalInformationCorse()" ></p-button>
 
 <!-- MODAL -->
 
@@ -62,5 +63,57 @@
             <p-button label="Guardar Nota" icon="pi pi-check-square" styleClass="p-button-success  mb-2"
                 (click)="guardarNotaPorEstudiante()"></p-button>
         </div>
+    </div>
+</p-dialog>
+
+
+
+
+<!-- FORMULARIO FIN DE CURSO PARA GENERAR EL PDF-->
+<p-dialog header="Informe final del curso" [(visible)]="visibleModalFormFinalCourse" [modal]="true"  [style]="{ width: '50vw', height: '450' }" [draggable]="false" [resizable]="false">
+    <div class="grid p-fluid m-5">
+        <div class="col-12 md:col-12 mt-3">
+            <div class="p-inputgroup">
+                <span class="p-float-label">
+                    <input type="text" pInputText id="observacionesInformeFinalCurso" name="observacionesInformeFinalCurso"
+                        [(ngModel)]="classInformeFinalC.observacionesInformeFinalCurso">
+                    <label htmlFor="username">Observaciones del curso</label>
+                </span>
+            </div>
+        </div>
+        <div class="col-12 md:col-12 mt-3">
+            <div class="p-inputgroup">
+                <span class="p-float-label">
+                    <input type="text" pInputText id="lugarInformeFinalCurso" name="lugarInformeFinalCurso"
+                        [(ngModel)]="classInformeFinalC.lugarInformeFinalCurso">
+                    <label htmlFor="username">Logar informe final curso</label>
+                </span>
+            </div>
+        </div>
+        <div class="col-12 md:col-12 mt-3">
+            <div class="p-inputgroup">
+                <span class="p-float-label">
+                    <input type="text" pInputText id="nombreCantonInformeFinalCurso" name="nombreCantonInformeFinalCurso"
+                        [(ngModel)]="classInformeFinalC.nombreCantonInformeFinalCurso">
+                    <label htmlFor="username">Canton informe final curso</label>
+                </span>
+            </div>
+        </div>
+
+        
+            <div class="p-grid p-justify-end">
+                <p-button [label]="this.classInformeFinalC.idInformeFinalCurso? 'Update':'Save'" icon="pi pi-pencil" styleClass="p-button-secondary mb-2"
+                    (onClick)="saveUpdateInformFinalCourse()"></p-button>
+    
+                <p-button label="Imprimir" icon="pi pi-file-pdf" styleClass="p-button-danger mb-2"
+             
+                [disabled]="this.classInformeFinalC.idInformeFinalCurso == null" (onClick)="generarReporteAsitenciaEvaluacion()"></p-button>
+    
+            </div>
+   
+        <!-- <div class="col-md-12" style="text-align: center; margin: 5px;">
+            <p-button label="Save" icon="pi pi-check-save" styleClass="p-button-success  mb-2"
+                (click)="saveInformFinalCourse()"></p-button>
+        </div> -->
     </div>
 </p-dialog>
