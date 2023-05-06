@@ -16,5 +16,5 @@ export class LoadScript {
       let body = document.getElementsByTagName('body')[0];
       body.appendChild(script);
     }
-  }
+  } 
 }

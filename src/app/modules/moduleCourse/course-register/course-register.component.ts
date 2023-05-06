@@ -2,16 +2,20 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PrimeNGConfig, SelectItem } from 'primeng/api';
 import { Area } from 'src/app/models/area';
+import { Canton } from 'src/app/models/canton';
 import { Capacitador } from 'src/app/models/capacitador';
 import { Curso } from 'src/app/models/curso';
 import { Especialidad } from 'src/app/models/especialidad';
 import { HorarioCurso } from 'src/app/models/horario-curso';
 import { ModalidadCurso } from 'src/app/models/modalidad-curso';
 import { NivelCurso } from 'src/app/models/nivel-curso';
+import { Parroquia } from 'src/app/models/parroquia';
 import { PrerequisitoCurso } from 'src/app/models/prerequisito-curso';
 import { Programas } from 'src/app/models/programa';
+import { Provincia } from 'src/app/models/provincia';
 import { TipoCurso } from 'src/app/models/tipo-curso';
 import { AreaService } from 'src/app/service/area.service';
+import { CantonService } from 'src/app/service/canton.service';
 import { CapacitadorService } from 'src/app/service/capacitador.service';
 import { CursoService } from 'src/app/service/curso.service';
 import { EspecialidadService } from 'src/app/service/especialidad.service';
@@ -19,8 +23,10 @@ import { HojaVidaCapacitadorService } from 'src/app/service/hoja-vida-capacitado
 import { HorarioCursoService } from 'src/app/service/horario-curso.service';
 import { ModalidadService } from 'src/app/service/modalidad.service';
 import { NivelCursoService } from 'src/app/service/nivel-curso.service';
+import { ParroquiaService } from 'src/app/service/parroquia.service';
 import { PrerrequisitosCursoService } from 'src/app/service/prerrequisitosCurso.service';
 import { ProgramasService } from 'src/app/service/programas.service';
+import { ProvinciaService } from 'src/app/service/provincia.service';
 import { TipoCursoService } from 'src/app/service/tipo-curso.service';
 
 @Component({
@@ -59,21 +65,17 @@ export class CourseRegisterComponent {
   selectedNivelCurso!: string;
   daysOfTheweekV!: string;
 
-  //Par el día de la semana
-  daysOfTheweek: string[] = [
-    'Lunes',
-    'Martes',
-    'Miércoles',
-    'Jueves',
-    'Viernes',
-    'Sábado',
-    'Domingo',
-  ];
-
   //Vamoa a traer al usuario loggiado..
   idUserLoggin: any;
 
   public idCursoUpdate!: any;
+
+
+  //START--------------------------------------------------------NEW LOGIC
+
+
+  //END----------------------------------------------------------
+
   constructor(
     private primengConfig: PrimeNGConfig,
     private areaService: AreaService,
@@ -88,7 +90,10 @@ export class CourseRegisterComponent {
     private prerequisitoService: PrerrequisitosCursoService,
     private hojaVidaService: HojaVidaCapacitadorService,
     private router: Router,
-    private actiRouter: ActivatedRoute
+    private actiRouter: ActivatedRoute,
+    private parroquiaService: ParroquiaService,
+    private cantonService: CantonService,
+    private provinciaService: ProvinciaService
   ) {}
 
   ngOnInit() {
@@ -110,6 +115,43 @@ export class CourseRegisterComponent {
     this.allList();
   }
 
+  //----------------------------------------------------------------------------------------------START
+  //Implementacion de nuevos atributos
+
+  public listProvincias: Provincia[] = [];
+  public listCanton: Canton[] = [];
+  public listParroquia: Parroquia[] = [];
+
+  public findCantonByProvinciaEvent(e: any){
+    let idProvincia = e.target.value;
+    this.cantonService.getAllCantonByIdProvincia(idProvincia).subscribe((data)=>{
+      if(data != null){
+        this.listCanton = data;
+      }
+    })
+  }
+
+
+  public findParroquiaByCantonEvent(e: any){
+    let idCanton = e.target.value;
+    this.parroquiaService.getAllParroquiaByIdCanton(idCanton).subscribe((data)=>{
+      if(data != null){
+        this.listParroquia = data;
+      }
+    })
+  }
+
+
+  public catchParroquiaByCantonEvent(e: any){
+    this.curso.parroquia = e
+    console.log(e)
+
+  }
+
+
+
+  //----------------------------------------------------------------------------------------------END
+
   //PARA VALIDAR LA HOJA DE VIDA Y DARLE LAS DIFERENTES VISTAS
   public estadoHojaVida: string= '';
   public validarHojaVidaByIdCapacitdor(idCapacitador: number){
@@ -123,6 +165,7 @@ export class CourseRegisterComponent {
   public findCursoById(idCurso: number) {
     this.cursoService.getCursoById(idCurso).subscribe((data) => {
       this.curso = data;
+      // this.curso.parroquia =  this.curso.parroquia
       this.listPrerequisitoCurso(this.curso.idCurso!);
       if (this.curso != null) {
         if (this.curso.fechaInicioCurso) {
@@ -136,6 +179,18 @@ export class CourseRegisterComponent {
         }
 
       }
+      if(this.curso){
+        this.daysOfTheweekV = this.curso?.horarioCurso?.dias || '';
+        this.horarioC.horaInicio = this.curso.horarioCurso?.horaInicio
+        this.horarioC.horaFin = this.curso.horarioCurso?.horaFin
+        // Antes de cargar la vista, asigna el valor correspondiente a selectedNivelCurso
+// this.selectedNivelCurso = this.curso.nivelCurso?.idNivelCurso || null;
+
+
+        // this.selectedNivelCurso = this.curso.nivelCurso?.idNivelCurso || ;
+      }
+
+
     });
   }
   public editPrerequisito(prerequisito: any) {
@@ -202,6 +257,13 @@ export class CourseRegisterComponent {
 
   //Create horario and curso
   public createHorarioCurso() {
+
+    // if(this.curso.idCurso){
+    //   alert('UPDATE')
+    // }else{
+    //   alert('create')
+    // }
+
     this.horarioC.dias = this.daysOfTheweekV;
     this.horarioC.estadoHorarioCurso = true;
     this.horarioService.crearHorarioCurso(this.horarioC).subscribe((data) => {
@@ -313,20 +375,40 @@ export class CourseRegisterComponent {
     });
 
     this.especialidadService.listEspecialidad().subscribe((data) => {
-      this.listEspeciali = data;
+      if(data != null){
+        this.listEspeciali = data;
+
+      }
     });
 
     this.tipoCursoService.listTipoCurso().subscribe((data) => {
-      this.listTipo = data;
+      if(data != null){
+        this.listTipo = data;
+
+      }
     });
 
     this.modalidadCursoService.listModalidadCurso().subscribe((data) => {
-      this.listModalidadCurso = data;
+      if(data != null){
+        this.listModalidadCurso = data;
+
+      }
     });
 
     this.nivelCursoService.listNivelCurso().subscribe((data) => {
-      this.listNivelCurso = data;
+      if(data != null){
+        this.listNivelCurso = data;
+
+      }
     });
+
+    this.provinciaService.getlistProvincia().subscribe((data)=>{
+      if(data != null){
+        this.listProvincias = data;
+        console.log({prov: this.listProvincias})
+      }
+
+    })
   }
 
   // Metodos para cargar la fotofilte
