@@ -10,6 +10,9 @@ import { CursoService } from 'src/app/service/curso.service';
 })
 export class MisCursosParticipanteComponent implements OnInit {
 
+  // NEW
+  layout: string = 'list';
+
 
   //Implementacion de el servicio para que el usuario 
   constructor(
