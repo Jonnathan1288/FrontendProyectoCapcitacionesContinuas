@@ -1,18 +1,20 @@
-
 <div class="container" *ngIf="estadoHojaVida == ''">
     Aun no tiene una hoja de vida
 </div>
 
 <div class="container" *ngIf="estadoHojaVida == 'P'">
-   
-<div class="surface-section px-4 py-8 md:px-6 lg:px-8">
-    <div class="text-700 text-center">
-        <div class="text-blue-600 font-bold mb-3"><i class="pi pi-discord"></i>&nbsp;SISTEMA DE CAPACITACIONES CONTINUAS</div>
-        <div class="text-900 font-bold text-5xl mb-3">Proceso de validación</div>
-        <div class="text-700 text-2xl mb-5">Le informamos que en este momento su hoja de vida se encuentra validando, esperenos!!.</div>
-        <button pButton pRipple label="Join Now" icon="pi pi-discord" class="font-bold px-5 py-3 p-button-raised p-button-rounded white-space-nowrap"></button>
+
+    <div class="surface-section px-4 py-8 md:px-6 lg:px-8">
+        <div class="text-700 text-center">
+            <div class="text-blue-600 font-bold mb-3"><i class="pi pi-discord"></i>&nbsp;SISTEMA DE CAPACITACIONES
+                CONTINUAS</div>
+            <div class="text-900 font-bold text-5xl mb-3">Proceso de validación</div>
+            <div class="text-700 text-2xl mb-5">Le informamos que en este momento su hoja de vida se encuentra
+                validando, esperenos!!.</div>
+            <button pButton pRipple label="Join Now" icon="pi pi-discord"
+                class="font-bold px-5 py-3 p-button-raised p-button-rounded white-space-nowrap"></button>
+        </div>
     </div>
-</div>
 </div>
 
 
@@ -28,8 +30,9 @@
             <section>
                 <span class="block text-6xl font-bold mb-1">Rechazado</span>
                 <div class="text-6xl text-primary font-bold mb-3">Su hoja de vida no cumple los parametros</div>
-                <p class="mt-0 mb-4 text-700 line-height-3">Le comentamos que su hoja de vida no cumple los requerimientos para que pueda usted crear cursos de capacitación, actualice su información.</p>
-                
+                <p class="mt-0 mb-4 text-700 line-height-3">Le comentamos que su hoja de vida no cumple los
+                    requerimientos para que pueda usted crear cursos de capacitación, actualice su información.</p>
+
                 <button pButton pRipple label="Learn More" type="button" class="mr-3 p-button-raised"></button>
                 <button pButton pRipple label="Live Demo" type="button" class="p-button-outlined"></button>
             </section>
@@ -38,30 +41,6 @@
             <img src="assets/images/blocks/hero/hero-1.png" alt="Image" class="md:ml-auto block md:h-full" style="clip-path: polygon(8% 0, 100% 0%, 100% 100%, 0 100%)">
         </div> -->
     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 </div>
@@ -102,8 +81,8 @@
                 <div class="field col-12 md:col-4">
                     <span class="p-float-label">
                         <p-dropdown [options]="listEspecialidadItem" styleClass="mb-1 md:mb-0"
-                        (onChange)="getObjectEspecialidad($event)" [itemSize]="10"></p-dropdown>
-                    
+                            (onChange)="getObjectEspecialidad($event)" [itemSize]="10"></p-dropdown>
+
                     </span>
                 </div>
 
@@ -168,6 +147,86 @@
                 </div>
             </div>
         </p-card>
+
+        <!-- PARA EL REGISTRO DE LAS PROVINCIAS, CANTONES, PARROQUIAS Y LOS LUGAARES DONDE SE VAN IMPARTIR -->
+        <p-card header="Lugar donde de va impartir" class="m-1">
+
+            <div class="grid p-fluid ">
+                <div class="col-12 md:col-4">
+
+                    <div class="card flex justify-content-center">
+                        <select pInputText placeholder="tipo" id="provincia" name="provincia" required (change)="findCantonByProvinciaEvent($event)">
+                            <option value="">Seleccione provincia</option>
+                            <option *ngFor="let pro of listProvincias" [value]="pro.idProvincia">{{pro.provincia}}
+                            </option>
+                        </select>
+                        <span class="arrow-icon"><i class="pi pi-chevron-down"></i></span>
+                    </div>
+
+                </div>
+
+                <div class="col-12 md:col-4">
+
+                    <div class="card flex justify-content-center">
+                        <select pInputText placeholder="tipo" id="tipo" name="tipo" required (change)="findParroquiaByCantonEvent($event)">
+                            <option value="">Seleccione Canton</option>
+                            <option *ngFor="let canton of listCanton" [value]="canton.idCanton">{{canton.canton}}
+                            </option>
+                        </select>
+                        <span class="arrow-icon"><i class="pi pi-chevron-down"></i></span>
+                    </div>
+
+                </div>
+
+                <div class="col-12 md:col-4">
+                   
+                    <div class="card flex justify-content-center">
+                        <select pInputText  id="parroquia" name="parroquia" required [(ngModel)]="curso.parroquia" (ngModelChange)="catchParroquiaByCantonEvent($event)">
+                            <option value="">Seleccione parroquia</option>
+                            <option *ngFor="let parroquia of listParroquia" [ngValue]="parroquia">{{parroquia.parroquia}}
+                            </option>
+                        </select>
+                        <span class="arrow-icon"><i class="pi pi-chevron-down"></i></span>
+                    </div>
+
+                    <!-- <div class="card flex justify-content-center" *ngIf="curso.idCurso">
+                        <select pInputText  id="parroquia" name="parroquia" required [(ngModel)]="curso?.parroquia!.idParroquia" (ngModelChange)="catchParroquiaByCantonEvent($event)">
+                            <option value="">Seleccione parroquia</option>
+                            <option *ngFor="let parroquia of listParroquia" [ngValue]="parroquia">{{parroquia.parroquia}}
+                            </option>
+                        </select>
+                        <span class="arrow-icon"><i class="pi pi-chevron-down"></i></span>
+                    </div> -->
+
+                </div>
+
+            </div>
+
+
+            <!-- OTRA PARTE -->
+
+            <p-card header="¿Curso OCC?" class="m-1">
+
+                <div class='col-md-6'>
+                    <div class='form-group'>
+                        <div class='col-md-11'>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input larger-radio" type="radio" name="inlineRadioOptions" id="inlineRadio1" [value]="'Si'"  [(ngModel)]="curso.cursoocc">
+                                <label class="form-check-label" for="inlineRadio1">Si</label>
+                            </div>
+                            <div class="form-check form-check-inline ml-4">
+                                <input class="form-check-input larger-radio" type="radio" name="inlineRadioOptions" id="inlineRadio2" [value]="'No'"  [(ngModel)]="curso.cursoocc">
+                                <label class="form-check-label" for="inlineRadio2">No</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </p-card>
+
+        </p-card>
+
+        <!-- END---------------------------------------------------------------------------------------------- -->
 
         <p-card header="Modalidad de curso" class="m-1">
             <!-- Para la modalidad -->
