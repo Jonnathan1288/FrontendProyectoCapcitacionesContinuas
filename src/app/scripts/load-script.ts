@@ -4,12 +4,17 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class LoadScript {
-  Cargar( archivos: String[]){
+  Cargar(archivos: String[]) {
     for (let archivo of archivos) {
-      let script = document.createElement("script");
-      script.src = "./assets/Js/" + archivo + ".js";
-      let body = document.getElementsByTagName("body")[0];
-      body.appendChild( script );
+      let script = document.createElement('script');
+      // para hacer mas rapido con la biblioteca colibri..
+      //@ts.ignore
+      //let newd = create('script')
+
+      //pero ahora lo vamos hacer de esta forma..
+      script.src = './assets/js/' + archivo + '.js';
+      let body = document.getElementsByTagName('body')[0];
+      body.appendChild(script);
     }
   }
 }
