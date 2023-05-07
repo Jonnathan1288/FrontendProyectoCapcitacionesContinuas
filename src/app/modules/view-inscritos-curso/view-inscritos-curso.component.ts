@@ -2,9 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Curso } from 'src/app/models/curso';
 import { Inscrito } from 'src/app/models/inscrito';
+import { Persona } from 'src/app/models/persona';
+import { Usuario } from 'src/app/models/usuario';
 import { CursoService } from 'src/app/service/curso.service';
 import { inscritosService } from 'src/app/service/inscritos.service';
 import { ParticipanteMatriculadoService } from 'src/app/service/participante-matriculado.service';
+import { UsuarioService } from 'src/app/service/usuario.service';
 
 @Component({
   selector: 'app-view-inscritos-curso',
@@ -17,7 +20,8 @@ export class ViewInscritosCursoComponent implements OnInit {
     private cursoService: CursoService,
     private inscritosService: inscritosService,
     private router: Router,
-    private participantesMatriculadosService: ParticipanteMatriculadoService
+    private participantesMatriculadosService: ParticipanteMatriculadoService,
+    private us:UsuarioService
   ) {}
 
   idCursoGlobal?: number;
@@ -31,6 +35,7 @@ export class ViewInscritosCursoComponent implements OnInit {
     });
   }
 
+  public inicioCursoEstado?: string;
   listaInscritos: Inscrito[] = [];
   public traerInscirtosPorCurso(): void {
     this.inscritosService
@@ -38,6 +43,10 @@ export class ViewInscritosCursoComponent implements OnInit {
       .subscribe((data) => {
         this.listaInscritos = data;
         console.log('dd ' + this.listaInscritos);
+        this.validarcursoCapacitacion() // valida
+        const  primerEstadoCurso = this.listaInscritos.map((inscrito) => inscrito.curso?.estadoPublicasionCurso);
+        this.inicioCursoEstado = primerEstadoCurso[0] || '';
+
       });
   }
 
@@ -75,20 +84,57 @@ export class ViewInscritosCursoComponent implements OnInit {
       });
   }
 
+  public estadoCurso?: string='';
   public InicioCurso() {
     this.participantesMatriculadosService
-      .pasarEstudiantesMatriculados(this.idCursoGlobal!)
-      .subscribe((data) => {
+    .pasarEstudiantesMatriculados(this.idCursoGlobal!)
+    .subscribe(
+      (data) => {
         this.router.navigate([
           '/verMatriculados/course/inicio',
           this.idCursoGlobal,
         ]);
-      }, (err)=>{
-        alert('Curso iniciado no puede hacer mas acciones')
+      },
+      (err) => {
+        alert('Curso iniciado no puede hacer mas acciones');
         this.router.navigate([
           '/verMatriculados/course/inicio',
           this.idCursoGlobal,
         ]);
-      });
+      }
+    );  
+  }
+
+  public validarcursoCapacitacion(){
+    // const fechasInicioCurso = this.listaInscritos.map((inscrito) => inscrito.curso?.fechaInicioCurso);
+
+    const fechaInicioCurso = this.listaInscritos.find(
+      (inscrito) => inscrito.curso?.fechaInicioCurso
+    )?.curso?.fechaInicioCurso;
+
+    if (fechaInicioCurso) {
+      const fechaInicioAdjusted = new Date(fechaInicioCurso);
+      fechaInicioAdjusted.setDate(fechaInicioAdjusted.getDate() + 1);
+
+      const fechaActual = new Date();
+
+      if (
+        fechaActual.getFullYear() === fechaInicioAdjusted.getFullYear() &&
+        fechaActual.getMonth() === fechaInicioAdjusted.getMonth() &&
+        fechaActual.getDate() === fechaInicioAdjusted.getDate()
+      ) {
+        this.estadoCurso = 'LI';
+        console.log('Las fechas son iguales');
+
+        //Fecha donde de habilita
+       
+      } else if (fechaActual > fechaInicioAdjusted) {
+        this.estadoCurso = 'IN';
+        console.log('La fecha actual es posterior a la fecha de inicio');
+      } else {
+        this.estadoCurso = 'FP';
+        console.log('La fecha actual es anterior a la fecha de inicio');
+      }
+    }
   }
 }

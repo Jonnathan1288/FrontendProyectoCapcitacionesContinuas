@@ -28,18 +28,17 @@ import { PrerrequisitosCursoService } from 'src/app/service/prerrequisitosCurso.
 import { ProgramasService } from 'src/app/service/programas.service';
 import { ProvinciaService } from 'src/app/service/provincia.service';
 import { TipoCursoService } from 'src/app/service/tipo-curso.service';
+import { NgZone } from '@angular/core';
 
 @Component({
   selector: 'app-course-register',
   templateUrl: './course-register.component.html',
-  styleUrls: [
-    './course-register.component.css'
-  ],
+  styleUrls: ['./course-register.component.css'],
 })
 export class CourseRegisterComponent {
   //Para todas las listas de los diferentes campos que vamos hacer dinamico los atributos
   public listAreaE: Area[] = [];
-  public listEspeciali: Especialidad[] = [];
+
   public listTipo: TipoCurso[] = [];
   public listNivelCurso: NivelCurso[] = [];
   public listModalidadCurso: ModalidadCurso[] = [];
@@ -47,8 +46,7 @@ export class CourseRegisterComponent {
   public prerequisitoCursoC: PrerequisitoCurso[] = [];
 
   //Para mostrarlos en el combobox con la key: value ->
-  public listAreaItem: SelectItem[] = [];
-  public listEspecialidadItem: SelectItem[] = [];
+
   public listProgramasItem: SelectItem[] = [];
 
   public especialidad = new Especialidad();
@@ -70,9 +68,7 @@ export class CourseRegisterComponent {
 
   public idCursoUpdate!: any;
 
-
   //START--------------------------------------------------------NEW LOGIC
-
 
   //END----------------------------------------------------------
 
@@ -93,7 +89,8 @@ export class CourseRegisterComponent {
     private actiRouter: ActivatedRoute,
     private parroquiaService: ParroquiaService,
     private cantonService: CantonService,
-    private provinciaService: ProvinciaService
+    private provinciaService: ProvinciaService,
+    private ngZone: NgZone
   ) {}
 
   ngOnInit() {
@@ -104,13 +101,16 @@ export class CourseRegisterComponent {
       const idCurso = params['id'];
       this.idCursoUpdate = idCurso;
       if (idCurso) {
+        // this.modalidad = new ModalidadCurso()
         this.findCursoById(idCurso);
       }
     });
-    this.capacitadorService.getCapacitadorByUsuarioIdUsuario(this.idUserLoggin).subscribe((data) => {
-      console.log({ capacitador: data });
-      this.curso.capacitador = data;
-    });
+    this.capacitadorService
+      .getCapacitadorByUsuarioIdUsuario(this.idUserLoggin)
+      .subscribe((data) => {
+        console.log({ capacitador: data });
+        this.curso.capacitador = data;
+      });
     this.listArea();
     this.allList();
   }
@@ -122,50 +122,104 @@ export class CourseRegisterComponent {
   public listCanton: Canton[] = [];
   public listParroquia: Parroquia[] = [];
 
-  public findCantonByProvinciaEvent(e: any){
-    let idProvincia = e.target.value;
-    this.cantonService.getAllCantonByIdProvincia(idProvincia).subscribe((data)=>{
-      if(data != null){
-        this.listCanton = data;
-      }
-    })
+  public findCantonByProvinciaEvent(e: any, id: any) {
+    let idProvincia;
+    if (id !== null) {
+      idProvincia = id;
+    } else {
+      idProvincia = e.target.value;
+    }
+
+    this.cantonService
+      .getAllCantonByIdProvincia(idProvincia)
+      .subscribe((data) => {
+        if (data != null) {
+          // alert()
+          this.listCanton = data;
+        }
+      });
   }
 
-
-  public findParroquiaByCantonEvent(e: any){
-    let idCanton = e.target.value;
-    this.parroquiaService.getAllParroquiaByIdCanton(idCanton).subscribe((data)=>{
-      if(data != null){
-        this.listParroquia = data;
-      }
-    })
+  public findParroquiaByCantonEvent(e: any, id: any) {
+    let idCanton;
+    if (id !== null) {
+      idCanton = id;
+    } else {
+      idCanton = e.target.value;
+    }
+    this.parroquiaService
+      .getAllParroquiaByIdCanton(idCanton)
+      .subscribe((data) => {
+        if (data != null) {
+          this.listParroquia = data;
+        }
+      });
   }
 
-
-  public catchParroquiaByCantonEvent(e: any){
-    this.curso.parroquia = e
-    console.log(e)
-
+  public catchParroquiaByCantonEvent(e: any) {
+    if (typeof e === 'object') {
+      this.curso.parroquia = e;
+    } else if (typeof e === 'number') {
+      this.curso.parroquia = this.listParroquia.find(
+        (parroquia) => parroquia.idParroquia === e
+      );
+      console.log(this.curso.parroquia);
+    }
   }
 
+  public catchEspecialidadByEvent(e: any, id: any) {
+    let Especialidad;
+    if (id !== null) {
+      Especialidad = id;
+    } else {
+      Especialidad = e.target.value;
+    }
+    this.especialidadService
+      .getEspecialidadById(Especialidad)
+      .subscribe((data) => {
+        if (data != null) {
 
+          this.curso.especialidad = data;
+        }
+      });
+      console.log(this.curso.especialidad)
+  }
+
+  public catchProgramasByEvent(e: any) {
+    if (typeof e === 'object') {
+      this.curso.programas = e;
+    } else if (typeof e === 'number') {
+      this.curso.programas = this.listProgramas.find(
+        (esp) => esp.idPrograma === e
+      );
+    }
+
+    console.log(this.curso.programas);
+  }
 
   //----------------------------------------------------------------------------------------------END
 
   //PARA VALIDAR LA HOJA DE VIDA Y DARLE LAS DIFERENTES VISTAS
-  public estadoHojaVida: string= '';
-  public validarHojaVidaByIdCapacitdor(idCapacitador: number){
-    this.hojaVidaService.getHojadeVidaByIdUsuarioLoggin(idCapacitador).subscribe((data)=>{
-      if(data != null){
-        this.estadoHojaVida = data.estadoAprobacion!
-      }
-    })
+  public estadoHojaVida: string = '';
+  public validarHojaVidaByIdCapacitdor(idCapacitador: number) {
+    this.hojaVidaService
+      .getHojadeVidaByIdUsuarioLoggin(idCapacitador)
+      .subscribe((data) => {
+        if (data != null) {
+          this.estadoHojaVida = data.estadoAprobacion!;
+        }
+      });
   }
 
+  // VARIABLES QUE ME VAN SERVI PARA CARGAR EN LA LISTA
+  public molalidadId?: number;
+  public tipoCursoId?: number;
+  public nivelCursoId?: number;
+  //METODO QUE ME VA PERMITIR CARGAR LOS DATOS DEL CURSO PARA SU CORRECTIVA EDICION
   public findCursoById(idCurso: number) {
     this.cursoService.getCursoById(idCurso).subscribe((data) => {
       this.curso = data;
-      // this.curso.parroquia =  this.curso.parroquia
+
       this.listPrerequisitoCurso(this.curso.idCurso!);
       if (this.curso != null) {
         if (this.curso.fechaInicioCurso) {
@@ -177,22 +231,33 @@ export class CourseRegisterComponent {
             this.curso.fechaFinalizacionCurso
           );
         }
-
       }
-      if(this.curso){
+      if (this.curso) {
+        this.horarioC = this.curso.horarioCurso!;
         this.daysOfTheweekV = this.curso?.horarioCurso?.dias || '';
-        this.horarioC.horaInicio = this.curso.horarioCurso?.horaInicio
-        this.horarioC.horaFin = this.curso.horarioCurso?.horaFin
-        // Antes de cargar la vista, asigna el valor correspondiente a selectedNivelCurso
-// this.selectedNivelCurso = this.curso.nivelCurso?.idNivelCurso || null;
-
-
-        // this.selectedNivelCurso = this.curso.nivelCurso?.idNivelCurso || ;
+        this.molalidadId = this.curso.modalidadCurso?.idModalidadCurso;
+        this.tipoCursoId = this.curso.tipoCurso?.idTipoCurso;
+        this.nivelCursoId = this.curso.nivelCurso?.idNivelCurso;
+        this.findCantonByProvinciaEvent(
+          null,
+          this.curso.parroquia?.canton?.provincia?.idProvincia
+        );
+        this.findParroquiaByCantonEvent(
+          null,
+          this.curso.parroquia?.canton?.idCanton
+        );
+        this.getEspecialidadesDependenceOfArea(
+          null,
+          this.curso.especialidad?.area?.idArea
+        );
       }
-
-
     });
   }
+  //LINEA QUE ME PERMITE CONTROLAR EL VALOR INDEFINIADO DE LA LISTA
+  public emptyVa: any = null;
+
+  //END EDITION ---------------------------------------------------------------
+
   public editPrerequisito(prerequisito: any) {
     this.prerequisito = {
       ...prerequisito,
@@ -257,40 +322,52 @@ export class CourseRegisterComponent {
 
   //Create horario and curso
   public createHorarioCurso() {
-
-    // if(this.curso.idCurso){
-    //   alert('UPDATE')
-    // }else{
-    //   alert('create')
-    // }
-
-    this.horarioC.dias = this.daysOfTheweekV;
-    this.horarioC.estadoHorarioCurso = true;
-    this.horarioService.crearHorarioCurso(this.horarioC).subscribe((data) => {
-      if (data != null) {
-        this.curso.horarioCurso = data;
-        this.curso.programas = this.programa;
-       console.log({ programa: this.curso });
-        this.cursoService.saveCurso(this.curso).subscribe((data) => {
+    if (this.curso.idCurso) {
+      this.horarioC.dias = this.daysOfTheweekV;
+      this.horarioC.estadoHorarioCurso = true;
+      this.horarioService
+        .updateHorarioCurso(this.horarioC.idHorarioCurso!, this.horarioC)
+        .subscribe((data) => {
           if (data != null) {
-            this.curso = data;
-            this.idCursoUpdate = this.curso.idCurso;
-            for (let prerequisito of this.listPrerequisitoCurso1) {
-              prerequisito.estadoPrerequisitoCurso = true;
-              prerequisito.curso = this.curso;
-              this.prerequisitoService
-                .savePrerequisitoCurso(prerequisito)
-                .subscribe((data) => {
-                  if (data != null) {
-               
-                  }
-                });
-            }
-            alert('Correcto al crear el curso');
+            this.cursoService
+              .updateCurso(this.curso.idCurso!, this.curso)
+              .subscribe((data) => {
+                if (data != null) {
+                  alert('succesful update course');
+                }
+              });
           }
         });
-      }
-    });
+    } else {
+      alert('create');
+
+      this.horarioC.dias = this.daysOfTheweekV;
+      this.horarioC.estadoHorarioCurso = true;
+      this.horarioService.crearHorarioCurso(this.horarioC).subscribe((data) => {
+        if (data != null) {
+          this.curso.horarioCurso = data;
+          this.curso.programas = this.programa;
+          console.log({ programa: this.curso });
+          this.cursoService.saveCurso(this.curso).subscribe((data) => {
+            if (data != null) {
+              this.curso = data;
+              this.idCursoUpdate = this.curso.idCurso;
+              for (let prerequisito of this.listPrerequisitoCurso1) {
+                prerequisito.estadoPrerequisitoCurso = true;
+                prerequisito.curso = this.curso;
+                this.prerequisitoService
+                  .savePrerequisitoCurso(prerequisito)
+                  .subscribe((data) => {
+                    if (data != null) {
+                    }
+                  });
+              }
+              alert('Correcto al crear el curso');
+            }
+          });
+        }
+      });
+    }
   }
 
   public listPrerequisitoCurso(idCursoUpdate: number) {
@@ -310,41 +387,32 @@ export class CourseRegisterComponent {
   public listArea() {
     this.areaService.listArea().subscribe((data) => {
       this.listAreaE = data;
-      this.listAreaItem = this.listAreaE.map((area) => {
-        return {
-          label: area.nombreArea,
-          value: area.idArea,
-        };
-      });
     });
   }
 
   //Método para obtener por el id..
-  public getEspecialidadesDependenceOfArea(e: any) {
-    let codigoArea = e.value;
-    let filterEsp = this.listEspeciali.filter(
-      (especialidad: any) => especialidad.area.idArea === codigoArea
-    );
+  public listEspecialida: Especialidad[] = [];
+  public getEspecialidadesDependenceOfArea(e: any, id: any) {
+    let codigoArea;
+    if (id !== null) {
+      codigoArea = id;
+    } else {
+      codigoArea = e.target.value;
+    }
 
-    // this.listEspecialidadItem = filterEsp.map((esp) => {
-    //   return {
-    //     label: esp.nombreEspecialidad!.slice(0, 40),
-    //     value: esp.idEspecialidad,
-    //   };
-    // });
-    this.listEspecialidadItem = filterEsp.map((esp) => {
-      return {
-        label: esp.nombreEspecialidad!.slice(0, 40) + '\n' + esp.nombreEspecialidad!.slice(40, 80),
-        value: esp.idEspecialidad,
-      };
-    });
-    
-    
+    this.especialidadService
+      .getespecialidadByIdArea(codigoArea)
+      .subscribe((data) => {
+        if (data != null) {
+          console.log(data);
+          this.listEspecialida = data;
+        }
+      });
   }
 
   //Método para obtener el objecot por especialidad
   public getObjectEspecialidad(e: any) {
-    let codigoEspecialidad = e.value;
+    let codigoEspecialidad = e.target.value;
     this.especialidadService
       .getEspecialidadById(codigoEspecialidad)
       .subscribe((data) => {
@@ -357,8 +425,8 @@ export class CourseRegisterComponent {
   public getObjectprogram(e: any) {
     let codigoPrograma = e.value;
     this.programaService.getProgramaById(codigoPrograma).subscribe((data) => {
-      this.programa = data
-      console.log({ programa: this.programa});
+      this.programa = data;
+      console.log({ programa: this.programa });
     });
   }
 
@@ -374,41 +442,30 @@ export class CourseRegisterComponent {
       });
     });
 
-    this.especialidadService.listEspecialidad().subscribe((data) => {
-      if(data != null){
-        this.listEspeciali = data;
-
-      }
-    });
-
     this.tipoCursoService.listTipoCurso().subscribe((data) => {
-      if(data != null){
+      if (data != null) {
         this.listTipo = data;
-
       }
     });
 
     this.modalidadCursoService.listModalidadCurso().subscribe((data) => {
-      if(data != null){
+      if (data != null) {
         this.listModalidadCurso = data;
-
       }
     });
 
     this.nivelCursoService.listNivelCurso().subscribe((data) => {
-      if(data != null){
+      if (data != null) {
         this.listNivelCurso = data;
-
       }
     });
 
-    this.provinciaService.getlistProvincia().subscribe((data)=>{
-      if(data != null){
+    this.provinciaService.getlistProvincia().subscribe((data) => {
+      if (data != null) {
         this.listProvincias = data;
-        console.log({prov: this.listProvincias})
+        console.log({ prov: this.listProvincias });
       }
-
-    })
+    });
   }
 
   // Metodos para cargar la fotofilte
@@ -444,7 +501,6 @@ export class CourseRegisterComponent {
     });
   }
 
-  
   listPrerequisitoCurso1: PrerequisitoCurso[] = [];
   public almacenarListaDeprerequisitos(): void {
     if (!this.prerequisito.nombrePrerequisitoCurso) {
@@ -463,7 +519,6 @@ export class CourseRegisterComponent {
       this.listPrerequisitoCurso1.splice(index, 1);
     }
   }
-
 
   //Ruteo a otras ventanas
   public silabo() {
