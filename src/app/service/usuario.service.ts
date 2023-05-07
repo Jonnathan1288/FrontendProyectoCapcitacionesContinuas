@@ -11,8 +11,8 @@ export class UsuarioService {
 
   constructor(private http: HttpClient) { }
 
-  public listUsuario():Observable<any>{
-    return this.http.get<any>(environment.apiuri+'/usuario/listar');
+  public listUsuario():Observable<Usuario[]>{
+    return this.http.get<Usuario[]>(environment.apiuri+'/usuario/listar');
   }
 
   public getUsuarioById(idUsuario: number):Observable<Usuario>{
