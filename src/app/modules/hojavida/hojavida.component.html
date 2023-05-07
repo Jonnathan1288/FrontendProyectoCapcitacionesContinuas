@@ -27,9 +27,14 @@
 
   </div>
 
-  <p-button label="Guardar" *ngIf="fileUrl && isExiste === false"  (onClick)="subirHojaVida()" styleClass="p-button-success" ></p-button>
-  <p-button label="Actualizar" *ngIf="fileUrl  && isExiste === true" (onClick)="subirHojaVida()" styleClass="p-button-success" ></p-button>
+    <div class="m-5" style="text-align: center;">
+      <p-button label="Guardar" *ngIf="fileUrl && isExiste === false"  (onClick)="subirHojaVida()" styleClass="p-button-success" ></p-button>
+      <p-button label="Actualizar" *ngIf="fileUrl  && isExiste === true" (onClick)="actualizarHojaVidaDocumento()" styleClass="p-button-success" ></p-button>
+    </div>
 
+    <div class="custom-file" *ngIf="fileUrl  && isExiste === true">
+      <input type="file" #fileIn accept="application/pdf" id="archivo" (change)="onFileSelected($event)">
+    </div>
 </p-card>
 
 
