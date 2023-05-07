@@ -16,9 +16,7 @@ export class PanelModuloCursosComponent implements OnInit {
     private cursoService: CursoService,
     private router: Router,
     private activateRoute: ActivatedRoute,
-    private loadScrip: LoadScript,
   ) {
-    loadScrip.Cargar(["winner"]);
   }
 
   idCursoGlobal?:number;

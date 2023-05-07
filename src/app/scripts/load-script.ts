@@ -4,7 +4,6 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class LoadScript {
-    
   Cargar(archivos: String[]) {
     for (let archivo of archivos) {
       let script = document.createElement('script');
