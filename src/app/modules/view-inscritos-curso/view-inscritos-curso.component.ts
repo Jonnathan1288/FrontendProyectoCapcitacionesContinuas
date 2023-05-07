@@ -37,15 +37,29 @@ export class ViewInscritosCursoComponent implements OnInit {
 
   public inicioCursoEstado?: string;
   listaInscritos: Inscrito[] = [];
+  participantesAceptado:number = 0;
   public traerInscirtosPorCurso(): void {
     this.inscritosService
       .getInscritosPorCurso(this.idCursoGlobal!)
       .subscribe((data) => {
         this.listaInscritos = data;
         console.log('dd ' + this.listaInscritos);
+        
+        this.validarCuposDisponibles();
+        // VER CUANTOS ESTAN APROBADOS
+        let contador = 0
+        for (let inscrito of this.listaInscritos ) {
+          if (inscrito.estadoInscrito === true) {
+            contador ++;
+          }
+        }
+        console.log("Número de inscritos en true -> " + contador);
+        this.participantesAceptado = contador;  
+        
         this.validarcursoCapacitacion() // valida
         const  primerEstadoCurso = this.listaInscritos.map((inscrito) => inscrito.curso?.estadoPublicasionCurso);
         this.inicioCursoEstado = primerEstadoCurso[0] || '';
+
 
       });
   }
@@ -55,7 +69,11 @@ export class ViewInscritosCursoComponent implements OnInit {
   opcionSelecionada?: string;
 
   public aprobarParticipante(idInscrito: any): void {
-    this.inscritosService
+
+    if (this.cuposDisponibles == 0) {
+      alert("no hya mas cupos")
+    } else {
+      this.inscritosService
       .getInscrioParaCursoById(idInscrito)
       .subscribe((data) => {
         this.inscrito = data;
@@ -67,6 +85,7 @@ export class ViewInscritosCursoComponent implements OnInit {
             this.traerInscirtosPorCurso();
           });
       });
+    }
   }
 
   public NoAprobarParticipante(idInscrito: any): void {
@@ -137,4 +156,29 @@ export class ViewInscritosCursoComponent implements OnInit {
       }
     }
   }
+
+  // VALIDACION DECUPOS DISPONIBLES
+  curso: Curso = new Curso();
+  cuposDisponibles!:number;
+  mesajePantalla:String = "Vacio";
+  public validarCuposDisponibles():void{
+    this.cursoService.getCursoById(this.idCursoGlobal!).subscribe(
+      data=>{
+        this.curso = data;
+        this.cuposDisponibles =  this.curso.numeroCuposCurso! - this.participantesAceptado;
+        console.log("Numero de cupos -> " + this.cuposDisponibles);
+        this.mesajePantalla = "Numero de Cupos: " + this.cuposDisponibles;
+        //
+        console.log("Los que estan aceptado ->" + this.participantesAceptado)
+        // VALIDACION
+        if (this.participantesAceptado > this.cuposDisponibles) {
+          alert("NO HAY MAS CUPOS")
+        } else {
+          console.log("si hay cupos")
+        }
+      }
+    )
+  }
+
+
 }

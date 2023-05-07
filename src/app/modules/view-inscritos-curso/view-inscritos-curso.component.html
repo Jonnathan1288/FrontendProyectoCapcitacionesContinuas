@@ -1,4 +1,10 @@
 <div class="container my-5">
+    <p-messages severity="info">
+        <ng-template pTemplate>
+            <div class="ml-2"> {{mesajePantalla}} </div>
+        </ng-template>
+    </p-messages>
+    
     <div class="container mt-1" *ngIf="estadoCurso === 'LI'">
         <div class="alert alert-success" role="alert">
             <h4 class="alert-heading">CURSO LISTO PARA INICIAR</h4>
