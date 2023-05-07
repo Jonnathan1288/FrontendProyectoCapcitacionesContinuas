@@ -41,8 +41,13 @@ export class ReportsCapacitacionesService {
     return this.http.get(environment.apiuri+ '/programacionMensual/download/'+month+'/'+year, { responseType: 'blob' });
   }
 
-    //Reportes que va tener el asisteciaEvalucion.
-    public downloadAsistenciaEvaluacion(idCurso: number) {
-      return this.http.get(environment.apiuri+ '/generarRegistroAsistenciaEvaluacion/download/' + idCurso, { responseType: 'blob' });
-    }
+  //Reportes que va tener el asisteciaEvalucion.
+  public downloadAsistenciaEvaluacion(idCurso: number) {
+    return this.http.get(environment.apiuri+ '/generarRegistroAsistenciaEvaluacion/download/' + idCurso, { responseType: 'blob' });
+  }
+
+  //IMPRIMIR CON CODIGOS DE LA SENECYT
+  public downloadCodigosSenecyt(idCurso: number) {
+    return this.http.get(environment.apiuri+ '/generarCodigosAsignarSenecyt/Docente/download/' + idCurso, { responseType: 'blob' });
+  }
 }

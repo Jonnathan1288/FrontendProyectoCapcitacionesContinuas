@@ -1,29 +1,27 @@
-
-
-
-
-
 <!-- IMPLEMENTACION PARA LA EDICION  EN LA MISMA TABLA -->
 
 
- <div class="card">
+<div class="card">
+    <p-toolbar styleClass="mb-0">
+        <ng-template pTemplate="left">
+            <button pButton pRipple label="Nuevo" icon="pi pi-plus" class="p-button-success mr-2"
+                ></button>
+
+        </ng-template>
+
+        <ng-template pTemplate="right">
+            <button pButton pRipple label="Imprimir" icon="pi pi-print"
+                class="p-button-primary mr-2 inline-block" (click)="getCodigosSenecytDownload()"></button>
+
+            <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button>
+        </ng-template>
+    </p-toolbar>
 
     <p-table #dt2 [value]="listparticipanteAprovado" dataKey="id" editMode="row" [tableStyle]="{'min-width': '50rem'}"
-        [rows]="3" [showCurrentPageReport]="true" [rowsPerPageOptions]="[3,5,7]" [loading]="loading"
-        [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [rows]="3" [showCurrentPageReport]="true" [rowsPerPageOptions]="[3,5,7]" [loading]="loading" [paginator]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
         [globalFilterFields]="['name','country.name','representative.name','status']"
         [tableStyle]="{'min-width':'75rem'}">
-
-        <!-- <ng-template pTemplate="caption">
-            <div class="table-header">
-                List of Customers
-                <span class="p-input-icon-left">
-                    <i class="pi pi-search"></i>
-                    <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
-                        placeholder="Global Search" />
-                </span>
-            </div>
-        </ng-template> -->
         <ng-template pTemplate="caption">
             <div class="flex">
                 <strong> List of Customers</strong>
@@ -35,102 +33,78 @@
             </div>
         </ng-template>
         <ng-template pTemplate="header">
-            <tr style="text-align: center;">
-                <th style="width:20%; text-align: center;">Nombres</th>
-                <th style="width:20%; text-align: center;">Appellidos</th>
-                <th style="width:15%; text-align: center;">Agent</th>
-                <th style="width:10%; text-align: center;">Estado</th>
-                <th style="width:35%; text-align: center;">Senecyt</th>
-                
+            <tr>
+                <th style="width:22%; "><strong>IDENTIFICASIÓN</strong></th>
+                <th style="width:22%; "><strong>NOMBRES</strong></th>
+                <th style="width:22%; "><strong>APELLIDOS</strong></th>
+                <th style="width:22%; "><strong>CÓDIGOS SENECYT</strong></th>
+                <th style="width:12%; "><strong>ESTADO</strong></th>
             </tr>
-            <tr >
-                <th style="width:20%; text-align: center;">
+            <tr>
+                <th >
                     <p-columnFilter type="text" field="name"></p-columnFilter>
                 </th>
-                <th>
+                <th >
+                    <p-columnFilter type="text" field="name"></p-columnFilter>
+                </th>
+                <th >
                     <p-columnFilter type="text" field="country.name"></p-columnFilter>
                 </th>
-                <th>
-                    <p-columnFilter field="representative" matchMode="in" [showMenu]="false">
-                        <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                            <p-multiSelect [ngModel]="value" placeholder="Any" (onChange)="filter($event.value)"
-                                optionLabel="name">
-                                <ng-template let-option pTemplate="item">
-                                    <div class="p-multiselect-representative-option">
-                                        <span class="ml-1">{{option.name}}</span>
-                                    </div>
-                                </ng-template>
-                            </p-multiSelect>
-                        </ng-template>
-                    </p-columnFilter>
-                </th>
-             
-                <th>
-                    <p-columnFilter type="boolean" field="verified"></p-columnFilter>
-                </th>
+                
+               
+                
 
-                <th>
-                      <div class="flex align-items-center justify-content-center gap-2">
-                        <button *ngIf="!editing" pButton pRipple type="button"  icon="pi pi-pencil"
+                <th  >
+             
+                    <div class="flex align-items-center justify-content-center gap-2">
+                        <button *ngIf="!editing" pButton pRipple type="button" icon="pi pi-pencil"
                             (click)="onRowEditInit()" class="p-button-rounded p-button-text"></button>
-                        <button *ngIf="editing" pButton pRipple type="button"  icon="pi pi-check"
+                        <button *ngIf="editing" pButton pRipple type="button" icon="pi pi-check"
                             (click)="onRowEditSave()"
                             class="p-button-rounded p-button-text p-button-success mr-2"></button>
-                        <button *ngIf="editing" pButton pRipple type="button"  icon="pi pi-times"
-                            (click)="onRowEditCancel()"
-                            class="p-button-rounded p-button-text p-button-danger"></button>
+                        <button *ngIf="editing" pButton pRipple type="button" icon="pi pi-times"
+                            (click)="onRowEditCancel()" class="p-button-rounded p-button-text p-button-danger"></button>
                     </div>
+                </th>
+
+                
+                <th >
+                    <p-columnFilter type="boolean" field="verified"></p-columnFilter>
                 </th>
             </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-product  >
+        <ng-template pTemplate="body" let-product>
             <tr [pEditableRow]="product">
                 <td>
-                    <!-- <p-cellEditor>
-                        <ng-template pTemplate="input">
-                            <input pInputText type="text" [(ngModel)]="product.username">
-                        </ng-template>
-                        <ng-template pTemplate="output">
-                        </ng-template>
-                    </p-cellEditor> -->
-                    {{product.partipantesMatriculados.inscrito.usuario.persona.nombre1}} {{product.partipantesMatriculados.inscrito.usuario.persona.nombre2}}
+                    {{product.partipantesMatriculados.inscrito.usuario.persona.identificacion}}
+                </td>
+                <td >
+               
+                    {{product.partipantesMatriculados.inscrito.usuario.persona.nombre1}}
+                    {{product.partipantesMatriculados.inscrito.usuario.persona.nombre2}}
 
                 </td>
-                <td>
-                    {{product.partipantesMatriculados.inscrito.usuario.persona.apellido1}} {{product.partipantesMatriculados.inscrito.usuario.persona.apellido1}}
-<!-- 
-                    <p-cellEditor>
-                        <ng-template pTemplate="input">
-                            <input pInputText type="text" [(ngModel)]="product.name" required>
-                        </ng-template>
-                        <ng-template pTemplate="output">
-                            {{product.name}}
-                        </ng-template>
-                    </p-cellEditor> -->
+                <td >
+                    {{product.partipantesMatriculados.inscrito.usuario.persona.apellido1}}
+                    {{product.partipantesMatriculados.inscrito.usuario.persona.apellido1}}
+    
                 </td>
-                <td>
-                    <h2>codiogo</h2>
-                    <!-- <p-cellEditor>
-                        <ng-template pTemplate="input">
-                            <p-dropdown appendTo="body" [(ngModel)]="product.inventoryStatus"
-                                [style]="{'width':'100%'}"></p-dropdown>
-                        </ng-template>
-                        <ng-template pTemplate="output">
-                            {{product.inventoryStatus}}
-                        </ng-template>
-                    </p-cellEditor> -->
-                </td>
-                <td  class="text-center">
-                  
-                        <!-- <i class="pi" [ngClass]="{'true-icon pi-check-circle': customer.verified, 'false-icon pi-times-circle': !customer.verified}"></i> -->
-                 
-                <td>
+              
+          
+                
+                <td style="width:12%; text-align: center;">
                     <div class="container" *ngIf="editing">
                         <input pInputText type="text" [(ngModel)]="product.codigoSenecyt">
                     </div>
                     <div class="container" *ngIf="!editing">
                         {{product.codigoSenecyt}}
                     </div>
+                </td>
+
+                <td >
+
+                    <i class="pi"
+                        [ngClass]="{'true-icon pi-check-circle': product.verified, 'false-icon pi-times-circle': !product.verified}"></i>
                 </td>
             </tr>
         </ng-template>
@@ -147,44 +121,10 @@
 
 
 
-<div class="container">
+<!-- <div class="container">
     <div class="ui-g-12 ui-md-4">
         <h3>Month Picker</h3>
-        <p-calendar  view="month" dateFormat="mm/yy" [yearNavigator]="true" yearRange="2000:2030" [readonlyInput]="true" [showIcon]="true"></p-calendar>
+        <p-calendar view="month" dateFormat="mm/yy" [yearNavigator]="true" yearRange="2000:2030" [readonlyInput]="true"
+            [showIcon]="true"></p-calendar>
     </div>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+</div> -->
