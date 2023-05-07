@@ -70,28 +70,72 @@
             <!-- Primer contenedor -->
             <div class="grid p-fluid">
                 <div class="field col-12 md:col-4">
-                    <span class="p-float-label">
-                        <p-dropdown [options]="listAreaItem" placeholder="Todas las areas" styleClass="mb-1 md:mb-0"
-                            (onChange)="getEspecialidadesDependenceOfArea($event)"></p-dropdown>
-                        <label for="dropdown">Area de curso</label>
+ 
 
-                    </span>
+                    <div class="card flex justify-content-center" *ngIf="!curso.idCurso">
+                        <select pInputText placeholder="tipo" id="canton" name="canton" required
+                            (change)="getEspecialidadesDependenceOfArea($event, null)">
+                            <option value="">Seleccione Area</option>
+                            <option *ngFor="let areas of listAreaE" [value]="areas.idArea">{{areas.nombreArea}}
+                            </option>
+                        </select>
+                        <span class="arrow-icon"><i class="pi pi-chevron-down"></i></span>
+                    </div>
+
+
+                    <div class="card flex justify-content-center" *ngIf="curso.idCurso">
+                        <select pInputText [(ngModel)]="curso.parroquia?.canton!.idCanton" id="canton" name="canton"
+                            (change)="getEspecialidadesDependenceOfArea($event, null)" required>
+                            <option (ngValue)="undefined">Seleccione Canton</option>
+                            <option *ngFor="let areas of listAreaE" [value]="areas.idArea">{{areas.nombreArea}}
+                            </option>
+                        </select>
+                    </div>
+
+
                 </div>
 
                 <div class="field col-12 md:col-4">
-                    <span class="p-float-label">
-                        <p-dropdown [options]="listEspecialidadItem" styleClass="mb-1 md:mb-0"
-                            (onChange)="getObjectEspecialidad($event)" [itemSize]="10"></p-dropdown>
+ 
 
-                    </span>
+                    <div class="card flex justify-content-center" *ngIf="!curso.idCurso">
+                        <select pInputText id="especialidad" name="especialidad"  required
+                            (change)="catchEspecialidadByEvent($event, null)">
+                            <option value="">Seleccione Especialidad</option>
+                            <option *ngFor="let especialidad of listEspecialida" [value]="especialidad.idEspecialidad">{{especialidad.nombreEspecialidad}}
+                            </option>
+                        </select>
+                        <span class="arrow-icon"><i class="pi pi-chevron-down"></i></span>
+                    </div>
+
+                    <div class="card flex justify-content-center" *ngIf="curso.idCurso">
+                        <select pInputText id="especialidad" name="especialidad" [(ngModel)]="curso.especialidad!.idEspecialidad" required
+                            (change)="catchEspecialidadByEvent($event, null)">
+                            <option value="">Seleccione Especialidad</option>
+                            <option *ngFor="let especialidad of listEspecialida" [value]="especialidad.idEspecialidad">{{especialidad.nombreEspecialidad}}
+                            </option>
+                        </select>
+                        <span class="arrow-icon"><i class="pi pi-chevron-down"></i></span>
+                    </div>
+
                 </div>
 
                 <div class="field col-12 md:col-4">
-                    <span class="p-float-label">
-                        <p-dropdown [options]="listProgramasItem" (onChange)="getObjectprogram($event)"
-                            placeholder="Programas disponibles" styleClass="mb-1 md:mb-0"></p-dropdown>
-                        <label for="dropdown">Programas diponibles</label>
-                    </span>
+                
+
+                    <div class="card flex justify-content-center">
+                        <select pInputText id="programas" name="especialidad" required
+                            [(ngModel)]="curso.idCurso ? curso.programas?.idPrograma: emptyVa"
+                            (ngModelChange)="catchProgramasByEvent($event)">
+                            <option (ngValue)="undefined">Programas diponibles</option>
+                            <option *ngFor="let programas of listProgramas"
+                                [ngValue]="programas.idPrograma ? programas?.idPrograma : programas">
+                                {{programas.nombrePrograma}}
+                            </option>
+                        </select>
+                        <span class="arrow-icon"><i class="pi pi-chevron-down"></i></span>
+                    </div>
+
                 </div>
             </div>
 
@@ -153,9 +197,12 @@
 
             <div class="grid p-fluid ">
                 <div class="col-12 md:col-4">
+      
 
-                    <div class="card flex justify-content-center">
-                        <select pInputText placeholder="tipo" id="provincia" name="provincia" required (change)="findCantonByProvinciaEvent($event)">
+
+                    <div class="card flex justify-content-center" *ngIf="!curso.idCurso">
+                        <select pInputText placeholder="tipo" id="provincia" name="provincia" required
+                            (change)="findCantonByProvinciaEvent($event, null)">
                             <option value="">Seleccione provincia</option>
                             <option *ngFor="let pro of listProvincias" [value]="pro.idProvincia">{{pro.provincia}}
                             </option>
@@ -163,12 +210,36 @@
                         <span class="arrow-icon"><i class="pi pi-chevron-down"></i></span>
                     </div>
 
+
+                    <div class="card flex justify-content-center" *ngIf="curso.idCurso">
+                        <select pInputText placeholder="tipo"
+                            [(ngModel)]="curso!.parroquia!.canton?.provincia!.idProvincia" id="razaAnimal"
+                            name="razaAnimal" (change)="findCantonByProvinciaEvent($event, null)" required>
+                            <option (ngValue)="undefined">Seleccione la categoría</option>
+                            <option *ngFor="let pro of listProvincias" [value]="pro.idProvincia">{{pro.provincia}}
+                            </option>
+                        </select>
+                    </div>
+
+
                 </div>
 
                 <div class="col-12 md:col-4">
 
-                    <div class="card flex justify-content-center">
-                        <select pInputText placeholder="tipo" id="tipo" name="tipo" required (change)="findParroquiaByCantonEvent($event)">
+                    <!-- <div class="card flex justify-content-center">
+                        <select pInputText placeholder="tipo"
+                            [(ngModel)]="curso.idCurso ? curso.parroquia?.canton?.idCanton : emptyVa" id="canton"
+                            name="canton" required (change)="findParroquiaByCantonEvent($event, null)">
+                            <option value="">Seleccione Canton</option>
+                            <option *ngFor="let canton of listCanton" [value]="canton.idCanton">{{canton.canton}}
+                            </option>
+                        </select>
+                        <span class="arrow-icon"><i class="pi pi-chevron-down"></i></span>
+                    </div> -->
+
+                    <div class="card flex justify-content-center" *ngIf="!curso.idCurso">
+                        <select pInputText placeholder="tipo" id="canton" name="canton" required
+                            (change)="findParroquiaByCantonEvent($event, null)">
                             <option value="">Seleccione Canton</option>
                             <option *ngFor="let canton of listCanton" [value]="canton.idCanton">{{canton.canton}}
                             </option>
@@ -176,14 +247,39 @@
                         <span class="arrow-icon"><i class="pi pi-chevron-down"></i></span>
                     </div>
 
+
+                    <div class="card flex justify-content-center" *ngIf="curso.idCurso">
+                        <select pInputText [(ngModel)]="curso.parroquia?.canton!.idCanton" id="canton" name="canton"
+                            (change)="findParroquiaByCantonEvent($event, null)" required>
+                            <option (ngValue)="undefined">Seleccione Canton</option>
+                            <option *ngFor="let canton of listCanton" [value]="canton.idCanton">{{canton.canton}}
+                            </option>
+                        </select>
+                    </div>
+
                 </div>
 
                 <div class="col-12 md:col-4">
-                   
-                    <div class="card flex justify-content-center">
-                        <select pInputText  id="parroquia" name="parroquia" required [(ngModel)]="curso.parroquia" (ngModelChange)="catchParroquiaByCantonEvent($event)">
+
+                    <!-- <div class="card flex justify-content-center">
+                        <select pInputText id="parroquia" name="parroquia" required [(ngModel)]="parroquia.idParroquia
+                            (ngModelChange)="catchParroquiaByCantonEvent($event)">
                             <option value="">Seleccione parroquia</option>
-                            <option *ngFor="let parroquia of listParroquia" [ngValue]="parroquia">{{parroquia.parroquia}}
+                            <option *ngFor="let parroquia of listParroquia" [ngValue]="parroquia">
+                                {{parroquia.parroquia}}
+                            </option>
+                        </select>
+                        <span class="arrow-icon"><i class="pi pi-chevron-down"></i></span>
+                    </div> -->
+
+                    <div class="card flex justify-content-center">
+                        <select pInputText id="parroquia" name="parroquia" required
+                            [(ngModel)]="curso.idCurso ? curso.parroquia?.idParroquia : emptyVa"
+                            (ngModelChange)="catchParroquiaByCantonEvent($event)">
+                            <option (ngValue)="undefined">Seleccione parroquia</option>
+                            <option *ngFor="let parroquia of listParroquia"
+                                [ngValue]="curso.idCurso ? parroquia?.idParroquia : parroquia">
+                                {{parroquia.parroquia}}
                             </option>
                         </select>
                         <span class="arrow-icon"><i class="pi pi-chevron-down"></i></span>
@@ -211,17 +307,19 @@
                     <div class='form-group'>
                         <div class='col-md-11'>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input larger-radio" type="radio" name="inlineRadioOptions" id="inlineRadio1" [value]="'Si'"  [(ngModel)]="curso.cursoocc">
+                                <input class="form-check-input larger-radio" type="radio" name="inlineRadioOptions"
+                                    id="inlineRadio1" [value]="'Si'" [(ngModel)]="curso.cursoocc">
                                 <label class="form-check-label" for="inlineRadio1">Si</label>
                             </div>
                             <div class="form-check form-check-inline ml-4">
-                                <input class="form-check-input larger-radio" type="radio" name="inlineRadioOptions" id="inlineRadio2" [value]="'No'"  [(ngModel)]="curso.cursoocc">
+                                <input class="form-check-input larger-radio" type="radio" name="inlineRadioOptions"
+                                    id="inlineRadio2" [value]="'No'" [(ngModel)]="curso.cursoocc">
                                 <label class="form-check-label" for="inlineRadio2">No</label>
                             </div>
                         </div>
                     </div>
                 </div>
-                
+
             </p-card>
 
         </p-card>
@@ -236,7 +334,7 @@
                     <div *ngFor="let modalidad of listModalidadCurso">
                         <p-radioButton name="modalidadCurso" [value]="modalidad.idModalidadCurso"
                             (ngModelChange)="getmodalidadCursoView(modalidad)" class="mb-2"
-                            [(ngModel)]="selectedModalidadCurso"></p-radioButton>
+                            [(ngModel)]="molalidadId"></p-radioButton>
                         <label for="modalidadCurso" class="ml-2">{{modalidad.nombreModalidadCurso}}</label>
                     </div>
 
@@ -252,7 +350,7 @@
 
                     <div *ngFor="let tipo of listTipo">
                         <p-radioButton name="tipoCurso" [value]="tipo.idTipoCurso" class="mb-2"
-                            [(ngModel)]="selectedTipoCurs" (ngModelChange)="getTipoView(tipo)"></p-radioButton>
+                            [(ngModel)]="tipoCursoId" (ngModelChange)="getTipoView(tipo)"></p-radioButton>
                         <label for="tipoCurso" class="ml-2">{{tipo.nombreTipoCurso}}</label>
                     </div>
                 </div>
@@ -266,7 +364,7 @@
 
                     <div *ngFor="let nivel of listNivelCurso">
                         <p-radioButton name="nivelCurso" [value]="nivel.idNivelCurso" class="mb-2"
-                            [(ngModel)]="selectedNivelCurso" (ngModelChange)="getnivelCursoView(nivel)"></p-radioButton>
+                            [(ngModel)]="nivelCursoId" (ngModelChange)="getnivelCursoView(nivel)"></p-radioButton>
                         <label for="nivelCurso" class="ml-2">{{nivel.nombreNivelCurso}}</label>
                     </div>
                 </div>
