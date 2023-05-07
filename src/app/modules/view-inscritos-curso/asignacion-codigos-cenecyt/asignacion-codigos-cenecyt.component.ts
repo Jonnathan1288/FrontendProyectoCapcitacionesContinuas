@@ -34,6 +34,7 @@ export class AsignacionCodigosCenecytComponent implements OnInit {
 
   public listparticipanteAprovado: ParticipantesAprobados[] = []
 
+  public editing?: boolean= false;
   constructor(private participantesAprovadoService: ParticipanteAprobadoService) {}
 
   ngOnInit(): void {
@@ -49,8 +50,10 @@ export class AsignacionCodigosCenecytComponent implements OnInit {
     })
   }
 
-  onRowEditInit(pa: ParticipantesAprobados) {
-    this.clonedProducts[pa.idParticipantesAprobados!] = { ...pa };
+  onRowEditInit() {
+    this.editing = true;
+
+    // this.clonedProducts[pa.idParticipantesAprobados!] = { ...pa };
   }
 
   // onRowEditInit(product: Usuario) {
@@ -59,7 +62,7 @@ export class AsignacionCodigosCenecytComponent implements OnInit {
   //   ;
   // }
 
-  onRowEditSave(pa: ParticipantesAprobados) {
+  onRowEditSave() {
 
     // this.participantesAprovadoService.updateParticipantesAprobados(pa.idParticipantesAprobados!, pa)
     //   .subscribe((data) => {
@@ -79,10 +82,11 @@ export class AsignacionCodigosCenecytComponent implements OnInit {
 
   }
 
-  onRowEditCancel(pa: ParticipantesAprobados, index: number) {
+  onRowEditCancel() {
+    this.editing= false
 
 
-    this.listparticipanteAprovado[index] = this.clonedProducts[pa.idParticipantesAprobados!];
-    delete this.clonedProducts[pa.idParticipantesAprobados!];
+    // this.listparticipanteAprovado[index] = this.clonedProducts[pa.idParticipantesAprobados!];
+    // delete this.clonedProducts[pa.idParticipantesAprobados!];
   }
 }
