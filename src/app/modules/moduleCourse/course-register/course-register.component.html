@@ -124,8 +124,8 @@
                 
 
                     <div class="card flex justify-content-center">
-                        <select pInputText id="programas" name="especialidad" required
-                            [(ngModel)]="curso.idCurso ? curso.programas?.idPrograma: emptyVa"
+                        <select pInputText id="programas" name="programas" required
+                            [(ngModel)]="curso.idCurso ? curso.programas?.idPrograma: emptyVa1"
                             (ngModelChange)="catchProgramasByEvent($event)">
                             <option (ngValue)="undefined">Programas diponibles</option>
                             <option *ngFor="let programas of listProgramas"
@@ -261,17 +261,6 @@
 
                 <div class="col-12 md:col-4">
 
-                    <!-- <div class="card flex justify-content-center">
-                        <select pInputText id="parroquia" name="parroquia" required [(ngModel)]="parroquia.idParroquia
-                            (ngModelChange)="catchParroquiaByCantonEvent($event)">
-                            <option value="">Seleccione parroquia</option>
-                            <option *ngFor="let parroquia of listParroquia" [ngValue]="parroquia">
-                                {{parroquia.parroquia}}
-                            </option>
-                        </select>
-                        <span class="arrow-icon"><i class="pi pi-chevron-down"></i></span>
-                    </div> -->
-
                     <div class="card flex justify-content-center">
                         <select pInputText id="parroquia" name="parroquia" required
                             [(ngModel)]="curso.idCurso ? curso.parroquia?.idParroquia : emptyVa"
@@ -284,15 +273,6 @@
                         </select>
                         <span class="arrow-icon"><i class="pi pi-chevron-down"></i></span>
                     </div>
-
-                    <!-- <div class="card flex justify-content-center" *ngIf="curso.idCurso">
-                        <select pInputText  id="parroquia" name="parroquia" required [(ngModel)]="curso?.parroquia!.idParroquia" (ngModelChange)="catchParroquiaByCantonEvent($event)">
-                            <option value="">Seleccione parroquia</option>
-                            <option *ngFor="let parroquia of listParroquia" [ngValue]="parroquia">{{parroquia.parroquia}}
-                            </option>
-                        </select>
-                        <span class="arrow-icon"><i class="pi pi-chevron-down"></i></span>
-                    </div> -->
 
                 </div>
 

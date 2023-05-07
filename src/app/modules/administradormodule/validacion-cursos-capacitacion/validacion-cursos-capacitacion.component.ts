@@ -109,10 +109,12 @@ export class ValidacionCursosCapacitacionComponent implements OnInit {
   //IMPLEMENTACION PARA HACER QUE EL CURSO SE ACEPTE
   public classCursoValidanew = new Curso();
   visibleCursoDeCapacitacion?: boolean;
-  public validarHojaDeVida(curso: Curso, idCurso: number) {
+  public validarHojaDeVida(curso: Curso, caso: number) {
+    // alert(idCurso)
+    this.pdfSrc = null
     this.classCursoValidanew = { ...curso };
     this.obtenerHojaVidaCapacitador(this.classCursoValidanew.capacitador!.idCapacitador!)
-    this.obtenerReportesValidacion(idCurso)
+    this.obtenerReportesValidacion(caso, curso.idCurso!)
     this.visibleCursoDeCapacitacion = true;
 
   }
@@ -144,8 +146,8 @@ export class ValidacionCursosCapacitacionComponent implements OnInit {
   }
 
   public pdfSrc: any;
-  public obtenerReportesValidacion(idCurso: number){
-    switch(idCurso){
+  public obtenerReportesValidacion(caso: number, idCurso: number){
+    switch(caso){
       case 1:
         this.reportService.gedownloadSilabo(idCurso).subscribe((data)=>{
           if(data != null){

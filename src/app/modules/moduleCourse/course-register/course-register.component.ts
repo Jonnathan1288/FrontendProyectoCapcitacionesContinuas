@@ -185,6 +185,7 @@ export class CourseRegisterComponent {
       console.log(this.curso.especialidad)
   }
 
+  public classPrograms = new Programas();
   public catchProgramasByEvent(e: any) {
     if (typeof e === 'object') {
       this.curso.programas = e;
@@ -255,6 +256,7 @@ export class CourseRegisterComponent {
   }
   //LINEA QUE ME PERMITE CONTROLAR EL VALOR INDEFINIADO DE LA LISTA
   public emptyVa: any = null;
+  public emptyVa1: any = null;
 
   //END EDITION ---------------------------------------------------------------
 
@@ -346,8 +348,7 @@ export class CourseRegisterComponent {
       this.horarioService.crearHorarioCurso(this.horarioC).subscribe((data) => {
         if (data != null) {
           this.curso.horarioCurso = data;
-          this.curso.programas = this.programa;
-          console.log({ programa: this.curso });
+          console.log({ curso: this.curso });
           this.cursoService.saveCurso(this.curso).subscribe((data) => {
             if (data != null) {
               this.curso = data;
@@ -364,6 +365,8 @@ export class CourseRegisterComponent {
               }
               alert('Correcto al crear el curso');
             }
+          }, (err)=>{
+            alert('err')
           });
         }
       });
