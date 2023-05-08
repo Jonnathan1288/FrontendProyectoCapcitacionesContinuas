@@ -92,6 +92,11 @@ export class ValidacionCursosCapacitacionComponent implements OnInit {
       if (data != null) {
         // this.loading = false
         this.listCursos = data;
+
+
+        console.log(this.listCursos)
+
+
         this.listCursos.forEach(
           (curso) =>
             (curso.fechaInicioCurso = new Date(curso.fechaInicioCurso!))
@@ -173,31 +178,36 @@ export class ValidacionCursosCapacitacionComponent implements OnInit {
 
   }
 
-  //Implementacion de los filtros
-  // public filterTableEvent(e: any) {
-  //   let letter = e.target.value.toLowerCase();
 
-  //   this.wordNoFind = letter;
-  //   console.log(this.wordNoFind);
+  public wordNoFind?: any;
+  public listFilterCursosCapacitacionContinua: Curso[]=[];
+  public filterTableEventCursosCapacitacioncionContinua(e: any) {
+    let letter = e.target.value.toLowerCase();
 
-  //   if (this.wordNoFind === '') {
+    this.wordNoFind = letter;
+    console.log(this.wordNoFind);
 
-  //     this.listALLAnimalsFiltered = this.listALLAnimals;
-  //     this.numerFoundCountAnimal = this.listALLAnimals.length;
-  //   } else {
-  //     let filteredAnimals = this.listALLAnimals.filter(
-  //       (animal: any) =>
-  //         animal.persona.id_persona != this.id_user_person &&
-  //         (animal.nombre.toLowerCase().includes(this.wordNoFind) ||
-  //           animal.raAnimal.nombreraza
-  //             .toLowerCase()
-  //             .includes(this.wordNoFind) ||
-  //           animal.raAnimal.razaAnimal.nombretipo
-  //             .toLowerCase()
-  //             .includes(this.wordNoFind))
-  //     );
-  //     this.numerFoundCountAnimal = filteredAnimals.length;
-  //     this.listALLAnimalsFiltered = filteredAnimals;
-  //   }
-  // }
+    if (this.wordNoFind === '') {
+
+      this.listFilterCursosCapacitacionContinua = this.listCursos;
+      // this.numerFoundCountAnimal = this.listALLAnimals.length;
+    } else {
+      let filteredAnimals = this.listFilterCursosCapacitacionContinua.filter(
+        (cursosDoc) =>
+          (cursosDoc.capacitador?.usuario?.persona?.nombre1?.toLowerCase().includes(this.wordNoFind) ||
+          cursosDoc.capacitador?.usuario?.persona?.nombre2?.toLowerCase().includes(this.wordNoFind) ||
+          cursosDoc.capacitador?.usuario?.persona?.apellido1?.toLowerCase().includes(this.wordNoFind) || 
+          cursosDoc.capacitador?.usuario?.persona?.apellido2?.toLowerCase().includes(this.wordNoFind) ||
+          cursosDoc.capacitador?.usuario?.username?.toLowerCase().includes(this.wordNoFind) ||
+          cursosDoc.nombreCurso?.toLowerCase().includes(this.wordNoFind)  ||
+          cursosDoc.programas?.nombrePrograma?.toLowerCase().includes(this.wordNoFind)  ||
+          cursosDoc.programas?.descripcionPrograma?.toLowerCase().includes(this.wordNoFind)  ||
+          
+          cursosDoc.programas?.periodoPrograma?.nombrePeriodoPrograma?.toLowerCase().includes(this.wordNoFind) 
+          )
+      );
+      
+      this.listFilterCursosCapacitacionContinua = filteredAnimals;
+    }
+  }
 }

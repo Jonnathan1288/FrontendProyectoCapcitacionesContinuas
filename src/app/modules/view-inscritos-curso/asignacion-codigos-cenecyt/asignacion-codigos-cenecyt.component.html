@@ -1,34 +1,46 @@
 <!-- IMPLEMENTACION PARA LA EDICION  EN LA MISMA TABLA -->
 
-
 <div class="card">
     <p-toolbar styleClass="mb-0">
         <ng-template pTemplate="left">
-            <button pButton pRipple label="Nuevo" icon="pi pi-plus" class="p-button-success mr-2"
-                ></button>
+            <button pButton pRipple label="Nuevo" icon="pi pi-plus" class="p-button-success mr-2"></button>
+            <!-- <p-dropdown [options]="listCursoCapacitador" [(ngModel)]="selectedCity1" placeholder="Select a City" optionLabel="name" [showClear]="true"></p-dropdown> -->
+
+
+            <p-dropdown [options]="listCursoCapacitador" placeholder="Seleccione curso" optionLabel="name"
+                [showClear]="true" (onChange)="onCursoSelectionChange($event)">
+                <ng-template let-course pTemplate="item" >
+                    <div (click)="catchCourseSelected(course)">{{ course.nombreCurso }} (ID: {{ course.idCurso }})</div>
+                </ng-template>
+            </p-dropdown>
+
+
+
 
         </ng-template>
 
         <ng-template pTemplate="right">
-            <button pButton pRipple label="Imprimir" icon="pi pi-print"
-                class="p-button-primary mr-2 inline-block" (click)="getCodigosSenecytDownload()"></button>
+            <button pButton pRipple label="Senecyt" icon="pi pi-print" class="p-button-primary mr-2 inline-block"
+                (click)="getCodigosSenecytDownload()" [disabled]="listFilterEstudiantesAprovados.length <= 0"></button>
 
-            <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help" (click)="getEstudiantesParaHacerFirmar()"></button>
+            <button pButton pRipple label="Firmas" icon="pi pi-print" class="p-button-help"
+                (click)="getEstudiantesParaHacerFirmar()" [disabled]="listFilterEstudiantesAprovados.length <= 0"></button>
         </ng-template>
     </p-toolbar>
 
-    <p-table #dt2 [value]="listparticipanteAprovado" dataKey="id" editMode="row" [tableStyle]="{'min-width': '50rem'}"
+    <p-table #dt2 [value]="listFilterEstudiantesAprovados" dataKey="id" editMode="row" [tableStyle]="{'min-width': '50rem'}"
         [rows]="3" [showCurrentPageReport]="true" [rowsPerPageOptions]="[3,5,7]" [loading]="loading" [paginator]="true"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
         [globalFilterFields]="['name','country.name','representative.name','status']"
         [tableStyle]="{'min-width':'75rem'}">
+
         <ng-template pTemplate="caption">
-            <div class="flex">
-                <strong> List of Customers</strong>
-                <span class="p-input-icon-left ml-auto">
+            <div class="flex align-items-center justify-content-between">
+                <h5 class="m-0"><strong>{{classCourseSelected.nombreCurso}}</strong></h5>
+                <span class="p-input-icon-left">
                     <i class="pi pi-search"></i>
-                    <input pInputText type="text" (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
-                        placeholder="Search keyword" />
+                    
+                    <input [disabled]="listFilterEstudiantesAprovados.length <= 0" pInputText type="text" placeholder="Search..." (input)="filterTableEventParticipantesAprovados($event)"/>
                 </span>
             </div>
         </ng-template>
@@ -38,22 +50,23 @@
                 <th style="width:22%; "><strong>NOMBRES</strong></th>
                 <th style="width:22%; "><strong>APELLIDOS</strong></th>
                 <th style="width:22%; "><strong>CÓDIGOS SENECYT</strong></th>
-                <th style="width:12%; "><strong>ESTADO</strong></th>
+                <th style="width:12%; "><strong>CERTFICADO</strong></th>
             </tr>
             <tr>
-                <th >
-                    <p-columnFilter type="text" field="name"></p-columnFilter>
+                <th>
+                    <p-columnFilter type="text"
+                        field="partipantesMatriculados.inscrito.usuario.persona.identificacion"></p-columnFilter>
                 </th>
-                <th >
-                    <p-columnFilter type="text" field="name"></p-columnFilter>
+                <th>
+                    <p-columnFilter type="text"
+                        field="partipantesMatriculados.inscrito.usuario.persona.nombre1"></p-columnFilter>
                 </th>
-                <th >
-                    <p-columnFilter type="text" field="country.name"></p-columnFilter>
+                <th>
+                    <p-columnFilter type="text"
+                        field="partipantesMatriculados.inscrito.usuario.persona.apellido1"></p-columnFilter>
                 </th>
-                
 
-                <th  >
-             
+                <th>
                     <div class="flex align-items-center justify-content-center gap-2">
                         <button *ngIf="!editing" pButton pRipple type="button" icon="pi pi-pencil"
                             (click)="onRowEditInit()" class="p-button-rounded p-button-text"></button>
@@ -65,31 +78,28 @@
                     </div>
                 </th>
 
-                
-                <th >
-                    <p-columnFilter type="boolean" field="verified"></p-columnFilter>
+                <th>
+                    <p-columnFilter type="boolean" field="certificadoFirmado"></p-columnFilter>
                 </th>
             </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-product>
+        <ng-template pTemplate="body" let-product let-ri="rowIndex">
             <tr [pEditableRow]="product">
                 <td>
                     {{product.partipantesMatriculados.inscrito.usuario.persona.identificacion}}
                 </td>
-                <td >
-               
+                <td>
+
                     {{product.partipantesMatriculados.inscrito.usuario.persona.nombre1}}
                     {{product.partipantesMatriculados.inscrito.usuario.persona.nombre2}}
 
                 </td>
-                <td >
+                <td>
                     {{product.partipantesMatriculados.inscrito.usuario.persona.apellido1}}
-                    {{product.partipantesMatriculados.inscrito.usuario.persona.apellido1}}
-    
+                    {{product.partipantesMatriculados.inscrito.usuario.persona.apellido2}}
+
                 </td>
-              
-          
-                
+
                 <td style="width:12%; text-align: center;">
                     <div class="container" *ngIf="editing">
                         <input pInputText type="text" [(ngModel)]="product.codigoSenecyt">
@@ -99,10 +109,37 @@
                     </div>
                 </td>
 
-                <td >
+                <td>
 
-                    <i class="pi"
-                        [ngClass]="{'true-icon pi-check-circle': product.verified, 'false-icon pi-times-circle': !product.verified}"></i>
+                    <div class="container" *ngIf="editing" style="text-align: center;">
+                        <div class="con">
+                            <button pButton pRipple type="button" icon="pi pi-file-pdf" class="p-button p-button-danger"
+                                (click)="showModaLImprimirMensal(product)"></button>
+                        </div>
+                        <div class=" mt-1">
+                            <!-- <div>
+                                <input type="file" id="pdf" name="pdf" (change)="handleFileInput($event, ri, product)">
+                            </div> -->
+
+                            <div class="file-upload-container">
+                                <label for="pdf" class="file-upload-label">
+                                    <span class="file-upload-icon"><i class="pi pi-upload"></i></span>
+                                    <span class="file-upload-text ">{{ product.certificadoParticipante ? 'Actualizar' :
+                                        'Seleccionar Certificado' }}</span>
+                                </label>
+                                <input type="file" id="pdf" name="pdf" (change)="handleFileInput($event, ri, product)">
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+                    <div *ngIf="!editing">
+                        <i class="pi"
+                            [ngClass]="{'true-icon pi-check-circle': product.certificadoFirmado , 'false-icon pi-times-circle': !product.certificadoFirmado}"
+                            [ngStyle]="{'color': product.certificadoFirmado ? 'green' : 'red'}"></i>
+                    </div>
                 </td>
             </tr>
         </ng-template>
@@ -111,18 +148,31 @@
 
 
 
+<!-- IMPLEMENTACION DE LA VISUALIZAION DEL PDF -->
 
 
+<p-dialog
+    header="{{'CERTIFICA A : ' + classCertificado.partipantesMatriculados?.inscrito!.usuario!.persona!.apellido1+ ' '+classCertificado.partipantesMatriculados?.inscrito!.usuario!.persona!.apellido2 +' '+classCertificado.partipantesMatriculados?.inscrito!.usuario!.persona!.nombre1 +' '+classCertificado.partipantesMatriculados?.inscrito!.usuario!.persona!.nombre2}}"
+    [(visible)]="visiblePeriodoMensual" [modal]="true" [style]="{ width: '60vw', height: '250' }" [draggable]="false"
+    [resizable]="false">
 
 
+    <div class="container" *ngIf="!pdfSrc">
+
+        <img src="../../../../assets/img/istap.png" alt="" width="100%" height="480px">
 
 
-
-
-<!-- <div class="container">
-    <div class="ui-g-12 ui-md-4">
-        <h3>Month Picker</h3>
-        <p-calendar view="month" dateFormat="mm/yy" [yearNavigator]="true" yearRange="2000:2030" [readonlyInput]="true"
-            [showIcon]="true"></p-calendar>
     </div>
-</div> -->
+    <div class="mx-2" *ngIf="pdfSrc">
+        <embed style="border-radius: 10px; " [src]="pdfSrc" type="application/pdf" width="100%" height="500px" />
+    </div>
+
+    <div class="grid p-fluid m-1">
+        <!-- Fin del periodo porgrama -->
+        <div class="col-md-12" style="text-align: center; margin: 5px;">
+            <p-button (onClick)="closeTitulo()" label="Aceptar" icon="pi pi-check"
+                styleClass="p-button-success  mb-2"></p-button>
+        </div>
+    </div>
+
+</p-dialog>
