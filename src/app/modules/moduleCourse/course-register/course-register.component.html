@@ -356,19 +356,24 @@
             <div class="grid p-fluid ">
                 <div class="col-12 md:col-6 mt-2">
 
-                    <span class="p-float-label">
-                        <input type="text" pInputText id="horaInicio" name="horaInicio"
-                            [(ngModel)]="horarioC.horaInicio">
-                        <label for="inputtext">Hora de inicio</label>
+                    <!-- NUEVO CODIGO PARA CAPTURA EL INICIO DE UNA FECHA  -->
+                    <div class="ui-g-12 ui-md-4">
+                        <span class="p-float-label">
+                            <!-- onkeypress='return event.charCode >= 48 && event.charCode <= 57' -->
+                        <p-calendar id="horaInicio" name="horaInicio" [(ngModel)]="fechaInit" [timeOnly]="true" hourFormat="12" pInputNumberOnly ></p-calendar>
+                        <label for="horaInicio">Hora de inicio</label>
                     </span>
+                    </div>
+                    
                 </div>
 
                 <div class="col-12 md:col-6 mt-2">
 
                     <span class="p-float-label">
-                        <input type="text" id="inputtext" pInputText id="horaFin" name="horaFin"
-                            [(ngModel)]="horarioC.horaFin">
-                        <label for="inputtext">Hora de fin</label>
+                   
+                            <p-calendar id="horaFin" name="horaFin" [(ngModel)]="fechaFin" [timeOnly]="true" hourFormat="12" pInputNumberOnly></p-calendar>
+                            <label for="horaFin">Hora Fin</label>
+                 
                     </span>
 
                 </div>

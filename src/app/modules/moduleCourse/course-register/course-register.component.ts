@@ -178,11 +178,10 @@ export class CourseRegisterComponent {
       .getEspecialidadById(Especialidad)
       .subscribe((data) => {
         if (data != null) {
-
           this.curso.especialidad = data;
         }
       });
-      console.log(this.curso.especialidad)
+    console.log(this.curso.especialidad);
   }
 
   public classPrograms = new Programas();
@@ -251,9 +250,50 @@ export class CourseRegisterComponent {
           null,
           this.curso.especialidad?.area?.idArea
         );
+        this.formatHoraCourse(this.curso.horarioCurso?.horaInicio!, this.curso.horarioCurso?.horaFin!);
+
+        //Méto para la fecha
       }
     });
   }
+
+  //Método que me va permitir formatear la fecha-------------
+
+  public formatHoraCourse(horaInit: string, horaFin: string) {
+
+    //Para la fecha de inicio
+    const horaInicioParts = horaInit.split(' ');
+    if (horaInicioParts.length !== 3) {
+      return;
+    }
+    const hora = parseInt(horaInicioParts[0]);
+    const minutos = parseInt(horaInicioParts[1]);
+    const amPm = horaInicioParts[2];
+
+    //Formateo
+    this.fechaInit = new Date();
+    this.fechaInit.setHours(amPm === 'PM' ? hora + 12 : hora);
+    this.fechaInit.setMinutes(minutos);
+
+    //END-------------------------------
+
+    //Para la hora fin
+    const horaFinParts = horaFin.split(' ');
+    if (horaFinParts.length !== 3) {
+      return;
+    }
+    const horaF = parseInt(horaFinParts[0]);
+    const minutosF = parseInt(horaFinParts[1]);
+    const amPmF = horaFinParts[2];
+
+    //Formateo
+    this.fechaFin = new Date();
+    this.fechaFin.setHours(amPmF === 'PM' ? horaF + 12 : horaF);
+    this.fechaFin.setMinutes(minutosF);
+    //END--------------------------------------
+  }
+
+  //END----------------------------------------
   //LINEA QUE ME PERMITE CONTROLAR EL VALOR INDEFINIADO DE LA LISTA
   public emptyVa: any = null;
   public emptyVa1: any = null;
@@ -323,14 +363,44 @@ export class CourseRegisterComponent {
   }
 
   //Create horario and curso
+
+  public fechaInit?: Date;
+  public fechaFin?: Date;
+
   public createHorarioCurso() {
+    //Hora para convertir a los horas minutos de la hora de inicio para mandarlo como string..
+    const horaI = this.fechaInit!.getHours() % 12;
+    const minutosI = this.fechaInit!.getMinutes();
+    const amPmI = this.fechaInit!.toLocaleString('en-US', {
+      hour: 'numeric',
+      hour12: true,
+    }).split(' ')[1];
+    //END-------------------------------------------------
+
+    //START Hora para el fin que se enviara como string
+    const horaF = this.fechaFin!.getHours() % 12;
+    const minutosF = this.fechaFin!.getMinutes();
+    const amPmF = this.fechaFin!.toLocaleString('en-US', {
+      hour: 'numeric',
+      hour12: true,
+    }).split(' ')[1];
+
+    this.horarioC.horaInicio = horaI + ' ' + minutosI + ' ' + amPmI;
+    this.horarioC.horaFin = horaF + ' ' + minutosF + ' ' + amPmF;
+
+    // this.fechaFin = new Date();
+    // this.fechaFin.setHours(amPm === 'PM' ? hora + 12 : hora);
+    // this.fechaFin.setMinutes(minutos);
+
     if (this.curso.idCurso) {
       this.horarioC.dias = this.daysOfTheweekV;
       this.horarioC.estadoHorarioCurso = true;
+      console.log({ horarioEnvio: this.horarioC });
       this.horarioService
         .updateHorarioCurso(this.horarioC.idHorarioCurso!, this.horarioC)
         .subscribe((data) => {
           if (data != null) {
+            console.log(data);
             this.cursoService
               .updateCurso(this.curso.idCurso!, this.curso)
               .subscribe((data) => {
@@ -349,25 +419,28 @@ export class CourseRegisterComponent {
         if (data != null) {
           this.curso.horarioCurso = data;
           console.log({ curso: this.curso });
-          this.cursoService.saveCurso(this.curso).subscribe((data) => {
-            if (data != null) {
-              this.curso = data;
-              this.idCursoUpdate = this.curso.idCurso;
-              for (let prerequisito of this.listPrerequisitoCurso1) {
-                prerequisito.estadoPrerequisitoCurso = true;
-                prerequisito.curso = this.curso;
-                this.prerequisitoService
-                  .savePrerequisitoCurso(prerequisito)
-                  .subscribe((data) => {
-                    if (data != null) {
-                    }
-                  });
+          this.cursoService.saveCurso(this.curso).subscribe(
+            (data) => {
+              if (data != null) {
+                this.curso = data;
+                this.idCursoUpdate = this.curso.idCurso;
+                for (let prerequisito of this.listPrerequisitoCurso1) {
+                  prerequisito.estadoPrerequisitoCurso = true;
+                  prerequisito.curso = this.curso;
+                  this.prerequisitoService
+                    .savePrerequisitoCurso(prerequisito)
+                    .subscribe((data) => {
+                      if (data != null) {
+                      }
+                    });
+                }
+                alert('Correcto al crear el curso');
               }
-              alert('Correcto al crear el curso');
+            },
+            (err) => {
+              alert('err');
             }
-          }, (err)=>{
-            alert('err')
-          });
+          );
         }
       });
     }

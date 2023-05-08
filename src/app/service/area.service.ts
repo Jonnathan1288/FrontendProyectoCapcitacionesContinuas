@@ -4,6 +4,7 @@ import { Curso } from '../models/curso';
 import { environment } from 'src/environment/enviroment';
 import { Observable } from 'rxjs';
 import { Area } from '../models/area';
+import { PruebaPdf } from '../models/pdf';
 
 @Injectable({
   providedIn: 'root'
@@ -27,4 +28,15 @@ export class AreaService {
   public updateArea(idArea:number, area: Area):Observable<Area>{
     return this.http.put<Area>(environment.apiuri+'/area/actualizar/'+idArea, area);
   }
+
+
+  //Pruebas de pdf
+  public savepdf(pdf: PruebaPdf):Observable<PruebaPdf>{
+    return this.http.post<PruebaPdf>(environment.apiuri+'/pdf/save', pdf);
+  }
+
+  public getpdf(id: number):Observable<PruebaPdf>{
+    return this.http.get<PruebaPdf>(environment.apiuri+'/pdf/findbyId/'+id);
+  }
+
 }
