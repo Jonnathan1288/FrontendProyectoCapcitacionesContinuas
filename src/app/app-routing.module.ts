@@ -48,7 +48,7 @@ const routes: Routes = [
   { path: 'verMatriculados/course/inicio/:id', component: ViewInicioCursoMatriculadosComponent},
   { path: 'verMisCursos/course', component: MisCursosParticipanteComponent},
   //Registro fotografico
-  { path: 'registro/fo', component: RegistroFotograficoEvidenciasComponent },
+  { path: 'fo', component: RegistroFotograficoEvidenciasComponent },
   //Ver vista de las evidencias fotograficas
   { path: 'registro/fotografico/curso/:id', component: ViewEvidenciasTableFotofraficasComponent },
   { path: 'register/course/:id', component: CourseRegisterComponent },

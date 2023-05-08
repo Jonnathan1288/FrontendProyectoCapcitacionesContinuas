@@ -124,8 +124,8 @@
                 
 
                     <div class="card flex justify-content-center">
-                        <select pInputText id="programas" name="especialidad" required
-                            [(ngModel)]="curso.idCurso ? curso.programas?.idPrograma: emptyVa"
+                        <select pInputText id="programas" name="programas" required
+                            [(ngModel)]="curso.idCurso ? curso.programas?.idPrograma: emptyVa1"
                             (ngModelChange)="catchProgramasByEvent($event)">
                             <option (ngValue)="undefined">Programas diponibles</option>
                             <option *ngFor="let programas of listProgramas"
@@ -261,17 +261,6 @@
 
                 <div class="col-12 md:col-4">
 
-                    <!-- <div class="card flex justify-content-center">
-                        <select pInputText id="parroquia" name="parroquia" required [(ngModel)]="parroquia.idParroquia
-                            (ngModelChange)="catchParroquiaByCantonEvent($event)">
-                            <option value="">Seleccione parroquia</option>
-                            <option *ngFor="let parroquia of listParroquia" [ngValue]="parroquia">
-                                {{parroquia.parroquia}}
-                            </option>
-                        </select>
-                        <span class="arrow-icon"><i class="pi pi-chevron-down"></i></span>
-                    </div> -->
-
                     <div class="card flex justify-content-center">
                         <select pInputText id="parroquia" name="parroquia" required
                             [(ngModel)]="curso.idCurso ? curso.parroquia?.idParroquia : emptyVa"
@@ -284,15 +273,6 @@
                         </select>
                         <span class="arrow-icon"><i class="pi pi-chevron-down"></i></span>
                     </div>
-
-                    <!-- <div class="card flex justify-content-center" *ngIf="curso.idCurso">
-                        <select pInputText  id="parroquia" name="parroquia" required [(ngModel)]="curso?.parroquia!.idParroquia" (ngModelChange)="catchParroquiaByCantonEvent($event)">
-                            <option value="">Seleccione parroquia</option>
-                            <option *ngFor="let parroquia of listParroquia" [ngValue]="parroquia">{{parroquia.parroquia}}
-                            </option>
-                        </select>
-                        <span class="arrow-icon"><i class="pi pi-chevron-down"></i></span>
-                    </div> -->
 
                 </div>
 
@@ -376,19 +356,24 @@
             <div class="grid p-fluid ">
                 <div class="col-12 md:col-6 mt-2">
 
-                    <span class="p-float-label">
-                        <input type="text" pInputText id="horaInicio" name="horaInicio"
-                            [(ngModel)]="horarioC.horaInicio">
-                        <label for="inputtext">Hora de inicio</label>
+                    <!-- NUEVO CODIGO PARA CAPTURA EL INICIO DE UNA FECHA  -->
+                    <div class="ui-g-12 ui-md-4">
+                        <span class="p-float-label">
+                            <!-- onkeypress='return event.charCode >= 48 && event.charCode <= 57' -->
+                        <p-calendar id="horaInicio" name="horaInicio" [(ngModel)]="fechaInit" [timeOnly]="true" hourFormat="12" pInputNumberOnly ></p-calendar>
+                        <label for="horaInicio">Hora de inicio</label>
                     </span>
+                    </div>
+                    
                 </div>
 
                 <div class="col-12 md:col-6 mt-2">
 
                     <span class="p-float-label">
-                        <input type="text" id="inputtext" pInputText id="horaFin" name="horaFin"
-                            [(ngModel)]="horarioC.horaFin">
-                        <label for="inputtext">Hora de fin</label>
+                   
+                            <p-calendar id="horaFin" name="horaFin" [(ngModel)]="fechaFin" [timeOnly]="true" hourFormat="12" pInputNumberOnly></p-calendar>
+                            <label for="horaFin">Hora Fin</label>
+                 
                     </span>
 
                 </div>
@@ -404,7 +389,7 @@
                     <div>
                         <p-radioButton name="group1" value="Sábados" class="mb-2"
                             [(ngModel)]="daysOfTheweekV"></p-radioButton>
-                        <label for="Sabados" class="ml-2">Sábados</label>
+                        <label for="Sábados" class="ml-2">Sábados</label>
                     </div>
 
                     <div>
