@@ -37,6 +37,13 @@ export class HojaVidaCapacitadorService {
     return this.http.post<any>(environment.apiuri+'/hojaVida/saveDocumento/' + idUsuario,formData);
   }
 
+  public actualizarHojadeVdaMasDocumento(file: File, idUsuario:number): Observable<any> {
+    const formData = new FormData();
+    formData.append('file', file, file.name);
+    return this.http.post<any>(environment.apiuri+'/hojaVida/updateDocumento/' + idUsuario,formData);
+  }
+
+
   public saveHojaDeVida(hojaVidaCapacitador: HojaVidaCapacitador):Observable<HojaVidaCapacitador>{
     return this.http.post<HojaVidaCapacitador>(environment.apiuri+'/hojaVidaCapcitador/crear', hojaVidaCapacitador);
   }

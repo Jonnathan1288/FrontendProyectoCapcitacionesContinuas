@@ -109,6 +109,16 @@ export class HojavidaComponent  implements OnInit{
     )
   }
 
+  // ACTUALIZAR LOS PDF
+  actualizarHojaVidaDocumento():void{
+    this.hojaVidaService.actualizarHojadeVdaMasDocumento(this.selectedFile,this.idUsuarioLoggic).subscribe(
+      data =>{
+        alert('Se actualizo el documentos')
+      }
+    )
+  }
+
+  // ACTULIAZAR HOJA DE VIDA DE NOSOTROS
   public actulizarHojaVida():void{
     this.hojaVidaService.updateHojaDeVida(this.idHojaVidaExsitente!,this.hojaVidaCapacitador).subscribe(
       data =>{
