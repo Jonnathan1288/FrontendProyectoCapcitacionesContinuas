@@ -28,6 +28,7 @@ export class AsignacionCodigosCenecytComponent implements OnInit {
   public listparticipanteAprovado: ParticipantesAprobados[] = [];
 
   public editing?: boolean = false;
+  public capturarIdCurso?: any;
   constructor(
     private participantesAprovadoService: ParticipanteAprobadoService,
     private reportService: ReportsCapacitacionesService
@@ -77,6 +78,18 @@ export class AsignacionCodigosCenecytComponent implements OnInit {
   public getCodigosSenecytDownload() {
     this.reportService
       .downloadCodigosSenecyt(2)
+      .subscribe((r) => {
+        const url = URL.createObjectURL(r);
+        window.open(url, '_blank');
+      });
+    // this.getPdf()
+  }
+
+
+   //IMPRIMIR TODOS LOS ESTUDIANTES APROVADOS POR CURSO CO CODIGOS DE LA SENECYT
+   public getEstudiantesParaHacerFirmar() {
+    this.reportService
+      .downloadEntregaCertificadoEstudiante(2)
       .subscribe((r) => {
         const url = URL.createObjectURL(r);
         window.open(url, '_blank');
