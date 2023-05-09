@@ -64,7 +64,6 @@ export class SilaboComponent implements OnInit {
   //IMPLEMENTACION DEL ROUTENIG PARA EL DISEÑO CURRICULAR
   verDisenioCurricular(){
     this.router.navigate(['/diseño', this.idDelSilabo!]);
-
   }
 
   validacionDeSilaboExistente():void{
@@ -274,8 +273,9 @@ export class SilaboComponent implements OnInit {
         this.generarMaterialesAudivisuales();
         this.generarMaterialesConvecionales();
         /* */
-        console.log("Silabo generado id->" + this.idSilaboCap)
-        this.reportService.gedownloadSilabo(this.idSilaboCap!)
+        console.log("Silabo generado id->" + this.idSilaboCap);
+        
+        this.reportService.gedownloadSilabo(this.silabo.idSilabo!)
         .subscribe((r) => {
           const url = URL.createObjectURL(r);
           window.open(url, '_blank');
@@ -336,6 +336,8 @@ export class SilaboComponent implements OnInit {
   }
   /* */
 
+  // EL TRAER DATOS *****************************************************************************************************************************************************
+
   validarIdSilabo: Boolean = false;
   idDelSilabo: any;
   public traerDatos(idCurso:number): void {
@@ -352,6 +354,14 @@ export class SilaboComponent implements OnInit {
           this.validarIdSilabo = true;
       }
     )
+  }
+
+  public actualizarSilabo(): void {
+    this.silaboService.saveSilabo(this.silabo).subscribe(
+      silaboData => {
+        this.silabo = silaboData;
+        console.log("Silabo actualizado");
+    })
   }
 
   // TRAER TODOS LOS DATOS DEL SILABO
@@ -837,4 +847,5 @@ export class SilaboComponent implements OnInit {
         window.open(url, '_blank');
       });
   }
+
 }
