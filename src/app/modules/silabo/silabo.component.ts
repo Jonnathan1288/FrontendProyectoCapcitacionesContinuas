@@ -937,8 +937,7 @@ export class SilaboComponent implements OnInit {
     }
   }
   // FIN ESTRATEGIAS
-
-
+  
   // IMPRIMIR // VALIDAR idSilaboCapGlobal // idSilaboCap
   public getReportSilabo() {
     if (this.contadorValidasUnoG == 0) {
@@ -963,5 +962,10 @@ export class SilaboComponent implements OnInit {
       }
     }
   }
+
+  // SALTOS DE LINEA
+  // onBibliografiaChange(event: any) {
+  //   this.silabo.bibliografia = event.replace(/\n/g, '\n');  
+  // }
 
 }

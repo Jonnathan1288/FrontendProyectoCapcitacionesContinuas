@@ -51,7 +51,7 @@ export class HojavidaComponent  implements OnInit{
     this.hojaVidaService.validarExstenciaHojaVida(this.idUsuarioLoggic).subscribe(
       data =>{
         if (data == false) {
-          alert('no tiene cv')
+          // alert('no tiene cv')
           this.isExiste = false;
           this.capcitadporService.getCapacitadorByUsuarioIdUsuario(this.idUsuarioLoggic).subscribe(
             data=>{
@@ -59,7 +59,7 @@ export class HojavidaComponent  implements OnInit{
             }
           )
         } else {
-          alert('SI tiene cv')
+          // alert('SI tiene cv')
           this.hojaVidaService.getHojadeVidaByIdUsuarioLoggin(this.idUsuarioLoggic).subscribe(
             data=>{
               this.isExiste = true;
