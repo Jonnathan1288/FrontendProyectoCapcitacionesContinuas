@@ -8,6 +8,6 @@ export class Usuario {
     fotoPerfil?: string;
     estadoUsuarioActivo?: boolean;
     persona?: Persona
-    rol?: Rol
+    //rol?: Rol
     roles?: Rol[]
 }

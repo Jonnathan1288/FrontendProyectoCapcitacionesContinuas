@@ -14,4 +14,8 @@ export class RolService {
   public getRolById(idRol: number):Observable<Rol>{
     return this.http.get<Rol>(environment.apiuri+'/rol/findbyId/'+idRol);
   }
+
+  public getAllRoleOfDataBase():Observable<Rol[]>{
+    return this.http.get<Rol[]>(environment.apiuri+'/rol/listar');
+  }
 }

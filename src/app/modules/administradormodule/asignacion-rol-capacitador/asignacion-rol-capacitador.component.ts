@@ -34,6 +34,10 @@ export class AsignacionRolCapacitadorComponent implements OnInit {
 
   public classDocenteFenix = new DocenteFenix();
 
+  public listRole: Rol[] = [];
+
+  public listRoleAsignarUser: Rol[] = [];
+
   private sanitizer!: DomSanitizer;
   constructor(
     private personaService: PersonaService,
@@ -44,13 +48,22 @@ export class AsignacionRolCapacitadorComponent implements OnInit {
     private hojadeVidaServcie: HojaVidaCapacitadorService,
     sanitizer: DomSanitizer,
     private reportService: ReportsCapacitacionesService
-    
   ) {
     this.sanitizer = sanitizer;
   }
   ngOnInit(): void {
     this.listDocentesCapacitadores();
     this.obtenerRol();
+    this.getAllRolesOfDataBase();
+  }
+
+  //OBTENER TODOS LOS ROLES DE LA BASE DE DATOS..
+  public getAllRolesOfDataBase() {
+    this.rolService.getAllRoleOfDataBase().subscribe((data) => {
+      if (data != null) {
+        this.listRole = data;
+      }
+    });
   }
 
   public filterGlobal(e: any) {
@@ -87,9 +100,14 @@ export class AsignacionRolCapacitadorComponent implements OnInit {
   }
 
   public cargarDatosDocenteCapacitador(docenteCapacitador: Capacitador) {
-    this.classCapacitador = { ...docenteCapacitador };
+     console.log(docenteCapacitador)
+    this.classCapacitador = {...docenteCapacitador };
     this.classUsuario = this.classCapacitador.usuario!;
     this.classPersona = this.classCapacitador.usuario?.persona!;
+
+    this.listRoleAsignarUser = [...this.classUsuario.roles!];
+    // this.listRoleAsignarUser = this.classUsuario.roles!;
+    console.log(this.classUsuario.roles);
     this.visible = true;
   }
 
@@ -102,6 +120,36 @@ export class AsignacionRolCapacitadorComponent implements OnInit {
     }
   }
 
+  //ASIGNAR ROLES A USUARIO
+  public asignarRolesUsuario(rol: Rol) {
+    // const found = this.listRoleAsignarUser.find(role => role = rol)
+    // const index = this.listRoleAsignarUser.findIndex(
+    //   (item) => item === rol
+    // );
+    // if (index !== -1) {
+    //   this.listRoleAsignarUser.splice(index, 1);
+    //   console.log(this.listRoleAsignarUser);
+    // }else{
+    //   this.listRoleAsignarUser.push(rol);
+    //   console.log(this.listRoleAsignarUser);
+    // }
+
+    const index = this.listRoleAsignarUser.findIndex(
+      (item) => item.idRol === rol.idRol
+    );
+
+    if (index !== -1) {
+      // Si el rol ya existe, lo eliminamos del arreglo
+      this.listRoleAsignarUser.splice(index, 1);
+    } else {
+      // Si el rol no existe, lo agregamos al arreglo
+      this.listRoleAsignarUser.push(rol);
+    }
+
+    console.log(this.listRoleAsignarUser);
+  }
+  public quitarElementoEstrategias(nombreEstrategiaMetodologica: any): void {}
+
   //Metodo para actualizar al docente Capacitador
   public updateDocenteCapacitador() {
     console.log({ persona: this.classPersona });
@@ -109,6 +157,7 @@ export class AsignacionRolCapacitadorComponent implements OnInit {
       .updatePersona(this.classPersona.idPersona!, this.classPersona)
       .subscribe((data) => {
         if (data != null) {
+          this.classUsuario.roles = this.listRoleAsignarUser;
           this.usuarioService
             .updateUsuario(this.classUsuario.idUsuario!, this.classUsuario)
             .subscribe((data) => {
@@ -144,7 +193,7 @@ export class AsignacionRolCapacitadorComponent implements OnInit {
           console.log('Bien');
           this.classUsuario.estadoUsuarioActivo = true;
           this.classUsuario.persona = data;
-          this.classUsuario.rol = this.classRol;
+          this.classUsuario.roles = this.listRoleAsignarUser;
           this.usuarioService
             .saveUsuario(this.classUsuario)
             .subscribe((data1) => {
@@ -176,7 +225,7 @@ export class AsignacionRolCapacitadorComponent implements OnInit {
         if (data != null) {
           this.classUsuario.estadoUsuarioActivo = true;
           this.classUsuario.persona = data;
-          this.classUsuario.rol = this.classRol;
+          //this.classUsuario.rol = this.classRol;
           this.usuarioService
             .saveUsuario(this.classUsuario)
             .subscribe((data1) => {
@@ -230,73 +279,77 @@ export class AsignacionRolCapacitadorComponent implements OnInit {
   public showModaLHojaVidaCapacitador(idCapacitador: number) {
     this.pdfSrc = null;
     this.fileUrl = null;
-    // this.fileUrl = 
+    // this.fileUrl =
     this.classHojaDevida = new HojaVidaCapacitador();
-    this.hojadeVidaServcie.getHojaVidaCapacitadorByIdCapacitador(idCapacitador).subscribe((data) => {
-        if (data != null) {
-          this.classHojaDevida = data;
-          console.log({capa:this.classHojaDevida })
-          this.visibleHojaVida = true;
-          this.mostrarPDF_BDA(idCapacitador);
+    this.hojadeVidaServcie
+      .getHojaVidaCapacitadorByIdCapacitador(idCapacitador)
+      .subscribe(
+        (data) => {
+          if (data != null) {
+            this.classHojaDevida = data;
+            console.log({ capa: this.classHojaDevida });
+            this.visibleHojaVida = true;
+            this.mostrarPDF_BDA(idCapacitador);
+          }
+        },
+        (err) => {
+          alert('Docente capacitador no tiene hoja de vida');
         }
-
-      }, (err)=>{
-        alert('Docente capacitador no tiene hoja de vida')
-      });
-    
+      );
   }
 
   //MOSTRAR HOJA VIDA
   //mETOO QUE ME MOSTRAR EN EL CASO DE LA VISTA
 
-    // fileUrl!: SafeResourceUrl;
-    fileUrl: SafeResourceUrl | null = null;
+  // fileUrl!: SafeResourceUrl;
+  fileUrl: SafeResourceUrl | null = null;
 
-    public pdfSrc: any;
-    public mostrarPDF_BDA(idCapacitador: number): void {
-      
-      if (this.classHojaDevida.documento && this.classHojaDevida.documento.length > 0) {
-        const byteCharacters = atob(this.classHojaDevida.documento);
-        const byteNumbers = new Array(byteCharacters.length);
-        for (let i = 0; i < byteCharacters.length; i++) {
-          byteNumbers[i] = byteCharacters.charCodeAt(i);
-        }
-        const byteArray = new Uint8Array(byteNumbers);
-        const pdfBlob = new Blob([byteArray], { type: 'application/pdf' });
-        this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
-          window.URL.createObjectURL(pdfBlob)
-        );
-
-      } else {
-        this.reportService.gedownloadHojaVida(idCapacitador).subscribe((data)=>{
-          if(data != null){
-            const url = URL.createObjectURL(data);
-            this.pdfSrc = this.sanitizer.bypassSecurityTrustResourceUrl(url);
-          }
-        })
+  public pdfSrc: any;
+  public mostrarPDF_BDA(idCapacitador: number): void {
+    if (
+      this.classHojaDevida.documento &&
+      this.classHojaDevida.documento.length > 0
+    ) {
+      const byteCharacters = atob(this.classHojaDevida.documento);
+      const byteNumbers = new Array(byteCharacters.length);
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
       }
-      //this.classHojaDevida = new HojaVidaCapacitador();
-      
+      const byteArray = new Uint8Array(byteNumbers);
+      const pdfBlob = new Blob([byteArray], { type: 'application/pdf' });
+      this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
+        window.URL.createObjectURL(pdfBlob)
+      );
+    } else {
+      this.reportService.gedownloadHojaVida(idCapacitador).subscribe((data) => {
+        if (data != null) {
+          const url = URL.createObjectURL(data);
+          this.pdfSrc = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+        }
+      });
     }
+    //this.classHojaDevida = new HojaVidaCapacitador();
+  }
 
   //Validar hoja de vida.
   public validarHojaDeVida(estado: number) {
-    if(estado == 1){
-      this.classHojaDevida.estadoAprobacion = 'A'
-    }else{
-      this.classHojaDevida.estadoAprobacion = 'R'
+    if (estado == 1) {
+      this.classHojaDevida.estadoAprobacion = 'A';
+    } else {
+      this.classHojaDevida.estadoAprobacion = 'R';
     }
-    console.log({hojaVida: this.classHojaDevida})
-    this.hojadeVidaServcie.updateHojaDeVida(this.classHojaDevida.idHojaVida!, this.classHojaDevida).subscribe((data)=>{
-      if(data != null){
-        alert('Succesful')
-        console.log({hojaVida: data})
-      }
-    })
+    console.log({ hojaVida: this.classHojaDevida });
+    this.hojadeVidaServcie
+      .updateHojaDeVida(this.classHojaDevida.idHojaVida!, this.classHojaDevida)
+      .subscribe((data) => {
+        if (data != null) {
+          alert('Succesful');
+          console.log({ hojaVida: data });
+        }
+      });
     setTimeout(() => {
-      this.visibleHojaVida = false;    
+      this.visibleHojaVida = false;
     }, 1200);
-    
   }
 
   //vISIVILIADA DEL MODAL
@@ -308,7 +361,4 @@ export class AsignacionRolCapacitadorComponent implements OnInit {
     this.classUsuario = new Usuario();
     this.visible = true;
   }
-
-
-
 }

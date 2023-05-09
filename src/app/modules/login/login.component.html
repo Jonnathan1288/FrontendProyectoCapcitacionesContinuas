@@ -44,8 +44,8 @@
   <div class="grid p-fluid m-2">
     <div class="col-12 md:col-12 " *ngFor="let list of roles">
       <div class=" mr-4 mx-4" style="text-align: center;" >
-        <p-button [label]="list.nombreRol === 'DocenteCapacitador'? 'DocenteCapacitador': 'Participante'" [icon]="list.nombreRol === 'DocenteCapacitador'? 'pi pi-prime': 'pi pi-user'" [styleClass]="list.nombreRol === 'DocenteCapacitador'? 'p-button-primary': 'p-button-success'" [badge]="list.nombreRol === 'DocenteCapacitador'? '2': '3'" 
-          [badgeClass]="list.nombreRol === 'DocenteCapacitador'? 'p-badge-success': 'p-badge-info'" (click)="guardarRolStorage(list.nombreRol!)"
+        <p-button [label]="list.nombreRol === 'Administrador'? 'Administrador': list.nombreRol === 'DocenteCapacitador'? 'DocenteCapacitador': 'Participante'" [icon]="list.nombreRol === 'DocenteCapacitador'? 'pi pi-prime': 'pi pi-user'" [styleClass]=" list.nombreRol === 'Administrador'? 'p-button-secondary': list.nombreRol === 'DocenteCapacitador'? 'p-button-primary': 'p-button-success'" [badge]="list.nombreRol === 'Administrador'? '1': list.nombreRol === 'DocenteCapacitador'? '2': '3'" 
+          [badgeClass]="list.nombreRol === 'Administrador'? 'p-badge-secondary': list.nombreRol === 'DocenteCapacitador'? 'p-badge-success': 'p-badge-info'" (click)="guardarRolStorage(list.nombreRol!)"
           ></p-button>
       </div>
     </div>
