@@ -81,9 +81,10 @@ export class RegistroFotograficoEvidenciasComponent implements OnInit {
   public  get(){
     this.areaSer.getpdf(1).subscribe((data)=>{
       if(data != null){
-        console.log(data)
+        // console.log(data)
         this.pruebaPdf = data;
         this.pdfSrc = this.sanitizer.bypassSecurityTrustResourceUrl('data:application/pdf;base64,' + this.pruebaPdf.pdf);
+        console.log(this.pdfSrc)
         this.pdfSrcExel = this.sanitizer.bypassSecurityTrustResourceUrl(this.pruebaPdf.exel!);
       }
     })

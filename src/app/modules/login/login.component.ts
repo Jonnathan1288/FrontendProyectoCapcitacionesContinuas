@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Usuario } from 'src/app/models/usuario';
 import { OauthService } from 'src/app/service/oauth.service';
 import { ToastrService } from 'ngx-toastr';
+import { Rol } from 'src/app/models/rol';
 
 @Component({
   selector: 'app-login',
@@ -21,35 +22,49 @@ export class LoginComponent implements OnInit {
 
   showSpinner: any;
 
+  public roles: Rol[] = [];
+
+  public rolLocalStorage?: any;
   public login() {
     if (this.usuario.username && this.usuario.password) {
       this.oauthService
         .login(this.usuario.username ?? '', this.usuario.password ?? '')
         .subscribe((data) => {
           if (data != null) {
-            this.showSpinner = true;
+            this.roles = data.roles!;
+
             localStorage.removeItem('id_username');
             localStorage.removeItem('id_persona');
             localStorage.removeItem('foto');
             localStorage.removeItem('rol');
             localStorage.removeItem('username');
-            this.toastrService.success('Bienvenido', 'Registro Exitoso', {
-              timeOut: 1500,
-              progressBar: true,
-              progressAnimation: 'increasing',
-            });
+
+            //Almacenar en el storage
             localStorage.setItem('id_username', String(data.idUsuario));
             localStorage.setItem('id_persona', String(data.persona?.idPersona));
             localStorage.setItem('foto', String(data.fotoPerfil));
-            localStorage.setItem('rol', String(data.rol?.nombreRol));
+
             localStorage.setItem('username', String(data.username));
 
-            setTimeout(() => {
-              this.showSpinner = false;
-              this.router.navigate(['/home']).then(() => {
-                window.location.reload();
+            if (data.roles?.length! > 1) {
+              this.modalView();
+            } else {
+              this.toastrService.success('Bienvenido', 'Registro Exitoso', {
+                timeOut: 1500,
+                progressBar: true,
+                progressAnimation: 'increasing',
               });
-            }, 1500);
+
+              for (let rol of data.roles!) {
+                localStorage.setItem('rol', String(rol.nombreRol));
+              }
+
+              setTimeout(() => {
+                this.showSpinner = false;
+                window.location.reload();
+                location.replace('/home');
+              }, 1500);
+            }
           } else {
             this.toastrService.error(
               'Credenciales Incorrectas',
@@ -61,7 +76,6 @@ export class LoginComponent implements OnInit {
           }
         });
     } else {
-      // alert('d')
       this.toastrService.warning(
         'Uno o más campos vacios',
         'Verifique los Campos de texto',
@@ -74,10 +88,31 @@ export class LoginComponent implements OnInit {
 
   //paso a la parte de registro de persona si no tengo cuenta en el portal.
 
-  public createAccount(){
+  public createAccount() {
     setTimeout(() => {
-
-      this.router.navigate(['/registrarPersona'])
+      this.router.navigate(['/registrarPersona']);
     }, 50);
+  }
+
+  public visiblePeriodoMensual?: boolean = false;
+  public modalView() {
+    this.visiblePeriodoMensual = true;
+  }
+
+  public guardarRolStorage(nombre: string) {
+    this.showSpinner = true;
+
+    this.toastrService.success('Bienvenido', 'Registro Exitoso', {
+      timeOut: 1500,
+      progressBar: true,
+      progressAnimation: 'increasing',
+    });
+
+    localStorage.setItem('rol', String(nombre));
+    setTimeout(() => {
+      this.showSpinner = false;
+      window.location.reload();
+      location.replace('/home');
+    }, 1500);
   }
 }

@@ -34,3 +34,32 @@
     </div>
   </div>
 </div>
+
+
+
+
+
+<p-dialog header="Reporte de programcion mensual" [(visible)]="visiblePeriodoMensual" [modal]="true"
+    [style]="{ width: '70vw', height: '250' }" [draggable]="false" [resizable]="false">
+    <div class="grid p-fluid m-2">
+        <div class="col-12 md:col-12 ">
+
+          <div class="div"  *ngFor="let list of roles">
+            <button (click)="guardarRolStorage(list.nombreRol!)">
+              {{list.nombreRol}}
+            </button>
+          </div>
+           
+        </div>
+    </div>
+
+
+
+    <div class="grid p-fluid m-1">
+        <!-- Fin del periodo porgrama -->
+        <div class="col-md-12" style="text-align: center; margin: 5px;">
+            <p-button type="ngSubmit" label="Aceptar" icon="pi pi-check" styleClass="p-button-success  mb-2"></p-button>
+        </div>
+    </div>
+
+</p-dialog>

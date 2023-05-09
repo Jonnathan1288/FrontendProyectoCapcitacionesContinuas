@@ -3,7 +3,6 @@
 
 <!-- Implementacion de nueva tabla------------------------------------------------------------------------------------- -->
 
-<!-- <p-table #dt [value]="listP" [(selection)]="selectedCustomers" dataKey="id" styleClass="p-datatable-customers" [rowHover]="true" -->
 
 <div class="container mt-5"></div>
 <div class="card">
@@ -16,7 +15,7 @@
                 List of Customers
                 <span class="p-input-icon-left">
                     <i class="pi pi-search"></i>
-                    <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                    <input pInputText type="text" (input)="filterTableEventCursosCapacitacioncionContinua($event)"
                         placeholder="Global Search" />
                 </span>
             </div>
@@ -30,8 +29,6 @@
 
                 <span class="p-input-icon-left ml-auto">
                     <i class="pi pi-search"></i>
-                    <!-- <input pInputText type="text" (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword" /> -->
-                    <!-- (input)="dt.filterGlobal($any($event.target).value, 'contains')" -->
                     <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
                         placeholder="Search keyword" />
 
@@ -41,29 +38,11 @@
 
         <ng-template pTemplate="header">
             <tr>
-                <th style="width: 3rem">
-                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-                </th>
-                <!-- <th pSortableColumn="programas.nombrePrograma">
-                    <div class="flex justify-content-between align-items-center">
-                        Periodo
-                        <p-sortIcon field="programas.nombrePrograma"></p-sortIcon>
-                        <p-columnFilter field="programas" matchMode="equals" display="menu" class="ml-auto">
-                            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                                <p-dropdown [ngModel]="value" [options]="listaProgramas"
-                                    (onChange)="filter($event.value)" optionLabel="nombrePrograma" placeholder="Any">
-                                    <ng-template let-option pTemplate="item">
-                                        <span class="ml-1">{{option.nombrePrograma}}</span>
-                                    </ng-template>
-                                </p-dropdown>
-                            </ng-template>
-                        </p-columnFilter>
-                    </div>
-                </th> -->
+
 
                 <th pSortableColumn="programas.nombrePrograma">
                     <div class="flex justify-content-between align-items-center">
-                        Capacitador
+                        <strong>PROGRAMA</strong>
                         <p-sortIcon field="programas.nombrePrograma"></p-sortIcon>
                         <p-columnFilter field="nombrePrograma" matchMode="in" display="menu" [showMatchModes]="false"
                             [showOperator]="false" [showAddButton]="false" class="ml-auto">
@@ -91,7 +70,8 @@
 
                 <th pSortableColumn="capacitador.usuario.username">
                     <div class="flex justify-content-between align-items-center">
-                        Capacitador
+                        <strong>CAPACITADOR</strong>
+
                         <p-sortIcon field="capacitador.usuario.username"></p-sortIcon>
                         <p-columnFilter field="capacitador.usuario" matchMode="in" display="menu"
                             [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" class="ml-auto">
@@ -107,9 +87,10 @@
 
                                     <ng-template let-option pTemplate="item">
                                         <div class="p-multiselect-representative-option">
-                                            <img [alt]="option.label"
-                                                src="assets/showcase/images/demo/avatar/{{option.image}}" width="32"
-                                                style="vertical-align: middle" />
+
+                                            <img [alt]="" [src]="
+                                            option.fotoPerfil? 'data:image/jpeg;base64,' + option.fotoPerfil: '../../../../assets/img/istap.png'" width="32" class="rounded-circle">
+
                                             <span class="ml-1">{{option.username}}</span>
                                         </div>
                                     </ng-template>
@@ -121,22 +102,16 @@
 
                 <th pSortableColumn="nombreCurso">
                     <div class="flex justify-content-between align-items-center">
-                        Nombre curso
+                        <strong>NOMBRE CURSO</strong>
                         <p-sortIcon field="nombreCurso"></p-sortIcon>
                         <p-columnFilter type="text" field="nombreCurso" display="menu" class="ml-auto"></p-columnFilter>
                     </div>
                 </th>
-                <!-- <th pSortableColumn="fechaInicioCurso">
-                    <div class="flex justify-content-between align-items-center">
-                        Inicio
-                        <p-sortIcon field="fechaInicioCurso"></p-sortIcon>
-                        <p-columnFilter type="date" field="fechaInicioCurso" display="menu" class="ml-auto"></p-columnFilter>
-                    </div>
-                </th> -->
+
 
                 <th pSortableColumn="fechaInicioCurso">
                     <div class="flex justify-content-between align-items-center">
-                        Inicio
+                        <strong>INICIO</strong>
                         <p-sortIcon field="fechaInicioCurso"></p-sortIcon>
                         <p-columnFilter type="date" field="fechaInicioCurso" display="menu"
                             class="ml-auto"></p-columnFilter>
@@ -146,7 +121,7 @@
 
                 <th pSortableColumn="fechaFinalizacionCurso">
                     <div class="flex justify-content-between align-items-center">
-                        Fin
+                        <strong>FIN</strong>
                         <p-sortIcon field="fechaFinalizacionCurso"></p-sortIcon>
                         <p-columnFilter type="date" field="fechaFinalizacionCurso" display="menu"
                             class="ml-auto"></p-columnFilter>
@@ -155,34 +130,17 @@
 
                 <th pSortableColumn="country.name">
                     <div class="flex justify-content-between align-items-center">
-                        Curso
+                        <strong>DOCUMENTOS</strong>
                         <p-sortIcon field="country.name"></p-sortIcon>
                         <p-columnFilter type="text" field="country.name" display="menu"
                             class="ml-auto"></p-columnFilter>
                     </div>
                 </th>
 
-                <!-- <th pSortableColumn="activity">
-                    <div class="flex justify-content-between align-items-center">
-                        Activity
-                        <p-sortIcon field="activity"></p-sortIcon>
-                        <p-columnFilter field="activity" matchMode="between" display="menu" [showMatchModes]="false"
-                            [showOperator]="false" [showAddButton]="false" class="ml-auto">
-                            <ng-template pTemplate="filter" let-filter="filterCallback">
-                                <p-slider [ngModel]="activityValues" [range]="true" (onSlideEnd)="filter($event.values)"
-                                    styleClass="m-3"></p-slider>
-                                <div class="flex align-items-center justify-content-between px-2">
-                                    <span>{{activityValues[0]}}</span>
-                                    <span>{{activityValues[1]}}</span>
-                                </div>
-                            </ng-template>
-                        </p-columnFilter>
-                    </div>
-                </th> -->
 
                 <th pSortableColumn="activity">
                     <div class="flex justify-content-between align-items-center">
-                        Estado
+                        <strong>ESTADO FINALIZACIÓN</strong>
                         <p-sortIcon field="activity"></p-sortIcon>
 
                         <p-columnFilter type="boolean" field="estadoCurso" display="menu"></p-columnFilter>
@@ -194,9 +152,7 @@
         </ng-template>
         <ng-template pTemplate="body" let-curso>
             <tr class="p-selectable-row">
-                <td>
-                    <p-tableCheckbox [value]="curso"></p-tableCheckbox>
-                </td>
+
                 <td>
                     <span class="p-column-title">Status</span>
                     {{curso.programas.nombrePrograma}}
@@ -207,7 +163,9 @@
                 <td>
                     <span class="p-column-title">Representative</span>
                     <!-- style="vertical-align: midle rounded-circle" -->
-                    <img [alt]="" [src]="'data:image/jpeg;base64,' + curso.fotoCurso" width="32" class="rounded-circle">
+                    <!-- <img [alt]="" [src]="'data:image/jpeg;base64,' + curso.fotoCurso" width="32" class="rounded-circle"> -->
+                    <img [alt]="" [src]="
+                    curso.capacitador.usuario.fotoPerfil? 'data:image/jpeg;base64,' + curso.capacitador.usuario.fotoPerfil: '../../../../assets/img/istap.png'" width="32" class="rounded-circle">
 
                     <!-- <img [alt]="customer.representative.name" src="assets/showcase/images/demo/avatar/{{customer.representative.image}}" width="32" style="vertical-align: middle" /> -->
                     <span class="image-text"> {{curso.capacitador.usuario.username}}</span>
@@ -229,15 +187,6 @@
                 <td style="text-align: center">
                     <span class="p-column-title">Country</span>
 
-                    <!-- <button pButton type="button" class="p-button-secondary" icon="pi pi-file"
-                        (click)="validarHojaDeVida(curso)"></button> -->
-
-                    <!-- <i class="pi pi-file" 
-                        [ngStyle]="{'color': curso.estadoAprovacionCurso ? 'black' : 'red'}"></i> -->
-                    <!-- <i class="pi pi-file" [ngClass]="{'pi-button': true}"
-                        [ngStyle]="{'color': curso.estadoAprovacionCurso ? 'black' : 'red'}"
-                        (click)="validarHojaDeVida(curso)">
-                    </i> -->
 
                     <button class="custom-button" (click)="validarHojaDeVida(curso, 2)">
                         <i class="pi pi-file" [ngClass]="{'pi-button': true}"></i>
@@ -254,17 +203,6 @@
                         [ngClass]="{'true-icon pi-check-circle': curso.estadoCurso , 'false-icon pi-times-circle': !curso.estadoCurso}"
                         [ngStyle]="{'color': curso.estadoCurso ? 'green' : 'red'}"></i>
 
-                    <!-- <p-progressBar [value]="customer.activity" [showValue]="false"></p-progressBar> -->
-
-
-                    <!-- <i class="pi" [ngClass]="{
-                        'true-icon pi-check-circle': curso.estadoCurso === 'aprobado',
-                        'false-icon pi-times-circle': curso.estadoCurso === 'reprobado',
-                        'unknown-icon pi-question-circle': curso.estadoCurso === 'pendiente'
-                      }" [ngStyle]="{
-                        'color': curso.estadoCurso === 'aprobado' ? 'green' : (curso.estadoCurso === 'reprobado' ? 'red' : 'grey')
-                      }">
-                    </i> -->
 
                 </td>
 
@@ -293,7 +231,8 @@
             <div class="p-inputgroup">
                 <div class="col-md-12" style="text-align: center; margin: 5px;">
                     <p-button type="ngSubmit" [label]="'NECESIDAD'" icon="pi pi-save"
-                        styleClass="p-button-success  mb-2" (onClick)="obtenerReportesValidacion(2, classCursoValidanew.idCurso!)"></p-button>
+                        styleClass="p-button-success  mb-2"
+                        (onClick)="obtenerReportesValidacion(2, classCursoValidanew.idCurso!)"></p-button>
 
                 </div>
             </div>
