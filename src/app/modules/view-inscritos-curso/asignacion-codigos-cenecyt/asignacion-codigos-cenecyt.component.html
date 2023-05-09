@@ -3,9 +3,8 @@
 <div class="card">
     <p-toolbar styleClass="mb-0">
         <ng-template pTemplate="left">
-            <button pButton pRipple label="Nuevo" icon="pi pi-plus" class="p-button-success mr-2"></button>
-            <!-- <p-dropdown [options]="listCursoCapacitador" [(ngModel)]="selectedCity1" placeholder="Select a City" optionLabel="name" [showClear]="true"></p-dropdown> -->
-
+            <!-- <button pButton pRipple label="Evaluación" icon="pi pi-file-pdf" class="p-button-danger mr-2" (click)="getFichaEvalucaionFinalCurso()" [disabled]="listFilterEstudiantesAprovados.length <= 0"></button> -->
+           
 
             <p-dropdown [options]="listCursoCapacitador" placeholder="Seleccione curso" optionLabel="name"
                 [showClear]="true" (onChange)="onCursoSelectionChange($event)">
@@ -20,6 +19,8 @@
         </ng-template>
 
         <ng-template pTemplate="right">
+            <button pButton pRipple label="Evaluación" icon="pi pi-file-pdf" class="p-button-danger mr-2" (click)="getFichaEvalucaionFinalCurso()" [disabled]="listFilterEstudiantesAprovados.length <= 0"></button>
+
             <button pButton pRipple label="Senecyt" icon="pi pi-print" class="p-button-primary mr-2 inline-block"
                 (click)="getCodigosSenecytDownload()" [disabled]="listFilterEstudiantesAprovados.length <= 0"></button>
 
@@ -29,7 +30,7 @@
     </p-toolbar>
 
     <p-table #dt2 [value]="listFilterEstudiantesAprovados" dataKey="id" editMode="row" [tableStyle]="{'min-width': '50rem'}"
-        [rows]="3" [showCurrentPageReport]="true" [rowsPerPageOptions]="[3,5,7]" [loading]="loading" [paginator]="true"
+        [rows]="5" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,15]" [loading]="loading" [paginator]="true"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
         [globalFilterFields]="['name','country.name','representative.name','status']"
         [tableStyle]="{'min-width':'75rem'}">
@@ -50,6 +51,7 @@
                 <th style="width:22%; "><strong>NOMBRES</strong></th>
                 <th style="width:22%; "><strong>APELLIDOS</strong></th>
                 <th style="width:22%; "><strong>CÓDIGOS SENECYT</strong></th>
+                <th style="width:22%; "><strong>DESCARGAR</strong></th>
                 <th style="width:12%; "><strong>CERTFICADO</strong></th>
             </tr>
             <tr>
@@ -79,34 +81,46 @@
                 </th>
 
                 <th>
+                    <!-- <p-columnFilter type="boolean" field="certificadoFirmado"></p-columnFilter> -->
+                </th>
+                <th>
                     <p-columnFilter type="boolean" field="certificadoFirmado"></p-columnFilter>
                 </th>
             </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-product let-ri="rowIndex">
-            <tr [pEditableRow]="product">
+        <ng-template pTemplate="body" let-certificadosPar let-ri="rowIndex">
+            <tr [pEditableRow]="certificadosPar">
                 <td>
-                    {{product.partipantesMatriculados.inscrito.usuario.persona.identificacion}}
+                    {{certificadosPar.partipantesMatriculados.inscrito.usuario.persona.identificacion}}
                 </td>
                 <td>
 
-                    {{product.partipantesMatriculados.inscrito.usuario.persona.nombre1}}
-                    {{product.partipantesMatriculados.inscrito.usuario.persona.nombre2}}
+                    {{certificadosPar.partipantesMatriculados.inscrito.usuario.persona.nombre1}}
+                    {{certificadosPar.partipantesMatriculados.inscrito.usuario.persona.nombre2}}
 
                 </td>
                 <td>
-                    {{product.partipantesMatriculados.inscrito.usuario.persona.apellido1}}
-                    {{product.partipantesMatriculados.inscrito.usuario.persona.apellido2}}
+                    {{certificadosPar.partipantesMatriculados.inscrito.usuario.persona.apellido1}}
+                    {{certificadosPar.partipantesMatriculados.inscrito.usuario.persona.apellido2}}
 
                 </td>
 
                 <td style="width:12%; text-align: center;">
                     <div class="container" *ngIf="editing">
-                        <input pInputText type="text" [(ngModel)]="product.codigoSenecyt">
+                        <input pInputText type="text" [(ngModel)]="certificadosPar.codigoSenecyt">
                     </div>
                     <div class="container" *ngIf="!editing">
-                        {{product.codigoSenecyt}}
+                        {{certificadosPar.codigoSenecyt}}
                     </div>
+                </td>
+
+                <td style="width:12%; text-align: center;">
+
+                    <div class="con">
+                        <button pButton pRipple type="button" icon="pi pi-file-pdf" class="p-button p-button-danger"
+                            (click)="downloadCertificadoEstudianteSenecytDownload(certificadosPar)"></button>
+                    </div>
+
                 </td>
 
                 <td>
@@ -114,20 +128,20 @@
                     <div class="container" *ngIf="editing" style="text-align: center;">
                         <div class="con">
                             <button pButton pRipple type="button" icon="pi pi-file-pdf" class="p-button p-button-danger"
-                                (click)="showModaLImprimirMensal(product)"></button>
+                                (click)="showModaLImprimirMensal(certificadosPar)"></button>
                         </div>
                         <div class=" mt-1">
                             <!-- <div>
-                                <input type="file" id="pdf" name="pdf" (change)="handleFileInput($event, ri, product)">
+                                <input type="file" id="pdf" name="pdf" (change)="handleFileInput($event, ri, certificadosPar)">
                             </div> -->
 
                             <div class="file-upload-container">
                                 <label for="pdf" class="file-upload-label">
                                     <span class="file-upload-icon"><i class="pi pi-upload"></i></span>
-                                    <span class="file-upload-text ">{{ product.certificadoParticipante ? 'Actualizar' :
+                                    <span class="file-upload-text ">{{ certificadosPar.certificadoParticipante ? 'Actualizar' :
                                         'Seleccionar Certificado' }}</span>
                                 </label>
-                                <input type="file" id="pdf" name="pdf" (change)="handleFileInput($event, ri, product)">
+                                <input type="file" id="pdf" name="pdf" (change)="handleFileInput($event, ri, certificadosPar)">
                             </div>
 
 
@@ -137,8 +151,8 @@
 
                     <div *ngIf="!editing">
                         <i class="pi"
-                            [ngClass]="{'true-icon pi-check-circle': product.certificadoFirmado , 'false-icon pi-times-circle': !product.certificadoFirmado}"
-                            [ngStyle]="{'color': product.certificadoFirmado ? 'green' : 'red'}"></i>
+                            [ngClass]="{'true-icon pi-check-circle': certificadosPar.certificadoFirmado , 'false-icon pi-times-circle': !certificadosPar.certificadoFirmado}"
+                            [ngStyle]="{'color': certificadosPar.certificadoFirmado ? 'green' : 'red'}"></i>
                     </div>
                 </td>
             </tr>
@@ -147,9 +161,7 @@
 </div>
 
 
-
 <!-- IMPLEMENTACION DE LA VISUALIZAION DEL PDF -->
-
 
 <p-dialog
     header="{{'CERTIFICA A : ' + classCertificado.partipantesMatriculados?.inscrito!.usuario!.persona!.apellido1+ ' '+classCertificado.partipantesMatriculados?.inscrito!.usuario!.persona!.apellido2 +' '+classCertificado.partipantesMatriculados?.inscrito!.usuario!.persona!.nombre1 +' '+classCertificado.partipantesMatriculados?.inscrito!.usuario!.persona!.nombre2}}"
@@ -157,10 +169,13 @@
     [resizable]="false">
 
 
-    <div class="container" *ngIf="!pdfSrc">
+    <div class="cont" *ngIf="pdfSrc === ''">
+      
+        <p-messages [(value)]="msgs1" [enableService]="true" [closable]="false"></p-messages>
 
-        <img src="../../../../assets/img/istap.png" alt="" width="100%" height="480px">
-
+        <div class="center-image">
+            <img src="../../../../assets/img/istap.png" alt="" width="80%" height="350px">
+        </div>
 
     </div>
     <div class="mx-2" *ngIf="pdfSrc">

@@ -16,6 +16,8 @@ import { EntornoAprendizajeService } from 'src/app/service/entorno-aprendizaje.s
 import { PrerrequisitosCursoService } from 'src/app/service/prerrequisitosCurso.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DisenioCurriculares } from 'src/app/models/disenio-curriculares';
+import { ReportsCapacitacionesService } from 'src/app/service/reports-capacitaciones.service';
+
 
 @Component({
   selector: 'app-curricular',
@@ -32,6 +34,7 @@ export class CurricularDiseñoComponent implements OnInit {
     private evaluacionFinalCurricularService: EvaluacionFinalCurricularService,
     private prerrequitsitoCursoService: PrerrequisitosCursoService,
     private entornoAprendizajeService: EntornoAprendizajeService,
+    private reportService: ReportsCapacitacionesService,
     private actiRouter: ActivatedRoute,
   ) {
   }
@@ -118,16 +121,8 @@ export class CurricularDiseñoComponent implements OnInit {
     }
   }
 
-  public quitarElementoEvaluacionD(indx: any): void {
-    const index = this.listEvaluacionDiagnosticaCurricular.findIndex(
-      (item) => item.tecnicaEvaluar === indx
-    );
-    if (index !== -1) {
-      this.listEvaluacionDiagnosticaCurricular.splice(index, 1);
-    }
-
-
-    // this.listEvaluacionDiagnosticaCurricular.splice(index, 1);
+  public quitarElementoEvaluacionD(index: number): void {
+    this.listEvaluacionDiagnosticaCurricular.splice(index, 1);
   }
 
   /* FIN RESULTADOS Evaluacion Diagnostica */
@@ -148,14 +143,8 @@ export class CurricularDiseñoComponent implements OnInit {
     }
   }
 
-  public quitarElementoEvaluacionFormativa(inde: any): void {
-    // this.listEvaluacionFormativaCurricular.splice(index, 1);
-    const index = this.listEvaluacionFormativaCurricular.findIndex(
-      (item) => item.tecnicaFormativa === inde
-    );
-    if (index !== -1) {
-      this.listEvaluacionFormativaCurricular.splice(index, 1);
-    }
+  public quitarElementoEvaluacionFormativa(index: number): void {
+    this.listEvaluacionFormativaCurricular.splice(index, 1);
   }
 
   /* FIN RESULTADOS Evaluacion FORMATIVA */
@@ -176,15 +165,8 @@ export class CurricularDiseñoComponent implements OnInit {
     }
   }
 
-  public quitarElementoEvaluacionF(inde: any): void {
-    // this.listEvaluacionFinalCurricular.splice(index, 1);
-
-    const index = this.listEvaluacionFinalCurricular.findIndex(
-      (item) => item.tecnicaFormativaFinal === inde
-    );
-    if (index !== -1) {
-      this.listEvaluacionFinalCurricular.splice(index, 1);
-    }
+  public quitarElementoEvaluacionF(index: number): void {
+    this.listEvaluacionFinalCurricular.splice(index, 1);
   }
 
   /* FIN RESULTADOS Evaluacion FINAL */
@@ -207,14 +189,8 @@ export class CurricularDiseñoComponent implements OnInit {
     }
   }
 
-  public quitarEntornoAprendizaje(inde: any): void {
-    // this.listEntornoAprendizaje.splice(index, 1);
-    const index = this.listEntornoAprendizaje.findIndex(
-      (item) => item.instalaciones === inde
-    );
-    if (index !== -1) {
-      this.listEntornoAprendizaje.splice(index, 1);
-    }
+  public quitarEntornoAprendizaje(index: number): void {
+    this.listEntornoAprendizaje.splice(index, 1);
   }
 
   /* FIN RESULTADOS ENTORNO APRENDIZAJE */
@@ -406,6 +382,100 @@ export class CurricularDiseñoComponent implements OnInit {
 
   }
 
+  public cambiarEvaluacionDiagnosticaCurricularFalse(idEvalucionDiagnosticaCurricular: number): void {
+    this.evaluacionDiagnosticoCurricularService.getEvaluacionDiagnosticoCurricularById(idEvalucionDiagnosticaCurricular).subscribe(
+      data => {
+        this.evaluacionDiagnosticoCurricular = data;
+        this.evaluacionDiagnosticoCurricular.estadoEvaluacionDiagnostica = false;
+        this.evaluacionDiagnosticoCurricularService.cambiarEstadosEvaluacioDiagnosticaDisenioCurricularId(idEvalucionDiagnosticaCurricular, this.evaluacionDiagnosticoCurricular).subscribe(
+          dataTwo => {
+            this.traerDatosEvaluacionDiagnosticaFull(this.idDelDisenio!);
+            console.log("Se actualizo")
+          }
+        )
+      }
+    )
+
+  }
+
+  public cambiarEvaluacionDiagnosticaCurriculartrue(idEvalucionDiagnosticaCurricular: number): void {
+    this.evaluacionDiagnosticoCurricularService.getEvaluacionDiagnosticoCurricularById(idEvalucionDiagnosticaCurricular).subscribe(
+      data => {
+        this.evaluacionDiagnosticoCurricular = data;
+        this.evaluacionDiagnosticoCurricular.estadoEvaluacionDiagnostica = true;
+        this.evaluacionDiagnosticoCurricularService.cambiarEstadosEvaluacioDiagnosticaDisenioCurricularId(idEvalucionDiagnosticaCurricular, this.evaluacionDiagnosticoCurricular).subscribe(
+          dataTwo => {
+            this.traerDatosEvaluacionDiagnosticaFull(this.idDelDisenio!);
+            console.log("Se actualizo")
+          }
+        )
+      }
+    )
+
+  }
+
+  public cambiarEstadosEvaluacionFormativaFalse(idEvaluacionFormativa: number): void {
+    this.evaluacionFormativaCurricularService.getEvaluacionFormativaCurricularById(idEvaluacionFormativa).subscribe(
+      data => {
+        this.evaluacionFormativaCurricular= data;
+        this.evaluacionFormativaCurricular.estadoEvaluacionFormativa = false;
+        this.evaluacionFormativaCurricularService.updateEvaluacionFormativaCurricularEstadoId(idEvaluacionFormativa, this.evaluacionFormativaCurricular).subscribe(
+          dataTwo => {
+            this.traerDatosEvaluacionFormativaFull(this.idDelDisenio!);
+            console.log("Se actualizo")
+          }
+        )
+      }
+    )
+
+  }
+
+  public cambiarEstadosEvaluacionFormativaTrue(idEvaluacionFormativa: number): void {
+    this.evaluacionFormativaCurricularService.getEvaluacionFormativaCurricularById(idEvaluacionFormativa).subscribe(
+      data => {
+        this.evaluacionFormativaCurricular= data;
+        this.evaluacionFormativaCurricular.estadoEvaluacionFormativa = true;
+        this.evaluacionFormativaCurricularService.updateEvaluacionFormativaCurricularEstadoId(idEvaluacionFormativa, this.evaluacionFormativaCurricular).subscribe(
+          dataTwo => {
+            this.traerDatosEvaluacionFormativaFull(this.idDelDisenio!);
+            console.log("Se actualizo")
+          }
+        )
+      }
+    )
+
+  }
+
+  public cambiarEstadosEvaluacionFinalFalse(idEvaluacionFinal: number): void {
+    this.evaluacionFinalCurricularService.getEvaluacionFinalCurricularById(idEvaluacionFinal).subscribe(
+      data => {
+        this.evaluacionFinalCurricular= data;
+        this.evaluacionFinalCurricular.estadoEvaluacionFinal = false;
+        this.evaluacionFinalCurricularService.updateEvaluacionFinalCurricularEstadoId(idEvaluacionFinal, this.evaluacionFinalCurricular).subscribe(
+          dataTwo => {
+            this.traerDatosEvaluacionFinalFull(this.idDelDisenio!);
+            console.log("Se actualizo")
+          }
+        )
+      }
+    )
+
+  }
+  public cambiarEstadosEvaluacionFinalTrue(idEvaluacionFinal: number): void {
+    this.evaluacionFinalCurricularService.getEvaluacionFinalCurricularById(idEvaluacionFinal).subscribe(
+      data => {
+        this.evaluacionFinalCurricular= data;
+        this.evaluacionFinalCurricular.estadoEvaluacionFinal = true;
+        this.evaluacionFinalCurricularService.updateEvaluacionFinalCurricularEstadoId(idEvaluacionFinal, this.evaluacionFinalCurricular).subscribe(
+          dataTwo => {
+            this.traerDatosEvaluacionFinalFull(this.idDelDisenio!);
+            console.log("Se actualizo")
+          }
+        )
+      }
+    )
+
+  }
   /* MODAL */
   visible?: boolean;
   visibleTree?: boolean;
@@ -438,10 +508,7 @@ export class CurricularDiseñoComponent implements OnInit {
   
     this.disenioCurricularService.updateDisenioCurricular(this.idDelDisenio!, nuevoDisenioCurricular).subscribe(
       data => {
-        console.log('idO-> '+data.idDisenioCurricular!)
-        console.log('id-> '+this.idDelDisenio!)
-        //ID DEL DISEÑO CURRICULAR DE OTRA PARTE QUE RECIBE DEL DEÑO MAS NO DEL ID DEL SILABO
-        this.traerDatos(this.idSilaboCap!);
+        this.traerDatos(this.idDelDisenio!);
         console.log("Se actualizó el Diseño Curricular");
       }
     );
@@ -606,10 +673,13 @@ export class CurricularDiseñoComponent implements OnInit {
 
   }
   // FIN //
-
-  /* METODOS DE LIMPIAR */
-
-
-  /* */
+ // IMPRIMIR // VALIDAR idSilaboCapGlobal // idSilaboCap
+ public getReportDisenioCurricular() {
+  this.reportService.gedownloadDisenioC(this.idDelDisenio!)
+    .subscribe((r) => {
+      const url = URL.createObjectURL(r);
+      window.open(url, '_blank');
+    });
+}
 
 }

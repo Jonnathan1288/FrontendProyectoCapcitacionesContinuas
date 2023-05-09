@@ -25,7 +25,7 @@ export class EvaluacionDiagnosticoCurricularService {
   }
 
  
-  public cambiarEstadosEvaluacioinDiagnosticaDisenioCurricularId(id:number, evaluacionDiacnosticaCurricular: EvaluacionDiagnosticaCurriculares):Observable<EvaluacionDiagnosticaCurriculares>{
+  public cambiarEstadosEvaluacioDiagnosticaDisenioCurricularId(id:number, evaluacionDiacnosticaCurricular: EvaluacionDiagnosticaCurriculares):Observable<EvaluacionDiagnosticaCurriculares>{
     return this.http.put<EvaluacionDiagnosticaCurriculares>(environment.apiuri+'/evaluacionDiacnosticaCurricular/update/'+id, evaluacionDiacnosticaCurricular);
   }
 
