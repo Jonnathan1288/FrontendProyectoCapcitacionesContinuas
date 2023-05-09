@@ -9,4 +9,5 @@ export class Usuario {
     estadoUsuarioActivo?: boolean;
     persona?: Persona
     rol?: Rol
+    roles?: Rol[]
 }
