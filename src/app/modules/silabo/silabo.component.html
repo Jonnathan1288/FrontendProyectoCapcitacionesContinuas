@@ -159,7 +159,9 @@
                             <span class="p-float-label">
                                 <input type="text" pInputText id="temaUnidadSilabo" name="temaUnidadSilabo"
                                     [(ngModel)]="resultadoAprendizajeSilabo.temaUnidadSilabo">
-                                <label htmlFor="username">Unidades de Competencia</label>
+                                <label htmlFor="username">Unidades de Competencia
+                                    <label style="color: rgb(255, 0, 0); padding-left: 2px"> *</label>
+                                </label>
                             </span>
                         </div>
                     </div>
@@ -169,7 +171,9 @@
                                 <input type="text" pInputText id="elementosCompetenciaSilabo"
                                     name="elementosCompetenciaSilabo"
                                     [(ngModel)]="resultadoAprendizajeSilabo.elementosCompetenciaSilabo">
-                                <label htmlFor="username">Elementos de Competencia</label>
+                                <label htmlFor="username">Elementos de Competencia
+                                    <label style="color: rgb(255, 0, 0); padding-left: 2px"> *</label>
+                                </label>
                             </span>
                         </div>
                     </div>
@@ -179,7 +183,9 @@
                                 <input type="text" pInputText id="activadesResultadoAprendizaje"
                                     name="activadesResultadoAprendizaje"
                                     [(ngModel)]="resultadoAprendizajeSilabo.activadesResultadoAprendizaje">
-                                <label htmlFor="username">Resultados de Aprendizaje</label>
+                                <label htmlFor="username">Resultados de Aprendizaje
+                                    <label style="color: rgb(255, 0, 0); padding-left: 2px"> *</label>
+                                </label>
                             </span>
                         </div>
                     </div>
@@ -188,7 +194,9 @@
                             <span class="p-float-label">
                                 <input type="text" pInputText id="formaEvidenciar" name="formaEvidenciar"
                                     [(ngModel)]="resultadoAprendizajeSilabo.formaEvidenciar">
-                                <label htmlFor="username">Forma de evidenciar</label>
+                                <label htmlFor="username">Forma de evidenciar
+                                    <label style="color: rgb(255, 0, 0); padding-left: 2px"> *</label>
+                                </label>
                             </span>
                         </div>
                     </div>
@@ -203,7 +211,7 @@
                     </div>
                 </div>
                 <div class="col-md-12" style="text-align: center; margin: 5px;">
-                    <p-button label="Actualizar" icon="pi pi-check-square" styleClass="p-button-success  mb-2"
+                    <p-button  [label]="opcionCapResultado === 'C'? 'Crear':'Actualizar'" icon="pi pi-check-square" styleClass="p-button-success  mb-2"
                         (click)="actualizarResultadosEstrategia()"></p-button>
                 </div>
             </div>
@@ -218,7 +226,9 @@
                             <span class="p-float-label">
                                 <input type="text" pInputText id="diaContenido" name="diaContenido"
                                     [(ngModel)]="contenidosSilabo.diaContenido">
-                                <label htmlFor="username">Día</label>
+                                <label htmlFor="username">Día
+                                    <label style="color: rgb(255, 0, 0); padding-left: 2px"> *</label>
+                                </label>
                             </span>
                         </div>
                     </div>
@@ -227,7 +237,9 @@
                             <span class="p-float-label">
                                 <input type="text" pInputText id="temaContenido" name="temaContenido"
                                     [(ngModel)]="contenidosSilabo.temaContenido">
-                                <label htmlFor="username">Contenidos</label>
+                                <label htmlFor="username">Contenidos
+                                    <label style="color: rgb(255, 0, 0); padding-left: 2px"> *</label>
+                                </label>
                             </span>
                         </div>
                     </div>
@@ -236,8 +248,10 @@
                             <span class="p-float-label">
                                 <input type="text" pInputText id="actividadesDocencia" name="actividadesDocencia"
                                     [(ngModel)]="contenidosSilabo.actividadesDocencia">
-                                <label htmlFor="username">Actividades de Docencia</label>
-                                <p-inputNumber class="ml-5" mode="decimal" [showButtons]="true" inputId="minmax-buttons"
+                                <label htmlFor="username">Actividades de Docencia
+                                    <label style="color: rgb(255, 0, 0); padding-left: 2px"> *</label>
+                                </label>
+                                <p-inputNumber class="ml-2" style="max-width: 15%;" mode="decimal" [showButtons]="true" inputId="minmax-buttons"
                                     id="horasClaseContenido" name="horasClaseContenido" [min]="0" [max]="100"
                                     [(ngModel)]="contenidosSilabo.horasClaseContenido"> </p-inputNumber>
                             </span>
@@ -248,10 +262,13 @@
                             <span class="p-float-label">
                                 <input type="text" pInputText id="actividadesPracticas" name="actividadesPracticas"
                                     [(ngModel)]="contenidosSilabo.actividadesPracticas">
-                                <label htmlFor="username">Actividades Prácticas</label>
-                                <p-inputNumber class="ml-5" mode="decimal" [showButtons]="true" inputId="minmax-buttons"
+                                <label htmlFor="username">Actividades Prácticas
+                                    <label style="color: rgb(255, 0, 0); padding-left: 2px"> *</label>
+                                </label>
+                                <p-inputNumber class="ml-2" style="max-width: 15%;" mode="decimal" [showButtons]="true" inputId="minmax-buttons"
                                     id="horasPracticas" name="horasPracticas" [min]="0" [max]="100"
-                                    [(ngModel)]="contenidosSilabo.horasPracticas"> </p-inputNumber>
+                                    [(ngModel)]="contenidosSilabo.horasPracticas"> 
+                                </p-inputNumber>
                             </span>
                         </div>
                     </div>
@@ -260,8 +277,10 @@
                             <span class="p-float-label">
                                 <input type="text" pInputText id="actividadesAutonomas" name="actividadesAutonomas"
                                     [(ngModel)]="contenidosSilabo.actividadesAutonomas">
-                                <label htmlFor="username">Actividades de Trabajo autónomo</label>
-                                <p-inputNumber class="ml-5" mode="decimal" [showButtons]="true" inputId="minmax-buttons"
+                                <label htmlFor="username">Actividades de Trabajo autónomo
+                                    <label style="color: rgb(255, 0, 0); padding-left: 2px"> *</label>
+                                </label>
+                                <p-inputNumber class="ml-2" style="max-width: 15%;" mode="decimal" [showButtons]="true" inputId="minmax-buttons"
                                     id="horasAutonomas" name="horasAutonomas" [min]="0" [max]="100"
                                     [(ngModel)]="contenidosSilabo.horasAutonomas"> </p-inputNumber>
                             </span>
@@ -328,7 +347,9 @@
                             <span class="p-float-label">
                                 <input type="text" pInputText id="diaContenido" name="diaContenido"
                                     [(ngModel)]="contenidosSilabo.diaContenido">
-                                <label htmlFor="username">Día</label>
+                                <label htmlFor="username">Día
+                                    <label style="color: rgb(255, 0, 0); padding-left: 2px"> *</label>
+                                </label>
                             </span>
                         </div>
                     </div>
@@ -337,7 +358,9 @@
                             <span class="p-float-label">
                                 <input type="text" pInputText id="temaContenido" name="temaContenido"
                                     [(ngModel)]="contenidosSilabo.temaContenido">
-                                <label htmlFor="username">Contenidos</label>
+                                <label htmlFor="username">Contenidos
+                                    <label style="color: rgb(255, 0, 0); padding-left: 2px"> *</label>
+                                </label>
                             </span>
                         </div>
                     </div>
@@ -346,7 +369,9 @@
                             <span class="p-float-label">
                                 <input type="text" pInputText id="actividadesDocencia" name="actividadesDocencia"
                                     [(ngModel)]="contenidosSilabo.actividadesDocencia">
-                                <label htmlFor="username">Actividades de Docencia</label>
+                                <label htmlFor="username">Actividades de Docencia
+                                    <label style="color: rgb(255, 0, 0); padding-left: 2px"> *</label>
+                                </label>
                                 <p-inputNumber class="ml-5" mode="decimal" [showButtons]="true" inputId="minmax-buttons"
                                     id="horasClaseContenido" name="horasClaseContenido" [min]="0" [max]="100"
                                     [(ngModel)]="contenidosSilabo.horasClaseContenido"> </p-inputNumber>
@@ -358,7 +383,9 @@
                             <span class="p-float-label">
                                 <input type="text" pInputText id="actividadesPracticas" name="actividadesPracticas"
                                     [(ngModel)]="contenidosSilabo.actividadesPracticas">
-                                <label htmlFor="username">Actividades Prácticas</label>
+                                <label htmlFor="username">Actividades Prácticas
+                                    <label style="color: rgb(255, 0, 0); padding-left: 2px"> *</label>
+                                </label>
                                 <p-inputNumber class="ml-5" mode="decimal" [showButtons]="true" inputId="minmax-buttons"
                                     id="horasPracticas" name="horasPracticas" [min]="0" [max]="100"
                                     [(ngModel)]="contenidosSilabo.horasPracticas"> </p-inputNumber>
@@ -370,7 +397,9 @@
                             <span class="p-float-label">
                                 <input type="text" pInputText id="actividadesAutonomas" name="actividadesAutonomas"
                                     [(ngModel)]="contenidosSilabo.actividadesAutonomas">
-                                <label htmlFor="username">Actividades de Trabajo autónomo</label>
+                                <label htmlFor="username">Actividades de Trabajo autónomo
+                                    <label style="color: rgb(255, 0, 0); padding-left: 2px"> *</label>
+                                </label>
                                 <p-inputNumber class="ml-5" mode="decimal" [showButtons]="true" inputId="minmax-buttons"
                                     id="horasAutonomas" name="horasAutonomas" [min]="0" [max]="100"
                                     [(ngModel)]="contenidosSilabo.horasAutonomas"> </p-inputNumber>
@@ -388,7 +417,7 @@
                     </div>
                 </div>
                 <div class="col-md-12" style="text-align: center; margin: 5px;">
-                    <p-button label="Crear Nuevo" icon="pi pi-check-square" styleClass="p-button-success  mb-2" (onClick)="metodoElejidoContenidos()"></p-button>
+                    <p-button [label]="opcionDelContenido === 'C'? 'Crear':'Actualizar'" icon="pi pi-check-square" styleClass="p-button-success  mb-2" (onClick)="metodoElejidoContenidos()"></p-button>
                 </div>
             </div>
         </p-dialog>
@@ -405,7 +434,9 @@
                                 <input type="text" pInputText id="nombreEstrategiaMetodologica"
                                     name="nombreEstrategiaMetodologica"
                                     [(ngModel)]="estrategiasMetodologicas.nombreEstrategiaMetodologica">
-                                <label htmlFor="username">Nombre estrategia</label>
+                                <label htmlFor="username">Nombre estrategia
+                                    <label style="color: rgb(255, 0, 0); padding-left: 2px"> *</label>
+                                </label>
                             </span>
                         </div>
                     </div>
@@ -415,7 +446,9 @@
                                 <input type="text" pInputText id="finalidadEstrategiaMetodologica"
                                     name="finalidadEstrategiaMetodologica"
                                     [(ngModel)]="estrategiasMetodologicas.finalidadEstrategiaMetodologica">
-                                <label htmlFor="finalidadEstrategiaMetodologica">Finalidad</label>
+                                <label htmlFor="finalidadEstrategiaMetodologica">Finalidad
+                                    <label style="color: rgb(255, 0, 0); padding-left: 2px"> *</label>
+                                </label>
                             </span>
                         </div>
                     </div>
@@ -465,7 +498,9 @@
                             <input type="text" pInputText id="nombreEstrategiaMetodologica"
                                 name="nombreEstrategiaMetodologica"
                                 [(ngModel)]="estrategiasMetodologicas.nombreEstrategiaMetodologica">
-                            <label htmlFor="username">Nombre estrategia</label>
+                            <label htmlFor="username">Nombre estrategia
+                                <label style="color: rgb(255, 0, 0); padding-left: 2px"> *</label>
+                            </label>
                         </span>
                     </div>
                 </div>
@@ -475,12 +510,14 @@
                             <input type="text" pInputText id="finalidadEstrategiaMetodologica"
                                 name="finalidadEstrategiaMetodologica"
                                 [(ngModel)]="estrategiasMetodologicas.finalidadEstrategiaMetodologica">
-                            <label htmlFor="username">Finalidad</label>
+                            <label htmlFor="username">Finalidad
+                                <label style="color: rgb(255, 0, 0); padding-left: 2px"> *</label>
+                            </label>
                         </span>
                     </div>
                 </div>
                 <div class="col-md-12" style="text-align: center; margin: 5px;">
-                    <p-button label="Actualizar" icon="pi pi-check-square" styleClass="p-button-success  mb-2"
+                    <p-button [label]="opcionEscojidaEstrategia === 'C'? 'Crear':'Actualizar'" icon="pi pi-check-square" styleClass="p-button-success  mb-2"
                         (click)="metodoElejidoEstrategias()"></p-button>
                 </div>
             </div>
@@ -496,7 +533,9 @@
                     <span class="p-float-label">
                         <input type="text" pInputText id="nombre" name="nombre"
                         [(ngModel)]="materialesConvecionales.descripcionMaterialConvencional" required>
-                        <label class="form-label" htmlFor="username">Descripción</label>
+                        <label class="form-label" htmlFor="username">Descripción
+                            <label style="color: rgb(255, 0, 0); padding-left: 2px"> *</label>
+                        </label>
                     </span>
                 </div>
                 <div>
@@ -524,19 +563,21 @@
             </p-card>
 
             
-            <p-dialog header="Contenidos del Curso" [(visible)]="visibleSeven" [modal]="true"  [style]="{ width: '50vw', height: '450' }" [draggable]="false" [resizable]="false">
+            <p-dialog header="Materiales Convecionales" [(visible)]="visibleSeven" [modal]="true"  [style]="{ width: '50vw', height: '450' }" [draggable]="false" [resizable]="false">
                     <div class="grid p-fluid m-5">
                         <div class="col-12 md:col-12 mt-1">
                             <div class="p-inputgroup">
                                 <span class="p-float-label">
                                     <input type="text" pInputText id="nombre" name="nombre"
                                     [(ngModel)]="materialesConvecionales.descripcionMaterialConvencional">
-                                    <label htmlFor="username">Descripción</label>
+                                    <label htmlFor="username">Descripción
+                                        <label style="color: rgb(255, 0, 0); padding-left: 2px"> *</label>
+                                    </label>
                                 </span>
                             </div>
                         </div>
                         <div class="col-md-12" style="text-align: center; margin: 5px;">
-                            <p-button label="Actualizar" icon="pi pi-check-square" styleClass="p-button-success  mb-2"
+                            <p-button [label]="opcionEscojidaConvencional === 'C'? 'Crear':'Actualizar'" icon="pi pi-check-square" styleClass="p-button-success  mb-2"
                                 (click)="opcionAEnviar()"></p-button>
                         </div>
                     </div>
@@ -548,7 +589,9 @@
                     <span class="p-float-label">
                         <input type="text" pInputText id="nombre" name="nombre"
                             [(ngModel)]="materialesAudiovisuales.descripcionMaterialAudiovisual">
-                        <label htmlFor="username">Descripción</label>
+                        <label htmlFor="username">Descripción
+                            <label style="color: rgb(255, 0, 0); padding-left: 2px"> *</label>
+                        </label>
                     </span>
                 </div>
                 <div>
@@ -575,19 +618,21 @@
             </p-card>
         </p-card>
 
-        <p-dialog header="Contenidos del Curso" [(visible)]="visibleFive" [modal]="true"  [style]="{ width: '50vw', height: '450' }" [draggable]="false" [resizable]="false">
+        <p-dialog header="Materiales Audiovisuales" [(visible)]="visibleFive" [modal]="true"  [style]="{ width: '50vw', height: '450' }" [draggable]="false" [resizable]="false">
                 <div class="grid p-fluid m-5">
                     <div class="col-12 md:col-12 mt-1">
                         <div class="p-inputgroup">
                             <span class="p-float-label">
                                 <input type="text" pInputText id="nombre" name="nombre"
                                     [(ngModel)]="materialesAudiovisuales.descripcionMaterialAudiovisual">
-                                <label htmlFor="username">Descripción</label>
+                                <label htmlFor="username">Descripción
+                                    <label style="color: rgb(255, 0, 0); padding-left: 2px"> *</label>
+                                </label>
                             </span>
                         </div>
                     </div>
                     <div class="col-md-12" style="text-align: center; margin: 5px;">
-                        <p-button label="Actualizar" icon="pi pi-check-square" styleClass="p-button-success  mb-2"
+                        <p-button [label]="opcionElegida === 'C'? 'Crear':'Actualizar'" icon="pi pi-check-square" styleClass="p-button-success  mb-2"
                             (click)="actualizarAudiovisual()"></p-button>
                     </div>
                 </div>
@@ -614,7 +659,9 @@
                             <span class="p-float-label">
                                 <input type="text" pInputText id="campoFormacion" name="campoFormacion"
                                     [(ngModel)]="silabo.campoFormacion">
-                                <label htmlFor="username">Campo Formación del Silabo</label>
+                                <label htmlFor="username">Campo Formación del Silabo
+                                    <label style="color: rgb(255, 0, 0); padding-left: 2px"> *</label>
+                                </label>
                             </span>
                         </div>
                     </div>
@@ -623,7 +670,9 @@
                             <span class="p-float-label">
                                 <input type="text" pInputText id="campoRevisadoPor" name="campoRevisadoPor"
                                     [(ngModel)]="silabo.campoRevisadoPor">
-                                <label htmlFor="username">Nombre del revisador</label>
+                                <label htmlFor="username">Nombre del revisador
+                                    <label style="color: rgb(255, 0, 0); padding-left: 2px"> *</label>
+                                </label>
                             </span>
                         </div>
                     </div>
@@ -632,7 +681,9 @@
                             <span class="p-float-label">
                                 <input type="text" pInputText id="campoAprovadoPor" name="campoAprovadoPor"
                                     [(ngModel)]="silabo.campoAprovadoPor">
-                                <label htmlFor="username">Nombre del aprobador</label>
+                                <label htmlFor="username">Nombre del aprobador
+                                    <label style="color: rgb(255, 0, 0); padding-left: 2px"> *</label>
+                                </label>
                             </span>
                         </div>
                     </div>
