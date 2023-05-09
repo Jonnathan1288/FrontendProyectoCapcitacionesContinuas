@@ -52,12 +52,22 @@ export class ReportsCapacitacionesService {
   }
 
   //IMPRIMIR CERTIFICADOS POR EL USUARIO QUE LO SOLICITE
-  public downloadCertificadoEstudiante(idCurso: number, identificasion: string) {
+  public downloadCertificadoEstudiante(idCurso: number, identificasion: String) {
     return this.http.get(environment.apiuri+ '/generarCertificadoEstudiante/download/' + idCurso+'/'+identificasion, { responseType: 'blob' });
   }
 
   //IMPRIMIR ENTREGA DE CERTIFICADOS
   public downloadEntregaCertificadoEstudiante(idCurso: number) {
     return this.http.get(environment.apiuri+ '/entregaCertificadosCursoCapacitacion/download/' + idCurso, { responseType: 'blob' });
+  }
+
+  //Reportes que va tener el admin..
+  public gedownloadDisenioC(idDisenioC: number) {
+    return this.http.get(environment.apiuri+ '/generarDisenioCurricular/downloadDisenioC/'+idDisenioC, { responseType: 'blob' });
+  }
+
+  //Reportes ficha de evaluacion final..
+  public downloadFichaEvaluacionFinalCurso(idCurso: number) {
+    return this.http.get(environment.apiuri+ '/generarFichaEvaluacionFinalCurso/downloadDisenioC/'+idCurso, { responseType: 'blob' });
   }
 }

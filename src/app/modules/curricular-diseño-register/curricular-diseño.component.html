@@ -83,9 +83,9 @@
                     </div>
 
                 </div>
-                
+
             </form>
-            <div class="col-md-12" style="text-align: center; margin: 5px;"  *ngIf='validarIdDisenioCurricular == true'>
+            <div class="col-md-12" style="text-align: center; margin: 5px;" *ngIf='validarIdDisenioCurricular == true'>
                 <p-button label="Actualizar" icon="pi pi-check-square" styleClass="p-button-success  mb-2"
                     (click)="actualizarDisenioCurricular()"></p-button>
             </div>
@@ -152,11 +152,19 @@
                                     (click)="quitarElementoEvaluacionD(data.tecnicaEvaluar)"></button></td>
                             <td *ngIf='validarIdDisenioCurricular == true'>
                                 <!-- <button *ngIf='data.idResultadoAprendizajeSilabo == 0' pButton type="button" class="p-button-rounded p-button-danger" icon="pi pi-times" (click)="quitarElemento(data.idResultadoAprendizajeSilabo)"></button> -->
-
+                                <button *ngIf='data.estadoEvaluacionDiagnostica == true' pButton type="button"
+                                    class="p-button-rounded p-button-success" icon="pi pi-check-circle"
+                                    style="margin-right: 5px;"
+                                    (click)="cambiarEvaluacionDiagnosticaCurricularFalse(data.idEvaluacionDiagnosticaCurricular)"></button>
+                                <button *ngIf='data.estadoEvaluacionDiagnostica == false' pButton type="button"
+                                    class="p-button-rounded p-button-danger" style="margin-right: 5px;"
+                                    icon="pi pi-power-off"
+                                    (click)="cambiarEvaluacionDiagnosticaCurriculartrue(data.idEvaluacionDiagnosticaCurricular)"></button>
                                 <button pButton type="button"
                                     (click)="showModalEditEvaluacionDiagnostica(data.idEvaluacionDiagnosticaCurricular)"
                                     class="p-button-rounded p-button-info" icon="pi pi-pencil"
                                     style="margin-right: 5px;"></button>
+
                             </td>
                         </tr>
                     </ng-template>
@@ -191,6 +199,7 @@
                         </div>
                     </div>
                     <div class="col-md-12" style="text-align: center; margin: 5px;">
+
                         <p-button label="Actualizar" icon="pi pi-check-square" styleClass="p-button-success  mb-2"
                             (click)="actualizarEvaluacionDiagnostica()"></p-button>
                     </div>
@@ -258,7 +267,14 @@
                                     (click)="quitarElementoEvaluacionFormativa(data.tecnicaFormativa)"></button></td>
 
                             <td *ngIf='validarIdDisenioCurricular == true'>
-
+                                <button *ngIf='data.estadoEvaluacionFormativa == true' pButton type="button"
+                                    class="p-button-rounded p-button-success" icon="pi pi-check-circle"
+                                    style="margin-right: 5px;"
+                                    (click)="cambiarEstadosEvaluacionFormativaFalse(data.idEvalucionFormativaCurricular)"></button>
+                                <button *ngIf='data.estadoEvaluacionFormativa == false' pButton type="button"
+                                    class="p-button-rounded p-button-danger" style="margin-right: 5px;"
+                                    icon="pi pi-power-off"
+                                    (click)="cambiarEstadosEvaluacionFormativaTrue(data.idEvalucionFormativaCurricular)"></button>
                                 <button pButton type="button"
                                     (click)="showModalEditEvaluacionFormativa(data.idEvalucionFormativaCurricular)"
                                     class="p-button-rounded p-button-info" icon="pi pi-pencil"
@@ -361,7 +377,14 @@
                                     class="p-button-rounded p-button-danger" icon="pi pi-times"
                                     (click)="quitarElementoEvaluacionF(data.tecnicaFormativaFinal)"></button></td>
                             <td *ngIf='validarIdDisenioCurricular == true'>
-
+                                <button *ngIf='data.estadoEvaluacionFinal == true' pButton type="button"
+                                    class="p-button-rounded p-button-success" icon="pi pi-check-circle"
+                                    style="margin-right: 5px;"
+                                    (click)="cambiarEstadosEvaluacionFinalFalse(data.idEvaluacionFinal)"></button>
+                                <button *ngIf='data.estadoEvaluacionFinal == false' pButton type="button"
+                                    class="p-button-rounded p-button-danger" style="margin-right: 5px;"
+                                    icon="pi pi-power-off"
+                                    (click)="cambiarEstadosEvaluacionFinalTrue(data.idEvaluacionFinal)"></button>
                                 <button pButton type="button"
                                     (click)="showModalEditEvaluacionFinal(data.idEvaluacionFinal)"
                                     class="p-button-rounded p-button-info" icon="pi pi-pencil"
@@ -483,7 +506,7 @@
 
                             <td *ngIf='validarIdDisenioCurricular == true'>
                                 <!-- <button *ngIf='data.idResultadoAprendizajeSilabo == 0' pButton type="button" class="p-button-rounded p-button-danger" icon="pi pi-times" (click)="quitarElemento(data.idResultadoAprendizajeSilabo)"></button> -->
-                                <button  *ngIf='data.estadoEntornoAprendizaje == true' pButton type="button"
+                                <button *ngIf='data.estadoEntornoAprendizaje == true' pButton type="button"
                                     class="p-button-rounded p-button-success" icon="pi pi-check-circle"
                                     style="margin-right: 5px;"
                                     (click)="cambiarEstadoEntornoAprendizajeCurricularFalse(data.idEntornoCurricular)"></button>
@@ -506,6 +529,11 @@
                 <p-button *ngIf='validarIdDisenioCurricular == false' label="Generar Diseño Curricular"
                     icon="icono fas fa-duotone fa-save" styleClass="p-button-success  mb-2"
                     (onClick)="generarDisenioCurricular()"></p-button>
+                
+            </div>
+            <div class="col-md-12" style="text-align: center; margin: 5px;">
+                <p-button label="Generar PDF" icon="pi pi-file-pdf" styleClass="p-button-danger  mb-2"
+                    (onClick)="getReportDisenioCurricular()"></p-button>
             </div>
             <p-dialog header="Entorno Aprendizaje Curricular" [(visible)]="visible" [modal]="true"
                 [style]="{ width: '50vw', height: '450' }" [draggable]="false" [resizable]="false">

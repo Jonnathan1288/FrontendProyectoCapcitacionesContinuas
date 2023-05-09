@@ -29,3 +29,100 @@
 .rechazado {
   background-color: red;
 }
+
+
+
+/* PARA LOS ROLES */
+
+/* .horizontal-table {
+  width: 100%;
+}
+
+.header-cell {
+  background-color: #f2f2f2;
+  color: #333;
+  font-weight: bold;
+  text-align: center;
+}
+
+.data-cell {
+  padding: 10px;
+  text-align: center;
+}
+
+.role-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f8f8f8;
+  border-radius: 6px;
+  padding: 20px;
+}
+
+.role-icon {
+  font-size: 48px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.role-name {
+  font-size: 16px;
+  color: #555;
+}
+
+@media screen and (max-width: 600px) {
+  .horizontal-table .p-datatable-thead > tr,
+  .horizontal-table .p-datatable-tbody > tr {
+    display: block;
+  }
+
+  .horizontal-table .p-datatable-tbody > tr {
+    margin-bottom: 10px;
+    border: none;
+  }
+
+  .horizontal-table .p-datatable-tbody > tr > td {
+    display: block;
+    width: 100%;
+    text-align: center;
+  }
+} */
+
+.role-table {
+  width: 100%;
+}
+
+.header-cell {
+  background-color: #f2f2f2;
+  color: #333;
+  font-weight: bold;
+  text-align: center;
+}
+
+.data-cell {
+  text-align: center;
+}
+
+.assign-button {
+  margin: 0 auto;
+}
+
+
+
+
+
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.role-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* Estilos adicionales si es necesario */
+
+
+
+

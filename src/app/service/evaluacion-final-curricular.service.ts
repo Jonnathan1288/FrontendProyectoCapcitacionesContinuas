@@ -27,6 +27,9 @@ export class EvaluacionFinalCurricularService {
     return this.http.put<EvaluacionFinalCurriculares>(`${environment.apiuri}/evaluacionFinalCurricular/update/${ idEvaluacionFinalCurricular}`, evaluacionFinalCurricular);
   }
 
+  public updateEvaluacionFinalCurricularEstadoId( idEvaluacionFinalCurricular: number, evaluacionFinalCurricular: EvaluacionFinalCurriculares): Observable<EvaluacionFinalCurriculares> {
+    return this.http.put<EvaluacionFinalCurriculares>(`${environment.apiuri}/evaluacionFinalCurricular/update/${ idEvaluacionFinalCurricular}`, evaluacionFinalCurricular);
+  }
   public getEvaluacionFinalCurricularPorDisenioById(id: number):Observable<EvaluacionFinalCurriculares[]>{
     return this.http.get<EvaluacionFinalCurriculares[]>(environment.apiuri+'/evaluacionFinalporDisenioCurricular/findbyId/'+id);
   }
