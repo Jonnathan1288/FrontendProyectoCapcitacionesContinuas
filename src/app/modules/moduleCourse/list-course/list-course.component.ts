@@ -13,12 +13,55 @@ import { CursoService } from 'src/app/service/curso.service';
 export class ListCourseComponent implements OnInit {
   public curso = new Curso();
   public capacitador = new Capacitador();
-
+  public items:any;
   public cursoList: Curso[] = [];
 
   first = 0;
-
+  layout: string = 'list';
   rows = 5;
+
+  public idCapClicl!: number;
+  capId(idCurso:number){
+    alert(idCurso);
+    this.idCapClicl = idCurso;
+  }
+
+  opcionesBotonesLista(idCurso:number){
+    this.items = [
+      {
+        tooltipOptions: {
+          tooltipLabel: 'Editar'
+        },
+        icon: 'pi pi-pencil',
+        routerLink: ['/register/course', idCurso]
+      },
+      {
+        tooltipOptions: {
+            tooltipLabel: 'Silabo'
+        },
+        icon: 'pi pi-book',
+        routerLink: ['/silabo',idCurso]
+      },
+      {
+        tooltipOptions: {
+          tooltipLabel: 'Necesidad'
+        },
+        icon: 'pi pi-file-pdf',
+        routerLink: ['/register/necesidad',idCurso]
+      },
+      {
+        tooltipOptions: {
+          tooltipLabel: 'Registro Fotográfico'
+        },
+        icon: 'pi pi-camera',
+        routerLink: ['/registro/fotografico/curso/', idCurso]
+      },
+      {
+          icon: 'pi pi-external-link',
+      }
+  ];
+
+  }
 
   public idUsuarioIsLoggin: any;
   public idCapacitador: any;
@@ -30,6 +73,7 @@ export class ListCourseComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    // this.opcionesBotonesLista();
     this.idUsuarioIsLoggin = localStorage.getItem('id_username');
     this.listCourseporUsuarioLogin(this.idUsuarioIsLoggin);
   }
