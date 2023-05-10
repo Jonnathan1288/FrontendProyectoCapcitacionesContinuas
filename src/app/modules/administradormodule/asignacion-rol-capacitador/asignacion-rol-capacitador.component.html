@@ -216,15 +216,15 @@
         <embed style="border-radius: 10px; " [src]="fileUrl" type="application/pdf" width="100%" height="500px" />
     </div>
 
-    <div class="mx-2" *ngIf="pdfSrc">
-        <embed style="border-radius: 10px; " [src]="pdfSrc" type="application/pdf" width="100%" height="500px" />
+    <div class="mx-2" *ngIf="isInNewComponet">
+        <app-disenio-hoja-vida [idCapacitadorGlobal2]="idCapacitadorSend"></app-disenio-hoja-vida>
+        <!-- <embed style="border-radius: 10px; " [src]="pdfSrc" type="application/pdf" width="100%" height="500px" /> -->
     </div>
 
-    <div class="mx-2" *ngIf="!fileUrl && !pdfSrc">
+    <div class="mx-2" *ngIf="!fileUrl && !pdfSrc && !isInNewComponet">
         <div class="container">
             Este docente capacitador no tiene hoja de vida
         </div>
-
     </div>
 
     <div class="grid p-fluid ">

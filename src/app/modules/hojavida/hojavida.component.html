@@ -43,11 +43,11 @@
 <div class="card flex justify-content-center m-5"  *ngIf="idNewHojaVida">
   <p-panel>
     <h2>MI HOJA DE VIDA</h2>
-      <p-card style="margin: 5px;">
+      <!-- <p-card style="margin: 5px;">
         <img
           src="https://img.freepik.com/foto-gratis/concepto-emociones-personas-foto-cabeza-hombre-guapo-aspecto-serio-barba-confiado-decidido_1258-26730.jpg"
           alt="Img Capacitador" width="300" height="300">
-      </p-card>
+      </p-card> -->
       <p-card style="margin: 5px;">
         <h4>SOBRE MI</h4>
         <div class="form-floating">
@@ -84,6 +84,8 @@
     <div class="r" style="margin: 5px; text-align: center;">
       <p-button *ngIf="isExiste === false" label="Guardar Hoja de Vida" (onClick)="guardarHojaVida()" styleClass="p-button-success"></p-button>
       <p-button *ngIf="isExiste === true" label="Actualizar Hoja de Vida" (onClick)="actulizarHojaVida()" styleClass="p-button-success"></p-button>
+      <p-button *ngIf="isExiste === true" label="Ver Hoja de Vida" (onClick)="verrHojaVida()" styleClass="p-button-success"></p-button>
+
     </div>
 
   </p-panel>

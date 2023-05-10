@@ -5,6 +5,7 @@ import { HojaVidaCapacitadorService } from 'src/app/service/hoja-vida-capacitado
 import { HojaVidaCapacitador } from 'src/app/models/hoja-vida-capacitador';
 import { CapacitadorService } from 'src/app/service/capacitador.service';
 import { Capacitador } from 'src/app/models/capacitador';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-hojavida',
@@ -18,7 +19,9 @@ export class HojavidaComponent  implements OnInit{
     private toastrService: ToastrService,
     sanitizer: DomSanitizer,
     private hojaVidaService: HojaVidaCapacitadorService,
-    private capcitadporService: CapacitadorService
+    private capcitadporService: CapacitadorService,
+    private activeRouter: ActivatedRoute,
+    private router: Router,
   ){
     this.sanitizer = sanitizer;
   }
@@ -47,6 +50,7 @@ export class HojavidaComponent  implements OnInit{
   idHojaVidaExsitente?: number;
   isExiste!: boolean;
   capacitador: Capacitador = new Capacitador();
+  idCapacitadorCap!:number;
   public validarExistenciaCV():void{
     this.hojaVidaService.validarExstenciaHojaVida(this.idUsuarioLoggic).subscribe(
       data =>{
@@ -56,6 +60,8 @@ export class HojavidaComponent  implements OnInit{
           this.capcitadporService.getCapacitadorByUsuarioIdUsuario(this.idUsuarioLoggic).subscribe(
             data=>{
               this.capacitador = data;
+              this.idCapacitadorCap = this.capacitador.idCapacitador!;
+              console.log("id -> " + this.idCapacitadorCap)
             }
           )
         } else {
@@ -67,6 +73,13 @@ export class HojavidaComponent  implements OnInit{
               this.idHojaVidaExsitente = this.hojaVidaCapacitador!.idHojaVida;
               this.mostrarPDF_BDA();
               console.log("Datos -> " + this.idHojaVidaExsitente)
+              this.capcitadporService.getCapacitadorByUsuarioIdUsuario(this.idUsuarioLoggic).subscribe(
+                data=>{
+                  this.capacitador = data;
+                  this.idCapacitadorCap = this.capacitador.idCapacitador!;
+                  console.log("id -> " + this.idCapacitadorCap)
+                }
+              )
             }
           )
         }
@@ -150,5 +163,10 @@ export class HojavidaComponent  implements OnInit{
     this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
       window.URL.createObjectURL(pdfBlob)
     );
+  }
+
+  // PASAR IDS
+  public verrHojaVida():void{
+    this.router.navigate(['/ver/hojaVida/capacitador/', this.idCapacitadorCap ]);
   }
 }
