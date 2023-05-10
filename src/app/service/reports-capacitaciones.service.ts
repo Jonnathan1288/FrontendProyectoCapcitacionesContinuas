@@ -70,4 +70,9 @@ export class ReportsCapacitacionesService {
   public downloadFichaEvaluacionFinalCurso(idCurso: number) {
     return this.http.get(environment.apiuri+ '/generarFichaEvaluacionFinalCurso/downloadDisenioC/'+idCurso, { responseType: 'blob' });
   }
+
+  //Reportes diseño curricular
+  public downloadDisenioCurricular(id: number) {
+    return this.http.get(environment.apiuri+ '/generarDisenioCurricular/downloadDisenioC/'+id, { responseType: 'blob' });
+  }
 }

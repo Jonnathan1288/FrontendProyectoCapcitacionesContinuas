@@ -7,12 +7,14 @@ import { Persona } from 'src/app/models/persona';
 import { Programas } from 'src/app/models/programa';
 import { Usuario } from 'src/app/models/usuario';
 import { CursoService } from 'src/app/service/curso.service';
+import { DisenioCurricularService } from 'src/app/service/disenio-curricular.service';
 import { HojaVidaCapacitadorService } from 'src/app/service/hoja-vida-capacitador.service';
 import { PeriodoProgramaService } from 'src/app/service/periodo-programa.service';
 import { PersonaService } from 'src/app/service/persona.service';
 import { ProgramasService } from 'src/app/service/programas.service';
 import { ReportsCapacitacionesService } from 'src/app/service/reports-capacitaciones.service';
 import { UsuarioService } from 'src/app/service/usuario.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-validacion-cursos-capacitacion',
@@ -49,7 +51,9 @@ export class ValidacionCursosCapacitacionComponent implements OnInit {
     private userService: UsuarioService,
     private hojaVidaService: HojaVidaCapacitadorService,
     sanitizer: DomSanitizer,
-    private reportService: ReportsCapacitacionesService
+    private reportService: ReportsCapacitacionesService,
+    private disenioService: DisenioCurricularService,
+    private toastrService: ToastrService
   ) {
     this.sanitizer = sanitizer
   }
@@ -172,7 +176,20 @@ export class ValidacionCursosCapacitacionComponent implements OnInit {
         break;
 
       case 3:
-        
+        this.disenioService.getDisenioCurricularPorSilaboCursoById(idCurso).subscribe((data)=>{
+          if(data != null){
+            this.reportService.downloadDisenioCurricular(data.idDisenioCurricular!).subscribe((data)=>{
+              if(data != null){
+                const url = URL.createObjectURL(data);
+                this.pdfSrc = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+              }
+            })
+          }
+        }, (err)=>{
+          this.toastrService.error('Este curso no tiene diseño curricular', 'NO HAY DISEÑO CURRICULAR');
+
+        })
+    
         break;
     }
 
