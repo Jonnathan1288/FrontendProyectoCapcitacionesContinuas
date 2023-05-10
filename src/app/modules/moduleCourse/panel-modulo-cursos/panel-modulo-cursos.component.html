@@ -56,7 +56,7 @@
         <!-- <canvas id="confetti"></canvas> -->
 
         <div  *ngIf='progreso >= 100' class="overview-text" style="text-align: center;">
-            <button pButton type="button" label="Danger" class="p-button-warning" label="Ver Certificado"><i class="pi pi-file-pdf m-2"></i></button>
+            <button pButton type="button" label="Danger" (click)="downloadCertificadoEstudianteSenecytDownload()" class="p-button-warning" label="Ver Certificado"><i class="pi pi-file-pdf m-2"></i></button>
         </div>
     </div>
 
