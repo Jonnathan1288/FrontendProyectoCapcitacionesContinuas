@@ -1,5 +1,5 @@
 
-<button pButton type="button" label="Sincronizar Datos" class="p-button-success m-2" (click)="verificarOtraerDatosFichaAlmacenados()"></button>
+<!-- <button pButton type="button" label="Sincronizar Datos" class="p-button-success m-2" (click)="verificarOtraerDatosFichaAlmacenados()"></button> -->
 
 
 <p-card header="INFORMACIÓN DEL CURSO"
@@ -153,8 +153,11 @@
         </div>
       </p-card>
       <div class='form-group'>
-        <div class='' style="text-align: center;">
+        <div *ngIf="isInscritoInCourse === false" class='' style="text-align: center;">
           <button pButton type="submit" label="Generar Ficha de Inscripcion" class="p-button-success"></button>
+        </div>
+        <div *ngIf="isInscritoInCourse === true" class='' style="text-align: center;">
+          <button pButton type="submit" label="Actualizar Ficha de Inscripcion" class="p-button-success"></button>
         </div>
       </div>
     </form>

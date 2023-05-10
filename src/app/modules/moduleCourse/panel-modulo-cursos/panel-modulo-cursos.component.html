@@ -46,16 +46,21 @@
                 <p style="text-align: center;" *ngIf='progreso <= 99' >Progreso del curso</p>
                 <p-progressBar *ngIf='progreso <= 99' [value]="progreso.toFixed(0)"></p-progressBar>
                 <p-progressBar *ngIf='progreso >= 99' [value]="100"></p-progressBar>
-                <img *ngIf='progreso >= 100' src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/169963/Screenshot_2015-10-11_21.43.12.png" alt="" class="m-1">
+                <img *ngIf='progreso >= 100 && estadoAprobacionCurso == "A"' src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/169963/Screenshot_2015-10-11_21.43.12.png" alt="" class="m-1">
                 <div>
-                    <span style="text-align: center; color: rgb(189, 193, 0);"  *ngIf='progreso >= 100'><strong>
+                    <span style="text-align: center; color: rgb(189, 193, 0);"  *ngIf='progreso >= 100 && estadoAprobacionCurso == "A"'><strong>
                         <i class="fas fa-star"></i>Felicitaciones</strong></span>
+                </div>
+                <img *ngIf='progreso >= 100 && estadoAprobacionCurso == "R"' src="https://cdn.pixabay.com/photo/2021/07/22/17/55/sad-6485840_1280.png" width="180px" height="180px" alt="" class="m-4">
+                <div>
+                    <span style="text-align: center; color: rgb(193, 39, 0);"  *ngIf='progreso >= 100 && estadoAprobacionCurso == "R"'><strong>
+                        <i class="fas fa-solid fa-ghost" style="padding-right: 5px;"></i>Lo siento no has Aprobado</strong></span>
                 </div>
             </div>
         </div>
         <!-- <canvas id="confetti"></canvas> -->
 
-        <div  *ngIf='progreso >= 100' class="overview-text" style="text-align: center;">
+        <div  *ngIf='progreso >= 100&& estadoAprobacionCurso == "A"' class="overview-text" style="text-align: center;">
             <button pButton type="button" label="Danger" (click)="downloadCertificadoEstudianteSenecytDownload()" class="p-button-warning" label="Ver Certificado"><i class="pi pi-file-pdf m-2"></i></button>
         </div>
     </div>

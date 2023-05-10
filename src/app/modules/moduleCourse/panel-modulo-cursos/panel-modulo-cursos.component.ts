@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Curso } from 'src/app/models/curso';
+import { ParticipantesMatriculados } from 'src/app/models/participantesMatriculados';
 import { Usuario } from 'src/app/models/usuario';
 import { LoadScript } from 'src/app/scripts/load-script';
 import { CursoService } from 'src/app/service/curso.service';
+import { ParticipanteMatriculadoService } from 'src/app/service/participante-matriculado.service';
 import { ReportsCapacitacionesService } from 'src/app/service/reports-capacitaciones.service';
 import { UsuarioService } from 'src/app/service/usuario.service';
 
@@ -20,7 +22,8 @@ export class PanelModuloCursosComponent implements OnInit {
     private router: Router,
     private activateRoute: ActivatedRoute,
     private reportService: ReportsCapacitacionesService,
-    private usuarioService: UsuarioService
+    private usuarioService: UsuarioService,
+    private participantesMatriulados: ParticipanteMatriculadoService
   ) {
   }
 
@@ -33,6 +36,7 @@ export class PanelModuloCursosComponent implements OnInit {
       this.idCursoGlobal = idCurso;
       this.verProgreso();
       this.datosDelUsuario();
+      this.buscarAlUsuario();
     });
   }
 
@@ -46,7 +50,29 @@ export class PanelModuloCursosComponent implements OnInit {
   }
 
   // VALIDACION SI APROBO O NO APROBO
-  
+  listaParticipantes: ParticipantesMatriculados[] = [];
+  public buscarAlUsuario():void{
+    this.participantesMatriulados.getParticipantesMatriculadosByIdCurso(this.idCursoGlobal!).subscribe(
+      data=>{
+        this.listaParticipantes = data;
+        console.log(this.listaParticipantes); 
+        this.buscarEnLista();
+      }
+    )
+  }
+
+  estadoAprobacionCurso!:String;
+  buscarEnLista(){
+    for (let participantes of this.listaParticipantes) {
+      console.log("esta buscado esta id de usuario " + this.idUsuarioIsLoggin)
+      if (participantes.inscrito?.usuario?.idUsuario == this.idUsuarioIsLoggin) {
+        this.estadoAprobacionCurso = participantes.estadoParticipanteAprobacion!;
+      } else {
+        console.log(" no encontroo")
+      }
+    }
+    console.log("Este es su estado -> " + this.estadoAprobacionCurso)
+  }
   //
 
   // CALCULAR EL PROGRESO

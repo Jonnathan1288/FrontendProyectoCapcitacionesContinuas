@@ -43,7 +43,7 @@ export class MatriculComponent implements OnInit {
 
   ngOnInit(): void {
     this.idUserLoggin = localStorage.getItem('id_username');
-    this.traerUsuarioLogin(this.idUserLoggin);
+    this.traerUsuarioLogin();
     this.activateRoute.params.subscribe((param) => {
       const idCursoROut = param['id'];
       this.idCursoCap = idCursoROut;
@@ -53,26 +53,26 @@ export class MatriculComponent implements OnInit {
   }
   
 
-  public traerUsuarioLogin(idUsuario: number) {
-    this.usuarioServie.getUsuarioById(idUsuario).subscribe((data) => {
+  public traerUsuarioLogin() {
+    this.usuarioServie.getUsuarioById(this.idUserLoggin).subscribe((data) => {
       this.usuario = data;
       this.idUsuarioLogin = this.usuario.idUsuario!;
+      this.verificarOtraerDatosFichaAlmacenados();
     });
   }
 
+  
   idUsuarioLogin!:number;
-  idUsuarioLoginInvalid:number = 7;
-
   public verificarOtraerDatosFichaAlmacenados(){
     this.detalleFichaMatriculaService.getDetalleFichaMatriculaByIdPorUsuario(this.idUsuarioLogin).subscribe(
       data =>{
         if (data!) {
           this.detallefichaMatricula = data
-          console.log("Esto trae -> " + this.detallefichaMatricula.idDetalleFichaMatricula + " respuestas : " + this.detallefichaMatricula.pregunta1);
         } else {
           console.log("nuevo")
           this.detallefichaMatricula = new DetalleFichaMatricula();
         }
+        this.ValidarSuIsncripcion();
       }
     )
   }
@@ -116,29 +116,29 @@ export class MatriculComponent implements OnInit {
       });
   }
 
-  editarDetalleFichaMatricula(detalle: DetalleFichaMatricula): void {
-    if (detalle.idDetalleFichaMatricula) {
-      this.detalleFichaMatriculaService
-        .editDetalleFichaMatricula(detalle.idDetalleFichaMatricula, detalle)
-        .subscribe(
-          (updatedDetalle) => {
-            console.log(
-              `Detalle de ficha de matrícula actualizado: ${updatedDetalle.idDetalleFichaMatricula}`
-            );
-          },
-          (error) => {
-            console.error(
-              'Error al actualizar el detalle de ficha de matrícula: ',
-              error
-            );
-          }
-        );
-    } else {
-      console.error(
-        'El ID del detalle de ficha de matrícula es nulo o no definido'
-      );
-    }
-  }
+  // editarDetalleFichaMatricula(detalle: DetalleFichaMatricula): void {
+  //   if (detalle.idDetalleFichaMatricula) {
+  //     this.detalleFichaMatriculaService
+  //       .editDetalleFichaMatricula(detalle.idDetalleFichaMatricula, detalle)
+  //       .subscribe(
+  //         (updatedDetalle) => {
+  //           console.log(
+  //             `Detalle de ficha de matrícula actualizado: ${updatedDetalle.idDetalleFichaMatricula}`
+  //           );
+  //         },
+  //         (error) => {
+  //           console.error(
+  //             'Error al actualizar el detalle de ficha de matrícula: ',
+  //             error
+  //           );
+  //         }
+  //       );
+  //   } else {
+  //     console.error(
+  //       'El ID del detalle de ficha de matrícula es nulo o no definido'
+  //     );
+  //   }
+  // }
 
   //mATRICULAS
   public getReportNecesidadCurso(idInscripcion: number) {
@@ -149,4 +149,26 @@ export class MatriculComponent implements OnInit {
         window.open(url, '_blank');
       });
   }
+
+  // validar si ya se inscribio en el curso
+  isInscritoInCourse!:boolean;
+  public ValidarSuIsncripcion():void{
+    this.inscritosService.getInscrioValidacion(this.idCursoCap,this.idUserLoggin).subscribe(
+      data => {
+        if (data == true) {
+          // alert('Ya estas inscrito')
+          this.isInscritoInCourse = true;
+          this.inscritosService.getInscritoByIdUsuario(this.idUserLoggin).subscribe(
+            data =>{
+              this.inscritos = data;
+            }
+          )
+        } else {
+          console.log("NO esta inscrito en este curso")
+          this.isInscritoInCourse = false;
+        }
+      }
+    )
+  }
+
 }

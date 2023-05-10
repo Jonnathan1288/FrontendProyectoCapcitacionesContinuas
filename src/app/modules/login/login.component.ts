@@ -64,11 +64,11 @@ export class LoginComponent implements OnInit {
                 localStorage.setItem('rol', String(rol.nombreRol));
               }
 
-              // setTimeout(() => {
-              //   this.showSpinner = false;
-              //   window.location.reload();
-              //   location.replace('/home');
-              // }, 1500);
+              setTimeout(() => {
+                this.showSpinner = false;
+                window.location.reload();
+                location.replace('/home');
+              }, 1500);
             }
           } else {
             this.toastrService.error(

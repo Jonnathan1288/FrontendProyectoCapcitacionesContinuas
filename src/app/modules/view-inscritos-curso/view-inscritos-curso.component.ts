@@ -146,7 +146,6 @@ export class ViewInscritosCursoComponent implements OnInit {
         console.log('Las fechas son iguales');
 
         //Fecha donde de habilita
-       
       } else if (fechaActual > fechaInicioAdjusted) {
         this.estadoCurso = 'IN';
         console.log('La fecha actual es posterior a la fecha de inicio');
