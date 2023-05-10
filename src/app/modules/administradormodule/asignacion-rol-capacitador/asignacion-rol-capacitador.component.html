@@ -14,32 +14,48 @@
         </ng-template>
     </p-toolbar>
 
-    <p-table #dt [value]="listClassCapacitador" [rows]="5" [paginator]="true"
-        [globalFilterFields]="['nombrePrograma','periodoPrograma.fechaInicioPeriodoPrograma','representative.name','status']"
-        responsiveLayout="scroll" [rowHover]="true" dataKey="id"
-        currentPageReportTemplate="Mostrando {first} de {last} de {totalRecords} registros fotograficos"
-        [showCurrentPageReport]="true">
+    <p-table #dt [value]="listDocentesCapacitadoresFilter" dataKey="id" styleClass="p-datatable-customers" [rowHover]="true" [rows]="5"
+    [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,15]"  responsiveLayout="scroll"
+    [paginator]="true" currentPageReportTemplate="Mostrando {first} to {last} of {totalRecords} capacitadores"
+    [filterDelay]="0" 
+    [showCurrentPageReport]="true">
         <ng-template pTemplate="caption">
             <div class="flex align-items-center justify-content-between">
                 <h5 class="m-0"><strong>DOCENTES CAPACITADORES</strong></h5>
+                <p-selectButton [options]="stateOptions" [(ngModel)]="estadoValidacionBusqueda" optionLabel="label"
+                    optionValue="value"></p-selectButton>
+
                 <span class="p-input-icon-left">
                     <i class="pi pi-search"></i>
-                    <input pInputText type="text" placeholder="Search..." (input)="filterGlobal($event)" />
+                    <input *ngIf="estadoValidacionBusqueda === 'off'" pInputText type="text"
+                        placeholder="Docentes capacitadores..." (input)="filterEventDocentesCapacitadores($event)" />
+
+                    <input *ngIf="estadoValidacionBusqueda === 'on'" pInputText type="text"
+                        placeholder="Docente fenix..." (input)="filterGlobalDocenteFenix($event)" maxlength="10" onkeypress='return event.charCode >= 48 && event.charCode <= 57' />
                 </span>
             </div>
         </ng-template>
         <ng-template pTemplate="header">
             <tr>
 
-                <th pSortableColumn="nombrePrograma">NOMRBES <p-sortIcon field="nombrePrograma"></p-sortIcon></th>
-                <th pSortableColumn="periodoPrograma">IDENTIFICASIÓN<p-sortIcon field="periodoPrograma"></p-sortIcon>
+                <th pSortableColumn="usuario.persona.nombre1">NOMRBES <p-sortIcon field="usuario.persona.nombre1"></p-sortIcon></th>
+                <th pSortableColumn="usuario.persona.identificacion">IDENTIFICASIÓN<p-sortIcon field="usuario.persona.identificacion"></p-sortIcon>
                 </th>
-                <th pSortableColumn="category">NOMBRE DE CUENTA<p-sortIcon field="category"></p-sortIcon></th>
-                <th pSortableColumn="descripcionFoto">TITÚLO<p-sortIcon field="descripcionFoto"></p-sortIcon></th>
+                <th pSortableColumn="usuario.username">NOMBRE DE CUENTA<p-sortIcon field="usuario.username"></p-sortIcon></th>
+                <th pSortableColumn="tituloCapacitador">TITÚLO<p-sortIcon field="tituloCapacitador"></p-sortIcon></th>
                 <th pSortableColumn="inventoryStatus">HOJA DE VIDA <p-sortIcon field="inventoryStatus"></p-sortIcon>
                 </th>
 
-                <th pSortableColumn="inventoryStatus">ESTADO <p-sortIcon field="inventoryStatus"></p-sortIcon></th>
+                <!-- <th pSortableColumn="inventoryStatus">ESTADO <p-sortIcon field="inventoryStatus"></p-sortIcon></th> -->
+                <th pSortableColumn="estadoActivoCapacitador">
+                    <div class="flex justify-content-between align-items-center">
+                        <strong>ESTADO</strong>
+                        <!-- <p-sortIcon field="estadoActivoCapacitador"></p-sortIcon> -->
+
+                        <p-columnFilter type="boolean" field="estadoActivoCapacitador" display="menu"></p-columnFilter>
+
+                    </div>
+                </th>
                 <th pSortableColumn="inventoryStatus">GÉSTION <p-sortIcon field="inventoryStatus"></p-sortIcon></th>
 
             </tr>
@@ -59,21 +75,26 @@
                     <div class="estatus">
                         <span
                             [ngClass]="{'status-active': capacit.estadoActivoCapacitador, 'status-pending': !capacit.estadoActivoCapacitador}">
-                            {{ capacit.estadoActivoCapacitador ? 'ACTIVO' : 'PENDIENTE' }}
+                            {{ capacit.estadoActivoCapacitador ? 'ACTIVO' : 'INACTIVO' }}
                         </span>
                     </div>
                 </td>
                 <td>
                     <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2 mt-1"
                         (click)="cargarDatosDocenteCapacitador(capacit)"></button>
-                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning mt-1"
-                        (click)="eliminadoLogicoDelCapacitador(capacit)"></button>
+                    <!-- <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning mt-1"
+                        (click)="eliminadoLogicoDelCapacitador(capacit)"></button> -->
+                        <button pButton pRipple [icon]="capacit.estadoActivoCapacitador ? 'pi pi-check' : 'pi pi-trash'"
+                        [class]="'p-button-rounded ' + (capacit.estadoActivoCapacitador ? 'p-button-primary' : 'p-button-warning') + ' mt-1'"
+                        (click)="eliminadoLogicoDelCapacitador(capacit)">
+                    </button>
                 </td>
             </tr>
         </ng-template>
         <ng-template pTemplate="summary">
             <div class="flex align-items-center justify-content-between">
-                En total hay {{listClassCapacitador ? listClassCapacitador.length : 0 }} Capacitadores.
+                En total hay {{listDocentesCapacitadoresFilter ? listDocentesCapacitadoresFilter.length : 0 }}
+                Capacitadores.
             </div>
         </ng-template>
     </p-table>
@@ -87,17 +108,20 @@
 
 <!-- IMPLEMENTACION DEL MODAL PARA EL INGRESO DE LOS CURSOS -->
 
-<p-dialog header="Contenidos del Curso" [(visible)]="visible" [modal]="true" [style]="{ width: '50vw', height: '250' }"
-    [draggable]="false" [resizable]="false">
-    <form (ngSubmit)="saveUpdateDocenteDocenteCapacitadorRol()" ngNativeValidate style="padding: 15px;">
+<p-dialog header="CREACIÓN DE CAPACITADORES CON SUS ROLES" [(visible)]="visible" [modal]="true"
+    [style]="{ width: '50vw', height: '250' }" [draggable]="false" [resizable]="false">
+
+    <form (ngSubmit)="saveUpdateDocenteDocenteCapacitadorRol()" novalidate  style="padding: 15px;">
         <div class="grid p-fluid m-2">
 
             <div class="col-12 md:col-12 mt-2">
                 <div class="p-inputgroup">
                     <span class="p-float-label">
                         <input type="text" id="inputtext" pInputText id="identificacion" name="identificacion"
-                            [(ngModel)]="classPersona.identificacion">
-                        <label for="inputtext">Identificación</label>
+                            [(ngModel)]="classPersona.identificacion" required [maxlength]="10" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+                            
+                        <label htmlFor="identificacion">Identificación<span class="red-asterisk"></span></label>
+                        
                     </span>
                 </div>
             </div>
@@ -106,8 +130,8 @@
                 <div class="p-inputgroup">
                     <span class="p-float-label">
                         <input type="text" id="inputtext" pInputText id="nombre1" name="nombre1"
-                            [(ngModel)]="classPersona.nombre1">
-                        <label for="inputtext">Nombre</label>
+                            [(ngModel)]="classPersona.nombre1" required>
+                        <label htmlFor="nombre1">Nombre<span class="red-asterisk"></span></label>
                     </span>
                 </div>
             </div>
@@ -117,7 +141,7 @@
                     <span class="p-float-label">
                         <input type="text" id="inputtext" pInputText id="apellido1" name="apellido1"
                             [(ngModel)]="classPersona.apellido1">
-                        <label for="inputtext">Apellido</label>
+                        <label htmlFor="apellido1">Apellido<span class="red-asterisk"></span></label>
                     </span>
                 </div>
             </div>
@@ -129,7 +153,7 @@
                     <span class="p-float-label">
                         <input type="text" id="inputtext" pInputText id="username" name="username"
                             [(ngModel)]="classUsuario.username">
-                        <label for="inputtext">Nombre de usuario</label>
+                        <label htmlFor="username">Nombre de usuario<span class="red-asterisk"></span></label>
                     </span>
                 </div>
             </div>
@@ -139,53 +163,35 @@
                     <span class="p-float-label">
                         <input type="text" id="inputtext" pInputText id="password" name="password"
                             [(ngModel)]="classUsuario.password">
-                        <label for="inputtext">Contraseña</label>
+                        <label htmlFor="password">Contraseña<span class="red-asterisk"></span></label>
                     </span>
+                    
                 </div>
             </div>
 
-            <!-- ASIGNACION DE ROLES A LOS DOCENTES Y A LOS ESTUDIANTES -->
-
-            <!-- <p-table [value]="listRole" class="horizontal-table" [rows]="1" [paginator]="false" [responsive]="true">
+            <p-table [value]="listRole" class="role-table" [style]="{width: '100%'}">
                 <ng-template pTemplate="header">
-                  <tr>
-                    <th class="header-cell">Roles</th>
-                  </tr>
+                    <tr>
+                        <th class="header-cell"><strong>NOMBRE ROL</strong></th>
+                        <th class="header-cell"><strong>ROL ASIGNADO</strong></th>
+                    </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-role>
-                  <tr>
-                    <td class="data-cell">
-                      <div class="role-card">
-                        <div class="role-icon">
-                          <i class="pi pi-user"></i>
-                        </div>
-                        <div class="role-name">{{ role }}</div>
-                      </div>
-                    </td>
-                  </tr>
+                    <tr>
+                        <td class="data-cell"><strong>{{ role.nombreRol }}</strong></td>
+                        <td class="data-cell">
+                            <button *ngIf="isRoleAssigned(role)" pButton label="Asignado" icon="pi pi-check"
+                                class="assign-button assigned-role" type="button"
+                                (click)="asignarRolesUsuario(role)"></button>
+
+                            <button *ngIf="!isRoleAssigned(role)" type="button" pButton pRipple label="No asignado"
+                                icon="pi pi-times" class="w-full custom-button"
+                                (click)="asignarRolesUsuario(role)"></button>
+                        </td>
+                    </tr>
                 </ng-template>
-              </p-table> -->
+            </p-table>
 
-            <div class="table-container card">
-                <p-table [value]="listRole" class="role-table" [style]="{width: '100%'}">
-                    <ng-template pTemplate="header">
-                        <tr>
-                            <th class="header-cell"><strong>NOMBRE ROL</strong></th>
-                            <th class="header-cell"><strong>ROL ASIGNADO</strong></th>
-                        </tr>
-                    </ng-template>
-                    <ng-template pTemplate="body" let-role>
-                        <tr>
-                            <td class="data-cell"><strong>{{ role.nombreRol }}</strong></td>
-                            <td class="data-cell">
-                                <button pButton label="Asignado" icon="pi pi-check" class="assign-button" type="button"
-                                    (click)="asignarRolesUsuario(role)"></button>
-                            </td>
-                        </tr>
-                    </ng-template>
-                </p-table>
-
-            </div>
 
 
             <!-- Fin del periodo porgrama -->

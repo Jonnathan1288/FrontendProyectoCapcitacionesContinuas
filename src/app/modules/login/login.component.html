@@ -39,18 +39,41 @@
 
 
 
-<p-dialog header="Seleccione el rol con el cual va ingresar al sistema" [(visible)]="visiblePeriodoMensual" [modal]="true"
-  [style]="{ width: '25vw', height: '25' }" [draggable]="false" [resizable]="false">
+<p-dialog header="Seleccione el rol con el cual va ingresar al sistema" [(visible)]="visiblePeriodoMensual"
+  [modal]="true" [style]="{ width: '25vw', height: '25' }" [draggable]="false" [resizable]="false">
   <div class="grid p-fluid m-2">
     <div class="col-12 md:col-12 " *ngFor="let list of roles">
-      <div class=" mr-4 mx-4" style="text-align: center;" >
-        <p-button [label]="list.nombreRol === 'Administrador'? 'Administrador': list.nombreRol === 'DocenteCapacitador'? 'DocenteCapacitador': 'Participante'" [icon]="list.nombreRol === 'DocenteCapacitador'? 'pi pi-prime': 'pi pi-user'" [styleClass]=" list.nombreRol === 'Administrador'? 'p-button-secondary': list.nombreRol === 'DocenteCapacitador'? 'p-button-primary': 'p-button-success'" [badge]="list.nombreRol === 'Administrador'? '1': list.nombreRol === 'DocenteCapacitador'? '2': '3'" 
-          [badgeClass]="list.nombreRol === 'Administrador'? 'p-badge-secondary': list.nombreRol === 'DocenteCapacitador'? 'p-badge-success': 'p-badge-info'" (click)="guardarRolStorage(list.nombreRol!)"
-          ></p-button>
+      <div class=" mr-4 mx-4" style="text-align: center;">
+        <p-button
+          [label]="list.nombreRol === 'Administrador'? 'Administrador': list.nombreRol === 'DocenteCapacitador'? 'DocenteCapacitador': 'Participante'"
+          [icon]="list.nombreRol === 'Administrador'? 'pi pi-prime': list.nombreRol === 'DocenteCapacitador'? 'pi pi-bookmark-fill': 'pi pi-user'"
+          [styleClass]=" list.nombreRol === 'Administrador'? 'p-button-secondary': list.nombreRol === 'DocenteCapacitador'? 'p-button-primary': 'p-button-success'"
+          [badge]="list.nombreRol === 'Administrador'? '1': list.nombreRol === 'DocenteCapacitador'? '2': '3'"
+          [badgeClass]="list.nombreRol === 'Administrador'? 'p-badge-secondary': list.nombreRol === 'DocenteCapacitador'? 'p-badge-success': 'p-badge-info'"
+          (click)="guardarRolStorage(list.nombreRol!)"></p-button>
       </div>
     </div>
   </div>
 
-
-
 </p-dialog>
+
+
+
+<p-dialog header="Seleccione el rol con el cual va ingresar al sistema" [(visible)]="visibleRolnoAsignado"
+  [modal]="true" [style]="{ width: '25vw', height: '10' }" [draggable]="false" [resizable]="false"
+  [responsive]="true" [appendTo]="'body'">
+  <div class="container p-fluid">
+
+    <div class="card">
+      <div class="card-header">
+        <h2>¡Rol no asignado!</h2>
+      </div>
+      <div class="card-body">
+        <p>Para acceder a esta funcionalidad, necesitas un rol asignado.</p>
+        <p>Por favor, contacta a los administradores del sistema para solicitar el rol correspondiente.</p>
+        <button pButton type="button" label="Contactar Administradores" icon="pi pi-envelope" ></button>
+      </div>
+    </div>
+  </div>
+</p-dialog>
+

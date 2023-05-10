@@ -24,6 +24,10 @@ export class PersonaService {
     return this.http.get<Persona>(environment.apiuri+'/persona/findbyId/'+idPersona);
   }
 
+  public getPersonaByIdentificasion(identificasion: String):Observable<boolean>{
+    return this.http.get<boolean>(environment.apiuri+'/persona/existsbyIdentifcasion/'+identificasion);
+  }
+
   public updatePersona(idPersona:number, Persona: Persona):Observable<Persona>{
     return this.http.put<Persona>(environment.apiuri+'/persona/actualizar/'+idPersona, Persona);
   }
