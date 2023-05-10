@@ -32,6 +32,11 @@ export class LoginComponent implements OnInit {
         .subscribe((data) => {
           if (data != null) {
             this.roles = data.roles!;
+            console.log(this.roles)
+            // if (this.roles?.length === 0) {
+            //   this.modalViewRolNoasigando();
+            // }
+
 
             localStorage.removeItem('id_username');
             localStorage.removeItem('id_persona');
@@ -59,11 +64,11 @@ export class LoginComponent implements OnInit {
                 localStorage.setItem('rol', String(rol.nombreRol));
               }
 
-              setTimeout(() => {
-                this.showSpinner = false;
-                window.location.reload();
-                location.replace('/home');
-              }, 1500);
+              // setTimeout(() => {
+              //   this.showSpinner = false;
+              //   window.location.reload();
+              //   location.replace('/home');
+              // }, 1500);
             }
           } else {
             this.toastrService.error(
@@ -74,6 +79,14 @@ export class LoginComponent implements OnInit {
               }
             );
           }
+        }, (err)=>{
+          this.toastrService.error(
+            'Revise sus Credenciales de acceso.',
+            'Usuario no registrado',
+            {
+              timeOut: 3000,
+            }
+          );
         });
     } else {
       this.toastrService.warning(
@@ -114,5 +127,12 @@ export class LoginComponent implements OnInit {
       window.location.reload();
       location.replace('/home');
     }, 1500);
+  }
+
+
+  //ROL NO ASIGNADO
+  public visibleRolnoAsignado?: boolean = false;
+  public modalViewRolNoasigando() {
+    this.visibleRolnoAsignado = true;
   }
 }

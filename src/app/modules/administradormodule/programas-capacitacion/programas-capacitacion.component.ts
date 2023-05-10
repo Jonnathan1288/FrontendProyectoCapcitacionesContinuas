@@ -5,6 +5,7 @@ import { Programas } from 'src/app/models/programa';
 import { PeriodoProgramaService } from 'src/app/service/periodo-programa.service';
 import { ProgramasService } from 'src/app/service/programas.service';
 import { ReportsCapacitacionesService } from 'src/app/service/reports-capacitaciones.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-programas-capacitacion',
@@ -25,7 +26,8 @@ export class ProgramasCapacitacionComponent implements OnInit {
     private periodoProgramaService: PeriodoProgramaService,
     private programaService: ProgramasService,
     sanitizer: DomSanitizer,
-    private reportService: ReportsCapacitacionesService
+    private reportService: ReportsCapacitacionesService,
+    private toastrService: ToastrService
   ) {
     this.sanitizer = sanitizer
     
@@ -85,21 +87,26 @@ export class ProgramasCapacitacionComponent implements OnInit {
   public getTodosLosProgramasPorAdministrador() {
     this.programaService.listPrograma().subscribe((data) => {
       if (data != null) {
-        this.listaProgramas = data.filter(
-          (programa: any) => programa.estadoProgramaActivo === true
-        );
+        this.listaProgramas = data
       }
     });
   }
 
   //Lo que vamos hacer es el eliminado logico
   public updateProgramasEliminadoLogico(programa: Programas) {
-    programa.estadoProgramaActivo = false;
+    // programa.estadoProgramaActivo = true;
+    programa.estadoProgramaActivo = !programa.estadoProgramaActivo; // Alternar el estado activo/desactivado
+
     this.programaService
       .updatePrograma(programa.idPrograma!, programa)
       .subscribe((data) => {
         if (data != null) {
           this.getTodosLosProgramasPorAdministrador();
+          if (programa.estadoProgramaActivo) {
+            this.toastrService.success('El programa ya esta público', 'Activación Exitosa');
+          } else {
+            this.toastrService.warning('El programa a sido  acultado', 'Desactivación Exitosa');
+          }
         }
       });
   }

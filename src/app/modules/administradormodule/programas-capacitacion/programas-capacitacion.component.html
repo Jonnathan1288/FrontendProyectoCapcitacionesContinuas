@@ -15,10 +15,16 @@
         </ng-template>
     </p-toolbar>
 
-    <p-table #dt [value]="listaProgramas" [rows]="5" [paginator]="true"
-        [globalFilterFields]="['nombrePrograma','periodoPrograma.fechaInicioPeriodoPrograma','representative.name','status']"
-        responsiveLayout="scroll" [rowHover]="true" dataKey="id"
-        currentPageReportTemplate="Mostrando {first} de {last} de {totalRecords} registros fotograficos"
+    <!-- #dt [value]="listCursos" dataKey="id" styleClass="p-datatable-customers" [rowHover]="true" [rows]="10"
+        [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading" responsiveLayout="scroll"
+        [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [filterDelay]="0" [globalFilterFields]="['nombreCurso','country.name','representative.name','status']" -->
+
+
+    <p-table #dt [value]="listaProgramas" dataKey="id" styleClass="p-datatable-customers" [rowHover]="true" [rows]="5"
+        [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,15]"  responsiveLayout="scroll"
+        [paginator]="true" currentPageReportTemplate="Mostrando {first} to {last} of {totalRecords} programas"
+        [filterDelay]="0" 
         [showCurrentPageReport]="true">
         <ng-template pTemplate="caption">
             <div class="flex align-items-center justify-content-between">
@@ -34,15 +40,23 @@
                 <!-- <th style="width: 3rem">
                     <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                 </th> -->
-                <th pSortableColumn="nombrePrograma">Nombre programa <p-sortIcon field="nombrePrograma"></p-sortIcon>
+                <th pSortableColumn="nombrePrograma"><strong>NOMBRE PROGRAMA</strong><p-sortIcon field="nombrePrograma"></p-sortIcon>
                 </th>
-                <th pSortableColumn="periodoPrograma.fechaInicioPeriodoPrograma">Fecha Inicio <p-sortIcon
+                <th pSortableColumn="periodoPrograma.fechaInicioPeriodoPrograma"><strong>FECHA INICIO</strong> <p-sortIcon
                         field="periodoPrograma.fechaInicioPeriodoPrograma"></p-sortIcon></th>
-                <th pSortableColumn="category">Fecha Fin <p-sortIcon field="category"></p-sortIcon></th>
-                <th pSortableColumn="descripcionFoto">PERIODO<p-sortIcon field="descripcionFoto"></p-sortIcon></th>
-                <th pSortableColumn="rating">Descripcion <p-sortIcon field="rating"></p-sortIcon></th>
-                <th pSortableColumn="inventoryStatus">Estado <p-sortIcon field="inventoryStatus"></p-sortIcon></th>
-                <th pSortableColumn="inventoryStatus">Géstion <p-sortIcon field="inventoryStatus"></p-sortIcon></th>
+                <th pSortableColumn="category"><strong>FECHA FIN</strong> <p-sortIcon field="category"></p-sortIcon></th>
+                <th pSortableColumn="descripcionFoto"><strong>PERIODO</strong><p-sortIcon field="descripcionFoto"></p-sortIcon></th>
+                <th pSortableColumn="rating"><strong>DESCRIPCIÓN </strong><p-sortIcon field="rating"></p-sortIcon></th>
+                <!-- <th pSortableColumn="inventoryStatus">Estado <p-sortIcon field="inventoryStatus"></p-sortIcon></th> -->
+                <th pSortableColumn="estadoProgramaActivo">
+                    <div class="flex justify-content-between align-items-center">
+                        <strong>ESTADO</strong>
+
+                        <p-columnFilter type="boolean" field="estadoProgramaActivo" display="menu"></p-columnFilter>
+
+                    </div>
+                </th>
+                <th pSortableColumn="inventoryStatus"><strong>GESTIÓN</strong> <p-sortIcon field="inventoryStatus"></p-sortIcon></th>
 
             </tr>
         </ng-template>
@@ -54,12 +68,18 @@
                 <td>{{programa.periodoPrograma.fechaFinPeriodoPrograma}}</td>
                 <td>{{programa.periodoPrograma.nombrePeriodoPrograma}}</td>
                 <td>{{programa.descripcionPrograma}}</td>
-                <td>{{programa.estadoProgramaActivo}}</td>
+                <td>
+                    <p-message [severity]="programa.estadoProgramaActivo == true? 'success': 'warn'" [text]="programa.estadoProgramaActivo == true? 'Público': 'Oculto'" styleClass="mr-2"></p-message>  
+
+                </td>
                 <td>
                     <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2 mt-1"
                         (click)="cargarDatos(programa)"></button>
-                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning mt-1"
-                        (click)="updateProgramasEliminadoLogico(programa)"></button>
+                    <button pButton pRipple [icon]="programa.estadoProgramaActivo ? 'pi pi-check' : 'pi pi-trash'"
+                        [class]="'p-button-rounded ' + (programa.estadoProgramaActivo ? 'p-button-primary' : 'p-button-warning') + ' mt-1'"
+                        (click)="updateProgramasEliminadoLogico(programa)">
+                    </button>
+
                 </td>
             </tr>
         </ng-template>
@@ -152,17 +172,19 @@
             </div> -->
 
             <div class="ui-g-12 ui-md-4">
-         
-                <p-calendar placeholder="Año y mes por el cual se mostrara el reporte" id="fechaEvidencia" name="fechaEvidencia" view="month" dateFormat="mm/yy" [yearNavigator]="true" yearRange="2000:2030" [readonlyInput]="true" [showIcon]="true" (onSelect)="onDateSelect($event)"></p-calendar>
+
+                <p-calendar placeholder="Año y mes por el cual se mostrara el reporte" id="fechaEvidencia"
+                    name="fechaEvidencia" view="month" dateFormat="mm/yy" [yearNavigator]="true" yearRange="2000:2030"
+                    [readonlyInput]="true" [showIcon]="true" (onSelect)="onDateSelect($event)"></p-calendar>
             </div>
         </div>
     </div>
 
-    <div class="container"  *ngIf="!pdfSrc">
-        
-            <img src="../../../../assets/img/istap.png" alt="">
-    
-    
+    <div class="container" *ngIf="!pdfSrc">
+
+        <img src="../../../../assets/img/istap.png" alt="">
+
+
     </div>
     <div class="mx-2" *ngIf="pdfSrc">
         <embed style="border-radius: 10px; " [src]="pdfSrc" type="application/pdf" width="100%" height="500px" />

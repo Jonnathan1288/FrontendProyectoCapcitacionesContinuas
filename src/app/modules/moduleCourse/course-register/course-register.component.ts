@@ -29,6 +29,7 @@ import { ProgramasService } from 'src/app/service/programas.service';
 import { ProvinciaService } from 'src/app/service/provincia.service';
 import { TipoCursoService } from 'src/app/service/tipo-curso.service';
 import { NgZone } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-course-register',
@@ -90,7 +91,8 @@ export class CourseRegisterComponent {
     private parroquiaService: ParroquiaService,
     private cantonService: CantonService,
     private provinciaService: ProvinciaService,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    private toastrService: ToastrService
   ) {}
 
   ngOnInit() {

@@ -19,6 +19,10 @@ export class UsuarioService {
     return this.http.get<Usuario>(environment.apiuri+'/usuario/findbyId/'+idUsuario);
   }
 
+  public getExistUsuarioByUsername(username: string):Observable<boolean>{
+    return this.http.get<boolean>(environment.apiuri+'/usuario/existsbyUsername/'+username);
+  }
+
   public saveUsuario(usuario: Usuario):Observable<Usuario>{
     return this.http.post<Usuario>(environment.apiuri+'/usuario/crear', usuario);
   }

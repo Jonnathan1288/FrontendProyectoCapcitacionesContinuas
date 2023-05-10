@@ -126,3 +126,21 @@
 
 
 
+.custom-button {
+  background-color: rgb(228, 107, 107);
+  border-color: rgb(228, 107, 107);
+}
+
+.custom-button:hover {
+  background-color: rgb(87, 98, 87);  /* Cambia el color de fondo en estado de hover */
+  border-color: rgb(87, 98, 87);
+}
+
+
+/* VALIDACIONES */
+
+.red-asterisk::after {
+  content: "*";
+  color: red;
+  margin-left: 5px;
+}
