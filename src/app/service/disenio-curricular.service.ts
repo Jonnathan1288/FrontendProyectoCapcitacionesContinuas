@@ -34,5 +34,9 @@ export class DisenioCurricularService {
   public getDisenioCurricularByIdPorSilabo(id_silabo: number):Observable<DisenioCurriculares>{
     return this.http.get<DisenioCurriculares>(environment.apiuri+'/disenioCurricular/findbyIdSilaboPorDisenioCurricular/'+id_silabo);
   }
+
+  public getDisenioCurricularPorSilaboCursoById(id_silabo: number):Observable<DisenioCurriculares>{
+    return this.http.get<DisenioCurriculares>(environment.apiuri+'/disenioCurricular/findbyIdSilaboCurso/'+id_silabo);
+  }
   
 }
