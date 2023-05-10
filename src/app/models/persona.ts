@@ -5,7 +5,7 @@ export class Persona {
     nombre2?: String;
     apellido1?: String;
     apellido2?: String;
-    fechaNacimiento?: String;
+    fechaNacimiento?: Date;
     genero?: String;
     direccion?: String;
     correo?: String;

@@ -1,213 +1,24 @@
-<!-- 
-
-<div class="container p-6">
-
-
-  <div class="surface-card p-4 shadow-2 border-round w-full lg:w-6">
-
-
-    <div>
-      <form (ngSubmit)="savePersona()">
-        <div class="text-center mb-5">
-          <div class="personal-image">
-            <label class="label" style="border: black;">
-              <input type="file" accept="image/jpeg, image/jpg, image/png" (change)="subirFoto($event)" />
-              <figure class="personal-figure">
-                <img *ngIf="classUsuario.fotoPerfil"
-                  [src]="classUsuario.fotoPerfil ? 'data:image/jpeg;base64,' + classUsuario.fotoPerfil : '../../../../assets/img/camer.png'"
-                  class="personal-avatar" alt="logoFundacion" />
-                <img style="padding: 20px;" *ngIf="!classUsuario.fotoPerfil" src="./assets/img/camer.png"
-                  class="personal-avatar" alt="Logo Fundación" />
-                <figcaption class="personal-figcaption">
-                  <img src="./assets/img/camer.png" />
-                </figcaption>
-              </figure>
-            </label>
-          </div>
-        </div>
-
-
-        <label for="email1" class="block text-900 font-medium mb-2">Identificación</label>
-        <input id="identificacion" name="identificacion" type="text" placeholder="Identificación" pInputText
-          class="w-full mb-3" [(ngModel)]="classPersona.identificacion" required>
-
-        <label for="password1" class="block text-900 font-medium mb-2">Primer nombre</label>
-        <input id="nombre1" name="nombre1" type="text" placeholder="Primer nombre" pInputText class="w-full mb-3"
-          [(ngModel)]="classPersona.nombre1">
-
-
-        <label for="password1" class="block text-900 font-medium mb-2">Segundo nombre</label>
-        <input id="nombre2" name="nombre2" type="text" placeholder="Segundo nombre" pInputText class="w-full mb-3"
-          [(ngModel)]="classPersona.nombre2">
-
-
-        <label for="password1" class="block text-900 font-medium mb-2">Primer apellido</label>
-        <input id="apellido1" name="apellido1" type="text" placeholder="Primer apellido" pInputText class="w-full mb-3"
-          [(ngModel)]="classPersona.apellido1">
-
-
-        <label for="password1" class="block text-900 font-medium mb-2">Segundo apellido</label>
-        <input id="apellido2" name="apellido2" type="text" placeholder="Segundo apellido2" pInputText
-          class="w-full mb-3" [(ngModel)]="classPersona.apellido2">
-
-        <label for="password1" class="block text-900 font-medium mb-2">Segundo apellido</label>
-        <input id="correo" name="correo" type="email" placeholder="Correo" pInputText class="w-full mb-3"
-          [(ngModel)]="classPersona.correo">
-
-
-        <label for="password1" class="block text-900 font-medium mb-2">Dirección</label>
-        <input id="direccion" name="direccion" type="text" placeholder="Dirección" pInputText class="w-full mb-3"
-          [(ngModel)]="classPersona.direccion">
-
-        <label for="password1" class="block text-900 font-medium mb-2">telefono</label>
-        <input id="telefono" name="telefono" type="text" placeholder="telefono" pInputText class="w-full mb-3"
-          [(ngModel)]="classPersona.telefono">
-
-
-        <label for="password1" class="block text-900 font-medium mb-2">celular</label>
-        <input id="celular" name="celular" type="text" placeholder="celular" pInputText class="w-full mb-3"
-          [(ngModel)]="classPersona.celular">
-
-
-          <div class="grid p-fluid">
-
-            <div class="col-12 md:col-12 mt-2">
-                <div class="p-inputgroup">
-                    <p-calendar inputId="edad" class="ng-dirty" [showIcon]="true"
-                        placeholder="Fecha de Nacimiento" id="fechaNacimiento" name="fechaNacimiento"
-                        [(ngModel)]="classPersona.fechaNacimiento"></p-calendar>
-                </div>
-
-            </div>
-        </div>
-
-        <div class="col-12 md:col-12 mt-1">
-          <label class="p-inputgroup" for='nombre'>Seleccione su genero:</label>
-          <div class='col-md-6'>
-            <div class='form-group'>
-              <div class='col-md-11'>
-
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
-                    [value]="'Masculino'" [(ngModel)]="classPersona.genero">
-                  <label class="form-check-label" for="inlineRadio1">Masculino</label>
-                </div>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
-                    [value]="'Femenino'" [(ngModel)]="classPersona.genero">
-                  <label class="form-check-label" for="inlineRadio2">Femenino</label>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-
-        <div class="col-12 md:col-12 mt-1">
-          <label class="p-inputgroup" for='nombre'>Seleccione su entia:</label>
-          <div class='col-md-6'>
-            <div class='form-group'>
-              <div class='col-md-11'>
-
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
-                    [value]="'Mestizo'" [(ngModel)]="classPersona.etnia">
-                  <label class="form-check-label" for="inlineRadio1">Mestizo</label>
-                </div>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
-                    [value]="'Blanco'" [(ngModel)]="classPersona.etnia">
-                  <label class="form-check-label" for="inlineRadio2">Blanco</label>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-        <div class="col-12 md:col-12 mt-1">
-          <label class="p-inputgroup" for='nombre'>Seleccione su nivel de instruccion:</label>
-          <div class='col-md-6'>
-            <div class='form-group'>
-              <div class='col-md-11'>
-
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
-                    [value]="'Primaria'" [(ngModel)]="classPersona.nivelInstruccion">
-                  <label class="form-check-label" for="inlineRadio1">Primaria</label>
-                </div>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
-                    [value]="'Secundaria'" [(ngModel)]="classPersona.nivelInstruccion">
-                  <label class="form-check-label" for="inlineRadio2">Secundaria</label>
-                </div>
-
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
-                    [value]="'Superior'" [(ngModel)]="classPersona.nivelInstruccion">
-                  <label class="form-check-label" for="inlineRadio2">Superior</label>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-
-
-        <label for="password1" class="block text-900 font-medium mb-2">username</label>
-        <input id="username" name="username" type="text" placeholder="username" pInputText class="w-full mb-3"
-          [(ngModel)]="classUsuario.username">
-
-
-        <label for="password1" class="block text-900 font-medium mb-2">password</label>
-        <input id="password" name="password" type="password" placeholder="password" pInputText class="w-full mb-3"
-          [(ngModel)]="classUsuario.password">
-
-        <button type="submit" pButton pRipple label="Sign In" icon="pi pi-user" class="w-full"></button>
-      </form>
-    </div>
-  </div>
-</div> -->
-
-
-
-
-
 <div style="margin: 80px; text-align: center; align-items: center;">
 
-  <div class="card p-4 shadow-sm rounded-lg w-full lg:flex-1">
+  <p-button label="¿Perteneces al ISTA?" icon="pi pi-check" iconPos="right" class="mb-2"
+    (onClick)="modalViewEstudianteISTA()"></p-button>
+  <div class="card p-4 shadow-sm rounded-lg w-full lg:flex-1 mt-2">
     <div>
       <form (ngSubmit)="savePersona()">
         <p-card header="Subir Foto" class="m-5">
           <div class="text-center mb-4">
             <div class="personal-image">
               <label class="label" style="border: black">
-                <input
-                  type="file"
-                  accept="image/jpeg, image/jpg, image/png"
-                  (change)="subirFoto($event)"
-                />
+                <input type="file" accept="image/jpeg, image/jpg, image/png" (change)="subirFoto($event)" />
                 <figure class="personal-figure">
                   <!-- <img class="personal-avatar"  *ngIf="filem" [src]="file" alt="img-avatar"> -->
-                  <img
-                    *ngIf="classUsuario.fotoPerfil"
-                    [src]="
+                  <img *ngIf="classUsuario.fotoPerfil" [src]="
                       classUsuario.fotoPerfil
                         ? 'data:image/jpeg;base64,' + classUsuario.fotoPerfil
                         : '../../../../assets/img/camer.png'
-                    "
-                    class="personal-avatar"
-                    alt="logoFundacion"
-                  />
-                  <img
-                    style="padding: 20px"
-                    *ngIf="!classUsuario.fotoPerfil"
-                    src="./assets/img/ico.jpeg"
-                    class="personal-avatar"
-                    alt="Logo Fundación"
-                  />
+                    " class="personal-avatar" alt="logoFundacion" />
+                  <img style="padding: 20px" *ngIf="!classUsuario.fotoPerfil" src="./assets/img/ico.jpeg"
+                    class="personal-avatar" alt="Logo Fundación" />
                   <figcaption class="personal-figcaption">
                     <img src="./assets/img/camer.png" />
                   </figcaption>
@@ -222,13 +33,8 @@
             <div class="col-12 md:col-4 mt-1">
               <div class="p-inputgroup">
                 <span class="p-float-label">
-                  <input
-                    type="text"
-                    pInputText
-                    id="identificacion"
-                    name="identificacion"
-                    [(ngModel)]="classPersona.identificacion"
-                  />
+                  <input type="text" pInputText id="identificacion" name="identificacion"
+                    [(ngModel)]="classPersona.identificacion" />
                   <label htmlFor="identificacion" class="pi pi-id-card"> Identificación</label>
                 </span>
               </div>
@@ -237,13 +43,7 @@
             <div class="col-12 md:col-4 mt-1">
               <div class="p-inputgroup">
                 <span class="p-float-label">
-                  <input
-                    type="text"
-                    pInputText
-                    id="nombre1"
-                    name="nombre1"
-                    [(ngModel)]="classPersona.nombre1"
-                  />
+                  <input type="text" pInputText id="nombre1" name="nombre1" [(ngModel)]="classPersona.nombre1" />
                   <label htmlFor="nombre1" class="pi pi-user"> Primer Nombre</label>
                 </span>
               </div>
@@ -252,14 +52,8 @@
             <div class="col-12 md:col-4 mt-1">
               <div class="p-inputgroup">
                 <span class="p-float-label">
-                  <input
-                    type="text"
-                    pInputText
-                    id="nombre2"
-                    name="nombre2"
-                    [(ngModel)]="classPersona.nombre2"
-                  />
-                  <label htmlFor="nombre2" class="pi pi-user" > Segundo Nombre</label>
+                  <input type="text" pInputText id="nombre2" name="nombre2" [(ngModel)]="classPersona.nombre2" />
+                  <label htmlFor="nombre2" class="pi pi-user"> Segundo Nombre</label>
                 </span>
               </div>
             </div>
@@ -270,14 +64,8 @@
             <div class="col-12 md:col-4 mt-1">
               <div class="p-inputgroup">
                 <span class="p-float-label">
-                  <input
-                    type="text"
-                    pInputText
-                    id="direccion"
-                    name="direccion"
-                    [(ngModel)]="classPersona.direccion"
-                  />
-                  <label htmlFor="direccion" class="pi pi-map-marker" > Dirección</label>
+                  <input type="text" pInputText id="direccion" name="direccion" [(ngModel)]="classPersona.direccion" />
+                  <label htmlFor="direccion" class="pi pi-map-marker"> Dirección</label>
                 </span>
               </div>
 
@@ -286,14 +74,8 @@
             <div class="col-12 md:col-4 mt-1">
               <div class="p-inputgroup">
                 <span class="p-float-label">
-                  <input
-                    type="text"
-                    pInputText
-                    id="apellido1"
-                    name="apellido1"
-                    [(ngModel)]="classPersona.apellido1"
-                  />
-                  <label htmlFor="apellido1" class="pi pi-user" > Primer Apellido</label>
+                  <input type="text" pInputText id="apellido1" name="apellido1" [(ngModel)]="classPersona.apellido1" />
+                  <label htmlFor="apellido1" class="pi pi-user"> Primer Apellido</label>
                 </span>
               </div>
             </div>
@@ -301,13 +83,7 @@
             <div class="col-12 md:col-4 mt-1">
               <div class="p-inputgroup">
                 <span class="p-float-label">
-                  <input
-                    type="text"
-                    pInputText
-                    id="apellido2"
-                    name="apellido2"
-                    [(ngModel)]="classPersona.apellido2"
-                  />
+                  <input type="text" pInputText id="apellido2" name="apellido2" [(ngModel)]="classPersona.apellido2" />
                   <label htmlFor="apellido2" class="pi pi-user"> Segundo Apellido</label>
                 </span>
               </div>
@@ -316,21 +92,15 @@
 
 
 
-          
+
           <!-- FILA 3-->
 
           <div class="grid p-fluid m-2">
             <div class="col-12 md:col-4 mt-1">
               <div class="p-inputgroup">
                 <span class="p-float-label">
-                  <input
-                    type="text"
-                    pInputText
-                    id="telefono"
-                    name="telefono"
-                    [(ngModel)]="classPersona.telefono"
-                  />
-                  <label htmlFor="telefono" class="pi pi-phone" > Teléfono</label>
+                  <input type="text" pInputText id="telefono" name="telefono" [(ngModel)]="classPersona.telefono" />
+                  <label htmlFor="telefono" class="pi pi-phone"> Teléfono</label>
                 </span>
               </div>
             </div>
@@ -338,35 +108,22 @@
             <div class="col-12 md:col-4 mt-1">
               <div class="p-inputgroup">
                 <span class="p-float-label">
-                  <input
-                    type="text"
-                    pInputText
-                    id="celular"
-                    name="celular"
-                    [(ngModel)]="classPersona.celular"
-                  />
+                  <input type="text" pInputText id="celular" name="celular" [(ngModel)]="classPersona.celular" />
                   <label htmlFor="celular" class="pi pi-mobile"> Celular</label>
                 </span>
               </div>
             </div>
 
             <div class="col-12 md:col-4 mt-1">
-              
 
-                <div class="p-inputgroup">
-                  <p-calendar
-                    inputId="edad"
-                    class="ng-dirty"
-                    [showIcon]="true"
-                    placeholder="Fecha Nacimiento"
-                    id="fechaNacimiento"
-                    name="fechaNacimiento"
-                    class="w-full mb-3"
-                    [(ngModel)]="classPersona.fechaNacimiento"
-                  ></p-calendar>
-                </div>
 
-             
+              <div class="p-inputgroup">
+                <p-calendar inputId="edad" class="ng-dirty" [showIcon]="true" placeholder="Fecha Nacimiento"
+                  id="fechaNacimiento" name="fechaNacimiento" class="w-full mb-3"
+                  [(ngModel)]="classPersona.fechaNacimiento"></p-calendar>
+              </div>
+
+
             </div>
           </div>
 
@@ -374,13 +131,7 @@
             <div class="col-12 md:col-12 mt-1">
               <div class="p-inputgroup">
                 <span class="p-float-label">
-                  <input
-                    type="text"
-                    pInputText
-                    id="correo"
-                    name="correo"
-                    [(ngModel)]="classPersona.correo"
-                  />
+                  <input type="text" pInputText id="correo" name="correo" [(ngModel)]="classPersona.correo" />
                   <label htmlFor="correo" class="pi pi-envelope"> Email</label>
                 </span>
               </div>
@@ -390,37 +141,19 @@
 
         <p-card header="Datos Físicos" class="m-5" style="text-align: center;">
           <div class="col-12 md:col-12 mt-1">
-            <label class="p-inputgroup" for="nombre"
-              >Seleccione su género:</label
-            >
-            <div class="col-md-6" >
-              <div class="form-group"style="text-align: center;">
+            <label class="p-inputgroup" for="nombre">Seleccione su género:</label>
+            <div class="col-md-6">
+              <div class="form-group" style="text-align: center;">
                 <div class="col-md-11">
                   <div class="form-check form-check-inline">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="Masculino"
-                      id="Masculino"
-                      [value]="'Masculino'"
-                      [(ngModel)]="classPersona.genero"
-                    />
-                    <label class="form-check-label" for="inlineRadio1"
-                      >Masculino</label
-                    >
+                    <input class="form-check-input" type="radio" name="Masculino" id="Masculino" [value]="'Masculino'"
+                      [(ngModel)]="classPersona.genero" />
+                    <label class="form-check-label" for="inlineRadio1">Masculino</label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="Femenino"
-                      id="Femenino"
-                      [value]="'Femenino'"
-                      [(ngModel)]="classPersona.genero"
-                    />
-                    <label class="form-check-label" for="inlineRadio2"
-                      >Femenino</label
-                    >
+                    <input class="form-check-input" type="radio" name="Femenino" id="Femenino" [value]="'Femenino'"
+                      [(ngModel)]="classPersona.genero" />
+                    <label class="form-check-label" for="inlineRadio2">Femenino</label>
                   </div>
                 </div>
               </div>
@@ -430,37 +163,19 @@
           <!-- Para la etnia -->
 
           <div class="col-12 md:col-12 mt-1">
-            <label class="p-inputgroup" for="nombre"
-              >Seleccione su etnia:</label
-            >
+            <label class="p-inputgroup" for="nombre">Seleccione su etnia:</label>
             <div class="col-md-6">
               <div class="form-group">
                 <div class="col-md-11">
                   <div class="form-check form-check-inline">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="Mestizo"
-                      id="Mestizo"
-                      [value]="'Mestizo'"
-                      [(ngModel)]="classPersona.etnia"
-                    />
-                    <label class="form-check-label" for="inlineRadio1"
-                      >Mestizo</label
-                    >
+                    <input class="form-check-input" type="radio" name="Mestizo" id="Mestizo" [value]="'Mestizo'"
+                      [(ngModel)]="classPersona.etnia" />
+                    <label class="form-check-label" for="inlineRadio1">Mestizo</label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="Blanco"
-                      id="Blanco"
-                      [value]="'Blanco'"
-                      [(ngModel)]="classPersona.etnia"
-                    />
-                    <label class="form-check-label" for="inlineRadio2"
-                      >Blanco</label
-                    >
+                    <input class="form-check-input" type="radio" name="Blanco" id="Blanco" [value]="'Blanco'"
+                      [(ngModel)]="classPersona.etnia" />
+                    <label class="form-check-label" for="inlineRadio2">Blanco</label>
                   </div>
                 </div>
               </div>
@@ -470,51 +185,25 @@
 
         <p-card header="Nivel de Instrucción" class="m-5">
           <div class="col-12 md:col-12 mt-1">
-            <label class="p-inputgroup" for="nombre"
-              >Seleccione su nivel de instrucción:</label
-            >
+            <label class="p-inputgroup" for="nombre">Seleccione su nivel de instrucción:</label>
             <div class="col-md-6">
               <div class="form-group">
                 <div class="col-md-11">
                   <div class="form-check form-check-inline">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="Primaria"
-                      id="Primaria"
-                      [value]="'Primaria'"
-                      [(ngModel)]="classPersona.nivelInstruccion"
-                    />
-                    <label class="form-check-label" for="inlineRadio1"
-                      >Primaria</label
-                    >
+                    <input class="form-check-input" type="radio" name="Primaria" id="Primaria" [value]="'Primaria'"
+                      [(ngModel)]="classPersona.nivelInstruccion" />
+                    <label class="form-check-label" for="inlineRadio1">Primaria</label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="Secundaria"
-                      id="Secundaria"
-                      [value]="'Secundaria'"
-                      [(ngModel)]="classPersona.nivelInstruccion"
-                    />
-                    <label class="form-check-label" for="inlineRadio2"
-                      >Secundaria</label
-                    >
+                    <input class="form-check-input" type="radio" name="Secundaria" id="Secundaria"
+                      [value]="'Secundaria'" [(ngModel)]="classPersona.nivelInstruccion" />
+                    <label class="form-check-label" for="inlineRadio2">Secundaria</label>
                   </div>
 
                   <div class="form-check form-check-inline">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="Superior"
-                      id="Superior"
-                      [value]="'Superior'"
-                      [(ngModel)]="classPersona.nivelInstruccion"
-                    />
-                    <label class="form-check-label" for="inlineRadio2"
-                      >Superior</label
-                    >
+                    <input class="form-check-input" type="radio" name="Superior" id="Superior" [value]="'Superior'"
+                      [(ngModel)]="classPersona.nivelInstruccion" />
+                    <label class="form-check-label" for="inlineRadio2">Superior</label>
                   </div>
                 </div>
               </div>
@@ -526,16 +215,10 @@
           <div class="grid p-fluid m-2">
             <div class="col-12 md:col-6 mt-1">
               <div class="p-inputgroup">
-                <span class="p-float-label" >
-                  <input
-                    type="text"
-                    pInputText
-                    id="username"
-                    name="username"
-                    [(ngModel)]="classUsuario.username"
-                  />
+                <span class="p-float-label">
+                  <input type="text" pInputText id="username" name="username" [(ngModel)]="classUsuario.username" />
                   <label htmlFor="username" class="pi pi-user"> Usuario</label>
-               
+
                 </span>
               </div>
             </div>
@@ -543,14 +226,8 @@
             <div class="col-12 md:col-6 mt-1">
               <div class="p-inputgroup">
                 <span class="p-float-label">
-                  <input
-                    type="text"
-                    pInputText
-                    id="password"
-                    name="password"
-                    type="password"
-                    [(ngModel)]="classUsuario.password"
-                  />
+                  <input type="text" pInputText id="password" name="password" type="password"
+                    [(ngModel)]="classUsuario.password" />
                   <label htmlFor="password" class="pi pi-lock"> Contraseña</label>
                 </span>
               </div>
@@ -566,15 +243,103 @@
           <a class="font-medium no-underline ml-2 text-blue-500 text-right cursor-pointer">Forgot password?</a>
         </div> -->
 
-        <button
-          type="submit"
-          pButton
-          pRipple
-          label="Sign In"
-          icon="pi pi-user"
-          class="w-full"
-        ></button>
+        <button type="submit" pButton pRipple label="Sign In" icon="pi pi-user" class="w-full"></button>
       </form>
     </div>
   </div>
 </div>
+
+
+<!-- //EN EL CASO DE QUE EL ESTUDIANTE PERTENESCA AL ISTA -->
+
+<p-dialog header="ESTUDIANTE ISTA" [(visible)]="visibleEstudinateIsta" [modal]="true"
+  [style]="{ width: '60vw', height: '60' }" [draggable]="false" [resizable]="false">
+
+  <!------ Include the above in your HEAD tag ---------->
+  <div class="grid p-fluid mt-1">
+    <div class="col-12 md:col-12">
+      <div class="p-inputgroup" style="padding-left: 20%; padding-right: 20%;">
+
+        <input type="text" pInputText placeholder="Ingresa tú Identificación  "
+          (input)="findEstudianteISTAFenix($event)" maxlength="10"
+          onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+        <button type="button" pButton pRipple label="Buscar"></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="cont" *ngIf="!estudianteISTAFind">
+      
+
+    <div class="center-image">
+        <img src="../../../../assets/img/istap.png" alt="" >
+    </div>
+
+</div>
+
+  <p-card header="Información del estudiante" style="margin: 2px;" *ngIf="estudianteISTAFind">
+
+    <div class="grid p-fluid m-2">
+
+      <div class="col-12 md:col-7 mt-1">
+        <div class="p-inputgroup">
+          <p><strong>NOMBRES:</strong> {{classEstudianteFenix.nombre1}} {{classEstudianteFenix.nombre2}}</p>
+
+
+        </div>
+      </div>
+      <div class="col-12 md:col-5 mt-1">
+        <div class="p-inputgroup">
+          <p><strong>APPELLIDOS:</strong> {{classEstudianteFenix.apellido1}} {{classEstudianteFenix.apellido2}}</p>
+
+        </div>
+      </div>
+
+    </div>
+    <div class="grid p-fluid m-2">
+
+      <div class="col-12 md:col-7 mt-1">
+        <div class="p-inputgroup">
+          <p><strong>CORREO:</strong> {{classEstudianteFenix.correo}} </p>
+        </div>
+      </div>
+
+    </div>
+
+    <form (ngSubmit)="savePersona()" ngNati>
+
+      <div class="grid p-fluid m-2">
+
+        <div class="col-12 md:col-6 mt-2">
+          <div class="p-inputgroup">
+            <span class="p-float-label">
+              <input type="text" id="inputtext" pInputText id="username" name="username"
+                [(ngModel)]="classUsuario.username" required [maxlength]="10">
+
+              <label htmlFor="username">Nombre de usuario<span class="red-asterisk"></span></label>
+
+            </span>
+          </div>
+        </div>
+
+        <div class="col-12 md:col-6 mt-2">
+          <div class="p-inputgroup">
+            <span class="p-float-label">
+              <input type="password" id="inputtext" pInputText id="password" name="password"
+                [(ngModel)]="classUsuario.password" required [maxlength]="10">
+
+              <label htmlFor="password">Contraseña<span class="red-asterisk"></span></label>
+
+            </span>
+          </div>
+        </div>
+      </div>
+      <button type="submit" pButton pRipple label="Crear cuenta" icon="pi pi-user" class="w-full"></button>
+    </form>
+    <!-- </p-card> -->
+  </p-card>
+
+
+
+
+</p-dialog>

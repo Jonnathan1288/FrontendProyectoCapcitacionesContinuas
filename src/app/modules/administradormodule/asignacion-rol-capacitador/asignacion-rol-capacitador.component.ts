@@ -275,7 +275,7 @@ export class AsignacionRolCapacitadorComponent implements OnInit {
                   this.classPersona.apellido2 =
                     this.classDocenteFenix.apellido2;
                   this.classPersona.fechaNacimiento =
-                    this.classDocenteFenix.fechaNacimiento;
+                    this.classDocenteFenix.fechaNacimiento!;
                   this.classPersona.direccion =
                     this.classDocenteFenix.direccion;
                   this.classPersona.correo = this.classDocenteFenix.correo;

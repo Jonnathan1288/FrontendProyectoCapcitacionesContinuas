@@ -13,8 +13,8 @@ export class AsistenciaService {
 
   constructor(private http: HttpClient) { }
 
-  public generarAsistenciaPorFecha(idCurso: number):Observable<any>{
-    return this.http.get<any>(environment.apiuri+'/asistencia/GenerarAsistencia/'+idCurso);
+  public generarAsistenciaPorFecha(idCurso: number):Observable<Asistencia[]>{
+    return this.http.get<Asistencia[]>(environment.apiuri+'/asistencia/GenerarAsistencia/'+idCurso);
   }
 
   public getAreaById(idAsistencia: number):Observable<Asistencia>{
@@ -27,5 +27,9 @@ export class AsistenciaService {
 
   public updateAsistencia(idAsistencia: number, asistencia: Asistencia):Observable<Asistencia>{
     return this.http.put<Asistencia>(environment.apiuri+'/asistencia/actualizar/'+idAsistencia, asistencia);
+  }
+
+  public getAsistenciaAntiguasPorFecha(idCurso: number, fecha: String):Observable<Asistencia[]>{
+    return this.http.get<Asistencia[]>(environment.apiuri+'/asistencia/obtenerAsistenciaAnteriores/'+idCurso+'/'+fecha);
   }
 }

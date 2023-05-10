@@ -1,4 +1,15 @@
 <div class="container my-3">
+
+    <div class="grid p-fluid m-2">
+        <div class="col-12 md:col-12 ">
+            <div class="p-inputgroup">
+                <p-calendar inputId="edad" class="ng-dirty" [showIcon]="true"
+                    placeholder="Fecha de asistencia" id="fechaEvidencia" name="fechaEvidencia"
+                    (onSelect)="onDateSelect($event)" style="padding-left: 30%; padding-right: 30%;"></p-calendar>
+            </div>
+
+        </div>
+    </div>
     
     <div>{{today}}</div>
     <div class="shadow-4 rounded-5 overflow-hidden">
@@ -16,7 +27,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let list of listaAsistenciaE">
+                    <tr *ngFor="let list of listAsistenciasAntiguas">
 
                         <td>
                             <div class="d-flex align-items-center">

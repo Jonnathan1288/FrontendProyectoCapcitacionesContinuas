@@ -1,67 +1,3 @@
-/* .container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.container .content {
-  max-width: 600px;
-}
-
-
-.personal-image {
-  text-align: center;
-  margin-top: 10px;
-}
-
-.personal-image input[type="file"] {
-  display: none;
-}
-
-.personal-figure {
-  position: relative;
-  width: 250px;
-  height: 170px;
-}
-
-.personal-avatar {
-  cursor: pointer;
-  width: 250px;
-  height: 170px;
-  box-sizing: border-box;
-  border: 2px solid transparent;
-  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.2);
-  transition: all ease-in-out .3s;
-}
-
-.personal-avatar:hover {
-  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.5);
-}
-
-.personal-figcaption {
-  cursor: pointer;
-  position: absolute;
-  top: 0px;
-  width: inherit;
-  height: inherit;
-  opacity: 0;
-  background-color: rgba(0, 0, 0, 0);
-  transition: all ease-in-out .3s;
-}
-
-.personal-figcaption:hover {
-  opacity: 1;
-  background-color: rgba(0, 0, 0, .5);
-}
-
-.personal-figcaption>img {
-  margin-top: 45px;
-  width: 50px;
-  height: 50px;
-} */
-
-
-
 
 .container {
   display: flex;
@@ -187,4 +123,26 @@
   100% {
     border-color: rgb(176, 219, 242); /* Establece el color del borde al final de la animación (azul) */
   }
+}
+
+
+
+
+/* VALIDACIONES */
+
+.red-asterisk::after {
+  content: "*";
+  color: red;
+  margin-left: 5px;
+}
+
+/* VALIDA IMAGEN ISTA */
+.center-image {
+  text-align: center;
+}
+
+.center-image img {
+  display: inline-block;
+  max-width: 80%;
+  height: 450px;
 }
