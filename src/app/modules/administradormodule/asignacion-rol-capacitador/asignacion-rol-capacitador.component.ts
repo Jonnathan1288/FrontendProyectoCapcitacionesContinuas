@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Capacitador } from 'src/app/models/capacitador';
 import { DocenteFenix } from 'src/app/models/docente-fenix';
@@ -14,6 +14,8 @@ import { ReportsCapacitacionesService } from 'src/app/service/reports-capacitaci
 import { RolService } from 'src/app/service/rol.service';
 import { UsuarioService } from 'src/app/service/usuario.service';
 import { ToastrService } from 'ngx-toastr';
+import { DisenioHojaVidaComponent } from '../../hojavida/disenio-hoja-vida/disenio-hoja-vida.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-asignacion-rol-capacitador',
@@ -54,7 +56,8 @@ export class AsignacionRolCapacitadorComponent implements OnInit {
     private hojadeVidaServcie: HojaVidaCapacitadorService,
     sanitizer: DomSanitizer,
     private reportService: ReportsCapacitacionesService,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private router: Router
   ) {
     this.sanitizer = sanitizer;
     this.stateOptions = [
@@ -431,7 +434,6 @@ export class AsignacionRolCapacitadorComponent implements OnInit {
         },
         (err) => {
           this.toastrService.error('Docente capacitador no tiene hoja de vida', 'Hoja de vada vacio');
-
         }
       );
   }
@@ -441,8 +443,9 @@ export class AsignacionRolCapacitadorComponent implements OnInit {
 
   // fileUrl!: SafeResourceUrl;
   fileUrl: SafeResourceUrl | null = null;
-
+  isInNewComponet:boolean = false;
   public pdfSrc: any;
+  idCapacitadorSend?:number;
   public mostrarPDF_BDA(idCapacitador: number): void {
     if (
       this.classHojaDevida.documento &&
@@ -458,13 +461,17 @@ export class AsignacionRolCapacitadorComponent implements OnInit {
       this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
         window.URL.createObjectURL(pdfBlob)
       );
+      this.isInNewComponet = false;
     } else {
-      this.reportService.gedownloadHojaVida(idCapacitador).subscribe((data) => {
-        if (data != null) {
-          const url = URL.createObjectURL(data);
-          this.pdfSrc = this.sanitizer.bypassSecurityTrustResourceUrl(url);
-        }
-      });
+      this.isInNewComponet = true;
+      this.idCapacitadorSend = idCapacitador;
+      // this.router.navigate(['/ver/hojaVida/capacitador/', idCapacitador]);
+      // this.reportService.gedownloadHojaVida(idCapacitador).subscribe((data) => {
+      //   if (data != null) {
+      //     const url = URL.createObjectURL(data);
+      //     this.pdfSrc = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+      //   }
+      // });
     }
     //this.classHojaDevida = new HojaVidaCapacitador();
   }
