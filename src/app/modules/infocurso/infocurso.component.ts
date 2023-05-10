@@ -61,14 +61,13 @@ export class InfocursoComponent implements OnInit {
     this.router.navigate(['/mat', idCurso ]);
   }
 
-
   // validar si ya se inscribio en el curso
   isInscritoInCourse!:boolean;
   public ValidarSuIsncripcion():void{
     this.inscritosService.getInscrioValidacion(this.idCursoGlobal,this.idUsuarioGlobal).subscribe(
       data => {
         if (data == true) {
-          console.log("ya esta inscrito en este curso")
+          // alert('Ya estas inscrito')
           this.isInscritoInCourse = true;
         } else {
           console.log("NO esta inscrito en este curso")
