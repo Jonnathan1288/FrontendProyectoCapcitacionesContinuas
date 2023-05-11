@@ -1,0 +1,71 @@
+.container {
+    margin: 20px auto;
+    max-width: 1000%;
+    border-radius: 5px;
+}
+
+.attendance-section {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.section-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+
+.attendance-date {
+    font-size: 18px;
+    color: #777;
+    margin-top: 10px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 10px;
+}
+
+.col-12 {
+    width: 100%;
+}
+
+
+
+
+
+
+
+
+/* NUEVOS CAMBIOS PARA LA OTRA TABLA */
+
+body {
+    position: relative;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+
+h2 {
+    font-size: 2em;
+    margin-top: 1em;
+
+}
+
+th {
+    font-size: 1.1em;
+}
+
+tr {
+    font-weight: 600;
+}
+
+
+
+tr:hover {
+    background-color: rgb(245, 245, 245);
+}
+
+#bntRegistrar:hover {
+    background-color: rgb(21, 125, 60);
+}

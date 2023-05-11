@@ -16,6 +16,12 @@ import { ReportsCapacitacionesService } from 'src/app/service/reports-capacitaci
   styleUrls: ['./registrar-notas-finales.component.css'],
 })
 export class RegistrarNotasFinalesComponent implements OnInit {
+
+  first = 0;
+  layout: string = 'list';
+  rows = 5;
+
+
   constructor(
     private activateRoute: ActivatedRoute,
     private router: Router,
@@ -225,4 +231,30 @@ export class RegistrarNotasFinalesComponent implements OnInit {
       );
     }
   }
+
+
+  //implemeentacion
+  
+    //Implementacion de la tabla de todo referente a primeng
+    next() {
+      this.first = this.first + this.rows;
+    }
+  
+    prev() {
+      this.first = this.first - this.rows;
+    }
+  
+    reset() {
+      this.first = 0;
+    }
+  
+    isLastPage(): boolean {
+      return this.listNotas
+        ? this.first === this.listNotas.length - this.rows
+        : true;
+    }
+  
+    isFirstPage(): boolean {
+      return this.listNotas ? this.first === 0 : true;
+    }
 }

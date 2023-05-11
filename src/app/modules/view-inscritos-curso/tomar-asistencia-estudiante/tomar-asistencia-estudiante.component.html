@@ -90,30 +90,23 @@
 
     <div class="container mt-2 ">
         <div class="card text-center mb-2 shadow-4 rounded-5">
-
-
             <p-table [value]="listAsistenciasAntiguas" [paginator]="true" [rows]="rows" [showCurrentPageReport]="true"
                 [(first)]="first" [tableStyle]="{'min-width': '50rem'}"
                 currentPageReportTemplate="Mostrando {first} to {last} of {totalRecords} estudiantes"
                 [rowsPerPageOptions]="[5,10,15]">
                 <ng-template pTemplate="header">
                     <tr>
-
                         <th style="width:40%"><strong>NOMBRES</strong></th>
                         <th style="width:25%"><strong>IDENTIFICASIÓN</strong></th>
                         <th style="width:25%"><strong>OBSERVACIÓN</strong></th>
                         <th style="width:10%"><strong>ASISTENCIA</strong></th>
                         <th style="width:10%"><strong>OBSERVACIÓN</strong></th>
-
-
-
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-data>
                     <tr>
                         <td>
                             <div class="d-flex align-items-center">
-
                                 <div>
                                     <p class="fw-bold mb-1">{{
                                         data.partipantesMatriculados!.inscrito!.usuario!.persona!.nombre1 }} {{
@@ -124,21 +117,16 @@
                                         data.partipantesMatriculados!.inscrito!.usuario!.persona!.correo }}</p>
                                 </div>
                             </div>
-
                         </td>
                         <td>
                             <p class="text-muted mb-0">{{
                                 data.partipantesMatriculados!.inscrito!.usuario!.persona!.identificacion }}</p>
                         </td>
-
-
                         <td>
                             <p class="text-muted mb-0">{{
                                 data.observacionAsistencia }}</p>
                         </td>
-
                         <td>
-
                             <div class="d-flex align-items-center">
                                 <p-button *ngIf='data.estadoAsistencia == true' icon="pi pi-check-square"
                                     styleClass="p-button-success me-2"
@@ -147,19 +135,15 @@
                                     styleClass="p-button-danger me-2"
                                     (click)="estudianteAsisteClase(data.idAsistencia, data)"></p-button>
                             </div>
-
                         </td>
-
                         <td>
                             <p-button icon="pi pi-eye" (click)="showDialog(data)"></p-button>
-
                         </td>
                     </tr>
                 </ng-template>
             </p-table>
         </div>
     </div>
-
 </div>
 
 
