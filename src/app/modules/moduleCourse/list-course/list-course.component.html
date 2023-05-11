@@ -76,12 +76,12 @@
                     <th style="width:25%">F-INICIO</th>
                     <th style="width:25%">F-FIN</th>
                     <th style="width:25%">FOTO</th>
-                    <th style="width:25%">ESTADO</th>
-                    <th style="width:25%">SILABO</th>
-                    <th style="width:25%">NECESIDAD</th>
+              
+                    <!-- <th style="width:25%">SILABO</th> -->
+                    <!-- <th style="width:25%">NECESIDAD</th> -->
                     <th style="width:25%">VER-CURSO</th>
                     <th style="width:25%">INSCRITOS</th>
-                    <th style="width:25%">RegFoto</th>
+                    <!-- <th style="width:25%">RegFoto</th> -->
                     <th style="width:25%">Publicar</th>
 
                 </tr>
@@ -95,18 +95,18 @@
 
                     <td><img [src]="'data:image/jpeg;base64,' + data.fotoCurso" alt="" width="50px" height="50px"
                             class="rounded-circle"></td>
-                    <td></td>
-                    <td><p-button type="button" icon="pi pi-eye" styleClass="p-button-text"
-                            (click)="silabo(data.idCurso)"></p-button></td>
-                    <td><p-button type="button" icon="pi pi-send" styleClass="p-button-text"
-                            (click)="editCurso(data.idCurso)"></p-button></td>
+                 
+                    <!-- <td><p-button type="button" icon="pi pi-eye" styleClass="p-button-text"
+                            (click)="silabo(data.idCurso)"></p-button></td> -->
+                    <!-- <td><p-button type="button" icon="pi pi-send" styleClass="p-button-text"
+                            (click)="editCurso(data.idCurso)"></p-button></td> -->
                     <td><p-button type="button" icon="pi pi-eye" styleClass="p-button-text"
                             (click)="VerCursoInicio(data.idCurso)"></p-button></td>
                     <td><p-button type="button" icon="pi pi-eye" styleClass="p-button-text"
                             (click)="VerParticipantesInscritos(data.idCurso)"></p-button></td>
-                    <td><p-button type="button" icon="pi pi-eye" styleClass="p-button-text"
-                            (click)="VerRegistroFotografico(data.idCurso)"></p-button></td>
-                    <td>
+                    <!-- <td><p-button type="button" icon="pi pi-eye" styleClass="p-button-text"
+                            (click)="VerRegistroFotografico(data.idCurso)"></p-button></td>-->
+                    <td> 
 
                         <p-button type="button" icon="pi pi-send" styleClass="p-button-text"
                             (click)="showModaLPublisedCourse(data)"></p-button>

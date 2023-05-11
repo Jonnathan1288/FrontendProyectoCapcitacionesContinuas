@@ -252,7 +252,10 @@ export class CourseRegisterComponent {
           null,
           this.curso.especialidad?.area?.idArea
         );
-        this.formatHoraCourse(this.curso.horarioCurso?.horaInicio!, this.curso.horarioCurso?.horaFin!);
+        this.formatHoraCourse(
+          this.curso.horarioCurso?.horaInicio!,
+          this.curso.horarioCurso?.horaFin!
+        );
 
         //Méto para la fecha
       }
@@ -262,7 +265,6 @@ export class CourseRegisterComponent {
   //Método que me va permitir formatear la fecha-------------
 
   public formatHoraCourse(horaInit: string, horaFin: string) {
-
     //Para la fecha de inicio
     const horaInicioParts = horaInit.split(' ');
     if (horaInicioParts.length !== 3) {
@@ -314,6 +316,9 @@ export class CourseRegisterComponent {
       .updatePrerequisitoCurso(prerequisito.idPrerequisitoCurso!, prerequisito)
       .subscribe((data) => {
         this.listPrerequisitoCurso(this.idCursoUpdate);
+        this.toastrService.error('Prerequisito quitado.', 'ELIMINADO.', {
+          timeOut: 1300,
+        });
       });
   }
 
@@ -328,17 +333,41 @@ export class CourseRegisterComponent {
         .subscribe((data) => {
           if (data != null) {
             this.listPrerequisitoCurso(this.idCursoUpdate);
+            this.toastrService.success(
+              'Prerequisito actualizado correctamente.',
+              'ACTUALIZADO.',
+              {
+                timeOut: 1300,
+              }
+            );
           }
         });
     } else {
-      this.prerequisito.estadoPrerequisitoCurso = true;
-      this.prerequisitoService
-        .savePrerequisitoCurso(this.prerequisito)
-        .subscribe((data) => {
-          if (data != null) {
-            this.listPrerequisitoCurso(this.idCursoUpdate);
+      if (this.listPrerequisitoCurso1.length >= 8) {
+        this.toastrService.warning(
+          'Puedes ingresar como maximo 8 prerequisitos.',
+          'LIMITE SUPERADO.',
+          {
+            timeOut: 1300,
           }
-        });
+        );
+      } else {
+        this.prerequisito.estadoPrerequisitoCurso = true;
+        this.prerequisitoService
+          .savePrerequisitoCurso(this.prerequisito)
+          .subscribe((data) => {
+            if (data != null) {
+              this.toastrService.success(
+                'Prerequisito agregado.',
+                'CREADO CORRECTO.',
+                {
+                  timeOut: 1300,
+                }
+              );
+              this.listPrerequisitoCurso(this.idCursoUpdate);
+            }
+          });
+      }
     }
     this.prerequisito = new PrerequisitoCurso();
     this.visible = false;
@@ -369,33 +398,97 @@ export class CourseRegisterComponent {
   public fechaInit?: Date;
   public fechaFin?: Date;
 
+  public validarCursosCpacitacionContinua() {
+    if (
+      !this.curso?.nombreCurso ||
+      !this.curso?.fotoCurso ||
+      !this.curso.especialidad ||
+      !this.curso.programas ||
+      !this.curso.nombreCurso ||
+      !this.curso.duracionCurso ||
+      !this.curso.numeroCuposCurso ||
+      !this.curso.fechaInicioCurso ||
+      !this.curso.fechaFinalizacionCurso ||
+      !this.curso.parroquia ||
+      !this.curso.descripcionCurso ||
+      !this.curso.objetivoGeneralesCurso ||
+      !this.curso.cursoocc ||
+      !this.curso.capacitador ||
+      !this.curso.modalidadCurso ||
+      !this.curso.tipoCurso ||
+      !this.curso.nivelCurso ||
+      !this.fechaInit ||
+      !this.fechaFin ||
+      !this.daysOfTheweekV
+    ) {
+      this.toastrService.error(
+        'Verifique los campos obligatorios.',
+        'CAMPOS VACÍOS .',
+        {
+          timeOut: 1600,
+        }
+      );
+    } else {
+      const fechaInicio = new Date(this.curso.fechaInicioCurso);
+      const fechaFinalizacion = new Date(this.curso.fechaFinalizacionCurso);
+      const tiempoDiferencia =
+        fechaFinalizacion.getTime() - fechaInicio.getTime();
+      const diasDiferencia = tiempoDiferencia / (1000 * 60 * 60 * 24);
+      if (diasDiferencia < 7) {
+        this.toastrService.error(
+          'La duración del curso debe ser al menos de 7 días.',
+          'DURACIÓN MINIMA.',
+          {
+            timeOut: 1500,
+          }
+        );
+      } else if (diasDiferencia > 27) {
+        this.toastrService.error(
+          'La duración del curso no puede ser mayor de 27 días.',
+          'DURACIÓN MÁXIMA.',
+          {
+            timeOut: 1500,
+          }
+        );
+      } else {
+        if (this.listPrerequisitoCurso1.length >= 1) {
+          //Hora para convertir a los horas minutos de la hora de inicio para mandarlo como string..
+          const horaI = this.fechaInit!.getHours() % 12;
+          const minutosI = this.fechaInit!.getMinutes();
+          const amPmI = this.fechaInit!.toLocaleString('en-US', {
+            hour: 'numeric',
+            hour12: true,
+          }).split(' ')[1];
+          //END-------------------------------------------------
+
+          //START Hora para el fin que se enviara como string
+          const horaF = this.fechaFin!.getHours() % 12;
+          const minutosF = this.fechaFin!.getMinutes();
+          const amPmF = this.fechaFin!.toLocaleString('en-US', {
+            hour: 'numeric',
+            hour12: true,
+          }).split(' ')[1];
+
+          this.horarioC.horaInicio = horaI + ' ' + minutosI + ' ' + amPmI;
+          this.horarioC.horaFin = horaF + ' ' + minutosF + ' ' + amPmF;
+          this.horarioC.dias = this.daysOfTheweekV;
+          this.createHorarioCurso();
+        } else {
+          this.toastrService.error(
+            'Debe llenar por minimo un prerequisito.',
+            'PREREQUISITOS VACIOS.',
+            {
+              timeOut: 1600,
+            }
+          );
+        }
+      }
+    }
+  }
+
   public createHorarioCurso() {
-    //Hora para convertir a los horas minutos de la hora de inicio para mandarlo como string..
-    const horaI = this.fechaInit!.getHours() % 12;
-    const minutosI = this.fechaInit!.getMinutes();
-    const amPmI = this.fechaInit!.toLocaleString('en-US', {
-      hour: 'numeric',
-      hour12: true,
-    }).split(' ')[1];
-    //END-------------------------------------------------
-
-    //START Hora para el fin que se enviara como string
-    const horaF = this.fechaFin!.getHours() % 12;
-    const minutosF = this.fechaFin!.getMinutes();
-    const amPmF = this.fechaFin!.toLocaleString('en-US', {
-      hour: 'numeric',
-      hour12: true,
-    }).split(' ')[1];
-
-    this.horarioC.horaInicio = horaI + ' ' + minutosI + ' ' + amPmI;
-    this.horarioC.horaFin = horaF + ' ' + minutosF + ' ' + amPmF;
-
-    // this.fechaFin = new Date();
-    // this.fechaFin.setHours(amPm === 'PM' ? hora + 12 : hora);
-    // this.fechaFin.setMinutes(minutos);
-
     if (this.curso.idCurso) {
-      this.horarioC.dias = this.daysOfTheweekV;
+      // this.horarioC.dias = this.daysOfTheweekV;
       this.horarioC.estadoHorarioCurso = true;
       console.log({ horarioEnvio: this.horarioC });
       this.horarioService
@@ -407,15 +500,27 @@ export class CourseRegisterComponent {
               .updateCurso(this.curso.idCurso!, this.curso)
               .subscribe((data) => {
                 if (data != null) {
-                  alert('succesful update course');
+                  this.toastrService.success(
+                    'Curso actualizado satisfactoriamente.',
+                    'CURSO ACTUALIZADO',
+                    {
+                      timeOut: 1500,
+                      progressBar: true,
+                      progressAnimation: 'increasing',
+                    }
+                  );
+                  setTimeout(() => {
+                    window.location.reload();
+                    location.replace('/list/course');
+                  }, 1500);
+
+                  // alert('succesful update course');
                 }
               });
           }
         });
     } else {
-      alert('create');
-
-      this.horarioC.dias = this.daysOfTheweekV;
+      // this.horarioC.dias = this.daysOfTheweekV;
       this.horarioC.estadoHorarioCurso = true;
       this.horarioService.crearHorarioCurso(this.horarioC).subscribe((data) => {
         if (data != null) {
@@ -436,7 +541,21 @@ export class CourseRegisterComponent {
                       }
                     });
                 }
-                alert('Correcto al crear el curso');
+                this.toastrService.success(
+                  'Curso creado satisfactoriamente.',
+                  'CURSO CREADO',
+                  {
+                    timeOut: 1500,
+                    progressBar: true,
+                    progressAnimation: 'increasing',
+                  }
+                );
+                setTimeout(() => {
+                  window.location.reload();
+                  location.replace('/list/course');
+                }, 1500);
+
+                // alert('Correcto al crear el curso');
               }
             },
             (err) => {
@@ -511,13 +630,15 @@ export class CourseRegisterComponent {
   //Método que me cargara toda la view para hacer dinamico
   public allList() {
     this.programaService.listPrograma().subscribe((data) => {
-      this.listProgramas = data;
-      this.listProgramasItem = this.listProgramas.map((area) => {
-        return {
-          label: area.nombrePrograma,
-          value: area.idPrograma,
-        };
-      });
+      this.listProgramas = data.filter(
+        (avtivo) => avtivo.estadoProgramaActivo === true
+      );
+      // this.listProgramasItem = this.listProgramas.map((area) => {
+      //   return {
+      //     label: area.nombrePrograma,
+      //     value: area.idPrograma,
+      //   };
+      // });
     });
 
     this.tipoCursoService.listTipoCurso().subscribe((data) => {
@@ -582,10 +703,33 @@ export class CourseRegisterComponent {
   listPrerequisitoCurso1: PrerequisitoCurso[] = [];
   public almacenarListaDeprerequisitos(): void {
     if (!this.prerequisito.nombrePrerequisitoCurso) {
-      alert('vacio');
+      this.toastrService.error(
+        'Usted no puede ingresar campos vacios.',
+        'CAMPO VACIO.',
+        {
+          timeOut: 1300,
+        }
+      );
     } else {
-      this.listPrerequisitoCurso1.push(this.prerequisito);
-      this.prerequisito = new PrerequisitoCurso();
+      if (this.listPrerequisitoCurso1.length === 8) {
+        this.toastrService.warning(
+          'Puedes ingresar como maximo 8 prerequisitos.',
+          'LIMITE SUPERADO.',
+          {
+            timeOut: 1300,
+          }
+        );
+      } else {
+        this.listPrerequisitoCurso1.push(this.prerequisito);
+        this.prerequisito = new PrerequisitoCurso();
+        this.toastrService.success(
+          'Ingreso correcto del prerequisito.',
+          'PREREQUISITO AGREGADO.',
+          {
+            timeOut: 1000,
+          }
+        );
+      }
     }
   }
 
@@ -595,13 +739,12 @@ export class CourseRegisterComponent {
     );
     if (index !== -1) {
       this.listPrerequisitoCurso1.splice(index, 1);
+      this.toastrService.error('Prerequisito quitado.', 'ELIMINADO.', {
+        timeOut: 1300,
+      });
     }
   }
 
-  //Ruteo a otras ventanas
-  public silabo() {
-    this.router.navigate(['/silabo', this.idCursoUpdate]);
-  }
 
   public necesidad() {
     this.router.navigate(['/register/necesidad', this.idCursoUpdate]);

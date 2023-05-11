@@ -9,6 +9,7 @@ import { NecesidadCursoService } from 'src/app/service/necesidad-curso.service';
 import { ReportsCapacitacionesService } from 'src/app/service/reports-capacitaciones.service';
 import * as fileSaver from 'file-saver';
 import { DomSanitizer } from '@angular/platform-browser';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-registro-necesidad',
   templateUrl: './registro-necesidad.component.html',
@@ -34,7 +35,8 @@ export class RegistroNecesidadComponent implements OnInit {
     private router: Router,
     private actiRouter: ActivatedRoute,
     private reportService: ReportsCapacitacionesService,
-    public sanitizer: DomSanitizer
+    public sanitizer: DomSanitizer,
+    private toastrService: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -46,41 +48,109 @@ export class RegistroNecesidadComponent implements OnInit {
     });
   }
 
+  public isNecesidadActivoPresente(): boolean {
+    return !!(this.necesidadActivo && this.necesidadActivo.idNecesidadCurso);
+  }
+
   public traerCursoAsiganado(idCurso: number) {
     this.cursoService.getCursoById(idCurso).subscribe((data) => {
       this.curso = data;
     });
   }
 
-  public createNecesidaCurso() {
-    this.necesidadActivo.curso = this.curso;
-    this.necesidadSer
-      .crearNecesidadCurso(this.necesidadActivo)
-      .subscribe((data) => {
-        if (data != null) {
-          for (let listaNecesidades of this.listaNecesidadCursoArr) {
-            listaNecesidades.estadoDetalleNecesidad = true;
-            listaNecesidades.necesidadCurso = data;
-            this.listanecSer
-              .saveListaNecesidadCurso(listaNecesidades)
-              .subscribe((data) => {
-                if (data != null) {
-                  alert('Correcto al crear el curso');
-                }
-              });
-          }
+  public validacionCaposNecesidadCurso() {
+    if (
+      !this.necesidadActivo.espacioImpartirNecesidadCurso ||
+      !this.necesidadActivo.resumenCurso ||
+      !this.necesidadActivo.poblacionDirijida
+    ) {
+      this.toastrService.error(
+        'Algúnos campos no estan llenos.',
+        'ALGUNOS CAMPOS VACÍOS.',
+        {
+          timeOut: 1300,
         }
-      });
+      );
+    }else{
+      if (this.listaNecesidadCursoArr.length >= 1){
+        this.createNecesidaCurso()
+      }else{
+        this.toastrService.error(
+          'Debe llenar por minimo una necesidad a la población.',
+          'NECESIDAD VACÍA.',
+          {
+            timeOut: 1600,
+          }
+        );
+      }
+    }
+  }
+  public createNecesidaCurso() {
+    if (this.necesidadActivo.idNecesidadCurso) {
+      this.necesidadSer
+        .updateNecesidadCurso(
+          this.necesidadActivo.idNecesidadCurso,
+          this.necesidadActivo
+        )
+        .subscribe((data) => {
+          if (data != null) {
+            this.toastrService.success(
+              'Informe de necesidad de curso actualizado.',
+              'ACTUALIZADO.',
+              {
+                timeOut: 1300,
+              }
+            );
+          }
+        });
+      console.log(this.necesidadActivo);
+    } else {
+      alert('create');
+      this.necesidadActivo.curso = this.curso;
+      this.necesidadSer
+        .crearNecesidadCurso(this.necesidadActivo)
+        .subscribe((data) => {
+          if (data != null) {
+            for (let listaNecesidades of this.listaNecesidadCursoArr) {
+              listaNecesidades.estadoDetalleNecesidad = true;
+              listaNecesidades.necesidadCurso = data;
+              this.listanecSer
+                .saveListaNecesidadCurso(listaNecesidades)
+                .subscribe((data) => {
+                  if (data != null) {
+                    alert('Correcto al crear el curso');
+                  }
+                });
+            }
+          }
+        });
+    }
   }
 
   listaNecesidadCursoArr: ListaNecesidadCurso[] = [];
 
   public almacenarListaNecedidadDeCurso(): void {
     if (!this.listaNece.detalleNececidadCurso) {
-      alert('vacio');
+      this.toastrService.error(
+        'Deebe llenar el campo de detalle.',
+        'CAMPO VACÍO.',
+        {
+          timeOut: 1300,
+        }
+      );
     } else {
-      this.listaNecesidadCursoArr.push(this.listaNece);
-      this.listaNece = new ListaNecesidadCurso();
+      if (this.listaNecesidadCursoArr.length === 8) {
+        this.toastrService.error(
+          'A exedido el limite de 8 necesidades',
+          'LIMITE DE 8.',
+          {
+            timeOut: 1300,
+          }
+        );
+      } else {
+        this.listaNecesidadCursoArr.push(this.listaNece);
+        this.listaNece = new ListaNecesidadCurso();
+      }
     }
   }
 
@@ -90,6 +160,9 @@ export class RegistroNecesidadComponent implements OnInit {
     );
     if (index !== -1) {
       this.listaNecesidadCursoArr.splice(index, 1);
+      this.toastrService.error('Necesida de curso quitado.', 'ELIMINADO.', {
+        timeOut: 1300,
+      });
     }
   }
 
@@ -115,7 +188,7 @@ export class RegistroNecesidadComponent implements OnInit {
           this.listaNecesidadCursoArr = this.listaNecesidadCursoArr.filter(
             (list) => list.estadoDetalleNecesidad === true
           );
-     
+
           // this.listaNecesidadCursoArr = data;
         });
     }
@@ -155,7 +228,6 @@ export class RegistroNecesidadComponent implements OnInit {
   public eliminadologicoDeInfNecesidadCurso(
     necesidadCurso: ListaNecesidadCurso
   ) {
-    
     necesidadCurso.estadoDetalleNecesidad = false;
     this.listanecSer
       .updateListaNecesidadCurso(
@@ -165,44 +237,59 @@ export class RegistroNecesidadComponent implements OnInit {
       .subscribe((data) => {
         this.traerListDeNecesidadesComoDeatlle();
         this.listaNecesidadCursoArr;
+
+        this.toastrService.warning('Necesidad eliminada.', 'ELIMINADO.', {
+          timeOut: 1000,
+        });
       });
- 
   }
 
   public updateCreate() {
     this.listaNece.necesidadCurso = this.necesidadActivo;
 
-    if (this.listaNece.idListaNecesidadCursos) {
-     
-      this.listanecSer
-        .updateListaNecesidadCurso(
-          this.listaNece.idListaNecesidadCursos,
-          this.listaNece
-        )
-        .subscribe((data) => {
-          this.traerListDeNecesidadesComoDeatlle();
-          console.log({ lista: this.listaNece });
-        });
+    if (this.listaNecesidadCursoArr.length === 8) {
+      this.toastrService.error(
+        'A exedido el limite de 8 necesidades',
+        'LIMITE DE 8.',
+        {
+          timeOut: 1300,
+        }
+      );
     } else {
-      this.listaNece.estadoDetalleNecesidad = true;
-      this.listanecSer
-        .saveListaNecesidadCurso(this.listaNece)
-        .subscribe((data) => {
-          this.traerListDeNecesidadesComoDeatlle();
-          console.log({ lista: this.listaNece });
-        });
+      if (this.listaNece.idListaNecesidadCursos) {
+        this.listanecSer
+          .updateListaNecesidadCurso(
+            this.listaNece.idListaNecesidadCursos,
+            this.listaNece
+          )
+          .subscribe((data) => {
+            this.traerListDeNecesidadesComoDeatlle();
+            this.toastrService.success(
+              'Necesida actualizada.',
+              'ACTUALIZADO.',
+              {
+                timeOut: 1000,
+              }
+            );
+          });
+      } else {
+        this.listaNece.estadoDetalleNecesidad = true;
+        this.listanecSer
+          .saveListaNecesidadCurso(this.listaNece)
+          .subscribe((data) => {
+            this.traerListDeNecesidadesComoDeatlle();
+
+            this.toastrService.success(
+              'Necesida agregada con éxito.',
+              'CREADO.',
+              {
+                timeOut: 1000,
+              }
+            );
+          });
+      }
     }
     this.listaNece = new ListaNecesidadCurso();
     this.visible = false;
   }
-
-  //Para el pdf
-  // public pdfSrc: any;
-  //  getPdf() {
-  //   this.reportService.getDownloadReportNecesidadCurso(this.idCurso).subscribe((r) => {
-
-  //      const url = URL.createObjectURL(r);
-  //        this.pdfSrc = this.sanitizer.bypassSecurityTrustResourceUrl(url);
-  //    });
-  //  }
 }

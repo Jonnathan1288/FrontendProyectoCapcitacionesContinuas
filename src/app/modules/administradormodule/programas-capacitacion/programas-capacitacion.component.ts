@@ -29,11 +29,74 @@ export class ProgramasCapacitacionComponent implements OnInit {
     private reportService: ReportsCapacitacionesService,
     private toastrService: ToastrService
   ) {
-    this.sanitizer = sanitizer
-    
+    this.sanitizer = sanitizer;
   }
   ngOnInit(): void {
     this.getTodosLosProgramasPorAdministrador();
+  }
+
+  public validarDatosProgramaCapacitacionContinua() {
+    if (
+      !this.classPeriodoPrograma.nombrePeriodoPrograma ||
+      !this.classPeriodoPrograma.fechaInicioPeriodoPrograma ||
+      !this.classPeriodoPrograma.fechaFinPeriodoPrograma ||
+      !this.classPeriodoPrograma.nombrePeriodoPrograma ||
+      !this.classPrograma.nombrePrograma ||
+      !this.classPrograma.descripcionPrograma
+    ) {
+      this.toastrService.error(
+        'Verifique los campos que no esten vacíos.',
+        'CAMPOS VACíOS.',
+        {
+          timeOut: 1300,
+        }
+      );
+    } else {
+      const fechaInicio = new Date(
+        this.classPeriodoPrograma.fechaInicioPeriodoPrograma
+      );
+      const fechaFinalizacion = new Date(
+        this.classPeriodoPrograma.fechaFinPeriodoPrograma
+      );
+
+      const tiempoDiferencia =
+        fechaFinalizacion.getTime() - fechaInicio.getTime();
+      const diasDiferencia = tiempoDiferencia / (1000 * 60 * 60 * 24);
+
+      //Periodo actual
+      const fechaActual = new Date();
+      if (fechaInicio < fechaActual) {
+        this.toastrService.error(
+          'No se puede ingresar una fecha pasada.',
+          'FECHA INVÁLIDA.',
+          {
+            timeOut: 1700,
+          }
+        );
+      } else {
+        // Continuar con la lógica adicional si la fecha es válida
+
+        if (diasDiferencia < 7) {
+          this.toastrService.error(
+            'La duración del curso debe ser al menos de 7 días.',
+            'DURACIÓN MINIMA.',
+            {
+              timeOut: 1500,
+            }
+          );
+        } else if (diasDiferencia > 27) {
+          this.toastrService.error(
+            'La duración del curso no puede ser mayor de 27 días.',
+            'DURACIÓN MÁXIMA.',
+            {
+              timeOut: 1500,
+            }
+          );
+        } else {
+          this.createPrograma();
+        }
+      }
+    }
   }
 
   public createPrograma() {
@@ -52,11 +115,19 @@ export class ProgramasCapacitacionComponent implements OnInit {
               )
               .subscribe((data) => {
                 if (data != null) {
-                  alert('datos actualizados');
+                  this.toastrService.success(
+                    'Se ha actualizado correctamente el programa de capacitación.',
+                    'ACTUALIZACIÓN EXITOSA.',
+                    {
+                      timeOut: 1500,
+                    }
+                  );
+                  
                   this.getTodosLosProgramasPorAdministrador();
-                  this.visible = false;
+           
                   this.classPeriodoPrograma = new PeriodoPrograma();
                   this.classPrograma = new Programas();
+                  this.visible = false;
                 }
               });
           }
@@ -76,7 +147,13 @@ export class ProgramasCapacitacionComponent implements OnInit {
                   this.getTodosLosProgramasPorAdministrador();
                   this.classPeriodoPrograma = new PeriodoPrograma();
                   this.classPrograma = new Programas();
-                  alert('correco en laceacion de la curso');
+                  this.toastrService.success(
+                    'Se ha creado correctamente el programa de capacitación.',
+                    'CREACIÓN EXITOSA.',
+                    {
+                      timeOut: 1500,
+                    }
+                  );
                 }
               });
           }
@@ -87,7 +164,8 @@ export class ProgramasCapacitacionComponent implements OnInit {
   public getTodosLosProgramasPorAdministrador() {
     this.programaService.listPrograma().subscribe((data) => {
       if (data != null) {
-        this.listaProgramas = data
+        this.listaProgramas = data;
+        this.listaProgramasFilter = this.listaProgramas
       }
     });
   }
@@ -103,9 +181,15 @@ export class ProgramasCapacitacionComponent implements OnInit {
         if (data != null) {
           this.getTodosLosProgramasPorAdministrador();
           if (programa.estadoProgramaActivo) {
-            this.toastrService.success('El programa ya esta público', 'Activación Exitosa');
+            this.toastrService.success(
+              'El programa ya esta público',
+              'Activación Exitosa'
+            );
           } else {
-            this.toastrService.warning('El programa a sido  acultado', 'Desactivación Exitosa');
+            this.toastrService.warning(
+              'El programa a sido  acultado',
+              'Desactivación Exitosa'
+            );
           }
         }
       });
@@ -147,28 +231,56 @@ export class ProgramasCapacitacionComponent implements OnInit {
     this.visiblePeriodoMensual = true;
   }
 
-
   //Implementacion del evento de la fecha
   public pdfSrc: any;
   onDateSelect(event: any) {
     const selectedDate: Date = event;
-  
+
     const year = selectedDate.getFullYear();
     const month = selectedDate.getMonth() + 1;
 
     // alert('Año: ' + year);
     // alert('Mes: ' + month);
 
-    this.reportService.downloadProgramacionMensul(month, year).subscribe((data)=>{
-      if(data != null){
-        // alert(data)
-        const url = URL.createObjectURL(data);
-        this.pdfSrc = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+    this.reportService.downloadProgramacionMensul(month, year).subscribe(
+      (data) => {
+        if (data != null) {
+          // alert(data)
+          const url = URL.createObjectURL(data);
+          this.pdfSrc = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+        }
+      },
+      (err) => {
+        alert('err');
       }
-    }, (err)=>{
-      alert('err')
-    })
+    );
   }
 
+
+  //FILTRO PARA LA BUSQUEDAD 
   
+
+  public wordNoFind?: any;
+  public listaProgramasFilter: Programas[] = [];
+  public filterTableProgramasCapacitacion(e: any) {
+    let letter = e.target.value.toLowerCase();
+
+    this.wordNoFind = letter;
+    console.log(this.wordNoFind);
+
+    if (this.wordNoFind === '') {
+      this.listaProgramasFilter = this.listaProgramas;
+    } else {
+      let programaslist = this.listaProgramasFilter.filter(
+        (p) =>
+          (p.nombrePrograma?.toLowerCase().includes(this.wordNoFind) ||
+          p.periodoPrograma?.nombrePeriodoPrograma?.toLowerCase().includes(this.wordNoFind) ||
+          p.descripcionPrograma?.toLowerCase().includes(this.wordNoFind)
+          )
+      );
+      
+      this.listaProgramasFilter = programaslist;
+    }
+  }
+
 }

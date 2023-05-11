@@ -1,0 +1,155 @@
+<div class="card">
+    <p-toolbar styleClass="mb-4">
+        <ng-template pTemplate="left">
+            <!-- <button pButton pRipple label="Nuevo" icon="pi pi-plus" class="p-button-success mr-2"
+                (click)="showModaL()"></button> -->
+                <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"
+                (click)="clear()"></button>
+        </ng-template>
+
+        <ng-template pTemplate="right">
+            <button pButton pRipple label="Imprimir" icon="pi pi-print"
+                class="p-button-primary mr-2 inline-block"></button>
+
+            <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button>
+        </ng-template>
+    </p-toolbar>
+
+    <p-table #dt [value]="listUsuariosFilter" dataKey="id" styleClass="p-datatable-customers" [rowHover]="true" [rows]="5"
+    [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,15]"  responsiveLayout="scroll"
+    [paginator]="true" currentPageReportTemplate="Mostrando {first} to {last} of {totalRecords} usuarios"
+    [filterDelay]="0" [globalFilterFields]="['identificacion','apellido1','nombre1','username']"
+    [showCurrentPageReport]="true" >
+        <ng-template pTemplate="caption">
+            <div class="flex align-items-center justify-content-between">
+                <h5 class="m-0"><strong>ASIGNACIÓN DE PERMISOS A LOS USUARIOS</strong></h5>
+
+
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+
+
+                 <input pInputText type="text" 
+                      placeholder="Buscar usuario.." (input)="filterEventUsuarios($event)"  /> 
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="persona.identificacion">IDENTIFICASIÓN<p-sortIcon field="persona.identificacion"></p-sortIcon>
+                </th>
+                <th pSortableColumn="persona.apellido1">APELLIDOS <p-sortIcon field="persona.apellido1"></p-sortIcon></th>
+
+                <th pSortableColumn="persona.nombre1">NOMRBES <p-sortIcon field="nombre1"></p-sortIcon></th>
+         
+                <th pSortableColumn="username">NOMBRE DE CUENTA<p-sortIcon field="username"></p-sortIcon></th>
+              
+
+
+                <th pSortableColumn="inventoryStatus">GÉSTION <p-sortIcon field="inventoryStatus"></p-sortIcon></th>
+
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-user>
+            <tr>
+                <td>{{user.persona.identificacion}}</td>
+                <td>{{user.persona.apellido1}} {{user.persona.apellido2}}</td>
+                <td>{{user.persona.nombre1}} {{user.persona.apellido1}}</td>
+             
+                <td>{{user.username}}</td>
+                
+    
+                <td>
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2 mt-1"
+                        (click)="cargarDatosDocenteUser(user)"></button>
+
+                        <!-- <button pButton pRipple [icon]="capacit.estadoActivoCapacitador ? 'pi pi-check' : 'pi pi-trash'"
+                        [class]="'p-button-rounded ' + (capacit.estadoActivoCapacitador ? 'p-button-primary' : 'p-button-warning') + ' mt-1'"
+                        (click)="eliminadoLogicoDelCapacitador(capacit)"> -->
+                    <!-- </button> -->
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <div class="flex align-items-center justify-content-between">
+                En total hay {{listUsuariosFilter ? listUsuariosFilter.length : 0 }}
+                Usuarios.
+            </div>
+        </ng-template>
+    </p-table>
+</div>
+
+
+
+
+
+<!-- Creacion de usuario -->
+
+<!-- IMPLEMENTACION DEL MODAL PARA EL INGRESO DE LOS CURSOS -->
+
+<p-dialog header="CREACIÓN DE CAPACITADORES CON SUS ROLES" [(visible)]="visible" [modal]="true"
+    [style]="{ width: '50vw', height: '250' }" [draggable]="false" [resizable]="false">
+
+    <form (ngSubmit)="saveUpdateDocenteDocenteCapacitadorRol()" novalidate  style="padding: 15px;">
+        <div class="grid p-fluid m-2">
+
+            <div class="col-12 md:col-7 mt-1">
+                <div class="p-inputgroup">
+                  <p><strong>NOMBRES:</strong> {{classUsuario.persona?.nombre1}} {{classUsuario.persona?.nombre2}} </p>
+        
+        
+                </div>
+              </div>
+              <div class="col-12 md:col-5 mt-1">
+                <div class="p-inputgroup">
+                  <p><strong>APPELLIDOS:</strong> {{classUsuario.persona?.apellido1}} {{classUsuario.persona?.apellido2}}</p>
+        
+                </div>
+              </div>
+
+            <!-- <div class="col-12 md:col-12 mt-2">
+                <div class="p-inputgroup">
+                    <span class="p-float-label">
+                        <input type="text" id="inputtext" pInputText id="password" name="password"
+                            [(ngModel)]="classUsuario.password">
+                        <label htmlFor="password">Contraseña<span class="red-asterisk"></span></label>
+                    </span>
+                    
+                </div>
+            </div> -->
+
+            <p-table [value]="listRole" class="role-table" [style]="{width: '100%'}">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th class="header-cell"><strong>NOMBRE ROL</strong></th>
+                        <th class="header-cell"><strong>ROL ASIGNADO</strong></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-role>
+                    <tr>
+                        <td class="data-cell"><strong>{{ role.nombreRol }}</strong></td>
+                        <td class="data-cell">
+                            <button *ngIf="isRoleAssigned(role)" pButton label="Asignado" icon="pi pi-check"
+                                class="assign-button assigned-role" type="button"
+                                (click)="asignarRolesUsuario(role)"></button>
+
+                            <button *ngIf="!isRoleAssigned(role)" type="button" pButton pRipple label="No asignado"
+                                icon="pi pi-times" class="w-full custom-button"
+                                (click)="asignarRolesUsuario(role)"></button>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+
+
+
+            <!-- Fin del periodo porgrama -->
+            <div class="col-md-12 mt-4" style="text-align: center; margin: 5px;">
+                <p-button type="ngSubmit"
+                    label="Actualizar permisos"
+                    icon="pi pi-save" styleClass="p-button-success  "></p-button>
+            </div>
+        </div>
+    </form>
+</p-dialog>
+

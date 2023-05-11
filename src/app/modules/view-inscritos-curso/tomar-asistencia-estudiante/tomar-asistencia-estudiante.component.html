@@ -1,73 +1,149 @@
 <div class="container my-3">
-    
-    <div>{{today}}</div>
-    <div class="shadow-4 rounded-5 overflow-hidden">
-        <div class="table-responsive">
-            <table class="table align-middle mb-0 bg-white">
-                <thead class="bg-light">
+
+
+    <div class="attendance-section">
+        <h2 class="section-title"><strong>Asistencia de Estudiantes</strong> </h2>
+        <div class="attendance-date">{{ today | date:'mediumDate' }}</div>
+    </div>
+
+
+
+    <div class="grid p-fluid m-2">
+        <div class="col-12 md:col-12 ">
+            <div class="p-inputgroup">
+                <p-calendar inputId="edad" class="ng-dirty" [showIcon]="true" placeholder="Fecha de asistencia"
+                    id="fechaEvidencia" name="fechaEvidencia" (onSelect)="onDateSelect($event)"
+                    style="padding-left: 30%; padding-right: 30%;"></p-calendar>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- <div class="shadow-4 rounded-5 overflow-hidden">
+            <div class="table-responsive">
+                <table class="table align-middle mb-0 bg-white">
+                    <thead class="bg-light">
+                        <tr>
+                            <th><strong>NOMBRES</strong></th>
+                            <th><strong>IDENTIFICASIÓN</strong></th>
+
+                            <th><strong>OBSERVACIÓN</strong></th>
+                            <th><strong>ASISTENCIA</strong></th>
+                            <th><strong>OBSERVACIÓN</strong></th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let list of listAsistenciasAntiguas">
+
+                            <td>
+                                <div class="d-flex align-items-center">
+
+                                    <div>
+                                        <p class="fw-bold mb-1">{{
+                                            list.partipantesMatriculados!.inscrito!.usuario!.persona!.nombre1 }} {{
+                                            list.partipantesMatriculados!.inscrito!.usuario!.persona!.nombre2 }} {{
+                                            list.partipantesMatriculados!.inscrito!.usuario!.persona!.apellido1 }} {{
+                                            list.partipantesMatriculados!.inscrito!.usuario!.persona!.apellido2 }}</p>
+                                        <p class="text-muted mb-0">{{
+                                            list.partipantesMatriculados!.inscrito!.usuario!.persona!.correo }}</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <p class="text-muted mb-0">{{
+                                    list.partipantesMatriculados!.inscrito!.usuario!.persona!.identificacion }}</p>
+                            </td>
+
+
+                            <td>
+                                <p class="text-muted mb-0">{{
+                                    list.observacionAsistencia }}</p>
+                            </td>
+
+                            <td>
+
+                                <div class="d-flex align-items-center">
+                                    <p-button *ngIf='list.estadoAsistencia == true' icon="pi pi-check-square"
+                                        styleClass="p-button-success me-2"
+                                        (click)="estudianteNOAsisteAClase(list.idAsistencia, list)"></p-button>
+                                    <p-button *ngIf='list.estadoAsistencia == false' icon="pi pi-times"
+                                        styleClass="p-button-danger me-2"
+                                        (click)="estudianteAsisteClase(list.idAsistencia, list)"></p-button>
+                                </div>
+
+                            </td>
+
+                            <td>
+                                <p-button icon="pi pi-eye" (click)="showDialog(list)"></p-button>
+
+                            </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div> -->
+
+
+
+    <div class="container mt-2 ">
+        <div class="card text-center mb-2 shadow-4 rounded-5">
+            <p-table [value]="listAsistenciasAntiguas" [paginator]="true" [rows]="rows" [showCurrentPageReport]="true"
+                [(first)]="first" [tableStyle]="{'min-width': '50rem'}"
+                currentPageReportTemplate="Mostrando {first} to {last} of {totalRecords} estudiantes"
+                [rowsPerPageOptions]="[5,10,15]">
+                <ng-template pTemplate="header">
                     <tr>
-                        <th>Nombres</th>
-                        <th>Identificación</th>
-                       
-                        <th>Observacion</th>
-                        <th>Asistencia</th>
-                        <th>Observacion</th>
-
+                        <th style="width:40%"><strong>NOMBRES</strong></th>
+                        <th style="width:25%"><strong>IDENTIFICASIÓN</strong></th>
+                        <th style="width:25%"><strong>OBSERVACIÓN</strong></th>
+                        <th style="width:10%"><strong>ASISTENCIA</strong></th>
+                        <th style="width:10%"><strong>OBSERVACIÓN</strong></th>
                     </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let list of listaAsistenciaE">
-
+                </ng-template>
+                <ng-template pTemplate="body" let-data>
+                    <tr>
                         <td>
                             <div class="d-flex align-items-center">
-
                                 <div>
                                     <p class="fw-bold mb-1">{{
-                                        list.partipantesMatriculados!.inscrito!.usuario!.persona!.nombre1 }} {{
-                                        list.partipantesMatriculados!.inscrito!.usuario!.persona!.nombre2 }} {{
-                                        list.partipantesMatriculados!.inscrito!.usuario!.persona!.apellido1 }} {{
-                                        list.partipantesMatriculados!.inscrito!.usuario!.persona!.apellido2 }}</p>
+                                        data.partipantesMatriculados!.inscrito!.usuario!.persona!.nombre1 }} {{
+                                        data.partipantesMatriculados!.inscrito!.usuario!.persona!.nombre2 }} {{
+                                        data.partipantesMatriculados!.inscrito!.usuario!.persona!.apellido1 }} {{
+                                        data.partipantesMatriculados!.inscrito!.usuario!.persona!.apellido2 }}</p>
                                     <p class="text-muted mb-0">{{
-                                        list.partipantesMatriculados!.inscrito!.usuario!.persona!.correo }}</p>
+                                        data.partipantesMatriculados!.inscrito!.usuario!.persona!.correo }}</p>
                                 </div>
                             </div>
                         </td>
                         <td>
                             <p class="text-muted mb-0">{{
-                                list.partipantesMatriculados!.inscrito!.usuario!.persona!.identificacion }}</p>
+                                data.partipantesMatriculados!.inscrito!.usuario!.persona!.identificacion }}</p>
                         </td>
-
-
                         <td>
                             <p class="text-muted mb-0">{{
-                                list.observacionAsistencia }}</p>
+                                data.observacionAsistencia }}</p>
                         </td>
-
                         <td>
-
                             <div class="d-flex align-items-center">
-                                <p-button *ngIf='list.estadoAsistencia == true' icon="pi pi-check-square"
+                                <p-button *ngIf='data.estadoAsistencia == true' icon="pi pi-check-square"
                                     styleClass="p-button-success me-2"
-                                    (click)="estudianteNOAsisteAClase(list.idAsistencia, list)"></p-button>
-                                <p-button *ngIf='list.estadoAsistencia == false' icon="pi pi-times"
+                                    (click)="estudianteNOAsisteAClase(data.idAsistencia, data)"></p-button>
+                                <p-button *ngIf='data.estadoAsistencia == false' icon="pi pi-times"
                                     styleClass="p-button-danger me-2"
-                                    (click)="estudianteAsisteClase(list.idAsistencia, list)"></p-button>
+                                    (click)="estudianteAsisteClase(data.idAsistencia, data)"></p-button>
                             </div>
-                           
                         </td>
-
                         <td>
-                            <p-button icon="pi pi-eye" (click)="showDialog(list)"></p-button>
-
+                            <p-button icon="pi pi-eye" (click)="showDialog(data)"></p-button>
                         </td>
-
                     </tr>
-                </tbody>
-            </table>
+                </ng-template>
+            </p-table>
         </div>
     </div>
-
-
 </div>
 
 
@@ -81,7 +157,7 @@
                 <span class="p-float-label">
                     <input type="text" pInputText id="observacionAsistencia" name="observacionAsistencia"
                         [(ngModel)]="asistenciaEstudiante.observacionAsistencia" required>
-                    <label htmlFor="username">Prerequisito para el curso</label>
+                    <label htmlFor="observacionAsistencia">Observación del día</label>
                 </span>
             </div>
         </div>

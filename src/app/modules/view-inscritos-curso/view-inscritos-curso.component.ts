@@ -15,6 +15,11 @@ import { UsuarioService } from 'src/app/service/usuario.service';
   styleUrls: ['./view-inscritos-curso.component.css'],
 })
 export class ViewInscritosCursoComponent implements OnInit {
+
+  first = 0;
+  layout: string = 'list';
+  rows = 5;
+
   constructor(
     private activateRoute: ActivatedRoute,
     private cursoService: CursoService,
@@ -25,6 +30,8 @@ export class ViewInscritosCursoComponent implements OnInit {
   ) {}
 
   idCursoGlobal?: number;
+
+
 
   ngOnInit(): void {
     this.activateRoute.params.subscribe((param) => {
@@ -179,5 +186,30 @@ export class ViewInscritosCursoComponent implements OnInit {
     )
   }
 
+
+
+  //IMPLEMENTACIÓN DE NUEVOS METODOS
+    //Implementacion de la tabla de todo referente a primeng
+    next() {
+      this.first = this.first + this.rows;
+    }
+  
+    prev() {
+      this.first = this.first - this.rows;
+    }
+  
+    reset() {
+      this.first = 0;
+    }
+  
+    isLastPage(): boolean {
+      return this.listaInscritos
+        ? this.first === this.listaInscritos.length - this.rows
+        : true;
+    }
+  
+    isFirstPage(): boolean {
+      return this.listaInscritos ? this.first === 0 : true;
+    }
 
 }

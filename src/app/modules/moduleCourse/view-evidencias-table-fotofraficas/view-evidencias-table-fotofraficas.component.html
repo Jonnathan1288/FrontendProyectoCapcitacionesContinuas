@@ -54,7 +54,11 @@
                 <td>{{regFotografico.fecha}}</td>
                 <td>
                     <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="cargarDatosRegistrofotografico(regFotografico)"></button>
-                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="eliminadoLogicoDelregistroFotografico(regFotografico)"></button>
+                    <!-- <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="eliminadoLogicoDelregistroFotografico(regFotografico)"></button> -->
+                    <button pButton pRipple [icon]="regFotografico.estado ? 'pi pi-check' : 'pi pi-trash'"
+                    [class]="'p-button-rounded ' + (regFotografico.estado ? 'p-button-primary' : 'p-button-warning') + ' mt-1'"
+                    (click)="eliminadoLogicoDelregistroFotografico(regFotografico)">
+                </button>
                 </td>
             </tr>
         </ng-template>
@@ -70,7 +74,7 @@
 <!-- IMPLEMENTACION DEL MODAL PARA EL INGRESO DE REGISTRO FOTOGRAFICO -->
 <p-dialog header="Contenidos del Curso" [(visible)]="visible" [modal]="true" [style]="{ width: '60vw', height: '280' }"
     [draggable]="false" [resizable]="false">
-    <form (ngSubmit)="saveEvidenciasRegistrofotografico()" ngNativeValidate style="padding: 15px;">
+    <form (ngSubmit)="validacionRegistroFotografico()" novalidate style="padding: 15px;">
 
         <p-card header="Registro fotografico del curso">
             <div class="row rounded mb-1">
@@ -80,14 +84,14 @@
                     <div class="grid p-fluid">
                         <div class="col-12 md:col-12" style="align-items: center;">
 
-                            <div class="card flex justify-content-center">
+                            <!-- <div class="card flex justify-content-center"> -->
                                 <span class="p-float-label">
-                                    <textarea id="float-input" rows="5" cols="30" pInputTextarea id="descripcionCurso"
+                                    <textarea id="float-input" rows="10" cols="30" pInputTextarea id="descripcionCurso"
                                         name="descripcionCurso"
-                                        [(ngModel)]="registroFotografico.descripcionFoto"></textarea>
+                                        [(ngModel)]="registroFotografico.descripcionFoto" required></textarea>
                                     <label for="float-input">Descripción dede la foto</label>
                                 </span>
-                            </div>
+                            <!-- </div> -->
 
                         </div>
                     </div>

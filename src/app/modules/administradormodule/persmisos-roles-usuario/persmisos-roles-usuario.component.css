@@ -1,0 +1,47 @@
+.role-table {
+    width: 100%;
+  }
+  
+  .header-cell {
+    background-color: #f2f2f2;
+    color: #333;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  .data-cell {
+    text-align: center;
+  }
+  
+  .assign-button {
+    margin: 0 auto;
+  }
+  
+  
+  
+  
+  
+  .table-container {
+    width: 100%;
+    overflow-x: auto;
+  }
+  
+  .role-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  /* Estilos adicionales si es necesario */
+  
+  
+  
+  
+  .custom-button {
+    background-color: rgb(228, 107, 107);
+    border-color: rgb(228, 107, 107);
+  }
+  
+  .custom-button:hover {
+    background-color: rgb(87, 98, 87);  /* Cambia el color de fondo en estado de hover */
+    border-color: rgb(87, 98, 87);
+  }

@@ -1,0 +1,6 @@
+.red-asterisk::after {
+    content: "*";
+    color: red;
+    margin-left: 5px;
+    /* font-size: 20px; */
+  }

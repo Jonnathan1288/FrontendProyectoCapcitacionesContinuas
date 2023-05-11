@@ -1,5 +1,5 @@
 
-export class DocenteFenix {
+export class EstudianteFenix {
     identificacion?: string;
     nombre1?: string;
     nombre2?: string;
@@ -12,6 +12,5 @@ export class DocenteFenix {
     celular?: string;
     genero?: string;
     etnia?: string;
-    tituloCapacitador?: string;
-    tipoAbreviaturaTitulo?: string;
+    nivelinstruccion?: string;
 }

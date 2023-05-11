@@ -46,7 +46,7 @@
 </div>
 
 <p-card header="Registro de curso" class="m-5" *ngIf="estadoHojaVida == 'A'">
-    <form (ngSubmit)="createHorarioCurso()" ngNativeValidate style="padding: 15px;">
+    <form (ngSubmit)="validarCursosCpacitacionContinua()" novalidate style="padding: 15px;">
         <p-card header="Infórme para la creación del curso" class="m-1">
             <div class="personal-image">
                 <label class="label" style="border: black;">
@@ -70,7 +70,7 @@
             <!-- Primer contenedor -->
             <div class="grid p-fluid">
                 <div class="field col-12 md:col-4">
- 
+
 
                     <div class="card flex justify-content-center" *ngIf="!curso.idCurso">
                         <select pInputText placeholder="tipo" id="canton" name="canton" required
@@ -79,7 +79,8 @@
                             <option *ngFor="let areas of listAreaE" [value]="areas.idArea">{{areas.nombreArea}}
                             </option>
                         </select>
-                        <span class="arrow-icon"><i class="pi pi-chevron-down"></i></span>
+                        <span class="arrow-icon"><i class="pi pi-chevron-down"><span
+                                    class="red-asterisk"></span></i></span>
                     </div>
 
 
@@ -90,38 +91,45 @@
                             <option *ngFor="let areas of listAreaE" [value]="areas.idArea">{{areas.nombreArea}}
                             </option>
                         </select>
+                        <span class="arrow-icon"><i class="pi pi-chevron-down"><span
+                                    class="red-asterisk"></span></i></span>
                     </div>
 
 
                 </div>
 
                 <div class="field col-12 md:col-4">
- 
+
 
                     <div class="card flex justify-content-center" *ngIf="!curso.idCurso">
-                        <select pInputText id="especialidad" name="especialidad"  required
+                        <select pInputText id="especialidad" name="especialidad" required
                             (change)="catchEspecialidadByEvent($event, null)">
                             <option value="">Seleccione Especialidad</option>
-                            <option *ngFor="let especialidad of listEspecialida" [value]="especialidad.idEspecialidad">{{especialidad.nombreEspecialidad}}
+                            <option *ngFor="let especialidad of listEspecialida" [value]="especialidad.idEspecialidad">
+                                {{especialidad.nombreEspecialidad}}
                             </option>
                         </select>
-                        <span class="arrow-icon"><i class="pi pi-chevron-down"></i></span>
+                        <span class="arrow-icon"><i class="pi pi-chevron-down"><span
+                                    class="red-asterisk"></span></i></span>
                     </div>
 
                     <div class="card flex justify-content-center" *ngIf="curso.idCurso">
-                        <select pInputText id="especialidad" name="especialidad" [(ngModel)]="curso.especialidad!.idEspecialidad" required
+                        <select pInputText id="especialidad" name="especialidad"
+                            [(ngModel)]="curso.especialidad!.idEspecialidad" required
                             (change)="catchEspecialidadByEvent($event, null)">
                             <option value="">Seleccione Especialidad</option>
-                            <option *ngFor="let especialidad of listEspecialida" [value]="especialidad.idEspecialidad">{{especialidad.nombreEspecialidad}}
+                            <option *ngFor="let especialidad of listEspecialida" [value]="especialidad.idEspecialidad">
+                                {{especialidad.nombreEspecialidad}}
                             </option>
                         </select>
-                        <span class="arrow-icon"><i class="pi pi-chevron-down"></i></span>
+                        <span class="arrow-icon"><i class="pi pi-chevron-down"><span
+                                    class="red-asterisk"></span></i></span>
                     </div>
 
                 </div>
 
                 <div class="field col-12 md:col-4">
-                
+
 
                     <div class="card flex justify-content-center">
                         <select pInputText id="programas" name="programas" required
@@ -133,7 +141,8 @@
                                 {{programas.nombrePrograma}}
                             </option>
                         </select>
-                        <span class="arrow-icon"><i class="pi pi-chevron-down"></i></span>
+                        <span class="arrow-icon"><i class="pi pi-chevron-down"><span
+                                    class="red-asterisk"></span></i></span>
                     </div>
 
                 </div>
@@ -145,7 +154,7 @@
                     <span class="p-float-label">
                         <input type="text" id="inputtext" pInputText id="nombreCurso" name="nombreCurso"
                             [(ngModel)]="curso.nombreCurso">
-                        <label for="inputtext">Nombre curso</label>
+                        <label for="inputtext">Nombre curso<span class="red-asterisk1"></span></label>
                     </span>
                 </div>
 
@@ -153,8 +162,9 @@
                     <div class="p-inputgroup mt-2">
                         <span class="p-float-label">
                             <p-inputNumber mode="decimal" [showButtons]="true" inputId="minmax-buttons" [min]="0"
-                                [max]="50" placeholder="Duración curso" id="duracionCurso" name="duracionCurso"
+                                [max]="50" placeholder="Duración curso en horas" id="duracionCurso" name="duracionCurso"
                                 [(ngModel)]="curso.duracionCurso"> </p-inputNumber>
+                            <label for="inputtext">Duración curso en horas<span class="red-asterisk1"></span></label>
                         </span>
                     </div>
                 </div>
@@ -165,6 +175,8 @@
                             <p-inputNumber mode="decimal" [showButtons]="true" inputId="minmax-buttons" [min]="0"
                                 [max]="50" placeholder="Número de cupos" id="numeroCuposCurso" name="numeroCuposCurso"
                                 [(ngModel)]="curso.numeroCuposCurso"> </p-inputNumber>
+                            <label for="inputtext">Número de cupos<span class="red-asterisk1"></span></label>
+
                         </span>
                     </div>
                 </div>
@@ -174,16 +186,23 @@
             <div class="grid p-fluid">
 
                 <div class="col-12 md:col-4 mt-2">
-                    <div class="p-inputgroup">
+                    <!-- <div class="p-inputgroup">
+                        <p-calendar inputId="edad" class="ng-dirty" [showIcon]="true"
+                            placeholder="Fecha inicio de curso" id="fechaInicioCurso" name="fechaInicioCurso"
+                            [(ngModel)]="curso.fechaInicioCurso"></p-calendar>
+                            
+                    </div> -->
+                    <div class="p-inputgroup required-field">
                         <p-calendar inputId="edad" class="ng-dirty" [showIcon]="true"
                             placeholder="Fecha inicio de curso" id="fechaInicioCurso" name="fechaInicioCurso"
                             [(ngModel)]="curso.fechaInicioCurso"></p-calendar>
                     </div>
 
+
                 </div>
 
                 <div class="col-12 md:col-4 mt-2">
-                    <div class="p-inputgroup">
+                    <div class="p-inputgroup required-field">
                         <p-calendar inputId="edad" class="ng-dirty" [showIcon]="true" placeholder="Fecha fin de curso"
                             id="fechaFinalizacionCurso" name="fechaFinalizacionCurso"
                             [(ngModel)]="curso.fechaFinalizacionCurso"></p-calendar>
@@ -197,7 +216,7 @@
 
             <div class="grid p-fluid ">
                 <div class="col-12 md:col-4">
-      
+
 
 
                     <div class="card flex justify-content-center" *ngIf="!curso.idCurso">
@@ -207,7 +226,8 @@
                             <option *ngFor="let pro of listProvincias" [value]="pro.idProvincia">{{pro.provincia}}
                             </option>
                         </select>
-                        <span class="arrow-icon"><i class="pi pi-chevron-down"></i></span>
+                        <span class="arrow-icon"><i class="pi pi-chevron-down"><span
+                                    class="red-asterisk"></span></i></span>
                     </div>
 
 
@@ -219,6 +239,9 @@
                             <option *ngFor="let pro of listProvincias" [value]="pro.idProvincia">{{pro.provincia}}
                             </option>
                         </select>
+                        <span class="arrow-icon"><i class="pi pi-chevron-down"><span
+                                    class="red-asterisk"></span></i></span>
+
                     </div>
 
 
@@ -244,7 +267,8 @@
                             <option *ngFor="let canton of listCanton" [value]="canton.idCanton">{{canton.canton}}
                             </option>
                         </select>
-                        <span class="arrow-icon"><i class="pi pi-chevron-down"></i></span>
+                        <span class="arrow-icon"><i class="pi pi-chevron-down"><span
+                                    class="red-asterisk"></span></i></span>
                     </div>
 
 
@@ -255,6 +279,9 @@
                             <option *ngFor="let canton of listCanton" [value]="canton.idCanton">{{canton.canton}}
                             </option>
                         </select>
+                        <span class="arrow-icon"><i class="pi pi-chevron-down"><span
+                                    class="red-asterisk"></span></i></span>
+
                     </div>
 
                 </div>
@@ -271,7 +298,8 @@
                                 {{parroquia.parroquia}}
                             </option>
                         </select>
-                        <span class="arrow-icon"><i class="pi pi-chevron-down"></i></span>
+                        <span class="arrow-icon"><i class="pi pi-chevron-down"><span
+                                    class="red-asterisk"></span></i></span>
                     </div>
 
                 </div>
@@ -282,6 +310,9 @@
             <!-- OTRA PARTE -->
 
             <p-card header="¿Curso OCC?" class="m-1">
+                <div class="header-with-dot">
+                    <div class="asterisk">*</div>
+                </div>
 
                 <div class='col-md-6'>
                     <div class='form-group'>
@@ -308,7 +339,11 @@
 
         <p-card header="Modalidad de curso" class="m-1">
             <!-- Para la modalidad -->
+
             <div class="container card">
+                <div class="header-with-dot">
+                    <div class="asterisk" style="margin-top: 20px;">*</div>
+                </div>
                 <div class="checkbox-group" style="padding-top: 5px;">
 
                     <div *ngFor="let modalidad of listModalidadCurso">
@@ -326,6 +361,9 @@
         <!-- Para Tipo -->
         <p-card header="Tipo de curso" class="m-1">
             <div class="container card mt-1">
+                <div class="header-with-dot">
+                    <div class="asterisk" style="margin-top: 20px;">*</div>
+                </div>
                 <div class="checkbox-group" style="padding-top: 5px;">
 
                     <div *ngFor="let tipo of listTipo">
@@ -340,6 +378,9 @@
         <!-- Nivel de curso -->
         <p-card header="Niveles" class="m-1">
             <div class="container card">
+                <div class="header-with-dot">
+                    <div class="asterisk" style="margin-top: 20px;">*</div>
+                </div>
                 <div class="checkbox-group" style="padding-top: 5px;">
 
                     <div *ngFor="let nivel of listNivelCurso">
@@ -360,27 +401,33 @@
                     <div class="ui-g-12 ui-md-4">
                         <span class="p-float-label">
                             <!-- onkeypress='return event.charCode >= 48 && event.charCode <= 57' -->
-                        <p-calendar id="horaInicio" name="horaInicio" [(ngModel)]="fechaInit" [timeOnly]="true" hourFormat="12" pInputNumberOnly ></p-calendar>
-                        <label for="horaInicio">Hora de inicio</label>
-                    </span>
+                            <p-calendar id="horaInicio" name="horaInicio" [(ngModel)]="fechaInit" [timeOnly]="true"
+                                hourFormat="12" pInputNumberOnly></p-calendar>
+                            <label for="horaInicio">Hora de inicio<span class="red-asterisk1"></span></label>
+                        </span>
                     </div>
-                    
+
                 </div>
 
                 <div class="col-12 md:col-6 mt-2">
 
                     <span class="p-float-label">
-                   
-                            <p-calendar id="horaFin" name="horaFin" [(ngModel)]="fechaFin" [timeOnly]="true" hourFormat="12" pInputNumberOnly></p-calendar>
-                            <label for="horaFin">Hora Fin</label>
-                 
+
+                        <p-calendar id="horaFin" name="horaFin" [(ngModel)]="fechaFin" [timeOnly]="true" hourFormat="12"
+                            pInputNumberOnly></p-calendar>
+                        <label for="horaFin">Hora Fin<span class="red-asterisk1"></span></label>
+
                     </span>
 
                 </div>
             </div>
 
             <div class="container card mt-1">
+                <div class="header-with-dot">
+                    <div class="asterisk" style="margin-top: 20px;">*</div>
+                </div>
                 <div class="checkbox-group" style="padding-top: 5px;">
+
                     <div>
                         <p-radioButton name="group1" value="Lunes-Viernes" class="mb-2"
                             [(ngModel)]="daysOfTheweekV"></p-radioButton>
@@ -412,14 +459,24 @@
 
         <div class="grid p-fluid">
             <div class="col-12 md:col-12 mt-5" style="align-items: center;">
+                <!-- <span class="p-float-label">
+                    <textarea id="float-input" rows="5" cols="30" pInputTextarea></textarea>
+                    <label for="float-input">Summary</label>
+                </span> -->
 
-                <div class="card flex justify-content-center">
-                    <span class="p-float-label">
-                        <textarea id="float-input" rows="5" cols="30" pInputTextarea id="descripcionCurso"
-                            name="descripcionCurso" [(ngModel)]="curso.descripcionCurso"></textarea>
-                        <label for="float-input">Descripción del curso a impartir</label>
-                    </span>
-                </div>
+                <style>
+                    .required {
+                        border: 1px solid red;
+                    }
+                </style>
+
+                <span class="p-float-label">
+                    <textarea id="float-input" rows="5" cols="30" pInputTextarea id="descripcionCurso"
+                        name="descripcionCurso" [(ngModel)]="curso.descripcionCurso" required
+                        onblur="this.classList.toggle('required', !this.value)"></textarea>
+                    <label for="float-input">Descripción del curso a impartir<span class="red-asterisk1"></span></label>
+                </span>
+
 
             </div>
         </div>
@@ -428,13 +485,18 @@
         <div class="grid p-fluid">
             <div class="col-12 md:col-12 mt-5" style="align-items: center;">
 
-                <div class="card flex justify-content-center">
-                    <span class="p-float-label">
-                        <textarea id="float-input" rows="5" cols="30" pInputTextarea id="objetivoGeneralesCurso"
-                            name="objetivoGeneralesCurso" [(ngModel)]="curso.objetivoGeneralesCurso"></textarea>
-                        <label for="float-input">Objetivo general del curso</label>
-                    </span>
-                </div>
+
+                <!-- <span class="p-float-label">
+                    <textarea id="float-input" rows="5" cols="30" pInputTextarea id="objetivoGeneralesCurso"
+                        name="objetivoGeneralesCurso" [(ngModel)]="curso.objetivoGeneralesCurso" required></textarea>
+                    <label for="float-input">Objetivo general del curso<span class="red-asterisk1"></span></label>
+                </span> -->
+                <span class="p-float-label">
+                    <textarea id="float-input" rows="5" cols="30" pInputTextarea id="objetivoGeneralesCurso"
+                        name="objetivoGeneralesCurso" [(ngModel)]="curso.objetivoGeneralesCurso" required
+                        onblur="this.classList.toggle('required', !this.value)"></textarea>
+                    <label for="float-input">Objetivo general del curso<span class="red-asterisk1"></span></label>
+                </span>
 
             </div>
         </div>
@@ -442,13 +504,13 @@
         <div class="grid p-fluid">
             <div class="col-12 md:col-12 mt-5" style="align-items: center;">
 
-                <div class="card flex justify-content-center">
-                    <span class="p-float-label">
-                        <textarea id="float-input" rows="5" cols="30" pInputTextarea id="observacionCurso"
-                            name="observacionCurso" [(ngModel)]="curso.observacionCurso"></textarea>
-                        <label for="float-input">Observacón del curso</label>
-                    </span>
-                </div>
+
+                <span class="p-float-label">
+                    <textarea id="float-input" rows="5" cols="30" pInputTextarea id="observacionCurso"
+                        name="observacionCurso" [(ngModel)]="curso.observacionCurso"></textarea>
+                    <label htmlFor="observacionCurso">Observacón del curso</label>
+                </span>
+
 
             </div>
         </div>
@@ -521,17 +583,11 @@
                 icon="pi pi-check" iconPos="right"></p-button>
         </div>
     </form>
-
-    <div class="container">
-        <p-button label="Generar silabo" icon="pi pi-plus" styleClass="p-button-success  mb-2"
-            (click)="silabo()"></p-button>
-
-    </div>
-    <div class="container">
+    <!-- <div class="container">
         <p-button label="Generar necesidad" icon="pi pi-plus" styleClass="p-button-success  mb-2"
             (click)="necesidad()"></p-button>
 
-    </div>
+    </div> -->
 </p-card>
 
 
