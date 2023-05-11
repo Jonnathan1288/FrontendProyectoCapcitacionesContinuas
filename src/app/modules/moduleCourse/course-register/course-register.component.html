@@ -3,7 +3,6 @@
 </div>
 
 <div class="container" *ngIf="estadoHojaVida == 'P'">
-
     <div class="surface-section px-4 py-8 md:px-6 lg:px-8">
         <div class="text-700 text-center">
             <div class="text-blue-600 font-bold mb-3"><i class="pi pi-discord"></i>&nbsp;SISTEMA DE CAPACITACIONES
@@ -20,10 +19,6 @@
 
 <!-- VALIDAMOS SI LA HOJA DE VIDA A SIDO RECHAZADA -->
 <div class="container" *ngIf="estadoHojaVida == 'R'">
-
-
-
-
 
     <div class="grid grid-nogutter surface-section text-800">
         <div class="col-12 md:col-12 p-6 text-center md:text-left flex align-items-center ">
@@ -46,6 +41,33 @@
 </div>
 
 <p-card header="Registro de curso" class="m-5" *ngIf="estadoHojaVida == 'A'">
+
+    <!-- RESTAURAR U SILABO Y SU DISENIO -->
+    <p-button *ngIf="tieneIdEnLauta === false" (click)="showDialog2()" icon="pi pi-search"label="Reutilizar"  styleClass="p-button-rounded p-button-success p-button-outlined"></p-button>
+
+    <p-dialog header="Cursos" [(visible)]="visibleC" [style]="{ width: '80vw', height: '100vw' }">
+        <p-card *ngFor="let cursos of listadoCursosReutilizar" class="m-1" >
+            <div class="surface-section px-4 py-5 md:px-6 lg:px-8">
+                <div class="flex align-items-start flex-column lg:justify-content-between lg:flex-row">
+                    <div>
+                        <div class="flex align-items-center flex-wrap">
+                            <div class="mr-5 flex align-items-center mt-3">
+                                <img [src]="'data:image/jpeg;base64,' + cursos.fotoCurso" alt="" width="80px" height="80px" class="rounded-circle">
+                            </div>
+                            <div class="mr-5 flex align-items-center mt-3">
+                                <div class="text-2xl"><strong>{{cursos.nombreCurso}}</strong></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-3 lg:mt-0">
+                        <p-button (onClick)="copiarDatos(cursos.idCurso!)" icon="pi pi-check" label="Copiar" styleClass="p-button-rounded p-button-success p-button-outlined"></p-button>
+                    </div>
+                </div>
+            </div>
+        </p-card>
+    </p-dialog>
+    <!-- RESTAURAR U SILABO Y SU DISENIO -->
+
     <form (ngSubmit)="validarCursosCpacitacionContinua()" novalidate style="padding: 15px;">
         <p-card header="Infórme para la creación del curso" class="m-1">
             <div class="personal-image">
@@ -55,7 +77,7 @@
                         <!-- <img class="personal-avatar"  *ngIf="filem" [src]="file" alt="img-avatar"> -->
                         <img *ngIf="curso.fotoCurso"
                             [src]="curso.fotoCurso ? 'data:image/jpeg;base64,' + curso.fotoCurso : '../../../../assets/img/camer.png'"
-                            class="personal-avatar" alt="logoFundacion" />
+                            class="personal-avatar" alt="img" />
                         <img style="padding: 20px;" *ngIf="!curso.fotoCurso" src="./assets/img/camer.png"
                             class="personal-avatar" alt="Logo Fundación" />
                         <figcaption class="personal-figcaption">

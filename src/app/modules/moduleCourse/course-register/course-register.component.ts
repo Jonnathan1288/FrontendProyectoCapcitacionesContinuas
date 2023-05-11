@@ -68,7 +68,7 @@ export class CourseRegisterComponent {
   idUserLoggin: any;
 
   public idCursoUpdate!: any;
-
+  public tieneIdEnLauta: boolean = false;
   //START--------------------------------------------------------NEW LOGIC
 
   //END----------------------------------------------------------
@@ -224,6 +224,7 @@ export class CourseRegisterComponent {
 
       this.listPrerequisitoCurso(this.curso.idCurso!);
       if (this.curso != null) {
+        this.tieneIdEnLauta = true;
         if (this.curso.fechaInicioCurso) {
           this.curso.fechaInicioCurso = new Date(this.curso.fechaInicioCurso);
         }
@@ -757,4 +758,72 @@ export class CourseRegisterComponent {
   showDialog() {
     this.visible = true;
   }
+
+
+  // PARA EL MODAL DE SILABOS A RESTAURAR
+  visibleC!: boolean;
+  showDialog2() {
+    this.traerTodosLosCursos();
+    this.visibleC = true;
+  }
+
+  listadoCursosReutilizar: Curso[] = [];
+
+  public traerTodosLosCursos():void{
+    this.cursoService.listCurso().subscribe(
+      data=>{
+        this.listadoCursosReutilizar = data;
+      }
+    )
+  }
+
+  public copiarDatos(idCurso:number):void{
+    this.cursoService.getCursoById(idCurso).subscribe((data) => {
+      this.curso = data;
+      this.curso.idCurso = 0;
+      if (this.curso != null) {
+        if (this.curso.fechaInicioCurso) {
+          this.curso.fechaInicioCurso = new Date(this.curso.fechaInicioCurso);
+        }
+        if (this.curso.fechaFinalizacionCurso) {
+          this.curso.fechaFinalizacionCurso = new Date(
+            this.curso.fechaFinalizacionCurso
+          );
+        }
+      }
+      if (this.curso) {
+        this.horarioC = this.curso.horarioCurso!;
+        this.daysOfTheweekV = this.curso?.horarioCurso?.dias || '';
+        this.molalidadId = this.curso.modalidadCurso?.idModalidadCurso;
+        this.tipoCursoId = this.curso.tipoCurso?.idTipoCurso;
+        this.nivelCursoId = this.curso.nivelCurso?.idNivelCurso;
+        this.findCantonByProvinciaEvent(
+          null,
+          this.curso.parroquia?.canton?.provincia?.idProvincia
+        );
+        this.findParroquiaByCantonEvent(
+          null,
+          this.curso.parroquia?.canton?.idCanton
+        );
+        this.getEspecialidadesDependenceOfArea(
+          null,
+          this.curso.especialidad?.area?.idArea
+        );
+        this.formatHoraCourse(
+          this.curso.horarioCurso?.horaInicio!,
+          this.curso.horarioCurso?.horaFin!
+        );
+        this.prerequisitoService
+        .listPrerequisitoCursoByIdCurso(idCurso)
+        .subscribe((data) => {
+          this.listPrerequisitoCurso1 = data;
+          this.listPrerequisitoCurso1 = this.listPrerequisitoCurso1.filter(
+            (prerequisito) => prerequisito.estadoPrerequisitoCurso === true
+          );
+        });
+      }
+    });
+  }
+
+
 }
