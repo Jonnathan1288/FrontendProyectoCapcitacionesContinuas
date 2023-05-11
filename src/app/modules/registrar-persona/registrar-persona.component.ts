@@ -46,6 +46,7 @@ export class registrarPersonaComponent implements OnInit {
     this.classEstudianteFenix = new EstudianteFenix();
     this.estudianteISTAFind = false;
     this.classPersona = new Persona();
+    this.classUsuario = new Usuario();
     this.visibleEstudinateIsta = true;
   }
 
@@ -178,26 +179,107 @@ export class registrarPersonaComponent implements OnInit {
       }
       //END---------------------------------------
     } else {
-      this.personaService.savePersona(this.classPersona).subscribe((data) => {
-        if (data != null) {
-          this.classUsuario.idUsuario = 0;
-          this.classUsuario.estadoUsuarioActivo = true;
-          // this.classUsuario.rol = this.classRol;
-          this.classUsuario.persona = data;
-          this.classUsuario.roles = this.listRole;
-          console.log(this.classUsuario);
-          this.usuarioService
-            .saveUsuario(this.classUsuario)
-            .subscribe((data1) => {
-              if (data1 != null) {
-                console.log({ user: data1 });
-                alert('succesful');
-              }
-            });
-        }
-      });
+      this.validarDatosPersona();
+      // this.personaService.savePersona(this.classPersona).subscribe((data) => {
+      //   if (data != null) {
+      //     this.classUsuario.idUsuario = 0;
+      //     this.classUsuario.estadoUsuarioActivo = true;
+      //     // this.classUsuario.rol = this.classRol;
+      //     this.classUsuario.persona = data;
+      //     this.classUsuario.roles = this.listRole;
+      //     console.log(this.classUsuario);
+      //     this.usuarioService
+      //       .saveUsuario(this.classUsuario)
+      //       .subscribe((data1) => {
+      //         if (data1 != null) {
+      //           console.log({ user: data1 });
+      //           alert('succesful');
+      //         }
+      //       });
+      //   }
+      // });
     }
   }
+
+
+
+  public validarDatosPersona(){
+    // public savePersona(){
+      if (!this.classPersona?.identificacion || !this.classPersona?.nombre1 || !this.classPersona?.nombre2 ||
+        !this.classPersona?.apellido1 || !this.classPersona?.apellido2 ||
+        !this.classPersona?.telefono || !this.classPersona?.celular ||
+        !this.classPersona?.fechaNacimiento || !this.classPersona?.correo ||
+        !this.classUsuario?.username || !this.classUsuario?.password) {
+  
+          this.toastrService.warning(
+            'Llene todos los campos.',
+            'Uno o más campos vacios.'
+          );
+      } else {
+        if (this.classUsuario?.password?.length !> 8) {
+          this.comprobaridentificacion();
+        } else 
+          {
+            this.toastrService.warning(
+            'Contrasenia  Invalida.',
+            'La contrasenia debe tener minimo 8 caracteres.'
+          );
+        }
+      }
+    // }
+  }
+
+
+  public comprobaridentificacion (){
+    this.personaService
+    .getPersonaByIdentificasion(this.classPersona?.identificacion!)
+    .subscribe((data)=> {
+      if (data !== true) {
+        this.usuarioService
+        .getExistUsuarioByUsername(this.classUsuario?.username!)
+        .subscribe((data1)=>{
+          if (data1 !== true ) {
+            //Servicio
+            //Guardar persona
+            this.personaService
+            .savePersona(this.classPersona)
+            .subscribe((data)=>{
+              if (data !== null) {
+                this.classUsuario.estadoUsuarioActivo=true;
+                this.classUsuario.idUsuario = 0;
+                this.classUsuario.persona = data;
+                this.classUsuario.roles = this.listRole;
+                //Guardar usuario
+                this.usuarioService
+                .saveUsuario(this.classUsuario)
+                .subscribe((data1) => {
+                  if (data1 !== null) {
+                    this.toastrService.success(
+                      'Registro exitoso.'
+                    );
+                    this.classPersona = new Persona();
+                    this.classUsuario = new Usuario();
+                  }
+                });
+              }
+            });
+          }else{
+            this.toastrService.error(
+              'El nombre de usuario ya esta en el siistema.',
+              'Ingrese otro nombre de usuario.'
+            );
+          }
+        });
+      }else{
+        this.toastrService.error(
+          'La identificasión ya esta en el sistema.',
+          'Identificasión existente'
+        );
+      }
+    });
+  }
+
+
 
   //Almacenar en el objeto
   async subirFoto(event: any) {
@@ -228,5 +310,11 @@ export class registrarPersonaComponent implements OnInit {
       };
       reader.readAsBinaryString(file);
     });
+  }
+
+
+  //LOCATION RELOAD
+  reloadPage() {
+    location.reload();
   }
 }

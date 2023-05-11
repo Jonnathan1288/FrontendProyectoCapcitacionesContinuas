@@ -253,7 +253,7 @@
 <!-- //EN EL CASO DE QUE EL ESTUDIANTE PERTENESCA AL ISTA -->
 
 <p-dialog header="ESTUDIANTE ISTA" [(visible)]="visibleEstudinateIsta" [modal]="true"
-  [style]="{ width: '60vw', height: '60' }" [draggable]="false" [resizable]="false">
+  [style]="{ width: '60vw', height: '60' }" [draggable]="false" [resizable]="false"  (onHide)="reloadPage()">
 
   <!------ Include the above in your HEAD tag ---------->
   <div class="grid p-fluid mt-1">

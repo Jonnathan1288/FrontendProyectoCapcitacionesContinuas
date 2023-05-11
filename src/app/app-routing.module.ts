@@ -30,11 +30,18 @@ import { ValidacionCursosCapacitacionComponent } from './modules/administradormo
 import { AsignacionCodigosCenecytComponent } from './modules/view-inscritos-curso/asignacion-codigos-cenecyt/asignacion-codigos-cenecyt.component';
 import { DisenioHojaVidaComponent } from './modules/hojavida/disenio-hoja-vida/disenio-hoja-vida.component';
 import { PersmisosRolesUsuarioComponent } from './modules/administradormodule/persmisos-roles-usuario/persmisos-roles-usuario.component';
+import { EditDataUserComponent } from './modules/registrar-persona/edit-data-user/edit-data-user.component';
 
 
 const routes: Routes = [
   {path: 'login', component:LoginComponent },
+
+  //REFERENCES USER
   {path: 'registrarPersona', component: registrarPersonaComponent},
+  {path: 'user/edit/data', component: EditDataUserComponent},
+
+
+  //OTHER
   {path: 'welcome', component: WelcomeComponent},
   { path: 'home', component: HomeComponent },
   { path: 'cap', component: CapacitadorComponent },

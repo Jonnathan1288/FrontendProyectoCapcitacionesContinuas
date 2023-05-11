@@ -39,6 +39,7 @@ import { ValidacionCursosCapacitacionComponent } from './modules/administradormo
 import { AsignacionCodigosCenecytComponent } from './modules/view-inscritos-curso/asignacion-codigos-cenecyt/asignacion-codigos-cenecyt.component';
 import { DisenioHojaVidaComponent } from './modules/hojavida/disenio-hoja-vida/disenio-hoja-vida.component';
 import { PersmisosRolesUsuarioComponent } from './modules/administradormodule/persmisos-roles-usuario/persmisos-roles-usuario.component';
+import { EditDataUserComponent } from './modules/registrar-persona/edit-data-user/edit-data-user.component';
 
 
 @NgModule({
@@ -75,6 +76,7 @@ import { PersmisosRolesUsuarioComponent } from './modules/administradormodule/pe
     AsignacionCodigosCenecytComponent,
     DisenioHojaVidaComponent,
     PersmisosRolesUsuarioComponent,
+    EditDataUserComponent,
   ],
   imports: [
     BrowserModule,
