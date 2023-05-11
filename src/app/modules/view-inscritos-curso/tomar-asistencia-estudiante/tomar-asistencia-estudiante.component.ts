@@ -22,6 +22,11 @@ export class TomarAsistenciaEstudianteComponent implements OnInit {
   //el array de los estudiantes del curso matriculado
   public listaAsistenciaE: any[] = [];
 
+
+  first = 0;
+  layout: string = 'list';
+  rows = 5;
+
   constructor(
     private activateRoute: ActivatedRoute,
     private router: Router,
@@ -74,16 +79,26 @@ export class TomarAsistenciaEstudianteComponent implements OnInit {
       )
       .subscribe((data) => {
         if (data != null) {
-          this.asistenciaService
-          .getAsistenciaAntiguasPorFecha(
-            this.idCursoEstudiantesMatriculados!,
-            this.fechaAlmacenada!
-          )
-          .subscribe((data) => {
-            if (data != null) {
-              this.listAsistenciasAntiguas = data
-            }
-          })
+          if(this.fechaAlmacenada === undefined || this.fechaAlmacenada === null){
+            this.toastrService.success(
+              'Observación realizada con éxito',
+              'OBSERVACIÓN GUARDADA.'
+            );
+            this.traerListadoEstudiantesMatriculadosAsistencia(this.idCursoEstudiantesMatriculados!);
+          }else{
+            this.asistenciaService
+            .getAsistenciaAntiguasPorFecha(
+              this.idCursoEstudiantesMatriculados!,
+              this.fechaAlmacenada!
+            )
+            .subscribe((data) => {
+              if (data != null) {
+                console.log(data)
+                this.listAsistenciasAntiguas = data
+              }
+            })
+          }
+        
         }
       });
     this.visible = false;
@@ -168,4 +183,29 @@ export class TomarAsistenciaEstudianteComponent implements OnInit {
         console.log(err)
       });
   }
+
+
+
+    //Implementacion de la tabla de todo referente a primeng
+    next() {
+      this.first = this.first + this.rows;
+    }
+  
+    prev() {
+      this.first = this.first - this.rows;
+    }
+  
+    reset() {
+      this.first = 0;
+    }
+  
+    isLastPage(): boolean {
+      return this.listAsistenciasAntiguas
+        ? this.first === this.listAsistenciasAntiguas.length - this.rows
+        : true;
+    }
+  
+    isFirstPage(): boolean {
+      return this.listAsistenciasAntiguas ? this.first === 0 : true;
+    }
 }

@@ -413,7 +413,6 @@ export class CourseRegisterComponent {
       !this.curso.descripcionCurso ||
       !this.curso.objetivoGeneralesCurso ||
       !this.curso.cursoocc ||
-
       !this.curso.capacitador ||
       !this.curso.modalidadCurso ||
       !this.curso.tipoCurso ||
@@ -430,36 +429,59 @@ export class CourseRegisterComponent {
         }
       );
     } else {
-      if (this.listPrerequisitoCurso1.length >= 1) {
-        //Hora para convertir a los horas minutos de la hora de inicio para mandarlo como string..
-        const horaI = this.fechaInit!.getHours() % 12;
-        const minutosI = this.fechaInit!.getMinutes();
-        const amPmI = this.fechaInit!.toLocaleString('en-US', {
-          hour: 'numeric',
-          hour12: true,
-        }).split(' ')[1];
-        //END-------------------------------------------------
-
-        //START Hora para el fin que se enviara como string
-        const horaF = this.fechaFin!.getHours() % 12;
-        const minutosF = this.fechaFin!.getMinutes();
-        const amPmF = this.fechaFin!.toLocaleString('en-US', {
-          hour: 'numeric',
-          hour12: true,
-        }).split(' ')[1];
-
-        this.horarioC.horaInicio = horaI + ' ' + minutosI + ' ' + amPmI;
-        this.horarioC.horaFin = horaF + ' ' + minutosF + ' ' + amPmF;
-        this.horarioC.dias = this.daysOfTheweekV;
-        this.createHorarioCurso();
-      } else {
+      const fechaInicio = new Date(this.curso.fechaInicioCurso);
+      const fechaFinalizacion = new Date(this.curso.fechaFinalizacionCurso);
+      const tiempoDiferencia =
+        fechaFinalizacion.getTime() - fechaInicio.getTime();
+      const diasDiferencia = tiempoDiferencia / (1000 * 60 * 60 * 24);
+      if (diasDiferencia < 7) {
         this.toastrService.error(
-          'Debe llenar por minimo un prerequisito.',
-          'PREREQUISITOS VACIOS.',
+          'La duración del curso debe ser al menos de 7 días.',
+          'DURACIÓN MINIMA.',
           {
-            timeOut: 1600,
+            timeOut: 1500,
           }
         );
+      } else if (diasDiferencia > 27) {
+        this.toastrService.error(
+          'La duración del curso no puede ser mayor de 27 días.',
+          'DURACIÓN MÁXIMA.',
+          {
+            timeOut: 1500,
+          }
+        );
+      } else {
+        if (this.listPrerequisitoCurso1.length >= 1) {
+          //Hora para convertir a los horas minutos de la hora de inicio para mandarlo como string..
+          const horaI = this.fechaInit!.getHours() % 12;
+          const minutosI = this.fechaInit!.getMinutes();
+          const amPmI = this.fechaInit!.toLocaleString('en-US', {
+            hour: 'numeric',
+            hour12: true,
+          }).split(' ')[1];
+          //END-------------------------------------------------
+
+          //START Hora para el fin que se enviara como string
+          const horaF = this.fechaFin!.getHours() % 12;
+          const minutosF = this.fechaFin!.getMinutes();
+          const amPmF = this.fechaFin!.toLocaleString('en-US', {
+            hour: 'numeric',
+            hour12: true,
+          }).split(' ')[1];
+
+          this.horarioC.horaInicio = horaI + ' ' + minutosI + ' ' + amPmI;
+          this.horarioC.horaFin = horaF + ' ' + minutosF + ' ' + amPmF;
+          this.horarioC.dias = this.daysOfTheweekV;
+          this.createHorarioCurso();
+        } else {
+          this.toastrService.error(
+            'Debe llenar por minimo un prerequisito.',
+            'PREREQUISITOS VACIOS.',
+            {
+              timeOut: 1600,
+            }
+          );
+        }
       }
     }
   }
@@ -478,16 +500,19 @@ export class CourseRegisterComponent {
               .updateCurso(this.curso.idCurso!, this.curso)
               .subscribe((data) => {
                 if (data != null) {
-                  
-                this.toastrService.success('Curso actualizado satisfactoriamente.', 'CURSO ACTUALIZADO', {
-                  timeOut: 1500,
-                  progressBar: true,
-                  progressAnimation: 'increasing',
-                });
-                setTimeout(() => {
-                  window.location.reload();
-                  location.replace('/list/course');
-                }, 1500);
+                  this.toastrService.success(
+                    'Curso actualizado satisfactoriamente.',
+                    'CURSO ACTUALIZADO',
+                    {
+                      timeOut: 1500,
+                      progressBar: true,
+                      progressAnimation: 'increasing',
+                    }
+                  );
+                  setTimeout(() => {
+                    window.location.reload();
+                    location.replace('/list/course');
+                  }, 1500);
 
                   // alert('succesful update course');
                 }
@@ -495,8 +520,6 @@ export class CourseRegisterComponent {
           }
         });
     } else {
-  
-
       // this.horarioC.dias = this.daysOfTheweekV;
       this.horarioC.estadoHorarioCurso = true;
       this.horarioService.crearHorarioCurso(this.horarioC).subscribe((data) => {
@@ -518,11 +541,15 @@ export class CourseRegisterComponent {
                       }
                     });
                 }
-                this.toastrService.success('Curso creado satisfactoriamente.', 'CURSO CREADO', {
-                  timeOut: 1500,
-                  progressBar: true,
-                  progressAnimation: 'increasing',
-                });
+                this.toastrService.success(
+                  'Curso creado satisfactoriamente.',
+                  'CURSO CREADO',
+                  {
+                    timeOut: 1500,
+                    progressBar: true,
+                    progressAnimation: 'increasing',
+                  }
+                );
                 setTimeout(() => {
                   window.location.reload();
                   location.replace('/list/course');
@@ -718,10 +745,6 @@ export class CourseRegisterComponent {
     }
   }
 
-  //Ruteo a otras ventanas
-  public silabo() {
-    this.router.navigate(['/silabo', this.idCursoUpdate]);
-  }
 
   public necesidad() {
     this.router.navigate(['/register/necesidad', this.idCursoUpdate]);

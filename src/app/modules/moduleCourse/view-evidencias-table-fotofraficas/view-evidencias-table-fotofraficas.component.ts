@@ -17,6 +17,7 @@ import { Curso } from 'src/app/models/curso';
 import { ActivatedRoute } from '@angular/router';
 import { CursoService } from 'src/app/service/curso.service';
 import { ReportsCapacitacionesService } from 'src/app/service/reports-capacitaciones.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-view-evidencias-table-fotofraficas',
@@ -68,7 +69,8 @@ export class ViewEvidenciasTableFotofraficasComponent implements OnInit {
     private cursoService: CursoService,
     private reportService: ReportsCapacitacionesService,
     private asi: UsuarioService,
-    private regfService: RegistroFotograficoCursoService
+    private regfService: RegistroFotograficoCursoService,
+    private toastrService: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -78,19 +80,19 @@ export class ViewEvidenciasTableFotofraficasComponent implements OnInit {
       this.obtenerCursoPorId(id_curso);
       this.obtenerTodosRegistrofotograficosPorCurso(id_curso);
     });
-    
   }
 
   public obtenerTodosRegistrofotograficosPorCurso(idRegistroFoto: number) {
     this.regfService
       .getRegistroFotograficoCursoAllByIdCurso(idRegistroFoto)
       .subscribe((data) => {
-        this.listRegistroFotografico = data.filter((regf)=>
-          regf.estado === true
-        )
+        this.listRegistroFotografico = data;
+        // .filter((regf)=>
+        //   regf.estado === true
+        // )
         //this.listRegistroFotografico = data;
       });
-      // getRegistroFotograficoCursoAllByIdCurso
+    // getRegistroFotograficoCursoAllByIdCurso
   }
   //Método para traer el curso por la id que ingresa
   public obtenerCursoPorId(idCurso: number) {
@@ -99,6 +101,21 @@ export class ViewEvidenciasTableFotofraficasComponent implements OnInit {
         this.curso = data;
       }
     });
+  }
+
+  public validacionRegistroFotografico() {
+    if (
+      !this.registroFotografico.fecha ||
+      !this.registroFotografico.descripcionFoto ||
+      !this.registroFotografico.foto
+    ) {
+      this.toastrService.error(
+        'Todos los campos deben estar llenos.',
+        'CAMPOS VACÍOS'
+      );
+    } else {
+      this.saveEvidenciasRegistrofotografico();
+    }
   }
 
   public saveEvidenciasRegistrofotografico() {
@@ -110,7 +127,12 @@ export class ViewEvidenciasTableFotofraficasComponent implements OnInit {
         )
         .subscribe((data) => {
           if (data != null) {
-            alert('succesful update');
+            this.toastrService.success(
+              'El registro fotografico ha sido guardado',
+              'GUARDADO CON ÉXITO'
+            );
+
+            // alert('succesful update');
             this.obtenerTodosRegistrofotograficosPorCurso(this.idCursoRouter!);
             this.registroFotografico = new RegistroFotograficoCurso();
             this.visible = false;
@@ -122,7 +144,11 @@ export class ViewEvidenciasTableFotofraficasComponent implements OnInit {
         .saveRegistroFotograficoCurso(this.registroFotografico)
         .subscribe((data) => {
           if (data != null) {
-            alert('fuccesful');
+            // alert('fuccesful');
+            this.toastrService.success(
+              'El registro fotografico a sido actualizado.',
+              'REGISTRO ACTUALIZADO'
+            );
             this.visible = false;
             this.registroFotografico = new RegistroFotograficoCurso();
             this.obtenerTodosRegistrofotograficosPorCurso(this.idCursoRouter!);
@@ -131,16 +157,34 @@ export class ViewEvidenciasTableFotofraficasComponent implements OnInit {
     }
   }
 
-  public eliminadoLogicoDelregistroFotografico(registroFotografico: RegistroFotograficoCurso){
-    registroFotografico.estado = false;
-    this.registroFotograficoService.updateRegistroFotografico(registroFotografico.idRegistroFotograficoCurso!, registroFotografico).subscribe((data)=>{
-      if(data != null){
-        this.obtenerTodosRegistrofotograficosPorCurso(this.idCursoRouter!);
-      }
-    })
-  }
+  public eliminadoLogicoDelregistroFotografico(
+    registroFotografico: RegistroFotograficoCurso
+  ) {
+    // registroFotografico.estado = false;
+    registroFotografico.estado = !registroFotografico.estado; // Alternar el estado activo/desactivado
+    this.registroFotograficoService
+      .updateRegistroFotografico(
+        registroFotografico.idRegistroFotograficoCurso!,
+        registroFotografico
+      )
+      .subscribe((data) => {
+        if (data != null) {
+          if (registroFotografico.estado) {
+            this.toastrService.success(
+              'El registro fotografico esta visible',
+              'Activación Exitosa'
+            );
+          } else {
+            this.toastrService.warning(
+              'El registro fotografico ya no esta en el reporte',
+              'Desactivación Exitosa'
+            );
+          }
 
-  
+          this.obtenerTodosRegistrofotograficosPorCurso(this.idCursoRouter!);
+        }
+      });
+  }
 
   //VISIVILIADA DEL MODAL
   visible?: boolean;

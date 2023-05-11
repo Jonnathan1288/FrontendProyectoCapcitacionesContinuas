@@ -433,7 +433,7 @@ export class AsignacionRolCapacitadorComponent implements OnInit {
           }
         },
         (err) => {
-          this.toastrService.error('Docente capacitador no tiene hoja de vida', 'Hoja de vada vacio');
+          this.toastrService.error('Docente capacitador no tiene hoja de vida', 'Hoja de vida vacio');
         }
       );
   }
@@ -488,8 +488,21 @@ export class AsignacionRolCapacitadorComponent implements OnInit {
       .updateHojaDeVida(this.classHojaDevida.idHojaVida!, this.classHojaDevida)
       .subscribe((data) => {
         if (data != null) {
-          alert('Succesful');
-          console.log({ hojaVida: data });
+
+          if(data.estadoAprobacion === 'A'){
+            this.toastrService.success('Hoja de vida aceptada.', 'ACEPTADO.', {
+              timeOut: 2000,
+            });
+          }else{
+
+            this.toastrService.error('Hoja de vida rechazada.', 'RECHAZADA.', {
+              timeOut: 2000,
+            });
+          }
+
+
+          // alert('Succesful');
+          // console.log({ hojaVida: data });
         }
       });
     setTimeout(() => {

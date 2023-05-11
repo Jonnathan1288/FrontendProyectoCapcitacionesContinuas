@@ -15,13 +15,7 @@
         </ng-template>
     </p-toolbar>
 
-    <!-- #dt [value]="listCursos" dataKey="id" styleClass="p-datatable-customers" [rowHover]="true" [rows]="10"
-        [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading" responsiveLayout="scroll"
-        [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-        [filterDelay]="0" [globalFilterFields]="['nombreCurso','country.name','representative.name','status']" -->
-
-
-    <p-table #dt [value]="listaProgramas" dataKey="id" styleClass="p-datatable-customers" [rowHover]="true" [rows]="5"
+    <p-table #dt [value]="listaProgramasFilter" dataKey="id" styleClass="p-datatable-customers" [rowHover]="true" [rows]="5"
         [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,15]"  responsiveLayout="scroll"
         [paginator]="true" currentPageReportTemplate="Mostrando {first} to {last} of {totalRecords} programas"
         [filterDelay]="0" 
@@ -31,7 +25,7 @@
                 <h5 class="m-0"><strong>PROGRAMAS DE CAPACITACIÓN</strong></h5>
                 <span class="p-input-icon-left">
                     <i class="pi pi-search"></i>
-                    <input pInputText type="text" placeholder="Search..." />
+                    <input pInputText type="text" placeholder="Search..." (input)="filterTableProgramasCapacitacion($event)"/>
                 </span>
             </div>
         </ng-template>
@@ -44,9 +38,9 @@
                 </th>
                 <th pSortableColumn="periodoPrograma.fechaInicioPeriodoPrograma"><strong>FECHA INICIO</strong> <p-sortIcon
                         field="periodoPrograma.fechaInicioPeriodoPrograma"></p-sortIcon></th>
-                <th pSortableColumn="category"><strong>FECHA FIN</strong> <p-sortIcon field="category"></p-sortIcon></th>
-                <th pSortableColumn="descripcionFoto"><strong>PERIODO</strong><p-sortIcon field="descripcionFoto"></p-sortIcon></th>
-                <th pSortableColumn="rating"><strong>DESCRIPCIÓN </strong><p-sortIcon field="rating"></p-sortIcon></th>
+                <th pSortableColumn="periodoPrograma.fechaFinPeriodoPrograma"><strong>FECHA FIN</strong> <p-sortIcon field="periodoPrograma.fechaFinPeriodoPrograma"></p-sortIcon></th>
+                <th pSortableColumn="periodoPrograma.nombrePeriodoPrograma"><strong>PERIODO</strong><p-sortIcon field="periodoPrograma.nombrePeriodoPrograma"></p-sortIcon></th>
+                <th pSortableColumn="descripcionPrograma"><strong>DESCRIPCIÓN </strong><p-sortIcon field="descripcionPrograma"></p-sortIcon></th>
                 <!-- <th pSortableColumn="inventoryStatus">Estado <p-sortIcon field="inventoryStatus"></p-sortIcon></th> -->
                 <th pSortableColumn="estadoProgramaActivo">
                     <div class="flex justify-content-between align-items-center">
@@ -95,15 +89,15 @@
 
 <!-- IMPLEMENTACION DEL MODAL PARA EL INGRESO DE LOS CURSOS -->
 
-<p-dialog header="Contenidos del Curso" [(visible)]="visible" [modal]="true" [style]="{ width: '50vw', height: '250' }"
+<p-dialog header="Programas de capacitación continua" [(visible)]="visible" [modal]="true" [style]="{ width: '50vw', height: '250' }"
     [draggable]="false" [resizable]="false">
-    <form (ngSubmit)="createPrograma()" ngNativeValidate style="padding: 15px;">
+    <form (ngSubmit)="validarDatosProgramaCapacitacionContinua()" novalidate style="padding: 15px;">
         <div class="grid p-fluid m-2">
             <div class="col-12 md:col-12 mt-1">
                 <div class="p-inputgroup">
                     <p-calendar inputId="edad" class="ng-dirty" [showIcon]="true" placeholder="Fecha inicio de curso"
                         id="fechaInicioPeriodoPrograma" name="fechaInicioPeriodoPrograma"
-                        [(ngModel)]="classPeriodoPrograma.fechaInicioPeriodoPrograma"></p-calendar>
+                        [(ngModel)]="classPeriodoPrograma.fechaInicioPeriodoPrograma" ></p-calendar>
 
                 </div>
             </div>
@@ -113,7 +107,7 @@
 
                     <p-calendar inputId="edad" class="ng-dirty" [showIcon]="true" placeholder="Fecha fin de curso"
                         id="fechaFinPeriodoPrograma" name="fechaFinPeriodoPrograma"
-                        [(ngModel)]="classPeriodoPrograma.fechaFinPeriodoPrograma"></p-calendar>
+                        [(ngModel)]="classPeriodoPrograma.fechaFinPeriodoPrograma" ></p-calendar>
 
                 </div>
             </div>
@@ -121,7 +115,7 @@
                 <div class="p-inputgroup">
                     <span class="p-float-label">
                         <input type="text" id="inputtext" pInputText id="nombrePeriodoPrograma"
-                            name="nombrePeriodoPrograma" [(ngModel)]="classPeriodoPrograma.nombrePeriodoPrograma">
+                            name="nombrePeriodoPrograma" [(ngModel)]="classPeriodoPrograma.nombrePeriodoPrograma" required>
                         <label for="inputtext">Periodo del programa</label>
                     </span>
                 </div>
@@ -133,7 +127,7 @@
                 <div class="p-inputgroup">
                     <span class="p-float-label">
                         <input type="text" pInputText id="nombrePrograma" name="nombrePrograma"
-                            [(ngModel)]="classPrograma.nombrePrograma">
+                            [(ngModel)]="classPrograma.nombrePrograma" required>
                         <label for="inputtext">Nombre del programa</label>
                     </span>
                 </div>
@@ -143,7 +137,7 @@
                 <div class="card flex justify-content-center">
                     <span class="p-float-label m-4">
                         <textarea id="float-input" rows="5" cols="30" pInputTextarea id="descripcionPrograma"
-                            name="descripcionPrograma" [(ngModel)]="classPrograma.descripcionPrograma"></textarea>
+                            name="descripcionPrograma" [(ngModel)]="classPrograma.descripcionPrograma" required></textarea>
                         <label for="float-input">Descripción del programa</label>
                     </span>
                 </div>
@@ -165,11 +159,6 @@
     [style]="{ width: '70vw', height: '250' }" [draggable]="false" [resizable]="false">
     <div class="grid p-fluid m-2">
         <div class="col-12 md:col-12 ">
-            <!-- <div class="p-inputgroup">
-                <p-calendar inputId="edad" class="ng-dirty" [showIcon]="true"
-                    placeholder="Año y mes por el cual se mostrara el reporte" id="fechaEvidencia" name="fechaEvidencia"
-                    (onSelect)="onDateSelect($event)"></p-calendar>
-            </div> -->
 
             <div class="ui-g-12 ui-md-4">
 

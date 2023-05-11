@@ -35,4 +35,8 @@ export class CapacitadorService {
   public updateCapacitador(idCapacitador: number, capacitador: Capacitador):Observable<Capacitador>{
     return this.http.put<Capacitador>(environment.apiuri+'/capacitador/actualizar/'+idCapacitador, capacitador);
   }
+
+  public existsCapacitadorByUsuarioIdUsuario(idUsuario: number):Observable<Boolean>{
+    return this.http.get<Boolean>(environment.apiuri+'/capacitador/exists/findbyIdUsuario/'+idUsuario);
+  }
 }

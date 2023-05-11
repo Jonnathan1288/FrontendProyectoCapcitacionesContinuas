@@ -205,7 +205,7 @@
                     <div class="p-inputgroup required-field">
                         <p-calendar inputId="edad" class="ng-dirty" [showIcon]="true" placeholder="Fecha fin de curso"
                             id="fechaFinalizacionCurso" name="fechaFinalizacionCurso"
-                            [(ngModel)]="curso.fechaFinalizacionCurso" ></p-calendar>
+                            [(ngModel)]="curso.fechaFinalizacionCurso"></p-calendar>
                     </div>
                 </div>
             </div>
@@ -472,8 +472,9 @@
 
                 <span class="p-float-label">
                     <textarea id="float-input" rows="5" cols="30" pInputTextarea id="descripcionCurso"
-                        name="descripcionCurso" [(ngModel)]="curso.descripcionCurso" required onblur="this.classList.toggle('required', !this.value)"></textarea>
-                    <label for="float-input" >Descripción del curso a impartir<span class="red-asterisk1"></span></label>
+                        name="descripcionCurso" [(ngModel)]="curso.descripcionCurso" required
+                        onblur="this.classList.toggle('required', !this.value)"></textarea>
+                    <label for="float-input">Descripción del curso a impartir<span class="red-asterisk1"></span></label>
                 </span>
 
 
@@ -582,17 +583,11 @@
                 icon="pi pi-check" iconPos="right"></p-button>
         </div>
     </form>
-
-    <div class="container">
-        <p-button label="Generar silabo" icon="pi pi-plus" styleClass="p-button-success  mb-2"
-            (click)="silabo()"></p-button>
-
-    </div>
-    <div class="container">
+    <!-- <div class="container">
         <p-button label="Generar necesidad" icon="pi pi-plus" styleClass="p-button-success  mb-2"
             (click)="necesidad()"></p-button>
 
-    </div>
+    </div> -->
 </p-card>
 
 
