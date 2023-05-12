@@ -66,7 +66,7 @@ export class ViewInscritosCursoComponent implements OnInit {
         this.validarcursoCapacitacion() // valida
         const  primerEstadoCurso = this.listaInscritos.map((inscrito) => inscrito.curso?.estadoPublicasionCurso);
         this.inicioCursoEstado = primerEstadoCurso[0] || '';
-
+        console.log("hola ->" + this.inicioCursoEstado)
 
       });
   }
@@ -178,7 +178,7 @@ export class ViewInscritosCursoComponent implements OnInit {
         console.log("Los que estan aceptado ->" + this.participantesAceptado)
         // VALIDACION
         if (this.participantesAceptado > this.cuposDisponibles) {
-          alert("NO HAY MAS CUPOS")
+          console.log("no hay mas cupos")
         } else {
           console.log("si hay cupos")
         }
