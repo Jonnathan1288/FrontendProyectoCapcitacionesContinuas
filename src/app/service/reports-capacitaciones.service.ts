@@ -80,4 +80,9 @@ export class ReportsCapacitacionesService {
   public downloadInformeFinalCurso(idCurso: number) {
     return this.http.get(environment.apiuri+ '/generarInformeFinal/downloadInforme/'+idCurso, { responseType: 'blob' });
   }
+
+   //Reportes de participantes
+   public downloadInformeFinalParticipantesCurso(idCurso: number) {
+    return this.http.get(environment.apiuri+ '/generarRegistroParticipantes/downloadRegistro/'+idCurso, { responseType: 'blob' });
+  }
 }

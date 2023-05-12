@@ -293,6 +293,15 @@ export class RegistrarNotasFinalesComponent implements OnInit {
       });
   }
 
+  public generarReporteParticipantes(): void {
+    this.resportService
+      .downloadInformeFinalParticipantesCurso(this.idCursoGlobal!)
+      .subscribe((r) => {
+        const url = URL.createObjectURL(r);
+        window.open(url, '_blank');
+      });
+  }
+
 
   //INFORME FINAL
   public generarReporteInformeFinalCurso(): void {

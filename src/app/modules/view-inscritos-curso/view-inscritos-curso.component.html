@@ -125,8 +125,8 @@
             </p-table>
         </div>
 
-        <div class="container m-4 text-center" *ngIf="estadoCurso === 'LI' || estadoCurso === 'IN'">
-            <p-button (onClick)="InicioCurso()" label="Iniciar Curso" styleClass="p-button-success" [disabled]="inicioCursoEstado === 'I' || listaInscritos.length == 0"></p-button>
+        <div class="container m-4 text-center" >
+            <p-button (onClick)="InicioCurso()" label="Iniciar Curso" styleClass="p-button-success" [disabled]="inicioCursoEstado === 'I' || estadoCurso === 'LI' || estadoCurso === 'IN' || listaInscritos.length == 0"></p-button>
         </div>
     </div>
 </div>
