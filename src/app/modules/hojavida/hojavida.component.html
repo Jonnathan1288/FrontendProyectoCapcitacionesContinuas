@@ -1,10 +1,10 @@
 
+  <div class="m-2 flex justify-content-center">
+    <p-button label="Subir Hoja de Vida" style="margin: 5px;" (onClick)="SubirHojaVida()"></p-button>
+    <p-button label="Generar Hoja de Vida" style="margin: 5px;" (onClick)="generarHojaVida()" styleClass="p-button-success"></p-button>
+  </div>
 
-  <p-button label="Subir Hoja de Vida" style="margin: 5px;" (onClick)="SubirHojaVida()"></p-button>
-  <p-button label="Generar Hoja de Vida"  style="margin: 5px;" (onClick)="generarHojaVida()" styleClass="p-button-success"></p-button>
-
-
-<p-card header="Subir Hoja de Vida" *ngIf="idUploadHojaVida" class="m-5">
+<p-card header="Subir Hoja de Vida" *ngIf="idUploadHojaVida" class="m-5" style="text-align: center;">
 
   <div class="col-md-7 d-flex flex-column justify-content-center align-items-center"
     style="min-height: 630px; background-color: rgb(240, 249, 250); position: relative; border-radius: 20px;   max-width: 100%;">
@@ -12,7 +12,13 @@
       *ngIf="isTieneArchivo === false">
       <label for="archivo" class="font-weight-bold mb-3">Seleccionar archivo PDF:</label>
 
-      <div class="custom-file">
+      <!-- <div class="custom-file">
+        <input type="file" #fileIn accept="application/pdf" id="archivo" (change)="onFileSelected($event)">
+      </div> -->
+      <div class="file-upload" style="text-align: center; align-items: center;">
+        <label for="archivo" class="file-upload-label">
+          <i class="fas fa-cloud-upload-alt"></i> Seleccionar archivo
+        </label>
         <input type="file" #fileIn accept="application/pdf" id="archivo" (change)="onFileSelected($event)">
       </div>
 
@@ -27,67 +33,113 @@
 
   </div>
 
-    <div class="m-5" style="text-align: center;">
-      <p-button label="Guardar" *ngIf="fileUrl && isExiste === false"  (onClick)="subirHojaVida()" styleClass="p-button-success" ></p-button>
-      <p-button label="Actualizar" *ngIf="fileUrl  && isExiste === true" (onClick)="actualizarHojaVidaDocumento()" styleClass="p-button-success" ></p-button>
-    </div>
+  <div class="m-5" style="text-align: center;">
+    <p-button label="Guardar" *ngIf="fileUrl && isExiste === false" (onClick)="subirHojaVida()"
+      styleClass="p-button-success"></p-button>
+    <p-button label="Actualizar" *ngIf="fileUrl  && isExiste === true" (onClick)="actualizarHojaVidaDocumento()"
+      styleClass="p-button-success"></p-button>
+  </div>
 
-    <div class="custom-file" *ngIf="fileUrl  && isExiste === true">
-      <input type="file" #fileIn accept="application/pdf" id="archivo" (change)="onFileSelected($event)">
-    </div>
+  <div class="file-upload" *ngIf="fileUrl && isExiste === true" style="text-align: center; align-items: center;">
+    <label for="archivo" class="file-upload-label">
+      <i class="fas fa-cloud-upload-alt"></i> Seleccionar archivo
+    </label>
+    <input type="file" #fileIn accept="application/pdf" id="archivo" (change)="onFileSelected($event)">
+  </div>
+
 </p-card>
 
 
 <!-- HOJA VIDA -->
 
-<div class="card flex justify-content-center m-5"  *ngIf="idNewHojaVida">
-  <p-panel>
-    <h2>MI HOJA DE VIDA</h2>
-      <!-- <p-card style="margin: 5px;">
-        <img
-          src="https://img.freepik.com/foto-gratis/concepto-emociones-personas-foto-cabeza-hombre-guapo-aspecto-serio-barba-confiado-decidido_1258-26730.jpg"
-          alt="Img Capacitador" width="300" height="300">
-      </p-card> -->
-      <p-card style="margin: 5px;">
-        <h4>SOBRE MI</h4>
-        <div class="form-floating">
-          <textarea class="form-control" placeholder="Leave a comment here" id="sobreMi" name="sobreMi"
-            style="height: 97px"   [(ngModel)]="hojaVidaCapacitador.sobreMi"></textarea>
-        </div>
-        <h4>EXPERIENCIA LABORAL</h4>
-        <div class="form-floating">
-          <textarea class="form-control" placeholder="Leave a comment here" id="experiencialLaboral" name="experiencialLaboral"
-            style="height: 97px" [(ngModel)]="hojaVidaCapacitador.experiencialLaboral"></textarea>
-        </div>
-        <h4>EXPERIENCIA ESCOLAR</h4>
-        <div class="form-floating">
-          <textarea class="form-control" placeholder="Leave a comment here" id="experienciaEscolar" name="experienciaEscolar"
-            style="height: 97px" [(ngModel)]="hojaVidaCapacitador.experienciaEscolar" ></textarea>
-        </div>
-        <h4>DESTREZAS</h4>
-        <div class="form-floating">
-          <textarea class="form-control" placeholder="Leave a comment here" id="destrezas" name="destrezas"
-            style="height: 97px" [(ngModel)]="hojaVidaCapacitador.destrezas"></textarea>
-        </div>
-        <br>
-        <h4>IDIOMAS</h4>
-        <div class="form-floating">
-          <textarea class="form-control" placeholder="Leave a comment here" id="idiomas" name="idiomas"
-            style="height: 97px" [(ngModel)]="hojaVidaCapacitador.idiomas"></textarea>
-        </div>
-        <br>
 
-      <br>
 
-  </p-card>
 
-    <div class="r" style="margin: 5px; text-align: center;">
-      <p-button *ngIf="isExiste === false" label="Guardar Hoja de Vida" (onClick)="guardarHojaVida()" styleClass="p-button-success"></p-button>
-      <p-button *ngIf="isExiste === true" label="Actualizar Hoja de Vida" (onClick)="actulizarHojaVida()" styleClass="p-button-success"></p-button>
-      <p-button *ngIf="isExiste === true" label="Ver Hoja de Vida" (onClick)="verrHojaVida()" styleClass="p-button-success"></p-button>
+<div class="card flex justify-content-center m-5" *ngIf="idNewHojaVida">
 
-    </div>
+  <p-accordion [multiple]="true" class="m-2">
+    <p-accordionTab header="Sobre mi">
+      <div class="grid p-fluid">
+        <div class="col-12 md:col-12 mt-2" style="align-items: center;">
+          <div class="card flex justify-content-center">
+            <span class="p-float-label m-4">
+              <textarea id="float-input" rows="5" cols="30" pInputTextarea id="sobreMi" name="sobreMi"
+                [(ngModel)]="hojaVidaCapacitador.sobreMi"></textarea>
+            </span>
+          </div>
+        </div>
+      </div>
+    </p-accordionTab>
+    <p-accordionTab header="Experiencial Laboral">
+      <div class="grid p-fluid m-5">
+        <div class="p-inputgroup m-2">
+          <input type="text" placeholder="Experiencia laboral" pInputText id="idiomas" name="idiomas" [(ngModel)]="laboralCap" >
+          <button type="button" pButton icon="pi pi-check-square" (click)="agregarLaboral()" styleClass="p-button-success"></button>
+        </div>
+        <div>
+          <ul *ngFor="let lista of listLaboral" > 
+              <li>{{lista}} 
+                  <button  pButton type="button" class="p-button-rounded p-button-danger" style="height: 10px; width: 25px;" (click)="quitarElementoLLenoL(lista)" icon="pi pi-times" ></button>
+              </li>
+          </ul>
+        </div>
+      </div>
+    </p-accordionTab>
+    <p-accordionTab header="Experiencial Escolar">
+      <div class="grid p-fluid m-5">
+        <div class="p-inputgroup m-2">
+          <input type="text" placeholder="Experiencia escolar" pInputText id="idiomas" name="idiomas" [(ngModel)]="educacionCap" >
+          <button type="button" pButton icon="pi pi-check-square" (click)="agregarEducacion()" styleClass="p-button-success"></button>
+        </div>
+        <div>
+          <ul *ngFor="let lista of listEducacion" > 
+              <li>{{lista}} 
+                  <button  pButton type="button" class="p-button-rounded p-button-danger" style="height: 10px; width: 25px;" (click)="quitarElementoLLenoE(lista)" icon="pi pi-times" ></button>
+              </li>
+          </ul>
+        </div>
+      </div>
+    </p-accordionTab>
+    <p-accordionTab header="Destrezas">
+      <div class="grid p-fluid m-5">
+        <div class="p-inputgroup m-2">
+          <input type="text" placeholder="Destrezas" pInputText id="idiomas" name="idiomas" [(ngModel)]="destrezasCap" >
+          <button type="button" pButton icon="pi pi-check-square" (click)="agregarDestreza()" styleClass="p-button-success"></button>
+        </div>
+        <div>
+          <ul *ngFor="let lista of listDestrezas" > 
+              <li>{{lista}} 
+                  <button  pButton type="button" class="p-button-rounded p-button-danger" style="height: 10px; width: 25px;" (click)="quitarElementoLLenoD(lista)" icon="pi pi-times" ></button>
+              </li>
+          </ul>
+        </div>
+      </div>
+    </p-accordionTab>
+    <p-accordionTab header="Idiomas">
+      <div class="grid p-fluid m-5">
+        <div class="p-inputgroup m-2">
+          <input type="text" placeholder="Idiomas" pInputText id="idiomas" name="idiomas" [(ngModel)]="idiomaCap" >
+          <button type="button" pButton icon="pi pi-check-square" (click)="agregarIdioma()" styleClass="p-button-success"></button>
+        </div>
+        <div>
+          <ul *ngFor="let lista of listIdiomas" > 
+              <li>{{lista}} 
+                  <button  pButton type="button" class="p-button-rounded p-button-danger" style="height: 10px; width: 25px;" (click)="quitarElementoLLeno(lista)" icon="pi pi-times" ></button>
+              </li>
+          </ul>
+        </div>
+      </div>
+    </p-accordionTab>
+  </p-accordion>
 
-  </p-panel>
+  <div class="r m-4" style="text-align: center;">
+    <p-button *ngIf="isExiste === false" label="Guardar Hoja de Vida" class="m-2" (onClick)="guardarHojaVida()"
+      styleClass="p-button-success"></p-button>
+    <p-button *ngIf="isExiste === true" label="Actualizar Hoja de Vida"  class="m-2" (onClick)="actulizarHojaVida()"
+      styleClass="p-button-success"></p-button>
+    <p-button *ngIf="isExiste === true" label="Ver Hoja de Vida"  class="m-2" (onClick)="verrHojaVida()"
+      styleClass="p-button-success"></p-button>
+
+  </div>
 
 </div>
