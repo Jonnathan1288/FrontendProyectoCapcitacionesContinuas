@@ -23,8 +23,8 @@ export class ParticipanteAprobadoService {
     return this.http.get<ParticipantesAprobados[]>(environment.apiuri+'/participantesAprobados/findbyIdCurso/'+idCurso);
   }
 
-  public saveParticipantesAprobadosParacodigoSenecyt(idCurso: number){
-    return this.http.get(environment.apiuri+'/participantesAprobados/save/findbyIdCurso/'+idCurso);
+  public saveParticipantesAprobadosParacodigoSenecyt(idCurso: number): Observable<ParticipantesAprobados[]>{
+    return this.http.get<ParticipantesAprobados[]>(environment.apiuri+'/participantesAprobados/save/findbyIdCurso/'+idCurso);
   }
 
   public updateParticipantesAprobados(idParticipantesAprobados:number, participantesAprobados: ParticipantesAprobados):Observable<ParticipantesAprobados>{

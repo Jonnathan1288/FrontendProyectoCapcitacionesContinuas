@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LoadScript } from './scripts/load-script';
 import { WelcomeComponent } from './modules/welcome/welcome.component';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { Usuario } from './models/usuario';
 import { UsuarioService } from './service/usuario.service';
 import { StorageService } from './service/storage.service';
@@ -13,6 +13,12 @@ import { StorageService } from './service/storage.service';
 })
 export class AppComponent implements OnInit {
 
+  public isLogginPresent: boolean = false;
+  public rolNameUser?: any;
+  userIsLoggin:any;
+
+  //VALOR PARA CATCH URL
+  currentUrl: string = '';
 
   constructor(private scriptC: LoadScript, private router: Router
     , private usuarioService: UsuarioService,
@@ -20,9 +26,6 @@ export class AppComponent implements OnInit {
     scriptC.Cargar(['dashboard']);
   }
 
-  public isLogginPresent: boolean = false;
-  public rolNameUser?: any;
-  userIsLoggin:any;
 
   ngOnInit(): void {
     this.rolNameUser = localStorage.getItem('rol');
@@ -33,6 +36,13 @@ export class AppComponent implements OnInit {
     }
     console.log("rolF -> " + this.rolNameUser)
     this.obternerDatosUsuarioLoggin(this.rolNameUser);
+
+
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.currentUrl = event.url;
+      }
+    });
   }
 
   public logOut() {

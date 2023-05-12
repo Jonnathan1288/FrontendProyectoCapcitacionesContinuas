@@ -75,4 +75,9 @@ export class ReportsCapacitacionesService {
   public downloadDisenioCurricular(id: number) {
     return this.http.get(environment.apiuri+ '/generarDisenioCurricular/downloadDisenioC/'+id, { responseType: 'blob' });
   }
+
+  //Reportes diseño curricular
+  public downloadInformeFinalCurso(idCurso: number) {
+    return this.http.get(environment.apiuri+ '/generarInformeFinal/downloadInforme/'+idCurso, { responseType: 'blob' });
+  }
 }
