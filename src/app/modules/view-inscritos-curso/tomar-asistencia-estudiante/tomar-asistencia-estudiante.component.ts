@@ -195,6 +195,11 @@ export class TomarAsistenciaEstudianteComponent implements OnInit {
 
     participantesMatriculados.estadoParticipanteActivo = !participantesMatriculados.estadoParticipanteActivo; // Alternar el estado activo/desactivado
 
+    if(participantesMatriculados.estadoParticipanteActivo == true){
+      participantesMatriculados.estadoParticipanteAprobacion = 'P'
+    }else{
+      participantesMatriculados.estadoParticipanteAprobacion = 'X'
+    }
     this.participanteMatriculadoService
       .updateParticipantesMatriculados(participantesMatriculados.idParticipanteMatriculado!, participantesMatriculados)
       .subscribe((data) => {
