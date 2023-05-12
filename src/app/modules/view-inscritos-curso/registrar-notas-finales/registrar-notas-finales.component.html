@@ -83,9 +83,13 @@
             style="text-align: center;" (onClick)="finalizarCursoCapacitacionContinua()"></p-button>
 
 
-            <p-button label="NOTAS FINALES" icon="pi pi-file-pdf" styleClass="p-button-danger mb-2"
+            <p-button label="NOTAS FINALES" icon="pi pi-file-pdf" styleClass="p-button-danger mb-2 m-2"
             [disabled]="this.classInformeFinalC.idInformeFinalCurso == null"
             (onClick)="generarReporteAsitenciaEvaluacion()"></p-button>
+
+            <p-button label="Reporte de Participantes" icon="pi pi-file-pdf" styleClass="p-button-danger mb-2"
+            [disabled]="this.classInformeFinalC.idInformeFinalCurso == null"
+            (onClick)="generarReporteParticipantes()"></p-button>
     </div>
 
 </div>
