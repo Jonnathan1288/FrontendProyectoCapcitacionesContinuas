@@ -16,8 +16,8 @@ export class inscritosService {
     return this.http.get<Inscrito>(environment.apiuri+'/inscritocurso/findbyId/'+idInscrito);
   }
 
-  public getInscritoByIdUsuario(idUsuario: number):Observable<Inscrito>{
-    return this.http.get<Inscrito>(environment.apiuri+'/usuarioInscrito/findbyIdUsuario/'+idUsuario);
+  public getInscritoByIdUsuario(idCurso:number,idUsario: number):Observable<Inscrito>{
+    return this.http.get<Inscrito>(environment.apiuri+'/usuarioInscrito/findbyIdUsuario/'+idCurso+'/'+idUsario);
   }
 
   public saveInscrioParaCurso(inscrito: Inscrito):Observable<Inscrito>{

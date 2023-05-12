@@ -2,14 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Curso } from 'src/app/models/curso';
 import { DetalleFichaMatricula } from 'src/app/models/detalle-ficha-matricula';
-import { FichaMatricula } from 'src/app/models/fichaMatricula';
 import { Inscrito } from 'src/app/models/inscrito';
 import { ParticipantesMatriculados } from 'src/app/models/participantesMatriculados';
 import { Usuario } from 'src/app/models/usuario';
 import { CursoService } from 'src/app/service/curso.service';
 import { DetalleFichaService } from 'src/app/service/detalle-ficha.service';
-import { inFichaMatriculaService } from 'src/app/service/ficha-matricula.service';
-
 import { inscritosService } from 'src/app/service/inscritos.service';
 import { ParticipanteMatriculadoService } from 'src/app/service/participante-matriculado.service';
 import { ReportsCapacitacionesService } from 'src/app/service/reports-capacitaciones.service';
@@ -22,7 +19,6 @@ import { UsuarioService } from 'src/app/service/usuario.service';
 })
 export class MatriculComponent implements OnInit {
   public inscritos = new Inscrito();
-  public fichaMatricula = new FichaMatricula();
   public detallefichaMatricula = new DetalleFichaMatricula();
   public usuario = new Usuario();
   public curso = new Curso();
@@ -36,10 +32,9 @@ export class MatriculComponent implements OnInit {
     private inscritosService: inscritosService,
     private activateRoute: ActivatedRoute,
     private cursoService: CursoService,
-    private fichamatriculaService: inFichaMatriculaService,
     private detalleFichaMatriculaService: DetalleFichaService,
     private reportService: ReportsCapacitacionesService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.idUserLoggin = localStorage.getItem('id_username');
@@ -51,7 +46,7 @@ export class MatriculComponent implements OnInit {
       console.log('Idcurso => ' + idCursoROut);
     });
   }
-  
+
 
   public traerUsuarioLogin() {
     this.usuarioServie.getUsuarioById(this.idUserLoggin).subscribe((data) => {
@@ -61,11 +56,11 @@ export class MatriculComponent implements OnInit {
     });
   }
 
-  
-  idUsuarioLogin!:number;
-  public verificarOtraerDatosFichaAlmacenados(){
+
+  idUsuarioLogin!: number;
+  public verificarOtraerDatosFichaAlmacenados() {
     this.detalleFichaMatriculaService.getDetalleFichaMatriculaByIdPorUsuario(this.idUsuarioLogin).subscribe(
-      data =>{
+      data => {
         if (data!) {
           this.detallefichaMatricula = data
         } else {
@@ -95,21 +90,13 @@ export class MatriculComponent implements OnInit {
         console.log(data);
         if (data != null) {
           this.inscritos = data;
-          this.fichaMatricula.inscrito = this.inscritos;
-          this.fichamatriculaService
-            .saveFichaMatricula(this.fichaMatricula)
+          this.detallefichaMatricula.usuario = this.usuario;
+          this.detalleFichaMatriculaService
+            .saveDetalleFichaMatricula(this.detallefichaMatricula)
             .subscribe((data1) => {
               if (data1 != null) {
-                this.fichaMatricula = data1;
-                this.detallefichaMatricula.fichaMatricula = this.fichaMatricula;
-                this.detalleFichaMatriculaService
-                  .saveDetalleFichaMatricula(this.detallefichaMatricula)
-                  .subscribe((data2) => {
-                    if (data2 != null) {
-                      this.getReportNecesidadCurso(this.inscritos.idInscrito!);
-                      alert('Inscrito satisfactoriamente');
-                    }
-                  });
+                this.detallefichaMatricula = data1;
+                alert('Inscrito satisfactoriamente');
               }
             });
         }
@@ -151,15 +138,15 @@ export class MatriculComponent implements OnInit {
   }
 
   // validar si ya se inscribio en el curso
-  isInscritoInCourse!:boolean;
-  public ValidarSuIsncripcion():void{
-    this.inscritosService.getInscrioValidacion(this.idCursoCap,this.idUserLoggin).subscribe(
+  isInscritoInCourse!: boolean;
+  public ValidarSuIsncripcion(): void {
+    this.inscritosService.getInscrioValidacion(this.idCursoCap, this.idUserLoggin).subscribe(
       data => {
         if (data == true) {
           // alert('Ya estas inscrito')
           this.isInscritoInCourse = true;
-          this.inscritosService.getInscritoByIdUsuario(this.idUserLoggin).subscribe(
-            data =>{
+          this.inscritosService.getInscritoByIdUsuario(this.idCursoCap, this.idUserLoggin).subscribe(
+            data => {
               this.inscritos = data;
             }
           )
