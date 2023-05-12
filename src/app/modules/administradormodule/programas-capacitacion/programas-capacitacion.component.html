@@ -144,7 +144,7 @@
             </div>
             <!-- Fin del periodo porgrama -->
             <div class="col-md-12" style="text-align: center; margin: 5px;">
-                <p-button type="ngSubmit" label="Guardar Programa" icon="pi pi-save"
+                <p-button type="ngSubmit" [label]="classPeriodoPrograma.idPeriodoPrograma? 'Actualizar Programa': 'Guardar Programa'" icon="pi pi-save"
                     styleClass="p-button-success  mb-2"></p-button>
             </div>
         </div>
