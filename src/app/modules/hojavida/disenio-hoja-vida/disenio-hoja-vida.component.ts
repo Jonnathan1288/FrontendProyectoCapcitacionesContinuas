@@ -42,10 +42,14 @@ export class DisenioHojaVidaComponent implements OnInit{
       this.capcitadporService.getCapacitadorById(this.idCapacitadorGlobal2!).subscribe(
         data =>{
           this.capacitador = data;
-          this.capacitador.tituloCapacitador
+          this.capacitador.tituloCapacitador;
           this.hojaVidaService.getHojaVidaCapacitadorByIdCapacitador(this.capacitador.idCapacitador!).subscribe(
             data2 =>{
               this.hojaVida = data2;
+              const educacion = this.hojaVida.experienciaEscolar!.split('| ');
+              this.listEducacion.push(...educacion);
+              const laboral = this.hojaVida.experiencialLaboral!.split('| ');
+              this.listLaboral.push(...laboral);
             }
           )
         }
@@ -58,6 +62,10 @@ export class DisenioHojaVidaComponent implements OnInit{
           this.hojaVidaService.getHojaVidaCapacitadorByIdCapacitador(this.capacitador.idCapacitador!).subscribe(
             data2 =>{
               this.hojaVida = data2;
+              const educacion = this.hojaVida.experienciaEscolar!.split('| ');
+              this.listEducacion.push(...educacion);
+              const laboral = this.hojaVida.experiencialLaboral!.split('| ');
+              this.listLaboral.push(...laboral);
             }
           )
         }
@@ -65,5 +73,10 @@ export class DisenioHojaVidaComponent implements OnInit{
     }
   }
 
+
+  // LISTAS
+  listEducacion: String[] = [];
+
+  listLaboral: String[] = [];
 
 }
