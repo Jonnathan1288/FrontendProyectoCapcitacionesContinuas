@@ -33,10 +33,6 @@ export class LoginComponent implements OnInit {
           if (data != null) {
             this.roles = data.roles!;
             console.log(this.roles)
-            // if (this.roles?.length === 0) {
-            //   this.modalViewRolNoasigando();
-            // }
-
 
             localStorage.removeItem('id_username');
             localStorage.removeItem('id_persona');

@@ -1,16 +1,40 @@
+<!-- CUANDO EL DOCENTE CAPACITADOR NO TIENE HOJA DE VIDA -->
 <div class="container" *ngIf="estadoHojaVida == ''">
-    Aun no tiene una hoja de vida
-</div>
 
-<div class="container" *ngIf="estadoHojaVida == 'P'">
-    <div class="surface-section px-4 py-8 md:px-6 lg:px-8">
+
+    <div class="surface-section px-4 py-8 md:px-6 lg:px-8  surface-card p-4 shadow-2 border-round w-full">
         <div class="text-700 text-center">
             <div class="text-blue-600 font-bold mb-3"><i class="pi pi-discord"></i>&nbsp;SISTEMA DE CAPACITACIONES
                 CONTINUAS</div>
+            <div class="text-center mb-5">
+                <img src="https://eduv.tecazuay.edu.ec/pluginfile.php/1/theme_academi/logo/1671035251/LOGO%20CUADRADO_SIN%20FONDO.png"
+                    alt="Image" height="130" width="170" class="mb-3">
+            </div>
+            <div class="text-900 font-bold text-5xl mb-3">No tiene hoja de vida</div>
+            <div class="text-700 text-2xl mb-5">Le informamos que debe subir u a su vez crear una hoja de vida, para que
+                los súperiores lo aprueben!!.</div>
+            <button (click)="hojaVida()" pButton pRipple label="Crear hoja de vida" icon="pi pi-discord"
+                class="font-bold px-5 py-3 p-button-raised p-button-rounded white-space-nowrap"></button>
+        </div>
+    </div>
+</div>
+
+<div class="container" *ngIf="estadoHojaVida == 'P'">
+    <div class="surface-section px-4 py-8 md:px-6 lg:px-8 surface-card p-4 shadow-2 border-round w-full">
+        <div class="text-700 text-center">
+            <div class="text-blue-600 font-bold mb-3"><i class="pi pi-discord"></i>&nbsp;SISTEMA DE CAPACITACIONES
+                CONTINUAS</div>
+
+                <div class="text-center mb-5">
+                    <img src="https://eduv.tecazuay.edu.ec/pluginfile.php/1/theme_academi/logo/1671035251/LOGO%20CUADRADO_SIN%20FONDO.png"
+                        alt="Image" height="130" width="170" class="mb-3">
+                </div>
+
+                
             <div class="text-900 font-bold text-5xl mb-3">Proceso de validación</div>
             <div class="text-700 text-2xl mb-5">Le informamos que en este momento su hoja de vida se encuentra
                 validando, esperenos!!.</div>
-            <button pButton pRipple label="Join Now" icon="pi pi-discord"
+            <button (click)="hojaVida()" pButton pRipple label="Ver hoja de vida" icon="pi pi-discord"
                 class="font-bold px-5 py-3 p-button-raised p-button-rounded white-space-nowrap"></button>
         </div>
     </div>
@@ -20,39 +44,43 @@
 <!-- VALIDAMOS SI LA HOJA DE VIDA A SIDO RECHAZADA -->
 <div class="container" *ngIf="estadoHojaVida == 'R'">
 
-    <div class="grid grid-nogutter surface-section text-800">
-        <div class="col-12 md:col-12 p-6 text-center md:text-left flex align-items-center ">
-            <section>
-                <span class="block text-6xl font-bold mb-1">Rechazado</span>
-                <div class="text-6xl text-primary font-bold mb-3">Su hoja de vida no cumple los parametros</div>
-                <p class="mt-0 mb-4 text-700 line-height-3">Le comentamos que su hoja de vida no cumple los
-                    requerimientos para que pueda usted crear cursos de capacitación, actualice su información.</p>
 
-                <button pButton pRipple label="Learn More" type="button" class="mr-3 p-button-raised"></button>
-                <button pButton pRipple label="Live Demo" type="button" class="p-button-outlined"></button>
-            </section>
+    <div class="surface-section px-4 py-8 md:px-6 lg:px-8 surface-card p-4 shadow-2 border-round w-full">
+        <div class="text-700 text-center">
+            <div class="text-blue-600 font-bold mb-3"><i class="pi pi-discord"></i>&nbsp;SISTEMA DE CAPACITACIONES
+                CONTINUAS</div>
+
+                <div class="text-center mb-5">
+                    <img src="https://eduv.tecazuay.edu.ec/pluginfile.php/1/theme_academi/logo/1671035251/LOGO%20CUADRADO_SIN%20FONDO.png"
+                        alt="Image" height="130" width="170" class="mb-3">
+                </div>
+
+                
+            <div class="text-900 font-bold text-5xl mb-3">Rechazado</div>
+            <div class="text-700 text-2xl mb-5">Le comentamos que su hoja de vida no cumple los
+                requerimientos para que pueda usted crear cursos de capacitación, actualice su información.</div>
+            <button (click)="hojaVida()" pButton pRipple label="Actualizar hoja de vida" icon="pi pi-discord"
+                class="font-bold px-5 py-3 p-button-raised p-button-rounded white-space-nowrap"></button>
         </div>
-        <!-- <div class="col-12 md:col-6 overflow-hidden">
-            <img src="assets/images/blocks/hero/hero-1.png" alt="Image" class="md:ml-auto block md:h-full" style="clip-path: polygon(8% 0, 100% 0%, 100% 100%, 0 100%)">
-        </div> -->
     </div>
-
 
 </div>
 
 <p-card header="Registro de curso" class="m-5" *ngIf="estadoHojaVida == 'A'">
 
     <!-- RESTAURAR U SILABO Y SU DISENIO -->
-    <p-button *ngIf="tieneIdEnLauta === false" (click)="showDialog2()" icon="pi pi-search"label="Reutilizar"  styleClass="p-button-rounded p-button-success p-button-outlined"></p-button>
+    <p-button *ngIf="tieneIdEnLauta === false" (click)="showDialog2()" icon="pi pi-search" label="Reutilizar"
+        styleClass="p-button-rounded p-button-success p-button-outlined"></p-button>
 
     <p-dialog header="Cursos" [(visible)]="visibleC" [style]="{ width: '80vw', height: '100vw' }">
-        <p-card *ngFor="let cursos of listadoCursosReutilizar" class="m-1" >
+        <p-card *ngFor="let cursos of listadoCursosReutilizar" class="m-1">
             <div class="surface-section px-4 py-5 md:px-6 lg:px-8">
                 <div class="flex align-items-start flex-column lg:justify-content-between lg:flex-row">
                     <div>
                         <div class="flex align-items-center flex-wrap">
                             <div class="mr-5 flex align-items-center mt-3">
-                                <img [src]="'data:image/jpeg;base64,' + cursos.fotoCurso" alt="" width="80px" height="80px" class="rounded-circle">
+                                <img [src]="'data:image/jpeg;base64,' + cursos.fotoCurso" alt="" width="80px"
+                                    height="80px" class="rounded-circle">
                             </div>
                             <div class="mr-5 flex align-items-center mt-3">
                                 <div class="text-2xl"><strong>{{cursos.nombreCurso}}</strong></div>
@@ -60,7 +88,8 @@
                         </div>
                     </div>
                     <div class="mt-3 lg:mt-0">
-                        <p-button (onClick)="copiarDatos(cursos.idCurso!)" icon="pi pi-check" label="Copiar" styleClass="p-button-rounded p-button-success p-button-outlined"></p-button>
+                        <p-button (onClick)="copiarDatos(cursos.idCurso!)" icon="pi pi-check" label="Copiar"
+                            styleClass="p-button-rounded p-button-success p-button-outlined"></p-button>
                     </div>
                 </div>
             </div>

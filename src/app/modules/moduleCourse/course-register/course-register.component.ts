@@ -825,5 +825,10 @@ export class CourseRegisterComponent {
     });
   }
 
+  //parate de los cursos para la creacion de la hoja de vida:
+
+  public hojaVida(){
+    this.router.navigate(['/hojaVida/capacitador']);
+  }
 
 }

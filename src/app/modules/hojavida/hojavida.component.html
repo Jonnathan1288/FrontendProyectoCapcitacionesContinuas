@@ -1,8 +1,8 @@
-
-  <div class="m-2 flex justify-content-center">
-    <p-button label="Subir Hoja de Vida" style="margin: 5px;" (onClick)="SubirHojaVida()"></p-button>
-    <p-button label="Generar Hoja de Vida" style="margin: 5px;" (onClick)="generarHojaVida()" styleClass="p-button-success"></p-button>
-  </div>
+<div class="m-2 flex justify-content-center">
+  <p-button label="Subir Hoja de Vida" style="margin: 5px;" (onClick)="SubirHojaVida()"></p-button>
+  <p-button label="Generar Hoja de Vida" style="margin: 5px;" (onClick)="generarHojaVida()"
+    styleClass="p-button-success"></p-button>
+</div>
 
 <p-card header="Subir Hoja de Vida" *ngIf="idUploadHojaVida" class="m-5" style="text-align: center;">
 
@@ -55,6 +55,7 @@
 
 
 
+
 <div class="card flex justify-content-center m-5" *ngIf="idNewHojaVida">
 
   <p-accordion [multiple]="true" class="m-2">
@@ -73,14 +74,17 @@
     <p-accordionTab header="Experiencial Laboral">
       <div class="grid p-fluid m-5">
         <div class="p-inputgroup m-2">
-          <input type="text" placeholder="Experiencia laboral" pInputText id="idiomas" name="idiomas" [(ngModel)]="laboralCap" >
-          <button type="button" pButton icon="pi pi-check-square" (click)="agregarLaboral()" styleClass="p-button-success"></button>
+          <input type="text" placeholder="Experiencia laboral" pInputText id="idiomas" name="idiomas"
+            [(ngModel)]="laboralCap">
+          <button type="button" pButton icon="pi pi-check-square" (click)="agregarLaboral()"
+            styleClass="p-button-success"></button>
         </div>
         <div>
-          <ul *ngFor="let lista of listLaboral" > 
-              <li>{{lista}} 
-                  <button  pButton type="button" class="p-button-rounded p-button-danger" style="height: 10px; width: 25px;" (click)="quitarElementoLLenoL(lista)" icon="pi pi-times" ></button>
-              </li>
+          <ul *ngFor="let lista of listLaboral">
+            <li>{{lista}}
+              <button pButton type="button" class="p-button-rounded p-button-danger" style="height: 10px; width: 25px;"
+                (click)="quitarElementoLLenoL(lista)" icon="pi pi-times"></button>
+            </li>
           </ul>
         </div>
       </div>
@@ -88,14 +92,17 @@
     <p-accordionTab header="Experiencial Escolar">
       <div class="grid p-fluid m-5">
         <div class="p-inputgroup m-2">
-          <input type="text" placeholder="Experiencia escolar" pInputText id="idiomas" name="idiomas" [(ngModel)]="educacionCap" >
-          <button type="button" pButton icon="pi pi-check-square" (click)="agregarEducacion()" styleClass="p-button-success"></button>
+          <input type="text" placeholder="Experiencia escolar" pInputText id="idiomas" name="idiomas"
+            [(ngModel)]="educacionCap">
+          <button type="button" pButton icon="pi pi-check-square" (click)="agregarEducacion()"
+            styleClass="p-button-success"></button>
         </div>
         <div>
-          <ul *ngFor="let lista of listEducacion" > 
-              <li>{{lista}} 
-                  <button  pButton type="button" class="p-button-rounded p-button-danger" style="height: 10px; width: 25px;" (click)="quitarElementoLLenoE(lista)" icon="pi pi-times" ></button>
-              </li>
+          <ul *ngFor="let lista of listEducacion">
+            <li>{{lista}}
+              <button pButton type="button" class="p-button-rounded p-button-danger" style="height: 10px; width: 25px;"
+                (click)="quitarElementoLLenoE(lista)" icon="pi pi-times"></button>
+            </li>
           </ul>
         </div>
       </div>
@@ -103,14 +110,16 @@
     <p-accordionTab header="Destrezas">
       <div class="grid p-fluid m-5">
         <div class="p-inputgroup m-2">
-          <input type="text" placeholder="Destrezas" pInputText id="idiomas" name="idiomas" [(ngModel)]="destrezasCap" >
-          <button type="button" pButton icon="pi pi-check-square" (click)="agregarDestreza()" styleClass="p-button-success"></button>
+          <input type="text" placeholder="Destrezas" pInputText id="idiomas" name="idiomas" [(ngModel)]="destrezasCap">
+          <button type="button" pButton icon="pi pi-check-square" (click)="agregarDestreza()"
+            styleClass="p-button-success"></button>
         </div>
         <div>
-          <ul *ngFor="let lista of listDestrezas" > 
-              <li>{{lista}} 
-                  <button  pButton type="button" class="p-button-rounded p-button-danger" style="height: 10px; width: 25px;" (click)="quitarElementoLLenoD(lista)" icon="pi pi-times" ></button>
-              </li>
+          <ul *ngFor="let lista of listDestrezas">
+            <li>{{lista}}
+              <button pButton type="button" class="p-button-rounded p-button-danger" style="height: 10px; width: 25px;"
+                (click)="quitarElementoLLenoD(lista)" icon="pi pi-times"></button>
+            </li>
           </ul>
         </div>
       </div>
@@ -118,14 +127,16 @@
     <p-accordionTab header="Idiomas">
       <div class="grid p-fluid m-5">
         <div class="p-inputgroup m-2">
-          <input type="text" placeholder="Idiomas" pInputText id="idiomas" name="idiomas" [(ngModel)]="idiomaCap" >
-          <button type="button" pButton icon="pi pi-check-square" (click)="agregarIdioma()" styleClass="p-button-success"></button>
+          <input type="text" placeholder="Idiomas" pInputText id="idiomas" name="idiomas" [(ngModel)]="idiomaCap">
+          <button type="button" pButton icon="pi pi-check-square" (click)="agregarIdioma()"
+            styleClass="p-button-success"></button>
         </div>
         <div>
-          <ul *ngFor="let lista of listIdiomas" > 
-              <li>{{lista}} 
-                  <button  pButton type="button" class="p-button-rounded p-button-danger" style="height: 10px; width: 25px;" (click)="quitarElementoLLeno(lista)" icon="pi pi-times" ></button>
-              </li>
+          <ul *ngFor="let lista of listIdiomas">
+            <li>{{lista}}
+              <button pButton type="button" class="p-button-rounded p-button-danger" style="height: 10px; width: 25px;"
+                (click)="quitarElementoLLeno(lista)" icon="pi pi-times"></button>
+            </li>
           </ul>
         </div>
       </div>
@@ -135,11 +146,13 @@
   <div class="r m-4" style="text-align: center;">
     <p-button *ngIf="isExiste === false" label="Guardar Hoja de Vida" class="m-2" (onClick)="guardarHojaVida()"
       styleClass="p-button-success"></p-button>
-    <p-button *ngIf="isExiste === true" label="Actualizar Hoja de Vida"  class="m-2" (onClick)="actulizarHojaVida()"
+    <p-button *ngIf="isExiste === true" label="Actualizar Hoja de Vida" class="m-2" (onClick)="actulizarHojaVida()"
       styleClass="p-button-success"></p-button>
-    <p-button *ngIf="isExiste === true" label="Ver Hoja de Vida"  class="m-2" (onClick)="verrHojaVida()"
+    <p-button *ngIf="isExiste === true" label="Ver Hoja de Vida" class="m-2" (onClick)="verrHojaVida()"
       styleClass="p-button-success"></p-button>
 
   </div>
 
 </div>
+
+

@@ -68,18 +68,24 @@ export class HojavidaComponent implements OnInit {
           // alert('SI tiene cv')
           this.hojaVidaService.getHojadeVidaByIdUsuarioLoggin(this.idUsuarioLoggic).subscribe(
             data => {
+              //LEGANDO
               this.isExiste = true;
-              this.hojaVidaCapacitador = data;
-              const idiomas = this.hojaVidaCapacitador.idiomas!.split(', ');
-              this.listIdiomas.push(...idiomas);
-              const destrezas = this.hojaVidaCapacitador.destrezas!.split(', ');
-              this.listDestrezas.push(...destrezas);
-              const educacion = this.hojaVidaCapacitador.experienciaEscolar!.split('| ');
-              this.listEducacion.push(...educacion);
-              const laboral = this.hojaVidaCapacitador.experiencialLaboral!.split('| ');
-              this.listLaboral.push(...laboral);
+              this.mostrarPDF_BDA(data.documento);
+              try {
+                this.hojaVidaCapacitador = data;
+                const idiomas = this.hojaVidaCapacitador.idiomas!.split(', ');
+                this.listIdiomas.push(...idiomas);
+                const destrezas = this.hojaVidaCapacitador.destrezas!.split(', ');
+                this.listDestrezas.push(...destrezas);
+                const educacion = this.hojaVidaCapacitador.experienciaEscolar!.split('| ');
+                this.listEducacion.push(...educacion);
+                const laboral = this.hojaVidaCapacitador.experiencialLaboral!.split('| ');
+                this.listLaboral.push(...laboral);
+              } catch (error) {
+               console.log('.')
+              }
               this.idHojaVidaExsitente = this.hojaVidaCapacitador!.idHojaVida;
-              this.mostrarPDF_BDA();
+         
               console.log("Datos -> " + this.idHojaVidaExsitente)
               this.capcitadporService.getCapacitadorByUsuarioIdUsuario(this.idUsuarioLoggic).subscribe(
                 data => {
@@ -152,6 +158,7 @@ export class HojavidaComponent implements OnInit {
     this.hojaVidaService.updateHojaDeVida(this.idHojaVidaExsitente!, this.hojaVidaCapacitador).subscribe(
       data => {
         this.toastrService.success('Se actualizo correctamente', 'Registro Actualizado');
+        location.reload();
       }
     )
   }
@@ -163,14 +170,15 @@ export class HojavidaComponent implements OnInit {
     this.hojaVidaService.saveHojaDeVida(this.hojaVidaCapacitador).subscribe(
       data => {
         this.toastrService.success('Se guardo correctamente', 'Registro Exitoso');
+        location.reload();
       }
     )
   }
 
   // TRAER EL PDF
   //mETOO QUE ME MOSTRAR EN EL CASO DE LA VISTA
-  public mostrarPDF_BDA(): void {
-    const byteCharacters = atob(this.hojaVidaCapacitador.documento);
+  public mostrarPDF_BDA(documento: any): void {
+    const byteCharacters = atob(documento);
     const byteNumbers = new Array(byteCharacters.length);
     for (let i = 0; i < byteCharacters.length; i++) {
       byteNumbers[i] = byteCharacters.charCodeAt(i);
