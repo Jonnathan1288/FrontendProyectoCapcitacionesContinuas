@@ -17,7 +17,7 @@ ul {
 header {
     position: relative;
     width: 100%;
-    background: rgb(0, 0, 0);
+    background: rgb(19, 8, 70);
     z-index: 99;
 }
 
@@ -25,7 +25,7 @@ header {
 /*-----------header-top------------*/
 .header-top {
     padding: 12px 0px 15px 0px;
-    background: rgba(0, 0, 0, 0.57);
+    background: rgba(20, 27, 93, 0.57);
 }
 
 .left_info ul li {
@@ -450,7 +450,8 @@ div#slider-home .carousel-item::before {
 .login-btn {
     padding: 10px;
     border-radius: 5px;
-    background-color: #000000;
+    /* background-color: #000000; */
+    background: rgba(20, 27, 93, 0.57);
     color: #ffffff;
     font-size: 16px;
     font-weight: bold;
@@ -464,7 +465,8 @@ div#slider-home .carousel-item::before {
 }
 
 .login-btn:hover {
-    background-color: #080000;
+    background: rgba(20, 27, 93, 0.57);
+    /* background-color: #080000; */
     color: #465463;
 }
 

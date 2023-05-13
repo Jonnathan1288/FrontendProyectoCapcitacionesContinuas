@@ -114,7 +114,33 @@ export class ViewEvidenciasTableFotofraficasComponent implements OnInit {
         'CAMPOS VACÍOS'
       );
     } else {
-      this.saveEvidenciasRegistrofotografico();
+      const fechaInicio = new Date(this.curso.fechaInicioCurso!);
+      const fechaFin = new Date(this.curso.fechaFinalizacionCurso!);
+      const fecha = new Date(this.registroFotografico.fecha);
+
+      // Convertir las fechas en cadenas en formato ISO 8601
+      const fechaInicioString = fechaInicio.toISOString().split('T')[0];
+      const fechaFinString = fechaFin.toISOString().split('T')[0];
+      const fechaString = fecha.toISOString().split('T')[0];
+
+      if (fechaString < fechaInicioString) {
+        this.toastrService.warning(
+          'No puede ingresar una fecha pasada a la fecha de inicio del curso.',
+          'FECHA PASADA'
+        );
+        // min
+      } else if (fechaString > fechaFinString) {
+        this.toastrService.warning(
+          'No puede ingresar una fecha posterio a la fecha de finalización del curso.',
+          'FECHA MAYOR'
+        );
+        //may
+      } else {
+         this.saveEvidenciasRegistrofotografico();
+        // console.log('La fecha está dentro del rango válido');
+      }
+
+      // this.saveEvidenciasRegistrofotografico();
     }
   }
 
@@ -128,10 +154,9 @@ export class ViewEvidenciasTableFotofraficasComponent implements OnInit {
         .subscribe((data) => {
           if (data != null) {
             this.toastrService.success(
-              'El registro fotografico ha sido guardado',
-              'GUARDADO CON ÉXITO'
+              'El registro fotografico a sido actualizado.',
+              'REGISTRO ACTUALIZADO'
             );
-
             // alert('succesful update');
             this.obtenerTodosRegistrofotograficosPorCurso(this.idCursoRouter!);
             this.registroFotografico = new RegistroFotograficoCurso();
@@ -146,8 +171,8 @@ export class ViewEvidenciasTableFotofraficasComponent implements OnInit {
           if (data != null) {
             // alert('fuccesful');
             this.toastrService.success(
-              'El registro fotografico a sido actualizado.',
-              'REGISTRO ACTUALIZADO'
+              'El registro fotografico ha sido guardado',
+              'GUARDADO CON ÉXITO'
             );
             this.visible = false;
             this.registroFotografico = new RegistroFotograficoCurso();

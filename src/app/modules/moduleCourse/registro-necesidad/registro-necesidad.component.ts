@@ -105,7 +105,6 @@ export class RegistroNecesidadComponent implements OnInit {
         });
       console.log(this.necesidadActivo);
     } else {
-      alert('create');
       this.necesidadActivo.curso = this.curso;
       this.necesidadSer
         .crearNecesidadCurso(this.necesidadActivo)
@@ -118,7 +117,13 @@ export class RegistroNecesidadComponent implements OnInit {
                 .saveListaNecesidadCurso(listaNecesidades)
                 .subscribe((data) => {
                   if (data != null) {
-                    alert('Correcto al crear el curso');
+                    this.toastrService.success(
+                      'Informe de necesidad creado con éxito.',
+                      'DATOS ALMACENADOS.',
+                      {
+                        timeOut: 1300,
+                      }
+                    );
                   }
                 });
             }
