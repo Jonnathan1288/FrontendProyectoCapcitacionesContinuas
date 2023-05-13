@@ -147,4 +147,5 @@ export class LoginComponent implements OnInit {
   public modalViewRolNoasigando() {
     this.visibleRolnoAsignado = true;
   }
+
 }

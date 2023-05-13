@@ -70,10 +70,10 @@ export class SilaboComponent implements OnInit {
     this.silaboService.getsilabooValidacion(this.idCursoCap).subscribe(
       data =>{
         if (data === true) {
-            alert('Ya tiene silabo' + data)
+            // alert('Ya tiene silabo' + data)
             this.traerDatos(this.idCursoCap);
         } else {
-          alert(" no tien silabo")
+          // alert(" no tien silabo")
           this.obtenerDatosCurso();
         }
       }
