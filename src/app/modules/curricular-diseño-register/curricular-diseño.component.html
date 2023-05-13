@@ -63,7 +63,7 @@
                     <div class="col-10 md:col-10">
                         <div class="p-inputgroup">
                             <span class="p-inputgroup-addon"><i class="icono  fas fa-pencil-alt"></i></span>
-                            <textarea rows="5" cols="30" pInputTextarea id="temasTransversales"
+                            <textarea rows="5" cols="30" pInputTextarea id="temasTransversales" required
                                 name="temasTransversales" class="no-resize"
                                 [(ngModel)]="disenioCurricular.temasTransversales"></textarea>
                         </div>
@@ -76,7 +76,7 @@
                     <div class="col-10 md:col-10">
                         <div class="p-inputgroup">
                             <span class="p-inputgroup-addon"><i class="icono fas fa-duotone fa-file"></i></span>
-                            <textarea rows="5" cols="30" pInputTextarea id="estrategiasAprendizaje"
+                            <textarea rows="5" cols="30" pInputTextarea id="estrategiasAprendizaje" required
                                 name="estrategiasAprendizaje" class="no-resize"
                                 [(ngModel)]="disenioCurricular.estrategiasAprendizaje"></textarea>
                         </div>
@@ -100,7 +100,7 @@
                     <div class="p-inputgroup">
                         <span class="p-float-label">
 
-                            <input type="text" pInputText id="tecnicaEvaluar" name="tecnicaEvaluar"
+                            <input type="text" pInputText id="tecnicaEvaluar" name="tecnicaEvaluar" required
                                 [(ngModel)]="evaluacionDiagnosticoCurricular.tecnicaEvaluar"
                                 oninput="this.value = this.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚ\s]/g, '')">
 
@@ -112,7 +112,7 @@
                 <div class="col-12 md:col-12 mt-2">
                     <div class="p-inputgroup">
                         <span class="p-float-label">
-                            <input type="text" pInputText id="instrumnetoEvaluar" name="instrumnetoEvaluar"
+                            <input type="text" pInputText id="instrumnetoEvaluar" name="instrumnetoEvaluar" required
                                 [(ngModel)]="evaluacionDiagnosticoCurricular.instrumnetoEvaluar"
                                 oninput="this.value = this.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚ\s]/g, '')">
                             <label htmlFor="username"><i class="icono fas fa-duotone fa-wrench"></i> Instrumento
@@ -178,7 +178,7 @@
                             <div class="p-inputgroup">
                                 <span class="p-float-label">
 
-                                    <input type="text" pInputText id="tecnicaEvaluar" name="tecnicaEvaluar"
+                                    <input type="text" pInputText id="tecnicaEvaluar" name="tecnicaEvaluar" required
                                         [(ngModel)]="evaluacionDiagnosticoCurricular.tecnicaEvaluar"
                                         oninput="this.value = this.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚ\s]/g, '')">
                                     <label htmlFor="username"> <i class="icono fas fa-duotone fa-newspaper"></i> Técnica
@@ -189,7 +189,7 @@
                         <div class="col-12 md:col-12 mt-2">
                             <div class="p-inputgroup">
                                 <span class="p-float-label">
-                                    <input type="text" pInputText id="instrumnetoEvaluar" name="instrumnetoEvaluar"
+                                    <input type="text" pInputText id="instrumnetoEvaluar" name="instrumnetoEvaluar" required
                                         [(ngModel)]="evaluacionDiagnosticoCurricular.instrumnetoEvaluar"
                                         oninput="this.value = this.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚ\s]/g, '')">
                                     <label htmlFor="username"><i class="icono fas fa-duotone fa-wrench"></i> Instrumento
@@ -216,7 +216,7 @@
                     <div class="p-inputgroup">
                         <span class="p-float-label">
 
-                            <input type="text" pInputText id="tecnicaFormativa" name="tecnicaFormativa"
+                            <input type="text" pInputText id="tecnicaFormativa" name="tecnicaFormativa" required
                                 [(ngModel)]="evaluacionFormativaCurricular.tecnicaFormativa"
                                 oninput="this.value = this.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚ\s]/g, '')">
                             <label htmlFor="username"> <i class="icono fas fa-duotone fa-newspaper"></i> Técnica
@@ -227,7 +227,7 @@
                 <div class="col-12 md:col-12 mt-2">
                     <div class="p-inputgroup">
                         <span class="p-float-label">
-                            <input type="text" pInputText id="instrumnetoFormativa" name="instrumnetoFormativa"
+                            <input type="text" pInputText id="instrumnetoFormativa" name="instrumnetoFormativa" required
                                 [(ngModel)]="evaluacionFormativaCurricular.instrumnetoFormativa"
                                 oninput="this.value = this.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚ\s]/g, '')">
                             <label htmlFor="username"><i class="icono fas fa-duotone fa-wrench"></i> Instrumento
@@ -292,7 +292,7 @@
                             <div class="p-inputgroup">
                                 <span class="p-float-label">
 
-                                    <input type="text" pInputText id="tecnicaFormativa" name="tecnicaFormativa"
+                                    <input type="text" pInputText id="tecnicaFormativa" name="tecnicaFormativa" required
                                         [(ngModel)]="evaluacionFormativaCurricular.tecnicaFormativa"
                                         oninput="this.value = this.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚ\s]/g, '')">
                                     <label htmlFor="username"> <i class="icono fas fa-duotone fa-newspaper"></i> Técnica
@@ -303,7 +303,7 @@
                         <div class="col-12 md:col-12 mt-2">
                             <div class="p-inputgroup">
                                 <span class="p-float-label">
-                                    <input type="text" pInputText id="instrumnetoFormativa" name="instrumnetoFormativa"
+                                    <input type="text" pInputText id="instrumnetoFormativa" name="instrumnetoFormativa" required
                                         [(ngModel)]="evaluacionFormativaCurricular.instrumnetoFormativa"
                                         oninput="this.value = this.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚ\s]/g, '')">
                                     <label htmlFor="username"><i class="icono fas fa-duotone fa-wrench"></i> Instrumento
@@ -327,7 +327,7 @@
                     <div class="p-inputgroup">
                         <span class="p-float-label">
 
-                            <input type="text" pInputText id="tecnicaFormativaFinal" name="tecnicaFormativaFinal"
+                            <input type="text" pInputText id="tecnicaFormativaFinal" name="tecnicaFormativaFinal" required
                                 [(ngModel)]="evaluacionFinalCurricular.tecnicaFormativaFinal"
                                 oninput="this.value = this.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚ\s]/g, '')">
                             <label htmlFor="username"> <i class="icono fas fa-duotone fa-newspaper"></i> Técnica
@@ -338,8 +338,8 @@
                 <div class="col-12 md:col-12 mt-2">
                     <div class="p-inputgroup">
                         <span class="p-float-label">
-                            <input type="text" pInputText id="instrumnetoFormativaFinal"
-                                name="instrumnetoFormativaFinal"
+                            <input type="text" pInputText id="instrumnetoFormativaFinal" 
+                                name="instrumnetoFormativaFinal" required
                                 [(ngModel)]="evaluacionFinalCurricular.instrumnetoFormativaFinal"
                                 oninput="this.value = this.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚ\s]/g, '')">
                             <label htmlFor="username"><i class="icono fas fa-duotone fa-wrench"></i> Instrumento
@@ -403,7 +403,7 @@
                                 <span class="p-float-label">
 
                                     <input type="text" pInputText id="tecnicaFormativaFinal"
-                                        name="tecnicaFormativaFinal"
+                                        name="tecnicaFormativaFinal" required
                                         [(ngModel)]="evaluacionFinalCurricular.tecnicaFormativaFinal"
                                         oninput="this.value = this.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚ\s]/g, '')">
                                     <label htmlFor="username"> <i class="icono fas fa-duotone fa-newspaper"></i> Técnica
@@ -415,7 +415,7 @@
                             <div class="p-inputgroup">
                                 <span class="p-float-label">
                                     <input type="text" pInputText id="instrumnetoFormativaFinal"
-                                        name="instrumnetoFormativaFinal"
+                                        name="instrumnetoFormativaFinal" required
                                         [(ngModel)]="evaluacionFinalCurricular.instrumnetoFormativaFinal"
                                         oninput="this.value = this.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚ\s]/g, '')">
                                     <label htmlFor="username"><i class="icono fas fa-duotone fa-wrench"></i> Instrumento
@@ -440,7 +440,7 @@
                     <div class="p-inputgroup">
                         <span class="p-float-label">
 
-                            <input type="text" pInputText id="instalaciones" name="instalaciones"
+                            <input type="text" pInputText id="instalaciones" name="instalaciones" required
                                 [(ngModel)]="entornoAprendizajeCurricular.instalaciones"
                                 oninput="this.value = this.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚ\s]/g, '')">
                             <label htmlFor="username"> <i class="icono fas fa-duotone fa-newspaper"></i>
@@ -451,7 +451,7 @@
                 <div class="col-12 md:col-12 mt-2">
                     <div class="p-inputgroup">
                         <span class="p-float-label">
-                            <input type="text" pInputText id="faseTeorica" name="faseTeorica"
+                            <input type="text" pInputText id="faseTeorica" name="faseTeorica" required
                                 [(ngModel)]="entornoAprendizajeCurricular.faseTeorica"
                                 oninput="this.value = this.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚ\s]/g, '')">
                             <label htmlFor="username"><i class="icono fas fa-duotone fa-wrench"></i> Fase
@@ -462,7 +462,7 @@
                 <div class="col-12 md:col-12 mt-2">
                     <div class="p-inputgroup">
                         <span class="p-float-label">
-                            <input type="text" pInputText id="fasePractica" name="fasePractica"
+                            <input type="text" pInputText id="fasePractica" name="fasePractica" required
                                 [(ngModel)]="entornoAprendizajeCurricular.fasePractica"
                                 oninput="this.value = this.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚ\s]/g, '')">
                             <label htmlFor="username"><i class="icono fas fa-duotone fa-wrench"></i> Fase
@@ -543,7 +543,7 @@
                             <div class="p-inputgroup">
                                 <span class="p-float-label">
 
-                                    <input type="text" pInputText id="instalaciones" name="instalaciones"
+                                    <input type="text" pInputText id="instalaciones" name="instalaciones" required
                                         [(ngModel)]="entornoAprendizajeCurricular.instalaciones"
                                         oninput="this.value = this.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚ\s]/g, '')">
                                     <label htmlFor="username"> <i class="icono fas fa-duotone fa-newspaper"></i>
@@ -554,7 +554,7 @@
                         <div class="col-12 md:col-12 mt-2">
                             <div class="p-inputgroup">
                                 <span class="p-float-label">
-                                    <input type="text" pInputText id="faseTeorica" name="faseTeorica"
+                                    <input type="text" pInputText id="faseTeorica" name="faseTeorica" required
                                         [(ngModel)]="entornoAprendizajeCurricular.faseTeorica"
                                         oninput="this.value = this.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚ\s]/g, '')">
                                     <label htmlFor="username"><i class="icono fas fa-duotone fa-wrench"></i> Fase
@@ -565,7 +565,7 @@
                         <div class="col-12 md:col-12 mt-2">
                             <div class="p-inputgroup">
                                 <span class="p-float-label">
-                                    <input type="text" pInputText id="fasePractica" name="fasePractica"
+                                    <input type="text" pInputText id="fasePractica" name="fasePractica" required
                                         [(ngModel)]="entornoAprendizajeCurricular.fasePractica"
                                         oninput="this.value = this.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚ\s]/g, '')">
                                     <label htmlFor="username"><i class="icono fas fa-duotone fa-wrench"></i> Fase

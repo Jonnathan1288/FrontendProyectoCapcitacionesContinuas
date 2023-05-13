@@ -225,7 +225,7 @@
                         <div class="p-inputgroup">
                             <span class="p-float-label">
                                 <input type="text" pInputText id="diaContenido" name="diaContenido"
-                                    [(ngModel)]="contenidosSilabo.diaContenido">
+                                    [(ngModel)]="contenidosSilabo.diaContenido" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
                                 <label htmlFor="username">Día
                                     <label style="color: rgb(255, 0, 0); padding-left: 2px"> *</label>
                                 </label>
@@ -346,7 +346,7 @@
                         <div class="p-inputgroup">
                             <span class="p-float-label">
                                 <input type="text" pInputText id="diaContenido" name="diaContenido"
-                                    [(ngModel)]="contenidosSilabo.diaContenido">
+                                    [(ngModel)]="contenidosSilabo.diaContenido" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
                                 <label htmlFor="username">Día
                                     <label style="color: rgb(255, 0, 0); padding-left: 2px"> *</label>
                                 </label>

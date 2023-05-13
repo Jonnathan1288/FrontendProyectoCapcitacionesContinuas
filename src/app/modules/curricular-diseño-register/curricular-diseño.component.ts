@@ -17,7 +17,7 @@ import { PrerrequisitosCursoService } from 'src/app/service/prerrequisitosCurso.
 import { ActivatedRoute, Router } from '@angular/router';
 import { DisenioCurriculares } from 'src/app/models/disenio-curriculares';
 import { ReportsCapacitacionesService } from 'src/app/service/reports-capacitaciones.service';
-
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-curricular',
@@ -35,6 +35,7 @@ export class CurricularDiseñoComponent implements OnInit {
     private prerrequitsitoCursoService: PrerrequisitosCursoService,
     private entornoAprendizajeService: EntornoAprendizajeService,
     private reportService: ReportsCapacitacionesService,
+    private toastr: ToastrService,
     private actiRouter: ActivatedRoute,
   ) {
   }
@@ -57,6 +58,7 @@ export class CurricularDiseñoComponent implements OnInit {
       this.validacionDeDisenioExistente();
     });
   }
+  
   validacionDeDisenioExistente(): void {
     this.disenioCurricularService.getDisenioCurricularValidacion(this.idSilaboCap).subscribe(
       data => {
@@ -211,6 +213,7 @@ export class CurricularDiseñoComponent implements OnInit {
       this.generarEvaluacionFinal();
       this.generarEntornoAprendizaje();
       alert('Guardado exitoso');
+      this.toastr.success('Registro Exitoso');
 
       /* */
       console.log("Disenio Curricular generado id->" + this.idDisenioCurricularCap)
@@ -509,6 +512,8 @@ export class CurricularDiseñoComponent implements OnInit {
     this.disenioCurricularService.updateDisenioCurricular(this.idDelDisenio!, nuevoDisenioCurricular).subscribe(
       data => {
         this.traerDatos(this.idDelDisenio!);
+        this.toastr.success('Actualización exitosa ', '¡Bien hecho!');
+
         console.log("Se actualizó el Diseño Curricular");
       }
     );
@@ -523,6 +528,7 @@ export class CurricularDiseñoComponent implements OnInit {
       this.entornoAprendizajeService.saveEntornoAprendizajeCurricular(this.entornoAprendizajeCurricular).subscribe(
         dataTwo => {
           this.traerDatosEntornoAprendizajeFull(this.idDelDisenio!);
+          this.toastr.success('Registro Exitoso');
           console.log("Se creo uno nuevo EA")
         }
       )
@@ -530,6 +536,7 @@ export class CurricularDiseñoComponent implements OnInit {
       this.entornoAprendizajeService.updateEntornoAprendizajeCurricular(this.idCapModelEdit!, this.entornoAprendizajeCurricular).subscribe(
         dataTwo => {
           this.traerDatosEntornoAprendizajeFull(this.idDelDisenio!);
+          this.toastr.success('Actualización exitosa ', '¡Bien hecho!');
           console.log("Se actualizo EA")
         }
       )
@@ -568,6 +575,7 @@ export class CurricularDiseñoComponent implements OnInit {
       this.evaluacionDiagnosticoCurricularService.saveEvaluacionDiagnosticoCurricular(this.evaluacionDiagnosticoCurricular).subscribe(
         dataTwo => {
           this.traerDatosEvaluacionDiagnosticaFull(this.idDelDisenio!);
+          this.toastr.success('Registro Exitoso');
           console.log("Se creo uno nuevo ED")
         }
       )
@@ -575,6 +583,7 @@ export class CurricularDiseñoComponent implements OnInit {
       this.evaluacionDiagnosticoCurricularService.updateEvaluacionDiagnosticaCurricular(this.idCapModelEditEvaluacionDiagnostica!, this.evaluacionDiagnosticoCurricular).subscribe(
         dataTwo => {
           this.traerDatosEvaluacionDiagnosticaFull(this.idDelDisenio!);
+          this.toastr.success('Actualización exitosa ', '¡Bien hecho!');
           console.log("Se actualizo ED")
         }
       )
@@ -610,6 +619,7 @@ export class CurricularDiseñoComponent implements OnInit {
       this.evaluacionFormativaCurricularService.saveEvaluacionFormativaCurricular(this.evaluacionFormativaCurricular).subscribe(
         dataTwo => {
           this.traerDatosEvaluacionFormativaFull(this.idDelDisenio!);
+          this.toastr.success('Registro Exitoso');
           console.log("Se creo uno nuevo EFC")
         }
       )
@@ -617,6 +627,7 @@ export class CurricularDiseñoComponent implements OnInit {
       this.evaluacionFormativaCurricularService.updateEvaluacionFormativaCurricular(this.idCapModelEditEvaluacionFormativa!, this.evaluacionFormativaCurricular).subscribe(
         dataTwo => {
           this.traerDatosEvaluacionFormativaFull(this.idDelDisenio!);
+          this.toastr.success('Actualización exitosa ', '¡Bien hecho!');
           console.log("Se actualizo EFC")
         }
       )
@@ -653,6 +664,7 @@ export class CurricularDiseñoComponent implements OnInit {
       this.evaluacionFinalCurricularService.saveEvaluacionFinalCurricular(this.evaluacionFinalCurricular).subscribe(
         dataTwo => {
           this.traerDatosEvaluacionFinalFull(this.idDelDisenio!);
+          this.toastr.success('Registro Exitoso');
           console.log("Se creo uno nuevo EFINAL")
         }
       )
@@ -660,6 +672,7 @@ export class CurricularDiseñoComponent implements OnInit {
       this.evaluacionFinalCurricularService.updateEvaluacionFinalCurricular(this.idCapModelEditEvaluacionFinal!, this.evaluacionFinalCurricular).subscribe(
         dataTwo => {
           this.traerDatosEvaluacionFinalFull(this.idDelDisenio!);
+          this.toastr.success('Actualización exitosa ', '¡Bien hecho!');
           console.log("Se actualizo EFINAL")
         }
       )

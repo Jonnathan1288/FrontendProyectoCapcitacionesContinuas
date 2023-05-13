@@ -38,26 +38,33 @@ export class EditDataUserComponent implements OnInit {
     private toastrService: ToastrService
   ) {}
 
+  public persona = new Persona();
+
   ngOnInit(): void {
     this.idusulogin = localStorage.getItem('id_username');
     this.usuLoginRol = localStorage.getItem('rol');
+    this.obtenerDatosUsusario(this.idusulogin);
+  }
 
-    this.usuarioService.getUsuarioById(this.idusulogin).subscribe((data) => {
+
+  public classCipyCapacitador = new Capacitador();
+  public obtenerDatosUsusario(idUsusario: number) {
+    this.usuarioService.getUsuarioById(idUsusario).subscribe((data) => {
       if (data != null) {
         this.classUsuario = data;
-        this.classPersona = this.classUsuario.persona!;
+        this.persona = this.classUsuario.persona!;
 
-        console.log(this.classUsuario);
-        console.log(this.classPersona);
+        if (this.persona.fechaNacimiento) {
+          this.persona.fechaNacimiento = new Date(
+            this.persona?.fechaNacimiento
+          ); // 
 
-        if (this.classUsuario.persona?.fechaNacimiento) {
-          this.classPersona.fechaNacimiento = new Date(
-            this.classUsuario.persona?.fechaNacimiento
-          );
         }
 
-        // this.esDocenteCapacitador =
-        //   this.classUsuario.roles?.nombreRol === 'DocenteCapacitador';
+        this.persona.etnia = this.persona?.etnia!.charAt(0).toUpperCase() + this.persona?.etnia!.slice(1).toLowerCase();
+
+        this.classPersona = { ...this.persona }; ///
+
 
         if (this.usuLoginRol === 'DocenteCapacitador') {
           this.capacitadorService
@@ -66,7 +73,8 @@ export class EditDataUserComponent implements OnInit {
             )
             .subscribe((data) => {
               if (data != null) {
-                this.classCapacitador = data;
+                this.classCipyCapacitador = data;
+                this.classCapacitador = {...this.classCipyCapacitador};
               }
             });
         }
@@ -78,7 +86,15 @@ export class EditDataUserComponent implements OnInit {
   visible?: boolean;
 
   public showModaL() {
+    this.classPersona = { ...this.persona };
+    this.classCapacitador = {...this.classCipyCapacitador}
+    console.log(this.classPersona);
+    console.log(this.persona);
     this.visible = true;
+  }
+
+  reloadPage() {
+    this.classPersona = { ...this.persona };
   }
 
   public editPersona() {
@@ -142,37 +158,41 @@ export class EditDataUserComponent implements OnInit {
       .subscribe(
         (data) => {
           if (data != null) {
-            this.classUsuario.persona = data;
+
+            this.persona = { ...this.classPersona };
+
+            //this.toastrService.success('Actualización exitosa', '¡Bien hecho!');
+
             this.usuarioService
               .updateUsuario(this.classUsuario.idUsuario!, this.classUsuario)
               .subscribe((data1) => {
                 if (data1 != null) {
-
-                 // this.classUsuario = {...data1}
-                  console.log({ user: data1 });
                   this.toastrService.success(
-                    'Actualización exitosa',
+                    'Actualización exitosa de los datos',
                     '¡Bien hecho!'
                   );
 
-                  if(this.usuLoginRol === 'DocenteCapacitador'){
+                  this.persona = { ...this.classPersona };
+
+                  if (this.usuLoginRol === 'DocenteCapacitador') {
                     this.capacitadorService
-                    .updateCapacitador(
-                      this.classCapacitador.idCapacitador!,
-                      this.classCapacitador
-                    )
-                    .subscribe((data2) => {
-                      if (data2 != null) {
-                        console.log({ capacitador: data2 });
-                      }
-                    });
-                  }else{
+                      .updateCapacitador(
+                        this.classCapacitador.idCapacitador!,
+                        this.classCapacitador
+                      )
+                      .subscribe((data2) => {
+                        if (data2 != null) {
+                          this.persona = { ...this.classPersona };
 
-
+                          this.toastrService.success(
+                            'Actualización exitosa de Docente Capacitador',
+                            '¡Bien hecho!'
+                          );
+                        }
+                      });
+                  } else {
                     return;
                   }
-
-
                 }
               });
           }

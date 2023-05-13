@@ -14,11 +14,11 @@
         </ng-template>
     </p-toolbar>
 
-    <p-table #dt [value]="listDocentesCapacitadoresFilter" dataKey="id" styleClass="p-datatable-customers" [rowHover]="true" [rows]="5"
-    [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,15]"  responsiveLayout="scroll"
-    [paginator]="true" currentPageReportTemplate="Mostrando {first} to {last} of {totalRecords} capacitadores"
-    [filterDelay]="0" 
-    [showCurrentPageReport]="true">
+    <p-table #dt [value]="listDocentesCapacitadoresFilter" dataKey="id" styleClass="p-datatable-customers"
+        [rowHover]="true" [rows]="5" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,15]"
+        responsiveLayout="scroll" [paginator]="true"
+        currentPageReportTemplate="Mostrando {first} to {last} of {totalRecords} capacitadores" [filterDelay]="0"
+        [showCurrentPageReport]="true">
         <ng-template pTemplate="caption">
             <div class="flex align-items-center justify-content-between">
                 <h5 class="m-0"><strong>DOCENTES CAPACITADORES</strong></h5>
@@ -31,17 +31,21 @@
                         placeholder="Docentes capacitadores..." (input)="filterEventDocentesCapacitadores($event)" />
 
                     <input *ngIf="estadoValidacionBusqueda === 'on'" pInputText type="text"
-                        placeholder="Docente fenix..." (input)="filterGlobalDocenteFenix($event)" maxlength="10" onkeypress='return event.charCode >= 48 && event.charCode <= 57' />
+                        placeholder="Docente fenix..." (input)="filterGlobalDocenteFenix($event)" maxlength="10"
+                        onkeypress='return event.charCode >= 48 && event.charCode <= 57' />
                 </span>
             </div>
         </ng-template>
         <ng-template pTemplate="header">
             <tr>
 
-                <th pSortableColumn="usuario.persona.nombre1">NOMRBES <p-sortIcon field="usuario.persona.nombre1"></p-sortIcon></th>
-                <th pSortableColumn="usuario.persona.identificacion">IDENTIFICASIÓN<p-sortIcon field="usuario.persona.identificacion"></p-sortIcon>
+                <th pSortableColumn="usuario.persona.nombre1">NOMRBES <p-sortIcon
+                        field="usuario.persona.nombre1"></p-sortIcon></th>
+                <th pSortableColumn="usuario.persona.identificacion">IDENTIFICASIÓN<p-sortIcon
+                        field="usuario.persona.identificacion"></p-sortIcon>
                 </th>
-                <th pSortableColumn="usuario.username">NOMBRE DE CUENTA<p-sortIcon field="usuario.username"></p-sortIcon></th>
+                <th pSortableColumn="usuario.username">NOMBRE DE CUENTA<p-sortIcon
+                        field="usuario.username"></p-sortIcon></th>
                 <th pSortableColumn="tituloCapacitador">TITÚLO<p-sortIcon field="tituloCapacitador"></p-sortIcon></th>
                 <th pSortableColumn="inventoryStatus">HOJA DE VIDA <p-sortIcon field="inventoryStatus"></p-sortIcon>
                 </th>
@@ -74,19 +78,18 @@
                 <td>
                     <div class="estatus">
                         <span
-                            [ngClass]="{'status-active': capacit.estadoActivoCapacitador, 'status-pending': !capacit.estadoActivoCapacitador}">
-                            {{ capacit.estadoActivoCapacitador ? 'ACTIVO' : 'INACTIVO' }}
+                            [ngClass]="{'status-active': capacit.usuario.estadoUsuarioActivo, 'status-pending': !capacit.usuario.estadoUsuarioActivo}">
+                            {{ capacit.usuario.estadoUsuarioActivo ? 'ACTIVO' : 'INACTIVO' }}
                         </span>
                     </div>
                 </td>
                 <td>
                     <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2 mt-1"
                         (click)="cargarDatosDocenteCapacitador(capacit)"></button>
-                    <!-- <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning mt-1"
-                        (click)="eliminadoLogicoDelCapacitador(capacit)"></button> -->
-                        <button pButton pRipple [icon]="capacit.estadoActivoCapacitador ? 'pi pi-check' : 'pi pi-trash'"
-                        [class]="'p-button-rounded ' + (capacit.estadoActivoCapacitador ? 'p-button-primary' : 'p-button-warning') + ' mt-1'"
-                        (click)="eliminadoLogicoDelCapacitador(capacit)">
+
+                    <button pButton pRipple [icon]="capacit.usuario.estadoUsuarioActivo ? 'pi pi-check' : 'pi pi-trash'"
+                        [class]="'p-button-rounded ' + (capacit.usuario.estadoUsuarioActivo ? 'p-button-primary' : 'p-button-warning') + ' mt-1'"
+                        (click)="eliminadoLogicoDelCapacitador(capacit.usuario)">
                     </button>
                 </td>
             </tr>
@@ -111,17 +114,18 @@
 <p-dialog header="CREACIÓN DE CAPACITADORES CON SUS ROLES" [(visible)]="visible" [modal]="true"
     [style]="{ width: '50vw', height: '250' }" [draggable]="false" [resizable]="false">
 
-    <form (ngSubmit)="saveUpdateDocenteDocenteCapacitadorRol()" novalidate  style="padding: 15px;">
+    <form (ngSubmit)="saveUpdateDocenteDocenteCapacitadorRol()" novalidate style="padding: 15px;">
         <div class="grid p-fluid m-2">
 
             <div class="col-12 md:col-12 mt-2">
                 <div class="p-inputgroup">
                     <span class="p-float-label">
                         <input type="text" id="inputtext" pInputText id="identificacion" name="identificacion"
-                            [(ngModel)]="classPersona.identificacion" required [maxlength]="10" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
-                            
+                            [(ngModel)]="classPersona.identificacion" required [maxlength]="10"
+                            onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+
                         <label htmlFor="identificacion">Identificación<span class="red-asterisk"></span></label>
-                        
+
                     </span>
                 </div>
             </div>
@@ -165,7 +169,7 @@
                             [(ngModel)]="classUsuario.password">
                         <label htmlFor="password">Contraseña<span class="red-asterisk"></span></label>
                     </span>
-                    
+
                 </div>
             </div>
 
@@ -231,7 +235,8 @@
         <div class="col-12 md:col-6 mt-1">
             <div class="p-inputgroup">
                 <div class="col-md-12" style="text-align: center; margin: 5px;">
-                    <p-button [disabled]="classHojaDevida.estadoAprobacion === 'A'" type="ngSubmit" [label]="'Aceptar'" icon="pi pi-save" styleClass="p-button-success  mb-2"
+                    <p-button [disabled]="classHojaDevida.estadoAprobacion === 'A'" type="ngSubmit" [label]="'Aceptar'"
+                        icon="pi pi-save" styleClass="p-button-success  mb-2"
                         (onClick)="validarHojaDeVida(1)"></p-button>
 
                 </div>
@@ -240,7 +245,8 @@
         <div class="col-12 md:col-6 mt-1">
             <div class="p-inputgroup">
                 <div class="col-md-12" style="text-align: center; margin: 5px;">
-                    <p-button [disabled]="classHojaDevida.estadoAprobacion === 'A'" type="ngSubmit" [label]="'Rechazar'" icon="pi pi-times" styleClass="p-button-danger  mb-2"
+                    <p-button [disabled]="classHojaDevida.estadoAprobacion === 'A'" type="ngSubmit" [label]="'Rechazar'"
+                        icon="pi pi-times" styleClass="p-button-danger  mb-2"
                         (onClick)="validarHojaDeVida(2)"></p-button>
 
                 </div>

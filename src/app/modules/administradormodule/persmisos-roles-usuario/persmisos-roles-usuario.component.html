@@ -60,13 +60,13 @@
                 
     
                 <td>
-                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2 mt-1"
+                    <button [disabled]="user.username === 'admin'" pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2 mt-1"
                         (click)="cargarDatosDocenteUser(user)"></button>
 
-                        <!-- <button pButton pRipple [icon]="capacit.estadoActivoCapacitador ? 'pi pi-check' : 'pi pi-trash'"
-                        [class]="'p-button-rounded ' + (capacit.estadoActivoCapacitador ? 'p-button-primary' : 'p-button-warning') + ' mt-1'"
-                        (click)="eliminadoLogicoDelCapacitador(capacit)"> -->
-                    <!-- </button> -->
+                        <button [disabled]="user.username === 'admin'" pButton pRipple [icon]="user.estadoUsuarioActivo ? 'pi pi-check' : 'pi pi-trash'"
+                        [class]="'p-button-rounded ' + (user.estadoUsuarioActivo ? 'p-button-primary' : 'p-button-warning') + ' mt-1'"
+                        (click)="eliminadoLogicoDelCapacitador(user)"> 
+                     </button> 
                 </td>
             </tr>
         </ng-template>
