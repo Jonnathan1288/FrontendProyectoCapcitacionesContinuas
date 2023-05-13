@@ -199,4 +199,21 @@ export class PersmisosRolesUsuarioComponent implements OnInit {
     this.listRoleAsignarUser = [];
     this.visible = true;
   }
+
+   //Eliminado logico del sistema
+   public eliminadoLogicoDelCapacitador(user: Usuario) {
+
+    user.estadoUsuarioActivo = !user.estadoUsuarioActivo; // Alternar el estado activo/desactivado
+
+      this.usuarioService.updateUsuario(user?.idUsuario!, user!).subscribe((data)=>{
+        if(data != null){
+          if (user.estadoUsuarioActivo) {
+            this.toastrService.success('Usuario a sido activodo/a', 'Usuario activo');
+          } else {
+            this.toastrService.warning('Usuario a sido inactivado/a', 'Usuario Inactivo');
+          }
+          // this.listDocentesCapacitadores();
+        }
+      })
+  }
 }

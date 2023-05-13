@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
         .subscribe((data) => {
           if (data != null) {
             this.roles = data.roles!;
-            console.log(this.roles)
+          
 
             localStorage.removeItem('id_username');
             localStorage.removeItem('id_persona');
