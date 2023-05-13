@@ -1,8 +1,5 @@
 
-.custom-progress-bar {
-    border: 0 none;
-    margin: 0;
-    background: #44f63b;
+
+.mi-clase-css .ui-progressbar-value {
+    color: rgb(0, 0, 0);
 }
-
-

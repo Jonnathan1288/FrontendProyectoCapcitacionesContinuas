@@ -45,7 +45,7 @@
             <div class="container">
                 <p style="text-align: center;" *ngIf='progreso <= 99' >Progreso del curso</p>
                 <p-progressBar *ngIf='progreso <= 99' [value]="progreso.toFixed(0)"></p-progressBar>
-                <p-progressBar *ngIf='progreso >= 99' [value]="100"></p-progressBar>
+                <p-progressBar *ngIf='progreso >= 99' [value]="100" color="yellow" styleClass="mi-clase-css"></p-progressBar>
                 <img *ngIf='progreso >= 100 && estadoAprobacionCurso == "A"' src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/169963/Screenshot_2015-10-11_21.43.12.png" alt="" class="m-1">
                 <div>
                     <span style="text-align: center; color: rgb(189, 193, 0);"  *ngIf='progreso >= 100 && estadoAprobacionCurso == "A"'><strong>
