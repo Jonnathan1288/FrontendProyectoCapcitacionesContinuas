@@ -465,8 +465,8 @@ div#slider-home .carousel-item::before {
 }
 
 .login-btn:hover {
-    background: rgba(20, 27, 93, 0.57);
-    /* background-color: #080000; */
+    /* background: rgba(20, 27, 93, 0.57); */
+    background-color: #080000;
     color: #465463;
 }
 

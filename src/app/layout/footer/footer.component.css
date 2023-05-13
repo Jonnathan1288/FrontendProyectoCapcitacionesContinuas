@@ -124,7 +124,8 @@ img.pull-left {
 
 /* Footer */
 .footer1 {
-    background: #232323;
+    background: #130632;
+    /* background: rgb(35, 30, 54); */
     padding: 30px 0 0 0;
     font-size: 12px;
     color: #999;
@@ -181,7 +182,8 @@ img.pull-left {
 }
 
 .footer2 {
-    background: #191919;
+    /* background: rgba(20, 27, 93, 0.57); */
+    background: #02011e;
     padding: 15px 0;
     color: #777;
     font-size: 12px;

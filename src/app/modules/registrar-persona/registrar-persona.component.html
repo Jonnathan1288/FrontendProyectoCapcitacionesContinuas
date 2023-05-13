@@ -1,157 +1,253 @@
-<div style="margin: 80px; text-align: center; align-items: center;">
+<!-- INICIO NUEVO DISEÑO -->
+<div class="container mt-4 mb-4">
 
-  <p-button label="¿Perteneces al ISTA?" icon="pi pi-check" iconPos="right" class="mb-2"
-    (onClick)="modalViewEstudianteISTA()"></p-button>
-  <div class="card p-4 shadow-sm rounded-lg w-full lg:flex-1 mt-2">
-    <div>
-      <form (ngSubmit)="savePersona()" style="text-align: center;">
-        <p-card header="Subir Foto" class="m-5">
-          <div class="text-center mb-4">
-            <div class="personal-image">
-              <label class="label" style="border: black">
-                <input type="file" accept="image/jpeg, image/jpg, image/png" (change)="subirFoto($event)" />
-                <figure class="personal-figure">
-                  <img *ngIf="classUsuario.fotoPerfil" [src]="
-                      classUsuario.fotoPerfil
-                        ? 'data:image/jpeg;base64,' + classUsuario.fotoPerfil
-                        : '../../../../assets/img/camer.png'
-                    " class="personal-avatar" alt="logoFundacion" />
-                  <img style="padding: 20px" *ngIf="!classUsuario.fotoPerfil" src="./assets/img/ico.jpeg"
-                    class="personal-avatar" alt="Logo Fundación" />
-                  <figcaption class="personal-figcaption">
-                    <img src="./assets/img/camer.png" />
-                  </figcaption>
-                </figure>
-              </label>
-            </div>
-          </div>
-        </p-card>
+  <div class="surface-section px-4 py-6 md:px-6 lg:px-6  surface-card p-4 shadow-8 border-round w-full ">
+    <div class="text-700 text-center">
+      <div class="text-blue-600 font-bold mb-2" style="font-size: 30px;">&nbsp;¿QUE ESPERAS PARA INSCRIBIRTE?</div>
 
-        <p-card header="Datos Personales" class="m-5">
-          <div class="grid p-fluid m-2">
-            <div class="col-12 md:col-4 mt-1">
-              <div class="p-inputgroup">
-                <span class="p-float-label">
-                  <input type="text" pInputText id="identificacion" name="identificacion"
-                    [(ngModel)]="classPersona.identificacion" />
-                  <label htmlFor="identificacion" class="pi pi-id-card"> Identificación</label>
-                </span>
+      <div class="text-center mb-5">
+
+        <span class="text-600 font-medium line-height-3">¿Perteneces al ISTA?</span>
+        <a class="font-medium no-underline ml-2 text-blue-500 cursor-pointer"
+          (click)="modalViewEstudianteISTA()">Preciona aquí!</a>
+      </div>
+
+      <div class="text-center mb-5">
+        <img
+          src="https://eduv.tecazuay.edu.ec/pluginfile.php/1/theme_academi/logo/1671035251/LOGO%20CUADRADO_SIN%20FONDO.png"
+          alt="Image" height="130" width="170" class="mb-3">
+      </div>
+      <div class="text-900 font-bold text-3xl mb-3">Llena los campos para tu inscripción en el sistema</div>
+
+      <!-- //otro -->
+      <div class="text-700 text-2xl mb-5">
+
+        <form (ngSubmit)="savePersona()" style="text-align: center;">
+          <div class="surface-section px-4 py-2 md:px-6 lg:px-2 surface-card p-4 shadow-4 border-round w-full ">
+            <div class="text-center mb-1">
+              <div class="container">
+                <strong>Foto de perfil</strong>
               </div>
-            </div>
-
-            <div class="col-12 md:col-4 mt-1">
-              <div class="p-inputgroup">
-                <span class="p-float-label">
-                  <input type="text" pInputText id="nombre1" name="nombre1" [(ngModel)]="classPersona.nombre1" />
-                  <label htmlFor="nombre1" class="pi pi-user"> Primer Nombre</label>
-                </span>
-              </div>
-            </div>
-
-            <div class="col-12 md:col-4 mt-1">
-              <div class="p-inputgroup">
-                <span class="p-float-label">
-                  <input type="text" pInputText id="nombre2" name="nombre2" [(ngModel)]="classPersona.nombre2" />
-                  <label htmlFor="nombre2" class="pi pi-user"> Segundo Nombre</label>
-                </span>
+              <div class="personal-image">
+                <label class="label" style="border: black">
+                  <input type="file" accept="image/jpeg, image/jpg, image/png" (change)="subirFoto($event)" />
+                  <figure class="personal-figure">
+                    <img *ngIf="classUsuario.fotoPerfil" [src]="
+                          classUsuario.fotoPerfil
+                            ? 'data:image/jpeg;base64,' + classUsuario.fotoPerfil
+                            : '../../../../assets/img/camer.png'
+                        " class="personal-avatar" alt="logoFundacion" />
+                    <img style="padding: 20px" *ngIf="!classUsuario.fotoPerfil" src="./assets/img/ico.jpeg"
+                      class="personal-avatar" alt="Logo Fundación" />
+                    <figcaption class="personal-figcaption">
+                      <img src="./assets/img/camer.png" />
+                    </figcaption>
+                  </figure>
+                </label>
               </div>
             </div>
           </div>
- 
+         
 
-          <div class="grid p-fluid m-2">
-            <div class="col-12 md:col-4 mt-1">
-              <div class="p-inputgroup">
-                <span class="p-float-label">
-                  <input type="text" pInputText id="direccion" name="direccion" [(ngModel)]="classPersona.direccion" />
-                  <label htmlFor="direccion" class="pi pi-map-marker"> Dirección</label>
-                </span>
+          <!-- /PRIMEROS TRES ELEMENTOS -->
+
+
+
+
+          <div class="surface-section px-4 py-2 md:px-6 lg:px-2 surface-card p-4 shadow-4 border-round w-full mt-3">
+            <h4><strong>Datos Personales</strong></h4>
+            <div class="grid p-fluid m-2">
+              <div class="col-12 md:col-4 mt-1">
+                <div class="p-inputgroup">
+                  <span class="p-float-label">
+                    <input type="text" pInputText id="identificacion" name="identificacion"
+                      [(ngModel)]="classPersona.identificacion" required/>
+                    <label htmlFor="identificacion" class="pi pi-id-card"> Identificación</label>
+                  </span>
+                </div>
               </div>
 
-            </div>
+              <div class="col-12 md:col-4 mt-1">
+                <div class="p-inputgroup">
+                  <span class="p-float-label">
+                    <input type="text" pInputText id="nombre1" name="nombre1" [(ngModel)]="classPersona.nombre1" required/>
+                    <label htmlFor="nombre1" class="pi pi-user"> Primer Nombre</label>
+                  </span>
+                </div>
+              </div>
 
-            <div class="col-12 md:col-4 mt-1">
-              <div class="p-inputgroup">
-                <span class="p-float-label">
-                  <input type="text" pInputText id="apellido1" name="apellido1" [(ngModel)]="classPersona.apellido1" />
-                  <label htmlFor="apellido1" class="pi pi-user"> Primer Apellido</label>
-                </span>
+              <div class="col-12 md:col-4 mt-1">
+                <div class="p-inputgroup">
+                  <span class="p-float-label">
+                    <input type="text" pInputText id="nombre2" name="nombre2" [(ngModel)]="classPersona.nombre2" required/>
+                    <label htmlFor="nombre2" class="pi pi-user"> Segundo Nombre</label>
+                  </span>
+                </div>
               </div>
             </div>
 
-            <div class="col-12 md:col-4 mt-1">
-              <div class="p-inputgroup">
-                <span class="p-float-label">
-                  <input type="text" pInputText id="apellido2" name="apellido2" [(ngModel)]="classPersona.apellido2" />
-                  <label htmlFor="apellido2" class="pi pi-user"> Segundo Apellido</label>
-                </span>
+
+            <div class="grid p-fluid m-2">
+              <div class="col-12 md:col-4 mt-1">
+                <div class="p-inputgroup">
+                  <span class="p-float-label">
+                    <input type="text" pInputText id="direccion" name="direccion"
+                      [(ngModel)]="classPersona.direccion" required/>
+                    <label htmlFor="direccion" class="pi pi-map-marker"> Dirección</label>
+                  </span>
+                </div>
+
+              </div>
+
+              <div class="col-12 md:col-4 mt-1">
+                <div class="p-inputgroup">
+                  <span class="p-float-label">
+                    <input type="text" pInputText id="apellido1" name="apellido1"
+                      [(ngModel)]="classPersona.apellido1" required/>
+                    <label htmlFor="apellido1" class="pi pi-user"> Primer Apellido</label>
+                  </span>
+                </div>
+              </div>
+
+              <div class="col-12 md:col-4 mt-1">
+                <div class="p-inputgroup">
+                  <span class="p-float-label">
+                    <input type="text" pInputText id="apellido2" name="apellido2"
+                      [(ngModel)]="classPersona.apellido2" />
+                    <label htmlFor="apellido2" class="pi pi-user"> Segundo Apellido</label>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="grid p-fluid m-2">
+              <div class="col-12 md:col-4 mt-1">
+                <div class="p-inputgroup">
+                  <span class="p-float-label">
+                    <input type="text" pInputText id="telefono" name="telefono" [(ngModel)]="classPersona.telefono" required/>
+                    <label htmlFor="telefono" class="pi pi-phone"> Teléfono</label>
+                  </span>
+                </div>
+              </div>
+
+              <div class="col-12 md:col-4 mt-1">
+                <div class="p-inputgroup">
+                  <span class="p-float-label">
+                    <input type="text" pInputText id="celular" name="celular" [(ngModel)]="classPersona.celular" required/>
+                    <label htmlFor="celular" class="pi pi-mobile"> Celular</label>
+                  </span>
+                </div>
+              </div>
+
+              <div class="col-12 md:col-4 mt-1">
+
+
+                <div class="p-inputgroup">
+                  <p-calendar inputId="edad" class="ng-dirty" [showIcon]="true" placeholder="Fecha Nacimiento"
+                    id="fechaNacimiento" name="fechaNacimiento" class="w-full mb-3"
+                    [(ngModel)]="classPersona.fechaNacimiento" ></p-calendar>
+                </div>
+
+
+              </div>
+            </div>
+
+            <div class="grid p-fluid m-1">
+              <div class="col-12 md:col-12 mt-1">
+                <div class="p-inputgroup">
+                  <span class="p-float-label">
+                    <input type="text" pInputText id="correo" name="correo" [(ngModel)]="classPersona.correo" required/>
+                    <label htmlFor="correo" class="pi pi-envelope"> Email</label>
+                  </span>
+                </div>
               </div>
             </div>
           </div>
+          <!--  -->
 
-
-
-
-
-          <div class="grid p-fluid m-2">
-            <div class="col-12 md:col-4 mt-1">
-              <div class="p-inputgroup">
-                <span class="p-float-label">
-                  <input type="text" pInputText id="telefono" name="telefono" [(ngModel)]="classPersona.telefono" />
-                  <label htmlFor="telefono" class="pi pi-phone"> Teléfono</label>
-                </span>
-              </div>
-            </div>
-
-            <div class="col-12 md:col-4 mt-1">
-              <div class="p-inputgroup">
-                <span class="p-float-label">
-                  <input type="text" pInputText id="celular" name="celular" [(ngModel)]="classPersona.celular" />
-                  <label htmlFor="celular" class="pi pi-mobile"> Celular</label>
-                </span>
-              </div>
-            </div>
-
-            <div class="col-12 md:col-4 mt-1">
-
-
-              <div class="p-inputgroup">
-                <p-calendar inputId="edad" class="ng-dirty" [showIcon]="true" placeholder="Fecha Nacimiento"
-                  id="fechaNacimiento" name="fechaNacimiento" class="w-full mb-3"
-                  [(ngModel)]="classPersona.fechaNacimiento"></p-calendar>
-              </div>
-
-
-            </div>
-          </div>
-
-          <div class="grid p-fluid m-2">
-            <div class="col-12 md:col-12 mt-1">
-              <div class="p-inputgroup">
-                <span class="p-float-label">
-                  <input type="text" pInputText id="correo" name="correo" [(ngModel)]="classPersona.correo" />
-                  <label htmlFor="correo" class="pi pi-envelope"> Email</label>
-                </span>
-              </div>
-            </div>
-          </div>
-        </p-card>
-
-        <p-card header="Datos Físicos" class="m-5" style="text-align: center;">
-          <div class="col-12 md:col-12 mt-1">
-            <label class="p-inputgroup" for="nombre">Seleccione su género:</label>
-            <div class="col-md-6">
-              <div class="form-group" style="text-align: center;">
-                <div class="col-md-11">
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="Masculino" id="Masculino" [value]="'Masculino'"
-                      [(ngModel)]="classPersona.genero" />
-                    <label class="form-check-label" for="inlineRadio1">Masculino</label>
+          <div class="surface-section px-4 py-2 md:px-6 lg:px-2  surface-card p-4 shadow-4 border-round w-full mt-3">
+            <h4><strong>Datos Físicos</strong></h4>
+            <div class="col-12 md:col-12 mt-1" style="font-size: 20px;">
+              <label class="p-inputgroup" for="nombre"><strong>Seleccione su género:</strong> </label>
+              <div class="col-md-6">
+                <div class="form-group" style="text-align: center;">
+                  <div class="col-md-11">
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="Masculino" id="Masculino" [value]="'Masculino'"
+                        [(ngModel)]="classPersona.genero" />
+                      <label class="form-check-label" for="inlineRadio1">Masculino</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="Femenino" id="Femenino" [value]="'Femenino'"
+                        [(ngModel)]="classPersona.genero" />
+                      <label class="form-check-label" for="inlineRadio2">Femenino</label>
+                    </div>
                   </div>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="Femenino" id="Femenino" [value]="'Femenino'"
-                      [(ngModel)]="classPersona.genero" />
-                    <label class="form-check-label" for="inlineRadio2">Femenino</label>
+                </div>
+              </div>
+            </div>
+
+          
+            <div class="grid p-fluid m-2 ml-4" style="font-size: 20px;">
+              <label class="p-inputgroup" for="nombre"><strong>Seleccione su etnia:</strong></label>
+              <div class="col-12 md:col-2 mt-1" style="font-size: 20px;">
+                <div class="p-inputgroup">
+                  <input class="form-check-input" type="radio" name="Mestizo" id="Mestizo" [value]="'Mestizo'" [(ngModel)]="classPersona.etnia" />
+                  <label class="form-check-label" for="Mestizo">Mestizo</label>
+                </div>
+              </div>
+              <div class="col-12 md:col-2 mt-1" style="font-size: 20px;">
+                <div class="p-inputgroup">
+                  <input class="form-check-input" type="radio" name="Blanco" id="Blanco" [value]="'Blanco'" [(ngModel)]="classPersona.etnia" />
+                  <label class="form-check-label" for="Blanco">Blanco</label>
+                </div>
+              </div>
+              <div class="col-12 md:col-2 mt-1" style="font-size: 20px;">
+                <div class="p-inputgroup">
+                  <input class="form-check-input" type="radio" name="Indígena" id="Indigena" [value]="'Indigena'" [(ngModel)]="classPersona.etnia" />
+                  <label class="form-check-label" for="Indigena">Indígena</label>
+                </div>
+              </div>
+              <div class="col-12 md:col-3 mt-1" style="font-size: 20px;">
+                <div class="p-inputgroup">
+                  <input class="form-check-input" type="radio" name="Afroecuatoriano" id="Afroecuatoriano" [value]="'Afroecuatoriano'" [(ngModel)]="classPersona.etnia" />
+                  <label class="form-check-label" for="Afroecuatoriano">Afroecuatoriano</label>
+                </div>
+              </div>
+              <div class="col-12 md:col-3 mt-1" style="font-size: 20px;">
+                <div class="p-inputgroup">
+                  <input class="form-check-input" type="radio" name="Otros" id="Otros" [value]="'Otros'" [(ngModel)]="classPersona.etnia" />
+                  <label class="form-check-label" for="Otros">Otros</label>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+
+          <div class="surface-section px-4 py-2 md:px-6 lg:px-2  surface-card p-4 shadow-4 border-round w-full mt-3">
+            <h4><strong>Nivel de Instrucción</strong></h4>
+            <div class="col-12 md:col-12 mt-1" style="font-size: 20px;">
+              <label class="p-inputgroup" for="nombre"><strong>Seleccione su nivel de instrucción:</strong> </label>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <div class="col-md-11">
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="Primaria" id="Primaria" [value]="'Primaria'"
+                        [(ngModel)]="classPersona.nivelInstruccion" />
+                      <label class="form-check-label" for="inlineRadio1">Primaria</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="Secundaria" id="Secundaria"
+                        [value]="'Secundaria'" [(ngModel)]="classPersona.nivelInstruccion" />
+                      <label class="form-check-label" for="inlineRadio2">Secundaria</label>
+                    </div>
+
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="Superior" id="Superior" [value]="'Superior'"
+                        [(ngModel)]="classPersona.nivelInstruccion" />
+                      <label class="form-check-label" for="inlineRadio2">Superior</label>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -159,92 +255,64 @@
           </div>
 
 
+          <div class="surface-section px-4 py-2 md:px-6 lg:px-2  surface-card p-4 shadow-4 border-round w-full mt-3 mb-4">
+            <h4><strong>Credenciales de acceso</strong></h4>
+            <div class="grid p-fluid m-2">
+              <div class="col-12 md:col-6 mt-1">
+                <div class="p-inputgroup">
+                  <span class="p-float-label">
+                    <input type="text" pInputText id="username" name="username" [(ngModel)]="classUsuario.username" required/>
+                    <label htmlFor="username" class="pi pi-user"> Usuario</label>
 
-          <div class="col-12 md:col-12 mt-1">
-            <label class="p-inputgroup" for="nombre">Seleccione su etnia:</label>
-            <div class="col-md-6">
-              <div class="form-group">
-                <div class="col-md-11">
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="Mestizo" id="Mestizo" [value]="'Mestizo'"
-                      [(ngModel)]="classPersona.etnia" />
-                    <label class="form-check-label" for="inlineRadio1">Mestizo</label>
-                  </div>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="Blanco" id="Blanco" [value]="'Blanco'"
-                      [(ngModel)]="classPersona.etnia" />
-                    <label class="form-check-label" for="inlineRadio2">Blanco</label>
-                  </div>
+                  </span>
+                </div>
+              </div>
+
+              <div class="col-12 md:col-6 mt-1">
+                <div class="p-inputgroup">
+                  <span class="p-float-label">
+                    <input type="text" pInputText id="password" name="password" type="password"
+                      [(ngModel)]="classUsuario.password" required/>
+                    <label htmlFor="password" class="pi pi-lock"> Contraseña</label>
+                  </span>
                 </div>
               </div>
             </div>
+
           </div>
-        </p-card>
 
-        <p-card header="Nivel de Instrucción" class="m-5">
-          <div class="col-12 md:col-12 mt-1">
-            <label class="p-inputgroup" for="nombre">Seleccione su nivel de instrucción:</label>
-            <div class="col-md-6">
-              <div class="form-group">
-                <div class="col-md-11">
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="Primaria" id="Primaria" [value]="'Primaria'"
-                      [(ngModel)]="classPersona.nivelInstruccion" />
-                    <label class="form-check-label" for="inlineRadio1">Primaria</label>
-                  </div>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="Secundaria" id="Secundaria"
-                      [value]="'Secundaria'" [(ngModel)]="classPersona.nivelInstruccion" />
-                    <label class="form-check-label" for="inlineRadio2">Secundaria</label>
-                  </div>
+          <!-- <button type="submit" pButton label="Crear cuenta" icon="pi pi-user" class="m-2 col-6 mt-4"
+            style="text-align: center;"></button> -->
 
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="Superior" id="Superior" [value]="'Superior'"
-                      [(ngModel)]="classPersona.nivelInstruccion" />
-                    <label class="form-check-label" for="inlineRadio2">Superior</label>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </p-card>
-
-        <p-card header="Credenciales" class="m-5">
-          <div class="grid p-fluid m-2">
-            <div class="col-12 md:col-6 mt-1">
-              <div class="p-inputgroup">
-                <span class="p-float-label">
-                  <input type="text" pInputText id="username" name="username" [(ngModel)]="classUsuario.username" />
-                  <label htmlFor="username" class="pi pi-user"> Usuario</label>
-
-                </span>
-              </div>
-            </div>
-
-            <div class="col-12 md:col-6 mt-1">
-              <div class="p-inputgroup">
-                <span class="p-float-label">
-                  <input type="text" pInputText id="password" name="password" type="password"
-                    [(ngModel)]="classUsuario.password" />
-                  <label htmlFor="password" class="pi pi-lock"> Contraseña</label>
-                </span>
-              </div>
-            </div>
-          </div>
-        </p-card>
+            <!-- <div class="sizes"> -->
+              
+              <p-button type="ngSubmit" label="Crear cuenta" icon="pi pi-user" styleClass="p-button-lg"></p-button>
+          <!-- </div> -->
+        </form>
 
 
-        <button type="submit" pButton label="Sign In" icon="pi pi-user" class="m-2 col-6" style="text-align: center;"></button>
-      </form>
+      </div>
+
     </div>
   </div>
 </div>
 
 
+
+
+
+
+<!-- FIN NUEVO DISEÑO -->
+
+
+
+
+
+
 <!-- //EN EL CASO DE QUE EL ESTUDIANTE PERTENESCA AL ISTA -->
 
 <p-dialog header="ESTUDIANTE ISTA" [(visible)]="visibleEstudinateIsta" [modal]="true"
-  [style]="{ width: '60vw', height: '60' }" [draggable]="false" [resizable]="false"  (onHide)="reloadPage()">
+  [style]="{ width: '60vw', height: '60' }" [draggable]="false" [resizable]="false" (onHide)="reloadPage()">
 
   <!------ Include the above in your HEAD tag ---------->
   <div class="grid p-fluid mt-1">
@@ -260,13 +328,13 @@
   </div>
 
   <div class="cont" *ngIf="!estudianteISTAFind">
-      
+
 
     <div class="center-image">
-        <img src="../../../../assets/img/istap.png" alt="" >
+      <img src="../../../../assets/img/istap.png" alt="">
     </div>
 
-</div>
+  </div>
 
   <p-card header="Información del estudiante" style="margin: 2px;" *ngIf="estudianteISTAFind">
 
