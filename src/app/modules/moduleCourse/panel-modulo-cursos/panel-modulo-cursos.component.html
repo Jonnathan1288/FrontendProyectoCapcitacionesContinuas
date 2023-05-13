@@ -17,23 +17,23 @@
         <div class="explain-bar">
             <div class="explain-contents">
                 <div class="explain-title">Modalidad</div>
-                <div class="explain-subtitle">{{curso.modalidadCurso!.nombreModalidadCurso}}</div>
+                <div class="explain-subtitle">{{curso.modalidadCurso?.nombreModalidadCurso}}</div>
             </div>
             <div class="explain-contents">
                 <div class="explain-title">Nivel Curso</div>
-                <div class="explain-subtitle">{{curso.nivelCurso!.nombreNivelCurso}}</div>
+                <div class="explain-subtitle">{{curso.nivelCurso?.nombreNivelCurso}}</div>
             </div>
             <div class="explain-contents">
                 <div class="explain-title">Horarios</div>
-                <div class="explain-subtitle">{{curso.horarioCurso!.horaInicio}} a {{curso.horarioCurso!.horaFin}}</div>
+                <div class="explain-subtitle">{{curso.horarioCurso?.horaInicio}} a {{curso.horarioCurso?.horaFin}}</div>
             </div>
             <div class="explain-contents">
                 <div class="explain-title">Días</div>
-                <div class="explain-subtitle">{{curso.horarioCurso!.dias}}</div>
+                <div class="explain-subtitle">{{curso.horarioCurso?.dias}}</div>
             </div>
             <div class="explain-contents">
                 <div class="explain-title">Docente Capacitador</div>
-                <div class="explain-subtitle">{{curso.capacitador!.tipoAbreviaturaTitulo}}.{{curso.capacitador!.usuario!.persona!.nombre1}} {{curso.capacitador!.usuario!.persona!.nombre2}} {{curso.capacitador!.usuario!.persona!.apellido1}} {{curso.capacitador!.usuario!.persona!.apellido2}}</div>
+                <div class="explain-subtitle">{{curso.capacitador?.tipoAbreviaturaTitulo}}.{{curso.capacitador?.usuario?.persona?.nombre1}} {{curso.capacitador?.usuario?.persona?.nombre2}} {{curso.capacitador?.usuario?.persona?.apellido1}} {{curso.capacitador?.usuario?.persona?.apellido2}}</div>
             </div>
         </div>
         <div class="overview-text">
