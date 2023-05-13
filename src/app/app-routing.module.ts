@@ -33,65 +33,82 @@ import { PersmisosRolesUsuarioComponent } from './modules/administradormodule/pe
 import { EditDataUserComponent } from './modules/registrar-persona/edit-data-user/edit-data-user.component';
 import { ConsultasCertificadoComponent } from './modules/home/consultas-certificado/consultas-certificado.component';
 
-
 const routes: Routes = [
-  {path: 'login', component:LoginComponent },
+  { path: 'login', component: LoginComponent },
 
   //REFERENCES USER
-  {path: 'registrarPersona', component: registrarPersonaComponent},
-  {path: 'user/edit/data', component: EditDataUserComponent},
-
+  { path: 'registrarPersona', component: registrarPersonaComponent },
+  { path: 'user/edit/data', component: EditDataUserComponent, canActivate: [AuthGaurdGuard], data: {expectedRoles: ['Administrador', 'DocenteCapacitador', 'Participante'] } },
 
   //OTHER
-  {path: 'welcome', component: WelcomeComponent},
+  { path: 'welcome', component: WelcomeComponent },
   { path: 'home', component: HomeComponent },
   { path: 'cap', component: CapacitadorComponent },
-  { path: 'silabo/:id', component: SilaboComponent },
+  { path: 'silabo/:id', component: SilaboComponent, canActivate: [AuthGaurdGuard], data: {expectedRoles: ['DocenteCapacitador'] }  },
   // { path: 'diseño', component: CurricularDiseñoComponent }, ELIMINADO
-  { path: 'diseño/:id', component: CurricularDiseñoComponent },
+  { path: 'diseño/:id', component: CurricularDiseñoComponent, canActivate: [AuthGaurdGuard], data: {expectedRoles: ['DocenteCapacitador'] }   },
   // { path: 'register/course', component: CourseRegisterComponent , canActivate: [AuthGaurdGuard], data: {expectedRoles: ['Administrador'] }},
-  { path: 'register/course', component: CourseRegisterComponent},
-  { path: 'asistencia/estudiantes/course/:id', component: TomarAsistenciaEstudianteComponent},
-  { path: 'notas/estudiantes/course/:id', component: RegistrarNotasFinalesComponent},
-  { path: 'panel/course/:id', component: PanelModuloCursosComponent},
-  { path: 'verInscritos/course/:id', component: ViewInscritosCursoComponent},
-  { path: 'verMatriculados/course/inicio/:id', component: ViewInicioCursoMatriculadosComponent},
-  { path: 'verMisCursos/course', component: MisCursosParticipanteComponent},
+  { path: 'register/course', component: CourseRegisterComponent, canActivate: [AuthGaurdGuard], data: {expectedRoles: ['DocenteCapacitador'] }   },
+  {
+    path: 'asistencia/estudiantes/course/:id',
+    component: TomarAsistenciaEstudianteComponent, canActivate: [AuthGaurdGuard], data: {expectedRoles: ['DocenteCapacitador'] }  
+  },
+  {
+    path: 'notas/estudiantes/course/:id',
+    component: RegistrarNotasFinalesComponent, canActivate: [AuthGaurdGuard], data: {expectedRoles: ['DocenteCapacitador'] }  
+  },
+  { path: 'panel/course/:id', component: PanelModuloCursosComponent },
+  { path: 'verInscritos/course/:id', component: ViewInscritosCursoComponent , canActivate: [AuthGaurdGuard], data: {expectedRoles: ['DocenteCapacitador'] }  },
+  {
+    path: 'verMatriculados/course/inicio/:id',
+    component: ViewInicioCursoMatriculadosComponent , canActivate: [AuthGaurdGuard], data: {expectedRoles: ['DocenteCapacitador'] }  
+  },
+  { path: 'verMisCursos/course', component: MisCursosParticipanteComponent },
   //Registro fotografico
   { path: 'fo', component: RegistroFotograficoEvidenciasComponent },
   //Ver vista de las evidencias fotograficas
-  { path: 'registro/fotografico/curso/:id', component: ViewEvidenciasTableFotofraficasComponent },
-  { path: 'register/course/:id', component: CourseRegisterComponent },
-  { path: 'list/course', component: ListCourseComponent },
-  { path: 'register/necesidad', component: RegistroNecesidadComponent },
-  { path: 'register/necesidad/:id', component: RegistroNecesidadComponent },
-  { path: 'mat', component: MatriculComponent },
-  { path: 'cards/course', component: CardcursoComponent },
+  {
+    path: 'registro/fotografico/curso/:id',
+    component: ViewEvidenciasTableFotofraficasComponent,
+  },
+  { path: 'register/course/:id', component: CourseRegisterComponent, canActivate: [AuthGaurdGuard], data: {expectedRoles: ['DocenteCapacitador'] }   },
+  { path: 'list/course', component: ListCourseComponent , canActivate: [AuthGaurdGuard], data: {expectedRoles: ['DocenteCapacitador'] }  },
+  { path: 'register/necesidad', component: RegistroNecesidadComponent, canActivate: [AuthGaurdGuard], data: {expectedRoles: ['DocenteCapacitador'] }   },
+  { path: 'register/necesidad/:id', component: RegistroNecesidadComponent , canActivate: [AuthGaurdGuard], data: {expectedRoles: ['DocenteCapacitador'] }  },
+  { path: 'mat', component: MatriculComponent , canActivate: [AuthGaurdGuard], data: {expectedRoles: ['DocenteCapacitador'] }  },
+  { path: 'cards/course', component: CardcursoComponent , canActivate: [AuthGaurdGuard], data: {expectedRoles: ['Participante'] }  },
   { path: 'mat/:id', component: MatriculComponent },
   { path: 'cardcu/detalle/:id', component: InfocursoComponent },
   { path: 'info', component: InfocursoComponent },
-  { path: 'hojaVida/capacitador', component:HojavidaComponent},
-  { path: 'ver/hojaVida/capacitador/:id', component:DisenioHojaVidaComponent},
+  { path: 'hojaVida/capacitador', component: HojavidaComponent, canActivate: [AuthGaurdGuard], data: {expectedRoles: ['DocenteCapacitador'] }   },
+  { path: 'ver/hojaVida/capacitador/:id', component: DisenioHojaVidaComponent , canActivate: [AuthGaurdGuard], data: {expectedRoles: ['DocenteCapacitador'] }  },
   //Programas de capacitacion.
   { path: 'programas/capacitacion', component: ProgramasCapacitacionComponent },
-  { path: 'asignacion/rol', component: AsignacionRolCapacitadorComponent },
+  { path: 'asignacion/rol', component: AsignacionRolCapacitadorComponent, canActivate: [AuthGaurdGuard], data: {expectedRoles: ['Administrador'] }   },
 
-  { path: 'permisos/rol/usuarios', component: PersmisosRolesUsuarioComponent },
+  { path: 'permisos/rol/usuarios', component: PersmisosRolesUsuarioComponent, canActivate: [AuthGaurdGuard], data: {expectedRoles: ['Administrador'] }  },
   //Asignacion de codigos cenecyt
-  { path: 'capacitador/codigos/cenecyt', component: AsignacionCodigosCenecytComponent },
+  {
+    path: 'capacitador/codigos/cenecyt',
+    component: AsignacionCodigosCenecytComponent,
+  },
 
   //cuando el usuario no esta logiado..
-  { path: 'consultas/certificados/aprovados/cursos/capactacionContinua', component: ConsultasCertificadoComponent },
-
-
+  {
+    path: 'consultas/certificados/aprovados/cursos/capactacionContinua',
+    component: ConsultasCertificadoComponent,
+  },
 
   //Aplicasion de los filtro de prime
-  { path: 'gestion/validacion/cursos/capacitacion', component: ValidacionCursosCapacitacionComponent },
-  { path: '**', pathMatch: 'full', redirectTo: 'home' }
+  {
+    path: 'gestion/validacion/cursos/capacitacion',
+    component: ValidacionCursosCapacitacionComponent, canActivate: [AuthGaurdGuard], data: {expectedRoles: ['Administrador'] } 
+  },
+  { path: '**', pathMatch: 'full', redirectTo: 'home' },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
