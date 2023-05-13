@@ -40,6 +40,7 @@ import { AsignacionCodigosCenecytComponent } from './modules/view-inscritos-curs
 import { DisenioHojaVidaComponent } from './modules/hojavida/disenio-hoja-vida/disenio-hoja-vida.component';
 import { PersmisosRolesUsuarioComponent } from './modules/administradormodule/persmisos-roles-usuario/persmisos-roles-usuario.component';
 import { EditDataUserComponent } from './modules/registrar-persona/edit-data-user/edit-data-user.component';
+import { ConsultasCertificadoComponent } from './modules/home/consultas-certificado/consultas-certificado.component';
 
 
 @NgModule({
@@ -77,6 +78,7 @@ import { EditDataUserComponent } from './modules/registrar-persona/edit-data-use
     DisenioHojaVidaComponent,
     PersmisosRolesUsuarioComponent,
     EditDataUserComponent,
+    ConsultasCertificadoComponent,
   ],
   imports: [
     BrowserModule,

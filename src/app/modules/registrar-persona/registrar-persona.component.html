@@ -11,7 +11,6 @@
               <label class="label" style="border: black">
                 <input type="file" accept="image/jpeg, image/jpg, image/png" (change)="subirFoto($event)" />
                 <figure class="personal-figure">
-                  <!-- <img class="personal-avatar"  *ngIf="filem" [src]="file" alt="img-avatar"> -->
                   <img *ngIf="classUsuario.fotoPerfil" [src]="
                       classUsuario.fotoPerfil
                         ? 'data:image/jpeg;base64,' + classUsuario.fotoPerfil
@@ -58,7 +57,7 @@
               </div>
             </div>
           </div>
-          <!-- FILA 2-->
+ 
 
           <div class="grid p-fluid m-2">
             <div class="col-12 md:col-4 mt-1">
@@ -93,7 +92,6 @@
 
 
 
-          <!-- FILA 3-->
 
           <div class="grid p-fluid m-2">
             <div class="col-12 md:col-4 mt-1">
@@ -160,7 +158,7 @@
             </div>
           </div>
 
-          <!-- Para la etnia -->
+
 
           <div class="col-12 md:col-12 mt-1">
             <label class="p-inputgroup" for="nombre">Seleccione su etnia:</label>
@@ -235,13 +233,6 @@
           </div>
         </p-card>
 
-        <!-- <div class="flex align-items-center justify-content-between mb-6">
-          <div class="flex align-items-center">
-            <p-checkbox id="rememberme" [binary]="true" styleClass="mr-2"></p-checkbox>
-            <label for="rememberme1">Remember me</label>
-          </div>
-          <a class="font-medium no-underline ml-2 text-blue-500 text-right cursor-pointer">Forgot password?</a>
-        </div> -->
 
         <button type="submit" pButton label="Sign In" icon="pi pi-user" class="m-2 col-6" style="text-align: center;"></button>
       </form>

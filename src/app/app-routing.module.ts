@@ -31,6 +31,7 @@ import { AsignacionCodigosCenecytComponent } from './modules/view-inscritos-curs
 import { DisenioHojaVidaComponent } from './modules/hojavida/disenio-hoja-vida/disenio-hoja-vida.component';
 import { PersmisosRolesUsuarioComponent } from './modules/administradormodule/persmisos-roles-usuario/persmisos-roles-usuario.component';
 import { EditDataUserComponent } from './modules/registrar-persona/edit-data-user/edit-data-user.component';
+import { ConsultasCertificadoComponent } from './modules/home/consultas-certificado/consultas-certificado.component';
 
 
 const routes: Routes = [
@@ -78,6 +79,10 @@ const routes: Routes = [
   { path: 'permisos/rol/usuarios', component: PersmisosRolesUsuarioComponent },
   //Asignacion de codigos cenecyt
   { path: 'capacitador/codigos/cenecyt', component: AsignacionCodigosCenecytComponent },
+
+  //cuando el usuario no esta logiado..
+  { path: 'consultas/certificados/aprovados/cursos/capactacionContinua', component: ConsultasCertificadoComponent },
+
 
 
   //Aplicasion de los filtro de prime
