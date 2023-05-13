@@ -154,6 +154,7 @@ export class ProgramasCapacitacionComponent implements OnInit {
                       timeOut: 1500,
                     }
                   );
+                  this.visible = false;
                 }
               });
           }

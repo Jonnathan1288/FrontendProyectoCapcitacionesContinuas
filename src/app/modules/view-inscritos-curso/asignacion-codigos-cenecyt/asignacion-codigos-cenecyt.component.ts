@@ -6,6 +6,7 @@ import { ReportsCapacitacionesService } from 'src/app/service/reports-capacitaci
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Curso } from 'src/app/models/curso';
 import { Message, MessageService } from 'primeng/api';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-asignacion-codigos-cenecyt',
   templateUrl: './asignacion-codigos-cenecyt.component.html',
@@ -45,7 +46,8 @@ export class AsignacionCodigosCenecytComponent implements OnInit {
     private reportService: ReportsCapacitacionesService,
     sanitizer: DomSanitizer,
     private cursoService: CursoService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private toastrService: ToastrService
   ) {
     this.sanitizer = sanitizer;
   }
@@ -144,7 +146,11 @@ export class AsignacionCodigosCenecytComponent implements OnInit {
       .subscribe(
         (data) => {
           if (data != null) {
-            alert('Update successful');
+            // alert('Update successful');
+            this.toastrService.success(
+              'La información de los certificados han sido actualizados correctamente.',
+              'DATOS ACTUALIZADOS'
+            );
             this.editing = false;
             this.getParticipanteAprovadoPorIdCursoParCodigosCenecyt(
               this.idCursoFinalRepors
@@ -152,7 +158,7 @@ export class AsignacionCodigosCenecytComponent implements OnInit {
           }
         },
         (err) => {
-          alert(err.error);
+          // alert(err.error);
           this.editing = false;
         }
       );

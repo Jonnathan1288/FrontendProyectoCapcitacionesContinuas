@@ -107,11 +107,11 @@
 
                 <td style="width:12%; text-align: center;">
                     <div class="container" *ngIf="editing">
-                        <!-- <input pInputText type="text" [(ngModel)]="certificadosPar.codigoSenecyt" [disabled]="codigoSenecytExists(certificadosPar.codigoSenecyt.trim())"> -->
-                        <div class="container" *ngIf="editing">
+                        <input pInputText type="text" [(ngModel)]="certificadosPar.codigoSenecyt">
+                        <!-- <div class="container" *ngIf="editing">
                             <input pInputText type="text" [(ngModel)]="certificadosPar.codigoSenecyt" (input)="verifiqueCodSenecytRepeat($event)">
                             <div *ngIf="isCodigoDuplicado" style="color: red">El código ingresado ya existe</div>
-                          </div>
+                          </div> -->
                           
                     </div>
                     <div class="container" *ngIf="!editing">

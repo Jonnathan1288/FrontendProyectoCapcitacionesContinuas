@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Curso } from 'src/app/models/curso';
 import { DetalleFichaMatricula } from 'src/app/models/detalle-ficha-matricula';
 import { Inscrito } from 'src/app/models/inscrito';
@@ -27,14 +28,17 @@ export class MatriculComponent implements OnInit {
   public idUserLoggin: any;
   public idCursoCap: any;
 
+  public idDetalleFichaMaricula?: number;
+
   constructor(
     private usuarioServie: UsuarioService,
     private inscritosService: inscritosService,
     private activateRoute: ActivatedRoute,
     private cursoService: CursoService,
     private detalleFichaMatriculaService: DetalleFichaService,
-    private reportService: ReportsCapacitacionesService
-  ) { }
+    private reportService: ReportsCapacitacionesService,
+    private toastrService: ToastrService
+  ) {}
 
   ngOnInit(): void {
     this.idUserLoggin = localStorage.getItem('id_username');
@@ -47,7 +51,6 @@ export class MatriculComponent implements OnInit {
     });
   }
 
-
   public traerUsuarioLogin() {
     this.usuarioServie.getUsuarioById(this.idUserLoggin).subscribe((data) => {
       this.usuario = data;
@@ -56,27 +59,51 @@ export class MatriculComponent implements OnInit {
     });
   }
 
-
   idUsuarioLogin!: number;
   public verificarOtraerDatosFichaAlmacenados() {
-    this.detalleFichaMatriculaService.getDetalleFichaMatriculaByIdPorUsuario(this.idUsuarioLogin).subscribe(
-      data => {
+    this.detalleFichaMatriculaService
+      .getDetalleFichaMatriculaByIdPorUsuario(this.idUsuarioLogin)
+      .subscribe((data) => {
         if (data!) {
-          this.detallefichaMatricula = data
+          this.detallefichaMatricula = data;
+          this.idDetalleFichaMaricula =
+            this.detallefichaMatricula.usuario?.idUsuario;
         } else {
-          console.log("nuevo")
+          console.log('nuevo');
           this.detallefichaMatricula = new DetalleFichaMatricula();
         }
         this.ValidarSuIsncripcion();
-      }
-    )
+      });
   }
-
 
   public traerDatosCursoId(idCurso: number): void {
     this.cursoService.getCursoById(idCurso).subscribe((data) => {
       this.curso = data;
     });
+  }
+
+  public validarFichaMatricula() {
+    if (
+      !this.detallefichaMatricula.pregunta1 ||
+      !this.detallefichaMatricula.pregunta2 ||
+      !this.detallefichaMatricula.pregunta3 ||
+      !this.detallefichaMatricula.pregunta4 ||
+      !this.detallefichaMatricula.pregunta5 ||
+      !this.detallefichaMatricula.pregunta6 ||
+      !this.detallefichaMatricula.pregunta7 ||
+      !this.detallefichaMatricula.pregunta8 ||
+      !this.detallefichaMatricula.pregunta9
+    ) {
+      this.toastrService.error(
+        'Verifique los campos que no esten vacíos.',
+        'CAMPOS VACíOS.',
+        {
+          timeOut: 1300,
+        }
+      );
+    }else{
+      this.guardarFichadeMatrircla();
+    }
   }
 
   public guardarFichadeMatrircla() {
@@ -96,7 +123,14 @@ export class MatriculComponent implements OnInit {
             .subscribe((data1) => {
               if (data1 != null) {
                 this.detallefichaMatricula = data1;
-                alert('Inscrito satisfactoriamente');
+                this.toastrService.success(
+                  'Datos almacenados correctamente.',
+                  'FICHA GUARDADA.',
+                  {
+                    timeOut: 1300,
+                  }
+                );
+                location.reload();
               }
             });
         }
@@ -128,9 +162,10 @@ export class MatriculComponent implements OnInit {
   // }
 
   //mATRICULAS
-  public getReportNecesidadCurso(idInscripcion: number) {
+  public getReportNecesidadCurso() {
+   
     this.reportService
-      .gedownloadFichaDeInscripcion(idInscripcion)
+      .gedownloadFichaDeInscripcion(this.idDetalleFichaMaricula!)
       .subscribe((r) => {
         const url = URL.createObjectURL(r);
         window.open(url, '_blank');
@@ -140,22 +175,21 @@ export class MatriculComponent implements OnInit {
   // validar si ya se inscribio en el curso
   isInscritoInCourse!: boolean;
   public ValidarSuIsncripcion(): void {
-    this.inscritosService.getInscrioValidacion(this.idCursoCap, this.idUserLoggin).subscribe(
-      data => {
+    this.inscritosService
+      .getInscrioValidacion(this.idCursoCap, this.idUserLoggin)
+      .subscribe((data) => {
         if (data == true) {
           // alert('Ya estas inscrito')
           this.isInscritoInCourse = true;
-          this.inscritosService.getInscritoByIdUsuario(this.idCursoCap, this.idUserLoggin).subscribe(
-            data => {
+          this.inscritosService
+            .getInscritoByIdUsuario(this.idCursoCap, this.idUserLoggin)
+            .subscribe((data) => {
               this.inscritos = data;
-            }
-          )
+            });
         } else {
-          console.log("NO esta inscrito en este curso")
+          console.log('NO esta inscrito en este curso');
           this.isInscritoInCourse = false;
         }
-      }
-    )
+      });
   }
-
 }
