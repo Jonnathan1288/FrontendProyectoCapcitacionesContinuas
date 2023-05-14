@@ -85,7 +85,7 @@ export class AsignacionRolCapacitadorComponent implements OnInit {
       // this.numerFoundCountAnimal = this.listALLAnimals.length;
     } else {
       let filterDocenteCapacitador =
-        this.listDocentesCapacitadoresFilter.filter(
+        this.listClassCapacitador.filter(
           (capacitador) =>
             capacitador.usuario?.persona?.nombre1
               ?.toLowerCase()

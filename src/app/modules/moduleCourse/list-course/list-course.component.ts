@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { Table } from 'primeng/table';
 import { Capacitador } from 'src/app/models/capacitador';
 import { Curso } from 'src/app/models/curso';
-import { CapacitadorService } from 'src/app/service/capacitador.service';
 import { CursoService } from 'src/app/service/curso.service';
 
 @Component({
@@ -26,8 +26,6 @@ export class ListCourseComponent implements OnInit {
   constructor(
     private cursoService: CursoService,
     private router: Router,
-    private actiRouter: ActivatedRoute,
-    private capacitadorService: CapacitadorService,
     private toastrService: ToastrService
   ) {}
 
@@ -43,42 +41,6 @@ export class ListCourseComponent implements OnInit {
     this.idCapClicl = idCurso;
   }
 
-  opcionesBotonesLista(idCurso: number) {
-    this.items = [
-      {
-        tooltipOptions: {
-          tooltipLabel: 'Editar',
-        },
-        icon: 'pi pi-pencil',
-        routerLink: ['/register/course', idCurso],
-      },
-      {
-        tooltipOptions: {
-          tooltipLabel: 'Silabo',
-        },
-        icon: 'pi pi-book',
-        routerLink: ['/silabo', idCurso],
-      },
-      {
-        tooltipOptions: {
-          tooltipLabel: 'Necesidad',
-        },
-        icon: 'pi pi-file-pdf',
-        routerLink: ['/register/necesidad', idCurso],
-      },
-      {
-        tooltipOptions: {
-          tooltipLabel: 'Registro Fotográfico',
-        },
-        icon: 'pi pi-camera',
-        routerLink: ['/registro/fotografico/curso/', idCurso],
-      },
-      {
-        icon: 'pi pi-external-link',
-      },
-    ];
-  }
-
   public listCourseporUsuarioLogin(idUsuario: number) {
     this.cursoService
       .obtenerTodoslosCursosPorIdUsuario(idUsuario)
@@ -88,31 +50,8 @@ export class ListCourseComponent implements OnInit {
       });
   }
 
-  public silabo(idcurso: number) {
-    this.router.navigate(['/silabo', idcurso]);
-  }
 
-  public editCurso(idcurso: number) {
-    this.router.navigate(['/register/course', idcurso]);
-  }
 
-  public necesidadCurso(idcurso: number) {
-    this.router.navigate(['/register/necesidad', idcurso]);
-  }
-
-  public VerCursoInicio(idCurso: number, estadoFinal: String) {
-    localStorage.setItem('status', String(estadoFinal));
-
-    this.router.navigate(['/verMatriculados/course/inicio', idCurso]);
-  }
-
-  public VerParticipantesInscritos(idCurso: number) {
-    this.router.navigate(['/verInscritos/course/', idCurso]);
-  }
-
-  public VerRegistroFotografico(idCurso: number) {
-    this.router.navigate(['/registro/fotografico/curso/', idCurso]);
-  }
 
   //Actualizar el curso para que sea publico
   public updateEstadoPublico(curso: Curso) {
@@ -125,29 +64,6 @@ export class ListCourseComponent implements OnInit {
         alert('Succesful published');
       }
     });
-  }
-
-  //Implementacion de la tabla de todo referente a primeng
-  next() {
-    this.first = this.first + this.rows;
-  }
-
-  prev() {
-    this.first = this.first - this.rows;
-  }
-
-  reset() {
-    this.first = 0;
-  }
-
-  isLastPage(): boolean {
-    return this.cursoList
-      ? this.first === this.cursoList.length - this.rows
-      : true;
-  }
-
-  isFirstPage(): boolean {
-    return this.cursoList ? this.first === 0 : true;
   }
 
   //IMPLEMENTACION DEL MODAL PARA VISULIZAR
@@ -197,5 +113,49 @@ export class ListCourseComponent implements OnInit {
   public modalViewoption(curso: Curso) {
     this.classNewCourse = { ...curso };
     this.visiblePeriodoMensual = true;
+  }
+
+  //VISIVILIDAD DEL CURSO
+
+  public newCursoCapcitacion() {
+    this.router.navigate(['/register/course']);
+  }
+
+
+  public editCurso(idcurso: number) {
+    this.router.navigate(['/register/course', idcurso]);
+  }
+
+  public VerCursoInicio(idCurso: number, estadoFinal: String) {
+    localStorage.setItem('status', String(estadoFinal));
+
+    this.router.navigate(['/verMatriculados/course/inicio', idCurso]);
+  }
+
+  public VerParticipantesInscritos(idCurso: number) {
+    this.router.navigate(['/verInscritos/course/', idCurso]);
+  }
+
+  public editarCurso() {
+    this.router.navigate(['/register/course', this.classNewCourse.idCurso]);
+  }
+
+  public necesidadCurso() {
+    this.router.navigate(['/register/necesidad', this.classNewCourse.idCurso]);
+  }
+
+  public generacionSilaboCurso() {
+    this.router.navigate(['/silabo', this.classNewCourse.idCurso]);
+  }
+
+  public reistroFotograficoCurso() {
+    this.router.navigate([
+      '/registro/fotografico/curso/',
+      this.classNewCourse.idCurso,
+    ]);
+  }
+
+  clear(table: Table) {
+    table.clear();
   }
 }

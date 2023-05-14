@@ -528,12 +528,12 @@
             <div class="col-md-12" style="text-align: center; margin: 5px;">
                 <p-button *ngIf='validarIdDisenioCurricular == false' label="Generar Diseño Curricular"
                     icon="icono fas fa-duotone fa-save" styleClass="p-button-success  mb-2"
-                    (onClick)="generarDisenioCurricular()"></p-button>
+                     (onClick)="generarDisenioCurricular()"></p-button>
                 
             </div>
             <div class="col-md-12" style="text-align: center; margin: 5px;">
                 <p-button label="Generar PDF" icon="pi pi-file-pdf" styleClass="p-button-danger  mb-2"
-                    (onClick)="getReportDisenioCurricular()"></p-button>
+                [disabled]="!disenioCurricular.idDisenioCurricular" (onClick)="getReportDisenioCurricular()"></p-button>
             </div>
             <p-dialog header="Entorno Aprendizaje Curricular" [(visible)]="visible" [modal]="true"
                 [style]="{ width: '50vw', height: '450' }" [draggable]="false" [resizable]="false">

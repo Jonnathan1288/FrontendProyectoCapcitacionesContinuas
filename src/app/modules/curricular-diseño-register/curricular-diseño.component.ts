@@ -63,10 +63,12 @@ export class CurricularDiseñoComponent implements OnInit {
     this.disenioCurricularService.getDisenioCurricularValidacion(this.idSilaboCap).subscribe(
       data => {
         if (data === true) {
-          alert('Ya tiene disenio Curricular' + data)
+          this.toastr.success('Editar diseño curricular.');
+          // alert('Ya tiene disenio Curricular' + data)
           this.traerDatos(this.idSilaboCap);
         } else {
-          alert(" no tien Disenio Curricular")
+          this.toastr.info('Listo para crear diseño curricular.');
+          // alert(" no tien Disenio Curricular")
           this.obtenerDatosSilabo();
         }
       }
@@ -114,7 +116,9 @@ export class CurricularDiseñoComponent implements OnInit {
 
   public almacenarListaEvaluacionD(): void {
     if (!this.evaluacionDiagnosticoCurricular.instrumnetoEvaluar || !this.evaluacionDiagnosticoCurricular.tecnicaEvaluar) {
-      alert("Campos Vacios")
+      // alert("Campos Vacios")
+      this.toastr.error('Campos vacios');
+
     } else {
       this.listEvaluacionDiagnosticaCurricular.push(this.evaluacionDiagnosticoCurricular);
       this.evaluacionDiagnosticoCurricular = new EvaluacionDiagnosticaCurriculares();
@@ -136,7 +140,9 @@ export class CurricularDiseñoComponent implements OnInit {
 
   public almacenarListaEvaluacionFormativa(): void {
     if (!this.evaluacionFormativaCurricular.instrumnetoFormativa || !this.evaluacionFormativaCurricular.tecnicaFormativa) {
-      alert("Campos Vacios")
+      // alert("Campos Vacios")
+      this.toastr.error('Campos vacios');
+
     } else {
       this.listEvaluacionFormativaCurricular.push(this.evaluacionFormativaCurricular);
       this.evaluacionFormativaCurricular = new EvalucionFormativaCurriculares();
@@ -158,7 +164,9 @@ export class CurricularDiseñoComponent implements OnInit {
 
   public almacenarListaEvaluacionF(): void {
     if (!this.evaluacionFinalCurricular.instrumnetoFormativaFinal || !this.evaluacionFinalCurricular.tecnicaFormativaFinal) {
-      alert("Campos Vacios")
+      // alert("Campos Vacios")
+      this.toastr.error('Campos vacios');
+
     } else {
       this.listEvaluacionFinalCurricular.push(this.evaluacionFinalCurricular);
       this.evaluacionFinalCurricular = new EvaluacionFinalCurriculares();
@@ -181,7 +189,8 @@ export class CurricularDiseñoComponent implements OnInit {
   public almacenarEntornoAprendizaje(): void {
     if (!this.entornoAprendizajeCurricular.instalaciones || !this.entornoAprendizajeCurricular.faseTeorica
       || !this.entornoAprendizajeCurricular.fasePractica) {
-      alert("Campos Vacios")
+      // alert("Campos Vacios")
+      this.toastr.error('Campos vacios');
     } else {
       this.listEntornoAprendizaje.push(this.entornoAprendizajeCurricular);
       this.entornoAprendizajeCurricular = new EntornoAprendizajeCurricular();
@@ -220,11 +229,12 @@ export class CurricularDiseñoComponent implements OnInit {
       this.generarEvaluacionFormativa();
       this.generarEvaluacionFinal();
       this.generarEntornoAprendizaje();
-      alert('Guardado exitoso');
+      // alert('Guardado exitoso');
       this.toastr.success('Registro Exitoso');
-
+      setTimeout(() => {
+        location.reload();
+      }, 1200);
       /* */
-      console.log("Disenio Curricular generado id->" + this.idDisenioCurricularCap)
     })
   }
   }
@@ -562,7 +572,10 @@ export class CurricularDiseñoComponent implements OnInit {
         this.traerDatos(this.idDelDisenio!);
         this.toastr.success('Actualización exitosa ', '¡Bien hecho!');
 
-        console.log("Se actualizó el Diseño Curricular");
+        setTimeout(() => {
+          location.reload();
+        }, 1200);
+        // console.log("Se actualizó el Diseño Curricular");
       }
     );
   }

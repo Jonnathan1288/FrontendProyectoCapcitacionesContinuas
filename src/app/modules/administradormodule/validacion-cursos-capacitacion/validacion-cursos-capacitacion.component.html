@@ -8,18 +8,8 @@
 <div class="card">
     <p-table #dt [value]="listCursos" dataKey="id" styleClass="p-datatable-customers" [rowHover]="true" [rows]="10"
         [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading" responsiveLayout="scroll"
-        [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-        [filterDelay]="0" [globalFilterFields]="['nombreCurso','country.name','representative.name','status']">
-        <ng-template pTemplate="caption">
-            <div class="table-header">
-                List of Customers
-                <span class="p-input-icon-left">
-                    <i class="pi pi-search"></i>
-                    <input pInputText type="text" (input)="filterTableEventCursosCapacitacioncionContinua($event)"
-                        placeholder="Global Search" />
-                </span>
-            </div>
-        </ng-template>
+        [paginator]="true" currentPageReportTemplate="Mostrando {first} to {last} of {totalRecords} cursos de capacitacion continua"
+        [filterDelay]="0" [globalFilterFields]="['fechaFinalizacionCurso', 'fechaInicioCurso', 'programas.periodoPrograma.nombrePeriodoPrograma', 'programas.descripcionPrograma', 'programas.nombrePrograma','nombreCurso','capacitador.usuario.persona.nombre1', 'capacitador.usuario.persona.nombre2', 'capacitador.usuario.persona.apellido1', 'capacitador.usuario.persona.apellido2','capacitador.usuario.username','status']">
 
         <ng-template pTemplate="caption">
             <div class="flex">
@@ -48,7 +38,7 @@
                             [showOperator]="false" [showAddButton]="false" class="ml-auto">
                             <ng-template pTemplate="header">
                                 <div class="px-3 pt-3 pb-0">
-                                    <span class="font-bold">Agent Picker</span>
+                                    <span class="font-bold">Programa</span>
                                 </div>
                             </ng-template>
                             <ng-template pTemplate="filter" let-value let-filter="filterCallback">
@@ -77,7 +67,7 @@
                             [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" class="ml-auto">
                             <ng-template pTemplate="header">
                                 <div class="px-3 pt-3 pb-0">
-                                    <span class="font-bold">Agent Picker</span>
+                                    <span class="font-bold">Usuario</span>
                                 </div>
                             </ng-template>
                             <ng-template pTemplate="filter" let-value let-filter="filterCallback">
@@ -210,7 +200,7 @@
         </ng-template>
         <ng-template pTemplate="emptymessage">
             <tr>
-                <td colspan="8">No customers found.</td>
+                <td colspan="8">Resultados no encontrados.</td>
             </tr>
         </ng-template>
     </p-table>

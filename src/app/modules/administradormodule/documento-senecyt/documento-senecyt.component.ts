@@ -174,7 +174,7 @@ public classUsuario = new Usuario();
     if (this.wordNoFind === '') {
       this.listDocumentosCopy = this.listDocumentoExel;
     } else {
-      let listDoc = this.listDocumentosCopy.filter(
+      let listDoc = this.listDocumentoExel.filter(
         (p) =>
           p.descripcion?.toLowerCase().includes(this.wordNoFind)
       );
