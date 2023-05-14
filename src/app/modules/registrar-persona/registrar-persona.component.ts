@@ -47,16 +47,17 @@ export class registrarPersonaComponent implements OnInit {
     this.estudianteISTAFind = false;
     this.classPersona = new Persona();
     this.classUsuario = new Usuario();
+    this.nivelComplejidad = '';
     this.visibleEstudinateIsta = true;
   }
 
-  //BANDERA 
+  //BANDERA
   public estudianteISTAFind: boolean = false;
   public findEstudianteISTAFenix(e: any) {
     let letter = e.target.value;
     if (letter.length == 10) {
       this.getEstudianteISTAFindByIdentificasion(letter);
-    }else{
+    } else {
       this.classEstudianteFenix = new EstudianteFenix();
       this.estudianteISTAFind = false;
       this.classPersona = new Persona();
@@ -103,7 +104,6 @@ export class registrarPersonaComponent implements OnInit {
           'CREDENCIALES VACIAS.'
         );
       } else {
-
         this.personaService
           .getPersonaByIdentificasion(this.classEstudianteFenix.identificacion)
           .subscribe((data) => {
@@ -180,113 +180,119 @@ export class registrarPersonaComponent implements OnInit {
       //END---------------------------------------
     } else {
       this.validarDatosPersona();
-      // this.personaService.savePersona(this.classPersona).subscribe((data) => {
-      //   if (data != null) {
-      //     this.classUsuario.idUsuario = 0;
-      //     this.classUsuario.estadoUsuarioActivo = true;
-      //     // this.classUsuario.rol = this.classRol;
-      //     this.classUsuario.persona = data;
-      //     this.classUsuario.roles = this.listRole;
-      //     console.log(this.classUsuario);
-      //     this.usuarioService
-      //       .saveUsuario(this.classUsuario)
-      //       .subscribe((data1) => {
-      //         if (data1 != null) {
-      //           console.log({ user: data1 });
-      //           alert('succesful');
-      //         }
-      //       });
-      //   }
-      // });
     }
   }
 
-
-
-  public validarDatosPersona(){
+  public validarDatosPersona() {
     // public savePersona(){
-      if (!this.classPersona?.identificacion || !this.classPersona?.nombre1 || !this.classPersona?.nombre2 ||
-        !this.classPersona?.apellido1 || !this.classPersona?.apellido2 ||
-        !this.classPersona?.telefono || !this.classPersona?.celular ||
-        !this.classPersona?.fechaNacimiento || !this.classPersona?.correo ||
-        !this.classUsuario?.username || !this.classUsuario?.password) {
-  
-          this.toastrService.warning(
-            'Llene todos los campos.',
-            'Uno o más campos vacios.'
-          );
-      } else {
-        if (this.classUsuario?.password?.length !> 8) {
-          this.comprobaridentificacion();
-        } else 
-          {
-            this.toastrService.warning(
-            'Contrasenia  Invalida.',
-            'La contrasenia debe tener minimo 8 caracteres.'
-          );
-        }
+    if (
+      !this.classPersona?.identificacion ||
+      !this.classPersona?.nombre1 ||
+      !this.classPersona?.nombre2 ||
+      !this.classPersona?.apellido1 ||
+      !this.classPersona?.apellido2 ||
+      !this.classPersona?.telefono ||
+      !this.classPersona?.celular ||
+      !this.classPersona?.fechaNacimiento ||
+      !this.classPersona?.correo ||
+      !this.classPersona?.genero ||
+      !this.classPersona?.etnia ||
+      !this.classPersona?.nivelInstruccion ||
+      !this.classUsuario?.username ||
+      !this.classUsuario?.fotoPerfil ||
+      !this.classUsuario?.password
+    ) {
+      this.toastrService.warning(
+        'Llene todos los campos.',
+        'Uno o más campos vacios.'
+      );
+    } else {
+      if (this.classPersona?.identificacion.length < 10) {
+        this.toastrService.error(
+          'La identificación no es invalida, verifique la longitud y los parametros.',
+          'IDENTIFICACIÓN INVALIDA.'
+        );
+        return;
       }
+
+      if (
+        this.classUsuario?.password.length >= 8 &&
+        /[a-z]/.test(this.classUsuario?.password) &&
+        /[A-Z]/.test(this.classUsuario?.password) &&
+        /\d/.test(this.classUsuario?.password) &&
+        /[@$!%*?&]/.test(this.classUsuario?.password)
+      ) {
+        this.comprobaridentificacion();
+      } else if (this.classUsuario?.password.length >= 6) {
+        this.toastrService.warning(
+          'La cotraseña debe ser fuerte.',
+          'PASSWORD MODERADA.'
+        );
+      } else {
+        this.toastrService.error(
+          'La seguridad de la contraseña no es aceptado por el sistema.',
+          'PASSWORD DEVIL.'
+        );
+      }
+    }
     // }
   }
 
-
-  public comprobaridentificacion (){
+  public comprobaridentificacion() {
     this.personaService
-    .getPersonaByIdentificasion(this.classPersona?.identificacion!)
-    .subscribe((data)=> {
-      if (data !== true) {
-        this.usuarioService
-        .getExistUsuarioByUsername(this.classUsuario?.username!)
-        .subscribe((data1)=>{
-          if (data1 !== true ) {
-            //Servicio
-            //Guardar persona
-            this.personaService
-            .savePersona(this.classPersona)
-            .subscribe((data)=>{
-              if (data !== null) {
-                this.classUsuario.estadoUsuarioActivo=true;
-                this.classUsuario.idUsuario = 0;
-                this.classUsuario.persona = data;
-                this.classUsuario.roles = this.listRole;
-                //Guardar usuario
-                this.usuarioService
-                .saveUsuario(this.classUsuario)
-                .subscribe((data1) => {
-                  if (data1 !== null) {
-                    this.toastrService.success(
-                      'Registro exitoso.'
-                    );
-                    this.classPersona = new Persona();
-                    this.classUsuario = new Usuario();
-                  }
-                });
+      .getPersonaByIdentificasion(this.classPersona?.identificacion!)
+      .subscribe((data) => {
+        if (data !== true) {
+          this.usuarioService
+            .getExistUsuarioByUsername(this.classUsuario?.username!)
+            .subscribe((data1) => {
+              if (data1 !== true) {
+                //Servicio
+                //Guardar persona
+                this.personaService
+                  .savePersona(this.classPersona)
+                  .subscribe((data) => {
+                    if (data !== null) {
+                      this.classUsuario.estadoUsuarioActivo = true;
+                      this.classUsuario.idUsuario = 0;
+                      this.classUsuario.persona = data;
+                      this.classUsuario.roles = this.listRole;
+                      //Guardar usuario
+                      this.usuarioService
+                        .saveUsuario(this.classUsuario)
+                        .subscribe((data1) => {
+                          if (data1 !== null) {
+                            this.toastrService.success('Registro exitoso.');
+                            this.classPersona = new Persona();
+                            this.classUsuario = new Usuario();
+                            this.router.navigate(['/login'])
+                          }
+                        });
+                    }
+                  });
+              } else {
+                this.toastrService.error(
+                  'El nombre de usuario ya esta en el siistema.',
+                  'Ingrese otro nombre de usuario.'
+                );
               }
             });
-          }else{
-            this.toastrService.error(
-              'El nombre de usuario ya esta en el siistema.',
-              'Ingrese otro nombre de usuario.'
-            );
-          }
-        });
-      }else{
-        this.toastrService.error(
-          'La identificasión ya esta en el sistema.',
-          'Identificasión existente'
-        );
-      }
-    });
+        } else {
+          this.toastrService.error(
+            'La identificasión ya esta en el sistema.',
+            'Identificasión existente'
+          );
+        }
+      });
   }
-
-
 
   //Almacenar en el objeto
   async subirFoto(event: any) {
     const file = event.target.files[0];
     const fileSize = file.size; // tamaño en bytes
     if (fileSize > 262144) {
-      alert('La foto es muy pesada');
+      this.toastrService.error('La foto es muy pesada.', 'FOTO PESADA.');
+      // alert('La foto es muy pesada');
       event.target.value = null;
     } else {
       try {
@@ -312,9 +318,33 @@ export class registrarPersonaComponent implements OnInit {
     });
   }
 
-
   //LOCATION RELOAD
   reloadPage() {
     location.reload();
+  }
+
+  nivelComplejidad?: string;
+  nivelComplejidadClass?: string;
+
+  calcularNivelComplejidad() {
+    const contraseña = this.classUsuario.password!;
+
+    // Calcula el nivel de complejidad basado en ciertos criterios
+    if (
+      contraseña.length >= 8 &&
+      /[a-z]/.test(contraseña) &&
+      /[A-Z]/.test(contraseña) &&
+      /\d/.test(contraseña) &&
+      /[@$!%*?&]/.test(contraseña)
+    ) {
+      this.nivelComplejidad = 'La contraseña es fuerte';
+      this.nivelComplejidadClass = 'strong';
+    } else if (contraseña.length >= 6) {
+      this.nivelComplejidad = 'La contraseña es moderado';
+      this.nivelComplejidadClass = 'moderate';
+    } else {
+      this.nivelComplejidad = 'La contraseña es débil';
+      this.nivelComplejidadClass = 'weak';
+    }
   }
 }

@@ -1,0 +1,134 @@
+<div class="card">
+    <p-toolbar styleClass="mb-4">
+        <ng-template pTemplate="left">
+            <button pButton pRipple label="Nuevo" icon="pi pi-plus" class="p-button-success mr-2"
+                (click)="showModaL()"></button>
+
+        </ng-template>
+
+
+    </p-toolbar>
+
+    <p-table #dt [value]="listDocumentosCopy" dataKey="id" styleClass="p-datatable-customers" [rowHover]="true"
+        [rows]="5" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,15]" responsiveLayout="scroll"
+        [paginator]="true" currentPageReportTemplate="Mostrando {first} to {last} of {totalRecords} documentos"
+        [filterDelay]="0" [showCurrentPageReport]="true">
+        <ng-template pTemplate="caption">
+            <div class="flex align-items-center justify-content-between">
+                <h5 class="m-0"><strong>DOCUMENTOS EXEL CON CÓDIGOS DE SENECYT</strong></h5>
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" placeholder="Search..."
+                        (input)="filterTableProgramasCapacitacion($event)" />
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+
+                <th pSortableColumn="idDocumentoSenecyt"><strong>ID DOCUMENTO</strong><p-sortIcon
+                        field="idDocumentoSenecyt"></p-sortIcon>
+                </th>
+                <th pSortableColumn="fechaCreacion"><strong>FECHA CREACIÓN</strong>
+                    <p-sortIcon field="fechaCreacion"></p-sortIcon>
+                </th>
+                <th pSortableColumn="documentoExel"><strong>DOCUMENTO</strong><p-sortIcon
+                        field="documentoExel"></p-sortIcon></th>
+                <th pSortableColumn="descripcion"><strong>DESCRIPCIÓN </strong><p-sortIcon
+                        field="descripcion"></p-sortIcon></th>
+                <!-- <th pSortableColumn="inventoryStatus">Estado <p-sortIcon field="inventoryStatus"></p-sortIcon></th> -->
+                <th pSortableColumn="estadoDocumento">
+                    <div class="flex justify-content-between align-items-center">
+                        <strong>ESTADO</strong>
+
+                        <p-columnFilter type="boolean" field="estadoDocumento" display="menu"></p-columnFilter>
+
+                    </div>
+                </th>
+                <th pSortableColumn="inventoryStatus"><strong>GESTIÓN</strong> <p-sortIcon
+                        field="inventoryStatus"></p-sortIcon></th>
+
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-documentoExel>
+            <tr>
+
+                <td>{{documentoExel.idDocumentoSenecyt}}</td>
+                <td>{{documentoExel.fechaCreacion}}</td>
+                <td><a  class="download-link" href="{{documentoExel.documentoExel}}"
+                        [download]="'codigosSenecyt'+documentoExel.fechaCreacion+'.xlsx'">
+                        <span class="download-icon">&#x2B07;</span> Descargar Códigos
+                    </a>
+
+                </td>
+                <td>{{documentoExel.descripcion}}</td>
+                <td>
+                    <p-message [severity]="documentoExel.estadoDocumento == true? 'success': 'warn'"
+                        [text]="documentoExel.estadoDocumento == true? 'Para descargar': 'Pasado'"
+                        styleClass="mr-2"></p-message>
+
+                </td>
+                <td>
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2 mt-1"
+                        (click)="cargarDatos(documentoExel)"></button>
+                    <button pButton pRipple [icon]="documentoExel.estadoDocumento ? 'pi pi-check' : 'pi pi-trash'"
+                        [class]="'p-button-rounded ' + (documentoExel.estadoDocumento ? 'p-button-primary' : 'p-button-warning') + ' mt-1'"
+                        (click)="updateStatusCodigosExel(documentoExel)">
+                    </button>
+
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <div class="flex align-items-center justify-content-between">
+                En total hay {{listDocumentoExel ? listDocumentoExel.length : 0 }} Registros de documentos.
+            </div>
+        </ng-template>
+    </p-table>
+</div>
+
+
+
+<!-- IMPLEMENTACION DEL MODAL PARA EL INGRESO DE LOS CURSOS -->
+
+<p-dialog header="Documento con los códigos de la senecyt" [(visible)]="visible" [modal]="true"
+    [style]="{ width: '50vw', height: '250' }" [draggable]="false" [resizable]="false">
+    <form (ngSubmit)="validacionDocumentosExel()" novalidate style="padding: 15px;">
+        <div class="grid p-fluid m-2">
+
+
+            <div class="col-12 md:col-12 mt-2" style="align-items: center;">
+                <div class="card flex justify-content-center">
+                    <span class="p-float-label m-4">
+                        <textarea id="float-input" rows="5" cols="30" pInputTextarea id="descripcion" name="descripcion"
+                            [(ngModel)]="classDocumentoExel.descripcion" required></textarea>
+                        <label for="float-input">Descripción del documento</label>
+                    </span>
+                </div>
+            </div>
+
+            <div class="col-12 md:col-12 mt-2 mb-2" style="display: flex; justify-content: center;">
+
+                <div style="max-width: 100%;">
+                    <label for="pdf" class="file-upload-label">
+                        <span class="file-upload-icon"><i class="pi pi-upload"></i></span>
+                        <span class="file-upload-text ">{{ classDocumentoExel.documentoExel ? 'Actualizar Documento' :
+                            'Seleccionar Códigos Senecyt' }}</span>
+                    </label>
+                    <input type="file" id="pdf" name="pdf" accept=".xlsx, .xls" (change)="handleExcelInput($event)">
+                </div>
+
+            </div>
+
+
+
+            <!-- Fin del periodo porgrama -->
+            <div class="col-md-12 mt-2" style="text-align: center; margin: 5px;">
+                <p-button type="ngSubmit" [label]="classDocumentoExel.idDocumentoSenecyt? 'Actualizar': 'Guardar'"
+                    icon="pi pi-save" styleClass="p-button-success  mb-2"></p-button>
+            </div>
+        </div>
+
+
+    </form>
+</p-dialog>

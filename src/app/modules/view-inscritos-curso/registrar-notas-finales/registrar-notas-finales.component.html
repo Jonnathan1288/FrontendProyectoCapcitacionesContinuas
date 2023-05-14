@@ -9,7 +9,13 @@
 
 
     <div class="attendance-section">
-        <h2 class="section-title"><strong>REGISTRO DE NOTAS FINALES DE LOS ESTUDIANTES</strong> </h2>
+        <h2 class="section-title"><strong>{{estadoFinal === 'F'? 'REVISIÓN DE LAS NOTAS FINALES' : 'REGISTRO DE NOTAS FINALES DE LOS ESTUDIANTES'}}</strong> </h2>
+
+    </div>
+
+
+    <div style="text-align: center;" *ngIf="estadoFinal === 'F'">
+        <p-tag icon="pi pi-times" severity="danger" value="CURSO FINALIZADO, SOLO PUEDE REVISAR LAS NOTAS CONCEDIDAS A LOS ESTUDIANTES, AL IGUAL QUE IMPRIMIR CADA UNO DE LOS REPORTES.."></p-tag>
 
     </div>
 
@@ -105,7 +111,7 @@
         <div class="col-12 md:col-12 mt-1">
             <div class="p-inputgroup">
                 <span class="p-float-label">
-                    <input type="text" pInputText id="parcial" name="parcial" [(ngModel)]="notas.parcial">
+                    <input type="text" pInputText id="parcial" name="parcial" [(ngModel)]="notas.parcial" (input)="validarParcialAndFinalNota($event)" maxlength="2" (keydown)="validarEntrada($event)"/>
                     <label htmlFor="parcial">Nota Parcial<span class="red-asterisk"></span></label>
                 </span>
             </div>
@@ -113,7 +119,7 @@
         <div class="col-12 md:col-12 mt-3">
             <div class="p-inputgroup">
                 <span class="p-float-label">
-                    <input type="text" pInputText id="examenFinal" name="examenFinal" [(ngModel)]="notas.examenFinal">
+                    <input type="text" pInputText id="examenFinal" name="examenFinal" [(ngModel)]="notas.examenFinal" (input)="validarParcialAndFinalNota($event)" maxlength="2">
                     <label htmlFor="examenFinal">Nota Exámen Final<span class="red-asterisk"></span></label>
                 </span>
             </div>

@@ -136,10 +136,20 @@ export class ValidacionCursosCapacitacionComponent implements OnInit {
     }
     this.cursoService.updateCurso(this.classCursoValidanew.idCurso!, this.classCursoValidanew).subscribe((data) => {
       if (data != null) {
-        console.log({dataCurso: data})
-        alert('succesful');
+        // console.log({dataCurso: data})
+        if(data.estadoAprovacionCurso === 'A'){
+          this.toastrService.success('Curso aprovado', 'CURSO APROVADO');
+
+        }else{
+          this.toastrService.error('El curso a sido rechazado.', 'CURSO RECHAZADO');
+        }
+
+        // alert('succesful');
       }
     });
+    setTimeout(() => {
+      location.reload();
+    }, 1300);
   }
 
   public classHojaVidaDocenteCapacitador = new HojaVidaCapacitador();
@@ -195,36 +205,4 @@ export class ValidacionCursosCapacitacionComponent implements OnInit {
 
   }
 
-
-  public wordNoFind?: any;
-  public listFilterCursosCapacitacionContinua: Curso[]=[];
-  public filterTableEventCursosCapacitacioncionContinua(e: any) {
-    let letter = e.target.value.toLowerCase();
-
-    this.wordNoFind = letter;
-    console.log(this.wordNoFind);
-
-    if (this.wordNoFind === '') {
-
-      this.listFilterCursosCapacitacionContinua = this.listCursos;
-      // this.numerFoundCountAnimal = this.listALLAnimals.length;
-    } else {
-      let filteredAnimals = this.listFilterCursosCapacitacionContinua.filter(
-        (cursosDoc) =>
-          (cursosDoc.capacitador?.usuario?.persona?.nombre1?.toLowerCase().includes(this.wordNoFind) ||
-          cursosDoc.capacitador?.usuario?.persona?.nombre2?.toLowerCase().includes(this.wordNoFind) ||
-          cursosDoc.capacitador?.usuario?.persona?.apellido1?.toLowerCase().includes(this.wordNoFind) || 
-          cursosDoc.capacitador?.usuario?.persona?.apellido2?.toLowerCase().includes(this.wordNoFind) ||
-          cursosDoc.capacitador?.usuario?.username?.toLowerCase().includes(this.wordNoFind) ||
-          cursosDoc.nombreCurso?.toLowerCase().includes(this.wordNoFind)  ||
-          cursosDoc.programas?.nombrePrograma?.toLowerCase().includes(this.wordNoFind)  ||
-          cursosDoc.programas?.descripcionPrograma?.toLowerCase().includes(this.wordNoFind)  ||
-          
-          cursosDoc.programas?.periodoPrograma?.nombrePeriodoPrograma?.toLowerCase().includes(this.wordNoFind) 
-          )
-      );
-      
-      this.listFilterCursosCapacitacionContinua = filteredAnimals;
-    }
-  }
 }

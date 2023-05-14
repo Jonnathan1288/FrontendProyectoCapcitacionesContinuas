@@ -20,6 +20,10 @@ export class AppComponent implements OnInit {
   //VALOR PARA CATCH URL
   currentUrl: string = '';
 
+  public foto:any;
+
+  public username:any;
+
   constructor(private scriptC: LoadScript, private router: Router
     , private usuarioService: UsuarioService,
     private storageServeic: StorageService) {
@@ -29,6 +33,9 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.rolNameUser = localStorage.getItem('rol');
+    this.foto = localStorage.getItem('foto');
+
+    this.username = localStorage.getItem('username');
     if(this.rolNameUser){
       this.isLogginPresent = false;
     }else{

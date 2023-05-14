@@ -27,6 +27,8 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 
   public classCursoFinalizaEstado = new Curso();
 
+  public estadoFinal?: any;
+
   constructor(
     private activateRoute: ActivatedRoute,
     private router: Router,
@@ -43,13 +45,14 @@ export class RegistrarNotasFinalesComponent implements OnInit {
   idCursoGlobal?: number;
 
   ngOnInit(): void {
+    this.estadoFinal = localStorage.getItem('status')
     this.activateRoute.params.subscribe((param) => {
       const idCursoRout = param['id'];
       console.log('Idcurso => ' + idCursoRout);
       this.idCursoGlobal = idCursoRout;
       this.validarExistenciaDeRegistros();
       this.getCursoPorIdAlmacenado(idCursoRout);
-      this.valida()
+      this.valida();
     });
   }
 
@@ -84,7 +87,7 @@ export class RegistrarNotasFinalesComponent implements OnInit {
                     timeOut: 2500,
                   }
                 );
-                
+
                 this.router.navigate(['/capacitador/codigos/cenecyt']);
               }
               // alert(2)
@@ -161,7 +164,7 @@ export class RegistrarNotasFinalesComponent implements OnInit {
   // MANDAR LOS DATOS A LA TABLA
   public guardarDatosVacios(): void {
     for (let participante of this.listaParticipantesMatriculados) {
-      if(participante.estadoParticipanteActivo === true){
+      if (participante.estadoParticipanteActivo === true) {
         const notas = new Notas();
         notas.partipantesMatriculados = participante;
         notas.examenFinal = 0;
@@ -172,7 +175,6 @@ export class RegistrarNotasFinalesComponent implements OnInit {
           this.obtenerParticipantesFinales();
         });
       }
-
     }
   }
   //
@@ -239,6 +241,25 @@ export class RegistrarNotasFinalesComponent implements OnInit {
     new ParticipantesMatriculados();
   idParticpanteNota!: number;
   public vaidarNotasEstudiantesFinales(): void {
+    let parcialCeroOVacio = false;
+    let examenFinalCeroOVacio = false;
+
+    this.listNotas.forEach((nota) => {
+      if (nota.parcial === 0 || nota.parcial === undefined) {
+        parcialCeroOVacio = true;
+      }
+      if (nota.examenFinal === 0 || nota.examenFinal === undefined) {
+        examenFinalCeroOVacio = true;
+      }
+    });
+
+    if (parcialCeroOVacio || examenFinalCeroOVacio) {
+      this.toastrService.error(
+        'Debe ingresar todas las notas de los estudiantes, y no deben ser cero.',
+        'NOTAS INCOMPLETAS'
+      );
+      return;
+    }
     console.log('CLICk');
     for (let participante of this.listNotas) {
       const parcial = participante.parcial!;
@@ -280,7 +301,6 @@ export class RegistrarNotasFinalesComponent implements OnInit {
   }
 
   public validarNotasFinalesView(nota1: number, notafinal: number) {
-
     return nota1 * 0.4 + notafinal * 0.6;
   }
 
@@ -301,7 +321,6 @@ export class RegistrarNotasFinalesComponent implements OnInit {
         window.open(url, '_blank');
       });
   }
-
 
   //INFORME FINAL
   public generarReporteInformeFinalCurso(): void {
@@ -344,8 +363,7 @@ export class RegistrarNotasFinalesComponent implements OnInit {
     this.visibleModalFormFinalCourse = true;
   }
 
-
-  public traerInformeFinalCurso(){
+  public traerInformeFinalCurso() {
     this.informeFinalCorseService
       .getInformeFinalCursoByIdCurso(this.idCursoGlobal!)
       .subscribe(
@@ -368,29 +386,28 @@ export class RegistrarNotasFinalesComponent implements OnInit {
       );
   }
 
-  public valida(){
+  public valida() {
     this.informeFinalCorseService
-    .getInformeFinalCursoByIdCurso(this.idCursoGlobal!)
-    .subscribe(
-      (data) => {
-        if (data != null) {
-          this.classInformeFinalC = data;
-          this.classInformeFinalC.idInformeFinalCurso =
-            data.idInformeFinalCurso;
-        }
-      },
-      (err) => {
-        this.toastrService.info(
-          'Listo para llenar el informe final.',
-          'INFORME FINAL.',
-          {
-            timeOut: 2000,
+      .getInformeFinalCursoByIdCurso(this.idCursoGlobal!)
+      .subscribe(
+        (data) => {
+          if (data != null) {
+            this.classInformeFinalC = data;
+            this.classInformeFinalC.idInformeFinalCurso =
+              data.idInformeFinalCurso;
           }
-        );
-      }
-    );
+        },
+        (err) => {
+          this.toastrService.info(
+            'Listo para llenar el informe final.',
+            'INFORME FINAL.',
+            {
+              timeOut: 2000,
+            }
+          );
+        }
+      );
   }
-
 
   public validarCamposVaciosInformeFinal() {
     if (
@@ -433,7 +450,6 @@ export class RegistrarNotasFinalesComponent implements OnInit {
           }
         });
     } else {
-      
       this.classInformeFinalC.curso = this.classCursoFinalizaEstado;
       // this.classInformeFinalC.curso = data;
       this.informeFinalCorseService
@@ -453,7 +469,6 @@ export class RegistrarNotasFinalesComponent implements OnInit {
           }
         });
     }
-
   }
 
   //implemeentacion
@@ -479,5 +494,31 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 
   isFirstPage(): boolean {
     return this.listNotas ? this.first === 0 : true;
+  }
+
+  lastValidParcial: string = ''; // Variable para almacenar el último valor válido del campo
+
+  public validarParcialAndFinalNota(event: any) {
+    const valor = event.target.value;
+
+    if (valor === '0') {
+      event.target.value = ''; // Si el valor ingresado es "0", se elimina el contenido del campo
+      return;
+    }
+
+    if (valor && (isNaN(valor) || valor < 0 || valor > 10)) {
+      event.target.value = this.lastValidParcial;
+    } else {
+      this.lastValidParcial = valor;
+    }
+  }
+
+  validarEntrada(event: any): void {
+    const tecla = event.keyCode || event.which;
+    const valor = event.target.value;
+  
+    if (valor === '0' && (tecla === 48 || tecla === 96)) {
+      event.preventDefault(); // Evita la entrada de "0" si ya se ingresó en el campo
+    }
   }
 }

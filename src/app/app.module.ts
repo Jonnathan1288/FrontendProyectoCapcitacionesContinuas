@@ -41,6 +41,8 @@ import { DisenioHojaVidaComponent } from './modules/hojavida/disenio-hoja-vida/d
 import { PersmisosRolesUsuarioComponent } from './modules/administradormodule/persmisos-roles-usuario/persmisos-roles-usuario.component';
 import { EditDataUserComponent } from './modules/registrar-persona/edit-data-user/edit-data-user.component';
 import { ConsultasCertificadoComponent } from './modules/home/consultas-certificado/consultas-certificado.component';
+import { ComunidadInstitucionalComponent } from './modules/home/comunidad-institucional/comunidad-institucional.component';
+import { DocumentoSenecytComponent } from './modules/administradormodule/documento-senecyt/documento-senecyt.component';
 
 
 @NgModule({
@@ -79,6 +81,8 @@ import { ConsultasCertificadoComponent } from './modules/home/consultas-certific
     PersmisosRolesUsuarioComponent,
     EditDataUserComponent,
     ConsultasCertificadoComponent,
+    ComunidadInstitucionalComponent,
+    DocumentoSenecytComponent,
   ],
   imports: [
     BrowserModule,

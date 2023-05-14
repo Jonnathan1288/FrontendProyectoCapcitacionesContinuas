@@ -71,10 +71,10 @@ export class RegistroNecesidadComponent implements OnInit {
           timeOut: 1300,
         }
       );
-    }else{
-      if (this.listaNecesidadCursoArr.length >= 1){
-        this.createNecesidaCurso()
-      }else{
+    } else {
+      if (this.listaNecesidadCursoArr.length >= 1) {
+        this.createNecesidaCurso();
+      } else {
         this.toastrService.error(
           'Debe llenar por minimo una necesidad a la población.',
           'NECESIDAD VACÍA.',
@@ -101,11 +101,13 @@ export class RegistroNecesidadComponent implements OnInit {
                 timeOut: 1300,
               }
             );
+            setTimeout(() => {
+              location.reload();
+            }, 1300);
           }
         });
       console.log(this.necesidadActivo);
     } else {
-      alert('create');
       this.necesidadActivo.curso = this.curso;
       this.necesidadSer
         .crearNecesidadCurso(this.necesidadActivo)
@@ -118,10 +120,20 @@ export class RegistroNecesidadComponent implements OnInit {
                 .saveListaNecesidadCurso(listaNecesidades)
                 .subscribe((data) => {
                   if (data != null) {
-                    alert('Correcto al crear el curso');
+                   console.log('right')
                   }
                 });
             }
+            this.toastrService.success(
+              'Informe de necesidad creado con éxito.',
+              'DATOS ALMACENADOS.',
+              {
+                timeOut: 1300,
+              }
+            );
+            setTimeout(() => {
+              location.reload();
+            }, 1300);
           }
         });
     }

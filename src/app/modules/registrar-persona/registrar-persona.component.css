@@ -1,16 +1,5 @@
 
-.container {
-  display: flex;
-  max-width: 80%; 
-  max-height: 80%;
-  justify-content: center;
-  align-items: center;
-  /* height: 100vh; */
- margin-top: 5px;
-  max-width: 80%;
 
-  
-}
 
 .container .content {
   max-width: 600px;
@@ -74,60 +63,6 @@
 
 
 
-
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-/* Agregamos la clase para la animación */
-.animated-element {
-  opacity: 0;
-  animation: fadeIn 1s ease-in-out forwards;
-}
-
-
-.animated-text {
-  animation: slide-left 2s linear infinite;
-}
-
-@keyframes slide-left {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-100%);
-  }
-}
-
-
-.card {
-  border: 6px solid #000; /* Establece un borde sólido de 1 píxel */
-  border-radius: 10px;
-  animation: cambia-color 4s infinite; /* Agrega una animación de cambio de color */
-  
-}
-
-@keyframes cambia-color {
-  0% {
-    border-color: rgb(183, 218, 245); /* Establece el color del borde al inicio de la animación (azul) */
-  }
-  50% {
-    border-color: rgb(180, 235, 223); /* Establece el color del borde a la mitad de la animación (negro) */
-  }
-  100% {
-    border-color: rgb(176, 219, 242); /* Establece el color del borde al final de la animación (azul) */
-  }
-}
-
-
-
-
 /* VALIDACIONES */
 
 .red-asterisk::after {
@@ -145,4 +80,54 @@
   display: inline-block;
   max-width: 80%;
   height: 450px;
+}
+
+
+/* MORE VALIDATION */
+
+
+
+.password-container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+  font-family: Arial, sans-serif;
+}
+
+.password-input {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 0.5rem;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.password-input:focus {
+  border-color: #2962FF;
+}
+
+.password-label {
+  margin-bottom: 0.5rem;
+  color: #888;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.password-strength {
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  font-weight: bold;
+}
+
+.weak {
+  color: #FF5722;
+}
+
+.moderate {
+  color: #FF9800;
+}
+
+.strong {
+  color: #4CAF50;
 }

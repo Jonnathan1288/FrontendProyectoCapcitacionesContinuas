@@ -21,15 +21,22 @@
             </ng-template>
         </p-messages>
         
-        <div class="container mt-1" *ngIf="estadoCurso === 'LI'">
-            <div class="alert alert-success" role="alert">
+
+        <div class="container mt-1" *ngIf="inicioCursoEstado === 'I' || inicioCursoEstado === 'F'; else otroDiv">
+            <!-- No se mostrará nada aquí -->
+          </div>
+          
+          <ng-template #otroDiv>
+            <div class="container mt-1" *ngIf="estadoCurso === 'LI'">
+              <div class="alert alert-success" role="alert">
                 <h4 class="alert-heading">CURSO LISTO PARA INICIAR</h4>
-                 <hr>
+                <hr>
                 <p>Este curso puede ser empesado.</p>
-               
-                <!-- <p class="mb-0">Si necesita hacer cambios en el curso, comuníquese con el administrador del sistema.</p> -->
+                <!-- Agrega aquí cualquier otro contenido que desees mostrar -->
+              </div>
             </div>
-        </div>
+          </ng-template>
+          
     
         <div class="container mt-1" *ngIf=" inicioCursoEstado === 'I'">
             <div class="alert alert-warning" role="alert">
@@ -114,10 +121,10 @@
                             <div class="d-flex align-items-center">
                                 <p-button *ngIf='list.estadoInscrito == true' icon="pi pi-check-square"
                                     styleClass="p-button-success me-2"
-                                    (onClick)="NoAprobarParticipante(list.idInscrito)" [disabled]="estadoCurso === 'IN'"></p-button>
+                                    (onClick)="NoAprobarParticipante(list.idInscrito)" [disabled]="estadoCurso === 'IN' || inicioCursoEstado === 'I' || inicioCursoEstado === 'F'"></p-button>
                                 <p-button *ngIf='list.estadoInscrito == false' icon="pi pi-times"
                                     styleClass="p-button-danger me-2"
-                                    (onClick)="aprobarParticipante(list.idInscrito)" [disabled]="estadoCurso === 'IN'"></p-button>
+                                    (onClick)="aprobarParticipante(list.idInscrito)" [disabled]="estadoCurso === 'IN' || inicioCursoEstado === 'I' || inicioCursoEstado === 'F'"></p-button>
                             </div>
                         </td>
                     </tr>
@@ -126,7 +133,12 @@
         </div>
 
         <div class="container m-4 text-center" >
-            <p-button (onClick)="InicioCurso()" label="Iniciar Curso" styleClass="p-button-success" [disabled]="inicioCursoEstado === 'I' || estadoCurso === 'LI' || estadoCurso === 'IN' || listaInscritos.length == 0"></p-button>
+            <p-button (onClick)="iniciarCursoCapacitacionContinua()" label="Iniciar Curso" styleClass="p-button-success" [disabled]="inicioCursoEstado=== 'F' || estadoCurso=== 'FP' || inicioCursoEstado === 'I' || listaInscritos.length == 0"></p-button>
         </div>
     </div>
 </div>
+
+
+
+<p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000"
+    rejectButtonStyleClass="p-button-text"></p-confirmDialog>
