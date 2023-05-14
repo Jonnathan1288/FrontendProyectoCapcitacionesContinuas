@@ -26,7 +26,8 @@
           <div class="surface-section px-4 py-2 md:px-6 lg:px-2 surface-card p-4 shadow-4 border-round w-full ">
             <div class="text-center mb-1">
               <div class="container">
-                <strong>Foto de perfil</strong>
+                <strong>Foto de perfil <span class="red-asterisk"></span></strong>
+               
               </div>
               <div class="personal-image">
                 <label class="label" style="border: black">
@@ -61,7 +62,8 @@
                 <div class="p-inputgroup">
                   <span class="p-float-label">
                     <input type="text" pInputText id="identificacion" name="identificacion"
-                      [(ngModel)]="classPersona.identificacion" required/>
+                      [(ngModel)]="classPersona.identificacion" required maxlength="10"
+                      onkeypress='return event.charCode >= 48 && event.charCode <= 57'/>
                     <label htmlFor="identificacion" class="pi pi-id-card"> Identificación</label>
                   </span>
                 </div>
@@ -262,13 +264,13 @@
                 <div class="p-inputgroup">
                   <span class="p-float-label">
                     <input type="text" pInputText id="username" name="username" [(ngModel)]="classUsuario.username" required/>
-                    <label htmlFor="username" class="pi pi-user"> Usuario</label>
+                    <label htmlFor="username" class="pi pi-user"> Usuario <span class="red-asterisk"></span></label>
 
                   </span>
                 </div>
               </div>
 
-              <div class="col-12 md:col-6 mt-1">
+              <!-- <div class="col-12 md:col-6 mt-1">
                 <div class="p-inputgroup">
                   <span class="p-float-label">
                     <input type="text" pInputText id="password" name="password" type="password"
@@ -276,14 +278,24 @@
                     <label htmlFor="password" class="pi pi-lock"> Contraseña</label>
                   </span>
                 </div>
+              </div> -->
+
+
+              <div class="col-12 md:col-6 mt-1">
+                <div class="p-inputgroup">
+                  <span class="p-float-label">
+                    <input type="text" pInputText id="password" name="password" type="password"
+                      [(ngModel)]="classUsuario.password" required (input)="calcularNivelComplejidad()" [maxlength]="10" />
+                    <label htmlFor="password" class="pi pi-lock"> Contraseña <span class="red-asterisk"></span></label>
+                  </span>
+                </div>
+                <div class="password-strength" [ngClass]="nivelComplejidadClass">{{ nivelComplejidad }}</div>
+
               </div>
+
             </div>
 
           </div>
-
-          <!-- <button type="submit" pButton label="Crear cuenta" icon="pi pi-user" class="m-2 col-6 mt-4"
-            style="text-align: center;"></button> -->
-
             <!-- <div class="sizes"> -->
               
               <p-button type="ngSubmit" label="Crear cuenta" icon="pi pi-user" styleClass="p-button-lg"></p-button>
@@ -381,7 +393,7 @@
           </div>
         </div>
 
-        <div class="col-12 md:col-6 mt-2">
+        <!-- <div class="col-12 md:col-6 mt-2">
           <div class="p-inputgroup">
             <span class="p-float-label">
               <input type="password" id="inputtext" pInputText id="password" name="password"
@@ -391,6 +403,18 @@
 
             </span>
           </div>
+        </div> -->
+
+        <div class="col-12 md:col-6 mt-1">
+          <div class="p-inputgroup">
+            <span class="p-float-label">
+              <input type="text" pInputText id="password" name="password" type="password"
+                [(ngModel)]="classUsuario.password" required (input)="calcularNivelComplejidad()" [maxlength]="10" />
+              <label htmlFor="password" class="pi pi-lock"> Contraseña<span class="red-asterisk"></span></label>
+            </span>
+          </div>
+          <div class="password-strength" [ngClass]="nivelComplejidadClass">{{ nivelComplejidad }}</div>
+
         </div>
       </div>
       <button type="submit" pButton pRipple label="Crear cuenta" icon="pi pi-user" class="w-full"></button>

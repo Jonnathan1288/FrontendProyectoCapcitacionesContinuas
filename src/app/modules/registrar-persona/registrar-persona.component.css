@@ -81,3 +81,53 @@
   max-width: 80%;
   height: 450px;
 }
+
+
+/* MORE VALIDATION */
+
+
+
+.password-container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+  font-family: Arial, sans-serif;
+}
+
+.password-input {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 0.5rem;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.password-input:focus {
+  border-color: #2962FF;
+}
+
+.password-label {
+  margin-bottom: 0.5rem;
+  color: #888;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.password-strength {
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  font-weight: bold;
+}
+
+.weak {
+  color: #FF5722;
+}
+
+.moderate {
+  color: #FF9800;
+}
+
+.strong {
+  color: #4CAF50;
+}
