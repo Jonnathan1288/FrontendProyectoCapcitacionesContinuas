@@ -65,7 +65,7 @@
 
 
 
-<div class="container mt-4">
+<div class=" mt-4">
     <div class="card text-center mb-2">
 
         <h5 class="mt-4 ">MIS CURSOS</h5>
@@ -90,11 +90,10 @@
                     <th style="width:25%">F-FIN</th>
                     <th style="width:25%">FOTO</th>
 
-                    <!-- <th style="width:25%">SILABO</th> -->
-                    <!-- <th style="width:25%">NECESIDAD</th> -->
+               
                     <th style="width:25%">VER-CURSO</th>
                     <th style="width:25%">INSCRITOS</th>
-                    <!-- <th style="width:25%">RegFoto</th> -->
+                    <th style="width:25%">OPC</th>
                     <th style="width:25%">Publicar</th>
 
                 </tr>
@@ -109,16 +108,21 @@
                     <td><img [src]="'data:image/jpeg;base64,' + data.fotoCurso" alt="" width="50px" height="50px"
                             class="rounded-circle"></td>
 
-                    <!-- <td><p-button type="button" icon="pi pi-eye" styleClass="p-button-text"
-                            (click)="silabo(data.idCurso)"></p-button></td> -->
-                    <!-- <td><p-button type="button" icon="pi pi-send" styleClass="p-button-text"
-                            (click)="editCurso(data.idCurso)"></p-button></td> -->
                     <td><p-button type="button" icon="pi pi-eye" styleClass="p-button-text"
-                            (click)="VerCursoInicio(data.idCurso)"></p-button></td>
+                            (click)="VerCursoInicio(data.idCurso, data.estadoPublicasionCurso)"></p-button></td>
                     <td><p-button type="button" icon="pi pi-eye" styleClass="p-button-text"
                             (click)="VerParticipantesInscritos(data.idCurso)"></p-button></td>
-                    <!-- <td><p-button type="button" icon="pi pi-eye" styleClass="p-button-text"
-                            (click)="VerRegistroFotografico(data.idCurso)"></p-button></td>-->
+             
+                            <td>
+
+                     
+                                <p-button type="button" icon="pi pi-ellipsis-v" styleClass="p-button-text"
+                            (click)="modalViewoption(data)"></p-button>
+                        
+                              
+                              
+        
+                            </td>
                     <td>
 
                         <p-button type="button" icon="pi pi-send" styleClass="p-button-text"
@@ -127,10 +131,7 @@
                     </td>
 
 
-                    <!-- <p-button *ngIf="data.estadoAprovacionCurso == 'A' || data.estadoPublicasionCurso == ''" type="button" icon="pi pi-send"
-                            styleClass="p-button-text" (click)="updateEstadoPublico(data)"></p-button>
-                        
-                        </td> -->
+       
 
                 </tr>
             </ng-template>
@@ -138,15 +139,6 @@
     </div>
 </div>
 
-
-
-
-<!-- IMPLEMENTACION DEL MODAL PARA QUE VISUALICE EL CURSO -->
-
-<!-- <p-dialog header="{{cursoViewPublished.nombreCurso}}" [(visible)]="visibleCursoPublicar" [modal]="true"
-    [style]="{ width: '70vw', height: '250' }" [draggable]="false" [resizable]="false"> -->
-
-<!--  estadoPublicasionCurso : V: visible ; O: Oculto --  estadoAprovacionCurso -> D: Default ;  A: Aprovado ; R: Rechazado -->
 
 
 <p-dialog
@@ -228,5 +220,34 @@
                 styleClass="p-button-success  mb-2"></p-button>
         </div>
     </div>
+
+</p-dialog>
+
+
+
+<p-dialog header="Seleccione el rol con el cual va ingresar al sistema" [(visible)]="visiblePeriodoMensual"
+  [modal]="true" [style]="{ width: '25vw', height: '25' }" [draggable]="false" [resizable]="false">
+  <div class="grid p-fluid m-2">
+    <div class="col-12 md:col-12 " >
+      <div class=" mr-4 mx-4" style="text-align: center;">
+        <p-button label="Registro fotografico" icon="pi pi-users" styleClass="p-button-warning" badge="8" badgeClass="p-badge-danger"></p-button>
+
+      </div>
+    </div>
+
+    <div class="col-12 md:col-12 " >
+        <div class=" mr-4 mx-4" style="text-align: center;">
+          <p-button label="Necesidad de Curso" icon="pi pi-users" styleClass="p-button-warning" badge="8" badgeClass="p-badge-danger"></p-button>
+  
+        </div>
+      </div>
+
+      <div class="col-12 md:col-12 " >
+        <div class=" mr-4 mx-4" style="text-align: center;">
+          <p-button label="Silabo" icon="pi pi-users" styleClass="p-button-warning" badge="8" badgeClass="p-badge-danger"></p-button>
+  
+        </div>
+      </div>
+  </div>
 
 </p-dialog>

@@ -31,6 +31,9 @@ import { DisenioHojaVidaComponent } from './modules/hojavida/disenio-hoja-vida/d
 import { PersmisosRolesUsuarioComponent } from './modules/administradormodule/persmisos-roles-usuario/persmisos-roles-usuario.component';
 import { EditDataUserComponent } from './modules/registrar-persona/edit-data-user/edit-data-user.component';
 import { ConsultasCertificadoComponent } from './modules/home/consultas-certificado/consultas-certificado.component';
+import { ComunidadInstitucionalComponent } from './modules/home/comunidad-institucional/comunidad-institucional.component';
+import { DocumentoSenecyt } from './models/documento-senecyt';
+import { DocumentoSenecytComponent } from './modules/administradormodule/documento-senecyt/documento-senecyt.component';
 
 const routes: Routes = [
 
@@ -41,6 +44,8 @@ const routes: Routes = [
   { path: 'registrarPersona', component: registrarPersonaComponent },
 
   { path: 'welcome', component: WelcomeComponent },
+
+  { path: 'cominidad', component: ComunidadInstitucionalComponent },
 
   {path: 'consultas/certificados/aprovados/cursos/capactacionContinua', component: ConsultasCertificadoComponent},
 
@@ -70,6 +75,9 @@ const routes: Routes = [
   { path: 'permisos/rol/usuarios', component: PersmisosRolesUsuarioComponent, canActivate: [AuthGaurdGuard], data: {expectedRoles: ['Administrador'] }  },
 
   { path: 'gestion/validacion/cursos/capacitacion', component: ValidacionCursosCapacitacionComponent, canActivate: [AuthGaurdGuard], data: {expectedRoles: ['Administrador']}},
+
+  { path: 'gestion/subida/documento/senecyt/exel', component: DocumentoSenecytComponent, canActivate: [AuthGaurdGuard], data: {expectedRoles: ['Administrador']}},
+
 
   //FIN ADMINISTRADORES --------------------------------------------------------------------------
 

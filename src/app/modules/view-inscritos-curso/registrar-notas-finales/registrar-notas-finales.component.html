@@ -9,7 +9,13 @@
 
 
     <div class="attendance-section">
-        <h2 class="section-title"><strong>REGISTRO DE NOTAS FINALES DE LOS ESTUDIANTES</strong> </h2>
+        <h2 class="section-title"><strong>{{estadoFinal === 'F'? 'REVISIÓN DE LAS NOTAS FINALES' : 'REGISTRO DE NOTAS FINALES DE LOS ESTUDIANTES'}}</strong> </h2>
+
+    </div>
+
+
+    <div style="text-align: center;" *ngIf="estadoFinal === 'F'">
+        <p-tag icon="pi pi-times" severity="danger" value="CURSO FINALIZADO, SOLO PUEDE REVISAR LAS NOTAS CONCEDIDAS A LOS ESTUDIANTES, AL IGUAL QUE IMPRIMIR CADA UNO DE LOS REPORTES.."></p-tag>
 
     </div>
 

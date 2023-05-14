@@ -21,8 +21,6 @@ export class ListCourseComponent implements OnInit {
   layout: string = 'list';
   rows = 5;
 
-
-
   public idUsuarioIsLoggin: any;
   public idCapacitador: any;
   constructor(
@@ -102,7 +100,9 @@ export class ListCourseComponent implements OnInit {
     this.router.navigate(['/register/necesidad', idcurso]);
   }
 
-  public VerCursoInicio(idCurso: number) {
+  public VerCursoInicio(idCurso: number, estadoFinal: String) {
+    localStorage.setItem('status', String(estadoFinal));
+
     this.router.navigate(['/verMatriculados/course/inicio', idCurso]);
   }
 
@@ -176,15 +176,26 @@ export class ListCourseComponent implements OnInit {
       .subscribe((data) => {
         if (data != null) {
           // alert('Succesful published course')
-          this.toastrService.success('Publicando', 'Publicasión del curso éxitosa', {
-            timeOut: 1500,
-            progressBar: true,
-            progressAnimation: 'increasing',
-          });
+          this.toastrService.success(
+            'Publicando',
+            'Publicasión del curso éxitosa',
+            {
+              timeOut: 1500,
+              progressBar: true,
+              progressAnimation: 'increasing',
+            }
+          );
           setTimeout(() => {
             window.location.reload();
           }, 1500);
         }
       });
+  }
+
+  public visiblePeriodoMensual?: boolean = false;
+  public classNewCourse = new Curso();
+  public modalViewoption(curso: Curso) {
+    this.classNewCourse = { ...curso };
+    this.visiblePeriodoMensual = true;
   }
 }

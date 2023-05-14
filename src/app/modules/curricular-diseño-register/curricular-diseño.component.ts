@@ -202,7 +202,15 @@ export class CurricularDiseñoComponent implements OnInit {
 
   public generarDisenioCurricular(): void {
     this.disenioCurricular.silabo = this.silabo;
+    if (!this.disenioCurricular?.temasTransversales || !this.disenioCurricular?.estrategiasAprendizaje) {
+
+      this.toastr.warning(
+        'Se encontraron campos vacios, por favor complete el formulario','CAMPOS VACIOS'
+        
+      );
+  } else {
     this.disenioCurricular.estadoDisenioCurricular = true;
+    
     this.disenioCurricularService.saveDisenioCurricular(this.disenioCurricular).subscribe(disenioData => {
       this.disenioCurricular = disenioData;
       this.idDisenioCurricularCap = this.disenioCurricular.idDisenioCurricular;
@@ -219,10 +227,18 @@ export class CurricularDiseñoComponent implements OnInit {
       console.log("Disenio Curricular generado id->" + this.idDisenioCurricularCap)
     })
   }
+  }
   /* */
 
   /* ENTIDADES SEGUIDAS DEL DISEÑO CURRICULAR */
   public generarEvaliacionDiagnostica(): void {
+    if (!this.evaluacionDiagnosticoCurricular?.instrumnetoEvaluar || !this.evaluacionDiagnosticoCurricular?.tecnicaEvaluar) {
+
+      this.toastr.warning(
+        'Se encontraron campos vacios, por favor complete el formulario','CAMPOS VACIOS'
+        
+      );
+  } else {
     for (let evaluacionDiagnostica of this.listEvaluacionDiagnosticaCurricular) {
       evaluacionDiagnostica.disenioCurricular = this.disenioCurricular;
       evaluacionDiagnostica.estadoEvaluacionDiagnostica = true;
@@ -231,8 +247,16 @@ export class CurricularDiseñoComponent implements OnInit {
       });
     }
   }
+  }
 
   public generarEvaluacionFormativa(): void {
+    if (!this.evaluacionFormativaCurricular?.instrumnetoFormativa || !this.evaluacionFormativaCurricular?.tecnicaFormativa) {
+
+      this.toastr.warning(
+        'Se encontraron campos vacios, por favor complete el formulario','CAMPOS VACIOS'
+        
+      );
+  } else {
     for (let evaluacionFormativa of this.listEvaluacionFormativaCurricular) {
       evaluacionFormativa.disenioCurricular = this.disenioCurricular;
       evaluacionFormativa.estadoEvaluacionFormativa = true;
@@ -241,8 +265,16 @@ export class CurricularDiseñoComponent implements OnInit {
       });
     }
   }
+  }
 
   public generarEvaluacionFinal(): void {
+    if (!this.evaluacionFinalCurricular?.instrumnetoFormativaFinal || !this.evaluacionFinalCurricular?.tecnicaFormativaFinal) {
+
+      this.toastr.warning(
+        'Se encontraron campos vacios, por favor complete el formulario','CAMPOS VACIOS'
+        
+      );
+  } else {
     for (let evaluacionFinal of this.listEvaluacionFinalCurricular) {
       evaluacionFinal.disenioCurricular = this.disenioCurricular;
       evaluacionFinal.estadoEvaluacionFinal = true;
@@ -251,8 +283,17 @@ export class CurricularDiseñoComponent implements OnInit {
       });
     }
   }
+  }
 
   public generarEntornoAprendizaje(): void {
+    if (!this.entornoAprendizajeCurricular?.fasePractica || !this.entornoAprendizajeCurricular?.faseTeorica 
+      || !this.entornoAprendizajeCurricular?.instalaciones) {
+
+      this.toastr.warning(
+        'Se encontraron campos vacios, por favor complete el formulario','CAMPOS VACIOS'
+        
+      );
+  } else {
     for (let entornoAprendizaje of this.listEntornoAprendizaje) {
       entornoAprendizaje.disenioCurricular = this.disenioCurricular;
       entornoAprendizaje.estadoEntornoAprendizaje = true;
@@ -260,6 +301,7 @@ export class CurricularDiseñoComponent implements OnInit {
         console.log("Se creo Entorno Aprendizaje =)");
       });
     }
+  }
   }
 
   /* */
@@ -508,7 +550,13 @@ export class CurricularDiseñoComponent implements OnInit {
       ...this.disenioCurricular, // copiar todos los valores existentes de this.disenioCurricular
       estadoDisenioCurricular: true // sobrescribir el valor de estadoDisenioCurricular con true
     };
-  
+    if (!this.disenioCurricular?.temasTransversales || !this.disenioCurricular?.estrategiasAprendizaje) {
+
+      this.toastr.warning(
+        'Se encontraron campos vacios, por favor complete el formulario','CAMPOS VACIOS'
+        
+      );
+  } else {
     this.disenioCurricularService.updateDisenioCurricular(this.idDelDisenio!, nuevoDisenioCurricular).subscribe(
       data => {
         this.traerDatos(this.idDelDisenio!);
@@ -518,10 +566,19 @@ export class CurricularDiseñoComponent implements OnInit {
       }
     );
   }
+  }
   
   
 
   public actualizarEntornoAprendizaje(): void {
+    if (!this.entornoAprendizajeCurricular?.fasePractica || !this.entornoAprendizajeCurricular?.faseTeorica 
+      || !this.entornoAprendizajeCurricular?.instalaciones) {
+
+      this.toastr.warning(
+        'Se encontraron campos vacios, por favor complete el formulario','CAMPOS VACIOS'
+        
+      );
+  } else {
     if (this.opcionCapEntornoAprendizaje == "C") {
       this.entornoAprendizajeCurricular.disenioCurricular = this.disenioCurricular;
       this.entornoAprendizajeCurricular.estadoEntornoAprendizaje = true;
@@ -541,6 +598,7 @@ export class CurricularDiseñoComponent implements OnInit {
         }
       )
     }
+  }
   }
   // FIN 
 
@@ -569,6 +627,14 @@ export class CurricularDiseñoComponent implements OnInit {
   }
 
   public actualizarEvaluacionDiagnostica(): void {
+    if (!this.evaluacionDiagnosticoCurricular?.instrumnetoEvaluar || !this.evaluacionDiagnosticoCurricular?.tecnicaEvaluar) {
+
+        this.toastr.warning(
+          'Se encontraron campos vacios, por favor complete el formulario','CAMPOS VACIOS'
+          
+        );
+    } else {
+    
     if (this.opcionElegida == "C") {
       this.evaluacionDiagnosticoCurricular.disenioCurricular = this.disenioCurricular;
       this.evaluacionDiagnosticoCurricular.estadoEvaluacionDiagnostica = true;
@@ -588,6 +654,7 @@ export class CurricularDiseñoComponent implements OnInit {
         }
       )
     }
+  }
   }
   // CREATE AND UPDATE EVALUACION FORMATIVA
   visibleFive1?: boolean;
@@ -613,6 +680,13 @@ export class CurricularDiseñoComponent implements OnInit {
   }
 
   public actualizarEvaluacionFormativa(): void {
+    if (!this.evaluacionFormativaCurricular?.instrumnetoFormativa || !this.evaluacionFormativaCurricular?.tecnicaFormativa) {
+
+      this.toastr.warning(
+        'Se encontraron campos vacios, por favor complete el formulario','CAMPOS VACIOS'
+        
+      );
+  } else {
     if (this.opcionElegidaEvaluacionFormativa == "C") {
       this.evaluacionFormativaCurricular.disenioCurricular = this.disenioCurricular;
       this.evaluacionFormativaCurricular.estadoEvaluacionFormativa = true;
@@ -632,6 +706,7 @@ export class CurricularDiseñoComponent implements OnInit {
         }
       )
     }
+  }
   }
 
   // CREATE AND UPDATE EVALUACION Final
@@ -658,6 +733,14 @@ export class CurricularDiseñoComponent implements OnInit {
   }
 
   public actualizarEvaluacionFinal(): void {
+
+    if (!this.evaluacionFinalCurricular?.instrumnetoFormativaFinal || !this.evaluacionFinalCurricular?.tecnicaFormativaFinal) {
+
+      this.toastr.warning(
+        'Se encontraron campos vacios, por favor complete el formulario','CAMPOS VACIOS'
+        
+      );
+  } else {
     if (this.opcionElegidaEvaluacionFinal == "C") {
       this.evaluacionFinalCurricular.disenioCurricular = this.disenioCurricular;
       this.evaluacionFinalCurricular.estadoEvaluacionFinal = true;
@@ -677,6 +760,7 @@ export class CurricularDiseñoComponent implements OnInit {
         }
       )
     }
+  }
   }
 
   // FIN

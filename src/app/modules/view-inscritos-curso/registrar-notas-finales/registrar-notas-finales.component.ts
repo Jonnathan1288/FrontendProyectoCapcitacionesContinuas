@@ -27,6 +27,8 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 
   public classCursoFinalizaEstado = new Curso();
 
+  public estadoFinal?: any;
+
   constructor(
     private activateRoute: ActivatedRoute,
     private router: Router,
@@ -43,6 +45,7 @@ export class RegistrarNotasFinalesComponent implements OnInit {
   idCursoGlobal?: number;
 
   ngOnInit(): void {
+    this.estadoFinal = localStorage.getItem('status')
     this.activateRoute.params.subscribe((param) => {
       const idCursoRout = param['id'];
       console.log('Idcurso => ' + idCursoRout);

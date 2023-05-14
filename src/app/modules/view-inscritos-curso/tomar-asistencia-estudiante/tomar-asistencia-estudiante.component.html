@@ -19,6 +19,12 @@
         </div>
     </div>
 
+    <div style="text-align: center;" *ngIf="estadoFinal === 'F'">
+        <p-tag icon="pi pi-times" severity="danger" value="CURSO FINALIZADO, SOLO PUEDE REVISAR EL HISTORIAL DE ASISTENCIAS DE SUS ALUMNOS."></p-tag>
+
+    </div>
+
+
     <div class="container mt-2 ">
         <div class="card text-center mb-2 shadow-4 rounded-5">
             <p-table [value]="listAsistenciasAntiguas" [paginator]="true" [rows]="rows" [showCurrentPageReport]="true"

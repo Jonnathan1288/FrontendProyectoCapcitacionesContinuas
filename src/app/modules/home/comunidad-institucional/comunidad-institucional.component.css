@@ -1,0 +1,16 @@
+.container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	/* margin-left: 280px; */
+  }
+
+/*
+.container2{
+	width: 2500px;
+	height: 500px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-left: 280px;
+} */

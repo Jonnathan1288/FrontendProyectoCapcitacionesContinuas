@@ -29,6 +29,8 @@ export class TomarAsistenciaEstudianteComponent implements OnInit {
   layout: string = 'list';
   rows = 5;
 
+  public estadoFinal?: any;
+
   constructor(
     private activateRoute: ActivatedRoute,
     private router: Router,
@@ -37,6 +39,7 @@ export class TomarAsistenciaEstudianteComponent implements OnInit {
     private participanteMatriculadoService: ParticipanteMatriculadoService
   ) {}
   ngOnInit(): void {
+    this.estadoFinal = localStorage.getItem('status')
     this.activateRoute.params.subscribe((param) => {
       const idEstudiantesM = param['id'];
       this.idCursoEstudiantesMatriculados = idEstudiantesM;

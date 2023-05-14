@@ -136,10 +136,20 @@ export class ValidacionCursosCapacitacionComponent implements OnInit {
     }
     this.cursoService.updateCurso(this.classCursoValidanew.idCurso!, this.classCursoValidanew).subscribe((data) => {
       if (data != null) {
-        console.log({dataCurso: data})
-        alert('succesful');
+        // console.log({dataCurso: data})
+        if(data.estadoAprovacionCurso === 'A'){
+          this.toastrService.success('Curso aprovado', 'CURSO APROVADO');
+
+        }else{
+          this.toastrService.error('El curso a sido rechazado.', 'CURSO RECHAZADO');
+        }
+
+        // alert('succesful');
       }
     });
+    setTimeout(() => {
+      location.reload();
+    }, 1300);
   }
 
   public classHojaVidaDocenteCapacitador = new HojaVidaCapacitador();
