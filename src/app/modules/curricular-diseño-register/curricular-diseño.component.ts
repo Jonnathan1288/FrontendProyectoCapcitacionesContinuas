@@ -218,6 +218,24 @@ export class CurricularDiseñoComponent implements OnInit {
         
       );
   } else {
+
+    //ID
+    if(this.listEvaluacionDiagnosticaCurricular.length  < 1){
+      this.toastr.warning(
+        'VAIAAAAAAAAAAAAA','LISTA VACIA'
+        
+      );
+      return;
+    }
+
+    // if(this.listEvaluacionDiagnosticaCurricular.length  < 1){
+    //   this.toastr.warning(
+    //     'VAIAAAAAAAAAAAAA','LISTA VACIA'
+        
+    //   );
+    //   return;
+    // }
+
     this.disenioCurricular.estadoDisenioCurricular = true;
     
     this.disenioCurricularService.saveDisenioCurricular(this.disenioCurricular).subscribe(disenioData => {
