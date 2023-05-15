@@ -1,4 +1,4 @@
-
+<!-- 
 
 <header>
     <div class="header-top">
@@ -26,7 +26,6 @@
                     <a routerLink="/welcome">
                    
                         <img src="https://i.ibb.co/QDy827D/ak-logo.png">
-                        <!-- <img src="../../../assets/img/fcp.png"> -->
                     </a>
                 </div>
                 <div id="head-mobile"></div>
@@ -47,4 +46,30 @@
             </nav>
         </div>
     </div>
-</header>
+</header> -->
+
+<nav class="navbar navbar-expand-custom navbar-mainbg">
+    <a class="navbar-brand navbar-logo" routerLink="/welcome">
+        <i class='bx bxs-smile icon'></i><strong>CCotinuas</strong> 
+    </a>
+    <button class="navbar-toggler" type="button" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <i class="fas fa-bars text-white"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+            <div class="hori-selector"><div class="left"></div><div class="right"></div></div>
+            <li class="nav-item active" >
+                <a class="nav-link" routerLink='#'><i class="fa-solid fa-house-chimney-window" style="color: #3B82F6;"></i>Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link"  routerLink="/cominidad" ><i class="fa-solid fa-school-flag" style="color: #3B82F6;"></i>Comunidad</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink='/consultas/certificados/aprovados/cursos/capactacionContinua'><i class="fa-solid fa-certificate" style="color: #3B82F6;"></i>Certificados</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/login"><i class="fa-solid fa-door-open" style="color: #537fca;"></i>Iniciar sesión</a>
+            </li>
+        </ul>
+    </div>
+</nav>
