@@ -165,7 +165,7 @@ export class MatriculComponent implements OnInit {
   public getReportNecesidadCurso() {
    
     this.reportService
-      .gedownloadFichaDeInscripcion(this.idDetalleFichaMaricula!)
+      .gedownloadFichaDeInscripcion(this.inscritos.curso?.idCurso!, this.inscritos.usuario?.idUsuario!)
       .subscribe((r) => {
         const url = URL.createObjectURL(r);
         window.open(url, '_blank');
