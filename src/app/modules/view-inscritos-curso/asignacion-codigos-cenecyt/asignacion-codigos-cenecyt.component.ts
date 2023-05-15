@@ -6,6 +6,7 @@ import { ReportsCapacitacionesService } from 'src/app/service/reports-capacitaci
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Curso } from 'src/app/models/curso';
 import { Message, MessageService } from 'primeng/api';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-asignacion-codigos-cenecyt',
   templateUrl: './asignacion-codigos-cenecyt.component.html',
@@ -18,7 +19,7 @@ import { Message, MessageService } from 'primeng/api';
       }
     `,
   ],
-  providers: [MessageService]
+  providers: [MessageService],
 })
 export class AsignacionCodigosCenecytComponent implements OnInit {
   //CODIGO DE PRIME
@@ -37,15 +38,16 @@ export class AsignacionCodigosCenecytComponent implements OnInit {
   public idUsuarioIsLoggin?: any;
   public listCursoCapacitador: Curso[] = [];
 
-  mesajePantalla:String = "Vacio";
+  mesajePantalla: String = 'Vacio';
 
-  msgs1: Message[]=[];
+  msgs1: Message[] = [];
   constructor(
     private participantesAprovadoService: ParticipanteAprobadoService,
     private reportService: ReportsCapacitacionesService,
     sanitizer: DomSanitizer,
     private cursoService: CursoService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private toastrService: ToastrService
   ) {
     this.sanitizer = sanitizer;
   }
@@ -58,10 +60,13 @@ export class AsignacionCodigosCenecytComponent implements OnInit {
       // {severity:'success', summary:'Success', detail:'Message Content'},
       // {severity:'info', summary:'Info', detail:'Message Content'},
       // {severity:'warn', summary:'Warning', detail:'Message Content'},
-      {severity:'error', summary:'Error', detail:'Este estudiante aún no tiene certificado firmado.'},
+      {
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Este estudiante aún no tiene certificado firmado.',
+      },
       // {severity:'custom', summary:'Custom', detail:'Message Content', icon: 'pi-file'}
-  ];
-  
+    ];
   }
 
   public listCourseporUsuarioLogin(idUsuario: number) {
@@ -70,10 +75,10 @@ export class AsignacionCodigosCenecytComponent implements OnInit {
       .subscribe((data) => {
         this.listCursoCapacitador = data;
 
-        this.listCursoCapacitador = data.filter((cursosFinalizados)=>
-        cursosFinalizados.estadoPublicasionCurso === 'F'
-
-        )
+        this.listCursoCapacitador = data.filter(
+          (cursosFinalizados) =>
+            cursosFinalizados.estadoPublicasionCurso === 'F'
+        );
       });
   }
 
@@ -106,11 +111,21 @@ export class AsignacionCodigosCenecytComponent implements OnInit {
       });
   }
 
-  onRowEditInit() {
+  public onRowEditInit() {
     this.editing = true;
   }
 
-  onRowEditSave() {
+  public isCodigoDuplicado: boolean = false;
+  public verifiqueCodSenecytRepeat(event: any) {
+    const codigoRepeat = event.target.value.trim();
+  
+    this.isCodigoDuplicado = this.listFilterEstudiantesAprovados.some(estudiante => estudiante.codigoSenecyt === codigoRepeat);
+  }
+  
+  
+  
+
+  public onRowEditSave() {
     const participantesAprobadosCopy = this.listparticipanteAprovado.map(
       (participante) => {
         const participanteCopy = { ...participante }; // Copiar el objeto original
@@ -131,17 +146,22 @@ export class AsignacionCodigosCenecytComponent implements OnInit {
       .subscribe(
         (data) => {
           if (data != null) {
-            alert('Update successful');
+            // alert('Update successful');
+            this.toastrService.success(
+              'La información de los certificados han sido actualizados correctamente.',
+              'DATOS ACTUALIZADOS'
+            );
             this.editing = false;
-            this.getParticipanteAprovadoPorIdCursoParCodigosCenecyt(this.idCursoFinalRepors);
+            this.getParticipanteAprovadoPorIdCursoParCodigosCenecyt(
+              this.idCursoFinalRepors
+            );
           }
         },
         (err) => {
-          alert(err.error);
+          // alert(err.error);
           this.editing = false;
         }
       );
-
   }
 
   onRowEditCancel() {
@@ -183,16 +203,15 @@ export class AsignacionCodigosCenecytComponent implements OnInit {
     this.pdfSrc = '';
     this.classCertificado = { ...certificado };
 
-    if(this.classCertificado.certificadoParticipante === null){
+    if (this.classCertificado.certificadoParticipante === null) {
       this.pdfSrc = '';
-    }else{
+    } else {
       this.pdfSrc = this.sanitizer.bypassSecurityTrustResourceUrl(
         '' + this.classCertificado.certificadoParticipante
       );
     }
-    
-    this.visiblePeriodoMensual = true;
 
+    this.visiblePeriodoMensual = true;
   }
 
   public closeTitulo() {
@@ -288,16 +307,20 @@ export class AsignacionCodigosCenecytComponent implements OnInit {
 
   //DESCARGAR CERTIFICADO DE CADAD ESTUDIANTE
 
-  public downloadCertificadoEstudianteSenecytDownload(participanteAprovado: ParticipantesAprobados) {
+  public downloadCertificadoEstudianteSenecytDownload(
+    participanteAprovado: ParticipantesAprobados
+  ) {
     this.reportService
-      .downloadCertificadoEstudiante(participanteAprovado.partipantesMatriculados?.inscrito?.curso?.idCurso!, participanteAprovado.partipantesMatriculados?.inscrito?.usuario?.persona?.identificacion!)
+      .downloadCertificadoEstudiante(
+        participanteAprovado.partipantesMatriculados?.inscrito?.curso?.idCurso!,
+        participanteAprovado.partipantesMatriculados?.inscrito?.usuario?.persona
+          ?.identificacion!
+      )
       .subscribe((r) => {
         const url = URL.createObjectURL(r);
         window.open(url, '_blank');
       });
   }
 
-
   // downloadCertificadoEstudiante}
-
 }

@@ -10,8 +10,6 @@
             <button pButton pRipple label="Imprimir" icon="pi pi-print" class="p-button-primary mr-2 inline-block"
                 (click)="showModaLImprimirMensal()"></button>
 
-            <!-- <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload> -->
-            <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button>
         </ng-template>
     </p-toolbar>
 
@@ -144,7 +142,7 @@
             </div>
             <!-- Fin del periodo porgrama -->
             <div class="col-md-12" style="text-align: center; margin: 5px;">
-                <p-button type="ngSubmit" label="Guardar Programa" icon="pi pi-save"
+                <p-button type="ngSubmit" [label]="classPeriodoPrograma.idPeriodoPrograma? 'Actualizar Programa': 'Guardar Programa'" icon="pi pi-save"
                     styleClass="p-button-success  mb-2"></p-button>
             </div>
         </div>

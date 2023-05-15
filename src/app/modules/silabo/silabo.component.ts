@@ -70,10 +70,12 @@ export class SilaboComponent implements OnInit {
     this.silaboService.getsilabooValidacion(this.idCursoCap).subscribe(
       data =>{
         if (data === true) {
-            alert('Ya tiene silabo' + data)
+          this.toastrService.success('Datos recuperados!.');
+            // alert('Ya tiene silabo' + data)
             this.traerDatos(this.idCursoCap);
         } else {
-          alert(" no tien silabo")
+          this.toastrService.info('Listo para crear silabo!.');
+          // alert(" no tien silabo")
           this.obtenerDatosCurso();
         }
       }
@@ -292,6 +294,10 @@ export class SilaboComponent implements OnInit {
                   const url = URL.createObjectURL(r);
                   window.open(url, '_blank');
                 });
+
+                setTimeout(() => {
+                  location.reload();
+                }, 1200);
             })
           }
         }
@@ -390,6 +396,9 @@ export class SilaboComponent implements OnInit {
               silaboData => {
                 this.silabo = silaboData;
                 this.toastrService.success('Silabo actualizado correctamente', 'Actualización Exitosa');
+                setTimeout(() => {
+                  location.reload();
+                }, 1200);
             })
           }
         }

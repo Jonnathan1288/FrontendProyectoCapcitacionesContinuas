@@ -29,65 +29,75 @@ export class LoginComponent implements OnInit {
     if (this.usuario.username && this.usuario.password) {
       this.oauthService
         .login(this.usuario.username ?? '', this.usuario.password ?? '')
-        .subscribe((data) => {
-          if (data != null) {
-            this.roles = data.roles!;
-            console.log(this.roles)
-            // if (this.roles?.length === 0) {
-            //   this.modalViewRolNoasigando();
-            // }
+        .subscribe(
+          (data) => {
+            if (data != null) {
+              this.roles = data.roles!;
+              localStorage.removeItem('id_username');
+              localStorage.removeItem('id_persona');
+              localStorage.removeItem('foto');
+              localStorage.removeItem('rol');
+              localStorage.removeItem('username');
+              if (data.estadoUsuarioActivo == false) {
+                this.toastrService.error(
+                  'Lo sentimos su cuenta esta desactidada, contactate con los administradores.s',
+                  'CUENTA DESACTIVADA',
+                  {
+                    timeOut: 3000,
+                  }
+                );
+              } else {
 
+                //Almacenar en el storage
+                localStorage.setItem('id_username', String(data.idUsuario));
+                localStorage.setItem(
+                  'id_persona',
+                  String(data.persona?.idPersona)
+                );
+                localStorage.setItem('foto', String(data.fotoPerfil));
 
-            localStorage.removeItem('id_username');
-            localStorage.removeItem('id_persona');
-            localStorage.removeItem('foto');
-            localStorage.removeItem('rol');
-            localStorage.removeItem('username');
+                localStorage.setItem('username', String(data.username));
 
-            //Almacenar en el storage
-            localStorage.setItem('id_username', String(data.idUsuario));
-            localStorage.setItem('id_persona', String(data.persona?.idPersona));
-            localStorage.setItem('foto', String(data.fotoPerfil));
+                if (data.roles?.length! > 1) {
+                  this.modalView();
+                } else {
+                  this.toastrService.success('Bienvenido', 'Registro Exitoso', {
+                    timeOut: 1500,
+                    progressBar: true,
+                    progressAnimation: 'increasing',
+                  });
 
-            localStorage.setItem('username', String(data.username));
+                  for (let rol of data.roles!) {
+                    localStorage.setItem('rol', String(rol.nombreRol));
+                  }
 
-            if (data.roles?.length! > 1) {
-              this.modalView();
-            } else {
-              this.toastrService.success('Bienvenido', 'Registro Exitoso', {
-                timeOut: 1500,
-                progressBar: true,
-                progressAnimation: 'increasing',
-              });
-
-              for (let rol of data.roles!) {
-                localStorage.setItem('rol', String(rol.nombreRol));
+                  setTimeout(() => {
+                    this.showSpinner = false;
+                    window.location.reload();
+                    location.replace('/home');
+                  }, 1500);
+                }
               }
-
-              setTimeout(() => {
-                this.showSpinner = false;
-                window.location.reload();
-                location.replace('/home');
-              }, 1500);
+            } else {
+              this.toastrService.error(
+                'Credenciales Incorrectas',
+                'Revise sus credenciales',
+                {
+                  timeOut: 3000,
+                }
+              );
             }
-          } else {
+          },
+          (err) => {
             this.toastrService.error(
-              'Credenciales Incorrectas',
-              'Revise sus credenciales',
+              'Revise sus Credenciales de acceso.',
+              'Usuario no registrado',
               {
                 timeOut: 3000,
               }
             );
           }
-        }, (err)=>{
-          this.toastrService.error(
-            'Revise sus Credenciales de acceso.',
-            'Usuario no registrado',
-            {
-              timeOut: 3000,
-            }
-          );
-        });
+        );
     } else {
       this.toastrService.warning(
         'Uno o más campos vacios',
@@ -98,6 +108,9 @@ export class LoginComponent implements OnInit {
       );
     }
   }
+
+  //VALIDACION DENTRO DEL LOGIN CREDENCIALES CORRECTAS
+  public loginNext() {}
 
   //paso a la parte de registro de persona si no tengo cuenta en el portal.
 
@@ -129,10 +142,10 @@ export class LoginComponent implements OnInit {
     }, 1500);
   }
 
-
   //ROL NO ASIGNADO
   public visibleRolnoAsignado?: boolean = false;
   public modalViewRolNoasigando() {
     this.visibleRolnoAsignado = true;
   }
+
 }

@@ -154,6 +154,7 @@ export class ProgramasCapacitacionComponent implements OnInit {
                       timeOut: 1500,
                     }
                   );
+                  this.visible = false;
                 }
               });
           }
@@ -271,7 +272,7 @@ export class ProgramasCapacitacionComponent implements OnInit {
     if (this.wordNoFind === '') {
       this.listaProgramasFilter = this.listaProgramas;
     } else {
-      let programaslist = this.listaProgramasFilter.filter(
+      let programaslist = this.listaProgramas.filter(
         (p) =>
           (p.nombrePrograma?.toLowerCase().includes(this.wordNoFind) ||
           p.periodoPrograma?.nombrePeriodoPrograma?.toLowerCase().includes(this.wordNoFind) ||

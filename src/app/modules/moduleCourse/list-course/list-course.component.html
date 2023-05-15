@@ -1,143 +1,152 @@
+
+
+<!-- NUEVO DISEÑO PARA LA VISTA -->
+
 <div class="card">
-    <p-dataView #dv [value]="cursoList" [layout]="layout" [rows]="3" [paginator]="true">
+    <p-toolbar styleClass="mb-4">
+        <ng-template pTemplate="left">
+            <button pButton pRipple label="Nuevo" icon="pi pi-plus" class="p-button-success mr-2"
+                (click)="newCursoCapcitacion()"></button>
+
+        </ng-template>
+
+
+
+        <ng-template pTemplate="right">
+            <div class="flex align-items-center justify-content-between">
+                <h5 class="m-0"><strong>MIS CURSOS DE CAPACITACIÓN</strong></h5>
+               
+            </div>
+        </ng-template>
+    </p-toolbar>
+
+    <p-table #dt [value]="cursoList" dataKey="id" styleClass="p-datatable-customers" [rowHover]="true" [rows]="5"
+        [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,15]" responsiveLayout="scroll" [paginator]="true"
+        currentPageReportTemplate="Mostrando {first} to {last} of {totalRecords} programas" [filterDelay]="0"
+        [showCurrentPageReport]="true" [globalFilterFields]="['nombreCurso','duracionCurso','fechaInicioCurso','fechaFinalizacionCurso']">
+        
+
+        <ng-template pTemplate="caption">
+            <div class="flex">
+                <!-- <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt1)"></button> -->
+                <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"
+                (click)="clear(dt)"></button>
+
+                <span class="p-input-icon-left ml-auto">
+                    <i class="pi pi-search"></i>
+                    <!-- <input pInputText type="text" (input)="filterTableCourse($event)"
+                        placeholder="Search keyword" /> -->
+
+                        <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                        placeholder="Search keyword" />
+
+                </span>
+            </div>
+        </ng-template>
+
+        
         <ng-template pTemplate="header">
-            <div class="flex justify-content-end">
-                <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
+            <tr>
+                <!-- <th style="width: 3rem">
+                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                </th> -->
+                <th pSortableColumn="nombreCurso"><strong>NOMBRE PROGRAMA</strong><p-sortIcon
+                        field="nombreCurso"></p-sortIcon>
+                </th>
+                <th pSortableColumn="duracionCurso"><strong>DURACIÓN</strong><p-sortIcon
+                        field="duracionCurso"></p-sortIcon>
+                </th>
+                <th pSortableColumn="fechaInicioCurso"><strong>FECHA INICIO</strong>
+                    <p-sortIcon field="fechaInicioCurso"></p-sortIcon></th>
+                <th pSortableColumn="fechaFinalizacionCurso"><strong>FECHA FIN</strong> <p-sortIcon
+                        field="fechaFinalizacionCurso"></p-sortIcon></th>
+                <th style="text-align: center;"><strong>FOTO</strong></th>
+                <th pSortableColumn="estadoPublicasionCurso"><strong>ASISTENCÍA</strong><p-sortIcon
+                        field="estadoPublicasionCurso"></p-sortIcon></th>
+                <th pSortableColumn="estadoAprovacionCurso"><strong>INSCRITOS </strong><p-sortIcon
+                        field="estadoAprovacionCurso"></p-sortIcon></th>
+
+                <th pSortableColumn="estadoPublicasionCurso"><strong>ESTADO </strong><p-sortIcon
+                        field="estadoPublicasionCurso"></p-sortIcon></th>
+                <!-- <th pSortableColumn="inventoryStatus">Estado <p-sortIcon field="inventoryStatus"></p-sortIcon></th> -->
+
+                <th pSortableColumn="estadoPublicasionCurso"><strong>PUBLICACIÓN </strong><p-sortIcon
+                        field="estadoPublicasionCurso"></p-sortIcon></th>
+
+                <th style="text-align: center;"><strong>GESTIÓN</strong> </th>
+
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-data>
+            <tr>
+
+
+
+                <td>{{data.nombreCurso}}</td>
+                <td>{{data.duracionCurso}} horas/s </td>
+                <td>{{data.fechaInicioCurso}}</td>
+                <td>{{data.fechaFinalizacionCurso}}</td>
+                <td><img [src]="data.fotoCurso ? 'data:image/jpeg;base64,' + data.fotoCurso : '../../../../assets/img/camer.png'"
+                        width="100" class="shadow-4" /></td>
+                <td style="text-align: center;">
+
+                    <button [disabled]="data.estadoAprovacionCurso != 'A'" pButton pRipple icon="pi pi-book"
+                        class="p-button-rounded p-button-success mr-2 mt-1" (click)="VerCursoInicio(data.idCurso, data.estadoPublicasionCurso)"></button>
+                </td>
+                <td style="text-align: center;">
+                    <button [disabled]="data.estadoAprovacionCurso != 'A'" pButton pRipple icon="pi pi-list"
+                        class="p-button-rounded p-button-secondary mr-2 mt-1" (click)="VerParticipantesInscritos(data.idCurso)"></button>
+                </td>
+                <td>
+
+                    <p-message
+                        [severity]="data.estadoPublicasionCurso === 'I'? 'success': data.estadoPublicasionCurso === 'F'? 'warn':'info'"
+                        [text]="data.estadoPublicasionCurso === 'I'? 'INICIO': data.estadoPublicasionCurso === 'F'? 'FINALIZO': 'PENDIENTE'"
+                        styleClass="mr-2"></p-message>
+
+                </td>
+
+                <td style="text-align: center;"> <button pButton pRipple icon="pi pi-send"
+                        class="p-button-rounded p-button-secondary mr-2 mt-1" (click)="showModaLPublisedCourse(data)"></button></td>
+                <td style="text-align: center;">
+                    <button pButton pRipple icon="pi pi-bars"
+                        class="p-button-rounded p-button-secondary mr-2 mt-1" (click)="modalViewoption(data)"></button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <div class="flex align-items-center justify-content-between">
+                En total hay {{cursoList ? cursoList.length : 0 }} Registros de cursos.
             </div>
         </ng-template>
-        <ng-template let-product pTemplate="listItem">
-            <div class="col-12">
-                <div class="flex flex-column xl:flex-row xl:align-items-start p-4 gap-4">
-                    <img [src]="product.fotoCurso ? 'data:image/jpeg;base64,' + product.fotoCurso : '../../../../assets/img/camer.png'" [alt]="product.fotoCurso" class="w-9 sm:w-16rem xl:w-10rem shadow-2 block xl:block mx-auto border-round"/>
-                    <div class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
-                        <div class="flex flex-column align-items-center sm:align-items-start gap-3">
-                            <div class="text-2xl font-bold text-900"> {{product.nombreCurso}}</div>
-                            <!-- <p-rating [ngModel]="product.rating" [readonly]="true" [cancel]="false"></p-rating> -->
-                            <div class="flex align-items-center gap-3">
-                                <!-- <span class="flex align-items-center gap-2">
-                                    <i class="pi pi-tag"></i>
-                                </span> -->
-                                <p-tag *ngIf="product.estadoPublicasionCurso === 'I'" [value]="'INICIO'" severity="success"></p-tag>
-                                <p-tag *ngIf="product.estadoPublicasionCurso === 'F'" [value]="'FINALIZO'" severity="warning"></p-tag>
-                            </div>
-                            <div class="flex align-items-center justify-content-between" >
-                                <p-speedDial appendTo="body" [model]="items" (onClick)="opcionesBotonesLista(product.idCurso)" type="circle" [radius]="80" buttonClassName="md:align-self-end mb-2 p-button-rounded p-button-success"></p-speedDial>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </ng-template>
-        <ng-template let-product pTemplate="gridItem">
-            <div class="col-12 sm:col-6 lg:col-12 xl:col-4 p-2">
-                <div class="p-4 border-1 surface-border surface-card border-round">
-                    <div class="flex flex-wrap align-items-center justify-content-between gap-2">
-                        <p-speedDial appendTo="body" [model]="items" type="circle" (onClick)="opcionesBotonesLista(product.idCurso)" [radius]="80" buttonClassName="p-button-success"></p-speedDial>
-                        <!-- <span class="flex align-items-center gap-2">
-                            <i class="pi pi-tag"></i>
-                            <span class="font-semibold">{{ product.category }}</span>
-                        </span> -->
-                        <p-tag *ngIf="product.estadoPublicasionCurso === 'I'" [value]="'INICIO'" severity="success"></p-tag>
-                        <p-tag *ngIf="product.estadoPublicasionCurso === 'F'" [value]="'FINALIZO'" severity="warning"></p-tag>
-                    </div>
-                    <div class="flex flex-column align-items-center gap-3 py-5">
-                        <img [src]="product.fotoCurso ? 'data:image/jpeg;base64,' + product.fotoCurso : '../../../../assets/img/camer.png'" [alt]="product.fotoCurso" class="w-9 sm:w-16rem xl:w-10rem shadow-2 block xl:block mx-auto border-round" />
-                        <div class="text-2xl font-bold">{{product.nombreCurso}}</div>
-                    </div>
-                </div>
-            </div>
-        </ng-template>
-    </p-dataView>
-    </div>
-
-
-
-<div class="container mt-4">
-    <div class="card text-center mb-2">
-
-        <h5 class="mt-4 ">MIS CURSOS</h5>
-        <div class="mb-3">
-            <p-button type="button" icon="pi pi-chevron-left" (click)="prev()" [disabled]="isFirstPage()"
-                styleClass="p-button-text"></p-button>
-            <p-button type="button" icon="pi pi-refresh" (click)="reset()" styleClass="p-button-text"></p-button>
-            <p-button type="button" icon="pi pi-chevron-right" (click)="next()" [disabled]="isLastPage()"
-                styleClass="p-button-text"></p-button>
-
-        </div>
-        <p-table [value]="cursoList" [paginator]="true" [rows]="rows" [showCurrentPageReport]="true" [(first)]="first"
-            [tableStyle]="{'min-width': '50rem'}"
-            currentPageReportTemplate="Mostrando {first} to {last} of {totalRecords} usuarios"
-            [rowsPerPageOptions]="[5,7,10]">
-            <ng-template pTemplate="header">
-                <tr>
-
-                    <th style="width:25%">NOMBRE</th>
-                    <th style="width:25%">DURACIÓN</th>
-                    <th style="width:25%">F-INICIO</th>
-                    <th style="width:25%">F-FIN</th>
-                    <th style="width:25%">FOTO</th>
-              
-                    <!-- <th style="width:25%">SILABO</th> -->
-                    <!-- <th style="width:25%">NECESIDAD</th> -->
-                    <th style="width:25%">VER-CURSO</th>
-                    <th style="width:25%">INSCRITOS</th>
-                    <!-- <th style="width:25%">RegFoto</th> -->
-                    <th style="width:25%">Publicar</th>
-
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-data>
-                <tr>
-                    <td>{{data.nombreCurso}}</td>
-                    <td>{{data.duracionCurso}}</td>
-                    <td>{{data.fechaInicioCurso}}</td>
-                    <td>{{data.fechaFinalizacionCurso}}</td>
-
-                    <td><img [src]="'data:image/jpeg;base64,' + data.fotoCurso" alt="" width="50px" height="50px"
-                            class="rounded-circle"></td>
-                 
-                    <!-- <td><p-button type="button" icon="pi pi-eye" styleClass="p-button-text"
-                            (click)="silabo(data.idCurso)"></p-button></td> -->
-                    <!-- <td><p-button type="button" icon="pi pi-send" styleClass="p-button-text"
-                            (click)="editCurso(data.idCurso)"></p-button></td> -->
-                    <td><p-button type="button" icon="pi pi-eye" styleClass="p-button-text"
-                            (click)="VerCursoInicio(data.idCurso)"></p-button></td>
-                    <td><p-button type="button" icon="pi pi-eye" styleClass="p-button-text"
-                            (click)="VerParticipantesInscritos(data.idCurso)"></p-button></td>
-                    <!-- <td><p-button type="button" icon="pi pi-eye" styleClass="p-button-text"
-                            (click)="VerRegistroFotografico(data.idCurso)"></p-button></td>-->
-                    <td> 
-
-                        <p-button type="button" icon="pi pi-send" styleClass="p-button-text"
-                            (click)="showModaLPublisedCourse(data)"></p-button>
-
-                    </td>
-
-
-                    <!-- <p-button *ngIf="data.estadoAprovacionCurso == 'A' || data.estadoPublicasionCurso == ''" type="button" icon="pi pi-send"
-                            styleClass="p-button-text" (click)="updateEstadoPublico(data)"></p-button>
-                        
-                        </td> -->
-
-                </tr>
-            </ng-template>
-        </p-table>
-    </div>
+    </p-table>
 </div>
 
 
 
 
-<!-- IMPLEMENTACION DEL MODAL PARA QUE VISUALICE EL CURSO -->
 
-<!-- <p-dialog header="{{cursoViewPublished.nombreCurso}}" [(visible)]="visibleCursoPublicar" [modal]="true"
-    [style]="{ width: '70vw', height: '250' }" [draggable]="false" [resizable]="false"> -->
 
-<!--  estadoPublicasionCurso : V: visible ; O: Oculto --  estadoAprovacionCurso -> D: Default ;  A: Aprovado ; R: Rechazado -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 <p-dialog
-    [header]="cursoViewPublished.nombreCurso + ' - ' + (cursoViewPublished.estadoPublicasionCurso === 'I' ? 'Iniciado': cursoViewPublished.estadoPublicasionCurso === 'V' ? 'Publicado' : cursoViewPublished.estadoAprovacionCurso === 'A' ? 'Listo para publicar' : cursoViewPublished.estadoAprovacionCurso === 'P' ? 'Estado de validación' : cursoViewPublished.estadoAprovacionCurso === 'R' ? 'Rechazado': 'Rechazado') "
+    [header]="cursoViewPublished.nombreCurso + ' - ' + (cursoViewPublished.estadoPublicasionCurso === 'F' ? 'Finalizado': cursoViewPublished.estadoPublicasionCurso === 'I' ? 'Iniciado': cursoViewPublished.estadoPublicasionCurso === 'V' ? 'Publicado' : cursoViewPublished.estadoAprovacionCurso === 'A' ? 'Listo para publicar' : cursoViewPublished.estadoAprovacionCurso === 'P' ? 'Estado de validación' : cursoViewPublished.estadoAprovacionCurso === 'R' ? 'Rechazado': 'Rechazado') "
     [(visible)]="visibleCursoPublicar" [modal]="true" [style]="{ width: '70vw', height: '250' }" [draggable]="false"
     [resizable]="false">
 
@@ -146,8 +155,10 @@
         [class.alert-success]="cursoViewPublished.estadoPublicasionCurso === 'I'"
         [class.alert-primary]="cursoViewPublished.estadoAprovacionCurso === 'A'"
         [class.alert-warning]="cursoViewPublished.estadoAprovacionCurso === 'P'"
-        [class.alert-danger]="cursoViewPublished.estadoAprovacionCurso === 'R'">
+        [class.alert-danger]="cursoViewPublished.estadoAprovacionCurso === 'R'"
+        [class.alert-success]="cursoViewPublished.estadoPublicasionCurso === 'F'">
         <div class="alert-heading" style="text-align: center;"> <strong>{{ cursoViewPublished.estadoPublicasionCurso ===
+                'F' ? 'Curso Finalizado': cursoViewPublished.estadoPublicasionCurso ===
                 'I' ? 'Curso Iniciado': cursoViewPublished.estadoPublicasionCurso ===
                 'V' ? 'Curso publicado' : cursoViewPublished.estadoAprovacionCurso === 'A' ? 'Curso listo para ser
                 publicado': cursoViewPublished.estadoAprovacionCurso === 'P' ? 'En este momento se encuentra validando
@@ -193,11 +204,11 @@
 
     <ng-template pTemplate="footer">
         <div class="p-grid p-justify-end">
-            <p-button label="Editar" icon="pi pi-pencil" styleClass="p-button-secondary mb-2"
-                (onClick)="editarCursoCapacitadionContinua()"></p-button>
+            <p-button [disabled]="cursoViewPublished.estadoPublicasionCurso === 'F'" label="Editar" icon="pi pi-pencil"
+                styleClass="p-button-secondary mb-2" (onClick)="editarCursoCapacitadionContinua()"></p-button>
 
             <p-button label="Publicar" icon="pi pi-send" styleClass="p-button-primary mb-2"
-                [disabled]="cursoViewPublished.estadoAprovacionCurso !== 'A' || cursoViewPublished.estadoPublicasionCurso === 'V' || cursoViewPublished.estadoPublicasionCurso === 'I'"
+                [disabled]="cursoViewPublished.estadoAprovacionCurso !== 'A' || cursoViewPublished.estadoPublicasionCurso === 'V' || cursoViewPublished.estadoPublicasionCurso === 'I' || cursoViewPublished.estadoPublicasionCurso === 'F'"
                 (onClick)="updatePublicCursosCapacitacion()"></p-button>
 
         </div>
@@ -212,6 +223,51 @@
             <p-button (onClick)="closeModalView()" label="Aceptar" icon="pi pi-check"
                 styleClass="p-button-success  mb-2"></p-button>
         </div>
+    </div>
+
+</p-dialog>
+
+
+
+<p-dialog header="OPCIONES DEL CURSO" [(visible)]="visiblePeriodoMensual"
+    [modal]="true" [style]="{ width: '25vw', height: '25' }" [draggable]="false" [resizable]="false">
+    <div class="grid p-fluid m-2">
+        
+
+        
+
+        <div class="col-12 md:col-12 ">
+            <div class=" mr-4 mx-4" style="text-align: center;">
+                <p-button label="Sílabo" icon="pi pi-book" styleClass="p-button-success" badge="1"
+                    badgeClass="p-badge-primary" (onClick)="generacionSilaboCurso()"></p-button>
+
+            </div>
+        </div>
+
+        <div class="col-12 md:col-12 ">
+            <div class=" mr-4 mx-4" style="text-align: center;">
+                <p-button label="Necesidad de Curso" icon="pi pi-file-pdf" styleClass="p-button-primary" badge="2"
+                    badgeClass="p-badge-secondary" (onClick)="necesidadCurso()"></p-button>
+
+            </div>
+        </div>
+
+        <div class="col-12 md:col-12 ">
+            <div class=" mr-4 mx-4" style="text-align: center;">
+                <p-button label="Registro fotográfico" icon="pi pi-camera" styleClass="p-button-secondary" badge="3"
+                    badgeClass="p-badge-success" (onClick)="reistroFotograficoCurso()"></p-button>
+
+            </div>
+        </div>
+
+        <div class="col-12 md:col-12 ">
+            <div class=" mr-4 mx-4" style="text-align: center;">
+                <p-button label="Editar curso" icon="pi pi-pencil" styleClass="p-button-success" badge="4"
+                    badgeClass="p-badge-primary" (onClick)="editarCurso()"></p-button>
+
+            </div>
+        </div>
+        
     </div>
 
 </p-dialog>

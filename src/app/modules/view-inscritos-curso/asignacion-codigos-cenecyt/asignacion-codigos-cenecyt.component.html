@@ -19,13 +19,13 @@
         </ng-template>
 
         <ng-template pTemplate="right">
-            <button pButton pRipple label="Evaluación" icon="pi pi-file-pdf" class="p-button-danger mr-2" (click)="getFichaEvalucaionFinalCurso()" [disabled]="listFilterEstudiantesAprovados.length <= 0"></button>
+            <button pButton pRipple label="Evaluación" icon="pi pi-file-pdf" class="p-button-danger mr-2" (click)="getFichaEvalucaionFinalCurso()" [disabled]="listparticipanteAprovado.length <= 0"></button>
 
             <button pButton pRipple label="Senecyt" icon="pi pi-print" class="p-button-primary mr-2 inline-block"
-                (click)="getCodigosSenecytDownload()" [disabled]="listFilterEstudiantesAprovados.length <= 0"></button>
+                (click)="getCodigosSenecytDownload()" [disabled]="listparticipanteAprovado.length <= 0"></button>
 
             <button pButton pRipple label="Firmas" icon="pi pi-print" class="p-button-help"
-                (click)="getEstudiantesParaHacerFirmar()" [disabled]="listFilterEstudiantesAprovados.length <= 0"></button>
+                (click)="getEstudiantesParaHacerFirmar()" [disabled]="listparticipanteAprovado.length <= 0"></button>
         </ng-template>
     </p-toolbar>
 
@@ -41,7 +41,7 @@
                 <span class="p-input-icon-left">
                     <i class="pi pi-search"></i>
                     
-                    <input [disabled]="listFilterEstudiantesAprovados.length <= 0" pInputText type="text" placeholder="Search..." (input)="filterTableEventParticipantesAprovados($event)"/>
+                    <input [disabled]="listparticipanteAprovado.length <= 0" pInputText type="text" placeholder="Search..." (input)="filterTableEventParticipantesAprovados($event)"/>
                 </span>
             </div>
         </ng-template>
@@ -108,6 +108,11 @@
                 <td style="width:12%; text-align: center;">
                     <div class="container" *ngIf="editing">
                         <input pInputText type="text" [(ngModel)]="certificadosPar.codigoSenecyt">
+                        <!-- <div class="container" *ngIf="editing">
+                            <input pInputText type="text" [(ngModel)]="certificadosPar.codigoSenecyt" (input)="verifiqueCodSenecytRepeat($event)">
+                            <div *ngIf="isCodigoDuplicado" style="color: red">El código ingresado ya existe</div>
+                          </div> -->
+                          
                     </div>
                     <div class="container" *ngIf="!editing">
                         {{certificadosPar.codigoSenecyt}}
@@ -127,7 +132,7 @@
 
                     <div class="container" *ngIf="editing" style="text-align: center;">
                         <div class="con">
-                            <button pButton pRipple type="button" icon="pi pi-file-pdf" class="p-button p-button-danger"
+                            <button pButton pRipple type="button" icon="pi pi-file-pdf" [class]="certificadosPar.certificadoParticipante? 'p-button p-button-danger':'p-button p-button-secondary'"
                                 (click)="showModaLImprimirMensal(certificadosPar)"></button>
                         </div>
                         <div class=" mt-1">

@@ -56,7 +56,7 @@ export class PersmisosRolesUsuarioComponent implements OnInit {
       this.listUsuariosFilter = this.listClassUsuario;
       // this.numerFoundCountAnimal = this.listALLAnimals.length;
     } else {
-      let filterUsusariosRoles = this.listUsuariosFilter.filter(
+      let filterUsusariosRoles = this.listClassUsuario.filter(
         (user) =>
           user.persona?.nombre1?.toLowerCase().includes(this.wordNoFind) ||
           user.persona?.nombre2?.toLowerCase().includes(this.wordNoFind) ||
@@ -198,5 +198,22 @@ export class PersmisosRolesUsuarioComponent implements OnInit {
     this.classUsuario = new Usuario();
     this.listRoleAsignarUser = [];
     this.visible = true;
+  }
+
+   //Eliminado logico del sistema
+   public eliminadoLogicoDelCapacitador(user: Usuario) {
+
+    user.estadoUsuarioActivo = !user.estadoUsuarioActivo; // Alternar el estado activo/desactivado
+
+      this.usuarioService.updateUsuario(user?.idUsuario!, user!).subscribe((data)=>{
+        if(data != null){
+          if (user.estadoUsuarioActivo) {
+            this.toastrService.success('Usuario a sido activodo/a', 'Usuario activo');
+          } else {
+            this.toastrService.warning('Usuario a sido inactivado/a', 'Usuario Inactivo');
+          }
+          // this.listDocentesCapacitadores();
+        }
+      })
   }
 }

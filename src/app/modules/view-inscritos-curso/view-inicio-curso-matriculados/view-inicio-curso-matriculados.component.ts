@@ -22,6 +22,8 @@ export class ViewInicioCursoMatriculadosComponent implements OnInit {
   layout: string = 'list';
   rows = 5;
 
+  public estadoFinal?: any;
+
   constructor(
     private participantesMatriculadosService: ParticipanteMatriculadoService,
     private activateRoute: ActivatedRoute,
@@ -30,6 +32,7 @@ export class ViewInicioCursoMatriculadosComponent implements OnInit {
     private notasService: NotasService
   ) {}
   ngOnInit(): void {
+    this.estadoFinal = localStorage.getItem('status')
     this.activateRoute.params.subscribe((param) => {
       const idCursoRout = param['id'];
       this.idCursoMatricula = idCursoRout;

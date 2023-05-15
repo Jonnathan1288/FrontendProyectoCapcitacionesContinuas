@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environment/enviroment';
-import { FichaMatricula } from '../models/fichaMatricula';
 import { ParticipantesMatriculados } from '../models/participantesMatriculados';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';

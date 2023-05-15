@@ -4,6 +4,8 @@ import { Asistencia } from 'src/app/models/asistencia';
 import { AsistenciaService } from 'src/app/service/asistencia.service';
 import { DatePipe } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
+import { ParticipantesMatriculados } from 'src/app/models/participantesMatriculados';
+import { ParticipanteMatriculadoService } from 'src/app/service/participante-matriculado.service';
 
 @Component({
   selector: 'app-tomar-asistencia-estudiante',
@@ -27,13 +29,17 @@ export class TomarAsistenciaEstudianteComponent implements OnInit {
   layout: string = 'list';
   rows = 5;
 
+  public estadoFinal?: any;
+
   constructor(
     private activateRoute: ActivatedRoute,
     private router: Router,
     private asistenciaService: AsistenciaService,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private participanteMatriculadoService: ParticipanteMatriculadoService
   ) {}
   ngOnInit(): void {
+    this.estadoFinal = localStorage.getItem('status')
     this.activateRoute.params.subscribe((param) => {
       const idEstudiantesM = param['id'];
       this.idCursoEstudiantesMatriculados = idEstudiantesM;
@@ -181,6 +187,33 @@ export class TomarAsistenciaEstudianteComponent implements OnInit {
       }, (err)=>{
         this.listAsistenciasAntiguas = [];
         console.log(err)
+      });
+  }
+
+
+
+  //Eliminado logico del sistema
+  public eliminadoLogicoDelCapacitador(participantesMatriculados: ParticipantesMatriculados) {
+    // capacitador.estadoActivoCapacitador = false;
+
+    participantesMatriculados.estadoParticipanteActivo = !participantesMatriculados.estadoParticipanteActivo; // Alternar el estado activo/desactivado
+
+    if(participantesMatriculados.estadoParticipanteActivo == true){
+      participantesMatriculados.estadoParticipanteAprobacion = 'P'
+    }else{
+      participantesMatriculados.estadoParticipanteAprobacion = 'X'
+    }
+    this.participanteMatriculadoService
+      .updateParticipantesMatriculados(participantesMatriculados.idParticipanteMatriculado!, participantesMatriculados)
+      .subscribe((data) => {
+        if (data != null) {
+          if (participantesMatriculados.estadoParticipanteActivo) {
+            this.toastrService.success('Estudiante activo', 'ASISTE');
+          } else {
+            this.toastrService.warning('Estudiante a sido almacenado como retirado', 'ESTUDIANTE RETIRADO');
+          }
+          //this.listDocentesCapacitadores();
+        }
       });
   }
 

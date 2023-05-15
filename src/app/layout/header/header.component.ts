@@ -11,7 +11,7 @@ export class HeaderComponent implements OnInit{
     private scriptC: LoadScript,
     // private speech: SpeechRecognitionService
   ) {
-    scriptC.Cargar(['header']);
+    scriptC.Cargar(['header','winner']);
     // this.speech.record('es_ES').subscribe((e) => (this.title = e));
   }
   ngOnInit(): void {}

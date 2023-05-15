@@ -75,12 +75,12 @@
         <div class="title">
           <p class="bold">Experiencia Laboral</p>
         </div>
-        <ul>
+        <ul *ngFor="let laboral of listLaboral">
           <li>
             <!-- <div class="date">2013 - 2015</div> -->
             <div class="info">
               <!-- <p class="semi-bold">Lorem ipsum dolor sit amet.</p> -->
-              <p>{{hojaVida.experiencialLaboral}}</p>
+              <p>{{laboral}}</p>
             </div>
           </li>
         </ul>
@@ -89,12 +89,12 @@
         <div class="title">
           <p class="bold">Educación</p>
         </div>
-        <ul>
+        <ul *ngFor="let lista of listEducacion">
           <li>
             <!-- <div class="date">2010 - 2013</div> -->
             <div class="info">
               <!-- <p class="semi-bold">Web Designing (Texas University)</p> -->
-              <p>{{hojaVida.experienciaEscolar}}</p>
+              <p>{{lista}}</p>
             </div>
           </li>
         </ul>

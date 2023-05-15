@@ -55,9 +55,8 @@ export class AsignacionRolCapacitadorComponent implements OnInit {
     private capacitadorService: CapacitadorService,
     private hojadeVidaServcie: HojaVidaCapacitadorService,
     sanitizer: DomSanitizer,
-    private reportService: ReportsCapacitacionesService,
     private toastrService: ToastrService,
-    private router: Router
+
   ) {
     this.sanitizer = sanitizer;
     this.stateOptions = [
@@ -86,7 +85,7 @@ export class AsignacionRolCapacitadorComponent implements OnInit {
       // this.numerFoundCountAnimal = this.listALLAnimals.length;
     } else {
       let filterDocenteCapacitador =
-        this.listDocentesCapacitadoresFilter.filter(
+        this.listClassCapacitador.filter(
           (capacitador) =>
             capacitador.usuario?.persona?.nombre1
               ?.toLowerCase()
@@ -384,23 +383,20 @@ export class AsignacionRolCapacitadorComponent implements OnInit {
   }
 
   //Eliminado logico del sistema
-  public eliminadoLogicoDelCapacitador(capacitador: Capacitador) {
-    // capacitador.estadoActivoCapacitador = false;
+  public eliminadoLogicoDelCapacitador(user: Usuario) {
 
-    capacitador.estadoActivoCapacitador = !capacitador.estadoActivoCapacitador; // Alternar el estado activo/desactivado
+    user.estadoUsuarioActivo = !user.estadoUsuarioActivo; // Alternar el estado activo/desactivado
 
-    this.capacitadorService
-      .updateCapacitador(capacitador.idCapacitador!, capacitador)
-      .subscribe((data) => {
-        if (data != null) {
-          if (capacitador.estadoActivoCapacitador) {
-            this.toastrService.success('Docente a sido activodo/a', 'Docente activo');
+      this.usuarioService.updateUsuario(user?.idUsuario!, user!).subscribe((data)=>{
+        if(data != null){
+          if (user.estadoUsuarioActivo) {
+            this.toastrService.success('Usuario a sido activodo/a', 'Usuario activo');
           } else {
-            this.toastrService.warning('Docente a sido inactivado/a', 'Docente Inactivo');
+            this.toastrService.warning('Usuario a sido inactivado/a', 'Usuario Inactivo');
           }
           this.listDocentesCapacitadores();
         }
-      });
+      })
   }
 
   //Traer los docetes capacitadores en el sistema..
