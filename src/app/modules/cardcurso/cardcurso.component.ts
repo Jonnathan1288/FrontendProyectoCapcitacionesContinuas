@@ -63,7 +63,7 @@ export class CardcursoComponent implements OnInit {
 
   filtrarPorModalidadBasicos() {
     this.listCursos = this.listCursosOriginal.filter(
-      (curso) => curso.nivelCurso!.nombreNivelCurso === 'Basico'
+      (curso) => curso.nivelCurso!.nombreNivelCurso === 'Básico'
     );
   }
 
