@@ -22,8 +22,8 @@ export class ReportsCapacitacionesService {
   }
 
   //Reportes que va tener el admin..
-  public gedownloadFichaDeInscripcion(idFicha: number) {
-    return this.http.get(environment.apiuri+ '/generarFichaInscripcion/downloadFicha/'+idFicha, { responseType: 'blob' });
+  public gedownloadFichaDeInscripcion(idCurso: number, idUsusario: number) {
+    return this.http.get(environment.apiuri+ '/generarFichaInscripcion/downloadFicha/'+idCurso+'/'+idUsusario, { responseType: 'blob' });
   }
 
   //Reportes que va tener el admin..
