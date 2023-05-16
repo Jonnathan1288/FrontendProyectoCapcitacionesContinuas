@@ -5,6 +5,7 @@ import { Area } from 'src/app/models/area';
 import { Curso } from 'src/app/models/curso';
 import { LoadScript } from 'src/app/scripts/load-script';
 import { CursoService } from 'src/app/service/curso.service';
+import { StorageService } from 'src/app/service/storage.service';
 
 @Component({
   selector: 'app-cardcurso',
@@ -12,15 +13,23 @@ import { CursoService } from 'src/app/service/curso.service';
   styleUrls: ['./cardcurso.component.css', './cardcurso.component.scss'],
 })
 export class CardcursoComponent implements OnInit {
-  ngOnInit(): void {
-    this.obtenerCursosFull();
-  }
 
+  public estadoMovimient?: boolean = false;
   constructor(
     private router: Router,
     private cursoService: CursoService,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private localService: StorageService
   ) {}
+  
+  ngOnInit(): void {
+    this.obtenerCursosFull();
+    if(this.localService.isLoggedIn()){
+      this.estadoMovimient = true;
+    }else{
+      this.estadoMovimient = false;
+    }
+  }
 
   listCursos: Curso[] = [];
   listCursosOriginal: Curso[] = [];
@@ -37,7 +46,12 @@ export class CardcursoComponent implements OnInit {
   }
 
   public pasarInfoCurso(idCurso: any): void {
-    this.router.navigate(['/cardcu/detalle', idCurso]);
+
+    if(this.localService.isLoggedIn()){
+      this.router.navigate(['/cardcu/detalle', idCurso]);
+    }else{
+      this.router.navigate(['/login']);
+    }
   }
 
   public pasarInfoCursoIsncripcion(idCurso: any): void {

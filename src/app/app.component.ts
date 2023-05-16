@@ -50,6 +50,8 @@ export class AppComponent implements OnInit {
         this.currentUrl = event.url;
       }
     });
+
+    
   }
 
   public logOut() {

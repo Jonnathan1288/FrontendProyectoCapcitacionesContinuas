@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container mb-5">
   <div>
     <div class="button-group  m-4" style="text-align: center;">
       <button class="button" (click)="obtenerCursosFull()">Todos</button>
@@ -31,7 +31,8 @@
         <div class="col-12 md:col-7 ">
 
 
-          <p-dropdown [options]="listAreaFilter" placeholder="{{ placeholder }}" optionLabel="name" [showClear]="true" (onChange)="updatePlaceholder($event)">
+          <p-dropdown [options]="listAreaFilter" placeholder="{{ placeholder }}" optionLabel="name" [showClear]="true"
+            (onChange)="updatePlaceholder($event)">
             <ng-template let-area pTemplate="item">
               <div (click)="capturarIDAreFiltercourse(area.idArea)">{{ area.nombreArea }}</div>
             </ng-template>
@@ -47,23 +48,36 @@
 
           <div class="ui-g-12 ui-md-4">
 
-            <p-calendar placeholder="Filtar por mes" (onSelect)="onDateSelect($event)" id="fechaEvidencia" name="fechaEvidencia" view="month"
-              dateFormat="mm/yy" [yearNavigator]="true" yearRange="2000:2030" [readonlyInput]="true"
-              [showIcon]="true"></p-calendar>
+            <p-calendar placeholder="Filtar por mes" (onSelect)="onDateSelect($event)" id="fechaEvidencia"
+              name="fechaEvidencia" view="month" dateFormat="mm/yy" [yearNavigator]="true" yearRange="2000:2030"
+              [readonlyInput]="true" [showIcon]="true"></p-calendar>
           </div>
         </div>
         <div class="col-12 md:col-2 ">
-          <button pButton type="button" class="p-button-primary" icon="pi pi-times" (click)="obtenernuevamenteLosCursosSinFiltros()"></button>
+          <button pButton type="button" class="p-button-primary" icon="pi pi-times"
+            (click)="obtenernuevamenteLosCursosSinFiltros()"></button>
 
         </div>
       </div>
 
-      <!-- (onSelect)="onDateSelect($event)" -->
 
 
     </div>
 
+    <div class="container" style="text-align: center;" *ngIf="!estadoMovimient">
+      <p-message severity="info" text="INICIE SESIÓN PARA MÁS INFORMACIÓN DE LOS CURSOS DE CAPACITACIÓN CONTINUA"
+        styleClass="mr-2"></p-message>
+
+    </div>
+
     <div class="pricing__title m-5">Cursos</div>
+
+
+
+    <div class="" style="height: 100px;" *ngIf="listCursos.length === 0">
+
+    </div>
+
     <div class="pricing__grid">
       <div class="pricing__card pricing-card pricing-card_free" *ngFor="let list of listCursos">
         <div class="pricing-card__top">
