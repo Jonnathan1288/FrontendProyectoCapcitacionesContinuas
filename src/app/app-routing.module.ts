@@ -124,7 +124,7 @@ const routes: Routes = [
 
   { path: 'mat', component: MatriculComponent, canActivate: [AuthGaurdGuard], data: {expectedRoles: ['Participante'] }  },
 
-  { path: 'cards/course', component: CardcursoComponent, canActivate: [AuthGaurdGuard], data: {expectedRoles: ['Participante'] }  },
+  { path: 'cards/course', component: CardcursoComponent},
 
   { path: 'info', component: InfocursoComponent, canActivate: [AuthGaurdGuard], data: {expectedRoles: ['Participante'] } },
 
