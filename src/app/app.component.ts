@@ -55,7 +55,7 @@ export class AppComponent implements OnInit {
   public logOut() {
     this.isLogginPresent = true;
     localStorage.clear();
-    this.router.navigate(['/login']).then(() => {
+    this.router.navigate(['/welcome']).then(() => {
       window.location.reload();
     });
   }
