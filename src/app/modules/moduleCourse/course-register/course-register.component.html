@@ -99,7 +99,7 @@
 
     <form (ngSubmit)="validarCursosCpacitacionContinua()" novalidate style="padding: 15px;">
         <div class="surface-section px-4 py-4 md:px-6 lg:px-4  surface-card p-4 shadow-7 border-round w-full">
-            <p-card header="Infórme para la creación del curso" class="m-1">
+            <p-card header="Informe para la creación del curso" class="m-1">
                 <div class="personal-image">
                     <label class="label" style="border: black;">
                         <input type="file" accept="image/jpeg, image/jpg, image/png" (change)="subirFoto($event)" />
@@ -139,7 +139,7 @@
                         <div class="card flex justify-content-center" *ngIf="curso.idCurso">
                             <select pInputText [(ngModel)]="curso.parroquia?.canton!.idCanton" id="canton" name="canton"
                                 (change)="getEspecialidadesDependenceOfArea($event, null)" required>
-                                <option (ngValue)="undefined">Seleccione Canton</option>
+                                <option (ngValue)="undefined">Seleccione el Cantón</option>
                                 <option *ngFor="let areas of listAreaE" [value]="areas.idArea">{{areas.nombreArea}}
                                 </option>
                             </select>
@@ -272,7 +272,7 @@
                         <div class="card flex justify-content-center" *ngIf="!curso.idCurso">
                             <select pInputText placeholder="tipo" id="provincia" name="provincia" required
                                 (change)="findCantonByProvinciaEvent($event, null)">
-                                <option value="">Seleccione provincia</option>
+                                <option value="">Seleccione la Provincia</option>
                                 <option *ngFor="let pro of listProvincias" [value]="pro.idProvincia">{{pro.provincia}}
                                 </option>
                             </select>
@@ -285,7 +285,7 @@
                             <select pInputText placeholder="tipo"
                                 [(ngModel)]="curso!.parroquia!.canton?.provincia!.idProvincia" id="razaAnimal"
                                 name="razaAnimal" (change)="findCantonByProvinciaEvent($event, null)" required>
-                                <option (ngValue)="undefined">Seleccione la categoría</option>
+                                <option (ngValue)="undefined">Seleccione la Categoría</option>
                                 <option *ngFor="let pro of listProvincias" [value]="pro.idProvincia">{{pro.provincia}}
                                 </option>
                             </select>
@@ -304,7 +304,7 @@
                         <div class="card flex justify-content-center" *ngIf="!curso.idCurso">
                             <select pInputText placeholder="tipo" id="canton" name="canton" required
                                 (change)="findParroquiaByCantonEvent($event, null)">
-                                <option value="">Seleccione Canton</option>
+                                <option value="">Seleccione el Cantón</option>
                                 <option *ngFor="let canton of listCanton" [value]="canton.idCanton">{{canton.canton}}
                                 </option>
                             </select>
@@ -316,7 +316,7 @@
                         <div class="card flex justify-content-center" *ngIf="curso.idCurso">
                             <select pInputText [(ngModel)]="curso.parroquia?.canton!.idCanton" id="canton" name="canton"
                                 (change)="findParroquiaByCantonEvent($event, null)" required>
-                                <option (ngValue)="undefined">Seleccione Canton</option>
+                                <option (ngValue)="undefined">Seleccione el Cantón</option>
                                 <option *ngFor="let canton of listCanton" [value]="canton.idCanton">{{canton.canton}}
                                 </option>
                             </select>
@@ -333,7 +333,7 @@
                             <select pInputText id="parroquia" name="parroquia" required
                                 [(ngModel)]="curso.idCurso ? curso.parroquia?.idParroquia : emptyVa"
                                 (ngModelChange)="catchParroquiaByCantonEvent($event)">
-                                <option (ngValue)="undefined">Seleccione parroquia</option>
+                                <option (ngValue)="undefined">Seleccione la Parroquia</option>
                                 <option *ngFor="let parroquia of listParroquia"
                                     [ngValue]="curso.idCurso ? parroquia?.idParroquia : parroquia">
                                     {{parroquia.parroquia}}
@@ -550,7 +550,7 @@
                     <span class="p-float-label">
                         <textarea id="float-input" rows="5" cols="30" pInputTextarea id="observacionCurso"
                             name="observacionCurso" [(ngModel)]="curso.observacionCurso"></textarea>
-                        <label htmlFor="observacionCurso">Observacón del curso</label>
+                        <label htmlFor="observacionCurso">Observación del curso</label>
                     </span>
 
 
