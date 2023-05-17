@@ -50,12 +50,14 @@ export class AppComponent implements OnInit {
         this.currentUrl = event.url;
       }
     });
+
+    
   }
 
   public logOut() {
     this.isLogginPresent = true;
     localStorage.clear();
-    this.router.navigate(['/login']).then(() => {
+    this.router.navigate(['/welcome']).then(() => {
       window.location.reload();
     });
   }
