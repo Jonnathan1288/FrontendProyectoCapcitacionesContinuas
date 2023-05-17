@@ -127,7 +127,7 @@
                         <div class="card flex justify-content-center" *ngIf="!curso.idCurso">
                             <select pInputText placeholder="tipo" id="canton" name="canton" required
                                 (change)="getEspecialidadesDependenceOfArea($event, null)">
-                                <option value="">Seleccione Area</option>
+                                <option value="">Seleccione Área</option>
                                 <option *ngFor="let areas of listAreaE" [value]="areas.idArea">{{areas.nombreArea}}
                                 </option>
                             </select>
@@ -557,7 +557,7 @@
                 </div>
             </div>
 
-            <p-card header="Prerequisitos para acceder al curso" class="m-5">
+            <p-card header="Prerrequisitos para acceder al curso" class="m-5">
                 <form ngNativeValidate>
                     <div class="grid p-fluid m-3" *ngIf="!idCursoUpdate">
                         <div class="col-12 md:col-12 mt-1">
@@ -566,7 +566,7 @@
                                     <input type="text" pInputText id="nombrePrerequisitoCurso"
                                         name="nombrePrerequisitoCurso"
                                         [(ngModel)]="prerequisito.nombrePrerequisitoCurso" required>
-                                    <label htmlFor="username">Prerequisito para el curso</label>
+                                    <label htmlFor="username">Prerrequisitos para el curso</label>
                                 </span>
                             </div>
                         </div>
@@ -627,11 +627,13 @@
 
         </div>
     </form>
+
     <!-- <div class="container">
         <p-button label="Generar necesidad" icon="pi pi-plus" styleClass="p-button-success  mb-2"
             (click)="necesidad()"></p-button>
 
     </div> -->
+    
 </p-panel>
 
 
@@ -643,7 +645,7 @@
                 <span class="p-float-label">
                     <input type="text" pInputText id="nombrePrerequisitoCurso" name="nombrePrerequisitoCurso"
                         [(ngModel)]="prerequisito.nombrePrerequisitoCurso" required>
-                    <label htmlFor="username">Prerequisito para el curso</label>
+                    <label htmlFor="username">Prerrequisitos para el curso</label>
                 </span>
             </div>
         </div>
