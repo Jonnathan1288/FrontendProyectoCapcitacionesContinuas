@@ -188,6 +188,7 @@ export class EditDataUserComponent implements OnInit {
                             'Actualización exitosa de Docente Capacitador',
                             '¡Bien hecho!'
                           );
+                          
                         }
                       });
                   } else {
@@ -195,6 +196,11 @@ export class EditDataUserComponent implements OnInit {
                   }
                 }
               });
+
+              //Implementacion de la carga
+              setTimeout(() => {
+                location.reload();
+              }, 1000);
           }
         },
         (error) => {

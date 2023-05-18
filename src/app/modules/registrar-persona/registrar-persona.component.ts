@@ -344,6 +344,7 @@ export class registrarPersonaComponent implements OnInit {
   //LOCATION RELOAD
   reloadPage() {
     location.reload();
+    location.replace('/welcome');
   }
 
   nivelComplejidad?: string;

@@ -43,8 +43,8 @@ export class ViewInscritosCursoComponent implements OnInit {
 
   public iniciarCursoCapacitacionContinua() {
     this.confirmationService.confirm({
-      message: 'Esta seguro en finalizar el curso?',
-      header: 'Confirmación, una vez finalizado no podra hacer cambios.',
+      message: '¿Está seguro en iniciar el curso?',
+      header: 'Una vez iniciado el curso, solo puede ver a sus estudiantes.',
       icon: 'pi pi-exclamation-triangle',
       acceptLabel: 'Aceptar',
       rejectLabel: 'Cancelar',
