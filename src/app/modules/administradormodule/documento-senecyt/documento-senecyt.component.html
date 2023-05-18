@@ -15,7 +15,7 @@
         [filterDelay]="0" [showCurrentPageReport]="true">
         <ng-template pTemplate="caption">
             <div class="flex align-items-center justify-content-between">
-                <h5 class="m-0"><strong>DOCUMENTOS EXEL CON CÓDIGOS DE SENECYT</strong></h5>
+                <h5 class="m-0"><strong>DOCUMENTOS EXCEL CON CÓDIGOS DE SENESCYT</strong></h5>
                 <span class="p-input-icon-left">
                     <i class="pi pi-search"></i>
                     <input pInputText type="text" placeholder="Search..."
@@ -91,7 +91,7 @@
 
 <!-- IMPLEMENTACION DEL MODAL PARA EL INGRESO DE LOS CURSOS -->
 
-<p-dialog header="Documento con los códigos de la senecyt" [(visible)]="visible" [modal]="true"
+<p-dialog header="Documento con los códigos de la senescyt" [(visible)]="visible" [modal]="true"
     [style]="{ width: '50vw', height: '250' }" [draggable]="false" [resizable]="false">
     <form (ngSubmit)="validacionDocumentosExel()" novalidate style="padding: 15px;">
         <div class="grid p-fluid m-2">
