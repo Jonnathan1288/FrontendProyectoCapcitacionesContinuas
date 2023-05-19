@@ -31,4 +31,9 @@ export class UsuarioService {
   public updateUsuario(idUsusario:number, usuario: Usuario):Observable<Usuario>{
     return this.http.put<Usuario>(environment.apiuri+'/usuario/actualizar/'+idUsusario, usuario, { headers: this.storageService.returnToken()});
   }
+
+  //Acceso..
+  public getFindUsuarioByEmail(email: string):Observable<Usuario>{
+    return this.http.get<Usuario>(environment.apiUriSecurity+'/existByCorreo/'+email);
+  }
 }

@@ -46,6 +46,11 @@ import { DocumentoSenecytComponent } from './modules/administradormodule/documen
 import { RecuperarContraseniaComponent } from './modules/registrar-persona/recuperar-contrasenia/recuperar-contrasenia.component';
 
 
+//Importación de auth de firebase - Google
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { environment } from 'src/environment/enviroment';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -91,6 +96,8 @@ import { RecuperarContraseniaComponent } from './modules/registrar-persona/recup
     AppRoutingModule,
     PrimengModule,
     HttpClientModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireAuthModule,
     RouterModule,
     ReactiveFormsModule,
     FormsModule,
