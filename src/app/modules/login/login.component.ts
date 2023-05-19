@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit {
                 if (data.roles?.length! > 1) {
                   this.modalView();
                 } else {
-                  this.toastrService.success('Bienvenido', 'Registro Exitoso', {
+                  this.toastrService.success('Bienvenido', 'Ingreso Exitoso', {
                     timeOut: 1500,
                     progressBar: true,
                     progressAnimation: 'increasing',

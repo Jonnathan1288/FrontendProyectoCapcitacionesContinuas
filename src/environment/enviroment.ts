@@ -1,5 +1,5 @@
 export const environment = {
-  apiuri: 'http://localhost:8080/api',
+  apiuri: 'http://capacitaciones-continuas-ista.us-east-1.elasticbeanstalk.com/api',
  
 
 };
