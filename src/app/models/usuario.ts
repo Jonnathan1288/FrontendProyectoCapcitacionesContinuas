@@ -15,4 +15,10 @@ export class Usuario {
 export class UserLogin{
     username?: string;
     password?: string;
-  }
+}
+
+export class CambiarPasswordDTO{
+    password?: String;
+    confirmPassword?: String;
+    tokenPassword?: String;
+}
