@@ -34,12 +34,11 @@ export class LoginComponent implements OnInit {
         .login(this.user)
         .subscribe(
           (data) => {
-            alert(data)
             if (data != null) {
               this.info = data;
-              console.log(data)
+        
               // console.log(data?.token?)
-              console.log(this.info.token)
+           
               this.roles = this.info.user.roles!;
               localStorage.removeItem('id_username');
               localStorage.removeItem('id_persona');
