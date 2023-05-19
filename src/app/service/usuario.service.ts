@@ -3,31 +3,32 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environment/enviroment';
 import { Usuario } from '../models/usuario';
+import { StorageService } from './storage.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsuarioService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private storageService: StorageService) { }
 
   public listUsuario():Observable<Usuario[]>{
-    return this.http.get<Usuario[]>(environment.apiuri+'/usuario/listar');
+    return this.http.get<Usuario[]>(environment.apiuri+'/usuario/listar', { headers: this.storageService.returnToken()});
   }
 
   public getUsuarioById(idUsuario: number):Observable<Usuario>{
-    return this.http.get<Usuario>(environment.apiuri+'/usuario/findbyId/'+idUsuario);
+    return this.http.get<Usuario>(environment.apiuri+'/usuario/findbyId/'+idUsuario, { headers: this.storageService.returnToken()});
   }
 
   public getExistUsuarioByUsername(username: string):Observable<boolean>{
-    return this.http.get<boolean>(environment.apiuri+'/usuario/existsbyUsername/'+username);
+    return this.http.get<boolean>(environment.apiuri+'/usuario/existsbyUsername/'+username, { headers: this.storageService.returnToken()});
   }
 
   public saveUsuario(usuario: Usuario):Observable<Usuario>{
-    return this.http.post<Usuario>(environment.apiuri+'/usuario/crear', usuario);
+    return this.http.post<Usuario>(environment.apiUriSecurity+'/register', usuario);
   }
 
   public updateUsuario(idUsusario:number, usuario: Usuario):Observable<Usuario>{
-    return this.http.put<Usuario>(environment.apiuri+'/usuario/actualizar/'+idUsusario, usuario);
+    return this.http.put<Usuario>(environment.apiuri+'/usuario/actualizar/'+idUsusario, usuario, { headers: this.storageService.returnToken()});
   }
 }

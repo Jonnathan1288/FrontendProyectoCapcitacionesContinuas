@@ -11,3 +11,8 @@ export class Usuario {
     //rol?: Rol
     roles?: Rol[]
 }
+
+export class UserLogin{
+    username?: string;
+    password?: string;
+  }

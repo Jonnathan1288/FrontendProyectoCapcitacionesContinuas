@@ -3,33 +3,34 @@ import { Observable } from 'rxjs';
 import { DetalleFichaMatricula } from '../models/detalle-ficha-matricula';
 import { environment } from 'src/environment/enviroment';
 import { HttpClient } from '@angular/common/http';
+import { StorageService } from './storage.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DetalleFichaService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private storageService: StorageService) { }
 
     // public listArea():Observable<any>{
   //   return this.http.get<any>(environment.apiuri+'/area/list');
   // }
 
   public getDetalleFichaMatriculaById(idDetallefichaMatricula: number):Observable<DetalleFichaMatricula>{
-    return this.http.get<DetalleFichaMatricula>(environment.apiuri+'/detalleFichaService/findbyId/'+idDetallefichaMatricula);
+    return this.http.get<DetalleFichaMatricula>(environment.apiuri+'/detalleFichaService/findbyId/'+idDetallefichaMatricula, { headers: this.storageService.returnToken()});
   }
 
   public getDetalleFichaMatriculaByIdPorUsuario(idUsuarioDetalle: number):Observable<DetalleFichaMatricula>{
-    return this.http.get<DetalleFichaMatricula>(environment.apiuri+'/detalleFichaService/findbyIdUsuario/'+idUsuarioDetalle);
+    return this.http.get<DetalleFichaMatricula>(environment.apiuri+'/detalleFichaService/findbyIdUsuario/'+idUsuarioDetalle, { headers: this.storageService.returnToken()});
   }
 
   public saveDetalleFichaMatricula(detalleFichaMatricula: DetalleFichaMatricula):Observable<DetalleFichaMatricula>{
-    return this.http.post<DetalleFichaMatricula>(environment.apiuri+'/detalleFichaService/save', detalleFichaMatricula);
+    return this.http.post<DetalleFichaMatricula>(environment.apiuri+'/detalleFichaService/save', detalleFichaMatricula, { headers: this.storageService.returnToken()});
   }
 
 
   public editDetalleFichaMatricula(idDetallefichaMatricula: number,detalleFichaMatricula: DetalleFichaMatricula):Observable<DetalleFichaMatricula>{
-    return this.http.put<DetalleFichaMatricula>(environment.apiuri+'/detalleFichaService/update/'+idDetallefichaMatricula, detalleFichaMatricula);
+    return this.http.put<DetalleFichaMatricula>(environment.apiuri+'/detalleFichaService/update/'+idDetallefichaMatricula, detalleFichaMatricula, { headers: this.storageService.returnToken()});
   }
 
 
