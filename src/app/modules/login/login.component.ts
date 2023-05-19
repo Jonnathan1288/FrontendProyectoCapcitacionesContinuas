@@ -5,6 +5,7 @@ import { UserLogin, Usuario } from 'src/app/models/usuario';
 import { OauthService } from 'src/app/service/oauth.service';
 import { ToastrService } from 'ngx-toastr';
 import { Rol } from 'src/app/models/rol';
+import { RecuperarService } from 'src/app/service/recuperar-password.service';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private router: Router,
     private oauthService: OauthService,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private recuperarService: RecuperarService
   ) {}
   ngOnInit(): void {}
 
@@ -154,6 +156,41 @@ export class LoginComponent implements OnInit {
   public visibleRolnoAsignado?: boolean = false;
   public modalViewRolNoasigando() {
     this.visibleRolnoAsignado = true;
+  }
+
+  // RECUPERAR CONTRASEÑA
+  isSendCorreo: Boolean = false;
+  cedulaReset?: String;
+  public visibleRecuperarPassword?:boolean = false;
+  public modalViewRecuperarPassword() {
+    this.visibleRecuperarPassword = true;
+  }
+
+  public enviarCorreo(){
+    this.showSpinner = true;
+    if (this.cedulaReset == "" || this.cedulaReset == null) {
+      this.toastrService.error('Digite su cédula', 'Campo vacio')
+    } else {
+      this.oauthService.getUsuarioByIdentificacion(this.cedulaReset).subscribe(
+        (data) =>{
+            this.recuperarService.sendCorreoRecuperacion(this.cedulaReset!).subscribe(
+              data =>{
+                console.log(data);
+                this.toastrService.success('Correo enviado', 'Revise su correo')
+                this.isSendCorreo = true;
+                setTimeout(() => {
+                  this.showSpinner = false;
+                  window.location.reload();
+                  location.replace('/welcome');
+                }, 1800);
+              }
+            )
+        }, (Error) =>{
+          this.toastrService.error('Usuario inexistente', 'Vetifique su identifiación')
+        }
+      )
+    }
+    
   }
 
 }

@@ -43,6 +43,7 @@ import { EditDataUserComponent } from './modules/registrar-persona/edit-data-use
 import { ConsultasCertificadoComponent } from './modules/home/consultas-certificado/consultas-certificado.component';
 import { ComunidadInstitucionalComponent } from './modules/home/comunidad-institucional/comunidad-institucional.component';
 import { DocumentoSenecytComponent } from './modules/administradormodule/documento-senecyt/documento-senecyt.component';
+import { RecuperarContraseniaComponent } from './modules/registrar-persona/recuperar-contrasenia/recuperar-contrasenia.component';
 
 
 @NgModule({
@@ -83,6 +84,7 @@ import { DocumentoSenecytComponent } from './modules/administradormodule/documen
     ConsultasCertificadoComponent,
     ComunidadInstitucionalComponent,
     DocumentoSenecytComponent,
+    RecuperarContraseniaComponent,
   ],
   imports: [
     BrowserModule,

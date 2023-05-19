@@ -72,7 +72,7 @@
                           <input id="chk1" type="checkbox" name="chk" class="custom-control-input"> 
                           <label for="chk1" class="custom-control-label text-sm">Remember me</label>
                       </div>
-                      <!-- <a href="#" class="ml-auto mb-0 text-sm">Forgot Password?</a> -->
+                      <a class="ml-auto mb-0 text-sm text-blue-500" (click)="modalViewRecuperarPassword()">Olvido su contraseña?</a>
                   </div>
                   <div class="row mb-3 px-3">
                       <button type="submit" pButton pRipple label="Login"  icon="pi pi-user" class="w-full"></button>
@@ -138,3 +138,20 @@
   </div>
 </p-dialog>
 
+
+<p-dialog header="Recuperación de contraseña" [(visible)]="visibleRecuperarPassword"
+  [modal]="true" [style]="{ width: '35vw', height: '28vw' }" [draggable]="false" [resizable]="false"
+  [responsive]="true" [appendTo]="'body'">
+  <div class="container p-fluid">
+
+    <div class="card">
+      <div class="card-body">
+        <p><strong>Digitie su número de cédula:</strong> </p>
+        <input id="cedula" name="cedula" type="text" placeholder="Número de cédula" pInputText class="w-full mb-3"
+          [(ngModel)]="cedulaReset" >
+        <button pButton type="button" label="Enviar correo" icon="pi pi-envelope" (click)="enviarCorreo()"></button>
+        <p *ngIf="isSendCorreo === true" class="m-3" style="text-align: center; color: orange;" >Por favor, revise su correo electronico asociado a su cuenta, se le envio un mesaje para poder restablecer su contraseña.</p>
+      </div>
+    </div>
+  </div>
+</p-dialog>
