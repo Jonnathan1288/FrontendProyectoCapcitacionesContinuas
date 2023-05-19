@@ -7,12 +7,7 @@
                 (click)="clear()"></button>
         </ng-template>
 
-        <ng-template pTemplate="right">
-            <button pButton pRipple label="Imprimir" icon="pi pi-print"
-                class="p-button-primary mr-2 inline-block"></button>
-
-            <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button>
-        </ng-template>
+       
     </p-toolbar>
 
     <p-table #dt [value]="listUsuariosFilter" dataKey="id" styleClass="p-datatable-customers" [rowHover]="true" [rows]="5"
