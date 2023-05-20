@@ -1,3 +1,4 @@
+<div *ngIf="isResetPassword === false">
 <div *ngIf="!isLogginPresent">
   <section id="sidebar">
     <a routerLink="/home" class="brand"><i class='bx bxs-smile icon'></i>CCotinuas</a>
@@ -35,6 +36,7 @@
 
       <li *ngIf='isAdministrador'><a routerLink="/permisos/rol/usuarios"><i class='bx bxs-widget icon'></i> Permisos</a></li>
       <li *ngIf='isAdministrador'><a routerLink="/gestion/subida/documento/senecyt/exel"><i class='bx bxs-widget icon'></i> Documentos Excel</a></li>
+
       <!-- <li class="divider" data-text="table and forms">Table and forms</li>
       <li><a href="#"><i class='bx bx-table icon'></i> Tables</a></li>
       <li>
@@ -115,10 +117,16 @@
 </div>
 
 <!--Cuando el usuario se logeado accede al menu principal-->
-<div *ngIf="isLogginPresent">
-  <app-header></app-header>
-  <div class="main-content">
-    <router-outlet></router-outlet>
+  <div *ngIf="isLogginPresent">
+    <app-header></app-header>
+    <div class="main-content">
+      <router-outlet></router-outlet>
+    </div>
+    <app-footer></app-footer>
   </div>
-  <app-footer></app-footer>
+
+</div>
+
+<div *ngIf="isResetPassword === true">
+    <app-recuperar-contrasenia></app-recuperar-contrasenia>
 </div>

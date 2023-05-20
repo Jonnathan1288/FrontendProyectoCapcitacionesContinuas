@@ -11,3 +11,14 @@ export class Usuario {
     //rol?: Rol
     roles?: Rol[]
 }
+
+export class UserLogin{
+    username?: string;
+    password?: string;
+}
+
+export class CambiarPasswordDTO{
+    password?: String;
+    confirmPassword?: String;
+    tokenPassword?: String;
+}

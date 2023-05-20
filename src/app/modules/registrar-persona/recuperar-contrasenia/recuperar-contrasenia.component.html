@@ -1,0 +1,19 @@
+<div class="wrapper fadeInDown">
+    <div id="formContent">
+      <!-- Tabs Titles -->
+      <h2 class="active"> Restaurar Constraseña</h2>
+  
+      <!-- Icon -->
+      <div class="fadeIn first">
+        <img src="https://eduv.tecazuay.edu.ec/pluginfile.php/1/theme_academi/logo/1671035251/LOGO%20CUADRADO_SIN%20FONDO.png" class="m-3" height="150px" width="25px" id="icon" alt="User Icon" />
+      </div>
+  
+      <!-- Login Form -->
+      <form (ngSubmit)="cambiarContrasenia()">
+        <input type="text" id="password" class="fadeIn second" name="password" placeholder="Constraseña" [(ngModel)]="usuarioReset.password">
+        <input type="text" id="confirmPassword" class="fadeIn third" name="confirmPassword" placeholder="Repita su Constraseña" [(ngModel)]="usuarioReset.confirmPassword">
+        <input type="submit" class="fadeIn fourth" value="Recuperar">
+      </form>
+  
+    </div>
+  </div>
