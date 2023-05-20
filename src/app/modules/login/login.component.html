@@ -64,8 +64,9 @@
                   </div>
                   <div class="row px-3" >
                     <label for="password1" class="block text-900 font-medium mb-2">Contraseña</label>
-                    <input id="password1" name="password" type="password" placeholder="****************" pInputText class="w-full mb-3"
-                      [(ngModel)]="user.password"> 
+                    <input id="password1" name="password" type="password" placeholder="**********" pInputText class="w-full mb-3"
+                      [(ngModel)]="user.password" [maxlength]="10" > 
+
                   </div>
                   <div class="row px-3 mb-4">
                       <div class="custom-control custom-checkbox custom-control-inline">
