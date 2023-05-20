@@ -218,7 +218,6 @@ export class LoginComponent implements OnInit {
           // console.log(data?.photoURL!);
 
           this.validarDatosGoogle(data?.email!);
-
         });
       })
       .catch((err) => {
@@ -226,14 +225,56 @@ export class LoginComponent implements OnInit {
       });
   }
 
-  public validarDatosGoogle(email: any){
-    this.usuarioService.getFindUsuarioByEmail(email).subscribe((data)=>{
-      if(data != null){
+  public validarDatosGoogle(email: any) {
+    this.usuarioService.getFindUsuarioByEmail(email).subscribe((data) => {
+      if (data != null) {
         this.user.username = data.username;
         this.user.password = data.password;
         this.login();
         // public user: UserLogin = new UserLogin();
       }
+    });
+  }
+
+  publicCuencaFirebase() {
+    const email = this.user.username;
+    const password = this.user.password;
+
+    this.auth
+      .createUserWithEmailAndPassword("javiertimbe100@gmail.com", "123456")
+      .then(() => {
+        this.verificarCorreo();
+      })
+      .catch((error) => {
+        alert('ERROR');
+      });
+  }
+
+  verificarCorreo() {
+    this.auth.currentUser
+      .then((user) => user?.sendEmailVerification())
+      .then(() => {
+        alert('Correro enviado');
+        // this.router.navigate(['/login']);
+      });
+  }
+
+
+  Credencial() {
+    // const email = this.loginUsuario.value.email;
+    // const password = this.loginUsuario.value.password;
+
+    // this.loading = true;
+    this.auth.signInWithEmailAndPassword("javiertimbe100@gmail.com", "123456").then((user) => {
+      if(user.user?.emailVerified) {
+   
+        alert("VERIFICADOOO")
+      } else {
+         
+        alert("FALTA DE VERIFICAR")
+      }
+    }).catch((error) => {
+      alert(error)
     })
   }
 }
