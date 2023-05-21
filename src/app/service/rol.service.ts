@@ -12,11 +12,13 @@ export class RolService {
 
   constructor(private http: HttpClient, private storageService: StorageService) { }
 
-  public getRolById(idRol: number):Observable<Rol>{
-    return this.http.get<Rol>(environment.apiuri+'/rol/findbyId/'+idRol, { headers: this.storageService.returnToken()});
-  }
-
   public getAllRoleOfDataBase():Observable<Rol[]>{
     return this.http.get<Rol[]>(environment.apiuri+'/rol/listar', { headers: this.storageService.returnToken()});
+  }
+
+  //PARA PETICIONES PUBLICAS DE VALIDACIONES--------------------------------------------------------------------------
+
+  public getRolById(idRol: number):Observable<Rol>{
+    return this.http.get<Rol>(environment.apiUriSecurity+'/rol/findbyId/'+idRol);
   }
 }

@@ -90,6 +90,7 @@ export class registrarPersonaComponent implements OnInit {
   public obtenerRolParticipante() {
     this.rolService.getRolById(3).subscribe((data) => {
       if (data != null) {
+        console.log(data)
         this.classRol = data;
         this.listRole.push(this.classRol);
       }
@@ -245,7 +246,7 @@ export class registrarPersonaComponent implements OnInit {
         /\d/.test(this.classUsuario?.password) &&
         /[@$!%*?&]/.test(this.classUsuario?.password)
       ) {
-        this.comprobaridentificacion();
+        this.comprobaridentificacion(); // paso de la validacion de la contraseña..
       } else if (this.classUsuario?.password.length >= 6) {
         this.toastrService.warning(
           'La cotraseña debe ser fuerte.',
@@ -261,7 +262,14 @@ export class registrarPersonaComponent implements OnInit {
     // }
   }
 
+  private successToast: any; // Variable para almacenar la referencia al toastr
+
+  public estadoEmailVerfication?: String = '';
+
   public comprobaridentificacion() {
+    this.showSuccessToast(); // Mostrar el toastr de éxito
+
+
     this.personaService
       .getPersonaByIdentificasion(this.classPersona?.identificacion!)
       .subscribe((data) => {
@@ -270,43 +278,115 @@ export class registrarPersonaComponent implements OnInit {
             .getExistUsuarioByUsername(this.classUsuario?.username!)
             .subscribe((data1) => {
               if (data1 !== true) {
-                //Servicio
-                //Guardar persona
-                this.personaService
-                  .savePersona(this.classPersona)
-                  .subscribe((data) => {
-                    if (data !== null) {
-                      this.classUsuario.estadoUsuarioActivo = true;
-                      this.classUsuario.idUsuario = 0;
-                      this.classUsuario.persona = data;
-                      this.classUsuario.roles = this.listRole;
-                      //Guardar usuario
-                      this.usuarioService
-                        .saveUsuario(this.classUsuario)
-                        .subscribe((data1) => {
-                          if (data1 !== null) {
-                            this.toastrService.success('Registro exitoso.');
-                            this.classPersona = new Persona();
-                            this.classUsuario = new Usuario();
-                            this.router.navigate(['/login']);
-                          }
-                        });
-                    }
-                  });
+                //validamos el correo electronico del usuario
+                this.personaService.getPersonaExistsByEmail(this.classPersona?.correo!).subscribe((data2)=>{
+                  if(data2 !== true){
+                    // this.clearSuccessToast(); // Ocultar el toastr de éxito
+                    this.saveDataPersonUser();
+                    // if(this.classPersona?.correo !== this.estadoEmailVerfication){
+                    
+                      // this.personaService.verifiqueValidateEmail(this.classPersona?.correo!).subscribe((data3)=>{
+                      //   if(data3.status === 'valid'){
+                      //     this.estadoEmailVerfication = '';
+                      //     this.saveDataPersonUser();
+                      //   }
+                      //   if(data3.status === 'invalid'){
+                      //     this.clearSuccessToast(); // Ocultar el toastr de éxito
+                      //     this.toastrService.error('Por favor ingresa un correo electrónico válido.', 'Correo inválido.', {
+                      //       timeOut: 1500
+                      //     });
+                      //     this.estadoEmailVerfication = this.classPersona?.correo!
+                      //     return;
+                      //   }
+
+                      // },(err)=>{
+                      //   this.clearSuccessToast(); // Ocultar el toastr de éxito
+                      //   this.toastrService.warning('Fin del plan..', 'PLAN AGOTADO', {
+                      //     timeOut: 500
+                      //   });
+                      //   //en el caso de que el plan de verificasion se agote.. se manda de una ejecutar el metodo de crear
+                      //   this.saveDataPersonUser();
+                      // })
+
+                    // }else{
+                    //   this.clearSuccessToast(); // Ocultar el toastr de éxito
+                    //   this.toastrService.error('Por favor ingresa un correo electrónico válido..', 'Correo inválido.', {
+                    //     timeOut: 1500
+                    //   });
+                    //   return;
+                    // }
+                      
+
+                  }else{
+                    // this.clearSuccessToast(); // Ocultar el toastr de éxito
+                    this.clearSuccessToast(); // Ocultar el toastr de éxito
+                    this.toastrService.error('Ingrese otro correo electrónico.', 'Correo existente.', {
+                      timeOut: 1500
+                    });
+                  }
+                })
+
+                
               } else {
+                this.clearSuccessToast(); // Ocultar el toastr de éxito
                 this.toastrService.error(
-                  'El nombre de usuario ya esta en el siistema.',
+                  'El nombre de usuario ya esta en el sistema.',
                   'Ingrese otro nombre de usuario.'
                 );
               }
             });
         } else {
+          this.clearSuccessToast(); // Ocultar el toastr de éxito
           this.toastrService.error(
-            'La identificasión ya esta en el sistema.',
-            'Identificasión existente'
+            'La identificación ya esta en el sistema.',
+            'Identificación existente.'
           );
         }
       });
+  }
+
+  public saveDataPersonUser(){
+    //Guardar persona inicio
+    this.personaService
+    .savePersona(this.classPersona)
+    .subscribe((data) => {
+      if (data !== null) {
+        this.classUsuario.estadoUsuarioActivo = true;
+        this.classUsuario.idUsuario = 0;
+        this.classUsuario.persona = data;
+        this.classUsuario.roles = this.listRole;
+
+        console.log("before")
+        // console.log(this.classUsuario)
+        //Guardar usuario
+        this.usuarioService
+          .saveUsuario(this.classUsuario)
+          .subscribe((data1) => {
+            if (data1 !== null) {
+              console.log("after")
+              // console.log(data1)
+              this.clearSuccessToast(); // Ocultar el toastr de éxito
+              this.toastrService.success('Registro exitoso.', '', {timeOut: 500} );
+              this.classPersona = new Persona();
+              this.classUsuario = new Usuario();
+              this.router.navigate(['/login']);
+            }
+          });
+      }
+    });
+    //fin
+  }
+
+  private showSuccessToast() {
+    this.successToast = this.toastrService.success  ('Esperenos un momento mientras verificamos la información.', 'Validando datos', {
+      timeOut: 30000, // Establecer timeOut a 0 para que el toastr no se cierre automáticamente
+      progressBar: true,
+      progressAnimation: 'increasing',
+    });
+  }
+  
+  private clearSuccessToast() {
+    this.toastrService.clear(this.successToast.toastId); // Oculta el toastr utilizando el ID de referencia
   }
 
   //Almacenar en el objeto

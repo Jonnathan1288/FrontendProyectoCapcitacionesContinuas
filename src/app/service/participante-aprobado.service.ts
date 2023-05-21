@@ -35,4 +35,9 @@ export class ParticipanteAprobadoService {
   public updateParticipantesAprobadosLista(listaParticipantesA: ParticipantesAprobados[]):Observable<ParticipantesAprobados[]>{
     return this.http.put<ParticipantesAprobados[]>(environment.apiuri +'/participantesAprobados/actualizar/lista' , listaParticipantesA, { headers: this.storageService.returnToken()});
   }
+
+  //IMPLEMENTACION PARA EL CERTIFICADO DE CONSULTA PUBLICO----------------------------
+  public getParticipantesAprobadosidCursoAndIdenitificacion(idCurso: number, identificacion: String): Observable<ParticipantesAprobados>{
+    return this.http.get<ParticipantesAprobados>(environment.apiUriSecurity+'/participantesAprobados/findbyIdIdCursoAndUsuario/'+idCurso+'/'+identificacion);
+  }
 }

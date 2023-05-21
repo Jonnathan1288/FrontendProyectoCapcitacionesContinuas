@@ -19,6 +19,6 @@ export class EstudianteFenixService {
   }
 
   public getEstudianteFenixFindByIdentificasión(identificacion: string):Observable<EstudianteFenix>{
-    return this.http.get<EstudianteFenix>(environment.apiuri+'/fenix/estudiante/ista/findbyIdentificasion/'+identificacion, { headers: this.storageService.returnToken()});
+    return this.http.get<EstudianteFenix>(environment.apiUriSecurity+'/fenix/estudiante/ista/findbyIdentificasion/'+identificacion);
   }
 }

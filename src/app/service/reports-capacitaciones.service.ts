@@ -52,11 +52,6 @@ export class ReportsCapacitacionesService {
     return this.http.get(environment.apiuri+ '/generarCodigosAsignarSenecyt/Docente/download/' + idCurso, { responseType: 'blob', headers: this.storageService.returnToken() });
   }
 
-  //IMPRIMIR CERTIFICADOS POR EL USUARIO QUE LO SOLICITE
-  public downloadCertificadoEstudiante(idCurso: number, identificasion: String) {
-    return this.http.get(environment.apiuri+ '/generarCertificadoEstudiante/download/' + idCurso+'/'+identificasion, { responseType: 'blob', headers: this.storageService.returnToken() });
-  }
-
   //IMPRIMIR ENTREGA DE CERTIFICADOS
   public downloadEntregaCertificadoEstudiante(idCurso: number) {
     return this.http.get(environment.apiuri+ '/entregaCertificadosCursoCapacitacion/download/' + idCurso, { responseType: 'blob', headers: this.storageService.returnToken() });
@@ -85,5 +80,11 @@ export class ReportsCapacitacionesService {
    //Reportes de participantes
    public downloadInformeFinalParticipantesCurso(idCurso: number) {
     return this.http.get(environment.apiuri+ '/generarRegistroParticipantes/downloadRegistro/'+idCurso, { responseType: 'blob', headers: this.storageService.returnToken() });
+  }
+
+  //PUBLICOS---------------------------------------------------------------------------------------------------
+  //IMPRIMIR CERTIFICADOS POR EL USUARIO QUE LO SOLICITE
+  public downloadCertificadoEstudiante(idCurso: number, identificasion: String) {
+    return this.http.get(environment.apiUriSecurity+ '/generarCertificadoEstudiante/download/' + idCurso+'/'+identificasion, { responseType: 'blob', headers: this.storageService.returnToken() });
   }
 }

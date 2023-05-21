@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Curso } from 'src/app/models/curso';
 import { Usuario } from 'src/app/models/usuario';
+import { CursoService } from 'src/app/service/curso.service';
 import { PersonaService } from 'src/app/service/persona.service';
 import { UsuarioService } from 'src/app/service/usuario.service';
 
@@ -12,22 +14,45 @@ import { UsuarioService } from 'src/app/service/usuario.service';
 export class HomeComponent implements OnInit {
 
   
-  constructor(
-    private usuarioService: UsuarioService,
-    private personaService: PersonaService,
-    private router: Router,
-  ) {}
-
-
   public idUsuarioIsLoggin: any;
   public rolNameUser?: any;
+
+  public cursoList: Curso[]=[];
+
+  constructor(
+    private usuarioService: UsuarioService,
+    private cursoService: CursoService,
+    private router: Router,
+  ) {}
 
   ngOnInit(): void {
     this.idUsuarioIsLoggin = localStorage.getItem('id_username');
     this.obternerDatosUsuarioLoggin(this.idUsuarioIsLoggin);
     this.rolNameUser = localStorage.getItem('rol');
     this.obternerDatosUsuarioLogginRoles(this.rolNameUser);
+    this.listCourseporUsuarioLogin(this.idUsuarioIsLoggin);
   }
+
+  public numeroCursos?: number;
+  public numeroCursosIniciados?: number;
+  public numeroCursosPublicados?: number;
+  public numeroCursosFinalizados?: number;
+
+
+  public listCourseporUsuarioLogin(idUsuario: number) {
+    this.cursoService
+      .obtenerTodoslosCursosPorIdUsuario(idUsuario)
+      .subscribe((data) => {
+        this.cursoList = data;
+
+        this.numeroCursos = this.cursoList.length;
+        this.numeroCursosIniciados = this.cursoList.filter((c)=>c.estadoPublicasionCurso === 'I').length;
+        this.numeroCursosPublicados = this.cursoList.filter((c)=>c.estadoPublicasionCurso === 'P').length;
+        this.numeroCursosFinalizados = this.cursoList.filter((c)=>c.estadoPublicasionCurso === 'F').length;
+      });
+  }
+
+
 
   usuario: Usuario = new Usuario();
 

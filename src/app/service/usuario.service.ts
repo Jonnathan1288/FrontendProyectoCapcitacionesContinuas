@@ -20,15 +20,17 @@ export class UsuarioService {
     return this.http.get<Usuario>(environment.apiuri+'/usuario/findbyId/'+idUsuario, { headers: this.storageService.returnToken()});
   }
 
-  public getExistUsuarioByUsername(username: string):Observable<boolean>{
-    return this.http.get<boolean>(environment.apiuri+'/usuario/existsbyUsername/'+username, { headers: this.storageService.returnToken()});
+  public updateUsuario(idUsusario:number, usuario: Usuario):Observable<Usuario>{
+    return this.http.put<Usuario>(environment.apiuri+'/usuario/actualizar/'+idUsusario, usuario, { headers: this.storageService.returnToken()});
   }
+
+  //PARA PETICIONES PUBLICAS DE VALIDACIONES--------------------------------------------------------------------------
 
   public saveUsuario(usuario: Usuario):Observable<Usuario>{
     return this.http.post<Usuario>(environment.apiUriSecurity+'/register', usuario);
   }
 
-  public updateUsuario(idUsusario:number, usuario: Usuario):Observable<Usuario>{
-    return this.http.put<Usuario>(environment.apiuri+'/usuario/actualizar/'+idUsusario, usuario, { headers: this.storageService.returnToken()});
+  public getExistUsuarioByUsername(username: string):Observable<boolean>{
+    return this.http.get<boolean>(environment.apiUriSecurity+'/usuario/existsbyUsername/'+username);
   }
 }

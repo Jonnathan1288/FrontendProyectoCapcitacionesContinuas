@@ -100,8 +100,8 @@
                 <td>
 
                     <p-message
-                        [severity]="data.estadoPublicasionCurso === 'I'? 'success': data.estadoPublicasionCurso === 'F'? 'warn':'info'"
-                        [text]="data.estadoPublicasionCurso === 'I'? 'INICIO': data.estadoPublicasionCurso === 'F'? 'FINALIZO': 'PENDIENTE'"
+                        [severity]="data.estadoPublicasionCurso === 'I'? 'success': data.estadoPublicasionCurso === 'F'? 'warn': data.estadoAprovacionCurso === 'R'? 'error':'info'"
+                        [text]="data.estadoPublicasionCurso === 'I'? 'INICIO': data.estadoPublicasionCurso === 'F'? 'FINALIZO': data.estadoPublicasionCurso === 'V'? 'PUBLICADO': data.estadoAprovacionCurso === 'R'? 'RECHAZADO': 'PENDIENTE'"
                         styleClass="mr-2"></p-message>
 
                 </td>
@@ -121,28 +121,6 @@
         </ng-template>
     </p-table>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 <p-dialog
@@ -254,7 +232,7 @@
 
         <div class="col-12 md:col-12 ">
             <div class=" mr-4 mx-4" style="text-align: center;">
-                <p-button label="Registro fotográfico" icon="pi pi-camera" styleClass="p-button-secondary" badge="3"
+                <p-button [disabled]="classNewCourse.estadoPublicasionCurso !== 'I' && classNewCourse.estadoPublicasionCurso !== 'F'" label="Registro fotográfico" icon="pi pi-camera" styleClass="p-button-secondary" badge="3"
                     badgeClass="p-badge-success" (onClick)="reistroFotograficoCurso()"></p-button>
 
             </div>
