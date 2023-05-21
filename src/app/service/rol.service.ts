@@ -3,19 +3,20 @@ import { Injectable } from '@angular/core';
 import { Rol } from '../models/rol';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environment/enviroment';
+import { StorageService } from './storage.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RolService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private storageService: StorageService) { }
 
   public getRolById(idRol: number):Observable<Rol>{
-    return this.http.get<Rol>(environment.apiuri+'/rol/findbyId/'+idRol);
+    return this.http.get<Rol>(environment.apiuri+'/rol/findbyId/'+idRol, { headers: this.storageService.returnToken()});
   }
 
   public getAllRoleOfDataBase():Observable<Rol[]>{
-    return this.http.get<Rol[]>(environment.apiuri+'/rol/listar');
+    return this.http.get<Rol[]>(environment.apiuri+'/rol/listar', { headers: this.storageService.returnToken()});
   }
 }

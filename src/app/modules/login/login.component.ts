@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Usuario } from 'src/app/models/usuario';
+import { UserLogin, Usuario } from 'src/app/models/usuario';
 import { OauthService } from 'src/app/service/oauth.service';
 import { ToastrService } from 'ngx-toastr';
 import { Rol } from 'src/app/models/rol';
+import { RecuperarService } from 'src/app/service/recuperar-password.service';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private router: Router,
     private oauthService: OauthService,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private recuperarService: RecuperarService
   ) {}
   ngOnInit(): void {}
 
@@ -25,20 +27,28 @@ export class LoginComponent implements OnInit {
   public roles: Rol[] = [];
 
   public rolLocalStorage?: any;
+
+  public info?:any;
+  public user: UserLogin = new UserLogin();
   public login() {
-    if (this.usuario.username && this.usuario.password) {
+    if (this.user) {
       this.oauthService
-        .login(this.usuario.username ?? '', this.usuario.password ?? '')
+        .login(this.user)
         .subscribe(
           (data) => {
             if (data != null) {
-              this.roles = data.roles!;
+              this.info = data;
+        
+              // console.log(data?.token?)
+           
+              this.roles = this.info.user.roles!;
               localStorage.removeItem('id_username');
               localStorage.removeItem('id_persona');
               localStorage.removeItem('foto');
               localStorage.removeItem('rol');
               localStorage.removeItem('username');
-              if (data.estadoUsuarioActivo == false) {
+              localStorage.removeItem('token');
+              if (this.info.user.estadoUsuarioActivo == false) {
                 this.toastrService.error(
                   'Lo sentimos su cuenta esta desactidada, contactate con los administradores.s',
                   'CUENTA DESACTIVADA',
@@ -47,27 +57,27 @@ export class LoginComponent implements OnInit {
                   }
                 );
               } else {
-
+                localStorage.setItem('token', String(this.info.token));
                 //Almacenar en el storage
-                localStorage.setItem('id_username', String(data.idUsuario));
+                localStorage.setItem('id_username', String(this.info.user.idUsuario));
                 localStorage.setItem(
                   'id_persona',
-                  String(data.persona?.idPersona)
+                  String(this.info.user.persona?.idPersona)
                 );
-                localStorage.setItem('foto', String(data.fotoPerfil));
+                localStorage.setItem('foto', String(this.info.user.fotoPerfil));
 
-                localStorage.setItem('username', String(data.username));
+                localStorage.setItem('username', String(this.info.user.username));
 
-                if (data.roles?.length! > 1) {
+                if (this.info.user.roles?.length! > 1) {
                   this.modalView();
                 } else {
-                  this.toastrService.success('Bienvenido', 'Registro Exitoso', {
+                  this.toastrService.success('Bienvenido', 'Ingreso Exitoso', {
                     timeOut: 1500,
                     progressBar: true,
                     progressAnimation: 'increasing',
                   });
 
-                  for (let rol of data.roles!) {
+                  for (let rol of this.info.user.roles!) {
                     localStorage.setItem('rol', String(rol.nombreRol));
                   }
 
@@ -146,6 +156,41 @@ export class LoginComponent implements OnInit {
   public visibleRolnoAsignado?: boolean = false;
   public modalViewRolNoasigando() {
     this.visibleRolnoAsignado = true;
+  }
+
+  // RECUPERAR CONTRASEÑA
+  isSendCorreo: Boolean = false;
+  cedulaReset?: String;
+  public visibleRecuperarPassword?:boolean = false;
+  public modalViewRecuperarPassword() {
+    this.visibleRecuperarPassword = true;
+  }
+
+  public enviarCorreo(){
+    this.showSpinner = true;
+    if (this.cedulaReset == "" || this.cedulaReset == null) {
+      this.toastrService.error('Digite su cédula', 'Campo vacio')
+    } else {
+      this.oauthService.getUsuarioByIdentificacion(this.cedulaReset).subscribe(
+        (data) =>{
+            this.recuperarService.sendCorreoRecuperacion(this.cedulaReset!).subscribe(
+              data =>{
+                console.log(data);
+                this.toastrService.success('Correo enviado', 'Revise su correo')
+                this.isSendCorreo = true;
+                setTimeout(() => {
+                  this.showSpinner = false;
+                  window.location.reload();
+                  location.replace('/welcome');
+                }, 1800);
+              }
+            )
+        }, (Error) =>{
+          this.toastrService.error('Usuario inexistente', 'Vetifique su identifiación')
+        }
+      )
+    }
+    
   }
 
 }

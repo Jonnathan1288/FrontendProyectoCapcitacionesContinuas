@@ -34,6 +34,7 @@ import { ConsultasCertificadoComponent } from './modules/home/consultas-certific
 import { ComunidadInstitucionalComponent } from './modules/home/comunidad-institucional/comunidad-institucional.component';
 import { DocumentoSenecyt } from './models/documento-senecyt';
 import { DocumentoSenecytComponent } from './modules/administradormodule/documento-senecyt/documento-senecyt.component';
+import { RecuperarContraseniaComponent } from './modules/registrar-persona/recuperar-contrasenia/recuperar-contrasenia.component';
 
 const routes: Routes = [
 
@@ -47,7 +48,10 @@ const routes: Routes = [
 
   { path: 'cominidad', component: ComunidadInstitucionalComponent },
 
-  {path: 'consultas/certificados/aprovados/cursos/capactacionContinua', component: ConsultasCertificadoComponent},
+  { path: 'consultas/certificados/aprovados/cursos/capactacionContinua', component: ConsultasCertificadoComponent},
+
+  { path: 'recuperar/contrasenia/:token', component: RecuperarContraseniaComponent },
+
 
   //FIN PUBLICOS PARA TODOS-------------------------------------------------------------
 
@@ -137,7 +141,6 @@ const routes: Routes = [
 
   //la parte ne la uqe este el exel
   { path: 'fo', component: RegistroFotograficoEvidenciasComponent },
-
   { path: '**', pathMatch: 'full', redirectTo: 'welcome' },
 ];
 

@@ -14,6 +14,7 @@ import { StorageService } from './service/storage.service';
 export class AppComponent implements OnInit {
 
   public isLogginPresent: boolean = false;
+  public isResetPassword: boolean = false;
   public rolNameUser?: any;
   userIsLoggin:any;
 
@@ -48,8 +49,19 @@ export class AppComponent implements OnInit {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.currentUrl = event.url;
+        console.log("ruta -> "+ this.currentUrl)
+        // if (this.currentUrl.indexOf("recuperar/contrasenia/")) {
+        //   this.isResetPassword = true;
+        //   console.log("esta true")
+        // } else {
+        //   this.isResetPassword = false;
+        //   console.log("esta false")
+        // }
       }
     });
+
+
+
 
     
   }
