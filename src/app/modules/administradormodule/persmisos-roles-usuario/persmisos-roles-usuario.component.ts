@@ -208,7 +208,7 @@ export class PersmisosRolesUsuarioComponent implements OnInit {
       this.usuarioService.updateUsuario(user?.idUsuario!, user!).subscribe((data)=>{
         if(data != null){
           if (user.estadoUsuarioActivo) {
-            this.toastrService.success('Usuario a sido activodo/a', 'Usuario activo');
+            this.toastrService.success('Usuario a sido activado/a', 'Usuario activo');
           } else {
             this.toastrService.warning('Usuario a sido inactivado/a', 'Usuario Inactivo');
           }
