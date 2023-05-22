@@ -38,7 +38,7 @@
                         placeholder="Search keyword" /> -->
 
                         <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
-                        placeholder="Search keyword" />
+                        placeholder="Buscar..." />
 
                 </span>
             </div>
@@ -149,14 +149,14 @@
 
 
 
-    <p-card header="Informacion General del Curso" style="margin: 1px;">
+    <p-card header="Información General del Curso" style="margin: 1px;">
 
 
 
         <div class="grid" style="margin: 2px;">
             <div class="col-5 flex justify-content-center">
                 <div style="float: left;">
-                    <p><strong>Area:</strong> {{ cursoViewPublished!.especialidad?.area?.nombreArea }}</p>
+                    <p><strong>Área:</strong> {{ cursoViewPublished!.especialidad?.area?.nombreArea }}</p>
                     <!-- <p><strong>Nombre del Curso:</strong> {{cursoViewPublished!.nombreCurso }}</p> -->
                     <p><strong>Fecha de Inicio</strong> {{ cursoViewPublished!.fechaInicioCurso }}</p>
                     <p><strong>Número de Cupos:</strong> {{cursoViewPublished!.numeroCuposCurso }}</p>
@@ -169,7 +169,7 @@
             <div class="col-5 flex justify-content-center">
                 <div style="float: left;">
 
-                    <p><strong>Código del curso: </strong> {{ cursoViewPublished!.especialidad?.codigoEspecialidad
+                    <p><strong>Código del Curso: </strong> {{ cursoViewPublished!.especialidad?.codigoEspecialidad
                         }}</p>
                     <p><strong>Fecha de Finalización:</strong> {{ cursoViewPublished!.fechaFinalizacionCurso }}</p>
                     <p><strong>Horas del curso:</strong> {{cursoViewPublished!.duracionCurso}}</p>

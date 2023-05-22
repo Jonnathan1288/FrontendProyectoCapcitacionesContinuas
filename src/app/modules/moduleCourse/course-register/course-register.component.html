@@ -11,8 +11,8 @@
                     alt="Image" height="130" width="170" class="mb-3">
             </div>
             <div class="text-900 font-bold text-5xl mb-3">No tiene hoja de vida</div>
-            <div class="text-700 text-2xl mb-5">Le informamos que debe subir u a su vez crear una hoja de vida, para que
-                los súperiores lo aprueben!!.</div>
+            <div class="text-700 text-2xl mb-5">Le informamos que debe subir o crear una hoja de vida, para que
+                los superiores lo aprueben!!.</div>
             <button (click)="hojaVida()" pButton pRipple label="Crear hoja de vida" icon="pi pi-discord"
                 class="font-bold px-5 py-3 p-button-raised p-button-rounded white-space-nowrap"></button>
         </div>
@@ -444,7 +444,7 @@
                                 <!-- onkeypress='return event.charCode >= 48 && event.charCode <= 57' -->
                                 <p-calendar id="horaInicio" name="horaInicio" [(ngModel)]="fechaInit" [timeOnly]="true"
                                     hourFormat="12" pInputNumberOnly></p-calendar>
-                                <label for="horaInicio">Hora de inicio<span class="red-asterisk1"></span></label>
+                                <label for="horaInicio">Hora de Inicio<span class="red-asterisk1"></span></label>
                             </span>
                         </div>
 
@@ -456,7 +456,7 @@
 
                             <p-calendar id="horaFin" name="horaFin" [(ngModel)]="fechaFin" [timeOnly]="true"
                                 hourFormat="12" pInputNumberOnly></p-calendar>
-                            <label for="horaFin">Hora Fin<span class="red-asterisk1"></span></label>
+                            <label for="horaFin">Hora de Fin<span class="red-asterisk1"></span></label>
 
                         </span>
 
