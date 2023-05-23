@@ -40,4 +40,8 @@ export class AreaService {
     return this.http.get<PruebaPdf>(environment.apiuri+'/pdf/findbyId/'+id, { headers: this.storageService.returnToken()});
   }
 
+  public sendEmailCodigoSenescyt(idUsuario: number, idDocumetno: number):Observable<any>{
+    return this.http.get<any>(environment.apiUriSecurity+'/email/sendEmailDocumentoSenescyt/'+idUsuario+'/'+idDocumetno);
+  }
+
 }
