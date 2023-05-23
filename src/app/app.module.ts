@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './layout/header/header.component';
 import { FooterComponent } from './layout/footer/footer.component';
 
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 
 import { CommonModule } from '@angular/common';
 
@@ -50,9 +50,8 @@ import { MatriculComponent } from './modules/participanteModule/matricul/matricu
 import { CardcursoComponent } from './modules/participanteModule/cardcurso/cardcurso.component';
 import { InfocursoComponent } from './modules/participanteModule/infocurso/infocurso.component';
 import { RegistroFotograficoEvidenciasComponent } from './modules/moduleDocenteCapacitador/registro-fotografico-evidencias/registro-fotografico-evidencias.component';
-
-
-
+import { NgxUiLoaderModule } from 'ngx-ui-loader';
+import { LoaderPeticionesInterceptor } from './Interceptors/loader-peticiones.interceptor';
 
 
 @NgModule({
@@ -106,12 +105,19 @@ import { RegistroFotograficoEvidenciasComponent } from './modules/moduleDocenteC
     CommonModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
+    NgxUiLoaderModule
 
   ],
   //schemas: [
-    //CUSTOM_ELEMENTS_SCHEMA
+  //CUSTOM_ELEMENTS_SCHEMA
   //],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoaderPeticionesInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
