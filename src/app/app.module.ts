@@ -10,7 +10,7 @@ import { PrimengModule } from './designs/primeng/primeng.module';
 import { WelcomeComponent } from './modules/welcome/welcome.component';
 import { LoginComponent } from './modules/login/login.component';
 import { registrarPersonaComponent } from './modules/registrar-persona/registrar-persona.component';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { CourseRegisterComponent } from './modules/moduleCourse/course-register/course-register.component';
 import { CommonModule } from '@angular/common';
 import { SilaboComponent } from './modules/silabo/silabo.component';
@@ -44,6 +44,8 @@ import { ConsultasCertificadoComponent } from './modules/home/consultas-certific
 import { ComunidadInstitucionalComponent } from './modules/home/comunidad-institucional/comunidad-institucional.component';
 import { DocumentoSenecytComponent } from './modules/administradormodule/documento-senecyt/documento-senecyt.component';
 import { RecuperarContraseniaComponent } from './modules/registrar-persona/recuperar-contrasenia/recuperar-contrasenia.component';
+import { NgxUiLoaderModule } from 'ngx-ui-loader';
+import { LoaderPeticionesInterceptor } from './Interceptors/loader-peticiones.interceptor';
 
 
 @NgModule({
@@ -97,12 +99,19 @@ import { RecuperarContraseniaComponent } from './modules/registrar-persona/recup
     CommonModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
+    NgxUiLoaderModule
 
   ],
   //schemas: [
-    //CUSTOM_ELEMENTS_SCHEMA
+  //CUSTOM_ELEMENTS_SCHEMA
   //],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoaderPeticionesInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
