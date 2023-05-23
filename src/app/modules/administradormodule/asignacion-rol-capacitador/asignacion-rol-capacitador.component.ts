@@ -14,7 +14,7 @@ import { ReportsCapacitacionesService } from 'src/app/service/reports-capacitaci
 import { RolService } from 'src/app/service/rol.service';
 import { UsuarioService } from 'src/app/service/usuario.service';
 import { ToastrService } from 'ngx-toastr';
-import { DisenioHojaVidaComponent } from '../../hojavida/disenio-hoja-vida/disenio-hoja-vida.component';
+import { DisenioHojaVidaComponent } from '../../moduleDocenteCapacitador/moduleHOjaVida/disenio-hoja-vida/disenio-hoja-vida.component';
 import { Router } from '@angular/router';
 
 @Component({

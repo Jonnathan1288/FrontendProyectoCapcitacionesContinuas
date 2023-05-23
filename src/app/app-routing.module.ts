@@ -2,39 +2,39 @@
 import { NgModule } from '@angular/core';
 import { AuthGaurdGuard } from './auth-gaurd.guard';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './modules/home/home.component';
-import { LoginComponent } from './modules/login/login.component';
-import { registrarPersonaComponent } from './modules/registrar-persona/registrar-persona.component';
-import { WelcomeComponent } from './modules/welcome/welcome.component';
-import { MatriculComponent } from './modules/matricul/matricul.component';
-import { CardcursoComponent } from './modules/cardcurso/cardcurso.component';
-import { InfocursoComponent } from './modules/infocurso/infocurso.component';
-import { CourseRegisterComponent } from './modules/moduleCourse/course-register/course-register.component';
-import { SilaboComponent } from './modules/silabo/silabo.component';
-import { CurricularDiseñoComponent } from './modules/curricular-diseño-register/curricular-diseño.component';
-import { ListCourseComponent } from './modules/moduleCourse/list-course/list-course.component';
-import { RegistroNecesidadComponent } from './modules/moduleCourse/registro-necesidad/registro-necesidad.component';
-import { HojavidaComponent } from './modules/hojavida/hojavida.component';
-import { ViewInscritosCursoComponent } from './modules/view-inscritos-curso/view-inscritos-curso.component';
-import { ViewInicioCursoMatriculadosComponent } from './modules/view-inscritos-curso/view-inicio-curso-matriculados/view-inicio-curso-matriculados.component';
-import { TomarAsistenciaEstudianteComponent } from './modules/view-inscritos-curso/tomar-asistencia-estudiante/tomar-asistencia-estudiante.component';
-import { RegistrarNotasFinalesComponent } from './modules/view-inscritos-curso/registrar-notas-finales/registrar-notas-finales.component';
-import { PanelModuloCursosComponent } from './modules/moduleCourse/panel-modulo-cursos/panel-modulo-cursos.component';
-import { RegistroFotograficoEvidenciasComponent } from './modules/view-inscritos-curso/registro-fotografico-evidencias/registro-fotografico-evidencias.component';
-import { ViewEvidenciasTableFotofraficasComponent } from './modules/moduleCourse/view-evidencias-table-fotofraficas/view-evidencias-table-fotofraficas.component';
+import { LoginComponent } from './modules/oauthModule/login/login.component';
+import { registrarPersonaComponent } from './modules/oauthModule/registrar-persona/registrar-persona.component';
+import { WelcomeComponent } from './modules/genericAllAccess/welcome/welcome.component';
+import { ComunidadInstitucionalComponent } from './modules/genericAllAccess/comunidad-institucional/comunidad-institucional.component';
+import { ConsultasCertificadoComponent } from './modules/genericAllAccess/consultas-certificado/consultas-certificado.component';
+import { RecuperarContraseniaComponent } from './modules/oauthModule/recuperar-contrasenia/recuperar-contrasenia.component';
+import { EditDataUserComponent } from './modules/oauthModule/edit-data-user/edit-data-user.component';
+import { HomeComponent } from './modules/genericAllAccess/home/home.component';
 import { ProgramasCapacitacionComponent } from './modules/administradormodule/programas-capacitacion/programas-capacitacion.component';
 import { AsignacionRolCapacitadorComponent } from './modules/administradormodule/asignacion-rol-capacitador/asignacion-rol-capacitador.component';
-import { MisCursosParticipanteComponent } from './modules/participanteModule/mis-cursos-participante/mis-cursos-participante.component';
-import { ValidacionCursosCapacitacionComponent } from './modules/administradormodule/validacion-cursos-capacitacion/validacion-cursos-capacitacion.component';
-import { AsignacionCodigosCenecytComponent } from './modules/view-inscritos-curso/asignacion-codigos-cenecyt/asignacion-codigos-cenecyt.component';
-import { DisenioHojaVidaComponent } from './modules/hojavida/disenio-hoja-vida/disenio-hoja-vida.component';
 import { PersmisosRolesUsuarioComponent } from './modules/administradormodule/persmisos-roles-usuario/persmisos-roles-usuario.component';
-import { EditDataUserComponent } from './modules/registrar-persona/edit-data-user/edit-data-user.component';
-import { ConsultasCertificadoComponent } from './modules/home/consultas-certificado/consultas-certificado.component';
-import { ComunidadInstitucionalComponent } from './modules/home/comunidad-institucional/comunidad-institucional.component';
-import { DocumentoSenecyt } from './models/documento-senecyt';
+import { ValidacionCursosCapacitacionComponent } from './modules/administradormodule/validacion-cursos-capacitacion/validacion-cursos-capacitacion.component';
 import { DocumentoSenecytComponent } from './modules/administradormodule/documento-senecyt/documento-senecyt.component';
-import { RecuperarContraseniaComponent } from './modules/registrar-persona/recuperar-contrasenia/recuperar-contrasenia.component';
+import { SilaboComponent } from './modules/moduleDocenteCapacitador/silabo/silabo.component';
+import { CurricularDiseñoComponent } from './modules/moduleDocenteCapacitador/curricular-diseño-register/curricular-diseño.component';
+import { CourseRegisterComponent } from './modules/moduleDocenteCapacitador/course-register/course-register.component';
+import { TomarAsistenciaEstudianteComponent } from './modules/moduleDocenteCapacitador/tomar-asistencia-estudiante/tomar-asistencia-estudiante.component';
+import { RegistrarNotasFinalesComponent } from './modules/moduleDocenteCapacitador/registrar-notas-finales/registrar-notas-finales.component';
+import { ViewInscritosCursoComponent } from './modules/moduleDocenteCapacitador/view-inscritos-curso/view-inscritos-curso.component';
+import { ViewInicioCursoMatriculadosComponent } from './modules/moduleDocenteCapacitador/view-inicio-curso-matriculados/view-inicio-curso-matriculados.component';
+import { ViewEvidenciasTableFotofraficasComponent } from './modules/moduleDocenteCapacitador/view-evidencias-table-fotofraficas/view-evidencias-table-fotofraficas.component';
+import { ListCourseComponent } from './modules/moduleDocenteCapacitador/list-course/list-course.component';
+import { RegistroNecesidadComponent } from './modules/moduleDocenteCapacitador/registro-necesidad/registro-necesidad.component';
+import { HojavidaComponent } from './modules/moduleDocenteCapacitador/moduleHOjaVida/hojavida/hojavida.component';
+import { DisenioHojaVidaComponent } from './modules/moduleDocenteCapacitador/moduleHOjaVida/disenio-hoja-vida/disenio-hoja-vida.component';
+import { AsignacionCodigosCenecytComponent } from './modules/moduleDocenteCapacitador/asignacion-codigos-cenecyt/asignacion-codigos-cenecyt.component';
+import { PanelModuloCursosComponent } from './modules/participanteModule/panel-modulo-cursos/panel-modulo-cursos.component';
+import { MisCursosParticipanteComponent } from './modules/participanteModule/mis-cursos-participante/mis-cursos-participante.component';
+import { MatriculComponent } from './modules/participanteModule/matricul/matricul.component';
+import { CardcursoComponent } from './modules/participanteModule/cardcurso/cardcurso.component';
+import { InfocursoComponent } from './modules/participanteModule/infocurso/infocurso.component';
+import { RegistroFotograficoEvidenciasComponent } from './modules/moduleDocenteCapacitador/registro-fotografico-evidencias/registro-fotografico-evidencias.component';
+
 
 const routes: Routes = [
 
@@ -48,7 +48,7 @@ const routes: Routes = [
 
   { path: 'cominidad', component: ComunidadInstitucionalComponent },
 
-  { path: 'consultas/certificados/aprovados/cursos/capactacionContinua', component: ConsultasCertificadoComponent},
+  { path: 'consultas/certificados/aprovados/cursos/capactacionContinua', component: ConsultasCertificadoComponent },
 
   { path: 'recuperar/contrasenia/:token', component: RecuperarContraseniaComponent },
 

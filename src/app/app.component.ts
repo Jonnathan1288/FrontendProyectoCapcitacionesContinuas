@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { LoadScript } from './scripts/load-script';
-import { WelcomeComponent } from './modules/welcome/welcome.component';
+// import { WelcomeComponent } from './modules/genericAllAccess/welcome/welcome.component';
 import { NavigationEnd, Router } from '@angular/router';
-import { Usuario } from './models/usuario';
+// import { Usuario } from './models/usuario';
 import { UsuarioService } from './service/usuario.service';
 import { StorageService } from './service/storage.service';
 
