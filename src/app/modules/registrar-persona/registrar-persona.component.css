@@ -131,3 +131,8 @@
 .strong {
   color: #4CAF50;
 }
+
+
+.empty-input {
+  border-color: rgb(224, 57, 57);
+}

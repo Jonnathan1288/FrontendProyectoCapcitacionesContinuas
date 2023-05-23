@@ -317,7 +317,7 @@ export class CourseRegisterComponent {
       .updatePrerequisitoCurso(prerequisito.idPrerequisitoCurso!, prerequisito)
       .subscribe((data) => {
         this.listPrerequisitoCurso(this.idCursoUpdate);
-        this.toastrService.error('Prerequisito quitado.', 'ELIMINADO.', {
+        this.toastrService.error('Prerrequisito quitado.', 'ELIMINADO.', {
           timeOut: 1300,
         });
       });
@@ -335,7 +335,7 @@ export class CourseRegisterComponent {
           if (data != null) {
             this.listPrerequisitoCurso(this.idCursoUpdate);
             this.toastrService.success(
-              'Prerequisito actualizado correctamente.',
+              'Prerrequisito actualizado correctamente.',
               'ACTUALIZADO.',
               {
                 timeOut: 1300,
@@ -346,7 +346,7 @@ export class CourseRegisterComponent {
     } else {
       if (this.listPrerequisitoCurso1.length >= 8) {
         this.toastrService.warning(
-          'Puedes ingresar como maximo 8 prerequisitos.',
+          'Puedes ingresar como maximo 8 prerrequisitos.',
           'LIMITE SUPERADO.',
           {
             timeOut: 1300,
@@ -359,7 +359,7 @@ export class CourseRegisterComponent {
           .subscribe((data) => {
             if (data != null) {
               this.toastrService.success(
-                'Prerequisito agregado.',
+                'Prerrequisito agregado.',
                 'CREADO CORRECTO.',
                 {
                   timeOut: 1300,
@@ -476,8 +476,8 @@ export class CourseRegisterComponent {
           this.createHorarioCurso();
         } else {
           this.toastrService.error(
-            'Debe llenar por minimo un prerequisito.',
-            'PREREQUISITOS VACIOS.',
+            'Debe llenar por mínimo un prerrequisito.',
+            'PREREQUISITOS VACÍOS.',
             {
               timeOut: 1600,
             }
@@ -705,8 +705,8 @@ export class CourseRegisterComponent {
   public almacenarListaDeprerequisitos(): void {
     if (!this.prerequisito.nombrePrerequisitoCurso) {
       this.toastrService.error(
-        'Usted no puede ingresar campos vacios.',
-        'CAMPO VACIO.',
+        'Usted no puede ingresar campos vacíos.',
+        'CAMPO VACÍO.',
         {
           timeOut: 1300,
         }
@@ -714,7 +714,7 @@ export class CourseRegisterComponent {
     } else {
       if (this.listPrerequisitoCurso1.length === 8) {
         this.toastrService.warning(
-          'Puedes ingresar como maximo 8 prerequisitos.',
+          'Puedes ingresar como maximo 8 prerrequisitos.',
           'LIMITE SUPERADO.',
           {
             timeOut: 1300,
@@ -724,8 +724,8 @@ export class CourseRegisterComponent {
         this.listPrerequisitoCurso1.push(this.prerequisito);
         this.prerequisito = new PrerequisitoCurso();
         this.toastrService.success(
-          'Ingreso correcto del prerequisito.',
-          'PREREQUISITO AGREGADO.',
+          'Ingreso correcto del prerrequisito.',
+          'PRERREQUISITO AGREGADO.',
           {
             timeOut: 1000,
           }
@@ -740,7 +740,7 @@ export class CourseRegisterComponent {
     );
     if (index !== -1) {
       this.listPrerequisitoCurso1.splice(index, 1);
-      this.toastrService.error('Prerequisito quitado.', 'ELIMINADO.', {
+      this.toastrService.error('Prerrequisito quitado.', 'ELIMINADO.', {
         timeOut: 1300,
       });
     }

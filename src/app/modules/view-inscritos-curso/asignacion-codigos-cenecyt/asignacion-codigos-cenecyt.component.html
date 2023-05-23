@@ -21,7 +21,7 @@
         <ng-template pTemplate="right">
             <button pButton pRipple label="Evaluación" icon="pi pi-file-pdf" class="p-button-danger mr-2" (click)="getFichaEvalucaionFinalCurso()" [disabled]="listparticipanteAprovado.length <= 0"></button>
 
-            <button pButton pRipple label="Senecyt" icon="pi pi-print" class="p-button-primary mr-2 inline-block"
+            <button pButton pRipple label="Senescyt" icon="pi pi-print" class="p-button-primary mr-2 inline-block"
                 (click)="getCodigosSenecytDownload()" [disabled]="listparticipanteAprovado.length <= 0"></button>
 
             <button pButton pRipple label="Firmas" icon="pi pi-print" class="p-button-help"
@@ -41,7 +41,7 @@
                 <span class="p-input-icon-left">
                     <i class="pi pi-search"></i>
                     
-                    <input [disabled]="listparticipanteAprovado.length <= 0" pInputText type="text" placeholder="Search..." (input)="filterTableEventParticipantesAprovados($event)"/>
+                    <input [disabled]="listparticipanteAprovado.length <= 0" pInputText type="text" placeholder="Buscar..." (input)="filterTableEventParticipantesAprovados($event)"/>
                 </span>
             </div>
         </ng-template>
@@ -50,9 +50,9 @@
                 <th style="width:22%; "><strong>IDENTIFICACIÓN</strong></th>
                 <th style="width:22%; "><strong>NOMBRES</strong></th>
                 <th style="width:22%; "><strong>APELLIDOS</strong></th>
-                <th style="width:22%; "><strong>CÓDIGOS SENESCYT</strong></th>
-                <th style="width:22%; "><strong>DESCARGAR</strong></th>
-                <th style="width:12%; "><strong>CERTFICADO</strong></th>
+                <th style="width:15%; "><strong>DESCARGAR</strong></th>
+                <th style="width:30%; "><strong>CÓDIGOS SENESCYT</strong></th>
+                <th style="width:12%; "><strong>CERTIFICADO</strong></th>
             </tr>
             <tr>
                 <th>
@@ -69,6 +69,10 @@
                 </th>
 
                 <th>
+                    <!-- <p-columnFilter type="boolean" field="certificadoFirmado"></p-columnFilter> -->
+                </th>
+
+                <th>
                     <div class="flex align-items-center justify-content-center gap-2">
                         <button *ngIf="!editing" pButton pRipple type="button" icon="pi pi-pencil"
                             (click)="onRowEditInit()" class="p-button-rounded p-button-text"></button>
@@ -80,9 +84,7 @@
                     </div>
                 </th>
 
-                <th>
-                    <!-- <p-columnFilter type="boolean" field="certificadoFirmado"></p-columnFilter> -->
-                </th>
+                
                 <th>
                     <p-columnFilter type="boolean" field="certificadoFirmado"></p-columnFilter>
                 </th>
@@ -105,6 +107,17 @@
 
                 </td>
 
+
+                <td style="width:12%; text-align: center;">
+
+                    <div class="con">
+                        <button [disabled]="!certificadosPar.codigoSenecyt" pButton pRipple type="button" icon="pi pi-file-pdf" class="p-button p-button-danger"
+                            (click)="downloadCertificadoEstudianteSenecytDownload(certificadosPar)"></button>
+                    </div>
+
+                </td>
+
+                
                 <td style="width:12%; text-align: center;">
                     <div class="container" *ngIf="editing">
                         <input pInputText type="text" [(ngModel)]="certificadosPar.codigoSenecyt">
@@ -117,15 +130,6 @@
                     <div class="container" *ngIf="!editing">
                         {{certificadosPar.codigoSenecyt}}
                     </div>
-                </td>
-
-                <td style="width:12%; text-align: center;">
-
-                    <div class="con">
-                        <button pButton pRipple type="button" icon="pi pi-file-pdf" class="p-button p-button-danger"
-                            (click)="downloadCertificadoEstudianteSenecytDownload(certificadosPar)"></button>
-                    </div>
-
                 </td>
 
                 <td>

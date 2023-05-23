@@ -63,8 +63,8 @@
                   <span class="p-float-label">
                     <input type="text" pInputText id="identificacion" name="identificacion"
                       [(ngModel)]="classPersona.identificacion" required maxlength="10"
-                      onkeypress='return event.charCode >= 48 && event.charCode <= 57'/>
-                    <label htmlFor="identificacion" class="pi pi-id-card"> Identificación</label>
+                      onkeypress='return event.charCode >= 48 && event.charCode <= 57' autofocus/>
+                    <label htmlFor="identificacion" class="pi pi-id-card"> Identificación<span class="red-asterisk"></span></label>
                   </span>
                 </div>
               </div>
@@ -72,8 +72,9 @@
               <div class="col-12 md:col-4 mt-1">
                 <div class="p-inputgroup">
                   <span class="p-float-label">
-                    <input type="text" pInputText id="nombre1" name="nombre1" [(ngModel)]="classPersona.nombre1" required/>
-                    <label htmlFor="nombre1" class="pi pi-user"> Primer Nombre</label>
+                    <input type="text" pInputText id="nombre1" name="nombre1" [(ngModel)]="classPersona.nombre1" required 
+                    onkeypress="return (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122)" maxlength="15"/>
+                    <label htmlFor="nombre1" class="pi pi-user"> Primer Nombre<span class="red-asterisk"></span></label>
                   </span>
                 </div>
               </div>
@@ -81,8 +82,8 @@
               <div class="col-12 md:col-4 mt-1">
                 <div class="p-inputgroup">
                   <span class="p-float-label">
-                    <input type="text" pInputText id="nombre2" name="nombre2" [(ngModel)]="classPersona.nombre2" required/>
-                    <label htmlFor="nombre2" class="pi pi-user"> Segundo Nombre</label>
+                    <input type="text" pInputText id="nombre2" name="nombre2" [(ngModel)]="classPersona.nombre2" onkeypress="return (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122)" maxlength="15" required/>
+                    <label htmlFor="nombre2" class="pi pi-user"> Segundo Nombre<span class="red-asterisk"></span></label>
                   </span>
                 </div>
               </div>
@@ -95,7 +96,7 @@
                   <span class="p-float-label">
                     <input type="text" pInputText id="direccion" name="direccion"
                       [(ngModel)]="classPersona.direccion" required/>
-                    <label htmlFor="direccion" class="pi pi-map-marker"> Dirección</label>
+                    <label htmlFor="direccion" class="pi pi-map-marker"> Dirección<span class="red-asterisk"></span></label>
                   </span>
                 </div>
 
@@ -105,8 +106,8 @@
                 <div class="p-inputgroup">
                   <span class="p-float-label">
                     <input type="text" pInputText id="apellido1" name="apellido1"
-                      [(ngModel)]="classPersona.apellido1" required/>
-                    <label htmlFor="apellido1" class="pi pi-user"> Primer Apellido</label>
+                      [(ngModel)]="classPersona.apellido1" onkeypress="return (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122)" maxlength="15" required/>
+                    <label htmlFor="apellido1" class="pi pi-user"> Primer Apellido<span class="red-asterisk"></span></label>
                   </span>
                 </div>
               </div>
@@ -115,8 +116,8 @@
                 <div class="p-inputgroup">
                   <span class="p-float-label">
                     <input type="text" pInputText id="apellido2" name="apellido2"
-                      [(ngModel)]="classPersona.apellido2" />
-                    <label htmlFor="apellido2" class="pi pi-user"> Segundo Apellido</label>
+                      [(ngModel)]="classPersona.apellido2" onkeypress="return (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122)" maxlength="15" required/>
+                    <label htmlFor="apellido2" class="pi pi-user"> Segundo Apellido<span class="red-asterisk"></span></label>
                   </span>
                 </div>
               </div>
@@ -127,8 +128,9 @@
               <div class="col-12 md:col-4 mt-1">
                 <div class="p-inputgroup">
                   <span class="p-float-label">
-                    <input type="text" pInputText id="telefono" name="telefono" [(ngModel)]="classPersona.telefono" required/>
-                    <label htmlFor="telefono" class="pi pi-phone"> Teléfono</label>
+                    <input type="text" pInputText id="telefono" name="telefono" [(ngModel)]="classPersona.telefono" maxlength="7"
+                    onkeypress='return event.charCode >= 48 && event.charCode <= 57' required/>
+                    <label htmlFor="telefono" class="pi pi-phone"> Teléfono<span class="red-asterisk"></span></label>
                   </span>
                 </div>
               </div>
@@ -136,8 +138,9 @@
               <div class="col-12 md:col-4 mt-1">
                 <div class="p-inputgroup">
                   <span class="p-float-label">
-                    <input type="text" pInputText id="celular" name="celular" [(ngModel)]="classPersona.celular" required/>
-                    <label htmlFor="celular" class="pi pi-mobile"> Celular</label>
+                    <input type="text" pInputText id="celular" name="celular" [(ngModel)]="classPersona.celular" maxlength="10"
+                    onkeypress='return event.charCode >= 48 && event.charCode <= 57' required/>
+                    <label htmlFor="celular" class="pi pi-mobile"> Celular<span class="red-asterisk"></span></label>
                   </span>
                 </div>
               </div>
@@ -159,8 +162,8 @@
               <div class="col-12 md:col-12 mt-1">
                 <div class="p-inputgroup">
                   <span class="p-float-label">
-                    <input type="text" pInputText id="correo" name="correo" [(ngModel)]="classPersona.correo" required/>
-                    <label htmlFor="correo" class="pi pi-envelope"> Email</label>
+                    <input type="email" pInputText id="correo" name="correo" [(ngModel)]="classPersona.correo" required/>
+                    <label htmlFor="correo" class="pi pi-envelope"> Email<span class="red-asterisk"></span></label>
                   </span>
                 </div>
               </div>
@@ -263,23 +266,12 @@
               <div class="col-12 md:col-6 mt-1">
                 <div class="p-inputgroup">
                   <span class="p-float-label">
-                    <input type="text" pInputText id="username" name="username" [(ngModel)]="classUsuario.username" required/>
+                    <input type="text" pInputText id="username" name="username" [(ngModel)]="classUsuario.username" onkeypress="return (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122)" maxlength="10"  required/>
                     <label htmlFor="username" class="pi pi-user"> Usuario <span class="red-asterisk"></span></label>
 
                   </span>
                 </div>
               </div>
-
-              <!-- <div class="col-12 md:col-6 mt-1">
-                <div class="p-inputgroup">
-                  <span class="p-float-label">
-                    <input type="text" pInputText id="password" name="password" type="password"
-                      [(ngModel)]="classUsuario.password" required/>
-                    <label htmlFor="password" class="pi pi-lock"> Contraseña</label>
-                  </span>
-                </div>
-              </div> -->
-
 
               <div class="col-12 md:col-6 mt-1">
                 <div class="p-inputgroup">
@@ -385,7 +377,7 @@
           <div class="p-inputgroup">
             <span class="p-float-label">
               <input type="text" id="inputtext" pInputText id="username" name="username"
-                [(ngModel)]="classUsuario.username" required [maxlength]="10">
+                [(ngModel)]="classUsuario.username" onkeypress="return (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122)" maxlength="10"  required >
 
               <label htmlFor="username">Nombre de usuario<span class="red-asterisk"></span></label>
 

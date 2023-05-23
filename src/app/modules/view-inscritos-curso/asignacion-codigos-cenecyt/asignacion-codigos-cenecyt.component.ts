@@ -251,7 +251,7 @@ export class AsignacionCodigosCenecytComponent implements OnInit {
       this.listFilterEstudiantesAprovados = this.listparticipanteAprovado;
       // this.numerFoundCountAnimal = this.listALLAnimals.length;
     } else {
-      let filteredAnimals = this.listFilterEstudiantesAprovados.filter(
+      let filteredAnimals = this.listparticipanteAprovado.filter(
         (usuario) =>
           usuario.partipantesMatriculados?.inscrito?.usuario?.persona?.nombre1
             ?.toLowerCase()

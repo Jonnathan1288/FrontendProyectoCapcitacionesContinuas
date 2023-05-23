@@ -38,7 +38,7 @@
                         placeholder="Search keyword" /> -->
 
                         <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
-                        placeholder="Search keyword" />
+                        placeholder="Buscar..." />
 
                 </span>
             </div>
@@ -61,7 +61,7 @@
                 <th pSortableColumn="fechaFinalizacionCurso"><strong>FECHA FIN</strong> <p-sortIcon
                         field="fechaFinalizacionCurso"></p-sortIcon></th>
                 <th style="text-align: center;"><strong>FOTO</strong></th>
-                <th pSortableColumn="estadoPublicasionCurso"><strong>ASISTENCÍA</strong><p-sortIcon
+                <th pSortableColumn="estadoPublicasionCurso"><strong>ASISTENCIA</strong><p-sortIcon
                         field="estadoPublicasionCurso"></p-sortIcon></th>
                 <th pSortableColumn="estadoAprovacionCurso"><strong>INSCRITOS </strong><p-sortIcon
                         field="estadoAprovacionCurso"></p-sortIcon></th>
@@ -100,8 +100,8 @@
                 <td>
 
                     <p-message
-                        [severity]="data.estadoPublicasionCurso === 'I'? 'success': data.estadoPublicasionCurso === 'F'? 'warn':'info'"
-                        [text]="data.estadoPublicasionCurso === 'I'? 'INICIO': data.estadoPublicasionCurso === 'F'? 'FINALIZO': 'PENDIENTE'"
+                        [severity]="data.estadoPublicasionCurso === 'I'? 'success': data.estadoPublicasionCurso === 'F'? 'warn': data.estadoAprovacionCurso === 'R'? 'error':'info'"
+                        [text]="data.estadoPublicasionCurso === 'I'? 'INICIO': data.estadoPublicasionCurso === 'F'? 'FINALIZO': data.estadoPublicasionCurso === 'V'? 'PUBLICADO': data.estadoAprovacionCurso === 'R'? 'RECHAZADO': 'PENDIENTE'"
                         styleClass="mr-2"></p-message>
 
                 </td>
@@ -121,28 +121,6 @@
         </ng-template>
     </p-table>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 <p-dialog
@@ -171,14 +149,14 @@
 
 
 
-    <p-card header="Informacion General del Curso" style="margin: 1px;">
+    <p-card header="Información General del Curso" style="margin: 1px;">
 
 
 
         <div class="grid" style="margin: 2px;">
             <div class="col-5 flex justify-content-center">
                 <div style="float: left;">
-                    <p><strong>Area:</strong> {{ cursoViewPublished!.especialidad?.area?.nombreArea }}</p>
+                    <p><strong>Área:</strong> {{ cursoViewPublished!.especialidad?.area?.nombreArea }}</p>
                     <!-- <p><strong>Nombre del Curso:</strong> {{cursoViewPublished!.nombreCurso }}</p> -->
                     <p><strong>Fecha de Inicio</strong> {{ cursoViewPublished!.fechaInicioCurso }}</p>
                     <p><strong>Número de Cupos:</strong> {{cursoViewPublished!.numeroCuposCurso }}</p>
@@ -191,7 +169,7 @@
             <div class="col-5 flex justify-content-center">
                 <div style="float: left;">
 
-                    <p><strong>Código del curso: </strong> {{ cursoViewPublished!.especialidad?.codigoEspecialidad
+                    <p><strong>Código del Curso: </strong> {{ cursoViewPublished!.especialidad?.codigoEspecialidad
                         }}</p>
                     <p><strong>Fecha de Finalización:</strong> {{ cursoViewPublished!.fechaFinalizacionCurso }}</p>
                     <p><strong>Horas del curso:</strong> {{cursoViewPublished!.duracionCurso}}</p>
@@ -254,7 +232,7 @@
 
         <div class="col-12 md:col-12 ">
             <div class=" mr-4 mx-4" style="text-align: center;">
-                <p-button label="Registro fotográfico" icon="pi pi-camera" styleClass="p-button-secondary" badge="3"
+                <p-button [disabled]="classNewCourse.estadoPublicasionCurso !== 'I' && classNewCourse.estadoPublicasionCurso !== 'F'" label="Registro fotográfico" icon="pi pi-camera" styleClass="p-button-secondary" badge="3"
                     badgeClass="p-badge-success" (onClick)="reistroFotograficoCurso()"></p-button>
 
             </div>
