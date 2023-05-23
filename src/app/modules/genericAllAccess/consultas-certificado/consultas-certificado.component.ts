@@ -60,6 +60,7 @@ export class ConsultasCertificadoComponent implements OnInit {
 
             const url = URL.createObjectURL(blob);
             window.open(url, '_blank');
+            this.cedulaIdentificasion = '';
           } else {
             this.reportService
               .downloadCertificadoEstudiante(

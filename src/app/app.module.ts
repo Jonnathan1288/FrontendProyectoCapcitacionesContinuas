@@ -52,6 +52,7 @@ import { InfocursoComponent } from './modules/participanteModule/infocurso/infoc
 import { RegistroFotograficoEvidenciasComponent } from './modules/moduleDocenteCapacitador/registro-fotografico-evidencias/registro-fotografico-evidencias.component';
 import { NgxUiLoaderModule } from 'ngx-ui-loader';
 import { LoaderPeticionesInterceptor } from './Interceptors/loader-peticiones.interceptor';
+import { StepsToApplyToTheCourseComponent } from './modules/genericAllAccess/steps-to-apply-to-the-course/steps-to-apply-to-the-course.component';
 
 
 @NgModule({
@@ -93,6 +94,7 @@ import { LoaderPeticionesInterceptor } from './Interceptors/loader-peticiones.in
     ComunidadInstitucionalComponent,
     DocumentoSenecytComponent,
     RecuperarContraseniaComponent,
+    StepsToApplyToTheCourseComponent,
   ],
   imports: [
     BrowserModule,

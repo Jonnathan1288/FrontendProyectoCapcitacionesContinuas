@@ -34,6 +34,7 @@ import { MatriculComponent } from './modules/participanteModule/matricul/matricu
 import { CardcursoComponent } from './modules/participanteModule/cardcurso/cardcurso.component';
 import { InfocursoComponent } from './modules/participanteModule/infocurso/infocurso.component';
 import { RegistroFotograficoEvidenciasComponent } from './modules/moduleDocenteCapacitador/registro-fotografico-evidencias/registro-fotografico-evidencias.component';
+import { StepsToApplyToTheCourseComponent } from './modules/genericAllAccess/steps-to-apply-to-the-course/steps-to-apply-to-the-course.component';
 
 
 const routes: Routes = [
@@ -51,6 +52,8 @@ const routes: Routes = [
   { path: 'consultas/certificados/aprovados/cursos/capactacionContinua', component: ConsultasCertificadoComponent },
 
   { path: 'recuperar/contrasenia/:token', component: RecuperarContraseniaComponent },
+
+  { path: 'steps/apply/course', component: StepsToApplyToTheCourseComponent },
 
 
   //FIN PUBLICOS PARA TODOS-------------------------------------------------------------
