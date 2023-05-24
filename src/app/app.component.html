@@ -69,6 +69,9 @@
             routerLink="/gestion/subida/documento/senecyt/exel"><i class='bx bxs-file-doc icon'
               style="font-size: 22px;"></i> <strong>Documentos Excel</strong></a></li>
 
+        <li><a href="#" (click)="logOut()"><i class='bx bxs-log-out-circle icon' style="font-size: 22px;"></i>
+            <strong>Salir</strong></a></li>
+
 
       </ul>
       <div class="ads">
@@ -147,4 +150,3 @@
 <div *ngIf="isResetPassword === true">
   <app-recuperar-contrasenia></app-recuperar-contrasenia>
 </div>
-
