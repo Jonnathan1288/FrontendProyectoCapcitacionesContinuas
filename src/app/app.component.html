@@ -11,45 +11,68 @@
     <section id="sidebar">
       <a routerLink="/home" class="brand"><i class='bx bxs-smile icon'></i><strong>CCotinuas</strong></a>
       <ul class="side-menu">
-        <li><a routerLink="/home" class="active"><i class='bx bxs-dashboard icon' style="font-size: 20px;"></i> <strong>Home</strong></a></li>
-        <strong><li class="divider" data-text="Opciones"></li></strong>
-
+        <li><a routerLink="/home" class="active"><i class='bx bxs-dashboard icon' style="font-size: 20px;"></i>
+            <strong>Home</strong></a></li>
+        <strong>
+          <li class="divider" data-text="Opciones"></li>
+        </strong>
 
         <!-- CAPCITADOR -->
-        <strong><li *ngIf='isCapacitador'><a routerLink="register/course"><i class='bx bxs-chart icon' style="font-size: 22px;"></i><strong>Cursos</strong> </a></li></strong>
+        <strong>
+          <li *ngIf='isCapacitador' (click)="onItemClick('i1')" [class.active]="activeItem === 'i1'"><a
+              routerLink="register/course"><i class='bx bxs-chart icon'
+                style="font-size: 22px;"></i><strong>Cursos</strong> </a></li>
+        </strong>
         <!-- VA NECECESIDAD/ SILABO/ CURRICULO -->
-        <li *ngIf='isCapacitador'><a routerLink="list/course"><i class='bx bxs-carousel icon' style="font-size: 22px;"></i> <strong>Mis cursos</strong></a></li>
+        <li *ngIf='isCapacitador' (click)="onItemClick('i2')" [class.active]="activeItem === 'i2'"><a
+            routerLink="list/course"><i class='bx bxs-carousel icon' style="font-size: 22px;"></i> <strong>Mis
+              cursos</strong></a></li>
         <!-- TOMAR ASISTENCI Y NOTAS FINALES MAS REPORTES Y FOTOGRAFICo -->
-        <li *ngIf='isCapacitador'><a routerLink="hojaVida/capacitador"><i class='bx bx bxs-news icon' style="font-size: 22px;"></i> <strong>Hoja de Vida</strong></a></li>
+        <li *ngIf='isCapacitador' (click)="onItemClick('i3')" [class.active]="activeItem === 'i3'"><a
+            routerLink="hojaVida/capacitador"><i class='bx bx bxs-news icon' style="font-size: 22px;"></i> <strong>Hoja
+              de Vida</strong></a></li>
         <!-- PONER E IMPRIMIR CODIGOS DE LA CENECYT -->
-        <li *ngIf='isCapacitador'><a routerLink="capacitador/codigos/cenecyt"><i class='bx bxs-memory-card icon' style="font-size: 22px;"></i> <strong>Códigos Senescyt</strong></a></li>
+        <li *ngIf='isCapacitador' (click)="onItemClick('i4')" [class.active]="activeItem === 'i4'"><a
+            routerLink="capacitador/codigos/cenecyt"><i class='bx bxs-memory-card icon' style="font-size: 22px;"></i>
+            <strong>Códigos Senescyt</strong></a></li>
         <!-- CREAR O SUBIR HOJAS -->
 
         <!-- PARTICIPANTE -->
-      <strong><li *ngIf='isParticipante'><a routerLink="cards/course"><i class='bx bxs-book icon' style="font-size: 22px;"></i> <strong>Cursos</strong> </a></li></strong>
-        <li *ngIf='isParticipante'><a routerLink="verMisCursos/course"><i class='bx bxs-paste icon' style="font-size: 22px;"></i> <strong>Mis cursos</strong> </a>
+        <strong>
+          <li *ngIf='isParticipante' (click)="onItemClick('i5')" [class.active]="activeItem === 'i5'"><a
+              routerLink="cards/course"><i class='bx bxs-book icon' style="font-size: 22px;"></i>
+              <strong>Cursos</strong> </a></li>
+        </strong>
+        <li *ngIf='isParticipante' (click)="onItemClick('i6')" [class.active]="activeItem === 'i6'"><a
+            routerLink="verMisCursos/course"><i class='bx bxs-paste icon' style="font-size: 22px;"></i> <strong>Mis
+              cursos</strong> </a>
         </li>
 
         <!-- ADMINISTRADOR -->
-      <strong> <li *ngIf='isAdministrador'><a routerLink="programas/capacitacion"><i class='bx bxs-notepad icon' style="font-size: 22px;"></i>
-          <strong>Programas</strong></a></li></strong>
-        <li *ngIf='isAdministrador'><a routerLink="asignacion/rol"><i class='bx bxs-group icon' style="font-size: 22px;"></i><strong> Capacitadores</strong></a>
+        <strong>
+          <li *ngIf='isAdministrador' (click)="onItemClick('i7')" [class.active]="activeItem === 'i7'"><a
+              routerLink="programas/capacitacion"><i class='bx bxs-notepad icon' style="font-size: 22px;"></i>
+              <strong>Programas</strong></a></li>
+        </strong>
+        <li *ngIf='isAdministrador' (click)="onItemClick('i8')" [class.active]="activeItem === 'i8'"><a
+            routerLink="asignacion/rol"><i class='bx bxs-group icon' style="font-size: 22px;"></i><strong>
+              Capacitadores</strong></a>
         </li>
-        <li *ngIf='isAdministrador'><a routerLink="/gestion/validacion/cursos/capacitacion" ><i
-              class='bx bxs-brightness icon' style="font-size: 22px;"></i> <strong>Validación</strong></a></li>
+        <li *ngIf='isAdministrador' (click)="onItemClick('i9')" [class.active]="activeItem === 'i9'"><a
+            routerLink="/gestion/validacion/cursos/capacitacion"><i class='bx bxs-brightness icon'
+              style="font-size: 22px;"></i> <strong>Validación</strong></a></li>
 
-        <li *ngIf='isAdministrador'><a routerLink="/permisos/rol/usuarios"><i class='bx bxs-lock-alt icon' style="font-size: 22px;"></i>
-        <strong>Permisos</strong></a></li>
-        <li *ngIf='isAdministrador'><a routerLink="/gestion/subida/documento/senecyt/exel"><i
-              class='bx bxs-file-doc icon' style="font-size: 22px;"></i> <strong>Documentos Excel</strong></a></li>
+        <li *ngIf='isAdministrador' (click)="onItemClick('i01')" [class.active]="activeItem === 'i01'"><a
+            routerLink="/permisos/rol/usuarios"><i class='bx bxs-lock-alt icon' style="font-size: 22px;"></i>
+            <strong>Permisos</strong></a></li>
+        <li *ngIf='isAdministrador' (click)="onItemClick('i02')" [class.active]="activeItem === 'i02'"><a
+            routerLink="/gestion/subida/documento/senecyt/exel"><i class='bx bxs-file-doc icon'
+              style="font-size: 22px;"></i> <strong>Documentos Excel</strong></a></li>
 
 
       </ul>
       <div class="ads">
-        <!-- <div class="wrapper">
-        <a href="#" class="btn-upgrade">Upgrade</a>
-        <p>Become a <span>PRO</span> member and enjoy <span>All Features</span></p>
-      </div> -->
+
       </div>
     </section>
     <!-- SIDEBAR -->
@@ -59,22 +82,25 @@
     <section id="content">
       <!-- NAVBAR -->
       <nav>
-        <strong><i class='bx bx-menu toggle-sidebar ' style="font-size: 22px;"></i></strong>
+        <strong><i class='bx bx-menu toggle-sidebar another' style="font-size: 30px;"></i></strong>
         <form action="#">
           <div class="form-group">
-            <!-- <input type="text" placeholder="Search...">
-          <i class='bx bx-search icon'></i> -->
+
           </div>
         </form>
 
         <span class="divider"></span>
 
         <!-- <strong>Alejo</strong> -->
-
+        <div class="profile1"> <a class="pi pi-prime" style="color: black;"><strong
+              class="mx-2">{{username}}</strong></a></div>
         <div class="profile">
-          <strong class="mx-2">{{username}}</strong>
-          <img [src]="foto ? 'data:image/jpeg;base64,' +foto : '../../../../assets/img/istap.png'" alt="img-avatar"
+
+          <!-- <i class="pi pi-prime"><strong class="mx-2">{{username}}</strong></i> -->
+          <img *ngIf="foto !== 'null'" [src]="foto? 'data:image/jpeg;base64,' +foto : '../assets/img/istap.png'"
             height="165px">
+
+          <img *ngIf="foto === 'null'" src="../assets/img/istap.png" height="165px">
 
           <ul class="profile-link">
             <li><a routerLink="user/edit/data"><i class='bx bxs-user-circle icon'></i> Perfil</a></li>
@@ -82,7 +108,7 @@
           </ul>
         </div>
 
-    
+
 
 
       </nav>
@@ -94,7 +120,7 @@
         <ul class="breadcrumbs">
           <!-- <li><a href="/home">Home</a></li>
           <li class="divider"></li> -->
-          <li><a href="#" class="active"><strong>{{ currentUrl }}</strong>  </a></li>
+          <li><a href="#" class="active"><strong>{{ currentUrl }}</strong> </a></li>
         </ul>
         <div class="card" style="padding: 10px;">
           <router-outlet></router-outlet>
@@ -121,3 +147,4 @@
 <div *ngIf="isResetPassword === true">
   <app-recuperar-contrasenia></app-recuperar-contrasenia>
 </div>
+

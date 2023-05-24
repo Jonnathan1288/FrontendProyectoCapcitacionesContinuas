@@ -36,7 +36,12 @@ export class AppComponent implements OnInit {
     this.rolNameUser = localStorage.getItem('rol');
     this.foto = localStorage.getItem('foto');
 
-    this.username = localStorage.getItem('username');
+    
+    try {
+      this.username = localStorage.getItem('username')!.toUpperCase();
+    } catch (error) {
+      console.log(error)
+    }
     if(this.rolNameUser){
       this.isLogginPresent = false;
     }else{
@@ -99,6 +104,12 @@ export class AppComponent implements OnInit {
         // alert('ROL DESCONOCIDO');
         break;
     };
+  }
+
+  activeItem: string = '';
+
+  onItemClick(itemId: string) {
+    this.activeItem = itemId;
   }
 
 }
