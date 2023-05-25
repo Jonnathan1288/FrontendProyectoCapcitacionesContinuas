@@ -6,12 +6,12 @@
 
         </ng-template>
 
-        <ng-template pTemplate="right">
+        <!-- <ng-template pTemplate="right">
             <button pButton pRipple label="Imprimir" icon="pi pi-print"
                 class="p-button-primary mr-2 inline-block"></button>
 
             <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button>
-        </ng-template>
+        </ng-template> -->
     </p-toolbar>
 
     <p-table #dt [value]="listDocentesCapacitadoresFilter" dataKey="id" styleClass="p-datatable-customers"
@@ -39,14 +39,14 @@
         <ng-template pTemplate="header">
             <tr>
 
-                <th pSortableColumn="usuario.persona.nombre1">NOMRBES <p-sortIcon
+                <th pSortableColumn="usuario.persona.nombre1">NOMBRES <p-sortIcon
                         field="usuario.persona.nombre1"></p-sortIcon></th>
-                <th pSortableColumn="usuario.persona.identificacion">IDENTIFICASIÓN<p-sortIcon
+                <th pSortableColumn="usuario.persona.identificacion">IDENTIFICACIÓN<p-sortIcon
                         field="usuario.persona.identificacion"></p-sortIcon>
                 </th>
                 <th pSortableColumn="usuario.username">NOMBRE DE CUENTA<p-sortIcon
                         field="usuario.username"></p-sortIcon></th>
-                <th pSortableColumn="tituloCapacitador">TITÚLO<p-sortIcon field="tituloCapacitador"></p-sortIcon></th>
+                <th pSortableColumn="tituloCapacitador">TÍTULO<p-sortIcon field="tituloCapacitador"></p-sortIcon></th>
                 <th pSortableColumn="inventoryStatus">HOJA DE VIDA <p-sortIcon field="inventoryStatus"></p-sortIcon>
                 </th>
 
@@ -60,7 +60,7 @@
 
                     </div>
                 </th>
-                <th pSortableColumn="inventoryStatus">GÉSTION <p-sortIcon field="inventoryStatus"></p-sortIcon></th>
+                <th pSortableColumn="inventoryStatus">GESTIÓN <p-sortIcon field="inventoryStatus"></p-sortIcon></th>
 
             </tr>
         </ng-template>
@@ -157,7 +157,7 @@
                     <span class="p-float-label">
                         <input type="text" id="inputtext" pInputText id="username" name="username"
                             [(ngModel)]="classUsuario.username">
-                        <label htmlFor="username">Nombre de usuario<span class="red-asterisk"></span></label>
+                        <label htmlFor="username">Nombre de Usuario<span class="red-asterisk"></span></label>
                     </span>
                 </div>
             </div>
@@ -227,7 +227,7 @@
 
     <div class="mx-2" *ngIf="!fileUrl && !pdfSrc && !isInNewComponet">
         <div class="container">
-            Este docente capacitador no tiene hoja de vida
+            Este docente capacitador no tiene hoja de vida.
         </div>
     </div>
 

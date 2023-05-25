@@ -8,7 +8,7 @@
 <div class="card">
     <p-table #dt [value]="listCursos" dataKey="id" styleClass="p-datatable-customers" [rowHover]="true" [rows]="10"
         [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading" responsiveLayout="scroll"
-        [paginator]="true" currentPageReportTemplate="Mostrando {first} to {last} of {totalRecords} cursos de capacitacion continua"
+        [paginator]="true" currentPageReportTemplate="Mostrando {first} to {last} of {totalRecords} cursos de capacitación continua."
         [filterDelay]="0" [globalFilterFields]="['fechaFinalizacionCurso', 'fechaInicioCurso', 'programas.periodoPrograma.nombrePeriodoPrograma', 'programas.descripcionPrograma', 'programas.nombrePrograma','nombreCurso','capacitador.usuario.persona.nombre1', 'capacitador.usuario.persona.nombre2', 'capacitador.usuario.persona.apellido1', 'capacitador.usuario.persona.apellido2','capacitador.usuario.username','status']">
 
         <ng-template pTemplate="caption">
@@ -20,7 +20,7 @@
                 <span class="p-input-icon-left ml-auto">
                     <i class="pi pi-search"></i>
                     <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
-                        placeholder="Search keyword" />
+                        placeholder="Buscar..." />
 
                 </span>
             </div>
@@ -277,7 +277,7 @@
         <div class="col-12 md:col-6 mt-2">
             <div class="p-inputgroup">
                 <div class="col-md-12" style="text-align: center; margin: 5px;">
-                    <p-button type="ngSubmit" [label]="'Aprovar'" icon="pi pi-check"
+                    <p-button type="ngSubmit" [label]="'Aprobar'" icon="pi pi-check"
                         [styleClass]="classCursoValidanew!.estadoAprovacionCurso! === 'A' ? 'p-button-success mb-2' : 'p-button-primary mb-2'"
                         [disabled]="classCursoValidanew!.estadoAprovacionCurso! == 'A'"
                         (onClick)="UpdateValidacionCurso(1)"></p-button>

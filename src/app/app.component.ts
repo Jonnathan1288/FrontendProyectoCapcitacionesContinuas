@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { LoadScript } from './scripts/load-script';
-import { WelcomeComponent } from './modules/welcome/welcome.component';
+// import { WelcomeComponent } from './modules/genericAllAccess/welcome/welcome.component';
 import { NavigationEnd, Router } from '@angular/router';
-import { Usuario } from './models/usuario';
+// import { Usuario } from './models/usuario';
 import { UsuarioService } from './service/usuario.service';
 import { StorageService } from './service/storage.service';
 
@@ -14,6 +14,7 @@ import { StorageService } from './service/storage.service';
 export class AppComponent implements OnInit {
 
   public isLogginPresent: boolean = false;
+  public isResetPassword: boolean = false;
   public rolNameUser?: any;
   userIsLoggin:any;
 
@@ -35,7 +36,12 @@ export class AppComponent implements OnInit {
     this.rolNameUser = localStorage.getItem('rol');
     this.foto = localStorage.getItem('foto');
 
-    this.username = localStorage.getItem('username');
+    
+    try {
+      this.username = localStorage.getItem('username')!.toUpperCase();
+    } catch (error) {
+      console.log(error)
+    }
     if(this.rolNameUser){
       this.isLogginPresent = false;
     }else{
@@ -48,8 +54,19 @@ export class AppComponent implements OnInit {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.currentUrl = event.url;
+        console.log("ruta -> "+ this.currentUrl)
+        // if (this.currentUrl.indexOf("recuperar/contrasenia/")) {
+        //   this.isResetPassword = true;
+        //   console.log("esta true")
+        // } else {
+        //   this.isResetPassword = false;
+        //   console.log("esta false")
+        // }
       }
     });
+
+
+
 
     
   }
@@ -87,6 +104,12 @@ export class AppComponent implements OnInit {
         // alert('ROL DESCONOCIDO');
         break;
     };
+  }
+
+  activeItem: string = '';
+
+  onItemClick(itemId: string) {
+    this.activeItem = itemId;
   }
 
 }

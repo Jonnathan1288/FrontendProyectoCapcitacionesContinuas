@@ -37,7 +37,7 @@
                 <th pSortableColumn="periodoPrograma.fechaInicioPeriodoPrograma"><strong>FECHA INICIO</strong> <p-sortIcon
                         field="periodoPrograma.fechaInicioPeriodoPrograma"></p-sortIcon></th>
                 <th pSortableColumn="periodoPrograma.fechaFinPeriodoPrograma"><strong>FECHA FIN</strong> <p-sortIcon field="periodoPrograma.fechaFinPeriodoPrograma"></p-sortIcon></th>
-                <th pSortableColumn="periodoPrograma.nombrePeriodoPrograma"><strong>PERIODO</strong><p-sortIcon field="periodoPrograma.nombrePeriodoPrograma"></p-sortIcon></th>
+                <th pSortableColumn="periodoPrograma.nombrePeriodoPrograma"><strong>PERÍODO</strong><p-sortIcon field="periodoPrograma.nombrePeriodoPrograma"></p-sortIcon></th>
                 <th pSortableColumn="descripcionPrograma"><strong>DESCRIPCIÓN </strong><p-sortIcon field="descripcionPrograma"></p-sortIcon></th>
                 <!-- <th pSortableColumn="inventoryStatus">Estado <p-sortIcon field="inventoryStatus"></p-sortIcon></th> -->
                 <th pSortableColumn="estadoProgramaActivo">
@@ -114,7 +114,7 @@
                     <span class="p-float-label">
                         <input type="text" id="inputtext" pInputText id="nombrePeriodoPrograma"
                             name="nombrePeriodoPrograma" [(ngModel)]="classPeriodoPrograma.nombrePeriodoPrograma" required>
-                        <label for="inputtext">Periodo del programa</label>
+                        <label for="inputtext">Período del programa</label>
                     </span>
                 </div>
             </div>
@@ -153,7 +153,7 @@
 
 <!-- IMPLEMENTACION DEL MODAL PARA EL INGRESO DE LOS CURSOS -->
 
-<p-dialog header="Reporte de programcion mensual" [(visible)]="visiblePeriodoMensual" [modal]="true"
+<p-dialog header="Reporte de programación mensual" [(visible)]="visiblePeriodoMensual" [modal]="true"
     [style]="{ width: '70vw', height: '250' }" [draggable]="false" [resizable]="false">
     <div class="grid p-fluid m-2">
         <div class="col-12 md:col-12 ">

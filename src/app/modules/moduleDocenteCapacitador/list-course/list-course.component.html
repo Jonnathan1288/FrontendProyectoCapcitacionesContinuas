@@ -1,0 +1,251 @@
+
+
+<!-- NUEVO DISEÑO PARA LA VISTA -->
+
+<div class="card">
+    <p-toolbar styleClass="mb-4">
+        <ng-template pTemplate="left">
+            <button pButton pRipple label="Nuevo" icon="pi pi-plus" class="p-button-success mr-2"
+                (click)="newCursoCapcitacion()"></button>
+
+        </ng-template>
+
+
+
+        <ng-template pTemplate="right">
+            <div class="flex align-items-center justify-content-between">
+                <h5 class="m-0"><strong>MIS CURSOS DE CAPACITACIÓN</strong></h5>
+               
+            </div>
+        </ng-template>
+    </p-toolbar>
+
+    <p-table #dt [value]="cursoList" dataKey="id" styleClass="p-datatable-customers" [rowHover]="true" [rows]="5"
+        [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,15]" responsiveLayout="scroll" [paginator]="true"
+        currentPageReportTemplate="Mostrando {first} to {last} of {totalRecords} programas" [filterDelay]="0"
+        [showCurrentPageReport]="true" [globalFilterFields]="['nombreCurso','duracionCurso','fechaInicioCurso','fechaFinalizacionCurso']">
+        
+
+        <ng-template pTemplate="caption">
+            <div class="flex">
+                <!-- <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt1)"></button> -->
+                <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"
+                (click)="clear(dt)"></button>
+
+                <span class="p-input-icon-left ml-auto">
+                    <i class="pi pi-search"></i>
+                    <!-- <input pInputText type="text" (input)="filterTableCourse($event)"
+                        placeholder="Search keyword" /> -->
+
+                        <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                        placeholder="Buscar..." />
+
+                </span>
+            </div>
+        </ng-template>
+
+        
+        <ng-template pTemplate="header">
+            <tr>
+                <!-- <th style="width: 3rem">
+                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                </th> -->
+                <th pSortableColumn="nombreCurso"><strong>NOMBRE PROGRAMA</strong><p-sortIcon
+                        field="nombreCurso"></p-sortIcon>
+                </th>
+                <th pSortableColumn="duracionCurso"><strong>DURACIÓN</strong><p-sortIcon
+                        field="duracionCurso"></p-sortIcon>
+                </th>
+                <th pSortableColumn="fechaInicioCurso"><strong>FECHA INICIO</strong>
+                    <p-sortIcon field="fechaInicioCurso"></p-sortIcon></th>
+                <th pSortableColumn="fechaFinalizacionCurso"><strong>FECHA FIN</strong> <p-sortIcon
+                        field="fechaFinalizacionCurso"></p-sortIcon></th>
+                <th style="text-align: center;"><strong>FOTO</strong></th>
+                <th pSortableColumn="estadoPublicasionCurso"><strong>ASISTENCIA</strong><p-sortIcon
+                        field="estadoPublicasionCurso"></p-sortIcon></th>
+                <th pSortableColumn="estadoAprovacionCurso"><strong>INSCRITOS </strong><p-sortIcon
+                        field="estadoAprovacionCurso"></p-sortIcon></th>
+
+                <th pSortableColumn="estadoPublicasionCurso"><strong>ESTADO </strong><p-sortIcon
+                        field="estadoPublicasionCurso"></p-sortIcon></th>
+                <!-- <th pSortableColumn="inventoryStatus">Estado <p-sortIcon field="inventoryStatus"></p-sortIcon></th> -->
+
+                <th pSortableColumn="estadoPublicasionCurso"><strong>PUBLICACIÓN </strong><p-sortIcon
+                        field="estadoPublicasionCurso"></p-sortIcon></th>
+
+                <th style="text-align: center;"><strong>GESTIÓN</strong> </th>
+
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-data>
+            <tr>
+
+
+
+                <td>{{data.nombreCurso}}</td>
+                <td>{{data.duracionCurso}} horas/s </td>
+                <td>{{data.fechaInicioCurso}}</td>
+                <td>{{data.fechaFinalizacionCurso}}</td>
+                <td><img [src]="data.fotoCurso ? 'data:image/jpeg;base64,' + data.fotoCurso : '../../../../assets/img/camer.png'"
+                        width="100" class="shadow-4" /></td>
+                <td style="text-align: center;">
+
+                    <button [disabled]="data.estadoAprovacionCurso != 'A'" pButton pRipple icon="pi pi-book"
+                        class="p-button-rounded p-button-success mr-2 mt-1" (click)="VerCursoInicio(data.idCurso, data.estadoPublicasionCurso)"></button>
+                </td>
+                <td style="text-align: center;">
+                    <button [disabled]="data.estadoAprovacionCurso != 'A'" pButton pRipple icon="pi pi-list"
+                        class="p-button-rounded p-button-secondary mr-2 mt-1" (click)="VerParticipantesInscritos(data.idCurso)"></button>
+                </td>
+                <td>
+
+                    <p-message
+                        [severity]="data.estadoPublicasionCurso === 'I'? 'success': data.estadoPublicasionCurso === 'F'? 'warn': data.estadoAprovacionCurso === 'R'? 'error':'info'"
+                        [text]="data.estadoPublicasionCurso === 'I'? 'INICIO': data.estadoPublicasionCurso === 'F'? 'FINALIZO': data.estadoPublicasionCurso === 'V'? 'PUBLICADO': data.estadoAprovacionCurso === 'R'? 'RECHAZADO': 'PENDIENTE'"
+                        styleClass="mr-2"></p-message>
+
+                </td>
+
+                <td style="text-align: center;"> <button pButton pRipple icon="pi pi-send"
+                        class="p-button-rounded p-button-secondary mr-2 mt-1" (click)="showModaLPublisedCourse(data)"></button></td>
+                <td style="text-align: center;">
+                    <button pButton pRipple icon="pi pi-bars"
+                        class="p-button-rounded p-button-secondary mr-2 mt-1" (click)="modalViewoption(data)"></button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <div class="flex align-items-center justify-content-between">
+                En total hay {{cursoList ? cursoList.length : 0 }} Registros de cursos.
+            </div>
+        </ng-template>
+    </p-table>
+</div>
+
+
+<p-dialog
+    [header]="cursoViewPublished.nombreCurso + ' - ' + (cursoViewPublished.estadoPublicasionCurso === 'F' ? 'Finalizado': cursoViewPublished.estadoPublicasionCurso === 'I' ? 'Iniciado': cursoViewPublished.estadoPublicasionCurso === 'V' ? 'Publicado' : cursoViewPublished.estadoAprovacionCurso === 'A' ? 'Listo para publicar' : cursoViewPublished.estadoAprovacionCurso === 'P' ? 'Estado de validación' : cursoViewPublished.estadoAprovacionCurso === 'R' ? 'Rechazado': 'Rechazado') "
+    [(visible)]="visibleCursoPublicar" [modal]="true" [style]="{ width: '70vw', height: '250' }" [draggable]="false"
+    [resizable]="false">
+
+
+    <div class="container" [class.alert-success]="cursoViewPublished.estadoPublicasionCurso === 'V'"
+        [class.alert-success]="cursoViewPublished.estadoPublicasionCurso === 'I'"
+        [class.alert-primary]="cursoViewPublished.estadoAprovacionCurso === 'A'"
+        [class.alert-warning]="cursoViewPublished.estadoAprovacionCurso === 'P'"
+        [class.alert-danger]="cursoViewPublished.estadoAprovacionCurso === 'R'"
+        [class.alert-success]="cursoViewPublished.estadoPublicasionCurso === 'F'">
+        <div class="alert-heading" style="text-align: center;"> <strong>{{ cursoViewPublished.estadoPublicasionCurso ===
+                'F' ? 'Curso Finalizado': cursoViewPublished.estadoPublicasionCurso ===
+                'I' ? 'Curso Iniciado': cursoViewPublished.estadoPublicasionCurso ===
+                'V' ? 'Curso publicado' : cursoViewPublished.estadoAprovacionCurso === 'A' ? 'Curso listo para ser
+                publicado': cursoViewPublished.estadoAprovacionCurso === 'P' ? 'En este momento se encuentra validando
+                su curso': cursoViewPublished.estadoAprovacionCurso === 'R' ? 'Curso rechazado' : 'Este curso no fue
+                aprobado con anterioridad'}} </strong></div>
+        <hr>
+        <p class="mb-0" *ngIf="cursoViewPublished.estadoAprovacionCurso === 'R'">Lo sentimos su curso no fue aprovado,
+            comuníquese con el administrador del sistema.</p>
+    </div>
+
+
+
+    <p-card header="Información General del Curso" style="margin: 1px;">
+
+
+
+        <div class="grid" style="margin: 2px;">
+            <div class="col-5 flex justify-content-center">
+                <div style="float: left;">
+                    <p><strong>Área:</strong> {{ cursoViewPublished!.especialidad?.area?.nombreArea }}</p>
+                    <!-- <p><strong>Nombre del Curso:</strong> {{cursoViewPublished!.nombreCurso }}</p> -->
+                    <p><strong>Fecha de Inicio</strong> {{ cursoViewPublished!.fechaInicioCurso }}</p>
+                    <p><strong>Número de Cupos:</strong> {{cursoViewPublished!.numeroCuposCurso }}</p>
+
+                    <p><strong>Horario:</strong> {{cursoViewPublished!.horarioCurso?.horaInicio + ' a ' +
+                        curso.horarioCurso?.horaFin}}</p>
+                </div>
+            </div>
+
+            <div class="col-5 flex justify-content-center">
+                <div style="float: left;">
+
+                    <p><strong>Código del Curso: </strong> {{ cursoViewPublished!.especialidad?.codigoEspecialidad
+                        }}</p>
+                    <p><strong>Fecha de Finalización:</strong> {{ cursoViewPublished!.fechaFinalizacionCurso }}</p>
+                    <p><strong>Horas del curso:</strong> {{cursoViewPublished!.duracionCurso}}</p>
+                    <p><strong>Modalidad:</strong> {{ cursoViewPublished!.modalidadCurso?.nombreModalidadCurso }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </p-card>
+
+    <ng-template pTemplate="footer">
+        <div class="p-grid p-justify-end">
+            <p-button [disabled]="cursoViewPublished.estadoPublicasionCurso === 'F'" label="Editar" icon="pi pi-pencil"
+                styleClass="p-button-secondary mb-2" (onClick)="editarCursoCapacitadionContinua()"></p-button>
+
+            <p-button label="Publicar" icon="pi pi-send" styleClass="p-button-primary mb-2"
+                [disabled]="cursoViewPublished.estadoAprovacionCurso !== 'A' || cursoViewPublished.estadoPublicasionCurso === 'V' || cursoViewPublished.estadoPublicasionCurso === 'I' || cursoViewPublished.estadoPublicasionCurso === 'F'"
+                (onClick)="updatePublicCursosCapacitacion()"></p-button>
+
+        </div>
+    </ng-template>
+    <!-- </div>  -->
+
+
+
+    <div class="grid p-fluid m-1">
+
+        <div class="col-md-12" style="text-align: center; margin: 5px;">
+            <p-button (onClick)="closeModalView()" label="Aceptar" icon="pi pi-check"
+                styleClass="p-button-success  mb-2"></p-button>
+        </div>
+    </div>
+
+</p-dialog>
+
+
+
+<p-dialog header="OPCIONES DEL CURSO" [(visible)]="visiblePeriodoMensual"
+    [modal]="true" [style]="{ width: '25vw', height: '25' }" [draggable]="false" [resizable]="false">
+    <div class="grid p-fluid m-2">
+        
+
+        
+
+        <div class="col-12 md:col-12 ">
+            <div class=" mr-4 mx-4" style="text-align: center;">
+                <p-button label="Sílabo" icon="pi pi-book" styleClass="p-button-success" badge="1"
+                    badgeClass="p-badge-primary" (onClick)="generacionSilaboCurso()"></p-button>
+
+            </div>
+        </div>
+
+        <div class="col-12 md:col-12 ">
+            <div class=" mr-4 mx-4" style="text-align: center;">
+                <p-button label="Necesidad de Curso" icon="pi pi-file-pdf" styleClass="p-button-primary" badge="2"
+                    badgeClass="p-badge-secondary" (onClick)="necesidadCurso()"></p-button>
+
+            </div>
+        </div>
+
+        <div class="col-12 md:col-12 ">
+            <div class=" mr-4 mx-4" style="text-align: center;">
+                <p-button [disabled]="classNewCourse.estadoPublicasionCurso !== 'I' && classNewCourse.estadoPublicasionCurso !== 'F'" label="Registro fotográfico" icon="pi pi-camera" styleClass="p-button-secondary" badge="3"
+                    badgeClass="p-badge-success" (onClick)="reistroFotograficoCurso()"></p-button>
+
+            </div>
+        </div>
+
+        <div class="col-12 md:col-12 ">
+            <div class=" mr-4 mx-4" style="text-align: center;">
+                <p-button label="Editar curso" icon="pi pi-pencil" styleClass="p-button-success" badge="4"
+                    badgeClass="p-badge-primary" (onClick)="editarCurso()"></p-button>
+
+            </div>
+        </div>
+        
+    </div>
+
+</p-dialog>

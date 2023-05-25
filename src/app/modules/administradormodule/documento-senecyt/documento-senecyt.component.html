@@ -15,7 +15,7 @@
         [filterDelay]="0" [showCurrentPageReport]="true">
         <ng-template pTemplate="caption">
             <div class="flex align-items-center justify-content-between">
-                <h5 class="m-0"><strong>DOCUMENTOS EXEL CON CÓDIGOS DE SENECYT</strong></h5>
+                <h5 class="m-0"><strong>DOCUMENTOS EXCEL CON CÓDIGOS DE SENESCYT</strong></h5>
                 <span class="p-input-icon-left">
                     <i class="pi pi-search"></i>
                     <input pInputText type="text" placeholder="Search..."
@@ -26,7 +26,7 @@
         <ng-template pTemplate="header">
             <tr>
 
-                <th pSortableColumn="idDocumentoSenecyt"><strong>ID DOCUMENTO</strong><p-sortIcon
+                <th pSortableColumn="idDocumentoSenecyt"><strong>ID</strong><p-sortIcon
                         field="idDocumentoSenecyt"></p-sortIcon>
                 </th>
                 <th pSortableColumn="fechaCreacion"><strong>FECHA CREACIÓN</strong>
@@ -47,6 +47,8 @@
                 </th>
                 <th pSortableColumn="inventoryStatus"><strong>GESTIÓN</strong> <p-sortIcon
                         field="inventoryStatus"></p-sortIcon></th>
+                <th pSortableColumn="inventoryStatus"><strong>ENVÍO</strong> <p-sortIcon
+                        field="inventoryStatus"></p-sortIcon></th>
 
             </tr>
         </ng-template>
@@ -55,7 +57,7 @@
 
                 <td>{{documentoExel.idDocumentoSenecyt}}</td>
                 <td>{{documentoExel.fechaCreacion}}</td>
-                <td><a  class="download-link" href="{{documentoExel.documentoExel}}"
+                <td><a class="download-link" href="{{documentoExel.documentoExel}}"
                         [download]="'codigosSenecyt'+documentoExel.fechaCreacion+'.xlsx'">
                         <span class="download-icon">&#x2B07;</span> Descargar Códigos
                     </a>
@@ -64,19 +66,28 @@
                 <td>{{documentoExel.descripcion}}</td>
                 <td>
                     <p-message [severity]="documentoExel.estadoDocumento == true? 'success': 'warn'"
-                        [text]="documentoExel.estadoDocumento == true? 'Para descargar': 'Pasado'"
+                        [text]="documentoExel.estadoDocumento == true? 'Enviado': 'Pendiente'"
                         styleClass="mr-2"></p-message>
 
                 </td>
                 <td>
                     <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2 mt-1"
                         (click)="cargarDatos(documentoExel)"></button>
-                    <button pButton pRipple [icon]="documentoExel.estadoDocumento ? 'pi pi-check' : 'pi pi-trash'"
+
+                        <!-- CAMBIAMOS EL METODO DE ACTUALIZACION POR EL DE VERFICASIÓN.. PERO CON EL MISMO FIN DE CAMBIO DE ESTADO.. -->
+                        <!-- updateStatusCodigosExel -->
+                    <button [disabled]="!documentoExel.estadoDocumento" pButton pRipple [icon]="documentoExel.estadoDocumento ? 'pi pi-check' : 'pi pi-trash'"
                         [class]="'p-button-rounded ' + (documentoExel.estadoDocumento ? 'p-button-primary' : 'p-button-warning') + ' mt-1'"
-                        (click)="updateStatusCodigosExel(documentoExel)">
+                        (click)="updateVerificationEstadoEnvio(documentoExel)">
                     </button>
 
+
+
                 </td>
+                <th style="text-align: center;">
+                    <button [disabled]="documentoExel.estadoDocumento" pButton pRipple icon="pi pi-send" class="p-button-rounded p-button-primary ml-2"
+                        (click)="showMaximizableDialog(documentoExel.idDocumentoSenecyt)"></button>
+                </th>
             </tr>
         </ng-template>
         <ng-template pTemplate="summary">
@@ -90,8 +101,9 @@
 
 
 <!-- IMPLEMENTACION DEL MODAL PARA EL INGRESO DE LOS CURSOS -->
+<!-- IMPLEMENTACION DEL MODAL PARA EL INGRESO DE LOS CURSOS -->
 
-<p-dialog header="Documento con los códigos de la senecyt" [(visible)]="visible" [modal]="true"
+<p-dialog header="Documento con los códigos de la senescyt" [(visible)]="visible" [modal]="true"
     [style]="{ width: '50vw', height: '250' }" [draggable]="false" [resizable]="false">
     <form (ngSubmit)="validacionDocumentosExel()" novalidate style="padding: 15px;">
         <div class="grid p-fluid m-2">
@@ -132,3 +144,69 @@
 
     </form>
 </p-dialog>
+
+
+
+
+
+<!-- MODAL PARA EL ENVIO DE LOS CODIGOS -->
+<p-dialog header="ENVÍO DE CÓDIGOS SENESCYT" [(visible)]="displayMaximizable" [modal]="true"
+    [style]="{width: '50vw', height:'70vw'}" [maximizable]="true" [draggable]="false" [resizable]="false">
+    <!-- <p-table [value]="listUsers" responsiveLayout="scroll" [paginator]="true" [rows]="6" [responsive]="true"> -->
+
+    <div class="card">
+        <p-table #dt1 [value]="listUsers" dataKey="id" styleClass="p-datatable-customers" [rowHover]="true" [rows]="6"
+            [showCurrentPageReport]="true" [rowsPerPageOptions]="[6,10,15]" [responsive]="true"
+            responsiveLayout="scroll" [paginator]="true"
+            currentPageReportTemplate="Mostrando {first} to {last} of {totalRecords} usuarios." [filterDelay]="0"
+            [globalFilterFields]="['persona.nombre1', 'persona.nombre2', 'persona.apellido1', 'persona.apellido2', 'persona.correo','nombreCurso','capacitador.usuario.persona.nombre1', 'capacitador.usuario.persona.nombre2', 'capacitador.usuario.persona.apellido1', 'capacitador.usuario.persona.apellido2','capacitador.usuario.username','status']">
+
+
+
+            <ng-template pTemplate="caption">
+                <div class="flex">
+                    <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"
+                        (click)="clear(dt1)"></button>
+
+                    <span class="p-input-icon-left ml-auto">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text" (input)="dt1.filterGlobal($any($event.target).value, 'contains')"
+                            placeholder="Buscar..." />
+
+                    </span>
+                </div>
+            </ng-template>
+
+
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="persona.nombre1"><strong>NOMBRES</strong> <p-sortIcon
+                            field="persona.nombre1"></p-sortIcon></th>
+                    <th pSortableColumn="year"><strong>FOTO</strong></th>
+                    <th pSortableColumn="persona.correo"><strong>CORREO</strong> <p-sortIcon field="price"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="inventoryStatus"><strong>SEND</strong> <p-sortIcon
+                            field="inventoryStatus"></p-sortIcon></th>
+                    <th style="width:4em"></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-user>
+                <tr>
+                    <td>{{user.persona.nombre1}} {{user.persona.apellido1}}</td>
+                    <td><img [src]="user.fotoPerfil ? 'data:image/jpeg;base64,' + user.fotoPerfil : '../../../../assets/img/camer.png'"
+                            width="100" class="shadow-4" /></td>
+                    <td>{{user.persona.correo}}</td>
+                    <td>
+                        <button pButton pRipple icon="pi pi-envelope"
+                            class="p-button p-button-danger mr-2 mt-1" (click)="sendEmailCodigosSenecyt(user)" (click)="imprimirTabla()"></button>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</p-dialog>
+
+
+<!-- OTHER CHANGE -->
+<p-confirmDialog [style]="{width: '45vw'}" [baseZIndex]="10000"
+    rejectButtonStyleClass="p-button-text"></p-confirmDialog>

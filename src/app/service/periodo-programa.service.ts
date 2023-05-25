@@ -4,27 +4,28 @@ import { ParticipantesMatriculados } from '../models/participantesMatriculados';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { PeriodoPrograma } from '../models/periodo-programa';
+import { StorageService } from './storage.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PeriodoProgramaService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private storageService: StorageService) { }
 
   public getlistPeriodoPrograma():Observable<PeriodoPrograma[]>{
-    return this.http.get<PeriodoPrograma[]>(environment.apiuri+'/periodoPrograma/list');
+    return this.http.get<PeriodoPrograma[]>(environment.apiuri+'/periodoPrograma/list', { headers: this.storageService.returnToken()});
   }
 
   public savePeriodoPrograma(periodoPrograma: PeriodoPrograma):Observable<PeriodoPrograma>{
-    return this.http.post<PeriodoPrograma>(environment.apiuri+'/periodoPrograma/save', periodoPrograma);
+    return this.http.post<PeriodoPrograma>(environment.apiuri+'/periodoPrograma/save', periodoPrograma, { headers: this.storageService.returnToken()});
   }
 
   public getPeriodoProgramaById(idPeriodoPrograma: number):Observable<PeriodoPrograma>{
-    return this.http.get<PeriodoPrograma>(environment.apiuri+'/periodoPrograma/findbyId/'+idPeriodoPrograma);
+    return this.http.get<PeriodoPrograma>(environment.apiuri+'/periodoPrograma/findbyId/'+idPeriodoPrograma, { headers: this.storageService.returnToken()});
   }
 
   public updatePeriodoPrograma(idPeriodoPrograma:number, periodoPrograma: PeriodoPrograma):Observable<PeriodoPrograma>{
-    return this.http.put<PeriodoPrograma>(environment.apiuri+'/periodoPrograma/actualizar/'+idPeriodoPrograma, periodoPrograma);
+    return this.http.put<PeriodoPrograma>(environment.apiuri+'/periodoPrograma/actualizar/'+idPeriodoPrograma, periodoPrograma, { headers: this.storageService.returnToken()});
   }
 }

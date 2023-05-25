@@ -1,0 +1,197 @@
+
+
+<!-- //NUEVA TABLA DE PRIMENG -->
+
+
+
+
+<div class="container my-3">
+
+
+    <div class="attendance-section">
+        <h2 class="section-title"><strong>{{estadoFinal === 'F'? 'REVISIÓN DE LAS NOTAS FINALES' : 'REGISTRO DE NOTAS FINALES DE LOS ESTUDIANTES'}}</strong> </h2>
+
+    </div>
+
+
+    <div style="text-align: center;" *ngIf="estadoFinal === 'F'">
+        <p-tag icon="pi pi-times" severity="danger" value="CURSO FINALIZADO, SOLO PUEDE REVISAR LAS NOTAS CONCEDIDAS A LOS ESTUDIANTES, AL IGUAL QUE IMPRIMIR CADA UNO DE LOS REPORTES.."></p-tag>
+
+    </div>
+
+    <div class="container mt-2 ">
+        <div class="card text-center mb-2 shadow-4 rounded-5">
+            <p-table [value]="listNotas" [paginator]="true" [rows]="rows" [showCurrentPageReport]="true"
+                [(first)]="first" [tableStyle]="{'min-width': '50rem'}"
+                currentPageReportTemplate="Mostrando {first} to {last} of {totalRecords} estudiantes"
+                [rowsPerPageOptions]="[5,10,15]">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width:35%"><strong>NOMBRES</strong></th>
+                        <th style="width:15%"><strong>IDENTIFICACIÓN</strong></th>
+                        <th style="width:10%"><strong>NOTA PARCIAL</strong></th>
+                        <th style="width:10%"><strong>NOTA EXAMEN FINAL</strong></th>
+                        <th style="width:10%"><strong>ESTADO</strong></th>
+                        <th style="width:10%"><strong>OBSERVACIÓN</strong></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-data>
+                    <tr>
+                     
+                        <td>{{data.partipantesMatriculados!.inscrito!.usuario!.persona.nombre1}}
+                            {{data.partipantesMatriculados!.inscrito!.usuario!.persona.nombre2}}
+                            {{data.partipantesMatriculados!.inscrito!.usuario!.persona!.apellido1}}
+                            {{data.partipantesMatriculados!.inscrito!.usuario!.persona!.apellido2}}</td>
+                        <td>{{data.partipantesMatriculados!.inscrito!.usuario!.persona!.identificacion}} </td>
+
+                        <td>{{data.parcial}}</td>
+                        <td>{{data.examenFinal}}</td>
+                        <td style="text-align: center;">
+                            <ng-container *ngIf="validarNotasFinalesView(data.parcial, data.examenFinal) >= 7">
+                                <strong>{{validarNotasFinalesView(data.parcial, data.examenFinal) | number: '1.1-2'}} / 10</strong>
+                                <p-tag styleClass="mr-2" icon="pi pi-check" severity="success" value="APROVADO"></p-tag>
+                            </ng-container>
+
+                            <ng-container
+                                *ngIf="validarNotasFinalesView(data.parcial, data.examenFinal) > 0 && validarNotasFinalesView(data.parcial, data.examenFinal) < 7">
+                                <strong>{{validarNotasFinalesView(data.parcial, data.examenFinal) | number: '1.1-2'}} / 10</strong>
+                                <p-tag styleClass="mr-2" icon="pi pi-exclamation-triangle" severity="warning"
+                                    value="REPROVADO"></p-tag>
+                            </ng-container>
+
+                            <ng-container
+                                *ngIf="(data.parcial === null || data.parcial === undefined) && (data.examenFinal === null || data.examenFinal === undefined) ">
+                                <p-tag styleClass="mr-2" icon="pi pi-info-circle" severity="primary"
+                                    value="PENDIENTE"></p-tag>
+                            </ng-container>
+                        </td>
+
+                        <td>{{data.observacion}}</td>
+                        <td><button [disabled]="classCursoFinalizaEstado.estadoPublicasionCurso === 'F'" pButton type="button" icon="pi pi-book" (click)="showModalNotas(data.idNota)"
+                                class="p-button-rounded p-button-text"></button></td>
+
+                    </tr>
+                </ng-template>
+            </p-table>
+
+
+        </div>
+        <p-button [disabled]="classCursoFinalizaEstado.estadoPublicasionCurso === 'F'" label="Validar Notas" icon="pi pi-calendar-minus" styleClass="p-button-success  mb-2 m-2"
+            style="text-align: center;" (onClick)="vaidarNotasEstudiantesFinales()"></p-button>
+        <!-- <p-button label="Generar Reporte" icon="pi pi-calendar-minus" styleClass="p-button-success  mb-2 m-5" style="text-align: center;" (click)="generarReporteAsitenciaEvaluacion()" ></p-button> -->
+        <p-button label="Generar Reporte" icon="pi pi-print" styleClass="p-button-primary  mb-2 m-2"
+            style="text-align: center;" (onClick)="showModalFinalInformationCorse()"></p-button>
+
+
+
+            <!-- [disabled]="this.classInformeFinalC.idInformeFinalCurso == null" -->
+        <p-button [disabled]="classCursoFinalizaEstado.estadoPublicasionCurso === 'F' || this.classInformeFinalC.idInformeFinalCurso == null" label="Finalizar curso" icon="pi pi-calendar-minus" styleClass="p-button-secondary  mb-2 m-2"
+            style="text-align: center;" (onClick)="finalizarCursoCapacitacionContinua()"></p-button>
+
+
+            <p-button label="NOTAS FINALES" icon="pi pi-file-pdf" styleClass="p-button-danger mb-2 m-2"
+            [disabled]="this.classInformeFinalC.idInformeFinalCurso == null"
+            (onClick)="generarReporteAsitenciaEvaluacion()"></p-button>
+
+            <p-button label="Reporte de Participantes" icon="pi pi-file-pdf" styleClass="p-button-danger mb-2"
+            [disabled]="this.classInformeFinalC.idInformeFinalCurso == null"
+            (onClick)="generarReporteParticipantes()"></p-button>
+    </div>
+
+</div>
+
+
+
+
+<!-- MODAL -->
+
+<p-dialog header="INGRESO DE NOTAS FINALES" [(visible)]="visible" [modal]="true"
+    [style]="{ width: '50vw', height: '450' }" [draggable]="false" [resizable]="false">
+    <div class="grid p-fluid m-5">
+        <div class="col-12 md:col-12 mt-1">
+            <div class="p-inputgroup">
+                <span class="p-float-label">
+                    <input type="text" pInputText id="parcial" name="parcial" [(ngModel)]="notas.parcial" (input)="validarParcialAndFinalNota($event)" maxlength="2" (keydown)="validarEntrada($event)"/>
+                    <label htmlFor="parcial">Nota Parcial<span class="red-asterisk"></span></label>
+                </span>
+            </div>
+        </div>
+        <div class="col-12 md:col-12 mt-3">
+            <div class="p-inputgroup">
+                <span class="p-float-label">
+                    <input type="text" pInputText id="examenFinal" name="examenFinal" [(ngModel)]="notas.examenFinal" (input)="validarParcialAndFinalNota($event)" maxlength="2">
+                    <label htmlFor="examenFinal">Nota Exámen Final<span class="red-asterisk"></span></label>
+                </span>
+            </div>
+        </div>
+        <div class="col-12 md:col-12 mt-3">
+            <div class="p-inputgroup">
+                <span class="p-float-label">
+                    <input type="text" pInputText id="observacion" name="observacion" [(ngModel)]="notas.observacion">
+                    <label htmlFor="observacion">Observación</label>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-12" style="text-align: center; margin: 5px;">
+            <p-button label="Guardar Nota" icon="pi pi-check-square" styleClass="p-button-success  mb-2"
+                (click)="guardarNotaPorEstudiante()"></p-button>
+        </div>
+    </div>
+</p-dialog>
+
+
+
+
+<!-- FORMULARIO FIN DE CURSO PARA GENERAR EL PDF-->
+<p-dialog header="Informe final del curso" [(visible)]="visibleModalFormFinalCourse" [modal]="true"
+    [style]="{ width: '50vw', height: '450' }" [draggable]="false" [resizable]="false">
+    <div class="grid p-fluid m-5">
+        <div class="col-12 md:col-12 mt-3">
+            <div class="p-inputgroup">
+                <span class="p-float-label">
+                    <input type="text" pInputText id="observacionesInformeFinalCurso"
+                        name="observacionesInformeFinalCurso"
+                        [(ngModel)]="classInformeFinalC.observacionesInformeFinalCurso">
+                    <label htmlFor="username">Observaciones del curso<span class="red-asterisk"></span></label>
+                </span>
+            </div>
+        </div>
+        <div class="col-12 md:col-12 mt-3">
+            <div class="p-inputgroup">
+                <span class="p-float-label">
+                    <input type="text" pInputText id="lugarInformeFinalCurso" name="lugarInformeFinalCurso"
+                        [(ngModel)]="classInformeFinalC.lugarInformeFinalCurso">
+                    <label htmlFor="username">Lugar informe final curso<span class="red-asterisk"></span></label>
+                </span>
+            </div>
+        </div>
+        <div class="col-12 md:col-12 mt-3">
+            <div class="p-inputgroup">
+                <span class="p-float-label">
+                    <input type="text" pInputText id="nombreCantonInformeFinalCurso"
+                        name="nombreCantonInformeFinalCurso"
+                        [(ngModel)]="classInformeFinalC.nombreCantonInformeFinalCurso">
+                    <label htmlFor="username">Cantón informe final curso<span class="red-asterisk"></span></label>
+                </span>
+            </div>
+        </div>
+
+
+        <div class="p-grid p-justify-end">
+            <p-button [label]="this.classInformeFinalC.idInformeFinalCurso? 'Actualizar':'Guardar'" icon="pi pi-pencil"
+                styleClass="p-button-secondary mb-2" (onClick)="validarCamposVaciosInformeFinal()"  [disabled]="classCursoFinalizaEstado.estadoPublicasionCurso === 'F'"></p-button>
+
+            <p-button label="Informe final" icon="pi pi-file-pdf" styleClass="p-button-danger mb-2"
+                [disabled]="this.classInformeFinalC.idInformeFinalCurso == null"
+                (onClick)="generarReporteInformeFinalCurso()"></p-button>
+
+        </div>
+
+    </div>
+</p-dialog>
+
+
+
+
+<p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000"
+    rejectButtonStyleClass="p-button-text"></p-confirmDialog>

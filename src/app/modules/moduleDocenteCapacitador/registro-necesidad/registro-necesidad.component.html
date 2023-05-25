@@ -1,0 +1,138 @@
+<p-card class="m-5 ">
+    <!-- //surface-section px-4 py-8 md:px-6 lg:px-8  surface-card p-4 shadow-8 border-round w-full  -->
+    <form (ngSubmit)="validacionCaposNecesidadCurso()" novalidate>
+        <div class="surface-section px-4 py-4 md:px-6 lg:px-4  surface-card p-4 shadow-8 border-round w-full">
+            <p-card header="Informe de Necesidad del Curso">        
+                    <div class="grid p-fluid m-3">
+                <div class="col-12 md:col-12 ">
+                    <div class="p-inputgroup">
+                        <span class="p-float-label">
+                            <input type="text" pInputText id="espacioImpartirNecesidadCurso"
+                                name="espacioImpartirNecesidadCurso"
+                                [(ngModel)]="necesidadActivo.espacioImpartirNecesidadCurso" required>
+                            <label htmlFor="username">Espacio a impartir el curso <span
+                                    class="red-asterisk"></span></label>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-12 md:col-12 mt-2">
+                    <div class="p-inputgroup">
+                        <span class="p-float-label">
+                            <input type="text" pInputText id="resumenCurso" name="resumenCurso"
+                                [(ngModel)]="necesidadActivo.resumenCurso" required>
+                            <label htmlFor="username">Resumen del curso <span class="red-asterisk"></span></label>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-12 md:col-12 mt-2">
+                    <div class="p-inputgroup">
+                        <span class="p-float-label">
+                            <input type="text" pInputText id="poblacionDirijida" name="respoblacionDirijidaumenCurso"
+                                [(ngModel)]="necesidadActivo.poblacionDirijida" required>
+                            <label htmlFor="username">Población a la que va dirijida el curso <span
+                                    class="red-asterisk"></span></label>
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+        </p-card>
+
+
+            <p-card header="Necesidad del Curso (Por que en el sector y por las carreras es necesario el curso)"
+                class="m-5">
+                <form ngNativeValidate>
+                    <div class="grid p-fluid m-3">
+                        <div class="col-12 md:col-12 mt-1" *ngIf="!auxiliarVariableParaList">
+                            <div class="p-inputgroup">
+                                <span class="p-float-label">
+                                    <input type="text" pInputText id="nombrePrerequisitoCurso"
+                                        name="nombrePrerequisitoCurso" [(ngModel)]="listaNece.detalleNececidadCurso"
+                                        required>
+                                    <label htmlFor="username">Detalles para el curso <span
+                                            class="red-asterisk"></span></label>
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-md-12" style="text-align: center; margin: 5px;">
+                        <p-button label="Agregar" *ngIf="auxiliarVariableParaList" icon="pi pi-plus"
+                            styleClass="p-button-success  mb-2" (click)="showDialog()"></p-button>
+
+                        <p-button label="Agregar" *ngIf="!auxiliarVariableParaList"
+                            (click)="almacenarListaNecedidadDeCurso()" icon="pi pi-plus"
+                            styleClass="p-button-success  mb-2"></p-button>
+                    </div>
+                </form>
+
+                <div class="card">
+                    <p-table [value]="listaNecesidadCursoArr">
+                        <ng-template pTemplate="header" let-columns>
+                            <tr style="align-items: center;">
+                                <th>Detalle</th>
+                                <th style="width:20%; text-align: center;">Opciones</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-data let-i="index" let-columns="columns">
+                            <tr>
+                                <td style="width:80%; text-align: left;">
+                                    {{data.detalleNececidadCurso}}
+                                </td>
+                                <td style="width:20%; text-align: center;">
+                                    <p-button *ngIf="auxiliarVariableParaList" class="ml-2 mt-1" icon="pi pi-pencil"
+                                        styleClass="p-button-secondary" (click)="editListNecesidad(data)"
+                                        (click)="showDialog()"></p-button>
+                                    <p-button *ngIf="auxiliarVariableParaList" class="ml-2 mt-1" icon="pi pi-trash"
+                                        styleClass="p-button-secondary"
+                                        (click)="eliminadologicoDeInfNecesidadCurso(data)"></p-button>
+                                    <p-button class="ml-2 mt-1" icon="pi pi-trash" styleClass="p-button-secondary"
+                                        *ngIf="!auxiliarVariableParaList"
+                                        (click)="quitarListaNesesidadCurso(data.detalleNececidadCurso)"></p-button>
+
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </p-card>
+            <div class="col-md-12" style="text-align: center; margin: 5px;">
+                <p-button [label]="necesidadActivo.idNecesidadCurso? 'Actualizar Necesidad': 'Guardar Necesidad'"
+                    type="ngSubmit" icon="pi pi-save" styleClass="p-button-success  mb-2"></p-button>
+            </div>
+        </div>
+    </form>
+
+
+</p-card>
+
+
+<div class="container" style="align-items: cencer;">
+    <p-button
+        [disabled]="this.necesidadActivo.idNecesidadCurso == null || this.necesidadActivo.idNecesidadCurso ==undefined "
+        [label]="this.necesidadActivo.idNecesidadCurso? 'IMPRIMIR NECESIDAD': 'LLENE LOS CAMPOS'"
+        (onClick)="getReportNecesidadCurso()" icon="pi pi-file-pdf" styleClass="p-button-danger  mb-2"></p-button>
+</div>
+
+
+<p-dialog header="Detalle" [(visible)]="visible" [style]="{width: '50vw'}">
+    <div class="grid p-fluid m-5">
+        <div class="col-12 md:col-12 mt-1">
+            <div class="p-inputgroup">
+                <span class="p-float-label">
+                    <input type="text" pInputText id="nombrePrerequisitoCurso" name="nombrePrerequisitoCurso"
+                        [(ngModel)]="listaNece.detalleNececidadCurso" required>
+                    <label htmlFor="username">Detalles para el curso <span class="red-asterisk"></span></label>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-12" style="text-align: center; margin: 5px;">
+            <p-button (click)="updateCreate()" [label]="this.listaNece.idListaNecesidadCursos ? 'Actualizar' : 'Crear'"
+                icon="pi pi-check-square" styleClass="p-button-success  mb-2"></p-button>
+        </div>
+    </div>
+</p-dialog>

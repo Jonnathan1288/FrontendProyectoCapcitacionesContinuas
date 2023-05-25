@@ -1,0 +1,137 @@
+<div class="card">
+    <p-toolbar styleClass="mb-4">
+        <ng-template pTemplate="left">
+            <button pButton pRipple label="Nuevo" icon="pi pi-plus" class="p-button-success mr-2"
+                (click)="showModaL()"></button>
+
+        </ng-template>
+
+        <ng-template pTemplate="right">
+            <button pButton pRipple label="Imprimir" icon="pi pi-print" class="p-button-primary mr-2 inline-block"
+                (click)="getReportRegistroFotograficoCurso()"></button>
+
+        </ng-template>
+    </p-toolbar>
+
+    <p-table #dt [value]="listRegistroFotografico" [rows]="5" [paginator]="true"
+        [globalFilterFields]="['descripcionFoto','fecha','representative.name','status']" responsiveLayout="scroll"
+        [rowHover]="true" dataKey="id"
+        currentPageReportTemplate="Mostrando {first} de {last} de {totalRecords} registros fotográficos"
+        [showCurrentPageReport]="true">
+        <ng-template pTemplate="caption">
+            <div class="flex align-items-center justify-content-between">
+                <h5 class="m-0"><strong>CURSO: </strong> {{curso.nombreCurso!}}</h5>
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" placeholder="Search..." (input)="dt.filterGlobal($any($event.target).value, 'contains')"/>
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+ 
+                <th><strong>FOTO</strong></th>
+
+                <th pSortableColumn="descripcionFoto"> <strong>DESCRIPCIÓN</strong><p-sortIcon field="descripcionFoto"></p-sortIcon></th>
+                <th pSortableColumn="fecha">  <strong>FECHA</strong><p-sortIcon field="fecha"></p-sortIcon></th>
+
+                <th pSortableColumn="inventoryStatus"> <strong>GÉSTION</strong></th>
+
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-regFotografico>
+            <tr>
+              
+                <td><img [src]="regFotografico.foto ? 'data:image/jpeg;base64,' + regFotografico.foto : '../../../../assets/img/camer.png'"
+                        [alt]="regFotografico.name" width="100" class="shadow-4" /></td>
+                <td>{{regFotografico.descripcionFoto}}</td>
+                <td>{{regFotografico.fecha}}</td>
+                <td>
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
+                        (click)="cargarDatosRegistrofotografico(regFotografico)"></button>
+                    <button pButton pRipple [icon]="regFotografico.estado ? 'pi pi-check' : 'pi pi-trash'"
+                        [class]="'p-button-rounded ' + (regFotografico.estado ? 'p-button-primary' : 'p-button-warning') + ' mt-1'"
+                        (click)="eliminadoLogicoDelregistroFotografico(regFotografico)">
+                    </button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <div class="flex align-items-center justify-content-between">
+                En total hay {{listRegistroFotografico ? listRegistroFotografico.length : 0 }} Registros fotograficos.
+            </div>
+        </ng-template>
+    </p-table>
+</div>
+
+
+<!-- IMPLEMENTACION DEL MODAL PARA EL INGRESO DE REGISTRO FOTOGRAFICO -->
+<p-dialog header="Contenidos del Curso" [(visible)]="visible" [modal]="true" [style]="{ width: '60vw', height: '280' }"
+    [draggable]="false" [resizable]="false">
+    <form (ngSubmit)="validacionRegistroFotografico()" novalidate style="padding: 15px;">
+
+        <p-card header="Registro fotografico del curso">
+            <div class="row rounded mb-1">
+
+                <div class="col-md-6">
+
+                    <div class="grid p-fluid">
+                        <div class="col-12 md:col-12" style="align-items: center;">
+
+                            <!-- <div class="card flex justify-content-center"> -->
+                            <span class="p-float-label">
+                                <textarea id="float-input" rows="10" cols="30" pInputTextarea id="descripcionCurso"
+                                    name="descripcionCurso" [(ngModel)]="registroFotografico.descripcionFoto"
+                                    required></textarea>
+                                <label for="float-input">Descripción dede la foto</label>
+                            </span>
+                            <!-- </div> -->
+
+                        </div>
+                    </div>
+
+                    <div class="grid p-fluid">
+
+                        <div class="col-12 md:col-12 mt-2">
+                            <div class="p-inputgroup">
+                                <p-calendar inputId="edad" class="ng-dirty" [showIcon]="true"
+                                    placeholder="Fecha de evidencia" id="fechaEvidencia" name="fechaEvidencia"
+                                    [(ngModel)]="registroFotografico.fecha"></p-calendar>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="container custom-text-center" style="font-size: 20px;">
+                        <strong>Foto evidencia</strong>
+                      </div>
+                      
+                    <div class="personal-image">
+                        <label class="label" style="border: black;">
+                            <input type="file" accept="image/jpeg, image/jpg, image/png" (change)="subirFoto($event)" />
+                            <figure class="personal-figure">
+                                <img *ngIf="registroFotografico.foto"
+                                    [src]="registroFotografico.foto ? 'data:image/jpeg;base64,' + registroFotografico.foto : '../../../../assets/img/camer.png'"
+                                    class="personal-avatar" alt="logoFundacion" />
+                                <img style="padding: 20px;" *ngIf="!registroFotografico.foto"
+                                    src="./assets/img/camer.png" class="personal-avatar" alt="Logo Fundación" />
+                                <figcaption class="personal-figcaption">
+                                    <img src="./assets/img/camer.png" />
+                                </figcaption>
+                            </figure>
+                        </label>
+                    </div>
+                </div>
+
+            </div>
+        </p-card>
+
+        <!-- Fin del periodo porgrama -->
+        <div class="col-md-12 " style="text-align: center; margin: 5px;">
+            <p-button type="ngSubmit" [label]="registroFotografico.idRegistroFotograficoCurso? 'Actualizar': 'Guardar'"
+                icon="pi pi-save" styleClass="p-button-success  mb-2 mt-4"></p-button>
+        </div>
+
+    </form>
+</p-dialog>

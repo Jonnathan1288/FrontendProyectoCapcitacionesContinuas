@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { Persona } from '../models/persona';
 import { environment } from 'src/environment/enviroment';
+import { StorageService } from './storage.service';
 
 
 @Injectable({
@@ -10,26 +11,36 @@ import { environment } from 'src/environment/enviroment';
 })
 export class PersonaService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private storageService: StorageService) { }
 
   public getListaPersonas():Observable<Persona[]>{
-    return this.http.get<Persona[]>(environment.apiuri+'/persona/listar');
-  }
-
-  public savePersona(persona: Persona):Observable<Persona>{
-    return this.http.post<Persona>(environment.apiuri+'/persona/crear', persona);
+    return this.http.get<Persona[]>(environment.apiuri+'/persona/listar', { headers: this.storageService.returnToken()});
   }
 
   public getPersonaById(idPersona: number):Observable<Persona>{
-    return this.http.get<Persona>(environment.apiuri+'/persona/findbyId/'+idPersona);
-  }
-
-  public getPersonaByIdentificasion(identificasion: String):Observable<boolean>{
-    return this.http.get<boolean>(environment.apiuri+'/persona/existsbyIdentifcasion/'+identificasion);
+    return this.http.get<Persona>(environment.apiuri+'/persona/findbyId/'+idPersona, { headers: this.storageService.returnToken()});
   }
 
   public updatePersona(idPersona:number, Persona: Persona):Observable<Persona>{
-    return this.http.put<Persona>(environment.apiuri+'/persona/actualizar/'+idPersona, Persona);
+    return this.http.put<Persona>(environment.apiuri+'/persona/actualizar/'+idPersona, Persona, { headers: this.storageService.returnToken()});
+  }
+
+  //PARA PETICIONES PUBLICAS DE VALIDACIONES--------------------------------------------------------------------------
+  
+  public savePersona(persona: Persona):Observable<Persona>{
+    return this.http.post<Persona>(environment.apiUriSecurity+'/persona/crear', persona);
+  }
+
+  public getPersonaByIdentificasion(identificasion: String):Observable<boolean>{
+    return this.http.get<boolean>(environment.apiUriSecurity+'/persona/existsbyIdentifcasion/'+identificasion);
+  }
+
+  public getPersonaExistsByEmail(email: String):Observable<boolean>{
+    return this.http.get<boolean>(environment.apiUriSecurity+'/persona/existsByPersonaCorreo/'+email);
+  }
+
+  public verifiqueValidateEmail(email: String):Observable<any>{
+    return this.http.get<any>(environment.apiUriSecurity+'/validate-email/'+email);
   }
 
 }

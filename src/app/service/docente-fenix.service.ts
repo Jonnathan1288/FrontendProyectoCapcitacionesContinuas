@@ -4,19 +4,20 @@ import { Curso } from '../models/curso';
 import { environment } from 'src/environment/enviroment';
 import { Observable } from 'rxjs';
 import { DocenteFenix } from '../models/docente-fenix';
+import { StorageService } from './storage.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DocenteFenixService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private storageService: StorageService) { }
 
   public listDocenteFenix():Observable<DocenteFenix[]>{
-    return this.http.get<DocenteFenix[]>(environment.apiuri+'/fenix/docente/ista/list');
+    return this.http.get<DocenteFenix[]>(environment.apiuri+'/fenix/docente/ista/list', { headers: this.storageService.returnToken()});
   }
 
   public getDocenteFenixFindByIdentificasión(identificacion: string):Observable<DocenteFenix>{
-    return this.http.get<DocenteFenix>(environment.apiuri+'/fenix/docente/ista/findbyIdentificasion/'+identificacion);
+    return this.http.get<DocenteFenix>(environment.apiuri+'/fenix/docente/ista/findbyIdentificasion/'+identificacion, { headers: this.storageService.returnToken()});
   }
 }

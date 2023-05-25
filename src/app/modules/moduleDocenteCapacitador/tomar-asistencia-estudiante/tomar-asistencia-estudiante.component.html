@@ -1,0 +1,124 @@
+<div class="container my-3">
+
+
+    <div class="attendance-section">
+        <h2 class="section-title"><strong>Asistencia de Estudiantes</strong> </h2>
+        <div class="attendance-date">{{ today | date:'mediumDate' }}</div>
+    </div>
+
+
+
+    <div class="grid p-fluid m-2">
+        <div class="col-12 md:col-12 ">
+            <div class="p-inputgroup">
+                <p-calendar inputId="edad" class="ng-dirty" [showIcon]="true" placeholder="Fecha de asistencia"
+                    id="fechaEvidencia" name="fechaEvidencia" (onSelect)="onDateSelect($event)"
+                    style="padding-left: 30%; padding-right: 30%;"></p-calendar>
+            </div>
+
+        </div>
+    </div>
+
+    <div style="text-align: center;" *ngIf="estadoFinal === 'F'">
+        <p-tag icon="pi pi-times" severity="danger" value="CURSO FINALIZADO, SOLO PUEDE REVISAR EL HISTORIAL DE ASISTENCIAS DE SUS ALUMNOS."></p-tag>
+
+    </div>
+
+
+    <div class="container mt-2 ">
+        <div class="card text-center mb-2 shadow-4 rounded-5">
+            <p-table [value]="listAsistenciasAntiguas" [paginator]="true" [rows]="rows" [showCurrentPageReport]="true"
+                [(first)]="first" [tableStyle]="{'min-width': '50rem'}"
+                currentPageReportTemplate="Mostrando {first} to {last} of {totalRecords} estudiantes"
+                [rowsPerPageOptions]="[5,10,15]">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width:40%"><strong>NOMBRES</strong></th>
+                        <th style="width:25%"><strong>IDENTIFICACIÓN</strong></th>
+                        <th style="width:25%"><strong>OBSERVACIÓN</strong></th>
+                        <th style="width:10%"><strong>ASISTENCIA</strong></th>
+                        <th style="width:10%"><strong>OBSERVACIÓN</strong></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-data>
+                    <tr>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <div>
+                                    <p class="fw-bold mb-1">{{
+                                        data.partipantesMatriculados!.inscrito!.usuario!.persona!.nombre1 }} {{
+                                        data.partipantesMatriculados!.inscrito!.usuario!.persona!.nombre2 }} {{
+                                        data.partipantesMatriculados!.inscrito!.usuario!.persona!.apellido1 }} {{
+                                        data.partipantesMatriculados!.inscrito!.usuario!.persona!.apellido2 }}</p>
+                                    <p class="text-muted mb-0">{{
+                                        data.partipantesMatriculados!.inscrito!.usuario!.persona!.correo }}</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <p class="text-muted mb-0">{{
+                                data.partipantesMatriculados!.inscrito!.usuario!.persona!.identificacion }}</p>
+                        </td>
+                        <td>
+                            <p class="text-muted mb-0">{{
+                                data.observacionAsistencia }}</p>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <p-button
+                                    [disabled]="data.partipantesMatriculados?.estadoParticipanteActivo === false || data.partipantesMatriculados?.inscrito?.curso?.estadoPublicasionCurso === 'F'"
+                                    *ngIf='data.estadoAsistencia == true' icon="pi pi-check-square"
+                                    styleClass="p-button-success me-2"
+                                    (onClick)="estudianteNOAsisteAClase(data.idAsistencia, data)"></p-button>
+                                <p-button
+                                    [disabled]="data.partipantesMatriculados?.estadoParticipanteActivo === false  || data.partipantesMatriculados?.inscrito?.curso?.estadoPublicasionCurso === 'F'"
+                                    *ngIf='data.estadoAsistencia == false' icon="pi pi-times"
+                                    styleClass="p-button-danger me-2"
+                                    (onClick)="estudianteAsisteClase(data.idAsistencia, data)"></p-button>
+                            </div>
+                        </td>
+                        <td>
+                            <p-button icon="pi pi-eye" (onClick)="showDialog(data)" [disabled]="data.partipantesMatriculados?.inscrito?.curso?.estadoPublicasionCurso === 'F'"></p-button>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<p-dialog header="Observacion al estudiante" [(visible)]="visible" [style]="{ width: '30vw', height: '550' }">
+    <div class="grid p-fluid m-1">
+        <div class="col-12 md:col-12 mt-2">
+
+            <span class="p-float-label">
+                <textarea id="float-input" rows="7" cols="30" pInputTextarea id="observacionAsistencia"
+                    name="observacionAsistencia" [(ngModel)]="asistenciaEstudiante.observacionAsistencia"></textarea>
+                <label for="float-input">Observación del día<span class="red-asterisk1"></span></label>
+            </span>
+        </div>
+
+    </div>
+
+    <div class="grid p-fluid">
+        <div class="col-12 md:col-6 ">
+
+            <p-button [label]="'Aceptar'" icon="pi pi-check-square" (click)="tomarAsistenciaCursoEstudianteCP()"
+                styleClass="p-button-success  mb-2"></p-button>
+
+            <p-button
+                [label]="asistenciaEstudiante.partipantesMatriculados?.estadoParticipanteActivo ?'ASISTE': 'RETIRADO'"
+                [icon]="asistenciaEstudiante.partipantesMatriculados?.estadoParticipanteActivo ? 'pi pi-check' : 'pi pi-trash'"
+                [styleClass]="'p-button ' +
+                        (asistenciaEstudiante.partipantesMatriculados?.estadoParticipanteActivo ? 'p-button-primary' : 'p-button-warning') + ''"
+                (click)="eliminadoLogicoDelCapacitador(asistenciaEstudiante.partipantesMatriculados!)">
+            </p-button>
+
+        </div>
+
+    </div>
+</p-dialog>

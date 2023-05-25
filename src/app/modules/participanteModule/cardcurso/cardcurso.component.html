@@ -1,0 +1,123 @@
+<div class="container mb-5">
+  <div>
+    <div class="button-group  m-4" style="text-align: center;">
+      <button class="button" (click)="obtenerCursosFull()">Todos</button>
+      <button class="button" (click)="filtrarPorModalidadTarde()">En la Tarde</button>
+      <button class="button" (click)="filtrarPorModalidadManana()">Por la Mañana</button>
+      <button class="button" (click)="filtrarPorModalidadBasicos()">Básicos</button>
+      <button class="button" (click)="filtrarPorModalidadIntermedios()">Intermedios</button>
+      <button class="button" (click)="filtrarPorModalidadSuperior()">Avanzados</button>
+      <button class="button" (click)="filtrarPorModalidadPresencial()">Presencial</button>
+      <button class="button" (click)="filtrarPorModalidadVirtual()">Virtual</button>
+      <button class="button" (click)="filtrarPorModalidadAdministrativo()">Administrativo</button>
+      <button class="button" (click)="filtrarPorModalidadTecnico()">Técnicos</button>
+      <button class="button" (click)="obtenerCursosFull()">X</button>
+    </div>
+
+    <div class="container">
+      <div class="grid p-fluid">
+        <div class="col-12 md:col-5">
+
+
+          <span class="p-input-icon-left">
+            <i class="pi pi-search"></i>
+            <input pInputText type="text" placeholder="Buscar cursos de capacitación.."
+              (input)="filterTableCursos($event)" />
+          </span>
+        </div>
+
+
+
+        <div class="col-12 md:col-7 ">
+
+
+          <p-dropdown [options]="listAreaFilter" placeholder="{{ placeholder }}" optionLabel="name" [showClear]="true"
+            (onChange)="updatePlaceholder($event)">
+            <ng-template let-area pTemplate="item">
+              <div (click)="capturarIDAreFiltercourse(area.idArea)">{{ area.nombreArea }}</div>
+            </ng-template>
+          </p-dropdown>
+
+
+        </div>
+
+      </div>
+
+      <div class="grid p-fluid ">
+        <div class="col-12 md:col-4 ">
+
+          <div class="ui-g-12 ui-md-4">
+
+            <p-calendar placeholder="Filtar por mes" (onSelect)="onDateSelect($event)" id="fechaEvidencia"
+              name="fechaEvidencia" view="month" dateFormat="mm/yy" [yearNavigator]="true" yearRange="2000:2030"
+              [readonlyInput]="true" [showIcon]="true"></p-calendar>
+          </div>
+        </div>
+        <div class="col-12 md:col-2 ">
+          <button pButton type="button" class="p-button-primary" icon="pi pi-times"
+            (click)="obtenernuevamenteLosCursosSinFiltros()"></button>
+
+        </div>
+      </div>
+
+
+
+    </div>
+
+    <div class="container" style="text-align: center;" *ngIf="!estadoMovimient">
+      <p-message severity="info" text="INICIE SESIÓN PARA MÁS INFORMACIÓN DE LOS CURSOS DE CAPACITACIÓN CONTINUA"
+        styleClass="mr-2"></p-message>
+
+    </div>
+
+    <div class="pricing__title m-5">Cursos</div>
+
+
+
+    <div class="" style="height: 100px;" *ngIf="listCursos.length === 0">
+
+    </div>
+
+    <div class="pricing__grid">
+      <div class="pricing__card pricing-card pricing-card_free" *ngFor="let list of listCursos">
+        <div class="pricing-card__top">
+          <div class="pricing-card__title">Disponible <i class="pi pi-verified"></i></div>
+          <div class="pricing-card__price"><i class="pi pi-gift"></i> {{list.numeroCuposCurso}}<span> Cupos</span></div>
+        </div>
+        <div class="pricing-card__body">
+          <div class="pricing-card__pluses">
+            <div class="pricing-card__plus">
+              <div class="pricing-card__plus-icon"><i class="pi pi-book"></i></div>
+              <div class="pricing-card__plus-text">{{list.nombreCurso}}</div>
+            </div>
+            <div class="pricing-card__plus">
+              <div class="pricing-card__plus-icon"><i class="pi pi-video"></i></div>
+              <div class="pricing-card__plus-text">{{list.modalidadCurso!.nombreModalidadCurso}}</div>
+            </div>
+            <div class="pricing-card__plus">
+              <div class="pricing-card__plus-icon"><i class="pi pi-send"></i></div>
+              <div class="pricing-card__plus-text">{{list.duracionCurso}}h</div>
+            </div>
+            <div class="pricing-card__plus">
+              <div class="pricing-card__plus-icon"><i class="pi pi-clock"></i></div>
+              <div class="pricing-card__plus-text">{{list.horarioCurso!.horaInicio}} a {{list.horarioCurso!.horaFin}}
+              </div>
+            </div>
+            <div class="pricing-card__plus">
+              <div class="pricing-card__plus-icon"><i class="pi pi-calendar"></i></div>
+              <div class="pricing-card__plus-text">{{list.horarioCurso!.dias}}</div>
+            </div>
+
+            <div class="pricing-card__plus">
+              <div class="pricing-card__plus-icon"><i class="pi pi-calendar-minus"></i></div>
+              <div class="pricing-card__plus-text">{{list.fechaInicioCurso}} - {{list.fechaFinalizacionCurso}}</div>
+            </div>
+          </div>
+          <div class="pricing-card__button"><p-button label="Detalles"
+              (click)="pasarInfoCurso(list.idCurso)"></p-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
