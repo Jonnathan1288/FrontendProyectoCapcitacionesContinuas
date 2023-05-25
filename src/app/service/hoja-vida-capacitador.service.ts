@@ -35,13 +35,13 @@ export class HojaVidaCapacitadorService {
   public guardarHojadeVdaMasDocumento(file: File, idUsuario:number): Observable<any> {
     const formData = new FormData();
     formData.append('file', file, file.name);
-    return this.http.post<any>(environment.apiuri+'/hojaVida/saveDocumento/' + idUsuario,formData, { headers: this.storageService.returnToken()});
+    return this.http.post<any>(environment.apiUriSecurity+'/hojaVida/saveDocumento/' + idUsuario,formData);
   }
 
   public actualizarHojadeVdaMasDocumento(file: File, idUsuario:number): Observable<any> {
     const formData = new FormData();
     formData.append('file', file, file.name);
-    return this.http.post<any>(environment.apiuri+'/hojaVida/updateDocumento/' + idUsuario,formData, { headers: this.storageService.returnToken()});
+    return this.http.post<any>(environment.apiUriSecurity+'/hojaVida/updateDocumento/' + idUsuario,formData);
   }
 
 

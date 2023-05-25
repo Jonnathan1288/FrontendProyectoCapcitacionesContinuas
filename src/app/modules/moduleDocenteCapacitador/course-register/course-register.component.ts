@@ -70,6 +70,7 @@ export class CourseRegisterComponent {
   public idCursoUpdate!: any;
   public tieneIdEnLauta: boolean = false;
   //START--------------------------------------------------------NEW LOGIC
+  public capacitadorCopy = new Capacitador();
 
   //END----------------------------------------------------------
 
@@ -112,6 +113,7 @@ export class CourseRegisterComponent {
       .subscribe((data) => {
         console.log({ capacitador: data });
         this.curso.capacitador = data;
+        this.capacitadorCopy = data
       });
     this.listArea();
     this.allList();
@@ -435,9 +437,9 @@ export class CourseRegisterComponent {
       const tiempoDiferencia =
         fechaFinalizacion.getTime() - fechaInicio.getTime();
       const diasDiferencia = tiempoDiferencia / (1000 * 60 * 60 * 24);
-      if (diasDiferencia < 7) {
+      if (diasDiferencia < 5) {
         this.toastrService.error(
-          'La duración del curso debe ser al menos de 7 días.',
+          'La duración del curso debe ser al menos de 5 días.',
           'DURACIÓN MINIMA.',
           {
             timeOut: 1500,
@@ -526,7 +528,9 @@ export class CourseRegisterComponent {
       this.horarioService.crearHorarioCurso(this.horarioC).subscribe((data) => {
         if (data != null) {
           this.curso.horarioCurso = data;
-          console.log({ curso: this.curso });
+          // console.log({ curso: this.curso });
+          //Metodo para poner el objeto nuevo------------------------------------------------------------------------------------------------
+          this.curso.capacitador = this.capacitadorCopy;
           this.cursoService.saveCurso(this.curso).subscribe(
             (data) => {
               if (data != null) {

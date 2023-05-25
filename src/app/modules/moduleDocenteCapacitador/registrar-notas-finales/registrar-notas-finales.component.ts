@@ -171,7 +171,7 @@ export class RegistrarNotasFinalesComponent implements OnInit {
         notas.observacion = '';
         notas.parcial = 0;
         this.notasService.saveNotas(notas).subscribe((data) => {
-          alert('se registró el participante ');
+          // alert('se registró el participante ');
           this.obtenerParticipantesFinales();
         });
       }

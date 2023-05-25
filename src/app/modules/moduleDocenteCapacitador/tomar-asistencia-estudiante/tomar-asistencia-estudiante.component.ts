@@ -72,7 +72,10 @@ export class TomarAsistenciaEstudianteComponent implements OnInit {
         if (data != null) {
           console.log(data);
 
-          alert('Tomado lista');
+          this.toastrService.success(
+            'Estudiante tomado asistencia',
+            'TOMADO ASISTENCIA.'
+          );
         }
       });
   }

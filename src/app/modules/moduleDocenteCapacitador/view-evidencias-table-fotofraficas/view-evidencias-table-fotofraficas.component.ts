@@ -249,7 +249,11 @@ export class ViewEvidenciasTableFotofraficasComponent implements OnInit {
     const file = event.target.files[0];
     const fileSize = file.size; // tamaño en bytes
     if (fileSize > 262144) {
-      alert('La foto es muy pesada');
+      this.toastrService.info(
+        '',
+        'La foto es muy pesada.'
+      );
+      // alert('La foto es muy pesada');
       event.target.value = null;
     } else {
       try {

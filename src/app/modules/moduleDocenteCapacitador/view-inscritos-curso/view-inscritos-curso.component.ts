@@ -179,7 +179,7 @@ export class ViewInscritosCursoComponent implements OnInit {
           ]);
         },
         (err) => {
-          alert('Curso iniciado no puede hacer mas acciones');
+          // alert('Curso iniciado no puede hacer mas acciones');
           this.router.navigate([
             '/verMatriculados/course/inicio',
             this.idCursoGlobal,
