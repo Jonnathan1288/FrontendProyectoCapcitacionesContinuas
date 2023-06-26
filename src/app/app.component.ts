@@ -9,67 +9,71 @@ import { StorageService } from './service/storage.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-
   public isLogginPresent: boolean = false;
   public isResetPassword: boolean = false;
   public rolNameUser?: any;
-  userIsLoggin:any;
+  userIsLoggin: any;
 
   //VALOR PARA CATCH URL
   currentUrl: string = '';
 
-  public foto:any;
+  public foto: any;
 
-  public username:any;
+  public username: any;
 
-  constructor(private scriptC: LoadScript, private router: Router
-    , private usuarioService: UsuarioService,
-    private storageServeic: StorageService) {
+  public status?: any;
+  public isDisabled: boolean = false;
+
+  constructor(
+    private scriptC: LoadScript,
+    private router: Router,
+    private usuarioService: UsuarioService,
+    private storageServeic: StorageService
+  ) {
     scriptC.Cargar(['dashboard']);
   }
-
 
   ngOnInit(): void {
     this.rolNameUser = localStorage.getItem('rol');
     this.foto = localStorage.getItem('foto');
+    this.status = localStorage.getItem('emp');
 
-    
+    if (this.status === 'EMPTY') {
+      this.isDisabled = true;
+    }else{
+      this.isDisabled = false;
+    }
+
     try {
       this.username = localStorage.getItem('username')!.toUpperCase();
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-    if(this.rolNameUser){
+    if (this.rolNameUser) {
       this.isLogginPresent = false;
-    }else{
+    } else {
       this.isLogginPresent = true;
     }
-    console.log("rolF -> " + this.rolNameUser)
+
     this.obternerDatosUsuarioLoggin(this.rolNameUser);
 
-
-    this.router.events.subscribe(event => {
+    this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.currentUrl = event.url;
-        console.log("ruta -> "+ this.currentUrl)
-        // if (this.currentUrl.indexOf("recuperar/contrasenia/")) {
-        //   this.isResetPassword = true;
-        //   console.log("esta true")
-        // } else {
-        //   this.isResetPassword = false;
-        //   console.log("esta false")
-        // }
       }
     });
-
-
-
-
-    
   }
+
+//   blockDocument() {
+//     this.blockedDocument = true;
+//     setTimeout(() => {
+//         this.blockedDocument = false;
+//     }, 3000);
+// }
+
 
   public logOut() {
     this.isLogginPresent = true;
@@ -83,7 +87,7 @@ export class AppComponent implements OnInit {
   isCapacitador: boolean = false;
   isParticipante: boolean = false;
 
-  public obternerDatosUsuarioLoggin(nombreRol:any): void {
+  public obternerDatosUsuarioLoggin(nombreRol: any): void {
     switch (nombreRol) {
       case 'Administrador':
         this.isAdministrador = true;
@@ -103,7 +107,7 @@ export class AppComponent implements OnInit {
       default:
         // alert('ROL DESCONOCIDO');
         break;
-    };
+    }
   }
 
   activeItem: string = '';
@@ -111,6 +115,4 @@ export class AppComponent implements OnInit {
   onItemClick(itemId: string) {
     this.activeItem = itemId;
   }
-
 }
-

@@ -294,6 +294,7 @@ export class DocumentoSenecytComponent implements OnInit {
                       );
                       setTimeout(() => {
                         this.displayMaximizable = false;
+                        location.reload();
                       }, 1000);
                     }
                   });

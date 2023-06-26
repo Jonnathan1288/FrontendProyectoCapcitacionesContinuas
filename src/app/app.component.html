@@ -8,42 +8,53 @@
 
 <div *ngIf="isResetPassword === false">
   <div *ngIf="!isLogginPresent">
+   
+
+  
     <section id="sidebar">
       <a routerLink="/home" class="brand"><i class='bx bxs-smile icon'></i><strong>CCotinuas</strong></a>
-      <ul class="side-menu">
+      <ul class="side-menu"   >
         <li><a routerLink="/home" class="active"><i class='bx bxs-dashboard icon' style="font-size: 20px;"></i>
-            <strong>Home</strong></a></li>
-        <strong>
+            <strong  >Home</strong></a></li>
+        <strong *ngIf="!isDisabled">
           <li class="divider" data-text="Opciones"></li>
+        </strong>
+
+        <strong *ngIf="isDisabled">
+          <li class="divider"></li>
+          <li >  
+            <p-tag icon="pi pi-times" severity="primary" value="Actualice sus datos, datos incompletos."></p-tag>
+    
+      </li>
         </strong>
 
         <!-- CAPCITADOR -->
         <strong>
-          <li *ngIf='isCapacitador' (click)="onItemClick('i1')" [class.active]="activeItem === 'i1'"><a
+          <li [class.disabled]="isDisabled" *ngIf='isCapacitador' (click)="onItemClick('i1')" [class.active]="activeItem === 'i1'"><a 
               routerLink="register/course"><i class='bx bxs-chart icon'
                 style="font-size: 22px;"></i><strong>Cursos</strong> </a></li>
         </strong>
         <!-- VA NECECESIDAD/ SILABO/ CURRICULO -->
-        <li *ngIf='isCapacitador' (click)="onItemClick('i2')" [class.active]="activeItem === 'i2'"><a
+        <li [class.disabled]="isDisabled" *ngIf='isCapacitador' (click)="onItemClick('i2')" [class.active]="activeItem === 'i2'"><a
             routerLink="list/course"><i class='bx bxs-carousel icon' style="font-size: 22px;"></i> <strong>Mis
               cursos</strong></a></li>
         <!-- TOMAR ASISTENCI Y NOTAS FINALES MAS REPORTES Y FOTOGRAFICo -->
-        <li *ngIf='isCapacitador' (click)="onItemClick('i3')" [class.active]="activeItem === 'i3'"><a
+        <li [class.disabled]="isDisabled" *ngIf='isCapacitador' (click)="onItemClick('i3')" [class.active]="activeItem === 'i3'"><a
             routerLink="hojaVida/capacitador"><i class='bx bx bxs-news icon' style="font-size: 22px;"></i> <strong>Hoja
               de Vida</strong></a></li>
         <!-- PONER E IMPRIMIR CODIGOS DE LA CENECYT -->
-        <li *ngIf='isCapacitador' (click)="onItemClick('i4')" [class.active]="activeItem === 'i4'"><a
+        <li [class.disabled]="isDisabled" *ngIf='isCapacitador' (click)="onItemClick('i4')" [class.active]="activeItem === 'i4'"><a
             routerLink="capacitador/codigos/cenecyt"><i class='bx bxs-memory-card icon' style="font-size: 22px;"></i>
             <strong>Códigos Senescyt</strong></a></li>
         <!-- CREAR O SUBIR HOJAS -->
 
         <!-- PARTICIPANTE -->
         <strong>
-          <li *ngIf='isParticipante' (click)="onItemClick('i5')" [class.active]="activeItem === 'i5'"><a
+          <li  [class.disabled]="isDisabled" *ngIf='isParticipante' (click)="onItemClick('i5')" [class.active]="activeItem === 'i5'"><a
               routerLink="cards/course"><i class='bx bxs-book icon' style="font-size: 22px;"></i>
               <strong>Cursos</strong> </a></li>
         </strong>
-        <li *ngIf='isParticipante' (click)="onItemClick('i6')" [class.active]="activeItem === 'i6'"><a
+        <li  [class.disabled]="isDisabled" *ngIf='isParticipante' (click)="onItemClick('i6')" [class.active]="activeItem === 'i6'"><a
             routerLink="verMisCursos/course"><i class='bx bxs-paste icon' style="font-size: 22px;"></i> <strong>Mis
               cursos</strong> </a>
         </li>
