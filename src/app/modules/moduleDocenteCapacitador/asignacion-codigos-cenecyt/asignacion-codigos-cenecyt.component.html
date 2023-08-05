@@ -93,17 +93,17 @@
         <ng-template pTemplate="body" let-certificadosPar let-ri="rowIndex">
             <tr [pEditableRow]="certificadosPar">
                 <td>
-                    {{certificadosPar.partipantesMatriculados.inscrito.usuario.persona.identificacion}}
+                    {{certificadosPar.partipantesMatriculados.inscrito.usuario.persona?.identificacion}}
                 </td>
                 <td>
 
-                    {{certificadosPar.partipantesMatriculados.inscrito.usuario.persona.nombre1}}
-                    {{certificadosPar.partipantesMatriculados.inscrito.usuario.persona.nombre2}}
+                    {{certificadosPar.partipantesMatriculados.inscrito.usuario.persona?.nombre1}}
+                    {{certificadosPar.partipantesMatriculados.inscrito.usuario.persona?.nombre2}}
 
                 </td>
                 <td>
-                    {{certificadosPar.partipantesMatriculados.inscrito.usuario.persona.apellido1}}
-                    {{certificadosPar.partipantesMatriculados.inscrito.usuario.persona.apellido2}}
+                    {{certificadosPar.partipantesMatriculados.inscrito.usuario.persona?.apellido1}}
+                    {{certificadosPar.partipantesMatriculados.inscrito.usuario.persona?.apellido2}}
 
                 </td>
 
