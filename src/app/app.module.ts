@@ -22,7 +22,6 @@ import { LoginComponent } from './modules/oauthModule/login/login.component';
 import { registrarPersonaComponent } from './modules/oauthModule/registrar-persona/registrar-persona.component';
 import { WelcomeComponent } from './modules/genericAllAccess/welcome/welcome.component';
 import { ComunidadInstitucionalComponent } from './modules/genericAllAccess/comunidad-institucional/comunidad-institucional.component';
-import { ConsultasCertificadoComponent } from './modules/genericAllAccess/consultas-certificado/consultas-certificado.component';
 import { RecuperarContraseniaComponent } from './modules/oauthModule/recuperar-contrasenia/recuperar-contrasenia.component';
 import { EditDataUserComponent } from './modules/oauthModule/edit-data-user/edit-data-user.component';
 import { HomeComponent } from './modules/genericAllAccess/home/home.component';
@@ -90,7 +89,6 @@ import { StepsToApplyToTheCourseComponent } from './modules/genericAllAccess/ste
     DisenioHojaVidaComponent,
     PersmisosRolesUsuarioComponent,
     EditDataUserComponent,
-    ConsultasCertificadoComponent,
     ComunidadInstitucionalComponent,
     DocumentoSenecytComponent,
     RecuperarContraseniaComponent,
