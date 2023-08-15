@@ -34,6 +34,7 @@ import { CardcursoComponent } from './modules/participanteModule/cardcurso/cardc
 import { InfocursoComponent } from './modules/participanteModule/infocurso/infocurso.component';
 import { RegistroFotograficoEvidenciasComponent } from './modules/moduleDocenteCapacitador/registro-fotografico-evidencias/registro-fotografico-evidencias.component';
 import { StepsToApplyToTheCourseComponent } from './modules/genericAllAccess/steps-to-apply-to-the-course/steps-to-apply-to-the-course.component';
+import { GenerateExelVariosComponent } from './modules/administradormodule/generate-exel-varios/generate-exel-varios.component';
 
 
 const routes: Routes = [
@@ -82,6 +83,8 @@ const routes: Routes = [
   { path: 'gestion/validacion/cursos/capacitacion', component: ValidacionCursosCapacitacionComponent, canActivate: [AuthGaurdGuard], data: { expectedRoles: ['Administrador'] } },
 
   { path: 'gestion/subida/documento/senecyt/exel', component: DocumentoSenecytComponent, canActivate: [AuthGaurdGuard], data: { expectedRoles: ['Administrador'] } },
+
+  { path: 'gestion/generate/documento/exel', component: GenerateExelVariosComponent, canActivate: [AuthGaurdGuard], data: { expectedRoles: ['Administrador'] } },
 
 
   //FIN ADMINISTRADORES --------------------------------------------------------------------------

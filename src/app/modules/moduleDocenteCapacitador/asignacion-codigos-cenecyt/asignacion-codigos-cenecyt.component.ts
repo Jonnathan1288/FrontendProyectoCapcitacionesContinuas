@@ -7,6 +7,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Curso } from 'src/app/models/curso';
 import { Message, MessageService } from 'primeng/api';
 import { ToastrService } from 'ngx-toastr';
+import { ParticipantesMatriculados } from 'src/app/models/participantesMatriculados';
 @Component({
   selector: 'app-asignacion-codigos-cenecyt',
   templateUrl: './asignacion-codigos-cenecyt.component.html',
@@ -27,9 +28,9 @@ export class AsignacionCodigosCenecytComponent implements OnInit {
   loading: boolean = false;
 
   //DONDE INICIAMOS CON LA PARTE FUNCIONAL DEL COMPONENETE
-  public classParicipanteAprovado = new ParticipantesAprobados();
+  public classParicipanteAprovado = new ParticipantesMatriculados();
 
-  public listparticipanteAprovado: ParticipantesAprobados[] = [];
+  public listparticipanteAprovado: ParticipantesMatriculados[] = [];
 
   public editing?: boolean = false;
   public capturarIdCurso?: any;
@@ -104,6 +105,7 @@ export class AsignacionCodigosCenecytComponent implements OnInit {
       .getAllParticipantesAprobadosByIdCurso(idCurso)
       .subscribe((data) => {
         if (data != null) {
+          console.log(data)
           this.listparticipanteAprovado = data;
           this.listFilterEstudiantesAprovados = this.listparticipanteAprovado;
           this.loading = false;
@@ -116,53 +118,10 @@ export class AsignacionCodigosCenecytComponent implements OnInit {
   }
 
   public isCodigoDuplicado: boolean = false;
-  public verifiqueCodSenecytRepeat(event: any) {
-    const codigoRepeat = event.target.value.trim();
-  
-    this.isCodigoDuplicado = this.listFilterEstudiantesAprovados.some(estudiante => estudiante.codigoSenecyt === codigoRepeat);
-  }
-  
-  
-  
 
-  public onRowEditSave() {
-    const participantesAprobadosCopy = this.listparticipanteAprovado.map(
-      (participante) => {
-        const participanteCopy = { ...participante }; // Copiar el objeto original
-        if (participanteCopy.certificadoParticipante) {
-          participanteCopy.certificadoParticipante =
-            participanteCopy.certificadoParticipante
-              .replace('SafeResourceUrlImpl', '')
-              .replace('changingThisBreaksApplicationSecurity', '');
-        }
-        return participanteCopy;
-      }
-    );
 
-    console.log(participantesAprobadosCopy);
 
-    this.participantesAprovadoService
-      .updateParticipantesAprobadosLista(participantesAprobadosCopy)
-      .subscribe(
-        (data) => {
-          if (data != null) {
-            // alert('Update successful');
-            this.toastrService.success(
-              'La información de los certificados han sido actualizados correctamente.',
-              'DATOS ACTUALIZADOS'
-            );
-            this.editing = false;
-            this.getParticipanteAprovadoPorIdCursoParCodigosCenecyt(
-              this.idCursoFinalRepors
-            );
-          }
-        },
-        (err) => {
-          // alert(err.error);
-          this.editing = false;
-        }
-      );
-  }
+
 
   onRowEditCancel() {
     this.editing = false;
@@ -171,25 +130,6 @@ export class AsignacionCodigosCenecytComponent implements OnInit {
   //SUBIR PDF PARA SU CERTIFICADO FIRMADO..
   pdfSrc: SafeResourceUrl | undefined;
 
-  handleFileInput(
-    event: any,
-    rowIndex: number,
-    certificado: ParticipantesAprobados
-  ) {
-    const file: File = event.target.files[0];
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      const base64Pdf = reader.result as string;
-      this.listparticipanteAprovado[rowIndex].certificadoParticipante =
-        'data:application/pdf;base64,' + base64Pdf.split(',')[1];
-      this.pdfSrc = this.sanitizer.bypassSecurityTrustResourceUrl(base64Pdf);
-    };
-
-    console.log(this.listparticipanteAprovado);
-    this.showModaLImprimirMensal(certificado);
-
-    reader.readAsDataURL(file);
-  }
 
   //
   public valida?: boolean = false;
@@ -240,7 +180,7 @@ export class AsignacionCodigosCenecytComponent implements OnInit {
 
   //Implementacion de los filtros
   public wordNoFind?: any;
-  public listFilterEstudiantesAprovados: ParticipantesAprobados[] = [];
+  public listFilterEstudiantesAprovados: ParticipantesMatriculados[] = [];
   public filterTableEventParticipantesAprovados(e: any) {
     let letter = e.target.value.toLowerCase();
 
@@ -249,28 +189,27 @@ export class AsignacionCodigosCenecytComponent implements OnInit {
 
     if (this.wordNoFind === '') {
       this.listFilterEstudiantesAprovados = this.listparticipanteAprovado;
-      // this.numerFoundCountAnimal = this.listALLAnimals.length;
     } else {
-      let filteredAnimals = this.listparticipanteAprovado.filter(
-        (usuario) =>
-          usuario.partipantesMatriculados?.inscrito?.usuario?.persona?.nombre1
-            ?.toLowerCase()
-            .includes(this.wordNoFind) ||
-          usuario.partipantesMatriculados?.inscrito?.usuario?.persona?.nombre2
-            ?.toLowerCase()
-            .includes(this.wordNoFind) ||
-          usuario.partipantesMatriculados?.inscrito?.usuario?.persona?.apellido1
-            ?.toLowerCase()
-            .includes(this.wordNoFind) ||
-          usuario.partipantesMatriculados?.inscrito?.usuario?.persona?.apellido2
-            ?.toLowerCase()
-            .includes(this.wordNoFind) ||
-          usuario.partipantesMatriculados?.inscrito?.usuario?.persona?.identificacion
-            ?.toLowerCase()
-            .includes(this.wordNoFind)
-      );
+      // let filteredAnimals = this.listparticipanteAprovado.filter(
+      //   (usuario) =>
+      //     usuario.partipantesMatriculados?.inscrito?.usuario?.persona?.nombre1
+      //       ?.toLowerCase()
+      //       .includes(this.wordNoFind) ||
+      //     usuario.partipantesMatriculados?.inscrito?.usuario?.persona?.nombre2
+      //       ?.toLowerCase()
+      //       .includes(this.wordNoFind) ||
+      //     usuario.partipantesMatriculados?.inscrito?.usuario?.persona?.apellido1
+      //       ?.toLowerCase()
+      //       .includes(this.wordNoFind) ||
+      //     usuario.partipantesMatriculados?.inscrito?.usuario?.persona?.apellido2
+      //       ?.toLowerCase()
+      //       .includes(this.wordNoFind) ||
+      //     usuario.partipantesMatriculados?.inscrito?.usuario?.persona?.identificacion
+      //       ?.toLowerCase()
+      //       .includes(this.wordNoFind)
+      // );
 
-      this.listFilterEstudiantesAprovados = filteredAnimals;
+      // this.listFilterEstudiantesAprovados = filteredAnimals;
     }
   }
 

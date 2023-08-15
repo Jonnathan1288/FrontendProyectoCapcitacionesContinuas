@@ -85,6 +85,10 @@
             routerLink="/gestion/subida/documento/senecyt/exel"><i class='bx bxs-file-doc icon'
               style="font-size: 22px;"></i> <strong>Documentos Excel</strong></a></li>
 
+        <li *ngIf='isAdministrador' (click)="onItemClick('i02')" [class.active]="activeItem === 'i03'"><a
+            routerLink="/gestion/generate/documento/exel"><i class='bx bxs-file-doc icon' style="font-size: 22px;"></i>
+            <strong>Excel</strong></a></li>
+
         <li><a href="#" (click)="logOut()"><i class='bx bxs-log-out-circle icon' style="font-size: 22px;"></i>
             <strong>Salir</strong></a></li>
 
