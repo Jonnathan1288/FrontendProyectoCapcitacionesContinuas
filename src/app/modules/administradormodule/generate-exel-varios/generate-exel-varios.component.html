@@ -1,44 +1,82 @@
 <div class="card">
-    <p-table [value]="customers" rowGroupMode="rowspan" groupRowsBy="representative.name"
-        sortField="representative.name" sortMode="single" [tableStyle]="{'min-width': '75rem'}">
+
+
+    <div class="grid p-fluid m-4">
+        <div class="col-12 md:col-9">
+            <div class="justify-content-center">
+                <p-multiSelect [options]="listCourseFiliter" [(ngModel)]="selectedCourseFiliter"
+                    defaultLabel="Seleccione cursos.." optionLabel="nombreCurso" [showClear]="true">
+                    <ng-template let-value pTemplate="selectedItems">
+                        <div class="flex align-items-center gap-2" *ngFor="let option of selectedCourseFiliter">
+
+                            <div>{{ option.docente }} - ({{option.nombreCurso}})</div>
+                        </div>
+                        <div *ngIf="!selectedCourseFiliter || selectedCourseFiliter.length === 0">Seleccione cursos..
+                        </div>
+                    </ng-template>
+                    <ng-template let-country pTemplate="item">
+                        <div class="flex align-items-center gap-2">
+
+                            <div>{{ country.docente }} - ({{country.nombreCurso}})</div>
+                        </div>
+                    </ng-template>
+                </p-multiSelect>
+            </div>
+
+
+        </div>
+
+        <div class="col-12 md:col-2">
+            <p-button label="Filtrar" icon="pi pi-filter" (onClick)="filterDataApproved()"
+                [disabled]="!selectedCourseFiliter || selectedCourseFiliter.length === 0" pTooltip=" FILTRO"
+                tooltipPosition="bottom"></p-button>
+        </div>
+        <div class="col-12 md:col-1">
+            <button type="button" pButton pRipple icon="pi pi-file-excel" class="p-button-success mr-2"
+                [disabled]="!selectedCourseFiliter || !listIdsSelected || listIdsSelected.length === 0"
+                (click)="downloadPaticipantsApproved()" pTooltip="APPROVED XLSX" tooltipPosition="bottom"></button>
+
+        </div>
+
+    </div>
+
+    <p-table [value]="listApprovedI" rowGroupMode="rowspan" groupRowsBy="idCurso" sortField="docente.nombre"
+        sortMode="single" [tableStyle]="{'min-width': '75rem'}">
         <ng-template pTemplate="header">
             <tr>
-                <th style="width:3rem">#</th>
-                <th>Representative</th>
-                <th>Name</th>
-                <th>Country</th>
-                <th>Company</th>
-                <th>Status</th>
-                <th>Date</th>
+                <th style="width:3rem">No.</th>
+
+                <th>NOMBRES Y APELLIDOS</th>
+                <th>CÓDIGO</th>
+                <th>CURSO</th>
+                <th>FECHA</th>
+                <th>HORAS</th>
+                <th>DOCENTE</th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-customer let-rowIndex="rowIndex" let-rowgroup="rowgroup"
             let-rowspan="rowspan">
             <tr>
                 <td>{{rowIndex}}</td>
+                <td>
+                    {{customer.nombres}}
+                </td>
+                <td>
+                </td>
+                <td>
+                    {{customer.curso.toUpperCase()}}
+                </td>
+                <td>
+                    {{customer.fecha}}
+                </td>
+                <td>
+                    {{customer.horas}}
+                </td>
                 <td *ngIf="rowgroup" [attr.rowspan]="rowspan">
-                    <img [alt]="customer.representative.name"
-                        src="https://primefaces.org/cdn/primeng/images/demo/avatar/{{customer.representative.image}}"
-                        width="32" style="vertical-align: middle" />
-                    <span class="font-bold ml-2">{{customer.representative.name}}</span>
+
+                    <span class="font-bold ml-2">{{customer.docente}}</span>
                 </td>
-                <td>
-                    {{customer.name}}
-                </td>
-                <td>
-                    <img src="https://primefaces.org/cdn/primeng/images/demo/flag/flag_placeholder.png"
-                        [class]="'flag flag-' + customer.country.code" style="width: 20px">
-                    <span class="ml-1 vertical-align-middle">{{customer.country.name}}</span>
-                </td>
-                <td>
-                    {{customer.company}}
-                </td>
-                <!-- <td>
-                    <p-tag [value]="customer.status" [severity]="getSeverity(customer.status)"></p-tag>
-                </td> -->
-                <td>
-                    {{customer.date}}
-                </td>
+
             </tr>
         </ng-template>
     </p-table>
