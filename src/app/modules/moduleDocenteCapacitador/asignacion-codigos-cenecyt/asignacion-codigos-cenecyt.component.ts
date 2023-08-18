@@ -97,31 +97,27 @@ export class AsignacionCodigosCenecytComponent implements OnInit {
     console.log('id->  :', selectedCursoId);
     this.loading = true;
     this.idCursoFinalRepors = selectedCursoId;
-    this.getParticipanteAprovadoPorIdCursoParCodigosCenecyt(selectedCursoId);
+    // this.getParticipanteAprovadoPorIdCursoParCodigosCenecyt(selectedCursoId);
   }
 
-  public getParticipanteAprovadoPorIdCursoParCodigosCenecyt(idCurso: number) {
-    this.participantesAprovadoService
-      .getAllParticipantesAprobadosByIdCurso(idCurso)
-      .subscribe((data) => {
-        if (data != null) {
-          console.log(data)
-          this.listparticipanteAprovado = data;
-          this.listFilterEstudiantesAprovados = this.listparticipanteAprovado;
-          this.loading = false;
-        }
-      });
-  }
+  // public getParticipanteAprovadoPorIdCursoParCodigosCenecyt(idCurso: number) {
+  //   this.participantesAprovadoService
+  //     .getAllParticipantesAprobadosByIdCurso(idCurso)
+  //     .subscribe((data) => {
+  //       if (data != null) {
+  //         console.log(data)
+  //         this.listparticipanteAprovado = data;
+  //         this.listFilterEstudiantesAprovados = this.listparticipanteAprovado;
+  //         this.loading = false;
+  //       }
+  //     });
+  // }
 
   public onRowEditInit() {
     this.editing = true;
   }
 
   public isCodigoDuplicado: boolean = false;
-
-
-
-
 
   onRowEditCancel() {
     this.editing = false;

@@ -33,8 +33,7 @@ export class ParticipanteMatriculadoService {
     return this.http.put<ParticipantesMatriculados>(environment.apiuri + '/participantesMatriculados/actualizar/' + idPatMatriculado, participantesMatriculados, { headers: this.storageService.returnToken() });
   }
 
-  //News methods
-
+  //News methods------------------
   public findALlParticipantesAprovadosByIdCursos(courses: number[]): Observable<ListApproved[]> {
     return this.http.post<ListApproved[]>(environment.apiuri + '/all/participantesAprovados/findbyIdCourse', courses, { headers: this.storageService.returnToken() });
   }

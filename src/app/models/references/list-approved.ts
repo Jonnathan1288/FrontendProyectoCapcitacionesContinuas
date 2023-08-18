@@ -1,6 +1,7 @@
 export class ListApproved {
     idCurso?: number
     nombres?: string
+    codigo?: string
     curso?: string
     fechaInicio?: string
     fechaFin?: string

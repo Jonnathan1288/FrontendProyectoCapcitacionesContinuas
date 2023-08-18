@@ -21,9 +21,9 @@ export class ParticipanteAprobadoService {
     return this.http.post<ParticipantesAprobados>(environment.apiuri + '/participantesAprobados/crear', participantesAprobados, { headers: this.storageService.returnToken() });
   }
 
-  public getAllParticipantesAprobadosByIdCurso(idCurso: number): Observable<ParticipantesMatriculados[]> {
-    return this.http.get<ParticipantesMatriculados[]>(environment.apiuri + '/participantesAprobados/findbyIdCurso/' + idCurso, { headers: this.storageService.returnToken() });
-  }
+  // public getAllParticipantesAprobadosByIdCurso(idCurso: number): Observable<ParticipantesAprobados[]> {
+  //   return this.http.get<ParticipantesAprobados[]>(environment.apiuri + '/participantesAprobados/findbyIdCurso/' + idCurso, { headers: this.storageService.returnToken() });
+  // }
 
   public saveParticipantesAprobadosParacodigoSenecyt(idCurso: number): Observable<ParticipantesAprobados[]> {
     return this.http.get<ParticipantesAprobados[]>(environment.apiuri + '/participantesAprobados/save/findbyIdCurso/' + idCurso, { headers: this.storageService.returnToken() });
@@ -35,6 +35,12 @@ export class ParticipanteAprobadoService {
 
   public updateParticipantesAprobadosLista(listaParticipantesA: ParticipantesAprobados[]): Observable<ParticipantesAprobados[]> {
     return this.http.put<ParticipantesAprobados[]>(environment.apiuri + '/participantesAprobados/actualizar/lista', listaParticipantesA, { headers: this.storageService.returnToken() });
+  }
+
+
+  //NEW METHODS-------------------
+  public findALlParticipantesAprovadosAndUpdateByIdCursos(courses: number[]): Observable<ParticipantesAprobados[]> {
+    return this.http.post<ParticipantesAprobados[]>(environment.apiuri + '/all/participantesAprovados/andupdate/findbyIdCourse', courses, { headers: this.storageService.returnToken() });
   }
 
   //IMPLEMENTACION PARA EL CERTIFICADO DE CONSULTA PUBLICO----------------------------

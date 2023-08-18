@@ -72,6 +72,7 @@ export class GenerateExelVariosComponent implements OnInit {
                     idCurso: t.idCurso,
                     nombres: t.nombres,
                     curso: t.curso,
+                    codigo: t.codigo,
                     fecha: this.parseDateToStringCalendar(t.fechaInicio as string, t.fechaFin as string),
                     horas: t.horas,
                     docente: t.docente
@@ -101,6 +102,7 @@ export class GenerateExelVariosComponent implements OnInit {
 
         return `${fechaInicioStr} al ${fechaFinStr}`;
     }
+
 }
 
 
