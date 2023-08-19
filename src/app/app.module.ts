@@ -53,6 +53,7 @@ import { NgxUiLoaderModule } from 'ngx-ui-loader';
 import { LoaderPeticionesInterceptor } from './Interceptors/loader-peticiones.interceptor';
 import { StepsToApplyToTheCourseComponent } from './modules/genericAllAccess/steps-to-apply-to-the-course/steps-to-apply-to-the-course.component';
 import { GenerateExelVariosComponent } from './modules/administradormodule/generate-exel-varios/generate-exel-varios.component';
+import { CodigosSenecytComponent } from './modules/administradormodule/codigos-senecyt/codigos-senecyt.component';
 
 
 @NgModule({
@@ -95,6 +96,7 @@ import { GenerateExelVariosComponent } from './modules/administradormodule/gener
     RecuperarContraseniaComponent,
     StepsToApplyToTheCourseComponent,
     GenerateExelVariosComponent,
+    CodigosSenecytComponent,
   ],
   imports: [
     BrowserModule,
