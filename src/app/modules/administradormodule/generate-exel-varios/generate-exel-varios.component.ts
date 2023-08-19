@@ -6,6 +6,9 @@ import { ListApproved } from 'src/app/models/references/list-approved';
 import { CursoService } from 'src/app/service/curso.service';
 import { ParticipanteMatriculadoService } from 'src/app/service/participante-matriculado.service';
 import { saveAs } from 'file-saver';
+import { ParticipantesAprobados } from 'src/app/models/participantes-aprobados';
+import { ParticipanteAprobadoService } from 'src/app/service/participante-aprobado.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'app-generate-exel-varios',
@@ -26,8 +29,13 @@ export class GenerateExelVariosComponent implements OnInit {
 
     public listIdsSelected: number[] = [];
 
+    // METHODS EDIT TABLE---------
+    public editing1?: boolean = false;
+
     constructor(
         private participantesMatriculados: ParticipanteMatriculadoService,
+        private participantesAprovadosService: ParticipanteAprobadoService,
+        private toastrService: ToastrService,
         private courseService: CursoService
     ) { }
     ngOnInit(): void {
@@ -62,6 +70,7 @@ export class GenerateExelVariosComponent implements OnInit {
         })
     }
 
+    originalList!: studentsApproved[]; // Variable para almacenar la copia original de la lista
 
     public requestStudentsApproved(list: number[]) {
         this.participantesMatriculados.findALlParticipantesAprovadosByIdCursos(list).subscribe({
@@ -72,11 +81,15 @@ export class GenerateExelVariosComponent implements OnInit {
                     idCurso: t.idCurso,
                     nombres: t.nombres,
                     curso: t.curso,
-                    codigo: t.codigo,
+                    codigoSenecyt: t.codigoSenecyt,
+                    idParticipanteMatriculado: t.idParticipanteMatriculado,
+                    idParticipantesAprobados: t.idParticipantesAprobados,
                     fecha: this.parseDateToStringCalendar(t.fechaInicio as string, t.fechaFin as string),
                     horas: t.horas,
                     docente: t.docente
                 }));
+
+                this.originalList = this.listApprovedI;
 
             },
             error: (err) => {
@@ -101,6 +114,54 @@ export class GenerateExelVariosComponent implements OnInit {
         const fechaFinStr = `${fechaFinObj.getDate() + 1} de ${meses[fechaFinObj.getMonth()]}, ${fechaFinObj.getFullYear()}`;
 
         return `${fechaInicioStr} al ${fechaFinStr}`;
+    }
+
+    // IMPLEMENTS  EDIT TABLE-------------
+
+
+    public onRowEditInit() {
+        this.editing1 = true;
+        console.log(this.originalList)
+
+    }
+
+    public onRowEditSave() {
+        // console.log(this.listApprovedI)
+        const participantesAprobadosCopy: ParticipantesAprobados[] = this.listApprovedI.map(
+            (participante) => {
+                const participanteCopy: ParticipantesAprobados = {
+                    idParticipantesAprobados: participante.idParticipantesAprobados,
+                    codigoSenecyt: participante.codigoSenecyt,
+                    partipantesMatriculados: {
+                        idParticipanteMatriculado: participante.idParticipanteMatriculado
+                    }
+                }
+                return participanteCopy;
+            }
+        );
+
+        console.log(participantesAprobadosCopy);
+
+        this.participantesAprovadosService
+            .updateParticipantesAprobadosLista(participantesAprobadosCopy)
+            .subscribe({
+                next: (resp) => {
+                    this.toastrService.success(
+                        'La información de los certificados han sido actualizados correctamente.',
+                        'DATOS ACTUALIZADOS'
+                    );
+                    this.editing1 = false;
+
+                }, error: (err) => { this.editing1 = false; }
+            }
+
+            );
+    }
+
+    onRowEditCancel() {
+        this.editing1 = false;
+        console.log(this.originalList)
+        this.originalList = [...this.listApprovedI]
     }
 
 }
