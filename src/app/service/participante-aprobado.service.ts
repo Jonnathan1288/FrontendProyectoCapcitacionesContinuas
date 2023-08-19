@@ -5,6 +5,7 @@ import { ParticipantesAprobados } from '../models/participantes-aprobados';
 import { Observable } from 'rxjs';
 import { StorageService } from './storage.service';
 import { ParticipantesMatriculados } from '../models/participantesMatriculados';
+import { ParticipantsApproved } from '../models/references/participants-approved';
 
 @Injectable({
   providedIn: 'root'
@@ -21,9 +22,9 @@ export class ParticipanteAprobadoService {
     return this.http.post<ParticipantesAprobados>(environment.apiuri + '/participantesAprobados/crear', participantesAprobados, { headers: this.storageService.returnToken() });
   }
 
-  // public getAllParticipantesAprobadosByIdCurso(idCurso: number): Observable<ParticipantesAprobados[]> {
-  //   return this.http.get<ParticipantesAprobados[]>(environment.apiuri + '/participantesAprobados/findbyIdCurso/' + idCurso, { headers: this.storageService.returnToken() });
-  // }
+  public getAllParticipantesAprobadosByIdCurso(idCurso: number): Observable<ParticipantesAprobados[]> {
+    return this.http.get<ParticipantesAprobados[]>(environment.apiuri + '/participantesAprobados/findbyIdCurso/' + idCurso, { headers: this.storageService.returnToken() });
+  }
 
   public saveParticipantesAprobadosParacodigoSenecyt(idCurso: number): Observable<ParticipantesAprobados[]> {
     return this.http.get<ParticipantesAprobados[]>(environment.apiuri + '/participantesAprobados/save/findbyIdCurso/' + idCurso, { headers: this.storageService.returnToken() });
@@ -46,5 +47,11 @@ export class ParticipanteAprobadoService {
   //IMPLEMENTACION PARA EL CERTIFICADO DE CONSULTA PUBLICO----------------------------
   public getParticipantesAprobadosidCursoAndIdenitificacion(idCurso: number, identificacion: String): Observable<ParticipantesAprobados> {
     return this.http.get<ParticipantesAprobados>(environment.apiUriSecurity + '/participantesAprobados/findbyIdIdCursoAndUsuario/' + idCurso + '/' + identificacion);
+  }
+
+
+  //IMPLEMENTACION PARA EL CERTIFICADO DE CONSULTA PUBLICO----------------------------
+  public getParticipantesAprobadosByDocenteIdCurso(idCurso: number): Observable<ParticipantsApproved[]> {
+    return this.http.get<ParticipantsApproved[]>(environment.apiuri + '/participantesAprobados/findby/docente/IdCurso/' + idCurso);
   }
 }

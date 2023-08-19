@@ -25,7 +25,7 @@ export class HomeComponent implements OnInit {
     private capacitadorService: CapacitadorService,
     private router: Router,
     private toastrService: ToastrService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.idUsuarioIsLoggin = localStorage.getItem('id_username');
@@ -41,8 +41,6 @@ export class HomeComponent implements OnInit {
           if (data != null) {
             console.log(data);
             if (
-              // data.tipoAbreviaturaTitulo === null ||
-              // data.tipoAbreviaturaTitulo === '' ||
               !data.tituloCapacitador ||
               !data.tipoAbreviaturaTitulo ||
               // Ususuario
