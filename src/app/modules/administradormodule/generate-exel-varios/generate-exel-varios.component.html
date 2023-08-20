@@ -1,15 +1,17 @@
 <div class="card mb-2">
     <p-toolbar>
         <div class="p-toolbar-group-start">
-            <p-button label="New" icon="pi pi-plus" class="mr-2"></p-button>
-            <p-button label="Upload" icon="pi pi-upload" styleClass="p-button-success"></p-button>
-            <i class="p-toolbar-separator pi pi-bars mr-2" style="vertical-align: middle"></i>
+
+            <p-splitButton [label]="selectedCodeExel ? selectedCodeExel.nombreDocumentoExcel! : 'No seleccionado'"
+                icon="pi pi-check" [model]="items" styleClass="p-button-primary"></p-splitButton>
+
 
         </div>
         <div class="p-toolbar-group-end">
-            <p-button icon="pi pi-search" class="mr-2"></p-button>
-            <p-button icon="pi pi-calendar" styleClass="p-button-success mr-2"></p-button>
-            <p-button icon="pi pi-times" styleClass="p-button-danger"></p-button>
+            <p-button icon="pi pi-times" styleClass="p-button-danger mr-2"></p-button>
+            <button type="button" pButton pRipple icon="pi pi-file-excel" class="p-button-success mr-2"
+                [disabled]=" !listIdsSelected || listIdsSelected.length === 0" (click)="downloadPaticipantsApproved()"
+                pTooltip="APPROVED XLSX" tooltipPosition="bottom"></button>
         </div>
     </p-toolbar>
 </div>
@@ -18,10 +20,11 @@
 
 
     <div class="grid p-fluid m-4">
-        <div class="col-12 md:col-9">
+        <div class="col-12 md:col-5">
             <div class="justify-content-center">
                 <p-multiSelect [options]="listCourseFiliter" [(ngModel)]="selectedCourseFiliter"
-                    defaultLabel="Seleccione cursos.." optionLabel="nombreCurso" [showClear]="true">
+                    defaultLabel="Seleccione cursos.." optionLabel="nombreCurso" [showClear]="true"
+                    pTooltip=" Seleccione cursos por los cuales desee filtrar.." tooltipPosition="bottom">
                     <ng-template let-value pTemplate="selectedItems">
                         <div class="flex align-items-center gap-2" *ngFor="let option of selectedCourseFiliter">
 
@@ -42,16 +45,34 @@
 
         </div>
 
+        <div class="col-12 md:col-5">
+            <div class="card flex justify-content-center">
+                <p-dropdown [options]="listCodeExel" [(ngModel)]="selectedCodeExel" optionLabel="nombreDocumentoExcel"
+                    [filter]="true" filterBy="nombreDocumentoExcel" [showClear]="true" placeholder="Mis documentos"
+                    pTooltip="Los cursos que usted guardo.." tooltipPosition="bottom">
+                    <ng-template pTemplate="selectedItem">
+                        <div class="flex align-items-center gap-2" *ngIf="selectedCodeExel">
+
+                            <div>{{ selectedCodeExel.nombreDocumentoExcel }}</div>
+                        </div>
+                    </ng-template>
+                    <ng-template let-country pTemplate="item">
+                        <div class="flex align-items-center gap-2" (click)="catchCourseSelected()">
+
+                            <div>{{ country.nombreDocumentoExcel }}</div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+            </div>
+
+        </div>
+
         <div class="col-12 md:col-2">
             <button pButton pRipple label="Filtrar" icon="pi pi-filter" class="p-button-secondary mr-2"
                 [disabled]="!selectedCourseFiliter || selectedCourseFiliter.length === 0" (click)="filterDataApproved()"
                 pTooltip=" FILTRO" tooltipPosition="bottom"></button>
         </div>
-        <div class="col-12 md:col-1">
-            <button type="button" pButton pRipple icon="pi pi-file-excel" class="p-button-success mr-2"
-                [disabled]="!selectedCourseFiliter || !listIdsSelected || listIdsSelected.length === 0"
-                (click)="downloadPaticipantsApproved()" pTooltip="APPROVED XLSX" tooltipPosition="bottom"></button>
-        </div>
+
 
     </div>
 
@@ -148,3 +169,38 @@
         </ng-template>
     </p-table>
 </div>
+
+
+<!-- CREACÍON DEL DIALGO -->
+
+<p-dialog [(visible)]="productDialog" [style]="{ width: '500px' }" header="Product Details" [modal]="true"
+    styleClass="p-fluid">
+    <ng-template pTemplate="content">
+
+
+        <div class="container-seleccionar" *ngIf="status === 'NEW'">
+            <div class="field">
+                <label for="name">Nombre del documento</label>
+                <input type="text" pInputText id="name" [(ngModel)]="codeExelEdit.nombreDocumentoExcel" required
+                    autofocus />
+                <small class="p-error" *ngIf="submitted && !codeExelEdit.nombreDocumentoExcel">Name is required.</small>
+            </div>
+
+            <div class="field" *ngFor="let data of selectedCourseFiliter">
+
+                <li class="flex align-items-center mb-3">
+                    <i class="pi pi-check-circle text-green-500 mr-2"></i>
+                    <span class="text-900">{{ data.nombreCurso }} - ({{data.docente}})</span>
+                </li>
+
+
+            </div>
+        </div>
+
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text"></button>
+        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveProduct()"></button>
+    </ng-template>
+</p-dialog>
