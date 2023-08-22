@@ -1,6 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
-html, body { height: 100%; }
+html,
+body {
+    height: 100%;
+}
 
 /* body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; 
     background-image: url(https://img.freepik.com/vector-gratis/fondo-blanco-formas-dinamicas_23-2148865190.jpg);
 } */
+
+
+/* @import 'primeng/resources/themes/lara-light-blue/theme.css'; */
+/* @import 'primeng/resources/themes/bootstrap4-light-blue/theme.css'; */
+/* @import 'primeng/resources/themes/bootstrap4-light-purple/theme.css'; */
+/* @import 'primeng/resources/themes/md-light-indigo/theme.css'; */
+
+/* @import 'primeng/resources/themes/md-light-deeppurple/theme.css'; */
+@import 'primeng/resources/themes/mira/theme.css';
+/* @import 'primeng/resources/themes/nano/theme.css'; */
+/* @import 'primeng/resources/themes/saga-green/theme.css'; */
+/* @import 'primeng/resources/themes/nova/theme.css'; */

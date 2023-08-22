@@ -22,7 +22,6 @@ import { LoginComponent } from './modules/oauthModule/login/login.component';
 import { registrarPersonaComponent } from './modules/oauthModule/registrar-persona/registrar-persona.component';
 import { WelcomeComponent } from './modules/genericAllAccess/welcome/welcome.component';
 import { ComunidadInstitucionalComponent } from './modules/genericAllAccess/comunidad-institucional/comunidad-institucional.component';
-import { ConsultasCertificadoComponent } from './modules/genericAllAccess/consultas-certificado/consultas-certificado.component';
 import { RecuperarContraseniaComponent } from './modules/oauthModule/recuperar-contrasenia/recuperar-contrasenia.component';
 import { EditDataUserComponent } from './modules/oauthModule/edit-data-user/edit-data-user.component';
 import { HomeComponent } from './modules/genericAllAccess/home/home.component';
@@ -53,6 +52,8 @@ import { RegistroFotograficoEvidenciasComponent } from './modules/moduleDocenteC
 import { NgxUiLoaderModule } from 'ngx-ui-loader';
 import { LoaderPeticionesInterceptor } from './Interceptors/loader-peticiones.interceptor';
 import { StepsToApplyToTheCourseComponent } from './modules/genericAllAccess/steps-to-apply-to-the-course/steps-to-apply-to-the-course.component';
+import { GenerateExelVariosComponent } from './modules/administradormodule/generate-exel-varios/generate-exel-varios.component';
+import { CodigosSenecytComponent } from './modules/administradormodule/codigos-senecyt/codigos-senecyt.component';
 
 
 @NgModule({
@@ -90,11 +91,12 @@ import { StepsToApplyToTheCourseComponent } from './modules/genericAllAccess/ste
     DisenioHojaVidaComponent,
     PersmisosRolesUsuarioComponent,
     EditDataUserComponent,
-    ConsultasCertificadoComponent,
     ComunidadInstitucionalComponent,
     DocumentoSenecytComponent,
     RecuperarContraseniaComponent,
     StepsToApplyToTheCourseComponent,
+    GenerateExelVariosComponent,
+    CodigosSenecytComponent,
   ],
   imports: [
     BrowserModule,

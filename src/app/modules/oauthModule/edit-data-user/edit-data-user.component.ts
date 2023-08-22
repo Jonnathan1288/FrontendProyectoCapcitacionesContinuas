@@ -44,8 +44,11 @@ export class EditDataUserComponent implements OnInit {
     this.idusulogin = localStorage.getItem('id_username');
     this.usuLoginRol = localStorage.getItem('rol');
     this.obtenerDatosUsusario(this.idusulogin);
-  }
 
+    if (localStorage.getItem('emp') === 'EMPTY') {
+      this.toastrService.info('', 'COMPLETE SU PERFIL DE USUARIO');
+    }
+  }
 
   public classCipyCapacitador = new Capacitador();
   public obtenerDatosUsusario(idUsusario: number) {
@@ -57,14 +60,14 @@ export class EditDataUserComponent implements OnInit {
         if (this.persona.fechaNacimiento) {
           this.persona.fechaNacimiento = new Date(
             this.persona?.fechaNacimiento
-          ); // 
-
+          ); //
         }
 
-        this.persona.etnia = this.persona?.etnia!.charAt(0).toUpperCase() + this.persona?.etnia!.slice(1).toLowerCase();
+        this.persona.etnia =
+          this.persona?.etnia!.charAt(0).toUpperCase() +
+          this.persona?.etnia!.slice(1).toLowerCase();
 
         this.classPersona = { ...this.persona }; ///
-
 
         if (this.usuLoginRol === 'DocenteCapacitador') {
           this.capacitadorService
@@ -74,7 +77,7 @@ export class EditDataUserComponent implements OnInit {
             .subscribe((data) => {
               if (data != null) {
                 this.classCipyCapacitador = data;
-                this.classCapacitador = {...this.classCipyCapacitador};
+                this.classCapacitador = { ...this.classCipyCapacitador };
               }
             });
         }
@@ -87,7 +90,7 @@ export class EditDataUserComponent implements OnInit {
 
   public showModaL() {
     this.classPersona = { ...this.persona };
-    this.classCapacitador = {...this.classCipyCapacitador}
+    this.classCapacitador = { ...this.classCipyCapacitador };
     console.log(this.classPersona);
     console.log(this.persona);
     this.visible = true;
@@ -158,7 +161,6 @@ export class EditDataUserComponent implements OnInit {
       .subscribe(
         (data) => {
           if (data != null) {
-
             this.persona = { ...this.classPersona };
 
             //this.toastrService.success('Actualización exitosa', '¡Bien hecho!');
@@ -188,19 +190,26 @@ export class EditDataUserComponent implements OnInit {
                             'Actualización exitosa de Docente Capacitador',
                             '¡Bien hecho!'
                           );
-                          
                         }
                       });
                   } else {
+                    setTimeout(() => {
+                      localStorage.removeItem('emp')
+                      localStorage.setItem('emp', String('CHECK'));
+                      location.reload();
+                    }, 1000);
                     return;
                   }
+
+                  setTimeout(() => {
+                    localStorage.removeItem('emp')
+                    localStorage.setItem('emp', String('CHECK'));
+                    location.reload();
+                  }, 1000);
                 }
               });
 
-              //Implementacion de la carga
-              setTimeout(() => {
-                location.reload();
-              }, 1000);
+            //Implementacion de la carga
           }
         },
         (error) => {
@@ -217,7 +226,11 @@ export class EditDataUserComponent implements OnInit {
     const file = event.target.files[0];
     const fileSize = file.size; // tamaño en bytes
     if (fileSize > 262144) {
-      alert('La foto es muy pesada');
+      // alert('La foto es muy pesada');
+      this.toastrService.error(
+        '',
+        'La foto es muy pesada.'
+      );
       event.target.value = null;
     } else {
       try {

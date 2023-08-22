@@ -271,9 +271,23 @@ export class SilaboComponent implements OnInit {
         if (this.listEstrategiasMetodologica.length  == 0) {
           this.toastrService.error('Agregue al menos una estrategia', 'Estrategias Metodológicas!');
         } else {
+          // Materiales------------------
+          if(this.listMaterialConvencionales.length == 0){
+            this.toastrService.error('Agregue al menos un material convencional.', 'Material Convencional!');
+            return;
+          }
+
+          if(this.listCMaterialAudiovisuales.length == 0){
+            this.toastrService.error('Agregue al menos un material audiovisual.', 'Material Audiovisual!');
+            return;
+          }
+          //Fin de las validaciones de campos null
+
+
           if (!this.silabo.campoAprovadoPor || !this.silabo.campoRevisadoPor || !this.silabo.campoFormacion) {
             this.toastrService.error('Verifique los campos obligatorios', 'Uno o más campos vacios');
           } else {
+            
             this.silabo.curso = this.curso;
             this.silaboService.saveSilabo(this.silabo).subscribe(
               silaboData => {

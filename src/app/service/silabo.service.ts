@@ -31,4 +31,10 @@ export class SilaboService {
   public getsilabooValidacion(idCurso:number){
     return this.http.get<boolean>(environment.apiuri+'/silabo/findbyIdCurso/'+idCurso, { headers: this.storageService.returnToken()});
   }
+
+
+  public getSilaboByIdPC(id_curso: number):Observable<Silabo>{
+    return this.http.get<Silabo>(environment.apiuri+'/silabo/findbyIdCursoPorSilabo/'+id_curso, { headers: this.storageService.returnToken()});
+  }
+  
 }

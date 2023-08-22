@@ -15,6 +15,7 @@ import { ProgramasService } from 'src/app/service/programas.service';
 import { ReportsCapacitacionesService } from 'src/app/service/reports-capacitaciones.service';
 import { UsuarioService } from 'src/app/service/usuario.service';
 import { ToastrService } from 'ngx-toastr';
+import { SilaboService } from 'src/app/service/silabo.service';
 
 @Component({
   selector: 'app-validacion-cursos-capacitacion',
@@ -53,9 +54,10 @@ export class ValidacionCursosCapacitacionComponent implements OnInit {
     sanitizer: DomSanitizer,
     private reportService: ReportsCapacitacionesService,
     private disenioService: DisenioCurricularService,
+    private silaboService: SilaboService,
     private toastrService: ToastrService
   ) {
-    this.sanitizer = sanitizer
+    this.sanitizer = sanitizer;
   }
   ngOnInit(): void {
     // this.getTodosLosProgramasPorAdministrador();
@@ -70,11 +72,11 @@ export class ValidacionCursosCapacitacionComponent implements OnInit {
   public getTodosLosProgramasPorAdministrador() {
     this.programaService.listPrograma().subscribe((data) => {
       // if (data != null) {
-        this.listaProgramas = data;
-        console.log({list: this.listaProgramas})
-        //  = data.filter(
-        //   (programa: any) => programa.estadoProgramaActivo === true
-        // );
+      this.listaProgramas = data;
+      console.log({ list: this.listaProgramas });
+      //  = data.filter(
+      //   (programa: any) => programa.estadoProgramaActivo === true
+      // );
       // }
     });
   }
@@ -97,9 +99,7 @@ export class ValidacionCursosCapacitacionComponent implements OnInit {
         // this.loading = false
         this.listCursos = data;
 
-
-        console.log(this.listCursos)
-
+        console.log(this.listCursos);
 
         this.listCursos.forEach(
           (curso) =>
@@ -120,89 +120,112 @@ export class ValidacionCursosCapacitacionComponent implements OnInit {
   visibleCursoDeCapacitacion?: boolean;
   public validarHojaDeVida(curso: Curso, caso: number) {
     // alert(idCurso)
-    this.pdfSrc = null
+    this.pdfSrc = null;
     this.classCursoValidanew = { ...curso };
-    this.obtenerHojaVidaCapacitador(this.classCursoValidanew.capacitador!.idCapacitador!)
-    this.obtenerReportesValidacion(caso, curso.idCurso!)
+    this.obtenerHojaVidaCapacitador(
+      this.classCursoValidanew.capacitador!.idCapacitador!
+    );
+    this.obtenerReportesValidacion(caso, curso.idCurso!);
     this.visibleCursoDeCapacitacion = true;
-
   }
 
   public UpdateValidacionCurso(idCurso: number) {
     if (idCurso == 1) {
       this.classCursoValidanew.estadoAprovacionCurso = 'A';
-    }else{
+    } else {
       this.classCursoValidanew.estadoAprovacionCurso = 'R';
     }
-    this.cursoService.updateCurso(this.classCursoValidanew.idCurso!, this.classCursoValidanew).subscribe((data) => {
-      if (data != null) {
-        // console.log({dataCurso: data})
-        if(data.estadoAprovacionCurso === 'A'){
-          this.toastrService.success('Curso aprovado', 'CURSO APROVADO');
-
-        }else{
-          this.toastrService.error('El curso a sido rechazado.', 'CURSO RECHAZADO');
+    this.cursoService
+      .updateCurso(this.classCursoValidanew.idCurso!, this.classCursoValidanew)
+      .subscribe((data) => {
+        if (data != null) {
+          // console.log({dataCurso: data})
+          if (data.estadoAprovacionCurso === 'A') {
+            this.toastrService.success('Curso aprovado', 'CURSO APROVADO');
+          } else {
+            this.toastrService.error(
+              'El curso a sido rechazado.',
+              'CURSO RECHAZADO'
+            );
+          }
         }
-
-        // alert('succesful');
-      }
-    });
+      });
     setTimeout(() => {
       location.reload();
     }, 1300);
   }
 
   public classHojaVidaDocenteCapacitador = new HojaVidaCapacitador();
-  public obtenerHojaVidaCapacitador(idCapacitador: number){
+  public obtenerHojaVidaCapacitador(idCapacitador: number) {
     this.classHojaVidaDocenteCapacitador = new HojaVidaCapacitador();
-    this.hojaVidaService.getHojaVidaCapacitadorByIdCapacitador(idCapacitador).subscribe((data)=>{
-      if(data != null){
-        // alert()
-        this.classHojaVidaDocenteCapacitador = data;
-      }
-  
-    })
+    this.hojaVidaService
+      .getHojaVidaCapacitadorByIdCapacitador(idCapacitador)
+      .subscribe((data) => {
+        if (data != null) {
+          // alert()
+          this.classHojaVidaDocenteCapacitador = data;
+        }
+      });
   }
 
   public pdfSrc: any;
-  public obtenerReportesValidacion(caso: number, idCurso: number){
-    switch(caso){
+  public obtenerReportesValidacion(caso: number, idCurso: number) {
+    switch (caso) {
       case 1:
-        this.reportService.gedownloadSilabo(idCurso).subscribe((data)=>{
-          if(data != null){
-            const url = URL.createObjectURL(data);
-            this.pdfSrc = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+        this.silaboService.getSilaboByIdPC(idCurso).subscribe((data) => {
+          if (data != null) {
+            this.reportService
+              .gedownloadSilabo(data.idSilabo!)
+              .subscribe((data) => {
+                if (data != null) {
+                  const url = URL.createObjectURL(data);
+                  this.pdfSrc =
+                    this.sanitizer.bypassSecurityTrustResourceUrl(url);
+                }
+              });
           }
-        })
+        });
+
         break;
 
       case 2:
-        this.reportService.getDownloadReportNecesidadCurso(idCurso).subscribe((data)=>{
-          if(data != null){
-            const url = URL.createObjectURL(data);
-            this.pdfSrc = this.sanitizer.bypassSecurityTrustResourceUrl(url);
-          }
-        })
+
+        this.reportService
+          .getDownloadReportNecesidadCurso(idCurso)
+          .subscribe((data) => {
+            if (data != null) {
+              const url = URL.createObjectURL(data);
+              this.pdfSrc = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+            }
+          });
         break;
 
       case 3:
-        this.disenioService.getDisenioCurricularPorSilaboCursoById(idCurso).subscribe((data)=>{
-          if(data != null){
-            this.reportService.downloadDisenioCurricular(data.idDisenioCurricular!).subscribe((data)=>{
-              if(data != null){
-                const url = URL.createObjectURL(data);
-                this.pdfSrc = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+        this.disenioService
+          .getDisenioCurricularPorSilaboCursoById(idCurso)
+          .subscribe(
+            (data) => {
+              if (data != null) {
+                this.reportService
+                  .downloadDisenioCurricular(data.idDisenioCurricular!)
+                  .subscribe((data) => {
+                    if (data != null) {
+                      const url = URL.createObjectURL(data);
+                      this.pdfSrc =
+                        this.sanitizer.bypassSecurityTrustResourceUrl(url);
+                    }
+                  });
               }
-            })
-          }
-        }, (err)=>{
-          this.toastrService.error('Este curso no tiene diseño curricular', 'NO HAY DISEÑO CURRICULAR');
+            },
+            (err) => {
+              this.toastrService.error(
+                'Este curso no tiene diseño curricular',
+                'NO HAY DISEÑO CURRICULAR'
+              );
+            }
+          );
 
-        })
-    
         break;
     }
-
   }
-
 }
