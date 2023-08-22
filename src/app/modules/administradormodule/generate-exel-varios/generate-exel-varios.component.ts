@@ -9,6 +9,9 @@ import { saveAs } from 'file-saver';
 import { ParticipantesAprobados } from 'src/app/models/participantes-aprobados';
 import { ParticipanteAprobadoService } from 'src/app/service/participante-aprobado.service';
 import { ToastrService } from 'ngx-toastr';
+import { MenuItem } from 'primeng/api';
+import { CodeExel } from 'src/app/interface/code-exel';
+import { ReduceDataService } from 'src/app/service/DtoService/reduce-data.service';
 
 @Component({
     selector: 'app-generate-exel-varios',
@@ -16,6 +19,7 @@ import { ToastrService } from 'ngx-toastr';
     styleUrls: ['./generate-exel-varios.component.css'],
 })
 export class GenerateExelVariosComponent implements OnInit {
+    public items!: MenuItem[];
 
     public listApproved: ListApproved[] = [];
 
@@ -35,11 +39,26 @@ export class GenerateExelVariosComponent implements OnInit {
     constructor(
         private participantesMatriculados: ParticipanteMatriculadoService,
         private participantesAprovadosService: ParticipanteAprobadoService,
+        private reducedataService: ReduceDataService,
         private toastrService: ToastrService,
         private courseService: CursoService
     ) { }
     ngOnInit(): void {
         this.listCoursesFinally();
+        this.listDocumentsExelFinally();
+        this.getOptionUser();
+    }
+
+    public getOptionUser() {
+        this.items = [
+            {
+                label: 'Crear Nuevo',
+                icon: 'pi pi-refresh',
+                command: () => {
+                    this.openNew();
+                }
+            }
+        ];
     }
 
     public listCoursesFinally() {
@@ -50,6 +69,18 @@ export class GenerateExelVariosComponent implements OnInit {
 
             }
         });
+    }
+
+    public listDocumentsExelFinally() {
+        const idUsuarioString = localStorage.getItem("id_username")!; // Assume que isso retorna uma string
+
+        this.reducedataService.getFinByAllUserAdminLoggin(parseInt(idUsuarioString)).subscribe({
+            next: (resp) => {
+                this.listCodeExel = resp;
+            }, error: (err) => {
+
+            }
+        })
     }
 
     public filterDataApproved() {
@@ -162,6 +193,77 @@ export class GenerateExelVariosComponent implements OnInit {
         this.editing1 = false;
         console.log(this.originalList)
         this.originalList = [...this.listApprovedI]
+    }
+
+
+    //Muestra del dialogo ..
+
+    productDialog: boolean = false;
+    submitted: boolean = false;
+
+    codeExelEdit!: CodeExel;
+
+    //public listAll---------------------------
+    public listCodeExel!: CodeExel[]
+    public selectedCodeExel!: CodeExel;
+    public listALlCodigosExelByIdUser() {
+
+
+    }
+
+    //MANEJAR EL ESTADO DE LAS PETICIONES
+    public status: string = '';
+
+
+    openNew() {
+        this.status = 'NEW'
+        this.codeExelEdit = {}
+        this.submitted = false;
+        this.productDialog = true;
+    }
+
+    selectData() {
+        this.status = 'SELECT'
+        this.codeExelEdit = {}
+        this.submitted = false;
+        this.productDialog = true;
+    }
+
+
+    hideDialog() {
+        this.productDialog = false;
+        this.submitted = false;
+    }
+
+    saveProduct() {
+        // this.submitted = true;
+        const idUsuarioString = localStorage.getItem("id_username"); // Assume que isso retorna uma string
+
+        if (idUsuarioString !== null) {
+
+            this.codeExelEdit.codigosCourseExcel = this.listIdsSelected;
+            this.codeExelEdit.statusCodeExcel = true;
+            this.codeExelEdit.usuario = {
+                idUsuario: parseInt(idUsuarioString, 10)
+            }
+
+            this.reducedataService.saveCodesExelDocument(this.codeExelEdit).subscribe({
+                next: (resp) => {
+                    alert('success')
+                }, error: (err) => {
+                    alert('error')
+
+                }
+
+            })
+        } else {
+            console.log("Não foi possível obter o id_usuario do armazenamento local.");
+        }
+    }
+
+    catchCourseSelected() {
+        this.listIdsSelected = this.selectedCodeExel.codigosCourseExcel as number[];
+        this.requestStudentsApproved(this.selectedCodeExel.codigosCourseExcel as number[]);
     }
 
 }
