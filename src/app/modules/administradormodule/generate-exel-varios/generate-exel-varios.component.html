@@ -1,0 +1,206 @@
+<div class="card mb-2">
+    <p-toolbar>
+        <div class="p-toolbar-group-start">
+
+            <p-splitButton [label]="selectedCodeExel ? selectedCodeExel.nombreDocumentoExcel! : 'No seleccionado'"
+                icon="pi pi-check" [model]="items" styleClass="p-button-primary"></p-splitButton>
+
+
+        </div>
+        <div class="p-toolbar-group-end">
+            <p-button icon="pi pi-times" styleClass="p-button-danger mr-2"></p-button>
+            <button type="button" pButton pRipple icon="pi pi-file-excel" class="p-button-success mr-2"
+                [disabled]=" !listIdsSelected || listIdsSelected.length === 0" (click)="downloadPaticipantsApproved()"
+                pTooltip="APPROVED XLSX" tooltipPosition="bottom"></button>
+        </div>
+    </p-toolbar>
+</div>
+
+<div class="card">
+
+
+    <div class="grid p-fluid m-4">
+        <div class="col-12 md:col-5">
+            <div class="justify-content-center">
+                <p-multiSelect [options]="listCourseFiliter" [(ngModel)]="selectedCourseFiliter"
+                    defaultLabel="Seleccione cursos.." optionLabel="nombreCurso" [showClear]="true"
+                    pTooltip=" Seleccione cursos por los cuales desee filtrar.." tooltipPosition="bottom">
+                    <ng-template let-value pTemplate="selectedItems">
+                        <div class="flex align-items-center gap-2" *ngFor="let option of selectedCourseFiliter">
+
+                            <div>{{ option.docente }} - ({{option.nombreCurso}})</div>
+                        </div>
+                        <div *ngIf="!selectedCourseFiliter || selectedCourseFiliter.length === 0">Seleccione cursos..
+                        </div>
+                    </ng-template>
+                    <ng-template let-country pTemplate="item">
+                        <div class="flex align-items-center gap-2">
+
+                            <div>{{ country.docente }} - ({{country.nombreCurso}})</div>
+                        </div>
+                    </ng-template>
+                </p-multiSelect>
+            </div>
+
+
+        </div>
+
+        <div class="col-12 md:col-5">
+            <div class="card flex justify-content-center">
+                <p-dropdown [options]="listCodeExel" [(ngModel)]="selectedCodeExel" optionLabel="nombreDocumentoExcel"
+                    [filter]="true" filterBy="nombreDocumentoExcel" [showClear]="true" placeholder="Mis documentos"
+                    pTooltip="Los cursos que usted guardo.." tooltipPosition="bottom">
+                    <ng-template pTemplate="selectedItem">
+                        <div class="flex align-items-center gap-2" *ngIf="selectedCodeExel">
+
+                            <div>{{ selectedCodeExel.nombreDocumentoExcel }}</div>
+                        </div>
+                    </ng-template>
+                    <ng-template let-country pTemplate="item">
+                        <div class="flex align-items-center gap-2" (click)="catchCourseSelected()">
+
+                            <div>{{ country.nombreDocumentoExcel }}</div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+            </div>
+
+        </div>
+
+        <div class="col-12 md:col-2">
+            <button pButton pRipple label="Filtrar" icon="pi pi-filter" class="p-button-secondary mr-2"
+                [disabled]="!selectedCourseFiliter || selectedCourseFiliter.length === 0" (click)="filterDataApproved()"
+                pTooltip=" FILTRO" tooltipPosition="bottom"></button>
+        </div>
+
+
+    </div>
+
+    <p-table #dt1 [value]="originalList" dataKey="codigoSenecyt" editMode="row" rowGroupMode="rowspan"
+        groupRowsBy="idCurso" sortField="docente.nombre" sortMode="single" [tableStyle]="{'min-width': '75rem'}"
+        [globalFilterFields]="['name', 'country.name', 'representative.name', 'status']">
+        <ng-template pTemplate="header">
+
+            <tr>
+                <th style="width:2%; "><strong>No.</strong></th>
+                <th style="width:20%; "><strong>NOMBRES Y APELLIDOS</strong></th>
+                <th style="width:18%; "><strong>CÓDIGO</strong></th>
+                <th style="width:20%; "><strong>CURSO</strong></th>
+                <th style="width:20%; "><strong>FECHA</strong></th>
+                <th style="width:2%; "><strong>HORAS</strong></th>
+                <th style="width:18%; "><strong>DOCENTE</strong></th>
+            </tr>
+            <tr>
+                <th>
+                </th>
+                <th>
+                    <p-columnFilter type="text"
+                        field="partipantesMatriculados.inscrito.usuario.persona.nombre1"></p-columnFilter>
+                </th>
+
+                <th>
+                    <div class="flex align-items-center justify-content-center gap-2">
+                        <button *ngIf="!editing1" pButton pRipple type="button" icon="pi pi-pencil"
+                            (click)="onRowEditInit()" class="p-button-rounded p-button-text"></button>
+                        <button *ngIf="editing1" pButton pRipple type="button" icon="pi pi-check"
+                            (click)="onRowEditSave()"
+                            class="p-button-rounded p-button-text p-button-success mr-2"></button>
+                        <button *ngIf="editing1" pButton pRipple type="button" icon="pi pi-times"
+                            (click)="onRowEditCancel()" class="p-button-rounded p-button-text p-button-danger"></button>
+                    </div>
+                </th>
+                <th>
+                    <p-columnFilter type="text"
+                        field="partipantesMatriculados.inscrito.usuario.persona.apellido1"></p-columnFilter>
+                </th>
+
+                <th>
+                    <p-columnFilter type="text"
+                        field="partipantesMatriculados.inscrito.usuario.persona.apellido1"></p-columnFilter>
+                </th>
+
+                <th></th>
+
+                <th>
+                    <p-columnFilter type="text"
+                        field="partipantesMatriculados.inscrito.usuario.persona.apellido1"></p-columnFilter>
+                </th>
+            </tr>
+
+        </ng-template>
+        <ng-template pTemplate="body" let-customer let-rowIndex="rowIndex" let-rowgroup="rowgroup"
+            let-rowspan="rowspan">
+            <tr [pEditableRow]="customer">
+                <td>{{rowIndex}}</td>
+                <td>
+                    {{customer.nombres}}
+                </td>
+
+                <td style="width:12%; text-align: center;">
+                    <div class="container" *ngIf="editing1">
+                        <input pInputText type="text" [(ngModel)]="customer.codigoSenecyt">
+
+                    </div>
+                    <div class="container" *ngIf="!editing1"
+                        [ngStyle]="{'color': customer.codigoSenecyt ? 'blue' : 'red'}">
+                        {{customer.codigoSenecyt ? customer.codigoSenecyt: 'NO TIENE CÓDIGO'}}
+                    </div>
+
+                </td>
+
+                <td>
+                    {{customer.curso.toUpperCase()}}
+                </td>
+
+                <td>
+                    {{customer.fecha}}
+                </td>
+
+                <td>
+                    {{customer.horas}}
+                </td>
+
+                <td *ngIf="rowgroup" [attr.rowspan]="rowspan">
+
+                    <span class="font-bold ml-2">{{customer.docente}}</span>
+                </td>
+
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+
+<!-- CREACÍON DEL DIALGO -->
+
+<p-dialog [(visible)]="productDialog" [style]="{ width: '500px' }" header="Product Details" [modal]="true"
+    styleClass="p-fluid">
+    <ng-template pTemplate="content">
+
+
+        <div class="container-seleccionar" *ngIf="status === 'NEW'">
+            <div class="field">
+                <label for="name">Nombre del documento</label>
+                <input type="text" pInputText id="name" [(ngModel)]="codeExelEdit.nombreDocumentoExcel" required
+                    autofocus />
+                <small class="p-error" *ngIf="submitted && !codeExelEdit.nombreDocumentoExcel">Name is required.</small>
+            </div>
+
+            <div class="field" *ngFor="let data of selectedCourseFiliter">
+
+                <li class="flex align-items-center mb-3">
+                    <i class="pi pi-check-circle text-green-500 mr-2"></i>
+                    <span class="text-900">{{ data.nombreCurso }} - ({{data.docente}})</span>
+                </li>
+
+
+            </div>
+        </div>
+
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text"></button>
+        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveProduct()"></button>
+    </ng-template>
+</p-dialog>

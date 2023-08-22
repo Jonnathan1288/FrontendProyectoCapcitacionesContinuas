@@ -6,7 +6,6 @@ import { LoginComponent } from './modules/oauthModule/login/login.component';
 import { registrarPersonaComponent } from './modules/oauthModule/registrar-persona/registrar-persona.component';
 import { WelcomeComponent } from './modules/genericAllAccess/welcome/welcome.component';
 import { ComunidadInstitucionalComponent } from './modules/genericAllAccess/comunidad-institucional/comunidad-institucional.component';
-import { ConsultasCertificadoComponent } from './modules/genericAllAccess/consultas-certificado/consultas-certificado.component';
 import { RecuperarContraseniaComponent } from './modules/oauthModule/recuperar-contrasenia/recuperar-contrasenia.component';
 import { EditDataUserComponent } from './modules/oauthModule/edit-data-user/edit-data-user.component';
 import { HomeComponent } from './modules/genericAllAccess/home/home.component';
@@ -35,6 +34,8 @@ import { CardcursoComponent } from './modules/participanteModule/cardcurso/cardc
 import { InfocursoComponent } from './modules/participanteModule/infocurso/infocurso.component';
 import { RegistroFotograficoEvidenciasComponent } from './modules/moduleDocenteCapacitador/registro-fotografico-evidencias/registro-fotografico-evidencias.component';
 import { StepsToApplyToTheCourseComponent } from './modules/genericAllAccess/steps-to-apply-to-the-course/steps-to-apply-to-the-course.component';
+import { GenerateExelVariosComponent } from './modules/administradormodule/generate-exel-varios/generate-exel-varios.component';
+import { CodigosSenecytComponent } from './modules/administradormodule/codigos-senecyt/codigos-senecyt.component';
 
 
 const routes: Routes = [
@@ -49,7 +50,6 @@ const routes: Routes = [
 
   { path: 'cominidad', component: ComunidadInstitucionalComponent },
 
-  { path: 'consultas/certificados/aprovados/cursos/capactacionContinua', component: ConsultasCertificadoComponent },
 
   { path: 'recuperar/contrasenia/:token', component: RecuperarContraseniaComponent },
 
@@ -61,10 +61,10 @@ const routes: Routes = [
 
   //PARA LOS TRES ROLES-------------------------------------------------------------------
 
-  
-  { path: 'user/edit/data', component: EditDataUserComponent, canActivate: [AuthGaurdGuard], data: {expectedRoles: ['Administrador', 'DocenteCapacitador', 'Participante'] } },
 
-  { path: 'home', component: HomeComponent, canActivate: [AuthGaurdGuard], data: {expectedRoles: ['Administrador', 'DocenteCapacitador', 'Participante'] } },
+  { path: 'user/edit/data', component: EditDataUserComponent, canActivate: [AuthGaurdGuard], data: { expectedRoles: ['Administrador', 'DocenteCapacitador', 'Participante'] } },
+
+  { path: 'home', component: HomeComponent, canActivate: [AuthGaurdGuard], data: { expectedRoles: ['Administrador', 'DocenteCapacitador', 'Participante'] } },
 
 
   //FIN LOS TRES ROLES-------------------------------------------------------------------
@@ -73,71 +73,75 @@ const routes: Routes = [
 
   //SOLO PARA LOS ADMINISTRADORES -> -------------------------------------------------------------
 
-  { path: 'programas/capacitacion', component: ProgramasCapacitacionComponent, canActivate: [AuthGaurdGuard], data: {expectedRoles: ['Administrador'] } },
+  { path: 'programas/capacitacion', component: ProgramasCapacitacionComponent, canActivate: [AuthGaurdGuard], data: { expectedRoles: ['Administrador'] } },
 
-  { path: 'asignacion/rol', component: AsignacionRolCapacitadorComponent, canActivate: [AuthGaurdGuard], data: {expectedRoles: ['Administrador'] } },
+  { path: 'asignacion/rol', component: AsignacionRolCapacitadorComponent, canActivate: [AuthGaurdGuard], data: { expectedRoles: ['Administrador'] } },
 
-  { path: 'programas/capacitacion', component: ProgramasCapacitacionComponent, canActivate: [AuthGaurdGuard], data: {expectedRoles: ['Administrador'] } },
+  { path: 'programas/capacitacion', component: ProgramasCapacitacionComponent, canActivate: [AuthGaurdGuard], data: { expectedRoles: ['Administrador'] } },
 
-  { path: 'permisos/rol/usuarios', component: PersmisosRolesUsuarioComponent, canActivate: [AuthGaurdGuard], data: {expectedRoles: ['Administrador'] }  },
+  { path: 'permisos/rol/usuarios', component: PersmisosRolesUsuarioComponent, canActivate: [AuthGaurdGuard], data: { expectedRoles: ['Administrador'] } },
 
-  { path: 'gestion/validacion/cursos/capacitacion', component: ValidacionCursosCapacitacionComponent, canActivate: [AuthGaurdGuard], data: {expectedRoles: ['Administrador']}},
+  { path: 'gestion/validacion/cursos/capacitacion', component: ValidacionCursosCapacitacionComponent, canActivate: [AuthGaurdGuard], data: { expectedRoles: ['Administrador'] } },
 
-  { path: 'gestion/subida/documento/senecyt/exel', component: DocumentoSenecytComponent, canActivate: [AuthGaurdGuard], data: {expectedRoles: ['Administrador']}},
+  { path: 'gestion/subida/documento/senecyt/exel', component: DocumentoSenecytComponent, canActivate: [AuthGaurdGuard], data: { expectedRoles: ['Administrador'] } },
+
+  { path: 'gestion/generate/documento/exel', component: GenerateExelVariosComponent, canActivate: [AuthGaurdGuard], data: { expectedRoles: ['Administrador'] } },
+
+  { path: 'gestion/save/codigos/senecyt', component: CodigosSenecytComponent, canActivate: [AuthGaurdGuard], data: { expectedRoles: ['Administrador'] } },
 
 
   //FIN ADMINISTRADORES --------------------------------------------------------------------------
 
 
   //SOLO PARA LOS DOCENTES CAPACITADORES -> -------------------------------------------------------------
-  { path: 'silabo/:id', component: SilaboComponent, canActivate: [AuthGaurdGuard], data: {expectedRoles: ['DocenteCapacitador'] }  },
+  { path: 'silabo/:id', component: SilaboComponent, canActivate: [AuthGaurdGuard], data: { expectedRoles: ['DocenteCapacitador'] } },
 
-  { path: 'diseño/:id', component: CurricularDiseñoComponent, canActivate: [AuthGaurdGuard], data: {expectedRoles: ['DocenteCapacitador'] }   },
+  { path: 'diseño/:id', component: CurricularDiseñoComponent, canActivate: [AuthGaurdGuard], data: { expectedRoles: ['DocenteCapacitador'] } },
 
-  { path: 'register/course', component: CourseRegisterComponent, canActivate: [AuthGaurdGuard], data: {expectedRoles: ['DocenteCapacitador'] }   },
-  
-  { path: 'asistencia/estudiantes/course/:id',component: TomarAsistenciaEstudianteComponent, canActivate: [AuthGaurdGuard], data: {expectedRoles: ['DocenteCapacitador'] } },
- 
-  { path: 'notas/estudiantes/course/:id',component: RegistrarNotasFinalesComponent, canActivate: [AuthGaurdGuard], data: {expectedRoles: ['DocenteCapacitador'] }  },
-  
-  { path: 'verInscritos/course/:id', component: ViewInscritosCursoComponent , canActivate: [AuthGaurdGuard], data: {expectedRoles: ['DocenteCapacitador'] }  },
-  
-  { path: 'verMatriculados/course/inicio/:id',component: ViewInicioCursoMatriculadosComponent , canActivate: [AuthGaurdGuard], data: {expectedRoles: ['DocenteCapacitador'] }  },
+  { path: 'register/course', component: CourseRegisterComponent, canActivate: [AuthGaurdGuard], data: { expectedRoles: ['DocenteCapacitador'] } },
 
-  { path: 'registro/fotografico/curso/:id',component: ViewEvidenciasTableFotofraficasComponent, canActivate: [AuthGaurdGuard], data: {expectedRoles: ['DocenteCapacitador'] }},
+  { path: 'asistencia/estudiantes/course/:id', component: TomarAsistenciaEstudianteComponent, canActivate: [AuthGaurdGuard], data: { expectedRoles: ['DocenteCapacitador'] } },
 
-  { path: 'register/course/:id', component: CourseRegisterComponent, canActivate: [AuthGaurdGuard], data: {expectedRoles: ['DocenteCapacitador'] } },
+  { path: 'notas/estudiantes/course/:id', component: RegistrarNotasFinalesComponent, canActivate: [AuthGaurdGuard], data: { expectedRoles: ['DocenteCapacitador'] } },
 
-  { path: 'list/course', component: ListCourseComponent , canActivate: [AuthGaurdGuard], data: {expectedRoles: ['DocenteCapacitador'] } },
+  { path: 'verInscritos/course/:id', component: ViewInscritosCursoComponent, canActivate: [AuthGaurdGuard], data: { expectedRoles: ['DocenteCapacitador'] } },
 
-  { path: 'register/necesidad', component: RegistroNecesidadComponent, canActivate: [AuthGaurdGuard], data: {expectedRoles: ['DocenteCapacitador'] } },
+  { path: 'verMatriculados/course/inicio/:id', component: ViewInicioCursoMatriculadosComponent, canActivate: [AuthGaurdGuard], data: { expectedRoles: ['DocenteCapacitador'] } },
 
-  { path: 'register/necesidad/:id', component: RegistroNecesidadComponent , canActivate: [AuthGaurdGuard], data: {expectedRoles: ['DocenteCapacitador'] } },
+  { path: 'registro/fotografico/curso/:id', component: ViewEvidenciasTableFotofraficasComponent, canActivate: [AuthGaurdGuard], data: { expectedRoles: ['DocenteCapacitador'] } },
 
-  { path: 'hojaVida/capacitador', component: HojavidaComponent, canActivate: [AuthGaurdGuard], data: {expectedRoles: ['DocenteCapacitador'] }},
+  { path: 'register/course/:id', component: CourseRegisterComponent, canActivate: [AuthGaurdGuard], data: { expectedRoles: ['DocenteCapacitador'] } },
 
-  { path: 'ver/hojaVida/capacitador/:id', component: DisenioHojaVidaComponent , canActivate: [AuthGaurdGuard], data: {expectedRoles: ['DocenteCapacitador'] }  },
+  { path: 'list/course', component: ListCourseComponent, canActivate: [AuthGaurdGuard], data: { expectedRoles: ['DocenteCapacitador'] } },
 
-  { path: 'capacitador/codigos/cenecyt', component: AsignacionCodigosCenecytComponent, canActivate: [AuthGaurdGuard], data: {expectedRoles: ['DocenteCapacitador'] } },
-  
+  { path: 'register/necesidad', component: RegistroNecesidadComponent, canActivate: [AuthGaurdGuard], data: { expectedRoles: ['DocenteCapacitador'] } },
+
+  { path: 'register/necesidad/:id', component: RegistroNecesidadComponent, canActivate: [AuthGaurdGuard], data: { expectedRoles: ['DocenteCapacitador'] } },
+
+  { path: 'hojaVida/capacitador', component: HojavidaComponent, canActivate: [AuthGaurdGuard], data: { expectedRoles: ['DocenteCapacitador'] } },
+
+  { path: 'ver/hojaVida/capacitador/:id', component: DisenioHojaVidaComponent, canActivate: [AuthGaurdGuard], data: { expectedRoles: ['DocenteCapacitador'] } },
+
+  { path: 'capacitador/codigos/cenecyt', component: AsignacionCodigosCenecytComponent, canActivate: [AuthGaurdGuard], data: { expectedRoles: ['DocenteCapacitador'] } },
+
   //FIN DOCENTES CAPACITADORES --------------------------------------------------------------------------
 
 
   //SOLO PARA LOS ESTUDIANTES -> -------------------------------------------------------------
 
-  { path: 'panel/course/:id', component: PanelModuloCursosComponent, canActivate: [AuthGaurdGuard], data: {expectedRoles: ['Participante'] } },
+  { path: 'panel/course/:id', component: PanelModuloCursosComponent, canActivate: [AuthGaurdGuard], data: { expectedRoles: ['Participante'] } },
 
-  { path: 'verMisCursos/course', component: MisCursosParticipanteComponent, canActivate: [AuthGaurdGuard], data: {expectedRoles: ['Participante'] }  },
+  { path: 'verMisCursos/course', component: MisCursosParticipanteComponent, canActivate: [AuthGaurdGuard], data: { expectedRoles: ['Participante'] } },
 
-  { path: 'mat', component: MatriculComponent, canActivate: [AuthGaurdGuard], data: {expectedRoles: ['Participante'] }  },
+  { path: 'mat', component: MatriculComponent, canActivate: [AuthGaurdGuard], data: { expectedRoles: ['Participante'] } },
 
-  { path: 'cards/course', component: CardcursoComponent},
+  { path: 'cards/course', component: CardcursoComponent },
 
-  { path: 'info', component: InfocursoComponent, canActivate: [AuthGaurdGuard], data: {expectedRoles: ['Participante'] } },
+  { path: 'info', component: InfocursoComponent, canActivate: [AuthGaurdGuard], data: { expectedRoles: ['Participante'] } },
 
-  { path: 'mat/:id', component: MatriculComponent, canActivate: [AuthGaurdGuard], data: {expectedRoles: ['Participante'] } },
+  { path: 'mat/:id', component: MatriculComponent, canActivate: [AuthGaurdGuard], data: { expectedRoles: ['Participante'] } },
 
-  { path: 'cardcu/detalle/:id', component: InfocursoComponent, canActivate: [AuthGaurdGuard], data: {expectedRoles: ['Participante'] } },
+  { path: 'cardcu/detalle/:id', component: InfocursoComponent, canActivate: [AuthGaurdGuard], data: { expectedRoles: ['Participante'] } },
 
   //FIN ESTUDIANTES --------------------------------------------------------------------------
 
@@ -152,4 +156,4 @@ const routes: Routes = [
   // imports: [RouterModule.forRoot(routes, { useHash: true })],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
