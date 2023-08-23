@@ -47,8 +47,7 @@
                 </th>
                 <th pSortableColumn="inventoryStatus"><strong>GESTIÓN</strong> <p-sortIcon
                         field="inventoryStatus"></p-sortIcon></th>
-                <th pSortableColumn="inventoryStatus"><strong>ENVÍO</strong> <p-sortIcon
-                        field="inventoryStatus"></p-sortIcon></th>
+
 
             </tr>
         </ng-template>
@@ -74,9 +73,10 @@
                     <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2 mt-1"
                         (click)="cargarDatos(documentoExel)"></button>
 
-                        <!-- CAMBIAMOS EL METODO DE ACTUALIZACION POR EL DE VERFICASIÓN.. PERO CON EL MISMO FIN DE CAMBIO DE ESTADO.. -->
-                        <!-- updateStatusCodigosExel -->
-                    <button [disabled]="!documentoExel.estadoDocumento" pButton pRipple [icon]="documentoExel.estadoDocumento ? 'pi pi-check' : 'pi pi-trash'"
+                    <!-- CAMBIAMOS EL METODO DE ACTUALIZACION POR EL DE VERFICASIÓN.. PERO CON EL MISMO FIN DE CAMBIO DE ESTADO.. -->
+                    <!-- updateStatusCodigosExel -->
+                    <button [disabled]="!documentoExel.estadoDocumento" pButton pRipple
+                        [icon]="documentoExel.estadoDocumento ? 'pi pi-check' : 'pi pi-trash'"
                         [class]="'p-button-rounded ' + (documentoExel.estadoDocumento ? 'p-button-primary' : 'p-button-warning') + ' mt-1'"
                         (click)="updateVerificationEstadoEnvio(documentoExel)">
                     </button>
@@ -84,10 +84,7 @@
 
 
                 </td>
-                <th style="text-align: center;">
-                    <button [disabled]="documentoExel.estadoDocumento" pButton pRipple icon="pi pi-send" class="p-button-rounded p-button-primary ml-2"
-                        (click)="showMaximizableDialog(documentoExel.idDocumentoSenecyt)"></button>
-                </th>
+
             </tr>
         </ng-template>
         <ng-template pTemplate="summary">
@@ -149,62 +146,6 @@
 
 
 
-<!-- MODAL PARA EL ENVIO DE LOS CODIGOS -->
-<p-dialog header="ENVÍO DE CÓDIGOS SENESCYT" [(visible)]="displayMaximizable" [modal]="true"
-    [style]="{width: '50vw', height:'70vw'}" [maximizable]="true" [draggable]="false" [resizable]="false">
-    <!-- <p-table [value]="listUsers" responsiveLayout="scroll" [paginator]="true" [rows]="6" [responsive]="true"> -->
-
-    <div class="card">
-        <p-table #dt1 [value]="listUsers" dataKey="id" styleClass="p-datatable-customers" [rowHover]="true" [rows]="6"
-            [showCurrentPageReport]="true" [rowsPerPageOptions]="[6,10,15]" [responsive]="true"
-            responsiveLayout="scroll" [paginator]="true"
-            currentPageReportTemplate="Mostrando {first} to {last} of {totalRecords} usuarios." [filterDelay]="0"
-            [globalFilterFields]="['persona.nombre1', 'persona.nombre2', 'persona.apellido1', 'persona.apellido2', 'persona.correo','nombreCurso','capacitador.usuario.persona.nombre1', 'capacitador.usuario.persona.nombre2', 'capacitador.usuario.persona.apellido1', 'capacitador.usuario.persona.apellido2','capacitador.usuario.username','status']">
-
-
-
-            <ng-template pTemplate="caption">
-                <div class="flex">
-                    <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"
-                        (click)="clear(dt1)"></button>
-
-                    <span class="p-input-icon-left ml-auto">
-                        <i class="pi pi-search"></i>
-                        <input pInputText type="text" (input)="dt1.filterGlobal($any($event.target).value, 'contains')"
-                            placeholder="Buscar..." />
-
-                    </span>
-                </div>
-            </ng-template>
-
-
-            <ng-template pTemplate="header">
-                <tr>
-                    <th pSortableColumn="persona.nombre1"><strong>NOMBRES</strong> <p-sortIcon
-                            field="persona.nombre1"></p-sortIcon></th>
-                    <th pSortableColumn="year"><strong>FOTO</strong></th>
-                    <th pSortableColumn="persona.correo"><strong>CORREO</strong> <p-sortIcon field="price"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="inventoryStatus"><strong>SEND</strong> <p-sortIcon
-                            field="inventoryStatus"></p-sortIcon></th>
-                    <th style="width:4em"></th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-user>
-                <tr>
-                    <td>{{user.persona.nombre1}} {{user.persona.apellido1}}</td>
-                    <td><img [src]="user.fotoPerfil ? 'data:image/jpeg;base64,' + user.fotoPerfil : '../../../../assets/img/camer.png'"
-                            width="100" class="shadow-4" /></td>
-                    <td>{{user.persona.correo}}</td>
-                    <td>
-                        <button pButton pRipple icon="pi pi-envelope"
-                            class="p-button p-button-danger mr-2 mt-1" (click)="sendEmailCodigosSenecyt(user)" (click)="imprimirTabla()"></button>
-                    </td>
-                </tr>
-            </ng-template>
-        </p-table>
-    </div>
-</p-dialog>
 
 
 <!-- OTHER CHANGE -->

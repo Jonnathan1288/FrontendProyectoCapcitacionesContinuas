@@ -94,11 +94,10 @@ export class CourseRegisterComponent {
     private provinciaService: ProvinciaService,
     private ngZone: NgZone,
     private toastrService: ToastrService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.idUserLoggin = localStorage.getItem('id_username');
-    this.validarHojaVidaByIdCapacitdor(this.idUserLoggin);
     this.primengConfig.ripple = true;
     this.actiRouter.params.subscribe((params) => {
       const idCurso = params['id'];
@@ -204,16 +203,7 @@ export class CourseRegisterComponent {
   //----------------------------------------------------------------------------------------------END
 
   //PARA VALIDAR LA HOJA DE VIDA Y DARLE LAS DIFERENTES VISTAS
-  public estadoHojaVida: string = '';
-  public validarHojaVidaByIdCapacitdor(idCapacitador: number) {
-    this.hojaVidaService
-      .getHojadeVidaByIdUsuarioLoggin(idCapacitador)
-      .subscribe((data) => {
-        if (data != null) {
-          this.estadoHojaVida = data.estadoAprobacion!;
-        }
-      });
-  }
+
 
   // VARIABLES QUE ME VAN SERVI PARA CARGAR EN LA LISTA
   public molalidadId?: number;
@@ -773,15 +763,15 @@ export class CourseRegisterComponent {
 
   listadoCursosReutilizar: Curso[] = [];
 
-  public traerTodosLosCursos():void{
+  public traerTodosLosCursos(): void {
     this.cursoService.listCurso().subscribe(
-      data=>{
+      data => {
         this.listadoCursosReutilizar = data;
       }
     )
   }
 
-  public copiarDatos(idCurso:number):void{
+  public copiarDatos(idCurso: number): void {
     this.cursoService.getCursoById(idCurso).subscribe((data) => {
       this.curso = data;
       this.curso.idCurso = 0;
@@ -818,20 +808,20 @@ export class CourseRegisterComponent {
           this.curso.horarioCurso?.horaFin!
         );
         this.prerequisitoService
-        .listPrerequisitoCursoByIdCurso(idCurso)
-        .subscribe((data) => {
-          this.listPrerequisitoCurso1 = data;
-          this.listPrerequisitoCurso1 = this.listPrerequisitoCurso1.filter(
-            (prerequisito) => prerequisito.estadoPrerequisitoCurso === true
-          );
-        });
+          .listPrerequisitoCursoByIdCurso(idCurso)
+          .subscribe((data) => {
+            this.listPrerequisitoCurso1 = data;
+            this.listPrerequisitoCurso1 = this.listPrerequisitoCurso1.filter(
+              (prerequisito) => prerequisito.estadoPrerequisitoCurso === true
+            );
+          });
       }
     });
   }
 
   //parate de los cursos para la creacion de la hoja de vida:
 
-  public hojaVida(){
+  public hojaVida() {
     this.router.navigate(['/hojaVida/capacitador']);
   }
 

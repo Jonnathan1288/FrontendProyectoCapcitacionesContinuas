@@ -71,21 +71,9 @@ export class HojavidaComponent implements OnInit {
               //LEGANDO
               this.isExiste = true;
               this.mostrarPDF_BDA(data.documento);
-              try {
-                this.hojaVidaCapacitador = data;
-                const idiomas = this.hojaVidaCapacitador.idiomas!.split(', ');
-                this.listIdiomas.push(...idiomas);
-                const destrezas = this.hojaVidaCapacitador.destrezas!.split(', ');
-                this.listDestrezas.push(...destrezas);
-                const educacion = this.hojaVidaCapacitador.experienciaEscolar!.split('| ');
-                this.listEducacion.push(...educacion);
-                const laboral = this.hojaVidaCapacitador.experiencialLaboral!.split('| ');
-                this.listLaboral.push(...laboral);
-              } catch (error) {
-               console.log('.')
-              }
+
               this.idHojaVidaExsitente = this.hojaVidaCapacitador!.idHojaVida;
-         
+
               console.log("Datos -> " + this.idHojaVidaExsitente)
               this.capcitadporService.getCapacitadorByUsuarioIdUsuario(this.idUsuarioLoggic).subscribe(
                 data => {
@@ -150,7 +138,7 @@ export class HojavidaComponent implements OnInit {
         }
       )
     }
-   
+
   }
 
   // ACTULIAZAR HOJA DE VIDA DE NOSOTROS
@@ -165,8 +153,7 @@ export class HojavidaComponent implements OnInit {
 
   public guardarHojaVida(): void {
     this.hojaVidaCapacitador.capacitador = this.capacitador;
-    this.hojaVidaCapacitador.estadoAprobacion = "P";
-    this.hojaVidaCapacitador.idiomas = this.listIdiomas.join(', ');
+    this.hojaVidaCapacitador.status = true;
     this.hojaVidaService.saveHojaDeVida(this.hojaVidaCapacitador).subscribe(
       data => {
         this.toastrService.success('Se guardo correctamente', 'Registro Exitoso');
@@ -199,83 +186,5 @@ export class HojavidaComponent implements OnInit {
   listIdiomas: String[] = [];
   idiomaCap!: String;
 
-  agregarIdioma(): void {
-    if (this.idiomaCap) {
-      this.listIdiomas.push(this.idiomaCap);
-      this.hojaVidaCapacitador.idiomas = this.listIdiomas.join(', ');
-      this.idiomaCap = '';
-    }
-  }
 
-  quitarElementoLLeno(idioma:any): void {
-    const index = this.listIdiomas.findIndex(item => item === idioma);
-    if (index !== -1) {
-      this.listIdiomas.splice(index, 1);
-      this.toastrService.error('Datos eliminados', 'Eliminado');
-      this.hojaVidaCapacitador.idiomas = this.listIdiomas.join(', ');
-    }
-  }
-
-  // AGREGAR DESTREZAS
-  listDestrezas: String[] = [];
-  destrezasCap!: String;
-
-  agregarDestreza(): void {
-    if (this.destrezasCap) {
-      this.listDestrezas.push(this.destrezasCap);
-      this.hojaVidaCapacitador.destrezas = this.listDestrezas.join(', ');
-      this.destrezasCap = '';
-    }
-  }
-
-  quitarElementoLLenoD(destreza:any): void {
-    const index = this.listDestrezas.findIndex(item => item === destreza);
-    if (index !== -1) {
-      this.listDestrezas.splice(index, 1);
-      this.toastrService.error('Datos eliminados', 'Eliminado');
-      this.hojaVidaCapacitador.destrezas = this.listDestrezas.join(', ');
-    }
-  }
-
-  // AGREGAR EDUCACION
-  listEducacion: String[] = [];
-  educacionCap!: String;
-
-  agregarEducacion(): void {
-    if (this.educacionCap) {
-      this.listEducacion.push(this.educacionCap);
-      this.hojaVidaCapacitador.experienciaEscolar = this.listEducacion.join('| ');
-      this.educacionCap = '';
-    }
-  }
-
-  quitarElementoLLenoE(destreza:any): void {
-    const index = this.listEducacion.findIndex(item => item === destreza);
-    if (index !== -1) {
-      this.listEducacion.splice(index, 1);
-      this.toastrService.error('Datos eliminados', 'Eliminado');
-      this.hojaVidaCapacitador.experienciaEscolar = this.listEducacion.join('| ');
-    }
-  }
-
-  // AGREGAR LABURO
-  listLaboral: String[] = [];
-  laboralCap!: String;
-
-  agregarLaboral(): void {
-    if (this.laboralCap) {
-      this.listLaboral.push(this.laboralCap);
-      this.hojaVidaCapacitador.experiencialLaboral = this.listLaboral.join('| ');
-      this.laboralCap = '';
-    }
-  }
-
-  quitarElementoLLenoL(laboral:any): void {
-    const index = this.listLaboral.findIndex(item => item === laboral);
-    if (index !== -1) {
-      this.listLaboral.splice(index, 1);
-      this.toastrService.error('Datos eliminados', 'Eliminado');
-      this.hojaVidaCapacitador.experiencialLaboral = this.listLaboral.join('| ');
-    }
-  }
 }

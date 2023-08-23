@@ -209,52 +209,6 @@
 </p-dialog>
 
 
-<!-- IMPLEMENTACION DE HOJA DE VIDA PARA VISUALIZAR -->
-<p-dialog
-    header="{{classHojaDevida?.capacitador?.tipoAbreviaturaTitulo}} {{classHojaDevida?.capacitador?.usuario?.persona?.nombre1}} {{classHojaDevida?.capacitador?.usuario?.persona?.apellido1}} {{classHojaDevida.estadoAprobacion === 'A' ? ' - Aceptado' : classHojaDevida.estadoAprobacion === 'P' ? ' - Pendiente' : classHojaDevida.estadoAprobacion === 'R' ? ' - Rechazado' : ''}}"
-    [(visible)]="visibleHojaVida" [modal]="true" [style]="{ width: '60vw', height: '650vm' }" [draggable]="false"
-    [resizable]="false">
-
-
-    <div class="mx-2" *ngIf="fileUrl">
-        <embed style="border-radius: 10px; " [src]="fileUrl" type="application/pdf" width="100%" height="500px" />
-    </div>
-
-    <div class="mx-2" *ngIf="isInNewComponet">
-        <app-disenio-hoja-vida [idCapacitadorGlobal2]="idCapacitadorSend"></app-disenio-hoja-vida>
-        <!-- <embed style="border-radius: 10px; " [src]="pdfSrc" type="application/pdf" width="100%" height="500px" /> -->
-    </div>
-
-    <div class="mx-2" *ngIf="!fileUrl && !pdfSrc && !isInNewComponet">
-        <div class="container">
-            Este docente capacitador no tiene hoja de vida.
-        </div>
-    </div>
-
-    <div class="grid p-fluid ">
-        <div class="col-12 md:col-6 mt-1">
-            <div class="p-inputgroup">
-                <div class="col-md-12" style="text-align: center; margin: 5px;">
-                    <p-button [disabled]="classHojaDevida.estadoAprobacion === 'A'" type="ngSubmit" [label]="'Aceptar'"
-                        icon="pi pi-save" styleClass="p-button-success  mb-2"
-                        (onClick)="validarHojaDeVida(1)"></p-button>
-
-                </div>
-            </div>
-        </div>
-        <div class="col-12 md:col-6 mt-1">
-            <div class="p-inputgroup">
-                <div class="col-md-12" style="text-align: center; margin: 5px;">
-                    <p-button [disabled]="classHojaDevida.estadoAprobacion === 'A'" type="ngSubmit" [label]="'Rechazar'"
-                        icon="pi pi-times" styleClass="p-button-danger  mb-2"
-                        (onClick)="validarHojaDeVida(2)"></p-button>
-
-                </div>
-            </div>
-        </div>
-    </div>
-
-</p-dialog>
 
 
 

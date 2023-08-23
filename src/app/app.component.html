@@ -46,9 +46,9 @@
               de Vida</strong></a></li>
         <!-- PONER E IMPRIMIR CODIGOS DE LA CENECYT -->
         <li [class.disabled]="isDisabled" *ngIf='isCapacitador' (click)="onItemClick('i4')"
-          [class.active]="activeItem === 'i4'"><a routerLink="capacitador/codigos/cenecyt"><i
+          [class.active]="activeItem === 'i4'"><a routerLink="capacitador/participantes/aprovados"><i
               class='bx bxs-memory-card icon' style="font-size: 22px;"></i>
-            <strong>Códigos Senescyt</strong></a></li>
+            <strong>Usuarios Aprovados</strong></a></li>
         <!-- CREAR O SUBIR HOJAS -->
 
         <!-- PARTICIPANTE -->
@@ -88,11 +88,9 @@
 
         <li *ngIf='isAdministrador' (click)="onItemClick('i03')" [class.active]="activeItem === 'i03'"><a
             routerLink="gestion/generate/documento/exel"><i class='bx bxs-file-doc icon' style="font-size: 22px;"></i>
-            <strong>Documentos Excel</strong></a></li>
+            <strong>Generar Aprovados</strong></a></li>
 
-        <li *ngIf='isAdministrador' (click)="onItemClick('i04')" [class.active]="activeItem === 'i04'"><a
-            routerLink="gestion/save/codigos/senecyt"><i class='bx bxs-file-doc icon' style="font-size: 22px;"></i>
-            <strong>Códigos Senecyt</strong></a></li>
+
 
         <li><a href="#" (click)="logOut()"><i class='bx bxs-log-out-circle icon' style="font-size: 22px;"></i>
             <strong>Salir</strong></a></li>

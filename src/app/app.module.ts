@@ -41,7 +41,6 @@ import { ViewEvidenciasTableFotofraficasComponent } from './modules/moduleDocent
 import { ListCourseComponent } from './modules/moduleDocenteCapacitador/list-course/list-course.component';
 import { RegistroNecesidadComponent } from './modules/moduleDocenteCapacitador/registro-necesidad/registro-necesidad.component';
 import { HojavidaComponent } from './modules/moduleDocenteCapacitador/moduleHOjaVida/hojavida/hojavida.component';
-import { DisenioHojaVidaComponent } from './modules/moduleDocenteCapacitador/moduleHOjaVida/disenio-hoja-vida/disenio-hoja-vida.component';
 import { AsignacionCodigosCenecytComponent } from './modules/moduleDocenteCapacitador/asignacion-codigos-cenecyt/asignacion-codigos-cenecyt.component';
 import { PanelModuloCursosComponent } from './modules/participanteModule/panel-modulo-cursos/panel-modulo-cursos.component';
 import { MisCursosParticipanteComponent } from './modules/participanteModule/mis-cursos-participante/mis-cursos-participante.component';
@@ -53,7 +52,6 @@ import { NgxUiLoaderModule } from 'ngx-ui-loader';
 import { LoaderPeticionesInterceptor } from './Interceptors/loader-peticiones.interceptor';
 import { StepsToApplyToTheCourseComponent } from './modules/genericAllAccess/steps-to-apply-to-the-course/steps-to-apply-to-the-course.component';
 import { GenerateExelVariosComponent } from './modules/administradormodule/generate-exel-varios/generate-exel-varios.component';
-import { CodigosSenecytComponent } from './modules/administradormodule/codigos-senecyt/codigos-senecyt.component';
 
 
 @NgModule({
@@ -88,7 +86,6 @@ import { CodigosSenecytComponent } from './modules/administradormodule/codigos-s
     MisCursosParticipanteComponent,
     ValidacionCursosCapacitacionComponent,
     AsignacionCodigosCenecytComponent,
-    DisenioHojaVidaComponent,
     PersmisosRolesUsuarioComponent,
     EditDataUserComponent,
     ComunidadInstitucionalComponent,
@@ -96,7 +93,6 @@ import { CodigosSenecytComponent } from './modules/administradormodule/codigos-s
     RecuperarContraseniaComponent,
     StepsToApplyToTheCourseComponent,
     GenerateExelVariosComponent,
-    CodigosSenecytComponent,
   ],
   imports: [
     BrowserModule,

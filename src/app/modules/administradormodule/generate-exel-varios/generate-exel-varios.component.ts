@@ -10,7 +10,6 @@ import { ParticipantesAprobados } from 'src/app/models/participantes-aprobados';
 import { ParticipanteAprobadoService } from 'src/app/service/participante-aprobado.service';
 import { ToastrService } from 'ngx-toastr';
 import { MenuItem } from 'primeng/api';
-import { CodeExel } from 'src/app/interface/code-exel';
 import { ReduceDataService } from 'src/app/service/DtoService/reduce-data.service';
 
 @Component({
@@ -45,7 +44,7 @@ export class GenerateExelVariosComponent implements OnInit {
     ) { }
     ngOnInit(): void {
         this.listCoursesFinally();
-        this.listDocumentsExelFinally();
+
         this.getOptionUser();
     }
 
@@ -55,7 +54,7 @@ export class GenerateExelVariosComponent implements OnInit {
                 label: 'Crear Nuevo',
                 icon: 'pi pi-refresh',
                 command: () => {
-                    this.openNew();
+                    // this.openNew();
                 }
             }
         ];
@@ -71,17 +70,7 @@ export class GenerateExelVariosComponent implements OnInit {
         });
     }
 
-    public listDocumentsExelFinally() {
-        const idUsuarioString = localStorage.getItem("id_username")!; // Assume que isso retorna uma string
 
-        this.reducedataService.getFinByAllUserAdminLoggin(parseInt(idUsuarioString)).subscribe({
-            next: (resp) => {
-                this.listCodeExel = resp;
-            }, error: (err) => {
-
-            }
-        })
-    }
 
     public filterDataApproved() {
         this.listIdsSelected = this.selectedCourseFiliter.map(course => course.idCurso as number);
@@ -201,70 +190,8 @@ export class GenerateExelVariosComponent implements OnInit {
     productDialog: boolean = false;
     submitted: boolean = false;
 
-    codeExelEdit!: CodeExel;
-
-    //public listAll---------------------------
-    public listCodeExel!: CodeExel[]
-    public selectedCodeExel!: CodeExel;
-    public listALlCodigosExelByIdUser() {
 
 
-    }
-
-    //MANEJAR EL ESTADO DE LAS PETICIONES
-    public status: string = '';
-
-
-    openNew() {
-        this.status = 'NEW'
-        this.codeExelEdit = {}
-        this.submitted = false;
-        this.productDialog = true;
-    }
-
-    selectData() {
-        this.status = 'SELECT'
-        this.codeExelEdit = {}
-        this.submitted = false;
-        this.productDialog = true;
-    }
-
-
-    hideDialog() {
-        this.productDialog = false;
-        this.submitted = false;
-    }
-
-    saveProduct() {
-        // this.submitted = true;
-        const idUsuarioString = localStorage.getItem("id_username"); // Assume que isso retorna uma string
-
-        if (idUsuarioString !== null) {
-
-            this.codeExelEdit.codigosCourseExcel = this.listIdsSelected;
-            this.codeExelEdit.statusCodeExcel = true;
-            this.codeExelEdit.usuario = {
-                idUsuario: parseInt(idUsuarioString, 10)
-            }
-
-            this.reducedataService.saveCodesExelDocument(this.codeExelEdit).subscribe({
-                next: (resp) => {
-                    alert('success')
-                }, error: (err) => {
-                    alert('error')
-
-                }
-
-            })
-        } else {
-            console.log("Não foi possível obter o id_usuario do armazenamento local.");
-        }
-    }
-
-    catchCourseSelected() {
-        this.listIdsSelected = this.selectedCodeExel.codigosCourseExcel as number[];
-        this.requestStudentsApproved(this.selectedCodeExel.codigosCourseExcel as number[]);
-    }
 
 }
 

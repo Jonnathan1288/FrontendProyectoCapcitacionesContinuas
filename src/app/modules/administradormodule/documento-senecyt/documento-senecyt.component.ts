@@ -38,7 +38,6 @@ export class DocumentoSenecytComponent implements OnInit {
     this.idUsuarioLocal = localStorage.getItem('id_username');
     this.obtenerTodosLosDocumentosExel();
     this.obtenerUsuario(this.idUsuarioLocal);
-    this.getUsersOfEmailSend();
   }
 
   public obtenerUsuario(idUsuario: number) {
@@ -192,21 +191,9 @@ export class DocumentoSenecytComponent implements OnInit {
     }
   }
 
-  public listUsers: Usuario[] = [];
-  public getUsersOfEmailSend() {
-    this.usuarioServcie.listUsuario().subscribe((data) => {
-      if (data != null) {
-        this.listUsers = data.filter((d) => d.username !== 'admin');
-      }
-    });
-  }
 
-  public displayMaximizable?: boolean;
-  public idDocumentoSenescyt?: number;
-  showMaximizableDialog(idDocumentoSenescyt: number) {
-    this.idDocumentoSenescyt = idDocumentoSenescyt;
-    this.displayMaximizable = true;
-  }
+
+
 
   clear(table: Table) {
     table.clear();
@@ -259,75 +246,7 @@ export class DocumentoSenecytComponent implements OnInit {
     });
   }
 
-  //METODO DE CONFIRMACION PARA ENVIAR EL EMAIL AL SERVIDOR..
-  public sendEmailCodigosSenecyt(user: Usuario) {
-    this.confirmationService.confirm({
-      message:
-        'Esta seguro de enviar el correo a ' +
-        user.persona?.nombre1 +
-        ' ' +
-        user.persona?.apellido1 +
-        '?',
-      header: 'Confirmación, de envió de los códigos Senescyt.',
-      icon: 'pi pi-exclamation-triangle',
-      acceptLabel: 'Enviar',
-      rejectLabel: 'Cancelar',
-      accept: () => {
-        // alert()
-        this.areaService
-          .sendEmailCodigoSenescyt(user.idUsuario!, this.idDocumentoSenescyt!)
-          .subscribe(
-            (data) => {
-              if (data != null) {
-                data.estadoDocumento = !data.estadoDocumento; // Alternar el estado activo/desactivado
 
-                this.documentoSenecytService
-                  .updateDocumentoSenecyt(data.idDocumentoSenecyt!, data!)
-                  .subscribe((data) => {
-                    if (data != null) {
-                      this.toastrService.success(
-                        '',
-                        'Correo electrónico enviado',
-                        {
-                          timeOut: 1000,
-                        }
-                      );
-                      setTimeout(() => {
-                        this.displayMaximizable = false;
-                        location.reload();
-                      }, 1000);
-                    }
-                  });
-              }
-            },
-            (err) => {
-              this.toastrService.error(
-                'Intentalo más en la tarde.',
-                'INCONVENIENTES.',
-                {
-                  timeOut: 1000,
-                }
-              );
-            }
-          );
-      },
-      reject: (type: any) => {
-        switch (type) {
-          case ConfirmEventType.REJECT:
-            this.toastrService.info('', 'CORREO CANCELADO.', {
-              timeOut: 1200,
-            });
-
-            break;
-          case ConfirmEventType.CANCEL:
-            this.toastrService.warning('', 'EN ESPERA DE ENVÍO.', {
-              timeOut: 1200,
-            });
-            break;
-        }
-      },
-    });
-  }
 
   //TOMA DE CAPTURA DE LA PANTALLA
   imprimirTabla() {
