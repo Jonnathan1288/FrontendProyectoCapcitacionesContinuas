@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { PeriodoProgramaService } from 'src/app/service/periodo-programa.service';
-import { ProgramasService } from 'src/app/service/programas.service';
+
 import { ToastrService } from 'ngx-toastr';
 import { DocumentoSenecytService } from 'src/app/service/documento-senecyt.service';
 import { DocumentoSenecyt } from 'src/app/models/documento-senecyt';
@@ -25,7 +24,6 @@ export class DocumentoSenecytComponent implements OnInit {
   public idUsuarioLocal?: any;
   public classUsuario = new Usuario();
   constructor(
-    private areaService: AreaService,
     sanitizer: DomSanitizer,
     private toastrService: ToastrService,
     private documentoSenecytService: DocumentoSenecytService,
@@ -198,55 +196,6 @@ export class DocumentoSenecytComponent implements OnInit {
   clear(table: Table) {
     table.clear();
   }
-  //METODO DE CONFIRMACION PARA ENVIAR EL EMAIL AL SERVIDOR..
-  public updateVerificationEstadoEnvio(doc: DocumentoSenecyt) {
-    this.confirmationService.confirm({
-      message: 'Esta seguro de volverlo a poner como no enviado?',
-      header: 'Le informamos que este correo ya fue enviado.',
-      icon: 'pi pi-exclamation-triangle',
-      acceptLabel: 'Confirmar',
-      rejectLabel: 'Cancelar',
-      accept: () => {
-        // programa.estadoProgramaActivo = true;
-        doc.estadoDocumento = !doc.estadoDocumento; // Alternar el estado activo/desactivado
-
-        this.documentoSenecytService
-          .updateDocumentoSenecyt(doc.idDocumentoSenecyt!, doc!)
-          .subscribe((data) => {
-            if (data != null) {
-              if (doc.estadoDocumento) {
-                this.toastrService.success(
-                  'Documento en proceso de mandar imprimir códigos.',
-                  'Activación Exitosa'
-                );
-              } else {
-                this.toastrService.warning(
-                  'Documento verificado',
-                  'Desactivación Exitosa'
-                );
-              }
-            }
-          });
-      },
-      reject: (type: any) => {
-        switch (type) {
-          case ConfirmEventType.REJECT:
-            this.toastrService.info('', 'DESAVTIVACIÓN CANCELADA.', {
-              timeOut: 1200,
-            });
-
-            break;
-          case ConfirmEventType.CANCEL:
-            this.toastrService.success('', 'SIN NINGUNA ACCIÓN.', {
-              timeOut: 1200,
-            });
-            break;
-        }
-      },
-    });
-  }
-
-
 
   //TOMA DE CAPTURA DE LA PANTALLA
   imprimirTabla() {

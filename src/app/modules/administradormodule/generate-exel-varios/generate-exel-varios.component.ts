@@ -9,13 +9,16 @@ import { saveAs } from 'file-saver';
 import { ParticipantesAprobados } from 'src/app/models/participantes-aprobados';
 import { ParticipanteAprobadoService } from 'src/app/service/participante-aprobado.service';
 import { ToastrService } from 'ngx-toastr';
-import { MenuItem } from 'primeng/api';
+import { ConfirmEventType, ConfirmationService, MenuItem } from 'primeng/api';
 import { ReduceDataService } from 'src/app/service/DtoService/reduce-data.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-generate-exel-varios',
     templateUrl: './generate-exel-varios.component.html',
     styleUrls: ['./generate-exel-varios.component.css'],
+    providers: [ConfirmationService]
+
 })
 export class GenerateExelVariosComponent implements OnInit {
     public items!: MenuItem[];
@@ -38,13 +41,14 @@ export class GenerateExelVariosComponent implements OnInit {
     constructor(
         private participantesMatriculados: ParticipanteMatriculadoService,
         private participantesAprovadosService: ParticipanteAprobadoService,
-        private reducedataService: ReduceDataService,
+        private router: Router,
         private toastrService: ToastrService,
-        private courseService: CursoService
+        private courseService: CursoService,
+        private confirmationService: ConfirmationService
     ) { }
+
     ngOnInit(): void {
         this.listCoursesFinally();
-
         this.getOptionUser();
     }
 
@@ -54,7 +58,7 @@ export class GenerateExelVariosComponent implements OnInit {
                 label: 'Crear Nuevo',
                 icon: 'pi pi-refresh',
                 command: () => {
-                    // this.openNew();
+                    this.router.navigate(['/gestion/upload/documentos/exel']);
                 }
             }
         ];
@@ -141,8 +145,6 @@ export class GenerateExelVariosComponent implements OnInit {
 
     public onRowEditInit() {
         this.editing1 = true;
-        console.log(this.originalList)
-
     }
 
     public onRowEditSave() {
@@ -178,20 +180,58 @@ export class GenerateExelVariosComponent implements OnInit {
             );
     }
 
-    onRowEditCancel() {
+    public onRowEditCancel() {
         this.editing1 = false;
         console.log(this.originalList)
         this.originalList = [...this.listApprovedI]
     }
 
 
-    //Muestra del dialogo ..
 
-    productDialog: boolean = false;
-    submitted: boolean = false;
+    public clearDataFilter() {
+        this.confirmationService.confirm({
+            message: 'Limpieza de todos los filtros?',
+            header: 'Confirmación',
+            icon: 'pi pi-exclamation-triangle',
+            acceptLabel: 'Confirmar',
+            rejectLabel: 'Cancelar',
+            accept: () => {
+                this.clearInformation();
+                this.toastrService.success(
+                    '',
+                    'LIMPIEZA COMPLETADA',
+                    {
+                        timeOut: 1500,
+                    }
+                );
+            },
+            reject: (type: any) => {
+                switch (type) {
+                    case ConfirmEventType.REJECT:
+                        this.toastrService.info(
+                            '',
+                            'LIMPIEZA CANCELADA',
+                            {
+                                timeOut: 1500,
+                            }
+                        );
+                        break;
+                    case ConfirmEventType.CANCEL:
+                        //no hace nada jeje
+                        break;
+                }
+            }
+        });
+    }
 
+    public clearInformation() {
+        this.listApproved = [];
+        this.listApprovedI = [];
+        this.listIdsSelected = [];
+        this.originalList = [];
+        this.selectedCourseFiliter = [];
 
-
+    }
 
 }
 

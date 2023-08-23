@@ -83,8 +83,8 @@
             <strong>Permisos</strong></a></li>
 
         <li *ngIf='isAdministrador' (click)="onItemClick('i02')" [class.active]="activeItem === 'i02'"><a
-            routerLink="/gestion/subida/documento/senecyt/exel"><i class='bx bxs-file-doc icon'
-              style="font-size: 22px;"></i> <strong>Documentos Excel</strong></a></li>
+            routerLink="gestion/upload/documentos/exel"><i class='bx bxs-file-doc icon' style="font-size: 22px;"></i>
+            <strong>Documentos Excel</strong></a></li>
 
         <li *ngIf='isAdministrador' (click)="onItemClick('i03')" [class.active]="activeItem === 'i03'"><a
             routerLink="gestion/generate/documento/exel"><i class='bx bxs-file-doc icon' style="font-size: 22px;"></i>

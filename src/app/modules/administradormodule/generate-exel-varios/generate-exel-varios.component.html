@@ -2,14 +2,16 @@
     <p-toolbar>
         <div class="p-toolbar-group-start">
 
-            <p-splitButton [label]="true ? '' : 'No seleccionado'" icon="pi pi-check" [model]="items"
+            <p-splitButton label="Subir" icon="pi pi-check" [model]="items"
                 styleClass="p-button-primary"></p-splitButton>
 
 
         </div>
         <div class="p-toolbar-group-end">
-            <p-button icon="pi pi-times" styleClass="p-button-danger mr-2"></p-button>
-            <button type="button" pButton pRipple icon="pi pi-file-excel" class="p-button-success mr-2"
+            <p-button icon="pi pi-times" styleClass="p-button-danger mr-2"
+                [disabled]=" !listIdsSelected || listIdsSelected.length === 0" (onClick)="clearDataFilter()"
+                pTooltip="LIMPIEZA" tooltipPosition="bottom"></p-button>
+            <button type=" button" pButton pRipple icon="pi pi-file-excel" class="p-button-success mr-2"
                 [disabled]=" !listIdsSelected || listIdsSelected.length === 0" (click)="downloadPaticipantsApproved()"
                 pTooltip="APPROVED XLSX" tooltipPosition="bottom"></button>
         </div>
@@ -22,8 +24,9 @@
     <div class="grid p-fluid m-4">
         <div class="col-12 md:col-10">
             <div class="justify-content-center">
+                <!-- [showClear]="true" -->
                 <p-multiSelect [options]="listCourseFiliter" [(ngModel)]="selectedCourseFiliter"
-                    defaultLabel="Seleccione cursos.." optionLabel="nombreCurso" [showClear]="true"
+                    defaultLabel="Seleccione cursos.." optionLabel="nombreCurso"
                     pTooltip=" Seleccione cursos por los cuales desee filtrar.." tooltipPosition="bottom">
                     <ng-template let-value pTemplate="selectedItems">
                         <div class="flex align-items-center gap-2" *ngFor="let option of selectedCourseFiliter">
@@ -148,4 +151,10 @@
             </tr>
         </ng-template>
     </p-table>
+</div>
+
+
+<!-- Message -->
+<div class="card flex justify-content-center gap-2">
+    <p-confirmDialog [style]="{width: '30vw'}"></p-confirmDialog>
 </div>

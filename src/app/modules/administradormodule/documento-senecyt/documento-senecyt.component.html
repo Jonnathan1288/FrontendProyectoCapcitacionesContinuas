@@ -9,13 +9,15 @@
 
     </p-toolbar>
 
-    <p-table #dt [value]="listDocumentosCopy" dataKey="id" styleClass="p-datatable-customers" [rowHover]="true"
-        [rows]="5" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,15]" responsiveLayout="scroll"
-        [paginator]="true" currentPageReportTemplate="Mostrando {first} to {last} of {totalRecords} documentos"
-        [filterDelay]="0" [showCurrentPageReport]="true">
+    <p-table #dt [value]="listDocumentosCopy" dataKey="idDocumentoSenecyt" styleClass="p-datatable-customers"
+        [rowHover]="true" [rows]="5" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,15]"
+        responsiveLayout="scroll" [paginator]="true"
+        [globalFilterFields]="['idDocumentoSenecyt', 'fechaCreacion', 'descripcion']"
+        currentPageReportTemplate="Mostrando {first} to {last} of {totalRecords} documentos" [filterDelay]="0"
+        [showCurrentPageReport]="true">
         <ng-template pTemplate="caption">
             <div class="flex align-items-center justify-content-between">
-                <h5 class="m-0"><strong>DOCUMENTOS EXCEL CON CÓDIGOS DE SENESCYT</strong></h5>
+                <h5 class="m-0"><strong>DOCUMENTOS EXCEL PARTICIPANTES APROBADOS</strong></h5>
                 <span class="p-input-icon-left">
                     <i class="pi pi-search"></i>
                     <input pInputText type="text" placeholder="Search..."
@@ -37,14 +39,14 @@
                 <th pSortableColumn="descripcion"><strong>DESCRIPCIÓN </strong><p-sortIcon
                         field="descripcion"></p-sortIcon></th>
                 <!-- <th pSortableColumn="inventoryStatus">Estado <p-sortIcon field="inventoryStatus"></p-sortIcon></th> -->
-                <th pSortableColumn="estadoDocumento">
+                <!-- <th pSortableColumn="estadoDocumento">
                     <div class="flex justify-content-between align-items-center">
                         <strong>ESTADO</strong>
 
                         <p-columnFilter type="boolean" field="estadoDocumento" display="menu"></p-columnFilter>
 
                     </div>
-                </th>
+                </th> -->
                 <th pSortableColumn="inventoryStatus"><strong>GESTIÓN</strong> <p-sortIcon
                         field="inventoryStatus"></p-sortIcon></th>
 
@@ -57,29 +59,21 @@
                 <td>{{documentoExel.idDocumentoSenecyt}}</td>
                 <td>{{documentoExel.fechaCreacion}}</td>
                 <td><a class="download-link" href="{{documentoExel.documentoExel}}"
-                        [download]="'codigosSenecyt'+documentoExel.fechaCreacion+'.xlsx'">
+                        [download]="'ParticipantesAprovados'+documentoExel.fechaCreacion+'.xlsx'">
                         <span class="download-icon">&#x2B07;</span> Descargar Códigos
                     </a>
 
                 </td>
                 <td>{{documentoExel.descripcion}}</td>
-                <td>
+                <!-- <td>
                     <p-message [severity]="documentoExel.estadoDocumento == true? 'success': 'warn'"
                         [text]="documentoExel.estadoDocumento == true? 'Enviado': 'Pendiente'"
                         styleClass="mr-2"></p-message>
 
-                </td>
+                </td> -->
                 <td>
                     <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2 mt-1"
                         (click)="cargarDatos(documentoExel)"></button>
-
-                    <!-- CAMBIAMOS EL METODO DE ACTUALIZACION POR EL DE VERFICASIÓN.. PERO CON EL MISMO FIN DE CAMBIO DE ESTADO.. -->
-                    <!-- updateStatusCodigosExel -->
-                    <button [disabled]="!documentoExel.estadoDocumento" pButton pRipple
-                        [icon]="documentoExel.estadoDocumento ? 'pi pi-check' : 'pi pi-trash'"
-                        [class]="'p-button-rounded ' + (documentoExel.estadoDocumento ? 'p-button-primary' : 'p-button-warning') + ' mt-1'"
-                        (click)="updateVerificationEstadoEnvio(documentoExel)">
-                    </button>
 
 
 
@@ -141,12 +135,6 @@
 
     </form>
 </p-dialog>
-
-
-
-
-
-
 
 <!-- OTHER CHANGE -->
 <p-confirmDialog [style]="{width: '45vw'}" [baseZIndex]="10000"

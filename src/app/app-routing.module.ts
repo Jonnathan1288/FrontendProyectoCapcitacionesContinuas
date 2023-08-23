@@ -81,7 +81,7 @@ const routes: Routes = [
 
   { path: 'gestion/validacion/cursos/capacitacion', component: ValidacionCursosCapacitacionComponent, canActivate: [AuthGaurdGuard], data: { expectedRoles: ['Administrador'] } },
 
-  { path: 'gestion/subida/documento/senecyt/exel', component: DocumentoSenecytComponent, canActivate: [AuthGaurdGuard], data: { expectedRoles: ['Administrador'] } },
+  { path: 'gestion/upload/documentos/exel', component: DocumentoSenecytComponent, canActivate: [AuthGaurdGuard], data: { expectedRoles: ['Administrador'] } },
 
   { path: 'gestion/generate/documento/exel', component: GenerateExelVariosComponent, canActivate: [AuthGaurdGuard], data: { expectedRoles: ['Administrador'] } },
 
