@@ -1,14 +1,14 @@
 .container {
   display: flex;
-  max-width: 80%; 
+  max-width: 80%;
   max-height: 80%;
   justify-content: center;
   align-items: center;
   /* height: 100vh; */
- margin-top: 5px;
+  margin-top: 5px;
   max-width: 100%;
 
-  
+
 }
 
 .container .content {
@@ -79,6 +79,7 @@
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -99,6 +100,7 @@
   from {
     transform: translateX(0);
   }
+
   to {
     transform: translateX(-100%);
   }
@@ -106,10 +108,12 @@
 
 
 .card {
-  border: 6px ; /* Establece un borde sólido de 1 píxel */
+  border: 6px;
+  /* Establece un borde sólido de 1 píxel */
   border-radius: 10px;
-  animation: cambia-color 4s infinite; /* Agrega una animación de cambio de color */
-  
+  animation: cambia-color 4s infinite;
+  /* Agrega una animación de cambio de color */
+
 }
 
 /*@keyframes cambia-color {
@@ -139,17 +143,17 @@
   width: 100%;
   display: flex;
   justify-content: center;
-/*  background: linear-gradient(#f5efef, transparent);*/
+  /*  background: linear-gradient(#f5efef, transparent);*/
   margin-bottom: 1.25rem;
 }
 
 .seccion-perfil-usuario .perfil-usuario-portada {
-background-image: url(../../../../assets/img/ft.jpg);
+  background-image: url(../../../../assets/img/ft.jpg);
   display: block;
   position: relative;
-  width:100%;
+  width: 100%;
   height: 15rem;
- 
+
   border-radius: 0 0 20px 20px;
   background-repeat: no-repeat;
   background-position: center center;
@@ -159,15 +163,15 @@ background-image: url(../../../../assets/img/ft.jpg);
 }
 
 .perfil-usuario-logo {
-margin-top: 0.5rem;
-width: 15rem;
+  margin-top: 0.5rem;
+  width: 15rem;
 
 }
 
 .perfil-usuario-logo img {
-width: 100%;
-height: auto;
-background-position: center center;
+  width: 100%;
+  height: auto;
+  background-position: center center;
 
 }
 
@@ -176,11 +180,12 @@ background-position: center center;
 
 
 .seccion-perfil-usuario .perfil-usuario-portada .boton-portada {
-position: relative;
-width: 90%;
-height: calc(100vh - 10rem); /* calcula la altura en función de la altura de la ventana del navegador */
-background-image: linear-gradient(45deg, #d0e1fd, #3b82f6);
-border-radius: 0 0 20px 20px;
+  position: relative;
+  width: 90%;
+  height: calc(100vh - 10rem);
+  /* calcula la altura en función de la altura de la ventana del navegador */
+  background-image: linear-gradient(45deg, #d0e1fd, #3b82f6);
+  border-radius: 0 0 20px 20px;
 }
 
 .seccion-perfil-usuario .perfil-usuario-portada .boton-portada i {
@@ -204,15 +209,15 @@ border-radius: 0 0 20px 20px;
 }
 
 .seccion-perfil-usuario .perfil-usuario-avatar img {
-position: absolute;
-top: 50%;
-left: 50%;
-transform: translate(-50%, -50%);
-border: 5px solid white;
-border-radius: 50%;
-width: 10rem;
-height: 10rem;
-object-fit: cover;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 5px solid white;
+  border-radius: 50%;
+  width: 10rem;
+  height: 10rem;
+  object-fit: cover;
 }
 
 .seccion-perfil-usuario .perfil-usuario-avatar .boton-avatar {
@@ -255,6 +260,24 @@ object-fit: cover;
   background-color: #fff;
   border-radius: 15px;
   width: 100%;
+}
+
+ .ventana-act {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 1.5rem 2rem;
+  box-shadow: 0 0 12px rgba(0, 0, 0, .2);
+  background-color: #fff;
+  border-radius: 15px;
+  width: 100%;
+}
+
+
+.TituloAct {
+
+  font-family: "Inter", sans-serif;
+  font-size: 1.5rem;
+  font-weight: bolder;
 }
 
 .seccion-perfil-usuario .perfil-usuario-bio {
@@ -320,60 +343,175 @@ object-fit: cover;
 /* adactacion a dispositivos */
 @media (max-width: 750px) {
   .seccion-perfil-usuario .lista-datos {
-      width: 100%;
+    width: 100%;
   }
 
   .seccion-perfil-usuario .perfil-usuario-portada,
   .seccion-perfil-usuario .perfil-usuario-body {
-      width: 95%;
+    width: 95%;
   }
 
   .seccion-perfil-usuario .redes-sociales {
-      position: relative;
-      flex-direction: row;
-      width: 100%;
-      left: 0;
-      text-align: center;
-      margin-top: 1rem;
-      margin-bottom: 1rem;
-      align-items: center;
-      justify-content: center
+    position: relative;
+    flex-direction: row;
+    width: 100%;
+    left: 0;
+    text-align: center;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    align-items: center;
+    justify-content: center
   }
 
   .seccion-perfil-usuario .redes-sociales .boton-redes+.boton-redes {
-      margin-left: 1rem;
-      margin-top: 0;
+    margin-left: 1rem;
+    margin-top: 0;
   }
 
 }
 
 
 .boton-redondo {
-border-radius: 50%;
+  border-radius: 50%;
 }
 
 .red-asterisk::after {
-content: "*";
-color: red;
-margin-left: 5px;
+  content: "*";
+  color: red;
+  margin-left: 5px;
 }
 
 /* iconos azul*/
 .icono {
-color: #3b82f6;
+  color: #3b82f6;
 }
 
-.icono + strong {
-color: black;
+.icono+strong {
+  color: black;
 }
 
 
 .card-color {
-background-color: #dee2e6;
+  background-color: #dee2e6;
 }
 
 
 .border-red {
-border: 1px solid red;
-border-radius: 6px;
+  border: 1px solid red;
+  border-radius: 6px;
+}
+
+
+nav {
+  position: inherit;
+  right: 100%;
+  left: 0;
+  width: 100%;
+  display: table;
+  margin: 0 auto;
+  transform: translateY(-50%);
+}
+
+nav a {
+  position: relative;
+  width: 28.333%;
+  display: table-cell;
+  text-align: center;
+  color: #949494;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 10px 20px;
+  transition: 0.2s ease color;
+}
+
+nav a:before,
+nav a:after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  transform: scale(0);
+  transition: 0.2s ease transform;
+}
+
+nav a:before {
+  top: 0;
+  left: 10px;
+  width: 6px;
+  height: 6px;
+}
+
+nav a:after {
+  top: 5px;
+  left: 18px;
+  width: 4px;
+  height: 4px;
+}
+
+nav a:nth-child(1):before {
+  background-color: rgb(0, 0, 0);
+  left: 10px;
+  top: 15px;
+}
+
+nav a:nth-child(1):after {
+  background-color: #3B82F6;
+  left: 20px;
+  top: 17px;
+
+}
+
+nav a:nth-child(2):before {
+  background-color: #000000;
+  left: 10px;
+  top: 15px;
+
+}
+
+nav a:nth-child(2):after {
+  background-color: #3B82F6;
+  left: 20px;
+  top: 15px;
+
+}
+
+nav a:nth-child(3):before {
+  background-color: purple;
+}
+
+nav a:nth-child(3):after {
+  background-color: palevioletred;
+}
+
+#indicator {
+  position: absolute;
+  left: 5%;
+  bottom: 0;
+  width: 30px;
+  height: 3px;
+  background-color: #fff;
+  border-radius: 5px;
+  transition: 0.2s ease left;
+}
+
+nav a:hover {
+  color: #3B82F6;
+}
+
+nav a:hover:before,
+nav a:hover:after {
+  transform: scale(1);
+}
+
+nav a:nth-child(1):hover~#indicator {
+  background: linear-gradient(130deg, #3B82F6, #133e85);
+}
+
+nav a:nth-child(2):hover~#indicator {
+  left: 34%;
+  background: linear-gradient(130deg, #3B82F6, #133e85);
+}
+
+nav a:nth-child(3):hover~#indicator {
+  left: 70%;
+  background: linear-gradient(130deg, #3B82F6, #133e85);
 }

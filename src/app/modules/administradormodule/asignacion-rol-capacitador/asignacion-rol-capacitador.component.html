@@ -47,8 +47,7 @@
                 <th pSortableColumn="usuario.username">NOMBRE DE CUENTA<p-sortIcon
                         field="usuario.username"></p-sortIcon></th>
                 <th pSortableColumn="tituloCapacitador">TÍTULO<p-sortIcon field="tituloCapacitador"></p-sortIcon></th>
-                <th pSortableColumn="inventoryStatus">HOJA DE VIDA <p-sortIcon field="inventoryStatus"></p-sortIcon>
-                </th>
+
 
                 <!-- <th pSortableColumn="inventoryStatus">ESTADO <p-sortIcon field="inventoryStatus"></p-sortIcon></th> -->
                 <th pSortableColumn="estadoActivoCapacitador">
@@ -71,10 +70,6 @@
                 <td>{{capacit.usuario.persona.identificacion}}</td>
                 <td>{{capacit.usuario.username}}</td>
                 <td>{{capacit.tituloCapacitador}}</td>
-                <td style="text-align: center">
-                    <button pButton type="button" class="p-button-secondary" icon="pi pi-file"
-                        (click)="showModaLHojaVidaCapacitador(capacit.idCapacitador)"></button>
-                </td>
                 <td>
                     <div class="estatus">
                         <span
