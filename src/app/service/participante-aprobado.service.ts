@@ -53,5 +53,6 @@ export class ParticipanteAprobadoService {
   //IMPLEMENTACION PARA EL CERTIFICADO DE CONSULTA PUBLICO----------------------------
   public getParticipantesAprobadosByDocenteIdCurso(idCurso: number): Observable<ParticipantsApproved[]> {
     return this.http.get<ParticipantsApproved[]>(environment.apiuri + '/participantesAprobados/findby/docente/IdCurso/' + idCurso);
+    // return this.http.get<ParticipantsApproved[]>(environment.apiuri + '/participantesAprobados/findby/docente/IdCurso/' + idCurso);
   }
 }
