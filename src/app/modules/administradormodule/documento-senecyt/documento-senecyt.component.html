@@ -1,4 +1,4 @@
-<div class="card">
+<div>
     <p-toolbar styleClass="mb-4">
         <ng-template pTemplate="left">
             <button pButton pRipple label="Nuevo" icon="pi pi-plus" class="p-button-success mr-2"
@@ -9,8 +9,8 @@
 
     </p-toolbar>
 
-    <p-table #dt [value]="listDocumentosCopy" dataKey="idDocumentoSenecyt" styleClass="p-datatable-customers"
-        [rowHover]="true" [rows]="5" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,15]"
+    <p-table #dt [value]="listDocumentoExel" dataKey="idDocumentoSenecyt" styleClass="p-datatable-customers"
+        [rowHover]="true" [rows]="5" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,10,15]"
         responsiveLayout="scroll" [paginator]="true"
         [globalFilterFields]="['idDocumentoSenecyt', 'fechaCreacion', 'descripcion']"
         currentPageReportTemplate="Mostrando {first} to {last} of {totalRecords} documentos" [filterDelay]="0"
@@ -21,7 +21,7 @@
                 <span class="p-input-icon-left">
                     <i class="pi pi-search"></i>
                     <input pInputText type="text" placeholder="Search..."
-                        (input)="filterTableProgramasCapacitacion($event)" />
+                        (input)="dt.filterGlobal($any($event.target).value, 'contains')" />
                 </span>
             </div>
         </ng-template>
@@ -47,8 +47,7 @@
 
                     </div>
                 </th> -->
-                <th pSortableColumn="inventoryStatus"><strong>GESTIÓN</strong> <p-sortIcon
-                        field="inventoryStatus"></p-sortIcon></th>
+                <th><strong>GESTIÓN</strong> </th>
 
 
             </tr>
@@ -58,8 +57,10 @@
 
                 <td>{{documentoExel.idDocumentoSenecyt}}</td>
                 <td>{{documentoExel.fechaCreacion}}</td>
-                <td><a class="download-link" href="{{documentoExel.documentoExel}}"
-                        [download]="'ParticipantesAprovados'+documentoExel.fechaCreacion+'.xlsx'">
+                <td>
+                    <a class="download-link"
+                        href="http://localhost:8080/api/upload/{{documentoExel.documentoExel}}/documents"
+                        target="_blank">
                         <span class="download-icon">&#x2B07;</span> Descargar Códigos
                     </a>
 
@@ -89,9 +90,6 @@
     </p-table>
 </div>
 
-
-
-<!-- IMPLEMENTACION DEL MODAL PARA EL INGRESO DE LOS CURSOS -->
 <!-- IMPLEMENTACION DEL MODAL PARA EL INGRESO DE LOS CURSOS -->
 
 <p-dialog header="Documento con los códigos de la senescyt" [(visible)]="visible" [modal]="true"
@@ -118,7 +116,7 @@
                         <span class="file-upload-text ">{{ classDocumentoExel.documentoExel ? 'Actualizar Documento' :
                             'Seleccionar Códigos Senecyt' }}</span>
                     </label>
-                    <input type="file" id="pdf" name="pdf" accept=".xlsx, .xls" (change)="handleExcelInput($event)">
+                    <input type="file" id="pdf" name="pdf" accept=".xlsx, .xls" (change)="onFileSelected($event)">
                 </div>
 
             </div>
