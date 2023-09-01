@@ -13,11 +13,11 @@ export class InstalacionService {
   constructor(private http: HttpClient, private storageService: StorageService) { }
 
   public findByOne(idInstalacion: number): Observable<Instalacion> {
-    return this.http.get<Instalacion>(environment.apiuri + '/instalacion/findOne/' + idInstalacion, { headers: this.storageService.returnToken() });
+    return this.http.get<Instalacion>(environment.apiuri + '/instalacion/findOne/' + idInstalacion);
   }
 
   public findByAll(): Observable<Instalacion[]> {
-    return this.http.get<Instalacion[]>(environment.apiuri + '/instalacion/list', { headers: this.storageService.returnToken() });
+    return this.http.get<Instalacion[]>(environment.apiuri + '/instalacion/list');
   }
 
 }

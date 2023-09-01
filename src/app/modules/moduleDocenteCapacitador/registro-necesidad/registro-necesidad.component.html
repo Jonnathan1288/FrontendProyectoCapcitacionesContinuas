@@ -1,6 +1,6 @@
 <p-card class="m-5 ">
     <!-- //surface-section px-4 py-8 md:px-6 lg:px-8  surface-card p-4 shadow-8 border-round w-full  -->
-    <form (ngSubmit)="validacionCaposNecesidadCurso()" novalidate>
+    <form (ngSubmit)="createNecesidaCurso()" novalidate>
         <div class="surface-section px-4 py-4 md:px-6 lg:px-4  surface-card p-4 shadow-8 border-round w-full">
             <p-card header="Informe de Necesidad del Curso">        
                     <div class="grid p-fluid m-3">
@@ -10,8 +10,7 @@
                             <input type="text" pInputText id="espacioImpartirNecesidadCurso"
                                 name="espacioImpartirNecesidadCurso"
                                 [(ngModel)]="necesidadActivo.espacioImpartirNecesidadCurso" required>
-                            <label htmlFor="username">Espacio a impartir el curso <span
-                                    class="red-asterisk"></span></label>
+                            <label htmlFor="username">Espacio a impartir el curso</label>
                         </span>
                     </div>
                 </div>
@@ -21,7 +20,7 @@
                         <span class="p-float-label">
                             <input type="text" pInputText id="resumenCurso" name="resumenCurso"
                                 [(ngModel)]="necesidadActivo.resumenCurso" required>
-                            <label htmlFor="username">Resumen del curso <span class="red-asterisk"></span></label>
+                            <label htmlFor="username">Resumen del curso</label>
                         </span>
                     </div>
                 </div>
@@ -31,8 +30,7 @@
                         <span class="p-float-label">
                             <input type="text" pInputText id="poblacionDirijida" name="respoblacionDirijidaumenCurso"
                                 [(ngModel)]="necesidadActivo.poblacionDirijida" required>
-                            <label htmlFor="username">Población a la que va dirijida el curso <span
-                                    class="red-asterisk"></span></label>
+                            <label htmlFor="username">Población a la que va dirijida el curso</label>
                         </span>
                     </div>
                 </div>
@@ -51,8 +49,7 @@
                                     <input type="text" pInputText id="nombrePrerequisitoCurso"
                                         name="nombrePrerequisitoCurso" [(ngModel)]="listaNece.detalleNececidadCurso"
                                         required>
-                                    <label htmlFor="username">Detalles para el curso <span
-                                            class="red-asterisk"></span></label>
+                                    <label htmlFor="username">Detalles para el curso</label>
                                 </span>
                             </div>
                         </div>

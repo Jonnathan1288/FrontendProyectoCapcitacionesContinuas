@@ -15,27 +15,27 @@ export class ParticipanteAprobadoService {
   constructor(private http: HttpClient, private storageService: StorageService) { }
 
   public getParticipantesAprobadosById(idPatAprovado: number): Observable<ParticipantesAprobados> {
-    return this.http.get<ParticipantesAprobados>(environment.apiuri + '/participantesAprobados/findbyId/' + idPatAprovado, { headers: this.storageService.returnToken() });
+    return this.http.get<ParticipantesAprobados>(environment.apiuri + '/participantesAprobados/findbyId/' + idPatAprovado);
   }
 
   public saveParticipantesAprobados(participantesAprobados: ParticipantesAprobados): Observable<ParticipantesAprobados> {
-    return this.http.post<ParticipantesAprobados>(environment.apiuri + '/participantesAprobados/crear', participantesAprobados, { headers: this.storageService.returnToken() });
+    return this.http.post<ParticipantesAprobados>(environment.apiuri + '/participantesAprobados/crear', participantesAprobados);
   }
 
   public getAllParticipantesAprobadosByIdCurso(idCurso: number): Observable<ParticipantesAprobados[]> {
-    return this.http.get<ParticipantesAprobados[]>(environment.apiuri + '/participantesAprobados/findbyIdCurso/' + idCurso, { headers: this.storageService.returnToken() });
+    return this.http.get<ParticipantesAprobados[]>(environment.apiuri + '/participantesAprobados/findbyIdCurso/' + idCurso);
   }
 
   public saveParticipantesAprobadosParacodigoSenecyt(idCurso: number): Observable<ParticipantesAprobados[]> {
-    return this.http.get<ParticipantesAprobados[]>(environment.apiuri + '/participantesAprobados/save/findbyIdCurso/' + idCurso, { headers: this.storageService.returnToken() });
+    return this.http.get<ParticipantesAprobados[]>(environment.apiuri + '/participantesAprobados/save/findbyIdCurso/' + idCurso);
   }
 
   public updateParticipantesAprobados(idParticipantesAprobados: number, participantesAprobados: ParticipantesAprobados): Observable<ParticipantesAprobados> {
-    return this.http.put<ParticipantesAprobados>(environment.apiuri + '/participantesAprobados/actualizar/' + idParticipantesAprobados, participantesAprobados, { headers: this.storageService.returnToken() });
+    return this.http.put<ParticipantesAprobados>(environment.apiuri + '/participantesAprobados/actualizar/' + idParticipantesAprobados, participantesAprobados);
   }
 
   public updateParticipantesAprobadosLista(listaParticipantesA: ParticipantesAprobados[]): Observable<ParticipantesAprobados[]> {
-    return this.http.put<ParticipantesAprobados[]>(environment.apiuri + '/participantesAprobados/actualizar/lista', listaParticipantesA, { headers: this.storageService.returnToken() });
+    return this.http.put<ParticipantesAprobados[]>(environment.apiuri + '/participantesAprobados/actualizar/lista', listaParticipantesA);
   }
 
 

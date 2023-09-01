@@ -18,18 +18,18 @@ export class InformeFinalCursoService {
   // }
 
   public getInformeFinalCursoById(idInformeFinalC: number):Observable<InformeFinalCurso>{
-    return this.http.get<InformeFinalCurso>(environment.apiuri+'/informeFinalCurso/findbyId/'+idInformeFinalC, { headers: this.storageService.returnToken()});
+    return this.http.get<InformeFinalCurso>(environment.apiuri+'/informeFinalCurso/findbyId/'+idInformeFinalC);
   }
 
   public getInformeFinalCursoByIdCurso(idCurso: number):Observable<InformeFinalCurso>{
-    return this.http.get<InformeFinalCurso>(environment.apiuri+'/informeFinalCurso/findbyIdCurso/'+idCurso, { headers: this.storageService.returnToken()});
+    return this.http.get<InformeFinalCurso>(environment.apiuri+'/informeFinalCurso/findbyIdCurso/'+idCurso);
   }
 
   public saveInformeFinalCurso(informeFinalCurso: InformeFinalCurso):Observable<InformeFinalCurso>{
-    return this.http.post<InformeFinalCurso>(environment.apiuri+'/informeFinalCurso/crear', informeFinalCurso, { headers: this.storageService.returnToken()});
+    return this.http.post<InformeFinalCurso>(environment.apiuri+'/informeFinalCurso/crear', informeFinalCurso);
   }
 
   public updateInformeFinalCurso(idInformeFinalC:number, informeFinalCurso: InformeFinalCurso):Observable<InformeFinalCurso>{
-    return this.http.put<InformeFinalCurso>(environment.apiuri+'/informeFinalCurso/update/'+idInformeFinalC, informeFinalCurso, { headers: this.storageService.returnToken()});
+    return this.http.put<InformeFinalCurso>(environment.apiuri+'/informeFinalCurso/update/'+idInformeFinalC, informeFinalCurso);
   }
 }

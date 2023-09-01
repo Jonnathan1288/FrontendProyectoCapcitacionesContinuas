@@ -13,23 +13,23 @@ export class NotasService {
   constructor(private http: HttpClient, private storageService: StorageService) { }
 
   public listNotas():Observable<Notas>{
-    return this.http.get<any>(environment.apiuri+'/notas/listar', { headers: this.storageService.returnToken()});
+    return this.http.get<any>(environment.apiuri+'/notas/listar');
   }
 
   public getNotasById(idNota: number):Observable<Notas>{
-    return this.http.get<Notas>(environment.apiuri+'/notas/findbyId/'+idNota, { headers: this.storageService.returnToken()});
+    return this.http.get<Notas>(environment.apiuri+'/notas/findbyId/'+idNota);
   }
 
   public saveNotas(notas: Notas):Observable<Notas>{
-    return this.http.post<Notas>(environment.apiuri+'/notas/crear', notas, { headers: this.storageService.returnToken()});
+    return this.http.post<Notas>(environment.apiuri+'/notas/crear', notas);
   }
 
   public updateNotas(idNota:number, notas: Notas):Observable<Notas>{
-    return this.http.put<Notas>(environment.apiuri+'/notas/actualizar/'+idNota, notas, { headers: this.storageService.returnToken()});
+    return this.http.put<Notas>(environment.apiuri+'/notas/actualizar/'+idNota, notas);
   }
 
   public getParticipantesFinales(idNota: number):Observable<Notas[]>{
-    return this.http.get<Notas[]>(environment.apiuri+'/notas/findbyIdMatriculado/'+idNota, { headers: this.storageService.returnToken()});
+    return this.http.get<Notas[]>(environment.apiuri+'/notas/findbyIdMatriculado/'+idNota);
   }
 
   public validarExistenciaDatos(idCurso: number){

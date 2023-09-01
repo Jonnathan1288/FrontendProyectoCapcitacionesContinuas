@@ -13,18 +13,18 @@ export class ProvinciaService {
   constructor(private http: HttpClient, private storageService: StorageService) { }
 
   public getlistProvincia():Observable<Provincia[]>{
-    return this.http.get<Provincia[]>(environment.apiuri+'/provincia/list', { headers: this.storageService.returnToken()});
+    return this.http.get<Provincia[]>(environment.apiuri+'/provincia/list');
   }
 
   public getProvinciaById(idProvincia: number):Observable<Provincia>{
-    return this.http.get<Provincia>(environment.apiuri+'/provincia/findbyId/'+idProvincia, { headers: this.storageService.returnToken()});
+    return this.http.get<Provincia>(environment.apiuri+'/provincia/findbyId/'+idProvincia);
   }
 
   public saveProvincia(provincia: Provincia):Observable<Provincia>{
-    return this.http.post<Provincia>(environment.apiuri+'/provincia/save', provincia, { headers: this.storageService.returnToken()});
+    return this.http.post<Provincia>(environment.apiuri+'/provincia/save', provincia);
   }
 
   public updateProvincia(idProvincia: number, provincia: Provincia):Observable<Provincia>{
-    return this.http.put<Provincia>(environment.apiuri+'/provincia/actualizar/'+idProvincia, provincia, { headers: this.storageService.returnToken()});
+    return this.http.put<Provincia>(environment.apiuri+'/provincia/actualizar/'+idProvincia, provincia);
   }
 }

@@ -23,6 +23,7 @@ export class Curso {
   fechaFinalizacionCurso?: Date;
   programas?: Programas;
   cursoocc?: string;
+  codigoCurso?: string;
   especialidad?: Especialidad;
   capacitador?: Capacitador;
   modalidadCurso?: ModalidadCurso;

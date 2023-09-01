@@ -94,7 +94,7 @@ export class CourseRegisterComponent {
     private provinciaService: ProvinciaService,
     private ngZone: NgZone,
     private toastrService: ToastrService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.idUserLoggin = localStorage.getItem('id_username');
@@ -112,10 +112,11 @@ export class CourseRegisterComponent {
       .subscribe((data) => {
         console.log({ capacitador: data });
         this.curso.capacitador = data;
-        this.capacitadorCopy = data
+        this.capacitadorCopy = data;
       });
     this.listArea();
     this.allList();
+    this.traerTodosLosCursos();
   }
 
   //----------------------------------------------------------------------------------------------START
@@ -204,7 +205,6 @@ export class CourseRegisterComponent {
 
   //PARA VALIDAR LA HOJA DE VIDA Y DARLE LAS DIFERENTES VISTAS
 
-
   // VARIABLES QUE ME VAN SERVI PARA CARGAR EN LA LISTA
   public molalidadId?: number;
   public tipoCursoId?: number;
@@ -225,6 +225,27 @@ export class CourseRegisterComponent {
           this.curso.fechaFinalizacionCurso = new Date(
             this.curso.fechaFinalizacionCurso
           );
+        }
+        if (!data.especialidad) {
+          data.especialidad = {
+            idEspecialidad: 1,
+            nombreEspecialidad: '',
+            area: {
+              idArea: 1,
+              nombreArea: '',
+            },
+          };
+        }
+
+        if (!data.parroquia?.canton) {
+          data.parroquia = {
+            idParroquia: 1,
+            parroquia: '',
+            canton: {
+              idCanton: 1,
+              provincia: { idProvincia: 1 },
+            },
+          };
         }
       }
       if (this.curso) {
@@ -392,28 +413,7 @@ export class CourseRegisterComponent {
   public fechaFin?: Date;
 
   public validarCursosCpacitacionContinua() {
-    if (
-      !this.curso?.nombreCurso ||
-      !this.curso?.fotoCurso ||
-      !this.curso.especialidad ||
-      !this.curso.programas ||
-      !this.curso.nombreCurso ||
-      !this.curso.duracionCurso ||
-      !this.curso.numeroCuposCurso ||
-      !this.curso.fechaInicioCurso ||
-      !this.curso.fechaFinalizacionCurso ||
-      !this.curso.parroquia ||
-      !this.curso.descripcionCurso ||
-      !this.curso.objetivoGeneralesCurso ||
-      !this.curso.cursoocc ||
-      !this.curso.capacitador ||
-      !this.curso.modalidadCurso ||
-      !this.curso.tipoCurso ||
-      !this.curso.nivelCurso ||
-      !this.fechaInit ||
-      !this.fechaFin ||
-      !this.daysOfTheweekV
-    ) {
+    if (!this.curso?.nombreCurso || !this.curso?.fotoCurso) {
       this.toastrService.error(
         'Verifique los campos obligatorios.',
         'CAMPOS VACÍOS .',
@@ -422,58 +422,104 @@ export class CourseRegisterComponent {
         }
       );
     } else {
-      const fechaInicio = new Date(this.curso.fechaInicioCurso);
-      const fechaFinalizacion = new Date(this.curso.fechaFinalizacionCurso);
-      const tiempoDiferencia =
-        fechaFinalizacion.getTime() - fechaInicio.getTime();
-      const diasDiferencia = tiempoDiferencia / (1000 * 60 * 60 * 24);
-      if (diasDiferencia < 5) {
-        this.toastrService.error(
-          'La duración del curso debe ser al menos de 5 días.',
-          'DURACIÓN MINIMA.',
-          {
-            timeOut: 1500,
-          }
+      console.log(this.listadoCursosReutilizar);
+      //empieza validaciones si los campos obligatorios estan llenos
+      if (this.curso.idCurso || !this.curso.idCurso) {
+        // Validar si el nombre del curso ya existe en otros registros
+        const nombreCursoExistente = this.listadoCursosReutilizar.some(
+          (curso) =>
+            curso.nombreCurso === this.curso.nombreCurso &&
+            curso.idCurso !== this.curso.idCurso
         );
-      } else if (diasDiferencia > 27) {
-        this.toastrService.error(
-          'La duración del curso no puede ser mayor de 27 días.',
-          'DURACIÓN MÁXIMA.',
-          {
-            timeOut: 1500,
-          }
-        );
-      } else {
-        if (this.listPrerequisitoCurso1.length >= 1) {
-          //Hora para convertir a los horas minutos de la hora de inicio para mandarlo como string..
-          const horaI = this.fechaInit!.getHours() % 12;
-          const minutosI = this.fechaInit!.getMinutes();
-          const amPmI = this.fechaInit!.toLocaleString('en-US', {
-            hour: 'numeric',
-            hour12: true,
-          }).split(' ')[1];
-          //END-------------------------------------------------
 
-          //START Hora para el fin que se enviara como string
-          const horaF = this.fechaFin!.getHours() % 12;
-          const minutosF = this.fechaFin!.getMinutes();
-          const amPmF = this.fechaFin!.toLocaleString('en-US', {
-            hour: 'numeric',
-            hour12: true,
-          }).split(' ')[1];
-
-          this.horarioC.horaInicio = horaI + ' ' + minutosI + ' ' + amPmI;
-          this.horarioC.horaFin = horaF + ' ' + minutosF + ' ' + amPmF;
-          this.horarioC.dias = this.daysOfTheweekV;
-          this.createHorarioCurso();
-        } else {
+        if (nombreCursoExistente) {
           this.toastrService.error(
-            'Debe llenar por mínimo un prerrequisito.',
-            'PREREQUISITOS VACÍOS.',
+            'El nombre del curso ya existe en otros registros.',
+            'NOMBRE DE CURSO REPETIDO.',
             {
               timeOut: 1600,
             }
           );
+          //FIN VALIDACION NOMBRE
+
+          //INICIO VALIDACION FECHAS - VALIDACION DE DIAS DE CURSO
+        } else {
+          if (
+            !this.curso.fechaInicioCurso ||
+            !this.curso.fechaFinalizacionCurso
+          ) {
+            //si las fechas estan vacias crea el curso con horas vacias
+            if (!this.fechaInit || !this.fechaFin) {
+              // si las horas estan vacias les manda vacio
+              this.horarioC.horaInicio = '';
+              this.horarioC.horaFin = '';
+              this.horarioC.dias = '';
+              this.createHorarioCurso();
+            } else {
+              const horaI = this.fechaInit!.getHours() % 12;
+              const minutosI = this.fechaInit!.getMinutes();
+              const amPmI = this.fechaInit!.toLocaleString('en-US', {
+                hour: 'numeric',
+                hour12: true,
+              }).split(' ')[1];
+              //END-------------------------------------------------
+
+              //START Hora para el fin que se enviara como string
+              const horaF = this.fechaFin!.getHours() % 12;
+              const minutosF = this.fechaFin!.getMinutes();
+              const amPmF = this.fechaFin!.toLocaleString('en-US', {
+                hour: 'numeric',
+                hour12: true,
+              }).split(' ')[1];
+
+              this.horarioC.horaInicio = horaI + ' ' + minutosI + ' ' + amPmI;
+              this.horarioC.horaFin = horaF + ' ' + minutosF + ' ' + amPmF;
+              this.horarioC.dias = this.daysOfTheweekV;
+              this.createHorarioCurso();
+            }
+          } else {
+            //si las fechas estan llenas comprueba los campos de la horas
+            if (!this.fechaInit || !this.fechaFin) {
+              // si las horas estan vacias les manda vacio
+              this.horarioC.horaInicio = '';
+              this.horarioC.horaFin = '';
+              this.horarioC.dias = '';
+              this.createHorarioCurso();
+            } else {
+              //si no estan vacias entra aqui
+              const fechaInicio = new Date(this.curso.fechaInicioCurso);
+              const fechaFinalizacion = new Date(
+                this.curso.fechaFinalizacionCurso
+              );
+              const tiempoDiferencia =
+                fechaFinalizacion.getTime() - fechaInicio.getTime();
+              const diasDiferencia = tiempoDiferencia / (1000 * 60 * 60 * 24);
+
+              if (this.listPrerequisitoCurso1.length >= 0) {
+                //Hora para convertir a los horas minutos de la hora de inicio para mandarlo como string..
+                const horaI = this.fechaInit!.getHours() % 12;
+                const minutosI = this.fechaInit!.getMinutes();
+                const amPmI = this.fechaInit!.toLocaleString('en-US', {
+                  hour: 'numeric',
+                  hour12: true,
+                }).split(' ')[1];
+                //END-------------------------------------------------
+
+                //START Hora para el fin que se enviara como string
+                const horaF = this.fechaFin!.getHours() % 12;
+                const minutosF = this.fechaFin!.getMinutes();
+                const amPmF = this.fechaFin!.toLocaleString('en-US', {
+                  hour: 'numeric',
+                  hour12: true,
+                }).split(' ')[1];
+
+                this.horarioC.horaInicio = horaI + ' ' + minutosI + ' ' + amPmI;
+                this.horarioC.horaFin = horaF + ' ' + minutosF + ' ' + amPmF;
+                this.horarioC.dias = this.daysOfTheweekV;
+                this.createHorarioCurso();
+              }
+            }
+          }
         }
       }
     }
@@ -667,10 +713,16 @@ export class CourseRegisterComponent {
   async subirFoto(event: any) {
     const file = event.target.files[0];
     const fileSize = file.size; // tamaño en bytes
-    if (fileSize > 262144) {
+    const maxSizeInBytes = 300 * 1024;
+    if (fileSize > maxSizeInBytes) {
       // mensaje de error al usuario
       alert('La foto es muy pesada');
       event.target.value = null;
+
+      window.open(
+        'https://www.iloveimg.com/es/comprimir-imagen/comprimir-jpg',
+        '_blank'
+      );
     } else {
       try {
         this.curso.fotoCurso = await this.convertToBase64(file);
@@ -740,7 +792,6 @@ export class CourseRegisterComponent {
     }
   }
 
-
   public necesidad() {
     this.router.navigate(['/register/necesidad', this.idCursoUpdate]);
   }
@@ -753,7 +804,6 @@ export class CourseRegisterComponent {
     this.visible = true;
   }
 
-
   // PARA EL MODAL DE SILABOS A RESTAURAR
   visibleC!: boolean;
   showDialog2() {
@@ -764,11 +814,9 @@ export class CourseRegisterComponent {
   listadoCursosReutilizar: Curso[] = [];
 
   public traerTodosLosCursos(): void {
-    this.cursoService.listCurso().subscribe(
-      data => {
-        this.listadoCursosReutilizar = data;
-      }
-    )
+    this.cursoService.listCurso().subscribe((data) => {
+      this.listadoCursosReutilizar = data;
+    });
   }
 
   public copiarDatos(idCurso: number): void {
@@ -824,5 +872,4 @@ export class CourseRegisterComponent {
   public hojaVida() {
     this.router.navigate(['/hojaVida/capacitador']);
   }
-
 }

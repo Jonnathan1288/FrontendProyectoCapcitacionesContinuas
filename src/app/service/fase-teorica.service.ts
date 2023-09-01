@@ -13,18 +13,18 @@ export class FaseTeoricaService {
   constructor(private http: HttpClient, private storageService: StorageService) { }
 
   public findByOne(idRecurso: number): Observable<FaseTeorica> {
-    return this.http.get<FaseTeorica>(environment.apiuri + '/faseTeorica/findOne/' + idRecurso, { headers: this.storageService.returnToken() });
+    return this.http.get<FaseTeorica>(environment.apiuri + '/faseTeorica/findOne/' + idRecurso);
   }
 
   public findByAll(): Observable<FaseTeorica[]> {
-    return this.http.get<FaseTeorica[]>(environment.apiuri + '/faseTeorica/list', { headers: this.storageService.returnToken() });
+    return this.http.get<FaseTeorica[]>(environment.apiuri + '/faseTeorica/list');
   }
 
   public save(faseTeorica: FaseTeorica): Observable<FaseTeorica> {
-    return this.http.post<FaseTeorica>(environment.apiuri + '/faseTeorica/save', faseTeorica, { headers: this.storageService.returnToken() });
+    return this.http.post<FaseTeorica>(environment.apiuri + '/faseTeorica/save', faseTeorica);
   }
 
   public update(faseTeorica: FaseTeorica, idFaseTeorica: number): Observable<FaseTeorica> {
-    return this.http.put<FaseTeorica>(environment.apiuri + '/faseTeorica/update/' + idFaseTeorica, faseTeorica, { headers: this.storageService.returnToken() });
+    return this.http.put<FaseTeorica>(environment.apiuri + '/faseTeorica/update/' + idFaseTeorica, faseTeorica);
   }
 }

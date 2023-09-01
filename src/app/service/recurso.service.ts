@@ -13,10 +13,10 @@ export class RecursoService {
   constructor(private http: HttpClient, private storageService: StorageService) { }
 
   public findByOne(idRecurso: number): Observable<Recurso> {
-    return this.http.get<Recurso>(environment.apiuri + '/recurso/findOne/' + idRecurso, { headers: this.storageService.returnToken() });
+    return this.http.get<Recurso>(environment.apiuri + '/recurso/findOne/' + idRecurso);
   }
 
   public findByAll(): Observable<Recurso[]> {
-    return this.http.get<Recurso[]>(environment.apiuri + '/recurso/list', { headers: this.storageService.returnToken() });
+    return this.http.get<Recurso[]>(environment.apiuri + '/recurso/list');
   }
 }

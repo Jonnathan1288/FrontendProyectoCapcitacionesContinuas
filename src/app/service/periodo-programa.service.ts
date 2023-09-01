@@ -14,18 +14,18 @@ export class PeriodoProgramaService {
   constructor(private http: HttpClient, private storageService: StorageService) { }
 
   public getlistPeriodoPrograma():Observable<PeriodoPrograma[]>{
-    return this.http.get<PeriodoPrograma[]>(environment.apiuri+'/periodoPrograma/list', { headers: this.storageService.returnToken()});
+    return this.http.get<PeriodoPrograma[]>(environment.apiuri+'/periodoPrograma/list');
   }
 
   public savePeriodoPrograma(periodoPrograma: PeriodoPrograma):Observable<PeriodoPrograma>{
-    return this.http.post<PeriodoPrograma>(environment.apiuri+'/periodoPrograma/save', periodoPrograma, { headers: this.storageService.returnToken()});
+    return this.http.post<PeriodoPrograma>(environment.apiuri+'/periodoPrograma/save', periodoPrograma);
   }
 
   public getPeriodoProgramaById(idPeriodoPrograma: number):Observable<PeriodoPrograma>{
-    return this.http.get<PeriodoPrograma>(environment.apiuri+'/periodoPrograma/findbyId/'+idPeriodoPrograma, { headers: this.storageService.returnToken()});
+    return this.http.get<PeriodoPrograma>(environment.apiuri+'/periodoPrograma/findbyId/'+idPeriodoPrograma);
   }
 
   public updatePeriodoPrograma(idPeriodoPrograma:number, periodoPrograma: PeriodoPrograma):Observable<PeriodoPrograma>{
-    return this.http.put<PeriodoPrograma>(environment.apiuri+'/periodoPrograma/actualizar/'+idPeriodoPrograma, periodoPrograma, { headers: this.storageService.returnToken()});
+    return this.http.put<PeriodoPrograma>(environment.apiuri+'/periodoPrograma/actualizar/'+idPeriodoPrograma, periodoPrograma);
   }
 }

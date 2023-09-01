@@ -15,19 +15,19 @@ export class HorarioCursoService {
   constructor(private http: HttpClient, private storageService: StorageService) { }
 
   public obtenerHorarioCurso():Observable<HorarioCurso[]>{
-    return this.http.get<HorarioCurso[]>(environment.apiuri+'/horarioCurso/listar', { headers: this.storageService.returnToken()});
+    return this.http.get<HorarioCurso[]>(environment.apiuri+'/horarioCurso/listar');
   }
 
   public getModalidadCursoById(idHorarioCurso: number):Observable<HorarioCurso>{
-    return this.http.get<HorarioCurso>(environment.apiuri+'/horarioCurso/findbyId/'+idHorarioCurso, { headers: this.storageService.returnToken()});
+    return this.http.get<HorarioCurso>(environment.apiuri+'/horarioCurso/findbyId/'+idHorarioCurso);
   }
 
   public crearHorarioCurso(horarioCurso: HorarioCurso):Observable<HorarioCurso>{
-    return this.http.post<HorarioCurso>(environment.apiuri+'/horarioCurso/crear', horarioCurso, { headers: this.storageService.returnToken()});
+    return this.http.post<HorarioCurso>(environment.apiuri+'/horarioCurso/crear', horarioCurso);
   }
 
   public updateHorarioCurso(idHorarioCurso:number, horarioCurso: HorarioCurso):Observable<HorarioCurso>{
-    return this.http.put<HorarioCurso>(environment.apiuri+'/horarioCurso/update/'+idHorarioCurso, horarioCurso, { headers: this.storageService.returnToken()});
+    return this.http.put<HorarioCurso>(environment.apiuri+'/horarioCurso/update/'+idHorarioCurso, horarioCurso);
   }
 
 }

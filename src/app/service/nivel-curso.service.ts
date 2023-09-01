@@ -13,19 +13,19 @@ export class NivelCursoService {
   constructor(private http: HttpClient, private storageService: StorageService) { }
 
   public listNivelCurso():Observable<any>{
-    return this.http.get<any>(environment.apiuri+'/nivelCurso/list', { headers: this.storageService.returnToken()});
+    return this.http.get<any>(environment.apiuri+'/nivelCurso/list');
   }
 
   public getNivelCursoById(idMivelCurso: number):Observable<NivelCurso>{
-    return this.http.get<NivelCurso>(environment.apiuri+'/nivelCurso/findbyId/'+idMivelCurso, { headers: this.storageService.returnToken()});
+    return this.http.get<NivelCurso>(environment.apiuri+'/nivelCurso/findbyId/'+idMivelCurso);
   }
 
   public saveNivelCurso(NivelCurso: NivelCurso):Observable<NivelCurso>{
-    return this.http.post<NivelCurso>(environment.apiuri+'/nivelCurso/save', NivelCurso, { headers: this.storageService.returnToken()});
+    return this.http.post<NivelCurso>(environment.apiuri+'/nivelCurso/save', NivelCurso);
   }
 
   public updateNivelCurso(idNivelCurso:number, NivelCurso: NivelCurso):Observable<NivelCurso>{
-    return this.http.put<NivelCurso>(environment.apiuri+'/nivelCurso/actualizar/'+idNivelCurso, NivelCurso, { headers: this.storageService.returnToken()});
+    return this.http.put<NivelCurso>(environment.apiuri+'/nivelCurso/actualizar/'+idNivelCurso, NivelCurso);
   }
 
 }

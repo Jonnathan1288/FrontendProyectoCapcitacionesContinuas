@@ -13,7 +13,7 @@ export class RolService {
   constructor(private http: HttpClient, private storageService: StorageService) { }
 
   public getAllRoleOfDataBase():Observable<Rol[]>{
-    return this.http.get<Rol[]>(environment.apiuri+'/rol/listar', { headers: this.storageService.returnToken()});
+    return this.http.get<Rol[]>(environment.apiuri+'/rol/listar');
   }
 
   //PARA PETICIONES PUBLICAS DE VALIDACIONES--------------------------------------------------------------------------

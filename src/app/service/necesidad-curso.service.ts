@@ -14,22 +14,22 @@ export class NecesidadCursoService {
   constructor(private http: HttpClient, private storageService: StorageService) { }
 
   public obtenerNecesidadCurso():Observable<NececidadCurso[]>{
-    return this.http.get<NececidadCurso[]>(environment.apiuri+'/necesidadCurso/listar', { headers: this.storageService.returnToken()});
+    return this.http.get<NececidadCurso[]>(environment.apiuri+'/necesidadCurso/listar');
   }
 
   public crearNecesidadCurso(necesidadCurso: NececidadCurso):Observable<NececidadCurso>{
-    return this.http.post<NececidadCurso>(environment.apiuri+'/necesidadCurso/crear', necesidadCurso, { headers: this.storageService.returnToken()});
+    return this.http.post<NececidadCurso>(environment.apiuri+'/necesidadCurso/crear', necesidadCurso);
   }
 
   public getNecesidadCursoById(id_curso: number):Observable<NececidadCurso>{
-    return this.http.get<NececidadCurso>(environment.apiuri+'/necesidadCurso/findbyId/'+id_curso, { headers: this.storageService.returnToken()});
+    return this.http.get<NececidadCurso>(environment.apiuri+'/necesidadCurso/findbyId/'+id_curso);
   }
 
   public getNecesidadCursoByIdCurso(id_curso: number):Observable<NececidadCurso>{
-    return this.http.get<NececidadCurso>(environment.apiuri+'/necesidadCurso/findbyIdCurso/'+id_curso, { headers: this.storageService.returnToken()});
+    return this.http.get<NececidadCurso>(environment.apiuri+'/necesidadCurso/findbyIdCurso/'+id_curso);
   }
 
   public updateNecesidadCurso(idNecesidadCurso:number, necesidadCurso: NececidadCurso):Observable<NececidadCurso>{
-    return this.http.put<NececidadCurso>(environment.apiuri+'/necesidadCurso/actualizar/'+idNecesidadCurso, necesidadCurso, { headers: this.storageService.returnToken()});
+    return this.http.put<NececidadCurso>(environment.apiuri+'/necesidadCurso/actualizar/'+idNecesidadCurso, necesidadCurso);
   }
 }

@@ -13,18 +13,18 @@ export class FasePracticaService {
   constructor(private http: HttpClient, private storageService: StorageService) { }
 
   public findByOne(idRecurso: number): Observable<FasePractica> {
-    return this.http.get<FasePractica>(environment.apiuri + '/fasePractica/findOne/' + idRecurso, { headers: this.storageService.returnToken() });
+    return this.http.get<FasePractica>(environment.apiuri + '/fasePractica/findOne/' + idRecurso);
   }
 
   public findByAll(): Observable<FasePractica[]> {
-    return this.http.get<FasePractica[]>(environment.apiuri + '/fasePractica/list', { headers: this.storageService.returnToken() });
+    return this.http.get<FasePractica[]>(environment.apiuri + '/fasePractica/list');
   }
 
   public save(FasePractica: FasePractica): Observable<FasePractica> {
-    return this.http.post<FasePractica>(environment.apiuri + '/fasePractica/save', FasePractica, { headers: this.storageService.returnToken() });
+    return this.http.post<FasePractica>(environment.apiuri + '/fasePractica/save', FasePractica);
   }
 
   public update(FasePractica: FasePractica, idFasePractica: number): Observable<FasePractica> {
-    return this.http.put<FasePractica>(environment.apiuri + 'fFasePractica/update/' + idFasePractica, FasePractica, { headers: this.storageService.returnToken() });
+    return this.http.put<FasePractica>(environment.apiuri + 'fFasePractica/update/' + idFasePractica, FasePractica);
   }
 }

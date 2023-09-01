@@ -14,15 +14,15 @@ export class PersonaService {
   constructor(private http: HttpClient, private storageService: StorageService) { }
 
   public getListaPersonas():Observable<Persona[]>{
-    return this.http.get<Persona[]>(environment.apiuri+'/persona/listar', { headers: this.storageService.returnToken()});
+    return this.http.get<Persona[]>(environment.apiuri+'/persona/listar');
   }
 
   public getPersonaById(idPersona: number):Observable<Persona>{
-    return this.http.get<Persona>(environment.apiuri+'/persona/findbyId/'+idPersona, { headers: this.storageService.returnToken()});
+    return this.http.get<Persona>(environment.apiuri+'/persona/findbyId/'+idPersona);
   }
 
   public updatePersona(idPersona:number, Persona: Persona):Observable<Persona>{
-    return this.http.put<Persona>(environment.apiuri+'/persona/actualizar/'+idPersona, Persona, { headers: this.storageService.returnToken()});
+    return this.http.put<Persona>(environment.apiuri+'/persona/actualizar/'+idPersona, Persona);
   }
 
   //PARA PETICIONES PUBLICAS DE VALIDACIONES--------------------------------------------------------------------------

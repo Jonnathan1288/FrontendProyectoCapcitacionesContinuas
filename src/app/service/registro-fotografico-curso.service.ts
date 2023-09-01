@@ -13,18 +13,18 @@ export class RegistroFotograficoCursoService {
   constructor(private http: HttpClient, private storageService: StorageService) { }
 
   public getRegistroFotograficoCursoById(idRegistroFotografico: number):Observable<RegistroFotograficoCurso>{
-    return this.http.get<RegistroFotograficoCurso>(environment.apiuri+'/registroFotograficoCurso/findbyId/'+idRegistroFotografico, { headers: this.storageService.returnToken()});
+    return this.http.get<RegistroFotograficoCurso>(environment.apiuri+'/registroFotograficoCurso/findbyId/'+idRegistroFotografico);
   }
 
   public getRegistroFotograficoCursoAllByIdCurso(idCurso: number):Observable<RegistroFotograficoCurso[]>{
-    return this.http.get<RegistroFotograficoCurso[]>(environment.apiuri+'/registroFotograficoCurso/traerTodosfindbyIdCurso/'+idCurso, { headers: this.storageService.returnToken()});
+    return this.http.get<RegistroFotograficoCurso[]>(environment.apiuri+'/registroFotograficoCurso/traerTodosfindbyIdCurso/'+idCurso);
   }
 
   public saveRegistroFotograficoCurso(registroFotografico: RegistroFotograficoCurso):Observable<RegistroFotograficoCurso>{
-    return this.http.post<RegistroFotograficoCurso>(environment.apiuri+'/registroFotograficoCurso/crear', registroFotografico, { headers: this.storageService.returnToken()});
+    return this.http.post<RegistroFotograficoCurso>(environment.apiuri+'/registroFotograficoCurso/crear', registroFotografico);
   }
 
   public updateRegistroFotografico(idRegistroFotografico: number, registroFotografico: RegistroFotograficoCurso):Observable<RegistroFotograficoCurso>{
-    return this.http.put<RegistroFotograficoCurso>(environment.apiuri+'/registroFotograficoCurso/actualizar/'+idRegistroFotografico, registroFotografico, { headers: this.storageService.returnToken()});
+    return this.http.put<RegistroFotograficoCurso>(environment.apiuri+'/registroFotograficoCurso/actualizar/'+idRegistroFotografico, registroFotografico);
   }
 }

@@ -14,19 +14,19 @@ export class AreaService {
   constructor(private http: HttpClient, private storageService: StorageService) { }
 
   public listArea(): Observable<any> {
-    return this.http.get<any>(environment.apiuri + '/area/list', { headers: this.storageService.returnToken() });
+    return this.http.get<any>(environment.apiuri + '/area/list');
   }
 
   public getAreaById(idArea: number): Observable<Area> {
-    return this.http.get<Area>(environment.apiuri + '/area/findbyId/' + idArea, { headers: this.storageService.returnToken() });
+    return this.http.get<Area>(environment.apiuri + '/area/findbyId/' + idArea);
   }
 
   public saveArea(area: Area): Observable<Area> {
-    return this.http.post<Area>(environment.apiuri + '/area/save', area, { headers: this.storageService.returnToken() });
+    return this.http.post<Area>(environment.apiuri + '/area/save', area);
   }
 
   public updateArea(idArea: number, area: Area): Observable<Area> {
-    return this.http.put<Area>(environment.apiuri + '/area/actualizar/' + idArea, area, { headers: this.storageService.returnToken() });
+    return this.http.put<Area>(environment.apiuri + '/area/actualizar/' + idArea, area);
   }
 
 
