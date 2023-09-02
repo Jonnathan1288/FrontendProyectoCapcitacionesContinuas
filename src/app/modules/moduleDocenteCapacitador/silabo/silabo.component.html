@@ -245,6 +245,8 @@
                         </span>
                     </div>
                 </div>
+
+                
                 <div class="col-12 md:col-12 mt-1">
                     <div class="p-inputgroup">
                         <span class="p-float-label">
@@ -256,6 +258,9 @@
                         </span>
                     </div>
                 </div>
+                
+
+
                 <div class="col-12 md:col-12 mt-1">
                     <div class="p-inputgroup">
                         <span class="p-float-label">
@@ -270,6 +275,8 @@
                         </span>
                     </div>
                 </div>
+
+
                 <div class="col-12 md:col-12 mt-1">
                     <div class="p-inputgroup">
                         <span class="p-float-label">
@@ -299,6 +306,7 @@
                         </span>
                     </div>
                 </div>
+                
                 <div class="col-12 md:col-12 mt-1">
                     <div class="p-inputgroup">
                         <span class="p-float-label">
@@ -308,6 +316,8 @@
                         </span>
                     </div>
                 </div>
+
+                
             </div>
             <div class="col-md-12" style="text-align: center; margin: 5px;" *ngIf='validarIdSilabo == false'>
                 <p-button label="Agregar" icon="pi pi-plus" styleClass="p-button-success  mb-2"
@@ -407,6 +417,19 @@
                             </span>
                         </div>
                     </div>
+                    
+                    <div class="col-12 md:col-12 mt-1">
+                        <div class="p-inputgroup">
+                            <span class="p-float-label">
+                                <input type="text" value="Horas de Talleres" pInputText id="Horas de Talleres" name="Horas de Talleres" disabled style="color: #000;">
+                            
+                                <p-inputNumber class="ml-5" mode="decimal" [showButtons]="true" inputId="minmax-buttons"
+                                id="horasClaseContenido" name="horasClaseContenido" [min]="0" [max]="100"
+                                [(ngModel)]="contenidosSilabo.horasTalleres"> </p-inputNumber>
+                            </span>
+                        </div>
+                    </div>
+
                     <div class="col-12 md:col-12 mt-1">
                         <div class="p-inputgroup">
                             <span class="p-float-label">
@@ -444,6 +467,8 @@
                             </span>
                         </div>
                     </div>
+
+                    
                 </div>
                 <div class="col-md-12" style="text-align: center; margin: 5px;">
                     <p-button [label]="opcionDelContenido === 'C'? 'Crear':'Actualizar'" icon="pi pi-check-square"

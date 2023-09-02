@@ -413,7 +413,7 @@ export class CourseRegisterComponent {
   public fechaFin?: Date;
 
   public validarCursosCpacitacionContinua() {
-    if (!this.curso?.nombreCurso || !this.curso?.fotoCurso) {
+    if (!this.curso?.nombreCurso || !this.curso?.fotoCurso || !this.curso?.programas?.nombrePrograma) {
       this.toastrService.error(
         'Verifique los campos obligatorios.',
         'CAMPOS VACÍOS .',

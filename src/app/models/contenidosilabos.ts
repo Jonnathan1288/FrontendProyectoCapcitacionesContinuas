@@ -6,6 +6,7 @@ export class Contenidosilabos {
     temaContenido?: string;
     diaContenido?: number;
     horasClaseContenido?: number;
+    horasTalleres?: number;
     actividadesDocencia?: string;
     horasPracticas?: number;
     actividadesPracticas?: string;
