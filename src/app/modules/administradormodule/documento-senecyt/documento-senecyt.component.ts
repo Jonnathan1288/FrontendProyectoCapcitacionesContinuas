@@ -89,23 +89,6 @@ export class DocumentoSenecytComponent implements OnInit {
             if (this.selectedFile) {
                 try {
                     this.classDocumentoExel.documentoExel = await this.uploadImage();
-                    this.documentoSenecytService
-                        .updateDocumentoSenecyt(
-                            this.classDocumentoExel.idDocumentoSenecyt!,
-                            this.classDocumentoExel
-                        )
-                        .subscribe((data) => {
-
-                            this.toastrService.success(
-                                'El documento a sido actualizado correctamente.',
-                                'DOCUMENTO ACTUALIZADO'
-                            );
-
-                            const index = this.listDocumentoExel.findIndex(e => e.idDocumentoSenecyt = data.idDocumentoSenecyt);
-                            this.listDocumentoExel[index] = data;
-
-                            this.clenaData();
-                        });
                 } catch (error) {
                     this.toastrService.error(
                         '',
@@ -114,6 +97,33 @@ export class DocumentoSenecytComponent implements OnInit {
                     this.clenaData();
                 }
             }
+            this.documentoSenecytService
+                .updateDocumentoSenecyt(
+                    this.classDocumentoExel.idDocumentoSenecyt!,
+                    this.classDocumentoExel
+                )
+                .subscribe({
+                    next: (resp) => {
+                        this.toastrService.success(
+                            'El documento a sido actualizado correctamente.',
+                            'DOCUMENTO ACTUALIZADO'
+                        );
+
+                        const index = this.listDocumentoExel.findIndex(e => e.idDocumentoSenecyt === resp.idDocumentoSenecyt);
+                        this.listDocumentoExel[index] = resp;
+
+                        this.clenaData();
+                    },
+                    error: (err) => {
+                        this.toastrService.error(
+                            '',
+                            'INCONVENIENTE AL ACTUALIZAR EL DOCUMENTO'
+                        );
+                    }
+
+                });
+
+
         } else {
 
             this.uploadService.upload(this.selectedFile, "documents").subscribe({
