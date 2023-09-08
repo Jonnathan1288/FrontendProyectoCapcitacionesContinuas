@@ -22,8 +22,7 @@
             <button pButton pRipple label="Senescyt" icon="pi pi-print" class="p-button-primary mr-2 inline-block"
                 (click)="getCodigosSenecytDownload()" [disabled]="listParticipantsApproved.length <= 0"></button>
 
-            <button pButton pRipple label="Firmas" icon="pi pi-print" class="p-button-help"
-                (click)="getEstudiantesParaHacerFirmar()" [disabled]="listParticipantsApproved.length <= 0"></button>
+          
         </ng-template>
     </p-toolbar>
 
@@ -66,11 +65,17 @@
         <ng-template pTemplate="body" let-certificadosPar let-ri="rowIndex">
             <tr [pEditableRow]="certificadosPar">
                 <td>
-                    {{certificadosPar.identificacion}}
+                    {{certificadosPar.partipantesMatriculados.inscrito.usuario.persona?.identificacion}}
                 </td>
                 <td>
 
-                    {{certificadosPar.nombres}}
+                    {{certificadosPar.partipantesMatriculados.inscrito.usuario.persona?.nombre1}}
+                    {{certificadosPar.partipantesMatriculados.inscrito.usuario.persona?.nombre2}}
+
+                </td>
+                <td>
+                    {{certificadosPar.partipantesMatriculados.inscrito.usuario.persona?.apellido1}}
+                    {{certificadosPar.partipantesMatriculados.inscrito.usuario.persona?.apellido2}}
 
 
                 </td>
