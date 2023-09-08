@@ -511,18 +511,29 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 
   lastValidParcial: string = ''; // Variable para almacenar el último valor válido del campo
 
-  public validarParcialAndFinalNota(event: any) {
-    const valor = event.target.value;
-
-    if (valor === '0') {
-      event.target.value = ''; // Si el valor ingresado es "0", se elimina el contenido del campo
-      return;
-    }
-
-    if (valor && (isNaN(valor) || valor < 0 || valor > 10)) {
-      event.target.value = this.lastValidParcial;
-    } else {
-      this.lastValidParcial = valor;
+  validarParcialAndFinalNota(event: any) {
+    const valor = parseInt(event.target.value, 10);
+    
+    if (event.target.id === 'informe1' ) {
+      if (valor < 1 || valor > 30) {
+        this.toastrService.error('La nota del INFORME 1 debe estar en el rango de 1 a 30');
+        event.target.value = '';
+      }
+    } else if (event.target.id === 'informe2') {
+      if (valor < 1 || valor > 30) {
+        this.toastrService.error('La nota  del INFORME 2 debe estar en el rango de 1 a 30');
+        event.target.value = '';
+      } 
+     }else if (event.target.id === 'informe3') {
+      if (valor < 1 || valor > 15) {
+        this.toastrService.error('La nota  del INFORME 3 debe estar en el rango de 1 a 15');
+        event.target.value = '';
+      }
+    } else if (event.target.id === 'examenFinal') {
+      if (valor < 1 || valor > 25) {
+        this.toastrService.error('La nota del EXAMEN debe estar en el rango de 1 a 25');
+        event.target.value = '';
+      }
     }
   }
 
@@ -530,8 +541,12 @@ export class RegistrarNotasFinalesComponent implements OnInit {
     const tecla = event.keyCode || event.which;
     const valor = event.target.value;
   
-    if (valor === '0' && (tecla === 48 || tecla === 96)) {
-      event.preventDefault(); // Evita la entrada de "0" si ya se ingresó en el campo
+    // Verificar si el valor contiene solo uno o dos ceros
+    if (/^0{1,2}$/.test(valor) && (tecla === 48 || tecla === 96)) {
+      this.toastrService.warning('No se permiten valores de este tipo.');
+      event.preventDefault(); // Evitar la entrada de uno o dos ceros
     }
   }
+  
+
 }
