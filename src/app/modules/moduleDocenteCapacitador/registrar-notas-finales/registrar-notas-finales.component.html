@@ -29,7 +29,9 @@
                     <tr>
                         <th style="width:35%"><strong>NOMBRES</strong></th>
                         <th style="width:15%"><strong>IDENTIFICACIÓN</strong></th>
-                        <th style="width:10%"><strong>NOTA PARCIAL</strong></th>
+                        <th style="width:10%"><strong>INFORME 1</strong></th>
+                        <th style="width:10%"><strong>INFORME 2</strong></th>
+                        <th style="width:10%"><strong>INFORME 3</strong></th>
                         <th style="width:10%"><strong>NOTA EXAMEN FINAL</strong></th>
                         <th style="width:10%"><strong>ESTADO</strong></th>
                         <th style="width:10%"><strong>OBSERVACIÓN</strong></th>
@@ -44,23 +46,25 @@
                             {{data.partipantesMatriculados!.inscrito!.usuario!.persona!.apellido2}}</td>
                         <td>{{data.partipantesMatriculados!.inscrito!.usuario!.persona!.identificacion}} </td>
 
-                        <td>{{data.parcial}}</td>
+                        <td>{{data.informe1}}</td>
+                        <td>{{data.informe2}}</td>
+                        <td>{{data.informe3}}</td>
                         <td>{{data.examenFinal}}</td>
                         <td style="text-align: center;">
-                            <ng-container *ngIf="validarNotasFinalesView(data.parcial, data.examenFinal) >= 7">
-                                <strong>{{validarNotasFinalesView(data.parcial, data.examenFinal) | number: '1.1-2'}} / 10</strong>
+                            <ng-container *ngIf="validarNotasFinalesView(data.informe1, data.informe2, data.informe3, data.examenFinal) >= 70">
+                                <strong>{{validarNotasFinalesView(data.informe1, data.informe2, data.informe3, data.examenFinal) | number: '1.1-2'}} / 100</strong>
                                 <p-tag styleClass="mr-2" icon="pi pi-check" severity="success" value="APROVADO"></p-tag>
                             </ng-container>
 
                             <ng-container
-                                *ngIf="validarNotasFinalesView(data.parcial, data.examenFinal) > 0 && validarNotasFinalesView(data.parcial, data.examenFinal) < 7">
-                                <strong>{{validarNotasFinalesView(data.parcial, data.examenFinal) | number: '1.1-2'}} / 10</strong>
+                                *ngIf="validarNotasFinalesView(data.informe1, data.informe2, data.informe3, data.examenFinal) > 0 && validarNotasFinalesView(data.informe1, data.informe2, data.informe3, data.examenFinal) < 70">
+                                <strong>{{validarNotasFinalesView(data.informe1, data.informe2, data.informe3, data.examenFinal) | number: '1.1-2'}} / 100</strong>
                                 <p-tag styleClass="mr-2" icon="pi pi-exclamation-triangle" severity="warning"
                                     value="REPROVADO"></p-tag>
                             </ng-container>
 
                             <ng-container
-                                *ngIf="(data.parcial === null || data.parcial === undefined) && (data.examenFinal === null || data.examenFinal === undefined) ">
+                                *ngIf="(data.informe1 === null || data.informe1 === undefined) && (data.informe2 === null || data.informe2 === undefined) && (data.informe3 === null || data.informe3 === undefined) && (data.examenFinal === null || data.examenFinal === undefined) ">
                                 <p-tag styleClass="mr-2" icon="pi pi-info-circle" severity="primary"
                                     value="PENDIENTE"></p-tag>
                             </ng-container>
@@ -111,11 +115,35 @@
         <div class="col-12 md:col-12 mt-1">
             <div class="p-inputgroup">
                 <span class="p-float-label">
+                    <input type="text" pInputText id="informe1" name="informe1" [(ngModel)]="notas.informe1" (input)="validarParcialAndFinalNota($event)" maxlength="2" (keydown)="validarEntrada($event)"/>
+                    <label htmlFor="informe1">Informe 1<span class="red-asterisk"></span></label>
+                </span>
+            </div>
+        </div>
+        <div class="col-12 md:col-12 mt-1">
+            <div class="p-inputgroup">
+                <span class="p-float-label">
+                    <input type="text" pInputText id="informe2" name="informe2" [(ngModel)]="notas.informe2" (input)="validarParcialAndFinalNota($event)" maxlength="2" (keydown)="validarEntrada($event)"/>
+                    <label htmlFor="informe2">Informe 2<span class="red-asterisk"></span></label>
+                </span>
+            </div>
+        </div>
+        <div class="col-12 md:col-12 mt-1">
+            <div class="p-inputgroup">
+                <span class="p-float-label">
+                    <input type="text" pInputText id="in" name="informe3" [(ngModel)]="notas.informe3" (input)="validarParcialAndFinalNota($event)" maxlength="2" (keydown)="validarEntrada($event)"/>
+                    <label htmlFor="informe3">Informe 3<span class="red-asterisk"></span></label>
+                </span>
+            </div>
+        </div>
+       <!-- <div class="col-12 md:col-12 mt-1">
+            <div class="p-inputgroup">
+                <span class="p-float-label">
                     <input type="text" pInputText id="parcial" name="parcial" [(ngModel)]="notas.parcial" (input)="validarParcialAndFinalNota($event)" maxlength="2" (keydown)="validarEntrada($event)"/>
                     <label htmlFor="parcial">Nota Parcial<span class="red-asterisk"></span></label>
                 </span>
             </div>
-        </div>
+        </div>-->
         <div class="col-12 md:col-12 mt-3">
             <div class="p-inputgroup">
                 <span class="p-float-label">
