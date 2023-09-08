@@ -139,16 +139,16 @@ export class CurricularDiseñoComponent implements OnInit {
 
 
   public almacenarListaEvaluacionFormativa(): void {
-    if (!this.evaluacionFormativaCurricular.instrumnetoFormativa || !this.evaluacionFormativaCurricular.tecnicaFormativa) {
-      // alert("Campos Vacios")
-      this.toastr.error('Campos vacios');
+    // if (!this.evaluacionFormativaCurricular.instrumnetoFormativa || !this.evaluacionFormativaCurricular.tecnicaFormativa) {
+    //   // alert("Campos Vacios")
+    //   this.toastr.error('Campos vacios');
 
-    } else {
+    // } else {
       this.listEvaluacionFormativaCurricular.push(this.evaluacionFormativaCurricular);
       this.evaluacionFormativaCurricular = new EvalucionFormativaCurriculares();
       this.evaluacionFormativaCurricular.instrumnetoFormativa = '';
       this.evaluacionFormativaCurricular.tecnicaFormativa = '';
-    }
+   // }
   }
 
   public quitarElementoEvaluacionFormativa(index: number): void {
@@ -163,16 +163,16 @@ export class CurricularDiseñoComponent implements OnInit {
 
 
   public almacenarListaEvaluacionF(): void {
-    if (!this.evaluacionFinalCurricular.instrumnetoFormativaFinal || !this.evaluacionFinalCurricular.tecnicaFormativaFinal) {
-      // alert("Campos Vacios")
-      this.toastr.error('Campos vacios');
+    // if (!this.evaluacionFinalCurricular.instrumnetoFormativaFinal || !this.evaluacionFinalCurricular.tecnicaFormativaFinal) {
+    //   // alert("Campos Vacios")
+    //   this.toastr.error('Campos vacios');
 
-    } else {
+    // } else {
       this.listEvaluacionFinalCurricular.push(this.evaluacionFinalCurricular);
       this.evaluacionFinalCurricular = new EvaluacionFinalCurriculares();
       this.evaluacionFinalCurricular.instrumnetoFormativaFinal = '';
       this.evaluacionFinalCurricular.tecnicaFormativaFinal = '';
-    }
+    //}
   }
 
   public quitarElementoEvaluacionF(index: number): void {
@@ -187,17 +187,17 @@ export class CurricularDiseñoComponent implements OnInit {
 
 
   public almacenarEntornoAprendizaje(): void {
-    if (!this.entornoAprendizajeCurricular.instalaciones || !this.entornoAprendizajeCurricular.faseTeorica
-      || !this.entornoAprendizajeCurricular.fasePractica) {
-      // alert("Campos Vacios")
-      this.toastr.error('Campos vacios');
-    } else {
+    // if (!this.entornoAprendizajeCurricular.instalaciones || !this.entornoAprendizajeCurricular.faseTeorica
+    //   || !this.entornoAprendizajeCurricular.fasePractica) {
+    //   // alert("Campos Vacios")
+    //   this.toastr.error('Campos vacios');
+    // } else {
       this.listEntornoAprendizaje.push(this.entornoAprendizajeCurricular);
       this.entornoAprendizajeCurricular = new EntornoAprendizajeCurricular();
       this.entornoAprendizajeCurricular.instalaciones = '';
       this.entornoAprendizajeCurricular.faseTeorica = '';
       this.entornoAprendizajeCurricular.fasePractica = '';
-    }
+    //}
   }
 
   public quitarEntornoAprendizaje(index: number): void {
@@ -211,46 +211,46 @@ export class CurricularDiseñoComponent implements OnInit {
 
   public generarDisenioCurricular(): void {
     this.disenioCurricular.silabo = this.silabo;
-    if (!this.disenioCurricular?.temasTransversales || !this.disenioCurricular?.estrategiasAprendizaje) {
+    // if (!this.disenioCurricular?.temasTransversales || !this.disenioCurricular?.estrategiasAprendizaje) {
 
-      this.toastr.warning(
-        'Se encontraron campos vacios, por favor complete el formulario', 'CAMPOS VACIOS'
+    //   this.toastr.warning(
+    //     'Se encontraron campos vacios, por favor complete el formulario', 'CAMPOS VACIOS'
 
-      );
-    } else {
+    //   );
+    // } else {
 
       //ID
-      if (this.listEvaluacionDiagnosticaCurricular.length < 1) {
-        this.toastr.warning(
-          'CAMPOS VACIOS', '*LISTA VACIA'
+      // if (this.listEvaluacionDiagnosticaCurricular.length < 1) {
+      //   this.toastr.warning(
+      //     'CAMPOS VACIOS', '*LISTA VACIA'
 
-        );
-        return;
-      }
-      //ID
-      if (this.listEvaluacionFormativaCurricular.length < 1) {
-        this.toastr.warning(
-          'CAMPOS VACIOS', '*LISTA VACIA'
+      //   );
+      //   return;
+      // }
+      // //ID
+      // if (this.listEvaluacionFormativaCurricular.length < 1) {
+      //   this.toastr.warning(
+      //     'CAMPOS VACIOS', '*LISTA VACIA'
 
-        );
-        return;
-      }
-      //ID
-      if (this.listEvaluacionFinalCurricular.length < 1) {
-        this.toastr.warning(
-          'CAMPOS VACIOS', '*LISTA VACIA'
+      //   );
+      //   return;
+      // }
+      // //ID
+      // if (this.listEvaluacionFinalCurricular.length < 1) {
+      //   this.toastr.warning(
+      //     'CAMPOS VACIOS', '*LISTA VACIA'
 
-        );
-        return;
-      }
-      //ID
-      if (this.listEntornoAprendizaje.length < 1) {
-        this.toastr.warning(
-          'CAMPOS VACIOS', '*LISTA VACIA'
+      //   );
+      //   return;
+      // }
+      // //ID
+      // if (this.listEntornoAprendizaje.length < 1) {
+      //   this.toastr.warning(
+      //     'CAMPOS VACIOS', '*LISTA VACIA'
 
-        );
-        return;
-      }
+      //   );
+      //   return;
+      // }
 
 
       this.disenioCurricular.estadoDisenioCurricular = true;
@@ -271,7 +271,7 @@ export class CurricularDiseñoComponent implements OnInit {
         }, 1200);
         /* */
       })
-    }
+    //}
   }
   /* */
 
@@ -570,13 +570,13 @@ export class CurricularDiseñoComponent implements OnInit {
       ...this.disenioCurricular, // copiar todos los valores existentes de this.disenioCurricular
       estadoDisenioCurricular: true // sobrescribir el valor de estadoDisenioCurricular con true
     };
-    if (!this.disenioCurricular?.temasTransversales || !this.disenioCurricular?.estrategiasAprendizaje) {
+    // if (!this.disenioCurricular?.temasTransversales || !this.disenioCurricular?.estrategiasAprendizaje) {
 
-      this.toastr.warning(
-        'Se encontraron campos vacios, por favor complete el formulario', 'CAMPOS VACIOS'
+    //   this.toastr.warning(
+    //     'Se encontraron campos vacios, por favor complete el formulario', 'CAMPOS VACIOS'
 
-      );
-    } else {
+    //   );
+    // } else {
       this.disenioCurricularService.updateDisenioCurricular(this.idDelDisenio!, nuevoDisenioCurricular).subscribe(
         data => {
           this.traerDatos(this.idDelDisenio!);
@@ -588,20 +588,20 @@ export class CurricularDiseñoComponent implements OnInit {
           // console.log("Se actualizó el Diseño Curricular");
         }
       );
-    }
+    //}
   }
 
 
 
   public actualizarEntornoAprendizaje(): void {
-    if (!this.entornoAprendizajeCurricular?.fasePractica || !this.entornoAprendizajeCurricular?.faseTeorica
-      || !this.entornoAprendizajeCurricular?.instalaciones) {
+    // if (!this.entornoAprendizajeCurricular?.fasePractica || !this.entornoAprendizajeCurricular?.faseTeorica
+    //   || !this.entornoAprendizajeCurricular?.instalaciones) {
 
-      this.toastr.warning(
-        'Se encontraron campos vacios, por favor complete el formulario', 'CAMPOS VACIOS'
+    //   this.toastr.warning(
+    //     'Se encontraron campos vacios, por favor complete el formulario', 'CAMPOS VACIOS'
 
-      );
-    } else {
+    //   );
+    // } else {
       if (this.opcionCapEntornoAprendizaje == "C") {
         this.entornoAprendizajeCurricular.disenioCurricular = this.disenioCurricular;
         this.entornoAprendizajeCurricular.estadoEntornoAprendizaje = true;
@@ -621,7 +621,7 @@ export class CurricularDiseñoComponent implements OnInit {
           }
         )
       }
-    }
+    //}
   }
   // FIN 
 
@@ -650,13 +650,13 @@ export class CurricularDiseñoComponent implements OnInit {
   }
 
   public actualizarEvaluacionDiagnostica(): void {
-    if (!this.evaluacionDiagnosticoCurricular?.instrumnetoEvaluar || !this.evaluacionDiagnosticoCurricular?.tecnicaEvaluar) {
+    // if (!this.evaluacionDiagnosticoCurricular?.instrumnetoEvaluar || !this.evaluacionDiagnosticoCurricular?.tecnicaEvaluar) {
 
-      this.toastr.warning(
-        'Se encontraron campos vacios, por favor complete el formulario', 'CAMPOS VACIOS'
+    //   this.toastr.warning(
+    //     'Se encontraron campos vacios, por favor complete el formulario', 'CAMPOS VACIOS'
 
-      );
-    } else {
+    //   );
+    // } else {
 
       if (this.opcionElegida == "C") {
         this.evaluacionDiagnosticoCurricular.disenioCurricular = this.disenioCurricular;
@@ -677,7 +677,7 @@ export class CurricularDiseñoComponent implements OnInit {
           }
         )
       }
-    }
+    //}
   }
   // CREATE AND UPDATE EVALUACION FORMATIVA
   visibleFive1?: boolean;
@@ -703,13 +703,13 @@ export class CurricularDiseñoComponent implements OnInit {
   }
 
   public actualizarEvaluacionFormativa(): void {
-    if (!this.evaluacionFormativaCurricular?.instrumnetoFormativa || !this.evaluacionFormativaCurricular?.tecnicaFormativa) {
+    // if (!this.evaluacionFormativaCurricular?.instrumnetoFormativa || !this.evaluacionFormativaCurricular?.tecnicaFormativa) {
 
-      this.toastr.warning(
-        'Se encontraron campos vacios, por favor complete el formulario', 'CAMPOS VACIOS'
+    //   this.toastr.warning(
+    //     'Se encontraron campos vacios, por favor complete el formulario', 'CAMPOS VACIOS'
 
-      );
-    } else {
+    //   );
+    // } else {
       if (this.opcionElegidaEvaluacionFormativa == "C") {
         this.evaluacionFormativaCurricular.disenioCurricular = this.disenioCurricular;
         this.evaluacionFormativaCurricular.estadoEvaluacionFormativa = true;
@@ -729,7 +729,7 @@ export class CurricularDiseñoComponent implements OnInit {
           }
         )
       }
-    }
+    //}
   }
 
   // CREATE AND UPDATE EVALUACION Final
@@ -757,13 +757,13 @@ export class CurricularDiseñoComponent implements OnInit {
 
   public actualizarEvaluacionFinal(): void {
 
-    if (!this.evaluacionFinalCurricular?.instrumnetoFormativaFinal || !this.evaluacionFinalCurricular?.tecnicaFormativaFinal) {
+    // if (!this.evaluacionFinalCurricular?.instrumnetoFormativaFinal || !this.evaluacionFinalCurricular?.tecnicaFormativaFinal) {
 
-      this.toastr.warning(
-        'Se encontraron campos vacios, por favor complete el formulario', 'CAMPOS VACIOS'
+    //   this.toastr.warning(
+    //     'Se encontraron campos vacios, por favor complete el formulario', 'CAMPOS VACIOS'
 
-      );
-    } else {
+    //   );
+    // } else {
       if (this.opcionElegidaEvaluacionFinal == "C") {
         this.evaluacionFinalCurricular.disenioCurricular = this.disenioCurricular;
         this.evaluacionFinalCurricular.estadoEvaluacionFinal = true;
@@ -783,7 +783,7 @@ export class CurricularDiseñoComponent implements OnInit {
           }
         )
       }
-    }
+    //}
   }
 
   // FIN

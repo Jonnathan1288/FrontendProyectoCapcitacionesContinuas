@@ -56,7 +56,7 @@
                         <div class="p-inputgroup">
                             <span class="p-float-label">
                                 <input type="text" pInputText id="temaUnidadSilabo" name="temaUnidadSilabo"
-                                    [(ngModel)]="resultadoAprendizajeSilabo.temaUnidadSilabo" required>
+                                    [(ngModel)]="resultadoAprendizajeSilabo.temaUnidadSilabo" >
                                 <label htmlFor="username">Unidades de Competencia
                                     <label style="color: rgb(255, 0, 0); padding-left: 2px"> *</label>
                                 </label>
@@ -68,7 +68,7 @@
                             <span class="p-float-label">
                                 <input type="text" pInputText id="elementosCompetenciaSilabo"
                                     name="elementosCompetenciaSilabo"
-                                    [(ngModel)]="resultadoAprendizajeSilabo.elementosCompetenciaSilabo" required>
+                                    [(ngModel)]="resultadoAprendizajeSilabo.elementosCompetenciaSilabo" >
                                 <label htmlFor="username">Elementos de Competencia
                                     <label style="color: rgb(255, 0, 0); padding-left: 2px"> *</label></label>
                             </span>
@@ -79,7 +79,7 @@
                             <span class="p-float-label">
                                 <input type="text" pInputText id="activadesResultadoAprendizaje"
                                     name="activadesResultadoAprendizaje"
-                                    [(ngModel)]="resultadoAprendizajeSilabo.activadesResultadoAprendizaje" required>
+                                    [(ngModel)]="resultadoAprendizajeSilabo.activadesResultadoAprendizaje" >
                                 <label htmlFor="username">Resultados de Aprendizaje
                                     <label style="color: rgb(255, 0, 0); padding-left: 2px"> *</label>
                                 </label>
@@ -90,7 +90,8 @@
                         <div class="p-inputgroup">
                             <span class="p-float-label">
                                 <input type="text" pInputText id="formaEvidenciar" name="formaEvidenciar"
-                                    [(ngModel)]="resultadoAprendizajeSilabo.formaEvidenciar" required>
+                                    [(ngModel)]="resultadoAprendizajeSilabo.formaEvidenciar" 
+                                    >
                                 <label htmlFor="username">Forma de evidenciar
                                     <label style="color: rgb(255, 0, 0); padding-left: 2px"> *</label>
                                 </label>
@@ -245,8 +246,6 @@
                         </span>
                     </div>
                 </div>
-
-                
                 <div class="col-12 md:col-12 mt-1">
                     <div class="p-inputgroup">
                         <span class="p-float-label">
@@ -258,9 +257,6 @@
                         </span>
                     </div>
                 </div>
-                
-
-
                 <div class="col-12 md:col-12 mt-1">
                     <div class="p-inputgroup">
                         <span class="p-float-label">
@@ -275,8 +271,6 @@
                         </span>
                     </div>
                 </div>
-
-
                 <div class="col-12 md:col-12 mt-1">
                     <div class="p-inputgroup">
                         <span class="p-float-label">
@@ -306,7 +300,6 @@
                         </span>
                     </div>
                 </div>
-                
                 <div class="col-12 md:col-12 mt-1">
                     <div class="p-inputgroup">
                         <span class="p-float-label">
@@ -316,8 +309,6 @@
                         </span>
                     </div>
                 </div>
-
-                
             </div>
             <div class="col-md-12" style="text-align: center; margin: 5px;" *ngIf='validarIdSilabo == false'>
                 <p-button label="Agregar" icon="pi pi-plus" styleClass="p-button-success  mb-2"
@@ -417,19 +408,6 @@
                             </span>
                         </div>
                     </div>
-                    
-                    <div class="col-12 md:col-12 mt-1">
-                        <div class="p-inputgroup">
-                            <span class="p-float-label">
-                                <input type="text" value="Horas de Talleres" pInputText id="Horas de Talleres" name="Horas de Talleres" disabled style="color: #000;">
-                            
-                                <p-inputNumber class="ml-5" mode="decimal" [showButtons]="true" inputId="minmax-buttons"
-                                id="horasClaseContenido" name="horasClaseContenido" [min]="0" [max]="100"
-                                [(ngModel)]="contenidosSilabo.horasTalleres"> </p-inputNumber>
-                            </span>
-                        </div>
-                    </div>
-
                     <div class="col-12 md:col-12 mt-1">
                         <div class="p-inputgroup">
                             <span class="p-float-label">
@@ -467,8 +445,6 @@
                             </span>
                         </div>
                     </div>
-
-                    
                 </div>
                 <div class="col-md-12" style="text-align: center; margin: 5px;">
                     <p-button [label]="opcionDelContenido === 'C'? 'Crear':'Actualizar'" icon="pi pi-check-square"
@@ -599,7 +575,7 @@
                     <div class="p-fluid m-4" *ngIf='validarIdSilabo == false'>
                         <span class="p-float-label">
                             <input type="text" pInputText id="nombre" name="nombre"
-                                [(ngModel)]="materialesConvecionales.descripcionMaterialConvencional" required>
+                                [(ngModel)]="materialesConvecionales.descripcionMaterialConvencional" >
                             <label class="form-label" htmlFor="username">Descripción
                                 <label style="color: rgb(255, 0, 0); padding-left: 2px"> *</label>
                             </label>
@@ -787,7 +763,7 @@
                         (onClick)="generarSilabo()"></p-button>
                 </div>
 
-                <div *ngIf="validarIdSilabo === true" class="col-md-12" style="text-align: center; margin: 5px;">
+                <div  class="col-md-12" style="text-align: center; margin: 5px;">
                     <p-button label="Generar PDF" icon="pi pi-file-pdf" styleClass="p-button-danger  mb-2"
                         (onClick)="getReportSilabo()"></p-button>
                 </div>
