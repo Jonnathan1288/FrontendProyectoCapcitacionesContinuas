@@ -25,6 +25,10 @@ export class FasePracticaService {
   }
 
   public update(FasePractica: FasePractica, idFasePractica: number): Observable<FasePractica> {
-    return this.http.put<FasePractica>(environment.apiuri + 'fFasePractica/update/' + idFasePractica, FasePractica);
+    return this.http.put<FasePractica>(environment.apiuri + '/fasePractica/update/' + idFasePractica, FasePractica);
+  }
+
+  public findAllByDisenioCurricularId(idDisenioCurricular: number): Observable<FasePractica[]> {
+    return this.http.get<FasePractica[]>(environment.apiuri + `/fasePractica/findAllByDisenioCurricularId/${idDisenioCurricular}`);
   }
 }

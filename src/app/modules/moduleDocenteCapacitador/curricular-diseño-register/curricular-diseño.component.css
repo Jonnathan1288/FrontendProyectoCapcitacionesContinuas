@@ -29,3 +29,117 @@ h4 {
 .no-resize {
     resize: none;
 }
+
+
+/* tabla Entorno de Aprendizaje */
+
+.container {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+}
+h2 {
+    text-align: center;
+}
+table {
+  
+    font-family: Arial, sans-serif;
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    
+
+}
+
+th{
+
+  background-color: #EEE;
+  border-bottom: 1px solid #DDD;
+  border-right: 1px solid #DDD;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+
+}
+table, th, td {
+    border: 1.5px solid #969393;
+}
+th, td {
+    padding: 6px;
+    text-align: left;
+}
+textarea {
+    width: 100%;
+    height: 100px; /* Aumenta la altura de las áreas de texto */
+}
+
+
+
+td.instalaciones {
+  width: 10%; /* Puedes ajustar el valor según tus necesidades */
+}
+
+/* Ancho para la columna "Recursos" */
+td.recursos {
+  width: 21%; /* Puedes ajustar el valor según tus necesidades */
+}
+
+
+
+
+
+
+
+
+/* textarea */
+.form {
+    margin-top: 20px;
+  }
+  
+  .select textarea{
+    width: 98%;
+    background: white;
+    border: none;
+    padding: 15px 20px;
+    border-radius: 20px;
+    margin-top: 15px;
+    box-shadow: #317a9c 0px 10px 10px -5px;
+    border-inline: 6px solid transparent;
+  }
+  
+  .select textarea ::-moz-placeholder {
+    color: rgb(170, 170, 170);
+  }
+  
+  .select textarea ::placeholder {
+    color: rgb(170, 170, 170);
+  }
+  
+  .select textarea:focus {
+    outline: none;
+    border-inline: 3px solid #12B1D1;
+  }
+  
+
+  .botones{
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  
+  .boton{
+    display: block;
+    background-color: #168d48;
+    border-radius: 20px;
+    padding: 10px;
+    color: white;
+    text-decoration: none;
+    margin: 10px 0;
+  }
+  
+  .boton:hover{
+    background-color: #09be55;
+    text-decoration: none;
+    color: white;
+  }
+ 
+
