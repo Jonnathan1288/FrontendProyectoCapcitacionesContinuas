@@ -423,7 +423,7 @@ export class CourseRegisterComponent {
     let data = event.target.files[0];
 
     if (data.size >= 1000000) {
-      this.toastrService.error('', 'ARCHIVO MUY GRANDE.', { timeOut: 2000 });
+      this.toastrService.error('', 'LA FOTO ES MUY GRANDE.', { timeOut: 2000 });
       return;
     }
     this.selectedFile = data;

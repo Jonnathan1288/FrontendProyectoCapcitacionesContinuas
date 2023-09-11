@@ -30,22 +30,17 @@
                
               </div>
               <div class="personal-image">
-                <label class="label" style="border: black">
-                  <input type="file" accept="image/jpeg, image/jpg, image/png" (change)="subirFoto($event)" />
-                  <figure class="personal-figure">
-                    <img *ngIf="classUsuario.fotoPerfil" [src]="
-                          classUsuario.fotoPerfil
-                            ? 'data:image/jpeg;base64,' + classUsuario.fotoPerfil
-                            : '../../../../assets/img/camer.png'
-                        " class="personal-avatar" alt="logoFundacion" />
-                    <img style="padding: 20px" *ngIf="!classUsuario.fotoPerfil" src="./assets/img/ico.jpeg"
-                      class="personal-avatar" alt="Logo Fundación" />
-                    <figcaption class="personal-figcaption">
-                      <img src="./assets/img/camer.png" />
-                    </figcaption>
-                  </figure>
+                <label class="label" style="border: black;">
+                    <input type="file" accept="image/jpeg, image/jpg, image/png"
+                        (change)="onFileSelected($event)" />
+                    <figure class="personal-figure required-field">
+                        <img [src]="avatarURL ? avatarURL: classUsuario.fotoPerfil ? 'http://localhost:8080/api/uploadUri/'+classUsuario.fotoPerfil+'/images_user' : 'https://banner2.cleanpng.com/20180219/eqe/kisspng-video-camera-ico-icon-camera-5a8a776b7b36e7.4789365515190239795047.jpg'" class="personal-avatar" alt="img">
+                        <figcaption class="personal-figcaption">
+                            <img src="https://banner2.cleanpng.com/20180219/eqe/kisspng-video-camera-ico-icon-camera-5a8a776b7b36e7.4789365515190239795047.jpg" />
+                        </figcaption>
+                    </figure>
                 </label>
-              </div>
+            </div>
             </div>
           </div>
          
