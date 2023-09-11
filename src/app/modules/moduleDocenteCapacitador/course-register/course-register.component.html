@@ -11,8 +11,8 @@
                     <div>
                         <div class="flex align-items-center flex-wrap">
                             <div class="mr-5 flex align-items-center mt-3">
-                                <img [src]="'data:image/jpeg;base64,' + cursos.fotoCurso" alt="" width="80px"
-                                    height="80px" class="rounded-circle">
+                                <img [src]="'http://localhost:8080/api/uploadUri/' +curso.fotoCurso+ '/images_course'" 
+                                alt="" width="80px" height="80px" class="rounded-circle">
                             </div>
                             <div class="mr-5 flex align-items-center mt-3">
                                 <div class="text-2xl"><strong>{{cursos.nombreCurso}}</strong></div>
@@ -36,29 +36,18 @@
                     <h2>Informe para la creación del curso</h2>
                 </div>
 
-          
-
-                
-                
-                <div class="personal-image custom-card select">
-                    <label class="label " style="border: black;">
-                        <span style="display: block; text-align: center; margin-bottom: 10px;">Selecciona la foto del curso:</span>
-                        <input type="file" accept="image/jpeg, image/jpg, image/png" (change)="subirFoto($event)" />
-                        <figure class="personal-figure  ">
-                            <!-- <img class="personal-avatar"  *ngIf="filem" [src]="file" alt="img-avatar"> -->
-                            <img *ngIf="curso.fotoCurso"
-                                [src]="curso.fotoCurso ? 'data:image/jpeg;base64,' + curso.fotoCurso : '../../../../assets/img/camer.png'"
-                                class="personal-avatar " alt="img" />
-                            <img style="padding: 20px;" *ngIf="!curso.fotoCurso" src="./assets/img/subir.png"
-                                class="personal-avatar " alt="Logo Fundación" />
+                <div class="personal-image">
+                    <label class="label" style="border: black;">
+                        <input type="file" accept="image/jpeg, image/jpg, image/png"
+                            (change)="onFileSelected($event)" />
+                        <figure class="personal-figure required-field">
+                            <img [src]="avatarURL ? avatarURL: curso.fotoCurso ? 'http://localhost:8080/api/uploadUri/'+curso.fotoCurso+'/images_course' : 'https://banner2.cleanpng.com/20180219/eqe/kisspng-video-camera-ico-icon-camera-5a8a776b7b36e7.4789365515190239795047.jpg'" class="personal-avatar" alt="img">
                             <figcaption class="personal-figcaption">
-                                <img src="./assets/img/subir.png" />
+                                <img src="https://banner2.cleanpng.com/20180219/eqe/kisspng-video-camera-ico-icon-camera-5a8a776b7b36e7.4789365515190239795047.jpg" />
                             </figcaption>
                         </figure>
                     </label>
-
-              
-                </div>
+                </div>
   
                
 
