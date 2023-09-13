@@ -10,7 +10,6 @@ import { PersonaService } from 'src/app/service/persona.service';
 import { RolService } from 'src/app/service/rol.service';
 import { UsuarioService } from 'src/app/service/usuario.service';
 import { ToastrService } from 'ngx-toastr';
-import { UploadService } from 'src/app/service/upload.service';
 // import Swal from 'sweetalert2';
 
 @Component({
@@ -35,8 +34,7 @@ export class registrarPersonaComponent implements OnInit {
     private rolService: RolService,
     private usuarioService: UsuarioService,
     private estudianteService: EstudianteFenixService,
-    private toastrService: ToastrService,
-    private uploadService: UploadService
+    private toastrService: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -51,10 +49,6 @@ export class registrarPersonaComponent implements OnInit {
     this.classUsuario = new Usuario();
     this.nivelComplejidad = '';
     this.visibleEstudinateIsta = true;
-    this.classUsuario = {
-      // Otras propiedades del curso
-      fotoPerfil: '', // Inicializar fotoCursoPreview como null
-    }
   }
 
   //BANDERA
@@ -189,8 +183,8 @@ export class registrarPersonaComponent implements OnInit {
                   });
               } else {
                 this.toastrService.error(
-                  'La identificación ya esta en el sistema.',
-                  'Identificasción existente'
+                  'La identificasión ya esta en el sistema.',
+                  'Identificasión existente'
                 );
               }
             });
@@ -203,7 +197,7 @@ export class registrarPersonaComponent implements OnInit {
         } else {
           this.toastrService.error(
             'La seguridad de la contraseña no es aceptado por el sistema.',
-            'PASSWORD DEBIL.'
+            'PASSWORD DEVIL.'
           );
         }
       }
@@ -213,43 +207,7 @@ export class registrarPersonaComponent implements OnInit {
     }
   }
 
-
-   //PREVISUALIZACION LA IMAGEN SELECCIONADA
-   public selectedFile!: File;
-   public avatarURL: string = '';
-   public onFileSelected(event: any) {
-     console.log('File selected:', event);
- 
-     let data = event.target.files[0];
- 
-     if (data.size >= 262144) {
-       this.toastrService.error('', 'LA FOTO ES MUY GRANDE.', { timeOut: 2000 });
-       return;
-     }
-     this.selectedFile = data;
-     const imageURL = URL.createObjectURL(this.selectedFile);
-     this.avatarURL = imageURL;
-     console.log('Selected file:', this.selectedFile,this.avatarURL);
-   }
-
-    //GUARDAR IMAGEN EN EL BACK
-  public async uploadImagen() {
-    try {
-      const result = await this.uploadService
-        .upload(this.selectedFile, 'images_user')
-        .toPromise();
-      return result.key;
-    } catch (error) {
-      console.error('new income');
-    }
-  }
-   
-
-  public async validarDatosPersona() {
-    if(this.selectedFile){
-      const key = await this.uploadImagen();
-    this.classUsuario.fotoPerfil = key;
-    }
+  public validarDatosPersona() {
     // public savePersona(){
     if (
       !this.classPersona?.identificacion ||
@@ -297,11 +255,11 @@ export class registrarPersonaComponent implements OnInit {
       } else {
         this.toastrService.error(
           'La seguridad de la contraseña no es aceptado por el sistema.',
-          'PASSWORD DEBIL.'
+          'PASSWORD DEVIL.'
         );
       }
     }
-
+    // }
   }
 
   private successToast: any; // Variable para almacenar la referencia al toastr
@@ -310,7 +268,6 @@ export class registrarPersonaComponent implements OnInit {
 
   public comprobaridentificacion() {
     this.showSuccessToast(); // Mostrar el toastr de éxito
-
 
     this.personaService
       .getPersonaByIdentificasion(this.classPersona?.identificacion!)
@@ -325,7 +282,38 @@ export class registrarPersonaComponent implements OnInit {
                   if(data2 !== true){
                     // this.clearSuccessToast(); // Ocultar el toastr de éxito
                     this.saveDataPersonUser();
-                  
+                    // if(this.classPersona?.correo !== this.estadoEmailVerfication){
+                    
+                      // this.personaService.verifiqueValidateEmail(this.classPersona?.correo!).subscribe((data3)=>{
+                      //   if(data3.status === 'valid'){
+                      //     this.estadoEmailVerfication = '';
+                      //     this.saveDataPersonUser();
+                      //   }
+                      //   if(data3.status === 'invalid'){
+                      //     this.clearSuccessToast(); // Ocultar el toastr de éxito
+                      //     this.toastrService.error('Por favor ingresa un correo electrónico válido.', 'Correo inválido.', {
+                      //       timeOut: 1500
+                      //     });
+                      //     this.estadoEmailVerfication = this.classPersona?.correo!
+                      //     return;
+                      //   }
+
+                      // },(err)=>{
+                      //   this.clearSuccessToast(); // Ocultar el toastr de éxito
+                      //   this.toastrService.warning('Fin del plan..', 'PLAN AGOTADO', {
+                      //     timeOut: 500
+                      //   });
+                      //   //en el caso de que el plan de verificasion se agote.. se manda de una ejecutar el metodo de crear
+                      //   this.saveDataPersonUser();
+                      // })
+
+                    // }else{
+                    //   this.clearSuccessToast(); // Ocultar el toastr de éxito
+                    //   this.toastrService.error('Por favor ingresa un correo electrónico válido..', 'Correo inválido.', {
+                    //     timeOut: 1500
+                    //   });
+                    //   return;
+                    // }
                       
 
                   }else{
@@ -389,7 +377,7 @@ export class registrarPersonaComponent implements OnInit {
   }
 
   private showSuccessToast() {
-    this.successToast = this.toastrService.success  ('Esperemos un momento mientras verificamos la información.', 'Validando datos', {
+    this.successToast = this.toastrService.success  ('Esperenos un momento mientras verificamos la información.', 'Validando datos', {
       timeOut: 30000, // Establecer timeOut a 0 para que el toastr no se cierre automáticamente
       progressBar: true,
       progressAnimation: 'increasing',
@@ -400,9 +388,37 @@ export class registrarPersonaComponent implements OnInit {
     this.toastrService.clear(this.successToast.toastId); // Oculta el toastr utilizando el ID de referencia
   }
 
- 
+  //Almacenar en el objeto
+  async subirFoto(event: any) {
+    const file = event.target.files[0];
+    const fileSize = file.size; // tamaño en bytes
+    if (fileSize > 262144) {
+      this.toastrService.error('La foto es muy pesada.', 'FOTO PESADA.');
+      // alert('La foto es muy pesada');
+      event.target.value = null;
+    } else {
+      try {
+        this.classUsuario.fotoPerfil = await this.convertToBase64(file);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  }
 
-  
+  //Conversion de la imagen en base 64
+  async convertToBase64(file: File): Promise<string> {
+    const reader = new FileReader();
+    return new Promise<string>((resolve, reject) => {
+      reader.onload = () => {
+        const result = btoa(reader.result as string);
+        resolve(result);
+      };
+      reader.onerror = () => {
+        reject(reader.error);
+      };
+      reader.readAsBinaryString(file);
+    });
+  }
 
   //LOCATION RELOAD
   reloadPage() {
@@ -435,3 +451,4 @@ export class registrarPersonaComponent implements OnInit {
     }
   }
 }
+

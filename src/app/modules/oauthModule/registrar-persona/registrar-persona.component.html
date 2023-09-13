@@ -30,23 +30,27 @@
                
               </div>
               <div class="personal-image">
-                <label class="label" style="border: black;">
-                    <input type="file" accept="image/jpeg, image/jpg, image/png"
-                        (change)="onFileSelected($event)" />
-                    <figure class="personal-figure required-field">
-                        <img [src]="avatarURL ? avatarURL: classUsuario.fotoPerfil ? 'http://localhost:8080/api/uploadUri/'+classUsuario.fotoPerfil+'/images_user' : 'https://banner2.cleanpng.com/20180219/eqe/kisspng-video-camera-ico-icon-camera-5a8a776b7b36e7.4789365515190239795047.jpg'" class="personal-avatar" alt="img">
-                        <figcaption class="personal-figcaption">
-                            <img src="https://banner2.cleanpng.com/20180219/eqe/kisspng-video-camera-ico-icon-camera-5a8a776b7b36e7.4789365515190239795047.jpg" />
-                        </figcaption>
-                    </figure>
+                <label class="label" style="border: black">
+                  <input type="file" accept="image/jpeg, image/jpg, image/png" (change)="subirFoto($event)" />
+                  <figure class="personal-figure">
+                    <img *ngIf="classUsuario.fotoPerfil" [src]="
+                          classUsuario.fotoPerfil
+                            ? 'data:image/jpeg;base64,' + classUsuario.fotoPerfil
+                            : '../../../../assets/img/camer.png'
+                        " class="personal-avatar" alt="logoFundacion" />
+                    <img style="padding: 20px" *ngIf="!classUsuario.fotoPerfil" src="./assets/img/ico.jpeg"
+                      class="personal-avatar" alt="Logo Fundación" />
+                    <figcaption class="personal-figcaption">
+                      <img src="./assets/img/camer.png" />
+                    </figcaption>
+                  </figure>
                 </label>
-            </div>
+              </div>
             </div>
           </div>
          
 
           <!-- /PRIMEROS TRES ELEMENTOS -->
-
 
 
 
@@ -84,7 +88,6 @@
               </div>
             </div>
 
-
             <div class="grid p-fluid m-2">
               <div class="col-12 md:col-4 mt-1">
                 <div class="p-inputgroup">
@@ -118,7 +121,6 @@
               </div>
             </div>
 
-
             <div class="grid p-fluid m-2">
               <div class="col-12 md:col-4 mt-1">
                 <div class="p-inputgroup">
@@ -142,13 +144,11 @@
 
               <div class="col-12 md:col-4 mt-1">
 
-
                 <div class="p-inputgroup">
                   <p-calendar inputId="edad" class="ng-dirty" [showIcon]="true" placeholder="Fecha Nacimiento"
                     id="fechaNacimiento" name="fechaNacimiento" class="w-full mb-3"
                     [(ngModel)]="classPersona.fechaNacimiento" ></p-calendar>
                 </div>
-
 
               </div>
             </div>
@@ -254,7 +254,6 @@
             </div>
           </div>
 
-
           <div class="surface-section px-4 py-2 md:px-6 lg:px-2  surface-card p-4 shadow-4 border-round w-full mt-3 mb-4">
             <h4><strong>Credenciales de acceso</strong></h4>
             <div class="grid p-fluid m-2">
@@ -289,7 +288,6 @@
           <!-- </div> -->
         </form>
 
-
       </div>
 
     </div>
@@ -300,9 +298,7 @@
 
 
 
-
 <!-- FIN NUEVO DISEÑO -->
-
 
 
 
@@ -328,7 +324,6 @@
 
   <div class="cont" *ngIf="!estudianteISTAFind">
 
-
     <div class="center-image">
       <img src="../../../../assets/img/istap.png" alt="">
     </div>
@@ -342,7 +337,6 @@
       <div class="col-12 md:col-7 mt-1">
         <div class="p-inputgroup">
           <p><strong>NOMBRES:</strong> {{classEstudianteFenix.nombre1}} {{classEstudianteFenix.nombre2}}</p>
-
 
         </div>
       </div>
@@ -408,7 +402,6 @@
     </form>
     <!-- </p-card> -->
   </p-card>
-
 
 
 

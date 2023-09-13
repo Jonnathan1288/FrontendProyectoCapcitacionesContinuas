@@ -41,9 +41,10 @@
                         <input type="file" accept="image/jpeg, image/jpg, image/png"
                             (change)="onFileSelected($event)" />
                         <figure class="personal-figure required-field">
-                            <img [src]="avatarURL ? avatarURL: curso.fotoCurso ? 'http://localhost:8080/api/uploadUri/'+curso.fotoCurso+'/images_course' : 'https://banner2.cleanpng.com/20180219/eqe/kisspng-video-camera-ico-icon-camera-5a8a776b7b36e7.4789365515190239795047.jpg'" class="personal-avatar" alt="img">
+                            <img [src]="avatarURL ? avatarURL: curso.fotoCurso ? 'http://localhost:8080/api/uploadUri/'+curso.fotoCurso+'/images_course'  : '../../../../assets/img/subir.png'
+                            " class="personal-avatar" alt="img" />
                             <figcaption class="personal-figcaption">
-                                <img src="https://banner2.cleanpng.com/20180219/eqe/kisspng-video-camera-ico-icon-camera-5a8a776b7b36e7.4789365515190239795047.jpg" />
+                                <img src="./assets/img/subir.png" />
                             </figcaption>
                         </figure>
                     </label>
