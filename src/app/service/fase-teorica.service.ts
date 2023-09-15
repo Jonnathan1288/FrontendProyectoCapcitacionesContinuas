@@ -27,4 +27,9 @@ export class FaseTeoricaService {
   public update(faseTeorica: FaseTeorica, idFaseTeorica: number): Observable<FaseTeorica> {
     return this.http.put<FaseTeorica>(environment.apiuri + '/faseTeorica/update/' + idFaseTeorica, faseTeorica);
   }
+
+  public findAllByDisenioCurricularId(idDisenioCurricular: number): Observable<FaseTeorica[]> {
+    return this.http.get<FaseTeorica[]>(environment.apiuri + `/faseTeorica/findAllByDisenioCurricularId/${idDisenioCurricular}`);
+  }
+
 }

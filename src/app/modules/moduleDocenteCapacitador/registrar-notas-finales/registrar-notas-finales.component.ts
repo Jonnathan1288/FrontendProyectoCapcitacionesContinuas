@@ -169,7 +169,9 @@ export class RegistrarNotasFinalesComponent implements OnInit {
         notas.partipantesMatriculados = participante;
         notas.examenFinal = 0;
         notas.observacion = '';
-        notas.parcial = 0;
+        notas.informe1 = 0;
+        notas.informe2 = 0;
+        notas.informe3 = 0;
         this.notasService.saveNotas(notas).subscribe((data) => {
           // alert('se registró el participante ');
           this.obtenerParticipantesFinales();
@@ -206,9 +208,9 @@ export class RegistrarNotasFinalesComponent implements OnInit {
   }
 
   public guardarNotaPorEstudiante(): void {
-    if (!this.notas.parcial || !this.notas.examenFinal) {
+    if (!this.notas.informe1 ||!this.notas.informe2 ||!this.notas.informe3 || !this.notas.examenFinal) {
       this.toastrService.error(
-        'Debe ingresar la nota examén final y además nota parcial.',
+        'Debe ingresar todas las notas: Informe 1, Informe 2, Informe 3 y Examen Final.',
         'NOTAS VACIAS.',
         {
           timeOut: 2000,
@@ -241,19 +243,27 @@ export class RegistrarNotasFinalesComponent implements OnInit {
     new ParticipantesMatriculados();
   idParticpanteNota!: number;
   public vaidarNotasEstudiantesFinales(): void {
-    let parcialCeroOVacio = false;
+    let informe1CeroVacio = false;
+    let informe2CeroVacio = false;
+    let informe3CeroVacio = false;
     let examenFinalCeroOVacio = false;
 
     this.listNotas.forEach((nota) => {
-      if (nota.parcial === 0 || nota.parcial === undefined) {
-        parcialCeroOVacio = true;
+      if (nota.informe1 === 0 || nota.informe1 === undefined) {
+        informe1CeroVacio = true;
+      }
+      if (nota.informe2 === 0 || nota.informe2 === undefined) {
+        informe2CeroVacio = true;
+      }
+      if (nota.informe3 === 0 || nota.informe3 === undefined) {
+        informe3CeroVacio = true;
       }
       if (nota.examenFinal === 0 || nota.examenFinal === undefined) {
         examenFinalCeroOVacio = true;
       }
     });
 
-    if (parcialCeroOVacio || examenFinalCeroOVacio) {
+    if (informe1CeroVacio || informe2CeroVacio || informe3CeroVacio || examenFinalCeroOVacio ) {
       this.toastrService.error(
         'Debe ingresar todas las notas de los estudiantes, y no deben ser cero.',
         'NOTAS INCOMPLETAS'
@@ -262,18 +272,21 @@ export class RegistrarNotasFinalesComponent implements OnInit {
     }
     console.log('CLICk');
     for (let participante of this.listNotas) {
-      const parcial = participante.parcial!;
+
+      const info1 = participante.informe1!;
+      const info2 = participante.informe2!;
+      const info3 = participante.informe3!;
       const examen = participante.examenFinal!;
       this.idParticpanteNota =
         participante.partipantesMatriculados!.idParticipanteMatriculado!;
-      const notaFinal = parcial * 0.4 + examen * 0.6;
+      const notaFinal = (info1 / 30) * 30 + (info2 / 30)* 30 + (info3/15)* 15 + (examen/25) * 25;
       console.log(' Esta es su nota final -> ' + notaFinal);
 
       this.participantesMatriculadosService
         .getParticipantesMatriculadosById(this.idParticpanteNota)
         .subscribe((data) => {
           this.participantesMatriculado = data;
-          if (notaFinal >= 7) {
+          if (notaFinal >= 70) {
             console.log('APROBADO');
             this.participantesMatriculado.estadoParticipanteAprobacion = 'A';
           } else {
@@ -300,8 +313,8 @@ export class RegistrarNotasFinalesComponent implements OnInit {
     );
   }
 
-  public validarNotasFinalesView(nota1: number, notafinal: number) {
-    return nota1 * 0.4 + notafinal * 0.6;
+  public validarNotasFinalesView(nota1: number,nota2: number, nota3: number, notafinal: number) {
+    return (nota1/30) * 30 + (nota2/30) * 30 +(nota3/15) * 15 + (notafinal/25) * 25;
   }
 
   public generarReporteAsitenciaEvaluacion(): void {
@@ -498,18 +511,29 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 
   lastValidParcial: string = ''; // Variable para almacenar el último valor válido del campo
 
-  public validarParcialAndFinalNota(event: any) {
-    const valor = event.target.value;
-
-    if (valor === '0') {
-      event.target.value = ''; // Si el valor ingresado es "0", se elimina el contenido del campo
-      return;
-    }
-
-    if (valor && (isNaN(valor) || valor < 0 || valor > 10)) {
-      event.target.value = this.lastValidParcial;
-    } else {
-      this.lastValidParcial = valor;
+  validarParcialAndFinalNota(event: any) {
+    const valor = parseInt(event.target.value, 10);
+    
+    if (event.target.id === 'informe1' ) {
+      if (valor < 1 || valor > 30) {
+        this.toastrService.error('La nota del INFORME 1 debe estar en el rango de 1 a 30');
+        event.target.value = '';
+      }
+    } else if (event.target.id === 'informe2') {
+      if (valor < 1 || valor > 30) {
+        this.toastrService.error('La nota  del INFORME 2 debe estar en el rango de 1 a 30');
+        event.target.value = '';
+      } 
+     }else if (event.target.id === 'informe3') {
+      if (valor < 1 || valor > 15) {
+        this.toastrService.error('La nota  del INFORME 3 debe estar en el rango de 1 a 15');
+        event.target.value = '';
+      }
+    } else if (event.target.id === 'examenFinal') {
+      if (valor < 1 || valor > 25) {
+        this.toastrService.error('La nota del EXAMEN debe estar en el rango de 1 a 25');
+        event.target.value = '';
+      }
     }
   }
 
@@ -517,8 +541,12 @@ export class RegistrarNotasFinalesComponent implements OnInit {
     const tecla = event.keyCode || event.which;
     const valor = event.target.value;
   
-    if (valor === '0' && (tecla === 48 || tecla === 96)) {
-      event.preventDefault(); // Evita la entrada de "0" si ya se ingresó en el campo
+    // Verificar si el valor contiene solo uno o dos ceros
+    if (/^0{1,2}$/.test(valor) && (tecla === 48 || tecla === 96)) {
+      this.toastrService.warning('No se permiten valores de este tipo.');
+      event.preventDefault(); // Evitar la entrada de uno o dos ceros
     }
   }
+  
+
 }

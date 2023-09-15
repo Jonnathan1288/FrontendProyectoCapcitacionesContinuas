@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Capacitador } from 'src/app/models/capacitador';
 import { Persona } from 'src/app/models/persona';
@@ -9,6 +9,7 @@ import { PersonaService } from 'src/app/service/persona.service';
 import { RolService } from 'src/app/service/rol.service';
 import { UsuarioService } from 'src/app/service/usuario.service';
 import { ToastrService } from 'ngx-toastr';
+import { LoadScript } from 'src/app/scripts/load-script';
 
 @Component({
   selector: 'app-edit-data-user',
@@ -35,8 +36,13 @@ export class EditDataUserComponent implements OnInit {
     private rolService: RolService,
     private usuarioService: UsuarioService,
     private capacitadorService: CapacitadorService,
-    private toastrService: ToastrService
-  ) {}
+    private toastrService: ToastrService,
+    private scriptC: LoadScript
+  ) {
+
+    scriptC.Cargar(['ventanas']);
+
+  }
 
   public persona = new Persona();
 
@@ -49,6 +55,8 @@ export class EditDataUserComponent implements OnInit {
       this.toastrService.info('', 'COMPLETE SU PERFIL DE USUARIO');
     }
   }
+
+
 
   public classCipyCapacitador = new Capacitador();
   public obtenerDatosUsusario(idUsusario: number) {
@@ -100,6 +108,97 @@ export class EditDataUserComponent implements OnInit {
     this.classPersona = { ...this.persona };
   }
 
+  public editarUsuario() {
+    if (this.usuLoginRol === 'DocenteCapacitador') {
+      if (
+        !this.classUsuario.username ||
+        !this.classUsuario.password
+      ) {
+        this.toastrService.warning(
+          'Uno o más campos vacíos',
+          'Por favor complete todos los campos'
+        );
+        return;
+      }
+    } else {
+      if (
+        !this.classUsuario.username ||
+        !this.classUsuario.password
+      ) {
+        this.toastrService.warning(
+          'Uno o más campos vacíos',
+          'Por favor complete todos los campos'
+        );
+        return;
+      }
+    }
+    this.personaService
+      .updatePersona(this.classPersona.idPersona!, this.classPersona)
+      .subscribe(
+        (data) => {
+          if (data != null) {
+            this.persona = { ...this.classPersona };
+
+            //this.toastrService.success('Actualización exitosa', '¡Bien hecho!');
+
+            this.usuarioService
+              .updateUsuario(this.classUsuario.idUsuario!, this.classUsuario)
+              .subscribe((data1) => {
+                if (data1 != null) {
+                  this.toastrService.success(
+                    'Actualización exitosa de los datos',
+                    '¡Bien hecho!'
+                  );
+
+                  this.persona = { ...this.classPersona };
+
+                  if (this.usuLoginRol === 'DocenteCapacitador') {
+                    this.capacitadorService
+                      .updateCapacitador(
+                        this.classCapacitador.idCapacitador!,
+                        this.classCapacitador
+                      )
+                      .subscribe((data2) => {
+                        if (data2 != null) {
+                          this.persona = { ...this.classPersona };
+
+                          this.toastrService.success(
+                            'Actualización exitosa de Docente Capacitador',
+                            '¡Bien hecho!'
+                          );
+                        }
+                      });
+                  } else {
+                    setTimeout(() => {
+                      localStorage.removeItem('emp')
+                      localStorage.setItem('emp', String('CHECK'));
+                      location.reload();
+                    }, 1000);
+                    return;
+                  }
+
+                  setTimeout(() => {
+                    localStorage.removeItem('emp')
+                    localStorage.setItem('emp', String('CHECK'));
+                    location.reload();
+                  }, 1000);
+                }
+              });
+
+            //Implementacion de la carga
+          }
+        },
+        (error) => {
+          console.error(error);
+          this.toastrService.error(
+            'Error al actualizar los datos',
+            'Por favor intenta más tarde'
+          );
+        }
+      );
+  }
+
+
   public editPersona() {
     if (this.usuLoginRol === 'DocenteCapacitador') {
       if (
@@ -117,9 +216,7 @@ export class EditDataUserComponent implements OnInit {
         !this.classPersona.etnia ||
         !this.classPersona.nivelInstruccion ||
         !this.classCapacitador.tituloCapacitador ||
-        !this.classCapacitador.tipoAbreviaturaTitulo ||
-        !this.classUsuario.username ||
-        !this.classUsuario.password
+        !this.classCapacitador.tipoAbreviaturaTitulo
       ) {
         this.toastrService.warning(
           'Uno o más campos vacíos',
@@ -141,9 +238,7 @@ export class EditDataUserComponent implements OnInit {
         !this.classPersona.correo ||
         !this.classPersona.genero ||
         !this.classPersona.etnia ||
-        !this.classPersona.nivelInstruccion ||
-        !this.classUsuario.username ||
-        !this.classUsuario.password
+        !this.classPersona.nivelInstruccion
       ) {
         this.toastrService.warning(
           'Uno o más campos vacíos',
@@ -255,4 +350,5 @@ export class EditDataUserComponent implements OnInit {
       reader.readAsBinaryString(file);
     });
   }
+
 }

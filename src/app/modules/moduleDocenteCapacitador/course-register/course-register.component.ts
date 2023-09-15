@@ -30,6 +30,7 @@ import { ProvinciaService } from 'src/app/service/provincia.service';
 import { TipoCursoService } from 'src/app/service/tipo-curso.service';
 import { NgZone } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+import { UploadService } from 'src/app/service/upload.service';
 
 @Component({
   selector: 'app-course-register',
@@ -93,7 +94,8 @@ export class CourseRegisterComponent {
     private cantonService: CantonService,
     private provinciaService: ProvinciaService,
     private ngZone: NgZone,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private uploadService: UploadService
   ) {}
 
   ngOnInit() {
@@ -117,6 +119,10 @@ export class CourseRegisterComponent {
     this.listArea();
     this.allList();
     this.traerTodosLosCursos();
+    this.curso = {
+      // Otras propiedades del curso
+      fotoCurso: '', // Inicializar fotoCursoPreview como null
+    };
   }
 
   //----------------------------------------------------------------------------------------------START
@@ -407,13 +413,54 @@ export class CourseRegisterComponent {
     console.log(nivelCurso);
   }
 
+
+  //PREVISUALIZACION LA IMAGEN SELECCIONADA
+  public selectedFile!: File;
+  public avatarURL: string = '';
+  public onFileSelected(event: any) {
+    console.log('File selected:', event);
+
+    let data = event.target.files[0];
+
+    if (data.size >= 1000000) {
+      this.toastrService.error('', 'LA FOTO ES MUY GRANDE.', { timeOut: 2000 });
+      return;
+    }
+    this.selectedFile = data;
+    const imageURL = URL.createObjectURL(this.selectedFile);
+    this.avatarURL = imageURL;
+    console.log('Selected file:', this.selectedFile,this.avatarURL);
+  }
+
+  //GUARDAR IMAGEN EN EL BACK
+  public async uploadImagen() {
+    try {
+      const result = await this.uploadService
+        .upload(this.selectedFile, 'images_course')
+        .toPromise();
+      return result.key;
+    } catch (error) {
+      console.error('new income');
+    }
+  }
+
   //Create horario and curso
 
   public fechaInit?: Date;
   public fechaFin?: Date;
 
-  public validarCursosCpacitacionContinua() {
-    if (!this.curso?.nombreCurso || !this.curso?.fotoCurso || !this.curso?.programas?.nombrePrograma) {
+  public async validarCursosCpacitacionContinua() {
+
+    if(this.selectedFile){
+      const key = await this.uploadImagen();
+    this.curso.fotoCurso = key;
+    }
+    
+    if (
+      !this.curso?.nombreCurso ||
+      !this.curso?.fotoCurso ||
+      !this.curso?.programas?.nombrePrograma
+    ) {
       this.toastrService.error(
         'Verifique los campos obligatorios.',
         'CAMPOS VACÍOS .',
@@ -431,7 +478,6 @@ export class CourseRegisterComponent {
             curso.nombreCurso === this.curso.nombreCurso &&
             curso.idCurso !== this.curso.idCurso
         );
-
         if (nombreCursoExistente) {
           this.toastrService.error(
             'El nombre del curso ya existe en otros registros.',
@@ -705,45 +751,6 @@ export class CourseRegisterComponent {
         this.listProvincias = data;
         console.log({ prov: this.listProvincias });
       }
-    });
-  }
-
-  // Metodos para cargar la fotofilte
-  // foto
-  async subirFoto(event: any) {
-    const file = event.target.files[0];
-    const fileSize = file.size; // tamaño en bytes
-    const maxSizeInBytes = 300 * 1024;
-    if (fileSize > maxSizeInBytes) {
-      // mensaje de error al usuario
-      alert('La foto es muy pesada');
-      event.target.value = null;
-
-      window.open(
-        'https://www.iloveimg.com/es/comprimir-imagen/comprimir-jpg',
-        '_blank'
-      );
-    } else {
-      try {
-        this.curso.fotoCurso = await this.convertToBase64(file);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-  }
-
-  //convesion a base 64
-  async convertToBase64(file: File): Promise<string> {
-    const reader = new FileReader();
-    return new Promise<string>((resolve, reject) => {
-      reader.onload = () => {
-        const result = btoa(reader.result as string);
-        resolve(result);
-      };
-      reader.onerror = () => {
-        reject(reader.error);
-      };
-      reader.readAsBinaryString(file);
     });
   }
 

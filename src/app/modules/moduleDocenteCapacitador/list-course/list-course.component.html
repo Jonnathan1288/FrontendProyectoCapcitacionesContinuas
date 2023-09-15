@@ -86,8 +86,9 @@
                 <td>{{data.duracionCurso}} horas/s </td>
                 <td>{{data.fechaInicioCurso}}</td>
                 <td>{{data.fechaFinalizacionCurso}}</td>
-                <td><img [src]="data.fotoCurso ? 'data:image/jpeg;base64,' + data.fotoCurso : '../../../../assets/img/camer.png'"
-                        width="100" class="shadow-4" /></td>
+                <td><img [src]="'http://localhost:8080/api/uploadUri/'+data.fotoCurso+'/images_course'"
+                    width="100" class="shadow-4" /></td>
+
                 <td style="text-align: center;">
 
                     <button [disabled]="data.estadoAprovacionCurso != 'A'" pButton pRipple icon="pi pi-book"
@@ -162,7 +163,7 @@
                     <p><strong>Número de Cupos:</strong> {{cursoViewPublished!.numeroCuposCurso }}</p>
 
                     <p><strong>Horario:</strong> {{cursoViewPublished!.horarioCurso?.horaInicio + ' a ' +
-                        curso.horarioCurso?.horaFin}}</p>
+                        cursoViewPublished!.horarioCurso?.horaFin}}</p>
                 </div>
             </div>
 

@@ -35,7 +35,7 @@
                 <th pSortableColumn="descripcionFoto"> <strong>DESCRIPCIÓN</strong><p-sortIcon field="descripcionFoto"></p-sortIcon></th>
                 <th pSortableColumn="fecha">  <strong>FECHA</strong><p-sortIcon field="fecha"></p-sortIcon></th>
 
-                <th pSortableColumn="inventoryStatus"> <strong>GÉSTION</strong></th>
+                <th pSortableColumn="inventoryStatus"> <strong>GESTIÓN</strong></th>
 
             </tr>
         </ng-template>
@@ -58,7 +58,7 @@
         </ng-template>
         <ng-template pTemplate="summary">
             <div class="flex align-items-center justify-content-between">
-                En total hay {{listRegistroFotografico ? listRegistroFotografico.length : 0 }} Registros fotograficos.
+                En total hay {{listRegistroFotografico ? listRegistroFotografico.length : 0 }} Registros fotográficos.
             </div>
         </ng-template>
     </p-table>
@@ -70,7 +70,7 @@
     [draggable]="false" [resizable]="false">
     <form (ngSubmit)="validacionRegistroFotografico()" novalidate style="padding: 15px;">
 
-        <p-card header="Registro fotografico del curso">
+        <p-card header="Registro fotográfico del curso">
             <div class="row rounded mb-1">
 
                 <div class="col-md-6">
@@ -83,7 +83,7 @@
                                 <textarea id="float-input" rows="10" cols="30" pInputTextarea id="descripcionCurso"
                                     name="descripcionCurso" [(ngModel)]="registroFotografico.descripcionFoto"
                                     required></textarea>
-                                <label for="float-input">Descripción dede la foto</label>
+                                <label for="float-input">Descripción de la foto</label>
                             </span>
                             <!-- </div> -->
 
