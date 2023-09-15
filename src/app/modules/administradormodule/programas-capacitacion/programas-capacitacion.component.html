@@ -6,11 +6,7 @@
 
         </ng-template>
 
-        <ng-template pTemplate="right">
-            <button pButton pRipple label="Imprimir" icon="pi pi-print" class="p-button-primary mr-2 inline-block"
-                (click)="showModaLImprimirMensal()"></button>
-
-        </ng-template>
+       
     </p-toolbar>
 
     <p-table #dt [value]="listaProgramasFilter" dataKey="id" styleClass="p-datatable-customers" [rowHover]="true"
@@ -58,7 +54,7 @@
             <tr>
 
                 <td>{{programa.nombrePrograma}}</td>
-                <td>{{programa.periodoPrograma.fechaInicioPeriodoPrograma}}</td>
+                <td>{{programa.periodoPrograma.nombrePeriodoPrograma}}</td>
                 <td>{{programa.descripcionPrograma}}</td>
                 <td>
                     <p-message [severity]="programa.estadoProgramaActivo == true? 'success': 'warn'"
