@@ -52,6 +52,10 @@ import { NgxUiLoaderModule } from 'ngx-ui-loader';
 import { LoaderPeticionesInterceptor } from './Interceptors/loader-peticiones.interceptor';
 import { StepsToApplyToTheCourseComponent } from './modules/genericAllAccess/steps-to-apply-to-the-course/steps-to-apply-to-the-course.component';
 import { GenerateExelVariosComponent } from './modules/administradormodule/generate-exel-varios/generate-exel-varios.component';
+import { PrincipalComponent } from './component/principal/principal.component';
+import { BreadcrumbsComponent } from './shared/breadcrumbs/breadcrumbs.component';
+import { SidebarComponent } from './shared/sidebar/sidebar.component';
+import { InicioComponent } from './component/inicio/inicio.component';
 
 
 @NgModule({
@@ -93,6 +97,10 @@ import { GenerateExelVariosComponent } from './modules/administradormodule/gener
     RecuperarContraseniaComponent,
     StepsToApplyToTheCourseComponent,
     GenerateExelVariosComponent,
+    PrincipalComponent,
+    BreadcrumbsComponent,
+    SidebarComponent,
+    InicioComponent,
   ],
   imports: [
     BrowserModule,

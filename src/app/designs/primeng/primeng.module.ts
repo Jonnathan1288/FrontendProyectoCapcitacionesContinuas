@@ -12,7 +12,7 @@ import { TableModule } from 'primeng/table';
 import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
 import { DataViewModule } from 'primeng/dataview';
-
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { CarouselModule } from 'primeng/carousel';
 import { PanelModule } from 'primeng/panel';
 import { InputTextModule } from 'primeng/inputtext';
@@ -76,7 +76,7 @@ import { InplaceModule } from 'primeng/inplace';
 
 import { AccordionModule } from 'primeng/accordion';
 
-import {SkeletonModule} from 'primeng/skeleton';
+import { SkeletonModule } from 'primeng/skeleton';
 // Fin de primeNG
 import { FieldsetModule } from 'primeng/fieldset';
 
@@ -106,7 +106,7 @@ import { FieldsetModule } from 'primeng/fieldset';
     CardModule,
     DialogModule,
     DataViewModule,
-
+    ProgressSpinnerModule,
     CarouselModule,
     PanelModule,
     AutoCompleteModule,
@@ -161,6 +161,7 @@ import { FieldsetModule } from 'primeng/fieldset';
     StyleClassModule,
     AutoFocusModule,
     SkeletonModule,
+
 
     InplaceModule
   ]

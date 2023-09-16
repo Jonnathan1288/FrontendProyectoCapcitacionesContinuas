@@ -6,13 +6,13 @@ import { LoadScript } from 'src/app/scripts/load-script';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit{
+export class HeaderComponent implements OnInit {
   constructor(
     private scriptC: LoadScript,
-    // private speech: SpeechRecognitionService
+
   ) {
-    scriptC.Cargar(['header','winner']);
-    // this.speech.record('es_ES').subscribe((e) => (this.title = e));
+    scriptC.Cargar(['header']);
+
   }
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 }

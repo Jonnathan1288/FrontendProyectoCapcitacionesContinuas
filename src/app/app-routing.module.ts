@@ -95,7 +95,7 @@ const routes: Routes = [
 
   { path: 'diseño/:id', component: CurricularDiseñoComponent, canActivate: [AuthGaurdGuard], data: { expectedRoles: ['DocenteCapacitador'] } },
 
-  { path: 'register/course', component: CourseRegisterComponent, canActivate: [AuthGaurdGuard], data: { expectedRoles: ['DocenteCapacitador'] } },
+  { path: 'register/course', component: CourseRegisterComponent, canActivate: [AuthGaurdGuard], data: { titulo: 'Cursos', expectedRoles: ['DocenteCapacitador'] } },
 
   { path: 'asistencia/estudiantes/course/:id', component: TomarAsistenciaEstudianteComponent, canActivate: [AuthGaurdGuard], data: { expectedRoles: ['DocenteCapacitador'] } },
 
@@ -109,13 +109,13 @@ const routes: Routes = [
 
   { path: 'register/course/:id', component: CourseRegisterComponent, canActivate: [AuthGaurdGuard], data: { expectedRoles: ['DocenteCapacitador'] } },
 
-  { path: 'list/course', component: ListCourseComponent, canActivate: [AuthGaurdGuard], data: { expectedRoles: ['DocenteCapacitador'] } },
+  { path: 'list/course', component: ListCourseComponent, canActivate: [AuthGaurdGuard], data: { titulo: 'Cursos', expectedRoles: ['DocenteCapacitador'] } },
 
   { path: 'register/necesidad', component: RegistroNecesidadComponent, canActivate: [AuthGaurdGuard], data: { expectedRoles: ['DocenteCapacitador'] } },
 
   { path: 'register/necesidad/:id', component: RegistroNecesidadComponent, canActivate: [AuthGaurdGuard], data: { expectedRoles: ['DocenteCapacitador'] } },
 
-  { path: 'hojaVida/capacitador', component: HojavidaComponent, canActivate: [AuthGaurdGuard], data: { expectedRoles: ['DocenteCapacitador'] } },
+  { path: 'hojaVida/capacitador', component: HojavidaComponent, canActivate: [AuthGaurdGuard], data: { titulo: 'Hoja de vida', expectedRoles: ['DocenteCapacitador'] } },
 
 
   { path: 'capacitador/participantes/aprovados', component: AsignacionCodigosCenecytComponent, canActivate: [AuthGaurdGuard], data: { expectedRoles: ['DocenteCapacitador'] } },
