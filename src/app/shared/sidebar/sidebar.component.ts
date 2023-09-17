@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { LoadScript } from 'src/app/scripts/load-script';
 import { StorageService } from 'src/app/service/storage.service';
 
-import { LocalStorageKeys, clearLocalStorage, getRole } from 'src/app/util/local-storage-manager';
+import { LocalStorageKeys, clearLocalStorage, getRole, getUserData } from 'src/app/util/local-storage-manager';
 import { SharedService } from 'src/app/util/service/shared.service';
 import { SidebarService } from 'src/app/util/service/sidebar.service';
 
@@ -15,11 +15,14 @@ import { SidebarService } from 'src/app/util/service/sidebar.service';
 export class SidebarComponent implements OnInit {
 
   //User
-  public userLoggin: string = '';
+  // public userLoggin: string = '';
   //Rol
   public rolLoggin: string = '';
 
   public listSidebar: any[] = [];
+
+  public nameUserLoggin: string = '';
+  public imageUserLoggin: string = '';
 
 
   constructor(
@@ -29,7 +32,7 @@ export class SidebarComponent implements OnInit {
     private sharedService: SharedService,
     private sidebarService: SidebarService
   ) {
-    _CargarScript.Cargar(["main"]);
+
   }
 
   ngOnInit() {
@@ -37,8 +40,12 @@ export class SidebarComponent implements OnInit {
       return !menuItem.rols || menuItem.rols.includes(getRole(LocalStorageKeys.ROL));
     });
 
-    this.userLoggin = localStorage.getItem("username")!;
     this.rolLoggin = localStorage.getItem("rol")!;
+
+    const userData = getUserData(LocalStorageKeys.USER_DATA);
+
+    this.nameUserLoggin = userData.username;
+    this.imageUserLoggin = userData.foto;
   }
 
 
@@ -50,9 +57,7 @@ export class SidebarComponent implements OnInit {
   // LOGOUT
   public logOut() {
     this.router.navigate(['/home']).then(() => {
-      this.sharedService.setIsLogginPresent(false); // Set the value here
       clearLocalStorage()
-
       window.location.reload();
     });
   }

@@ -53,9 +53,8 @@ export class LoginComponent implements OnInit {
               this.roles = this.info.user.roles!;
               localStorage.removeItem('id_username');
               localStorage.removeItem('id_persona');
-              localStorage.removeItem('foto');
+              localStorage.removeItem('datauser');
               localStorage.removeItem('rol');
-              localStorage.removeItem('username');
               localStorage.removeItem('token');
               if (this.info.user.estadoUsuarioActivo == false) {
                 this.toastrService.error(
@@ -73,19 +72,17 @@ export class LoginComponent implements OnInit {
                   'id_persona',
                   String(this.info.user.persona?.idPersona)
                 );
-                localStorage.setItem('foto', String(this.info.user.fotoPerfil));
 
-                localStorage.setItem('username', String(this.info.user.username));
+                const dataUser = {
+                  username: this.info.user.username,
+                  foto: this.info.user.fotoPerfil
+                }
+
+                localStorage.setItem("datauser", JSON.stringify(dataUser));
 
                 if (this.info.user.roles?.length! > 1) {
                   this.modalView();
                 } else {
-                  this.toastrService.success('Bienvenido', 'Ingreso Exitoso', {
-                    timeOut: 500,
-                    progressBar: true,
-                    progressAnimation: 'increasing',
-                  });
-
                   for (let rol of this.info.user.roles!) {
                     localStorage.setItem('rol', String(rol.nombreRol));
                   }
@@ -95,9 +92,7 @@ export class LoginComponent implements OnInit {
                     this.router.navigate(['/home']).then(() => {
                       window.location.reload();
                     });
-
-
-                  }, 500);
+                  }, 100);
                 }
               }
             } else {

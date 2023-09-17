@@ -56,6 +56,7 @@ import { PrincipalComponent } from './component/principal/principal.component';
 import { BreadcrumbsComponent } from './shared/breadcrumbs/breadcrumbs.component';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { InicioComponent } from './component/inicio/inicio.component';
+import { HeadersbComponent } from './shared/headersb/headersb.component';
 
 
 @NgModule({
@@ -101,6 +102,7 @@ import { InicioComponent } from './component/inicio/inicio.component';
     BreadcrumbsComponent,
     SidebarComponent,
     InicioComponent,
+    HeadersbComponent,
   ],
   imports: [
     BrowserModule,

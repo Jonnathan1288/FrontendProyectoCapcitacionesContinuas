@@ -7,4 +7,14 @@
 
 
 <!-- Implements del sidebar -->
+<app-headersb></app-headersb>
 <app-sidebar></app-sidebar>
+<div class="content-wrapper">
+    <div class="data p-4">
+        <app-breadcrumbs></app-breadcrumbs>
+        <!-- <router-outlet></router-outlet> -->
+        <div class="scrollable-content">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>
