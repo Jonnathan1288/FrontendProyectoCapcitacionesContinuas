@@ -2,10 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoadScript } from 'src/app/scripts/load-script';
 import { StorageService } from 'src/app/service/storage.service';
+import { BadgeColor } from 'src/app/util/enums';
 
 import { LocalStorageKeys, clearLocalStorage, getRole, getUserData } from 'src/app/util/local-storage-manager';
 import { SharedService } from 'src/app/util/service/shared.service';
 import { SidebarService } from 'src/app/util/service/sidebar.service';
+
 
 @Component({
   selector: 'app-sidebar',
@@ -69,10 +71,25 @@ export class SidebarComponent implements OnInit {
     return date.toLocaleDateString();
   }
 
-
-
   public dayExact(day: string): string {
     const DIAS_EXACT: Record<string, string> = { '1': 'warning', '2': 'success' }
     return DIAS_EXACT[day] || 'primary';
   }
+
+  //Other enum----------------------------------------------------------------
+  getBadgeStyle(item: any): string {
+    return this.getBadgeColor(item.submenu.length);
+  }
+
+  private getBadgeColor(submenuLength: number): string {
+    const badgeColors = [
+      BadgeColor.Warning,
+      BadgeColor.Primary,
+      BadgeColor.AnotherColor,
+    ];
+
+    const colorIndex = submenuLength % badgeColors.length;
+    return badgeColors[colorIndex];
+  }
+
 }

@@ -1,10 +1,10 @@
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="../../index3.html" class="brand-link">
-        <img src="./assets/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+    <a class="brand-link">
+        <img src="./assets/img/cc.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
             style="opacity: .8">
-        <span class="brand-text font-weight-light">CContinuas</span>
+        <span class="brand-text font-weight-bold"><strong>CContinuas</strong></span>
     </a>
 
     <!-- Sidebar -->
@@ -28,7 +28,7 @@
                         <i class="{{item.icono}}"></i>
                         <p class="ml-2">
                             {{item.titulo}}
-                            <span class="badge badge-warning ml-2">{{item.submenu.length}}</span>
+                            <span [class]="'badge ' +(getBadgeStyle(item))+ ' ml-2'">{{item.submenu.length}}</span>
                             <i class="right fas fa-angle-left " style="margin-top: 0.2em;"></i>
                         </p>
                     </a>
@@ -45,7 +45,7 @@
                     <a class="nav-link" style="cursor: pointer;" (click)="logOut()">
                         <i class="nav-icon fas fa-sign-out-alt"></i>
                         <p class="ml-2">
-                            Logout
+                            Salir
                         </p>
                     </a>
                 </li>

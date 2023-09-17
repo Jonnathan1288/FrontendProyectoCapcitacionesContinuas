@@ -4,7 +4,8 @@ import { TokenData } from "../interface/token-data";
 export enum LocalStorageKeys {
     TOKEN = "token",
     ROL = 'rol',
-    USER_DATA = 'datauser'
+    USER_DATA = 'datauser',
+    TIME_TOKEN = 'token'
 }
 
 export const getToken = (key: string) => {
@@ -17,6 +18,10 @@ export const getTokenTimeOut = (token: string) => {
     const currentTime: number = Math.floor(Date.now() / 1000);
 
     return decodedToken.exp < currentTime;
+};
+
+export const getTokenTime = (token: string) => {
+    return localStorage.getItem(token);
 };
 
 export const clearLocalStorage = () => {

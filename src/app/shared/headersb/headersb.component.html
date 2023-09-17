@@ -10,6 +10,14 @@
 
 
 
+        <li class="nav-item dropdown" [pTooltip]="getTimeOutCredential()" tooltipPosition="bottom">
+            <a class="nav-link" data-toggle="dropdown" href="#">
+                <strong>{{ timeOut.hour }}:{{ timeOut.minute }}:{{ timeOut.second}} / 5h</strong>
+                <i class="ml-2 fas fa-clock"></i>
+            </a>
+        </li>
+
+
         <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#">
                 <i class="far fa-comments"></i>
@@ -27,7 +35,7 @@
                                 <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
                             </h3>
                             <p class="text-sm">Call me whenever you can...</p>
-                            <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+                            <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> {{reverseTime()}} Horas</p>
                         </div>
                     </div>
 
@@ -76,7 +84,7 @@
                 <!-- <img src="./assets/dist/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle  "> -->
 
                 <strong>{{nameUserLoggin.toUpperCase()}}</strong>
-                <i class="far pi pi-angle-down"></i>
+                <i class="ml-2 fas fa-caret-square-down"></i>
 
                 <!-- <span class="badge badge-warning navbar-badge">15</span> -->
             </a>
@@ -91,7 +99,8 @@
 
                     <div class="media-body">
 
-                        <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+                        <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> Hace {{reverseTime()}}
+                            Hora{{reverseTime() === 1 ?'':'s'}}</p>
                     </div>
                 </div>
 
@@ -114,3 +123,16 @@
     </ul>
 
 </nav>
+
+<p-dialog [(visible)]="messageDialog" [style]="{ width: '450px' }" header="Salir del sistema" [modal]="true"
+    styleClass="p-fluid" (visibleChange)="confirmDialogClose(1)">
+    <ng-template pTemplate="content">
+        {{messageView}}
+
+    </ng-template><ng-template pTemplate="footer">
+        <p-button label="Cancelar" icon="pi pi-times" styleClass="p-button-outlined p-button-warning"
+            (onClick)="confirmDialogClose(2)" *ngIf="keyValue==='err' ? false: true"></p-button>
+        <p-button label="Salir" icon="pi pi-sign-out" styleClass="p-button-outlined"
+            (onClick)="confirmDialogClose(3)"></p-button>
+    </ng-template>
+</p-dialog>
