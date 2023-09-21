@@ -71,6 +71,7 @@ export class SidebarService {
 		submenu: [
 			{ titulo: 'Nuevo Curso', path: 'register/course', icono: 'fa fa-plus-circle' },
 			{ titulo: 'Mis cursos', path: 'list/course', icono: 'fa fa-folder-open' },
+			{ titulo: 'Gestionar Curso', path: 'capacitador/gestioncurso', icono: 'fa fa-pencil' },
 		]
 	},
 	{

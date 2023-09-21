@@ -34,6 +34,7 @@ import { InfocursoComponent } from './modules/participanteModule/infocurso/infoc
 import { RegistroFotograficoEvidenciasComponent } from './modules/moduleDocenteCapacitador/registro-fotografico-evidencias/registro-fotografico-evidencias.component';
 import { StepsToApplyToTheCourseComponent } from './modules/genericAllAccess/steps-to-apply-to-the-course/steps-to-apply-to-the-course.component';
 import { GenerateExelVariosComponent } from './modules/administradormodule/generate-exel-varios/generate-exel-varios.component';
+import { GestionCursoComponent } from './modules/moduleDocenteCapacitador/gestionar-curso/gestion-curso/gestion-curso.component';
 
 
 const routes: Routes = [
@@ -119,6 +120,7 @@ const routes: Routes = [
 
 
   { path: 'capacitador/participantes/aprovados', component: AsignacionCodigosCenecytComponent, canActivate: [AuthGaurdGuard], data: { expectedRoles: ['DocenteCapacitador'] } },
+  { path: 'capacitador/gestioncurso', component: GestionCursoComponent, canActivate: [AuthGaurdGuard], data: { titulo: 'Gestion Curso', expectedRoles: ['DocenteCapacitador'] } },
 
   //FIN DOCENTES CAPACITADORES --------------------------------------------------------------------------
 

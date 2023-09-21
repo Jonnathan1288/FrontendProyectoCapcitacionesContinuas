@@ -57,6 +57,7 @@ import { BreadcrumbsComponent } from './shared/breadcrumbs/breadcrumbs.component
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { InicioComponent } from './component/inicio/inicio.component';
 import { HeadersbComponent } from './shared/headersb/headersb.component';
+import { GestionCursoComponent } from './modules/moduleDocenteCapacitador/gestionar-curso/gestion-curso/gestion-curso.component';
 
 
 @NgModule({
@@ -103,6 +104,7 @@ import { HeadersbComponent } from './shared/headersb/headersb.component';
     SidebarComponent,
     InicioComponent,
     HeadersbComponent,
+    GestionCursoComponent,
   ],
   imports: [
     BrowserModule,
