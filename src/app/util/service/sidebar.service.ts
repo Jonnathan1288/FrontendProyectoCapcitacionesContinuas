@@ -84,11 +84,11 @@ export class SidebarService {
 		]
 	},
 	{
-		titulo: 'Aprovados',
+		titulo: 'Aprobados',
 		icono: 'nav-icon fas fa-calendar-check',
 		rols: [ROLES.DOCENTE_CAPACITADOR],
 		submenu: [
-			{ titulo: 'Participantes Aprovados', path: 'capacitador/participantes/aprovados', icono: 'fa fa-users' },
+			{ titulo: 'Participantes Aprobados', path: 'capacitador/participantes/aprovados', icono: 'fa fa-users' },
 
 		]
 	},
