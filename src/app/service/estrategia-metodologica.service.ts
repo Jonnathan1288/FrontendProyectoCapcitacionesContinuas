@@ -13,23 +13,23 @@ export class EstrategiaMetodologicaService {
   constructor(private http: HttpClient, private storageService: StorageService) { }
 
   public listEstrategiasMetodologica():Observable<EstrategiasMetodologica[]>{
-    return this.http.get<EstrategiasMetodologica[]>(environment.apiuri+'/estrategiaMetodologica/list', { headers: this.storageService.returnToken()});
+    return this.http.get<EstrategiasMetodologica[]>(environment.apiuri+'/estrategiaMetodologica/list');
   }
 
   public saveEstrategiasMetodologica(estrategiaMetodologica: EstrategiasMetodologica):Observable<EstrategiasMetodologica>{
-    return this.http.post<EstrategiasMetodologica>(environment.apiuri+'/strategiaMetodologica/save', estrategiaMetodologica, { headers: this.storageService.returnToken()});
+    return this.http.post<EstrategiasMetodologica>(environment.apiuri+'/estrategiaMetodologica/save', estrategiaMetodologica);
   }
 
   public getEstrategiasMetodologicaById(id: number):Observable<EstrategiasMetodologica>{
-    return this.http.get<EstrategiasMetodologica>(environment.apiuri+'/estrategiaMetodologica/findbyId/'+id, { headers: this.storageService.returnToken()});
+    return this.http.get<EstrategiasMetodologica>(environment.apiuri+'/estrategiaMetodologica/findbyId/'+id);
   }
 
   public getEstrategiasMetodologicaPorIdSilabo(id: number):Observable<EstrategiasMetodologica[]>{
-    return this.http.get<EstrategiasMetodologica[]>(environment.apiuri+'/strategiaMetodologicaPorSilabo/findbyId/'+id, { headers: this.storageService.returnToken()});
+    return this.http.get<EstrategiasMetodologica[]>(environment.apiuri+'/estrategiaMetodologica/strategiaMetodologicaPorSilabo/findbyId/'+id);
   }
 
   public updateEstrategiasSilabo(id:number, estrategiaMetodologica: EstrategiasMetodologica):Observable<EstrategiasMetodologica>{
-    return this.http.put<EstrategiasMetodologica>(environment.apiuri+'/strategiaMetodologica/update/'+id, estrategiaMetodologica, { headers: this.storageService.returnToken()});
+    return this.http.put<EstrategiasMetodologica>(environment.apiuri+'/estrategiaMetodologica/actualizar/'+id, estrategiaMetodologica);
   }
   
 }

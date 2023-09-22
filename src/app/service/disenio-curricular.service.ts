@@ -14,30 +14,30 @@ export class DisenioCurricularService {
   constructor(private http: HttpClient, private storageService: StorageService) { }
 
   public listDisenioCurricular():Observable<any>{
-    return this.http.get<any>(environment.apiuri+'/disenioCurricular/list', { headers: this.storageService.returnToken()});
+    return this.http.get<any>(environment.apiuri+'/disenioCurricular/list');
   }
 
   public getDisenioCurricularById(idDisenioCurricular: number):Observable<DisenioCurriculares>{
-    return this.http.get<DisenioCurriculares>(environment.apiuri+'/disenioCurricular/findbyId/'+idDisenioCurricular, { headers: this.storageService.returnToken()});
+    return this.http.get<DisenioCurriculares>(environment.apiuri+'/disenioCurricular/findbyId/'+idDisenioCurricular);
   }
 
   public saveDisenioCurricular(listDisenioCurricular: DisenioCurriculares):Observable<DisenioCurriculares>{
-    return this.http.post<DisenioCurriculares>(environment.apiuri+'/disenioCurricular/save',listDisenioCurricular, { headers: this.storageService.returnToken()});
+    return this.http.post<DisenioCurriculares>(environment.apiuri+'/disenioCurricular/save',listDisenioCurricular);
   }
 
   public updateDisenioCurricular(idDisenioCurricular: number, disenioCurricular: DisenioCurriculares): Observable<DisenioCurriculares> {
-    return this.http.put<DisenioCurriculares>(`${environment.apiuri}/disenioCurricular/update/${idDisenioCurricular}`, disenioCurricular, { headers: this.storageService.returnToken()});
+    return this.http.put<DisenioCurriculares>(`${environment.apiuri}/disenioCurricular/actualizar/${idDisenioCurricular}`, disenioCurricular);
   }
   
   public getDisenioCurricularValidacion(idSilabo:number){
-    return this.http.get<boolean>(environment.apiuri+'/disenioCurricular/findbyIdSilabo/'+idSilabo, { headers: this.storageService.returnToken()});
+    return this.http.get<boolean>(environment.apiuri+'/disenioCurricular/findbyIdSilabo/'+idSilabo);
   }
   public getDisenioCurricularByIdPorSilabo(id_silabo: number):Observable<DisenioCurriculares>{
-    return this.http.get<DisenioCurriculares>(environment.apiuri+'/disenioCurricular/findbyIdSilaboPorDisenioCurricular/'+id_silabo, { headers: this.storageService.returnToken()});
+    return this.http.get<DisenioCurriculares>(environment.apiuri+'/disenioCurricular/findbyIdSilaboPorDisenioCurricular/'+id_silabo);
   }
 
   public getDisenioCurricularPorSilaboCursoById(id_silabo: number):Observable<DisenioCurriculares>{
-    return this.http.get<DisenioCurriculares>(environment.apiuri+'/disenioCurricular/findbyIdSilaboCurso/'+id_silabo, { headers: this.storageService.returnToken()});
+    return this.http.get<DisenioCurriculares>(environment.apiuri+'/disenioCurricular/findbyIdSilaboCurso/'+id_silabo);
   }
   
 }

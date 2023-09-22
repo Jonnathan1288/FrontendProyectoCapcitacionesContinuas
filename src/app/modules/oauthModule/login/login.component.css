@@ -5,230 +5,291 @@
   height: 80vh;
 }  */
 
-/* .container .content {
+ /* .container .content {
   max-width: 800px; /* ajusta el ancho máximo según tus necesidades /
 } */
 
-/*NUEVO*/
+ /*NUEVO*/
 
-.card0 {
-  box-shadow: 0px 4px 8px 0px #757575;
-  border-radius: 0px;
-}
+ .card0 {
+   box-shadow: 0px 4px 8px 0px #757575;
+   border-radius: 0px;
+ }
 
-.card2 {
-  margin: 0px 40px;
-}
+ .card2 {
+   margin: 0px 40px;
+ }
 
-/* .logo {
+ /* .logo {
   width: 200px;
   height: 100px;
   margin-top: 20px;
   margin-left: 35px;
 } */
 
-.image {
-  width: 360px;
-  height: 280px;
-}
+ .image {
+   width: 360px;
+   height: 280px;
+ }
 
-.border-line {
-  border-right: 1px solid #EEEEEE;
-}
-
-
-.line {
-  height: 1px;
-  width: 50%;
-  background-color: #EEEEEE;
-  margin-top: 10px;
-}
-
-.slogan {
-  background-color: #1DA1F2;
-  color: #fff;
-  font-size: 18px;
-  padding-top: 5px;
-  border-radius: 50%;
-  width: 35px;
-  height: 35px;
-
-}
-
-.text-sm {
-  font-size: 14px !important;
-}
-
-::placeholder {
-  color: #BDBDBD;
-  opacity: 1;
-  font-weight: 300
-}
-
-:-ms-input-placeholder {
-  color: #BDBDBD;
-  font-weight: 300
-}
-
-::-ms-input-placeholder {
-  color: #BDBDBD;
-  font-weight: 300
-}
-
-input, textarea {
-  padding: 10px 12px 10px 12px;
-  border: 1px solid lightgrey;
-  border-radius: 2px;
-  margin-bottom: 5px;
-  margin-top: 2px;
-  width: 100%;
-  box-sizing: border-box;
-  color: #2C3E50;
-  font-size: 14px;
-  letter-spacing: 1px;
-}
-
-input:focus, textarea:focus {
-  -moz-box-shadow: none !important;
-  -webkit-box-shadow: none !important;
-  box-shadow: none !important;
-  border: 1px solid #304FFE;
-  outline-width: 0;
-}
-
-button:focus {
-  -moz-box-shadow: none !important;
-  -webkit-box-shadow: none !important;
-  box-shadow: none !important;
-  outline-width: 0;
-}
-
-a {
-  color: inherit;
-  cursor: pointer;
-}
-
-.btn-blue {
-  background-color: #1A237E;
-  width: 150px;
-  color: #fff;
-  border-radius: 2px;
-}
-
-.btn-blue:hover {
-  background-color: #000;
-  cursor: pointer;
-}
-
-.bg-blue {
-  color: #fff;
-  background-color: #1A237E;
-}
-
-@media screen and (max-width: 991px) {
-  .logo {
-      margin-left: 0px;
-  }
-
-  .image {
-      width: 300px;
-      height: 220px;
-  }
-
-  .border-line {
-      border-right: none;
-  }
-
-  .card2 {
-      border-top: 1px solid #EEEEEE !important;
-      margin: 0px 15px;
-  }
-}
-
-/*ROLES*/
-.badge-wrapper {
-  width: 90%;
-  text-align: center;
-  cursor: pointer;
-}
-.trait_badge {
-  position: relative;
-  margin: 1.5em 3em;
-  width: 4em;
-  height: 6.2em;
-  border-radius: 10px;
-  display: inline-block;
-  top: 0;
-  transition: all 0.2s ease;
-}
-.trait_badge:before, .trait_badge:after {
-  position: absolute;
-  width: inherit;
-  height: inherit;
-  border-radius: inherit;
-  background: inherit;
-  content: "";
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  margin: auto;
-}
-.trait_badge:before {
-  transform: rotate(60deg);
-}
-.trait_badge:after {
-  transform: rotate(-60deg);
-}
-.trait_badge:hover {
-  top: -4px;
-}
-.trait_badge .circle {
-  width: 40px;
-  height: 40px;
-  position: absolute;
-  background: #fff;
-  z-index: 10;
-  border-radius: 50%;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  margin: auto;
-}
-.trait_badge .circle .fas {
-  margin-top: 10px;
-}
-
-.trait_badge .ribbon {
-  position: absolute;
-  border-radius: 4px;
-  padding: 5px 5px 4px;
-  width: 110px;
-  z-index: 11;
-  color: #000000;
-  bottom: 8px;
-  left: 50%;
-  margin-left: -55px;
-  font-size: 12px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.27);
-  text-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
-  text-transform: uppercase;
-  background: #ffffff;
-}
+ .border-line {
+   border-right: 1px solid #EEEEEE;
+ }
 
 
-.yellow {
-  background: linear-gradient(to bottom right, #ffeb3b 0%, #fbc02d 100%);
-  color: #ffb300;
-}
+ .line {
+   height: 1px;
+   width: 50%;
+   background-color: #EEEEEE;
+   margin-top: 10px;
+ }
 
-.blue-dark {
-  background: linear-gradient(to bottom right, #1976d2 0%, #283593 100%);
-  color: #1c68c5;
-}
+ .slogan {
+   background-color: #1DA1F2;
+   color: #fff;
+   font-size: 18px;
+   padding-top: 5px;
+   border-radius: 50%;
+   width: 35px;
+   height: 35px;
 
-.green {
-  background: linear-gradient(to bottom right, #cddc39 0%, #8bc34a 100%);
-  color: #7cb342;
-}
+ }
+
+ .text-sm {
+   font-size: 14px !important;
+ }
+
+ ::placeholder {
+   color: #BDBDBD;
+   opacity: 1;
+   font-weight: 300
+ }
+
+ :-ms-input-placeholder {
+   color: #BDBDBD;
+   font-weight: 300
+ }
+
+ ::-ms-input-placeholder {
+   color: #BDBDBD;
+   font-weight: 300
+ }
+
+ input,
+ textarea {
+   padding: 10px 12px 10px 12px;
+   border: 1px solid lightgrey;
+   border-radius: 2px;
+   margin-bottom: 5px;
+   margin-top: 2px;
+   width: 100%;
+   box-sizing: border-box;
+   color: #2C3E50;
+   font-size: 14px;
+   letter-spacing: 1px;
+ }
+
+ input:focus,
+ textarea:focus {
+   -moz-box-shadow: none !important;
+   -webkit-box-shadow: none !important;
+   box-shadow: none !important;
+   border: 1px solid #304FFE;
+   outline-width: 0;
+ }
+
+ button:focus {
+   -moz-box-shadow: none !important;
+   -webkit-box-shadow: none !important;
+   box-shadow: none !important;
+   outline-width: 0;
+ }
+
+ a {
+   color: inherit;
+   cursor: pointer;
+ }
+
+ .btn-blue {
+   background-color: #1A237E;
+   width: 150px;
+   color: #fff;
+   border-radius: 2px;
+ }
+
+ .btn-blue:hover {
+   background-color: #000;
+   cursor: pointer;
+ }
+
+ .bg-blue {
+   color: #fff;
+   background-color: #1A237E;
+ }
+
+ @media screen and (max-width: 991px) {
+   .logo {
+     margin-left: 0px;
+   }
+
+   .image {
+     width: 300px;
+     height: 220px;
+   }
+
+   .border-line {
+     border-right: none;
+   }
+
+   .card2 {
+     border-top: 1px solid #EEEEEE !important;
+     margin: 0px 15px;
+   }
+ }
+
+ /*ROLES*/
+ .badge-wrapper {
+   width: 90%;
+   text-align: center;
+   cursor: pointer;
+ }
+
+ .trait_badge {
+   position: relative;
+   margin: 1.5em 3em;
+   width: 4em;
+   height: 6.2em;
+   border-radius: 10px;
+   display: inline-block;
+   top: 0;
+   transition: all 0.2s ease;
+ }
+
+ .trait_badge:before,
+ .trait_badge:after {
+   position: absolute;
+   width: inherit;
+   height: inherit;
+   border-radius: inherit;
+   background: inherit;
+   content: "";
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 0;
+   margin: auto;
+ }
+
+ .trait_badge:before {
+   transform: rotate(60deg);
+ }
+
+ .trait_badge:after {
+   transform: rotate(-60deg);
+ }
+
+ .trait_badge:hover {
+   top: -4px;
+ }
+
+ .trait_badge .circle {
+   width: 40px;
+   height: 40px;
+   position: absolute;
+   background: #fff;
+   z-index: 10;
+   border-radius: 50%;
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 0;
+   margin: auto;
+ }
+
+ .trait_badge .circle .fas {
+   margin-top: 10px;
+ }
+
+ .trait_badge .ribbon {
+   position: absolute;
+   border-radius: 4px;
+   padding: 5px 5px 4px;
+   width: 110px;
+   z-index: 11;
+   color: #000000;
+   bottom: 8px;
+   left: 50%;
+   margin-left: -55px;
+   font-size: 12px;
+   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.27);
+   text-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+   text-transform: uppercase;
+   background: #ffffff;
+ }
+
+
+ .yellow {
+   background: linear-gradient(to bottom right, #ffeb3b 0%, #fbc02d 100%);
+   color: #ffb300;
+ }
+
+ .blue-dark {
+   background: linear-gradient(to bottom right, #1976d2 0%, #283593 100%);
+   color: #1c68c5;
+ }
+
+ .green {
+   background: linear-gradient(to bottom right, #cddc39 0%, #8bc34a 100%);
+   color: #7cb342;
+ }
+
+
+ /* PROGRES */
+ .centered-container {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   height: 100vh;
+   /* O ajusta la altura según tus necesidades */
+ }
+
+ .loading-text {
+   margin-top: 10px;
+   font-size: 16px;
+ }
+
+
+ .centered-container {
+   display: flex;
+
+   align-items: center;
+   justify-content: center;
+   height: 100vh;
+ }
+
+ .loading-text {
+   font-size: 16px;
+ }
+
+ #loading-dots::after {
+   content: '...';
+   animation: dots 1.5s infinite;
+
+ }
+
+ @keyframes dots {
+
+   0%,
+   20% {
+     content: '.';
+   }
+
+   40% {
+     content: '..';
+   }
+
+   60% {
+     content: '...';
+   }
+ }

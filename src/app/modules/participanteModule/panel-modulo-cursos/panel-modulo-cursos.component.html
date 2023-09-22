@@ -1,6 +1,6 @@
 
     <!-- HEADER -->
-    <img [src]="curso.fotoCurso ? 'data:image/jpeg;base64,' + curso.fotoCurso : '../../../../assets/img/camer.png'" class="job-bg" alt="" >
+    <img [src]="'http://localhost:8080/api/uploadUri/' +curso.fotoCurso+ '/images_course'" class="job-bg" alt="" >
     <div class="job-logos">
     </div>
 
@@ -60,8 +60,5 @@
         </div>
         <!-- <canvas id="confetti"></canvas> -->
 
-        <div  *ngIf='progreso >= 100&& estadoAprobacionCurso == "A"' class="overview-text" style="text-align: center;">
-            <button pButton type="button" label="Danger" (click)="downloadCertificadoEstudianteSenecytDownload()" class="p-button-warning" label="Ver Certificado"><i class="pi pi-file-pdf m-2"></i></button>
-        </div>
     </div>
 

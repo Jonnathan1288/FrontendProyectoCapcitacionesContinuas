@@ -269,7 +269,6 @@ export class registrarPersonaComponent implements OnInit {
   public comprobaridentificacion() {
     this.showSuccessToast(); // Mostrar el toastr de éxito
 
-
     this.personaService
       .getPersonaByIdentificasion(this.classPersona?.identificacion!)
       .subscribe((data) => {
@@ -452,3 +451,4 @@ export class registrarPersonaComponent implements OnInit {
     }
   }
 }
+

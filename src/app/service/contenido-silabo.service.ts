@@ -13,24 +13,24 @@ export class ContenidoSilaboService {
   constructor(private http: HttpClient, private storageService: StorageService) { }
 
   public listContenidosilabos():Observable<Contenidosilabos[]>{
-    return this.http.get<Contenidosilabos[]>(environment.apiuri+'/contenidosilabo/list', { headers: this.storageService.returnToken()});
+    return this.http.get<Contenidosilabos[]>(environment.apiuri+'/contenidosilabo/list');
   }
 
   public saveContenidosilabos(contenidosSilabo: Contenidosilabos):Observable<Contenidosilabos>{
-    return this.http.post<Contenidosilabos>(environment.apiuri+'/contenidosilabo/save', contenidosSilabo, { headers: this.storageService.returnToken()});
+    return this.http.post<Contenidosilabos>(environment.apiuri+'/contenidosilabo/save', contenidosSilabo);
   }
 
   public getContenidosilabosById(id: number):Observable<Contenidosilabos>{
-    return this.http.get<Contenidosilabos>(environment.apiuri+'/contenidosilabo/findbyId/'+id, { headers: this.storageService.returnToken()});
+    return this.http.get<Contenidosilabos>(environment.apiuri+'/contenidosilabo/findbyId/'+id);
   }
 
   
   public getContenidoSilaboPorIdSilabo(id: number):Observable<Contenidosilabos[]>{
-    return this.http.get<Contenidosilabos[]>(environment.apiuri+'/contenidosilaboPorSilabo/findbyId/'+id, { headers: this.storageService.returnToken()});
+    return this.http.get<Contenidosilabos[]>(environment.apiuri+'/contenidosilabo/contenidosilaboPorSilabo/findbyId/'+id);
   }
 
   public updateContenidoSilabo(id:number, contenidosSilabo: Contenidosilabos):Observable<Contenidosilabos>{
-    return this.http.put<Contenidosilabos>(environment.apiuri+'/contenidosilabo/actualizar/'+id, contenidosSilabo, { headers: this.storageService.returnToken()});
+    return this.http.put<Contenidosilabos>(environment.apiuri+'/contenidosilabo/actualizar/'+id, contenidosSilabo);
   }
   
   

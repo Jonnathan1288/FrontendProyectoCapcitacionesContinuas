@@ -14,28 +14,28 @@ export class ParticipanteMatriculadoService {
   constructor(private http: HttpClient, private storageService: StorageService) { }
 
   public getParticipantesMatriculadosById(idPatMatriculado: number): Observable<ParticipantesMatriculados> {
-    return this.http.get<ParticipantesMatriculados>(environment.apiuri + '/participantesMatriculados/findbyId/' + idPatMatriculado, { headers: this.storageService.returnToken() });
+    return this.http.get<ParticipantesMatriculados>(environment.apiuri + '/participantesMatriculados/findbyId/' + idPatMatriculado);
   }
 
   public saveParticipantesMatriculados(participantesMatriculados: ParticipantesMatriculados): Observable<ParticipantesMatriculados> {
-    return this.http.post<ParticipantesMatriculados>(environment.apiuri + '/participantesMatriculados/crear', participantesMatriculados, { headers: this.storageService.returnToken() });
+    return this.http.post<ParticipantesMatriculados>(environment.apiuri + '/participantesMatriculados/crear', participantesMatriculados);
   }
 
   public getParticipantesMatriculadosByIdCurso(idCurso: number): Observable<ParticipantesMatriculados[]> {
-    return this.http.get<ParticipantesMatriculados[]>(environment.apiuri + '/participantesMatriculados/findbyIdCursoMatriculados/' + idCurso, { headers: this.storageService.returnToken() });
+    return this.http.get<ParticipantesMatriculados[]>(environment.apiuri + '/participantesMatriculados/findbyIdCursoMatriculados/' + idCurso);
   }
 
   public pasarEstudiantesMatriculados(idCurso: number) {
-    return this.http.get(environment.apiuri + '/participantesMatriculados/aceptarInicioCurso/' + idCurso, { headers: this.storageService.returnToken() });
+    return this.http.get(environment.apiuri + '/participantesMatriculados/aceptarInicioCurso/' + idCurso);
   }
 
   public updateParticipantesMatriculados(idPatMatriculado: number, participantesMatriculados: ParticipantesMatriculados): Observable<ParticipantesMatriculados> {
-    return this.http.put<ParticipantesMatriculados>(environment.apiuri + '/participantesMatriculados/actualizar/' + idPatMatriculado, participantesMatriculados, { headers: this.storageService.returnToken() });
+    return this.http.put<ParticipantesMatriculados>(environment.apiuri + '/participantesMatriculados/actualizar/' + idPatMatriculado, participantesMatriculados);
   }
 
   //News methods------------------
   public findALlParticipantesAprovadosByIdCursos(courses: number[]): Observable<ListApproved[]> {
-    return this.http.post<ListApproved[]>(environment.apiuri + '/all/participantesAprovados/findbyIdCourse', courses, { headers: this.storageService.returnToken() });
+    return this.http.post<ListApproved[]>(environment.apiuri + '/all/participantesAprovados/findbyIdCourse', courses);
   }
 
   //Reportes que va tener el admin..

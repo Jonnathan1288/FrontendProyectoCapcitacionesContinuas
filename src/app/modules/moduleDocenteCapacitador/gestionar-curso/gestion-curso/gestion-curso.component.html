@@ -1,0 +1,50 @@
+<div class="card ">
+
+  <h5 class="fa fa-arrow-down">Selecciona un Curso</h5>
+
+<br>
+<div class="dropdown-with-icon">
+  <i class="fa fa-list"></i>
+ 
+<p-dropdown [options]="cursoList" placeholder="Tus Cursos" optionLabel="nombreCurso"
+  [showClear]="true" (onChange)="cursoSeleccionadoChange($event)" (onClear)="cursoDeseleccionado()" [style]="{'width': '60%'}">
+  <ng-template let-course pTemplate="item">
+    <div (click)="cursoSeleccionadoChange(course)">
+      <i class="fa fa-book-open"></i> {{ course.nombreCurso }}
+    </div>
+  </ng-template>
+</p-dropdown>
+
+
+
+
+</div>
+
+
+
+<h6>OPCIONES DEL CURSO</h6>
+
+<br>
+
+<div class="grid p-fluid m-2">
+
+
+<p-button label="Sílabo" icon="fa fa-file-text" styleClass="p-button-success" badge="1" badgeClass="p-badge-primary" (onClick)="generacionSilaboCurso()" style="margin-right: 10px;" [disabled]="!cursoSeleccionado"></p-button>
+
+<p-button label="Necesidad de Curso" icon="pi pi-file-pdf" styleClass="p-button-primary" badge="2" badgeClass="p-badge-secondary" (onClick)="necesidadCurso()" style="margin-right: 10px;" [disabled]="!cursoSeleccionado"></p-button>
+
+<p-button [disabled]="classCourseSelected.estadoPublicasionCurso !== 'I' && classCourseSelected.estadoPublicasionCurso !== 'F'" label="Registro fotográfico" icon="pi pi-camera" styleClass="p-button-secondary" badge="3" badgeClass="p-badge-success" (onClick)="reistroFotograficoCurso()" style="margin-right: 10px;" [disabled]="!cursoSeleccionado"></p-button>
+
+<p-button label="Editar curso" icon="pi pi-pencil" styleClass="p-button-success" badge="4" badgeClass="p-badge-primary" (onClick)="editarCurso()" [disabled]="!cursoSeleccionado"></p-button>
+
+</div>
+<hr class="horizontal-line">
+
+
+</div>
+
+
+
+
+
+

@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Asistencia } from 'src/app/models/asistencia';
@@ -6,6 +7,8 @@ import { DatePipe } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 import { ParticipantesMatriculados } from 'src/app/models/participantesMatriculados';
 import { ParticipanteMatriculadoService } from 'src/app/service/participante-matriculado.service';
+import { Curso } from 'src/app/models/curso';
+import { CursoService } from 'src/app/service/curso.service';
 
 @Component({
   selector: 'app-tomar-asistencia-estudiante',
@@ -24,6 +27,7 @@ export class TomarAsistenciaEstudianteComponent implements OnInit {
   //el array de los estudiantes del curso matriculado
   public listaAsistenciaE: any[] = [];
 
+  public curso = new Curso();
 
   first = 0;
   layout: string = 'list';
@@ -36,10 +40,11 @@ export class TomarAsistenciaEstudianteComponent implements OnInit {
     private router: Router,
     private asistenciaService: AsistenciaService,
     private toastrService: ToastrService,
-    private participanteMatriculadoService: ParticipanteMatriculadoService
+    private participanteMatriculadoService: ParticipanteMatriculadoService,
+    private cursoService: CursoService
   ) {}
   ngOnInit(): void {
-    this.estadoFinal = localStorage.getItem('status')
+    this.estadoFinal = localStorage.getItem('status');
     this.activateRoute.params.subscribe((param) => {
       const idEstudiantesM = param['id'];
       this.idCursoEstudiantesMatriculados = idEstudiantesM;
@@ -47,6 +52,7 @@ export class TomarAsistenciaEstudianteComponent implements OnInit {
         this.idCursoEstudiantesMatriculados!
       );
     });
+    this.getCurso();
   }
 
   public traerListadoEstudiantesMatriculadosAsistencia(idCurso: number) {
@@ -55,27 +61,8 @@ export class TomarAsistenciaEstudianteComponent implements OnInit {
       .subscribe((data) => {
         if (data != null) {
           this.listaAsistenciaE = data;
-          this.listAsistenciasAntiguas = this.listaAsistenciaE
+          this.listAsistenciasAntiguas = this.listaAsistenciaE;
           this.banderaParaControlAsistencia = true;
-
-        }
-
-      });
-  }
-
-
-
-  public tomarAsistenciaCursoEstudiante(idAsist: any, asistencia: Asistencia) {
-    this.asistenciaService
-      .updateAsistencia(idAsist, asistencia)
-      .subscribe((data) => {
-        if (data != null) {
-          console.log(data);
-
-          this.toastrService.success(
-            'Estudiante tomado asistencia',
-            'TOMADO ASISTENCIA.'
-          );
         }
       });
   }
@@ -88,26 +75,30 @@ export class TomarAsistenciaEstudianteComponent implements OnInit {
       )
       .subscribe((data) => {
         if (data != null) {
-          if(this.fechaAlmacenada === undefined || this.fechaAlmacenada === null){
+          if (
+            this.fechaAlmacenada === undefined ||
+            this.fechaAlmacenada === null
+          ) {
             this.toastrService.success(
               'Observación realizada con éxito',
               'OBSERVACIÓN GUARDADA.'
             );
-            this.traerListadoEstudiantesMatriculadosAsistencia(this.idCursoEstudiantesMatriculados!);
-          }else{
+            this.traerListadoEstudiantesMatriculadosAsistencia(
+              this.idCursoEstudiantesMatriculados!
+            );
+          } else {
             this.asistenciaService
-            .getAsistenciaAntiguasPorFecha(
-              this.idCursoEstudiantesMatriculados!,
-              this.fechaAlmacenada!
-            )
-            .subscribe((data) => {
-              if (data != null) {
-                console.log(data)
-                this.listAsistenciasAntiguas = data
-              }
-            })
+              .getAsistenciaAntiguasPorFecha(
+                this.idCursoEstudiantesMatriculados!,
+                this.fechaAlmacenada!
+              )
+              .subscribe((data) => {
+                if (data != null) {
+                  console.log(data);
+                  this.listAsistenciasAntiguas = data;
+                }
+              });
           }
-        
         }
       });
     this.visible = false;
@@ -125,7 +116,6 @@ export class TomarAsistenciaEstudianteComponent implements OnInit {
             'Estudiante tomado asistencia',
             'TOMADO ASISTENCIA.'
           );
-
         }
       });
   }
@@ -153,95 +143,158 @@ export class TomarAsistenciaEstudianteComponent implements OnInit {
     this.visible = true;
   }
 
-  public listAsistenciasAntiguas : Asistencia[]=[]
-  public fechaAlmacenada ?: string;
+  public listAsistenciasAntiguas: Asistencia[] = [];
+
+  public fechaAlmacenada?: string;
+
   public onDateSelect(event: any) {
     const selectedDate: Date = event;
 
     const formattedDate = selectedDate.toISOString().substring(0, 10); // Obtener la fecha en formato 'yyyy-MM-dd'
-    console.log(formattedDate)
-    this.fechaAlmacenada = formattedDate
-    this.asistenciaService
-      .getAsistenciaAntiguasPorFecha(
-        this.idCursoEstudiantesMatriculados!,
-        formattedDate
-      )
-      .subscribe((data) => {
-        if (data != null) {
-          console.log(data)
-         
-          if(data.length > 0){
-            this.toastrService.success(
-              'Historial de asistencia encontrada.',
-              'ASISTENCIA RECUPERADA.'
-            );
+    console.log(formattedDate, this.curso.fechaInicioCurso);
 
-            this.listAsistenciasAntiguas = data;
-          }else{
-            this.toastrService.error(
-              'La fecha ingresada no coincide con el curso.',
-              'ASISTENCIA NO ENCONTRADA.'
-            );
-            this.listAsistenciasAntiguas = data;
-      
+    // Compara las fechas formateadas
+
+    if (
+      this.curso.fechaFinalizacionCurso &&
+      this.curso.fechaInicioCurso
+    ) {
+      console.log(this.curso.fechaInicioCurso,this.curso.fechaFinalizacionCurso );
+      this.curso.fechaInicioCurso = new Date(this.curso.fechaInicioCurso);
+      this.curso.fechaFinalizacionCurso = new Date(this.curso.fechaFinalizacionCurso);
+
+      const fechaInicioCurso = new Date(this.curso.fechaInicioCurso.getUTCFullYear(), this.curso.fechaInicioCurso.getUTCMonth(), this.curso.fechaInicioCurso.getUTCDate());
+      const fechaFinCurso = new Date(this.curso.fechaFinalizacionCurso.getUTCFullYear(), this.curso.fechaFinalizacionCurso.getUTCMonth(), this.curso.fechaFinalizacionCurso.getUTCDate());
+      console.log(fechaInicioCurso,'                 ',fechaFinCurso);
+
+      console.log('FECHA INICIO: ',this.curso.fechaInicioCurso,'  FECHA FIN :',this.curso.fechaFinalizacionCurso)
+
+      if (
+        selectedDate >= fechaInicioCurso &&
+        selectedDate <= fechaFinCurso
+      ) {
+        
+        this.asistenciaService
+        .getAsistenciaAntiguasPorFecha(
+          this.idCursoEstudiantesMatriculados!,
+          formattedDate
+        )
+        .subscribe(
+          (data) => {
+            if (data != null) {
+              console.log(data);
+
+              if (data.length > 0) {
+                this.toastrService.success(
+                  'Historial de asistencia encontrada.',
+                  'ASISTENCIA RECUPERADA.'
+                );
+
+                this.listAsistenciasAntiguas = data;
+              } else {
+                this.toastrService.error(
+                  'En la fecha ingresada no se tomó asistencia!',
+                  'ASISTENCIA NO REGISTRADA EN ESA FECHA!'
+                );
+                this.listAsistenciasAntiguas = data;
+                this.asistenciaService
+               .generarAsistenciaPorFecha2(this.idCursoEstudiantesMatriculados!,formattedDate)
+               .subscribe((data) => {
+                 if (data != null) {
+                   this.listaAsistenciaE = data;
+                   this.listAsistenciasAntiguas = this.listaAsistenciaE;
+                   this.banderaParaControlAsistencia = true;
+                 }
+               });
+              }
+            }
+          },
+          (err) => {
+            this.listAsistenciasAntiguas = [];
+            console.log(err);
           }
-
-        }
-      }, (err)=>{
+        );
+      }else{
+        this.toastrService.error('Esta fuera del rango de la fecha de inicio o fin del curso.', 'FUERA DE RANGO');
+        console.log(this.curso.fechaInicioCurso);
         this.listAsistenciasAntiguas = [];
-        console.log(err)
-      });
+      }
+
+      
+    } else {
+      this.toastrService.success('Fecha de curso no definida', 'ERROR DE FECHAS');
+      console.log(this.curso.fechaInicioCurso);
+      this.listAsistenciasAntiguas = [];
+    }
   }
 
-
+  public getCurso() {
+    this.cursoService
+      .getCursoById(this.idCursoEstudiantesMatriculados!)
+      .subscribe(
+        (data: Curso) => {
+          this.curso = data;
+        },
+        (error) => {
+          console.error('Error al obtener el curso:', error);
+        }
+      );
+  }
 
   //Eliminado logico del sistema
-  public eliminadoLogicoDelCapacitador(participantesMatriculados: ParticipantesMatriculados) {
+  public eliminadoLogicoDelCapacitador(
+    participantesMatriculados: ParticipantesMatriculados
+  ) {
     // capacitador.estadoActivoCapacitador = false;
 
-    participantesMatriculados.estadoParticipanteActivo = !participantesMatriculados.estadoParticipanteActivo; // Alternar el estado activo/desactivado
+    participantesMatriculados.estadoParticipanteActivo =
+      !participantesMatriculados.estadoParticipanteActivo; // Alternar el estado activo/desactivado
 
-    if(participantesMatriculados.estadoParticipanteActivo == true){
-      participantesMatriculados.estadoParticipanteAprobacion = 'P'
-    }else{
-      participantesMatriculados.estadoParticipanteAprobacion = 'X'
+    if (participantesMatriculados.estadoParticipanteActivo == true) {
+      participantesMatriculados.estadoParticipanteAprobacion = 'P';
+    } else {
+      participantesMatriculados.estadoParticipanteAprobacion = 'X';
     }
     this.participanteMatriculadoService
-      .updateParticipantesMatriculados(participantesMatriculados.idParticipanteMatriculado!, participantesMatriculados)
+      .updateParticipantesMatriculados(
+        participantesMatriculados.idParticipanteMatriculado!,
+        participantesMatriculados
+      )
       .subscribe((data) => {
         if (data != null) {
           if (participantesMatriculados.estadoParticipanteActivo) {
             this.toastrService.success('Estudiante activo', 'ASISTE');
           } else {
-            this.toastrService.warning('Estudiante a sido almacenado como retirado', 'ESTUDIANTE RETIRADO');
+            this.toastrService.warning(
+              'Estudiante a sido almacenado como retirado',
+              'ESTUDIANTE RETIRADO'
+            );
           }
           //this.listDocentesCapacitadores();
         }
       });
   }
 
+  //Implementacion de la tabla de todo referente a primeng
+  next() {
+    this.first = this.first + this.rows;
+  }
 
+  prev() {
+    this.first = this.first - this.rows;
+  }
 
-    //Implementacion de la tabla de todo referente a primeng
-    next() {
-      this.first = this.first + this.rows;
-    }
-  
-    prev() {
-      this.first = this.first - this.rows;
-    }
-  
-    reset() {
-      this.first = 0;
-    }
-  
-    isLastPage(): boolean {
-      return this.listAsistenciasAntiguas
-        ? this.first === this.listAsistenciasAntiguas.length - this.rows
-        : true;
-    }
-  
-    isFirstPage(): boolean {
-      return this.listAsistenciasAntiguas ? this.first === 0 : true;
-    }
+  reset() {
+    this.first = 0;
+  }
+
+  isLastPage(): boolean {
+    return this.listAsistenciasAntiguas
+      ? this.first === this.listAsistenciasAntiguas.length - this.rows
+      : true;
+  }
+
+  isFirstPage(): boolean {
+    return this.listAsistenciasAntiguas ? this.first === 0 : true;
+  }
 }

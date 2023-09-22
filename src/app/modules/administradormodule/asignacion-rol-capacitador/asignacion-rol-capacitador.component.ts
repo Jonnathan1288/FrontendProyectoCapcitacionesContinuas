@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Capacitador } from 'src/app/models/capacitador';
 import { DocenteFenix } from 'src/app/models/docente-fenix';
@@ -10,12 +10,9 @@ import { CapacitadorService } from 'src/app/service/capacitador.service';
 import { DocenteFenixService } from 'src/app/service/docente-fenix.service';
 import { HojaVidaCapacitadorService } from 'src/app/service/hoja-vida-capacitador.service';
 import { PersonaService } from 'src/app/service/persona.service';
-import { ReportsCapacitacionesService } from 'src/app/service/reports-capacitaciones.service';
 import { RolService } from 'src/app/service/rol.service';
 import { UsuarioService } from 'src/app/service/usuario.service';
 import { ToastrService } from 'ngx-toastr';
-import { DisenioHojaVidaComponent } from '../../moduleDocenteCapacitador/moduleHOjaVida/disenio-hoja-vida/disenio-hoja-vida.component';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-asignacion-rol-capacitador',
@@ -356,7 +353,7 @@ export class AsignacionRolCapacitadorComponent implements OnInit {
                                     this.classUsuario = new Usuario();
                                     this.visible = false;
                                     this.listDocentesCapacitadores();
-                                    
+
                                   }
                                 });
                             }
@@ -387,16 +384,16 @@ export class AsignacionRolCapacitadorComponent implements OnInit {
 
     user.estadoUsuarioActivo = !user.estadoUsuarioActivo; // Alternar el estado activo/desactivado
 
-      this.usuarioService.updateUsuario(user?.idUsuario!, user!).subscribe((data)=>{
-        if(data != null){
-          if (user.estadoUsuarioActivo) {
-            this.toastrService.success('Usuario a sido activodo/a', 'Usuario activo');
-          } else {
-            this.toastrService.warning('Usuario a sido inactivado/a', 'Usuario Inactivo');
-          }
-          this.listDocentesCapacitadores();
+    this.usuarioService.updateUsuario(user?.idUsuario!, user!).subscribe((data) => {
+      if (data != null) {
+        if (user.estadoUsuarioActivo) {
+          this.toastrService.success('Usuario a sido activodo/a', 'Usuario activo');
+        } else {
+          this.toastrService.warning('Usuario a sido inactivado/a', 'Usuario Inactivo');
         }
-      })
+        this.listDocentesCapacitadores();
+      }
+    })
   }
 
   //Traer los docetes capacitadores en el sistema..
@@ -439,9 +436,9 @@ export class AsignacionRolCapacitadorComponent implements OnInit {
 
   // fileUrl!: SafeResourceUrl;
   fileUrl: SafeResourceUrl | null = null;
-  isInNewComponet:boolean = false;
+  isInNewComponet: boolean = false;
   public pdfSrc: any;
-  idCapacitadorSend?:number;
+  idCapacitadorSend?: number;
   public mostrarPDF_BDA(idCapacitador: number): void {
     if (
       this.classHojaDevida.documento &&
@@ -472,39 +469,7 @@ export class AsignacionRolCapacitadorComponent implements OnInit {
     //this.classHojaDevida = new HojaVidaCapacitador();
   }
 
-  //Validar hoja de vida.
-  public validarHojaDeVida(estado: number) {
-    if (estado == 1) {
-      this.classHojaDevida.estadoAprobacion = 'A';
-    } else {
-      this.classHojaDevida.estadoAprobacion = 'R';
-    }
-    console.log({ hojaVida: this.classHojaDevida });
-    this.hojadeVidaServcie
-      .updateHojaDeVida(this.classHojaDevida.idHojaVida!, this.classHojaDevida)
-      .subscribe((data) => {
-        if (data != null) {
 
-          if(data.estadoAprobacion === 'A'){
-            this.toastrService.success('Hoja de vida aceptada.', 'ACEPTADO.', {
-              timeOut: 2000,
-            });
-          }else{
-
-            this.toastrService.error('Hoja de vida rechazada.', 'RECHAZADA.', {
-              timeOut: 2000,
-            });
-          }
-
-
-          // alert('Succesful');
-          // console.log({ hojaVida: data });
-        }
-      });
-    setTimeout(() => {
-      this.visibleHojaVida = false;
-    }, 1200);
-  }
 
   //vISIVILIADA DEL MODAL
   visible?: boolean;

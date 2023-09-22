@@ -13,27 +13,27 @@ export class CapacitadorService {
   constructor(private http: HttpClient, private storageService: StorageService) {}
   
   public getAllCapacitador(): Observable<Capacitador[]> {
-    return this.http.get<Capacitador[]>(environment.apiuri + '/capacitador/list', { headers: this.storageService.returnToken()});
+    return this.http.get<Capacitador[]>(environment.apiuri + '/capacitador/list');
   }
 
   public getCapacitadorById(idCapacitador: number): Observable<Capacitador> {
-    return this.http.get<Capacitador>(environment.apiuri + '/capacitador/findbyId/' + idCapacitador, { headers: this.storageService.returnToken()});
+    return this.http.get<Capacitador>(environment.apiuri + '/capacitador/findbyId/' + idCapacitador);
   }
 
   public getCapacitadorByUsuarioIdUsuario(idUsuario: number): Observable<Capacitador> {
-    return this.http.get<Capacitador>(environment.apiuri + '/capacitador/findbyIdUsuario/' + idUsuario, { headers: this.storageService.returnToken()});
+    return this.http.get<Capacitador>(environment.apiuri + '/capacitador/findbyIdUsuario/' + idUsuario);
   }
 
   public saveCapacitador(capacitador: Capacitador):Observable<Capacitador>{
-    return this.http.post<Capacitador>(environment.apiuri+'/capacitador/save', capacitador, { headers: this.storageService.returnToken()});
+    return this.http.post<Capacitador>(environment.apiuri+'/capacitador/save', capacitador);
   }
 
   public updateCapacitador(idCapacitador: number, capacitador: Capacitador):Observable<Capacitador>{
-    return this.http.put<Capacitador>(environment.apiuri+'/capacitador/actualizar/'+idCapacitador, capacitador, { headers: this.storageService.returnToken()});
+    return this.http.put<Capacitador>(environment.apiuri+'/capacitador/actualizar/'+idCapacitador, capacitador);
   }
 
   public existsCapacitadorByUsuarioIdUsuario(idUsuario: number):Observable<Boolean>{
-    return this.http.get<Boolean>(environment.apiuri+'/capacitador/exists/findbyIdUsuario/'+idUsuario, { headers: this.storageService.returnToken()});
+    return this.http.get<Boolean>(environment.apiuri+'/capacitador/exists/findbyIdUsuario/'+idUsuario);
   }
 
   //PARA PETICIONES PUBLICAS DE VALIDACIONES--------------------------------------------------------------------------

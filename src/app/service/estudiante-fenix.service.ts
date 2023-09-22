@@ -15,7 +15,7 @@ export class EstudianteFenixService {
   constructor(private http: HttpClient, private storageService: StorageService) { }
 
   public listEstudianteFenix():Observable<EstudianteFenix[]>{
-    return this.http.get<EstudianteFenix[]>(environment.apiuri+'/fenix/estudiante/ista/list', { headers: this.storageService.returnToken()});
+    return this.http.get<EstudianteFenix[]>(environment.apiuri+'/fenix/estudiante/ista/list');
   }
 
   public getEstudianteFenixFindByIdentificasión(identificacion: string):Observable<EstudianteFenix>{

@@ -1,0 +1,17 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.content-wrapper {
+    display: flex;
+    flex: 1;
+    overflow-x: hidden;
+}
+
+.data {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 15px;
+}

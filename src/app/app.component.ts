@@ -27,52 +27,50 @@ export class AppComponent implements OnInit {
   public status?: any;
   public isDisabled: boolean = false;
 
+
+  //Nuevo -------------------------
+
+
   constructor(
-    private scriptC: LoadScript,
+
     private router: Router,
-    private usuarioService: UsuarioService,
-    private storageServeic: StorageService
+    private storageService: StorageService
   ) {
-    scriptC.Cargar(['dashboard']);
+
   }
 
   ngOnInit(): void {
-    this.rolNameUser = localStorage.getItem('rol');
-    this.foto = localStorage.getItem('foto');
-    this.status = localStorage.getItem('emp');
 
-    if (this.status === 'EMPTY') {
-      this.isDisabled = true;
-    }else{
-      this.isDisabled = false;
-    }
+    this.isLogginPresent = this.storageService.isLoggedIn();
+    // this.rolNameUser = localStorage.getItem('rol');
+    // this.foto = localStorage.getItem('foto');
+    // this.status = localStorage.getItem('emp');
 
-    try {
-      this.username = localStorage.getItem('username')!.toUpperCase();
-    } catch (error) {
-      console.log(error);
-    }
-    if (this.rolNameUser) {
-      this.isLogginPresent = false;
-    } else {
-      this.isLogginPresent = true;
-    }
+    // if (this.status === 'EMPTY') {
+    //   this.isDisabled = true;
+    // } else {
+    //   this.isDisabled = false;
+    // }
 
-    this.obternerDatosUsuarioLoggin(this.rolNameUser);
+    // try {
+    //   this.username = localStorage.getItem('username')!.toUpperCase();
+    // } catch (error) {
+    //   console.log(error);
+    // }
+    // if (this.rolNameUser) {
+    //   this.isLogginPresent = false;
+    // } else {
+    //   this.isLogginPresent = true;
+    // }
 
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        this.currentUrl = event.url;
-      }
-    });
+    // this.obternerDatosUsuarioLoggin(this.rolNameUser);
+
+    // this.router.events.subscribe((event) => {
+    //   if (event instanceof NavigationEnd) {
+    //     this.currentUrl = event.url;
+    //   }
+    // });
   }
-
-//   blockDocument() {
-//     this.blockedDocument = true;
-//     setTimeout(() => {
-//         this.blockedDocument = false;
-//     }, 3000);
-// }
 
 
   public logOut() {

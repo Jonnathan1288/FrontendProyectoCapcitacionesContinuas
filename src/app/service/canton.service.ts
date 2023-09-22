@@ -13,15 +13,15 @@ export class CantonService {
   constructor(private http: HttpClient, private storageService: StorageService) { }
 
   public getAllCantonByIdProvincia(idProvincia: number):Observable<Canton[]>{
-    return this.http.get<Canton[]>(environment.apiuri+'/canton/findbyIdProvincia/'+idProvincia, { headers: this.storageService.returnToken()});
+    return this.http.get<Canton[]>(environment.apiuri+'/canton/findbyIdProvincia/'+idProvincia);
   }
 
   public getCantonById(idCanton: number):Observable<Canton>{
-    return this.http.get<Canton>(environment.apiuri+'/canton/findbyId/'+idCanton, { headers: this.storageService.returnToken()});
+    return this.http.get<Canton>(environment.apiuri+'/canton/findbyId/'+idCanton);
   }
 
   public saveProvincia(canton: Canton):Observable<Canton>{
-    return this.http.post<Canton>(environment.apiuri+'/canton/save', canton, { headers: this.storageService.returnToken()});
+    return this.http.post<Canton>(environment.apiuri+'/canton/save', canton);
   }
 
 }

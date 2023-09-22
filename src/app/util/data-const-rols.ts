@@ -1,0 +1,7 @@
+export const ROLES = {
+    ADMINISTRADOR: 'Administrador',
+    DOCENTE_CAPACITADOR: 'DocenteCapacitador',
+    PARTICIPANTE: 'Participante'
+};
+
+export const PRINCIPAL_ROLS = [ROLES.ADMINISTRADOR, ROLES.DOCENTE_CAPACITADOR, ROLES.PARTICIPANTE];

@@ -13,19 +13,19 @@ export class EspecialidadService {
   constructor(private http: HttpClient, private storageService: StorageService) { }
 
   public listEspecialidad():Observable<Especialidad[]>{
-    return this.http.get<Especialidad[]>(environment.apiuri+'/especialidad/list', { headers: this.storageService.returnToken()});
+    return this.http.get<Especialidad[]>(environment.apiuri+'/especialidad/list');
   }
 
   public getEspecialidadById(id_curso: number):Observable<Especialidad>{
-    return this.http.get<Especialidad>(environment.apiuri+'/especialidad/findbyId/'+id_curso, { headers: this.storageService.returnToken()});
+    return this.http.get<Especialidad>(environment.apiuri+'/especialidad/findbyId/'+id_curso);
   }
 
   public saveEspecialidad(curso: Curso):Observable<Especialidad>{
-    return this.http.post<Especialidad>(environment.apiuri+'/especialidad/save', curso, { headers: this.storageService.returnToken()});
+    return this.http.post<Especialidad>(environment.apiuri+'/especialidad/save', curso);
   }
 
   public getespecialidadByIdArea(idArea: number):Observable<Especialidad[]>{
-    return this.http.get<Especialidad[]>(environment.apiuri+'/especialidad/findbyIdArea/'+idArea, { headers: this.storageService.returnToken()});
+    return this.http.get<Especialidad[]>(environment.apiuri+'/especialidad/findbyIdArea/'+idArea);
   }
   
 }

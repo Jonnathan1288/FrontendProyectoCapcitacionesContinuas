@@ -14,10 +14,10 @@ export class DocenteFenixService {
   constructor(private http: HttpClient, private storageService: StorageService) { }
 
   public listDocenteFenix():Observable<DocenteFenix[]>{
-    return this.http.get<DocenteFenix[]>(environment.apiuri+'/fenix/docente/ista/list', { headers: this.storageService.returnToken()});
+    return this.http.get<DocenteFenix[]>(environment.apiuri+'/fenix/docente/ista/list');
   }
 
   public getDocenteFenixFindByIdentificasión(identificacion: string):Observable<DocenteFenix>{
-    return this.http.get<DocenteFenix>(environment.apiuri+'/fenix/docente/ista/findbyIdentificasion/'+identificacion, { headers: this.storageService.returnToken()});
+    return this.http.get<DocenteFenix>(environment.apiuri+'/fenix/docente/ista/findbyIdentificasion/'+identificacion);
   }
 }

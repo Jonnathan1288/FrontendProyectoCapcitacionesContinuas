@@ -13,15 +13,15 @@ export class UsuarioService {
   constructor(private http: HttpClient, private storageService: StorageService) { }
 
   public listUsuario():Observable<Usuario[]>{
-    return this.http.get<Usuario[]>(environment.apiuri+'/usuario/listar', { headers: this.storageService.returnToken()});
+    return this.http.get<Usuario[]>(environment.apiuri+'/usuario/listar');
   }
 
   public getUsuarioById(idUsuario: number):Observable<Usuario>{
-    return this.http.get<Usuario>(environment.apiuri+'/usuario/findbyId/'+idUsuario, { headers: this.storageService.returnToken()});
+    return this.http.get<Usuario>(environment.apiuri+'/usuario/findbyId/'+idUsuario);
   }
 
   public updateUsuario(idUsusario:number, usuario: Usuario):Observable<Usuario>{
-    return this.http.put<Usuario>(environment.apiuri+'/usuario/actualizar/'+idUsusario, usuario, { headers: this.storageService.returnToken()});
+    return this.http.put<Usuario>(environment.apiuri+'/usuario/actualizar/'+idUsusario, usuario);
   }
 
   //PARA PETICIONES PUBLICAS DE VALIDACIONES--------------------------------------------------------------------------

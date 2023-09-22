@@ -14,13 +14,19 @@ import { RecuperarService } from 'src/app/service/recuperar-password.service';
 })
 export class LoginComponent implements OnInit {
   public usuario = new Usuario();
+
+
+  public initAuthSpiner: boolean = false;
+
+
   constructor(
     private router: Router,
     private oauthService: OauthService,
     private toastrService: ToastrService,
     private recuperarService: RecuperarService
-  ) {}
-  ngOnInit(): void {}
+  ) { }
+  ngOnInit(): void {
+  }
 
   showSpinner: any;
 
@@ -28,25 +34,27 @@ export class LoginComponent implements OnInit {
 
   public rolLocalStorage?: any;
 
-  public info?:any;
+  public info?: any;
   public user: UserLogin = new UserLogin();
   public login() {
+
     if (this.user) {
+      this.initAuthSpiner = true;
       this.oauthService
         .login(this.user)
         .subscribe(
           (data) => {
             if (data != null) {
+              this.initAuthSpiner = false;
               this.info = data;
-        
+
               // console.log(data?.token?)
-           
+
               this.roles = this.info.user.roles!;
               localStorage.removeItem('id_username');
               localStorage.removeItem('id_persona');
-              localStorage.removeItem('foto');
+              localStorage.removeItem('datauser');
               localStorage.removeItem('rol');
-              localStorage.removeItem('username');
               localStorage.removeItem('token');
               if (this.info.user.estadoUsuarioActivo == false) {
                 this.toastrService.error(
@@ -64,28 +72,27 @@ export class LoginComponent implements OnInit {
                   'id_persona',
                   String(this.info.user.persona?.idPersona)
                 );
-                localStorage.setItem('foto', String(this.info.user.fotoPerfil));
 
-                localStorage.setItem('username', String(this.info.user.username));
+                const dataUser = {
+                  username: this.info.user.username,
+                  foto: this.info.user.fotoPerfil
+                }
+
+                localStorage.setItem("datauser", JSON.stringify(dataUser));
 
                 if (this.info.user.roles?.length! > 1) {
                   this.modalView();
                 } else {
-                  this.toastrService.success('Bienvenido', 'Ingreso Exitoso', {
-                    timeOut: 1500,
-                    progressBar: true,
-                    progressAnimation: 'increasing',
-                  });
-
                   for (let rol of this.info.user.roles!) {
                     localStorage.setItem('rol', String(rol.nombreRol));
                   }
 
                   setTimeout(() => {
                     this.showSpinner = false;
-                    window.location.reload();
-                    location.replace('/home');
-                  }, 1500);
+                    this.router.navigate(['/home']).then(() => {
+                      window.location.reload();
+                    });
+                  }, 100);
                 }
               }
             } else {
@@ -99,6 +106,7 @@ export class LoginComponent implements OnInit {
             }
           },
           (err) => {
+            this.initAuthSpiner = false;
             this.toastrService.error(
               'Revise sus Credenciales de acceso.',
               'Usuario no registrado',
@@ -109,6 +117,7 @@ export class LoginComponent implements OnInit {
           }
         );
     } else {
+
       this.toastrService.warning(
         'Uno o más campos vacios',
         'Verifique los Campos de texto',
@@ -120,7 +129,7 @@ export class LoginComponent implements OnInit {
   }
 
   //VALIDACION DENTRO DEL LOGIN CREDENCIALES CORRECTAS
-  public loginNext() {}
+  public loginNext() { }
 
   //paso a la parte de registro de persona si no tengo cuenta en el portal.
 
@@ -161,36 +170,36 @@ export class LoginComponent implements OnInit {
   // RECUPERAR CONTRASEÑA
   isSendCorreo: Boolean = false;
   cedulaReset?: String;
-  public visibleRecuperarPassword?:boolean = false;
+  public visibleRecuperarPassword?: boolean = false;
   public modalViewRecuperarPassword() {
     this.visibleRecuperarPassword = true;
   }
 
-  public enviarCorreo(){
+  public enviarCorreo() {
     this.showSpinner = true;
     if (this.cedulaReset == "" || this.cedulaReset == null) {
       this.toastrService.error('Digite su cédula', 'Campo vacio')
     } else {
       this.oauthService.getUsuarioByIdentificacion(this.cedulaReset).subscribe(
-        (data) =>{
-            this.recuperarService.sendCorreoRecuperacion(this.cedulaReset!).subscribe(
-              data =>{
-                console.log(data);
-                this.toastrService.success('Correo enviado', 'Revise su correo')
-                this.isSendCorreo = true;
-                setTimeout(() => {
-                  this.showSpinner = false;
-                  window.location.reload();
-                  location.replace('/welcome');
-                }, 1800);
-              }
-            )
-        }, (Error) =>{
+        (data) => {
+          this.recuperarService.sendCorreoRecuperacion(this.cedulaReset!).subscribe(
+            data => {
+              console.log(data);
+              this.toastrService.success('Correo enviado', 'Revise su correo')
+              this.isSendCorreo = true;
+              setTimeout(() => {
+                this.showSpinner = false;
+                window.location.reload();
+                location.replace('/welcome');
+              }, 1800);
+            }
+          )
+        }, (Error) => {
           this.toastrService.error('Usuario inexistente', 'Vetifique su identifiación')
         }
       )
     }
-    
+
   }
 
 }

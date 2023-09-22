@@ -18,7 +18,6 @@ import { PrerrequisitosCursoService } from 'src/app/service/prerrequisitosCurso.
 import { ReportsCapacitacionesService } from 'src/app/service/reports-capacitaciones.service';
 import { ResultadoAprendizajeSilaboService } from 'src/app/service/resultado-aprendizaje-silabo.service';
 import { SilaboService } from 'src/app/service/silabo.service';
-
 @Component({
   selector: 'app-silabo',
   templateUrl: './silabo.component.html',
@@ -122,15 +121,15 @@ export class SilaboComponent implements OnInit {
   /* CREACION RESULTADOS APRENDIZAJE - ARRAY TEMPORAL*/
   listResultadosAprendizajes: ResultadoAprendizajeSilabo[] = [];
   public almacenarLista(): void {
-    if (!this.resultadoAprendizajeSilabo.temaUnidadSilabo || !this.resultadoAprendizajeSilabo.elementosCompetenciaSilabo ||
-      !this.resultadoAprendizajeSilabo.activadesResultadoAprendizaje || !this.resultadoAprendizajeSilabo.formaEvidenciar) {
-      this.toastrService.error('Verifique los campos obligatorios', 'Uno o más campos vacios');
-    } else {
+    // if (!this.resultadoAprendizajeSilabo.temaUnidadSilabo || !this.resultadoAprendizajeSilabo.elementosCompetenciaSilabo ||
+    //   !this.resultadoAprendizajeSilabo.activadesResultadoAprendizaje || !this.resultadoAprendizajeSilabo.formaEvidenciar) {
+    //   this.toastrService.error('Verifique los campos obligatorios', 'Uno o más campos vacios');
+    // } else {
       this.resultadoAprendizajeSilabo.estadoUnidadActivo = true;
       this.listResultadosAprendizajes.push(this.resultadoAprendizajeSilabo);
       this.toastrService.success('Se añadio correctamente', 'Registro Exitoso');
       this.limpiarResultadoAprendizaje();
-    }
+    //}
   }
 
   public quitarElemento(temaUnidadSilabo: any): void {
@@ -154,10 +153,10 @@ export class SilaboComponent implements OnInit {
   /* CREACION CONTENIDOS - ARRAY TEMPORAL*/
   listContenidosSilabo: Contenidosilabos[] = [];
   public almacenarListaContenidos(): void {
-    if (!this.contenidosSilabo.temaContenido || !this.contenidosSilabo.horasAutonomas || !this.contenidosSilabo.diaContenido ||
-      !this.contenidosSilabo.actividadesPracticas || !this.contenidosSilabo.actividadesAutonomas || !this.contenidosSilabo.actividadesDocencia || !this.contenidosSilabo.horasPracticas || !this.contenidosSilabo.horasClaseContenido) {
-        this.toastrService.error('Verifique los campos obligatorios', 'Uno o más campos vacios');
-    } else {
+    // if (!this.contenidosSilabo.temaContenido || !this.contenidosSilabo.horasAutonomas || !this.contenidosSilabo.diaContenido ||
+    //   !this.contenidosSilabo.actividadesPracticas || !this.contenidosSilabo.actividadesAutonomas || !this.contenidosSilabo.actividadesDocencia || !this.contenidosSilabo.horasPracticas || !this.contenidosSilabo.horasClaseContenido) {
+    //     this.toastrService.error('Verifique los campos obligatorios', 'Uno o más campos vacios');
+    // } else {
       this.listContenidosSilabo.push(this.contenidosSilabo);
       this.toastrService.success('Se añadio correctamente', 'Registro Exitoso');
       this.contenidosSilabo = new Contenidosilabos();
@@ -165,7 +164,7 @@ export class SilaboComponent implements OnInit {
       this.contenidosSilabo.horasPracticas = 0;
       this.contenidosSilabo.horasClaseContenido = 0;
       this.contenidosSilabo.horasAutonomas = 0;
-    }
+    //}
   }
 
   public quitarElementoContenido(temaContenido: any): void {
@@ -181,13 +180,13 @@ export class SilaboComponent implements OnInit {
   listEstrategiasMetodologica: EstrategiasMetodologica[] = [];
 
   public almacenarListaEstrategias(): void {
-    if (!this.estrategiasMetodologicas.nombreEstrategiaMetodologica || !this.estrategiasMetodologicas.finalidadEstrategiaMetodologica) {
-      this.toastrService.error('Verifique los campos obligatorios', 'Uno o más campos vacios');
-    } else {
+    // if (!this.estrategiasMetodologicas.nombreEstrategiaMetodologica || !this.estrategiasMetodologicas.finalidadEstrategiaMetodologica) {
+    //   this.toastrService.error('Verifique los campos obligatorios', 'Uno o más campos vacios');
+    // } else {
       this.listEstrategiasMetodologica.push(this.estrategiasMetodologicas);
       this.toastrService.success('Se añadio correctamente', 'Registro Exitoso');
       this.limpiarEstrategias();
-    }
+    //}
   }
 
   public quitarElementoEstrategias(nombreEstrategiaMetodologica: any): void {
@@ -209,13 +208,13 @@ export class SilaboComponent implements OnInit {
   listMaterialConvencionales: MaterialConvencionales[] = [];
 
   public almacenarListaMaterialConvencionales(): void {
-    if (!this.materialesConvecionales.descripcionMaterialConvencional) {
-      this.toastrService.error('Verifique los campos obligatorios', 'Uno o más campos vacios');
-    } else {
+    // if (!this.materialesConvecionales.descripcionMaterialConvencional) {
+    //   this.toastrService.error('Verifique los campos obligatorios', 'Uno o más campos vacios');
+    // } else {
       this.listMaterialConvencionales.push(this.materialesConvecionales);
       this.toastrService.success('Se añadio correctamente', 'Registro Exitoso');
       this.limpiarMaterialezConvencionales();
-    }
+    //}
   }
 
   public quitarElementoMateriales(descripcionMaterialConvencional: any): void {
@@ -236,13 +235,13 @@ export class SilaboComponent implements OnInit {
   listCMaterialAudiovisuales: MaterialAudiovisuales[] = [];
 
   public almacenarListaMaterialAudiovisualess(): void {
-    if (!this.materialesAudiovisuales.descripcionMaterialAudiovisual) {
-      this.toastrService.error('Verifique los campos obligatorios', 'Uno o más campos vacios');
-    } else {
+    // if (!this.materialesAudiovisuales.descripcionMaterialAudiovisual) {
+    //   this.toastrService.error('Verifique los campos obligatorios', 'Uno o más campos vacios');
+    // } else {
       this.listCMaterialAudiovisuales.push(this.materialesAudiovisuales);
       this.toastrService.success('Se añadio correctamente', 'Registro Exitoso');
       this.limpiarMaterialesAudivisuales();
-    }
+   // }
   }
 
   public quitarElementoConvencional(descripcionMaterialAudiovisual: any): void {
@@ -262,32 +261,18 @@ export class SilaboComponent implements OnInit {
   /* METODO POST */
   idSilaboCap!: any;
   public generarSilabo(): void {
-    if (this.listResultadosAprendizajes.length == 0) {
-      this.toastrService.error('Agregue al menos un resultado', 'Resultados de Aprendizaje!');
-    } else {
-      if (this.listContenidosSilabo.length  == 0) {
-        this.toastrService.error('Agregue al menos un contenido', 'Contenidos Silabo!');
-      } else {
-        if (this.listEstrategiasMetodologica.length  == 0) {
-          this.toastrService.error('Agregue al menos una estrategia', 'Estrategias Metodológicas!');
-        } else {
-          // Materiales------------------
-          if(this.listMaterialConvencionales.length == 0){
-            this.toastrService.error('Agregue al menos un material convencional.', 'Material Convencional!');
-            return;
-          }
-
-          if(this.listCMaterialAudiovisuales.length == 0){
-            this.toastrService.error('Agregue al menos un material audiovisual.', 'Material Audiovisual!');
-            return;
-          }
-          //Fin de las validaciones de campos null
-
-
-          if (!this.silabo.campoAprovadoPor || !this.silabo.campoRevisadoPor || !this.silabo.campoFormacion) {
-            this.toastrService.error('Verifique los campos obligatorios', 'Uno o más campos vacios');
-          } else {
-            
+    // if (this.listResultadosAprendizajes.length == 0) {
+    //   this.toastrService.error('Agregue al menos un resultado', 'Resultados de Aprendizaje!');
+    // } else {
+    //   if (this.listContenidosSilabo.length  == 0) {
+    //     this.toastrService.error('Agregue al menos un contenido', 'Contenidos Silabo!');
+    //   } else {
+    //     if (this.listEstrategiasMetodologica.length  == 0) {
+    //       this.toastrService.error('Agregue al menos una estrategia', 'Estrategias Metodológicas!');
+    //     } else {
+    //       if (!this.silabo.campoAprovadoPor || !this.silabo.campoRevisadoPor || !this.silabo.campoFormacion) {
+    //         this.toastrService.error('Verifique los campos obligatorios', 'Uno o más campos vacios');
+    //       } else {
             this.silabo.curso = this.curso;
             this.silaboService.saveSilabo(this.silabo).subscribe(
               silaboData => {
@@ -313,10 +298,10 @@ export class SilaboComponent implements OnInit {
                   location.reload();
                 }, 1200);
             })
-          }
-        }
-      }
-    }
+         // }
+       // }
+      //}
+   //}
   }
   /* */
 
@@ -394,18 +379,18 @@ export class SilaboComponent implements OnInit {
 
 
   public actualizarSilabo(): void {
-    if (this.contadorValidasUnoG == 0) {
-      this.toastrService.error('Active al menos un resultado', 'Resultados de Aprendizaje!');
-    } else {
-      if (this.contadorValidasDosG == 0) {
-        this.toastrService.error('Active al menos un contenido', 'Contenidos Silabo!');
-      } else {
-        if (this.contadorValidasTresG == 0) {
-          this.toastrService.error('Active al menos una estrategia', 'Estrategias Metodológicas!');
-        } else {
-          if (!this.silabo.campoAprovadoPor || !this.silabo.campoRevisadoPor || !this.silabo.campoFormacion) {
-            this.toastrService.error('Verifique los campos obligatorios', 'Uno o más campos vacios');
-          } else {
+    // if (this.contadorValidasUnoG == 0) {
+    //   this.toastrService.error('Active al menos un resultado', 'Resultados de Aprendizaje!');
+    // } else {
+    //   if (this.contadorValidasDosG == 0) {
+    //     this.toastrService.error('Active al menos un contenido', 'Contenidos Silabo!');
+    //   } else {
+    //     if (this.contadorValidasTresG == 0) {
+    //       this.toastrService.error('Active al menos una estrategia', 'Estrategias Metodológicas!');
+    //     } else {
+    //       if (!this.silabo.campoAprovadoPor || !this.silabo.campoRevisadoPor || !this.silabo.campoFormacion) {
+    //         this.toastrService.error('Verifique los campos obligatorios', 'Uno o más campos vacios');
+    //       } else {
               this.silaboService.saveSilabo(this.silabo).subscribe(
               silaboData => {
                 this.silabo = silaboData;
@@ -414,10 +399,10 @@ export class SilaboComponent implements OnInit {
                   location.reload();
                 }, 1200);
             })
-          }
-        }
-      }
-    }
+        //  }
+       // }
+      //}
+    //}
   }
 
   // TRAER TODOS LOS DATOS DEL SILABO
@@ -727,10 +712,10 @@ export class SilaboComponent implements OnInit {
 
   public actualizarResultadosEstrategia(): void {
     if (this.opcionCapResultado == "C") {
-      if (!this.resultadoAprendizajeSilabo.temaUnidadSilabo || !this.resultadoAprendizajeSilabo.elementosCompetenciaSilabo ||
-        !this.resultadoAprendizajeSilabo.activadesResultadoAprendizaje || !this.resultadoAprendizajeSilabo.formaEvidenciar) {
-        this.toastrService.error('Verifique los campos obligatorios', 'Uno o más campos vacios');
-      } else {
+      // if (!this.resultadoAprendizajeSilabo.temaUnidadSilabo || !this.resultadoAprendizajeSilabo.elementosCompetenciaSilabo ||
+      //   !this.resultadoAprendizajeSilabo.activadesResultadoAprendizaje || !this.resultadoAprendizajeSilabo.formaEvidenciar) {
+      //   this.toastrService.error('Verifique los campos obligatorios', 'Uno o más campos vacios');
+      // } else {
         this.resultadoAprendizajeSilabo.silabo = this.silabo;
         this.resultadoAprendizajeSilabo.estadoUnidadActivo = true;
         this.resultadosAprendizajeService.saveResultadosArendizaje(this.resultadoAprendizajeSilabo).subscribe(
@@ -740,19 +725,19 @@ export class SilaboComponent implements OnInit {
             this.toastrService.success('Nuevo registro existoso', 'Registro Exitoso');
           }
         )
-      }
+      //}
     } else {
-      if (!this.resultadoAprendizajeSilabo.temaUnidadSilabo || !this.resultadoAprendizajeSilabo.elementosCompetenciaSilabo ||
-        !this.resultadoAprendizajeSilabo.activadesResultadoAprendizaje || !this.resultadoAprendizajeSilabo.formaEvidenciar) {
-        this.toastrService.error('Verifique los campos obligatorios', 'Uno o más campos vacios');
-      } else {
+      // if (!this.resultadoAprendizajeSilabo.temaUnidadSilabo || !this.resultadoAprendizajeSilabo.elementosCompetenciaSilabo ||
+      //   !this.resultadoAprendizajeSilabo.activadesResultadoAprendizaje || !this.resultadoAprendizajeSilabo.formaEvidenciar) {
+      //   this.toastrService.error('Verifique los campos obligatorios', 'Uno o más campos vacios');
+      // } else {
         this.resultadosAprendizajeService.updateEstadosResultados(this.idCapModelEdit!, this.resultadoAprendizajeSilabo).subscribe(
           dataTwo => {
             this.traerDatosEstretegiasFull(this.idDelSilabo!);
             this.toastrService.success('', 'Registro Actualizado');
           }
         )
-      }
+      //}
     }
   }
   // FIN 
@@ -782,10 +767,10 @@ export class SilaboComponent implements OnInit {
 
   public metodoElejidoContenidos():void{
     if (this.opcionDelContenido == "C") {
-      if (!this.contenidosSilabo.temaContenido || !this.contenidosSilabo.horasAutonomas || !this.contenidosSilabo.diaContenido ||
-        !this.contenidosSilabo.actividadesPracticas || !this.contenidosSilabo.actividadesAutonomas || !this.contenidosSilabo.actividadesDocencia || !this.contenidosSilabo.horasPracticas || !this.contenidosSilabo.horasClaseContenido) {
-          this.toastrService.error('Verifique los campos obligatorios', 'Uno o más campos vacios');
-      } else {
+      // if (!this.contenidosSilabo.temaContenido || !this.contenidosSilabo.horasAutonomas || !this.contenidosSilabo.diaContenido ||
+      //   !this.contenidosSilabo.actividadesPracticas || !this.contenidosSilabo.actividadesAutonomas || !this.contenidosSilabo.actividadesDocencia || !this.contenidosSilabo.horasPracticas || !this.contenidosSilabo.horasClaseContenido) {
+      //     this.toastrService.error('Verifique los campos obligatorios', 'Uno o más campos vacios');
+      // } else {
         this.contenidosSilabo.silabo = this.silabo;
         this.contenidosSilabo.estadoContenido = true;
         this.contenidoSilaboService.saveContenidosilabos(this.contenidosSilabo).subscribe(
@@ -793,18 +778,18 @@ export class SilaboComponent implements OnInit {
           this.traerDatosContenidosFull(this.idDelSilabo!);
           this.toastrService.success('Nuevo registro existoso', 'Registro Exitoso');
         })
-      }
+      //}
     } else {
-      if (!this.contenidosSilabo.temaContenido || !this.contenidosSilabo.horasAutonomas || !this.contenidosSilabo.diaContenido ||
-        !this.contenidosSilabo.actividadesPracticas || !this.contenidosSilabo.actividadesAutonomas || !this.contenidosSilabo.actividadesDocencia || !this.contenidosSilabo.horasPracticas || !this.contenidosSilabo.horasClaseContenido) {
-          this.toastrService.error('Verifique los campos obligatorios', 'Uno o más campos vacios');
-      } else {
+      // if (!this.contenidosSilabo.temaContenido || !this.contenidosSilabo.horasAutonomas || !this.contenidosSilabo.diaContenido ||
+      //   !this.contenidosSilabo.actividadesPracticas || !this.contenidosSilabo.actividadesAutonomas || !this.contenidosSilabo.actividadesDocencia || !this.contenidosSilabo.horasPracticas || !this.contenidosSilabo.horasClaseContenido) {
+      //     this.toastrService.error('Verifique los campos obligatorios', 'Uno o más campos vacios');
+      // } else {
       this.contenidoSilaboService.updateContenidoSilabo(this.idCapModelEditContenido!, this.contenidosSilabo).subscribe(
         dataTwo => {
           this.traerDatosContenidosFull(this.idDelSilabo!);
           this.toastrService.success('', 'Registro Actualizado');
         })
-      }
+     // }
     }
   }
   // FIN
@@ -833,9 +818,9 @@ export class SilaboComponent implements OnInit {
 
   public actualizarAudiovisual(): void {
     if (this.opcionElegida == "C") {
-      if (!this.materialesAudiovisuales.descripcionMaterialAudiovisual) {
-        this.toastrService.error('Verifique los campos obligatorios', 'Uno o más campos vacios');
-      } else {
+      // if (!this.materialesAudiovisuales.descripcionMaterialAudiovisual) {
+      //   this.toastrService.error('Verifique los campos obligatorios', 'Uno o más campos vacios');
+      // } else {
           this.materialesAudiovisuales.silabo = this.silabo;
           this.materialesAudiovisuales.estadoMaterialAudiovisual = true;
           this.materialesAudivisualesSilaboService.saveMaterialAudiovisuales(this.materialesAudiovisuales).subscribe(
@@ -844,18 +829,18 @@ export class SilaboComponent implements OnInit {
             this.toastrService.success('Nuevo registro existoso', 'Registro Exitoso');
           }
         )
-      }
+      //}
     } else {
-      if (!this.materialesAudiovisuales.descripcionMaterialAudiovisual) {
-        this.toastrService.error('Verifique los campos obligatorios', 'Uno o más campos vacios');
-      } else {
+      // if (!this.materialesAudiovisuales.descripcionMaterialAudiovisual) {
+      //   this.toastrService.error('Verifique los campos obligatorios', 'Uno o más campos vacios');
+      // } else {
         this.materialesAudivisualesSilaboService.updateEstadosMaterialAudio(this.idCapModelEditAudiovisual!, this.materialesAudiovisuales).subscribe(
           dataTwo => {
             this.traerDatosMaudiovisualesFull(this.idDelSilabo!);
             this.toastrService.success('', 'Registro Actualizado');
           }
         )
-      }
+      //}
     }
   }
   // FIN
@@ -885,9 +870,9 @@ export class SilaboComponent implements OnInit {
 
   public opcionAEnviar(): void {
     if (this.opcionEscojidaConvencional == "C") {
-        if (!this.materialesConvecionales.descripcionMaterialConvencional) {
-          this.toastrService.error('Verifique los campos obligatorios', 'Uno o más campos vacios');
-        } else {
+        // if (!this.materialesConvecionales.descripcionMaterialConvencional) {
+        //   this.toastrService.error('Verifique los campos obligatorios', 'Uno o más campos vacios');
+        // } else {
           this.materialesConvecionales.silabo = this.silabo;
           this.materialesConvecionales.estadoMaterialConvencional = true;
           this.materialesConvencianalesService.saveMaterialConvencional(this.materialesConvecionales).subscribe(
@@ -896,18 +881,18 @@ export class SilaboComponent implements OnInit {
             this.toastrService.success('Nuevo registro existoso', 'Registro Exitoso');
           }
         )
-      }
+      //}
     } else {
-      if (!this.materialesConvecionales.descripcionMaterialConvencional) {
-        this.toastrService.error('Verifique los campos obligatorios', 'Uno o más campos vacios');
-      } else {
+      // if (!this.materialesConvecionales.descripcionMaterialConvencional) {
+      //   this.toastrService.error('Verifique los campos obligatorios', 'Uno o más campos vacios');
+      // } else {
         this.materialesConvencianalesService.updateMaterialConvencionales(this.idCaoModelConvencional!, this.materialesConvecionales).subscribe(
           dataTwo => {
             this.traerDatosMconvencionalesFull(this.idDelSilabo!);
             this.toastrService.success('', 'Registro Actualizado');
           }
         )
-      }
+      //}
     }
   }
   // FIN CONVE
@@ -936,9 +921,9 @@ export class SilaboComponent implements OnInit {
 
   public metodoElejidoEstrategias():void{
     if (this.opcionEscojidaEstrategia == "C") {
-      if (!this.estrategiasMetodologicas.nombreEstrategiaMetodologica || !this.estrategiasMetodologicas.finalidadEstrategiaMetodologica) {
-        this.toastrService.error('Verifique los campos obligatorios', 'Uno o más campos vacios');
-      } else {
+      // if (!this.estrategiasMetodologicas.nombreEstrategiaMetodologica || !this.estrategiasMetodologicas.finalidadEstrategiaMetodologica) {
+      //   this.toastrService.error('Verifique los campos obligatorios', 'Uno o más campos vacios');
+      // } else {
         this.estrategiasMetodologicas.silabo = this.silabo;
         this.estrategiasMetodologicas.estadoEstrategiaMetodologicaActivo = true;
         this.estrategiasMetodologicasService.saveEstrategiasMetodologica(this.estrategiasMetodologicas).subscribe(
@@ -946,44 +931,44 @@ export class SilaboComponent implements OnInit {
           this.traerDatosEstrategiasFull(this.idDelSilabo!);
           this.toastrService.success('Nuevo registro existoso', 'Registro Exitoso');
         })
-      }
+      //}
     } else {
-      if (!this.estrategiasMetodologicas.nombreEstrategiaMetodologica || !this.estrategiasMetodologicas.finalidadEstrategiaMetodologica) {
-        this.toastrService.error('Verifique los campos obligatorios', 'Uno o más campos vacios');
-      } else {
+      // if (!this.estrategiasMetodologicas.nombreEstrategiaMetodologica || !this.estrategiasMetodologicas.finalidadEstrategiaMetodologica) {
+      //   this.toastrService.error('Verifique los campos obligatorios', 'Uno o más campos vacios');
+      // } else {
         this.estrategiasMetodologicasService.updateEstrategiasSilabo(this.idCapModelEditEstetegia!, this.estrategiasMetodologicas).subscribe(
           dataTwo => {
             this.traerDatosEstrategiasFull(this.idDelSilabo!);
             this.toastrService.success('', 'Registro Actualizado');
           })
-      }
+      // }
     }
   }
   // FIN ESTRATEGIAS
   
   // IMPRIMIR // VALIDAR idSilaboCapGlobal // idSilaboCap
   public getReportSilabo() {
-    if (this.contadorValidasUnoG == 0) {
-      this.toastrService.error('Active al menos un resultado', 'Resultados de Aprendizaje!');
-    } else {
-      if (this.contadorValidasDosG == 0) {
-        this.toastrService.error('Active al menos un contenido', 'Contenidos Silabo!');
-      } else {
-        if (this.contadorValidasTresG == 0) {
-          this.toastrService.error('Active al menos una estrategia', 'Estrategias Metodológicas!');
-        } else {
-          if (!this.silabo.campoAprovadoPor || !this.silabo.campoRevisadoPor || !this.silabo.campoFormacion) {
-            this.toastrService.error('Verifique los campos obligatorios', 'Uno o más campos vacios');
-          } else {
+    // if (this.contadorValidasUnoG == 0) {
+    //   this.toastrService.error('Active al menos un resultado', 'Resultados de Aprendizaje!');
+    // } else {
+    //   if (this.contadorValidasDosG == 0) {
+    //     this.toastrService.error('Active al menos un contenido', 'Contenidos Silabo!');
+    //   } else {
+    //     if (this.contadorValidasTresG == 0) {
+    //       this.toastrService.error('Active al menos una estrategia', 'Estrategias Metodológicas!');
+    //     } else {
+    //       if (!this.silabo.campoAprovadoPor || !this.silabo.campoRevisadoPor || !this.silabo.campoFormacion) {
+    //         this.toastrService.error('Verifique los campos obligatorios', 'Uno o más campos vacios');
+    //       } else {
           this.reportService.gedownloadSilabo(this.idDelSilabo!)
             .subscribe((r) => {
               const url = URL.createObjectURL(r);
               window.open(url, '_blank');
             });
-          }
-        }
-      }
-    }
+          //}
+       // }
+      //}
+    //}
   }
 
   // SALTOS DE LINEA

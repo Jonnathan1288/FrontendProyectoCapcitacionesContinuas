@@ -13,26 +13,26 @@ export class ResultadoAprendizajeSilaboService {
   constructor(private http: HttpClient, private storageService: StorageService) { }
 
   public listResultadosArendizaje():Observable<ResultadoAprendizajeSilabo[]>{
-    return this.http.get<ResultadoAprendizajeSilabo[]>(environment.apiuri+'/resultadoAprendizajeSilabo/listar', { headers: this.storageService.returnToken()});
+    return this.http.get<ResultadoAprendizajeSilabo[]>(environment.apiuri+'/resultadoAprendizajeSilabo/listar');
   }
 
   public saveResultadosArendizaje(resultadoAprendizajeSilabo: ResultadoAprendizajeSilabo):Observable<ResultadoAprendizajeSilabo>{
-    return this.http.post<ResultadoAprendizajeSilabo>(environment.apiuri+'/resultadoAprendizajeSilabo/crear', resultadoAprendizajeSilabo, { headers: this.storageService.returnToken()});
+    return this.http.post<ResultadoAprendizajeSilabo>(environment.apiuri+'/resultadoAprendizajeSilabo/crear', resultadoAprendizajeSilabo);
   }
 
   public getResultadosArendizajeById(id_curso: number):Observable<ResultadoAprendizajeSilabo>{
-    return this.http.get<ResultadoAprendizajeSilabo>(environment.apiuri+'/resultadoAprendizajeSilabo/findbyId/'+id_curso, { headers: this.storageService.returnToken()});
+    return this.http.get<ResultadoAprendizajeSilabo>(environment.apiuri+'/resultadoAprendizajeSilabo/findbyId/'+id_curso);
   }
 
   public getResultadosPorIdSilabo(id: number):Observable<ResultadoAprendizajeSilabo[]>{
-    return this.http.get<ResultadoAprendizajeSilabo[]>(environment.apiuri+'/resultadoAprendizajeSilaboIdSilabo/findbyId/'+id, { headers: this.storageService.returnToken()});
+    return this.http.get<ResultadoAprendizajeSilabo[]>(environment.apiuri+'/resultadoAprendizajeSilaboIdSilabo/findbyId/'+id);
   }
 
   public cambiarEstadosResultadosSilaboId(id:number, resultadoAprendizajeSilabo: ResultadoAprendizajeSilabo):Observable<ResultadoAprendizajeSilabo>{
-    return this.http.put<ResultadoAprendizajeSilabo>(environment.apiuri+'/resultadoAprendizajeSilabo/actualizar/'+id, resultadoAprendizajeSilabo, { headers: this.storageService.returnToken()});
+    return this.http.put<ResultadoAprendizajeSilabo>(environment.apiuri+'/resultadoAprendizajeSilabo/actualizar/'+id, resultadoAprendizajeSilabo);
   }
 
   public updateEstadosResultados(id:number, resultadoAprendizajeSilabo: ResultadoAprendizajeSilabo):Observable<ResultadoAprendizajeSilabo>{
-    return this.http.put<ResultadoAprendizajeSilabo>(environment.apiuri+'/resultadoAprendizajeSilabo/actualizar/'+id, resultadoAprendizajeSilabo, { headers: this.storageService.returnToken()});
+    return this.http.put<ResultadoAprendizajeSilabo>(environment.apiuri+'/resultadoAprendizajeSilabo/actualizar/'+id, resultadoAprendizajeSilabo);
   }
 }
