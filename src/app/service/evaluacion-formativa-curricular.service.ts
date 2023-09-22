@@ -24,13 +24,13 @@ export class EvaluacionFormativaCurricularService {
   }
 
   public updateEvaluacionFormativaCurricular(  idEvalucionFormativaCurricular: number, evaluacionFormativaCurricular: EvalucionFormativaCurriculares): Observable<EvalucionFormativaCurriculares> {
-    return this.http.put<EvalucionFormativaCurriculares>(`${environment.apiuri}/evaluacionFormativaCurricular/update/${  idEvalucionFormativaCurricular}`, evaluacionFormativaCurricular);
+    return this.http.put<EvalucionFormativaCurriculares>(`${environment.apiuri}/evaluacionFormativaCurricular/actualizar/${  idEvalucionFormativaCurricular}`, evaluacionFormativaCurricular);
   }
   public updateEvaluacionFormativaCurricularEstadoId(  idEvalucionFormativaCurricular: number, evaluacionFormativaCurricular: EvalucionFormativaCurriculares): Observable<EvalucionFormativaCurriculares> {
-    return this.http.put<EvalucionFormativaCurriculares>(`${environment.apiuri}/evaluacionFormativaCurricular/update/${  idEvalucionFormativaCurricular}`, evaluacionFormativaCurricular, { headers: this.storageService.returnToken()});
+    return this.http.put<EvalucionFormativaCurriculares>(`${environment.apiuri}/evaluacionFormativaCurricular/actualizar/${  idEvalucionFormativaCurricular}`, evaluacionFormativaCurricular, { headers: this.storageService.returnToken()});
   }
   public getEvaluacionFormativaCurricularPorDisenioById(id: number):Observable<EvalucionFormativaCurriculares[]>{
-    return this.http.get<EvalucionFormativaCurriculares[]>(environment.apiuri+'/evaluacionFormativaporDisenioCurricular/findbyId/'+id);
+    return this.http.get<EvalucionFormativaCurriculares[]>(environment.apiuri+'/evaluacionFormativaCurricular/evaluacionFormativaporDisenioCurricular/findbyId/'+id);
   }
   
   

@@ -25,14 +25,14 @@ export class EvaluacionFinalCurricularService {
   }
 
   public updateEvaluacionFinalCurricular( idEvaluacionFinalCurricular: number, evaluacionFinalCurricular: EvaluacionFinalCurriculares): Observable<EvaluacionFinalCurriculares> {
-    return this.http.put<EvaluacionFinalCurriculares>(`${environment.apiuri}/evaluacionFinalCurricular/update/${ idEvaluacionFinalCurricular}`, evaluacionFinalCurricular);
+    return this.http.put<EvaluacionFinalCurriculares>(`${environment.apiuri}/evaluacionFinalCurricular/actualizar/${ idEvaluacionFinalCurricular}`, evaluacionFinalCurricular);
   }
 
   public updateEvaluacionFinalCurricularEstadoId( idEvaluacionFinalCurricular: number, evaluacionFinalCurricular: EvaluacionFinalCurriculares): Observable<EvaluacionFinalCurriculares> {
-    return this.http.put<EvaluacionFinalCurriculares>(`${environment.apiuri}/evaluacionFinalCurricular/update/${ idEvaluacionFinalCurricular}`, evaluacionFinalCurricular);
+    return this.http.put<EvaluacionFinalCurriculares>(`${environment.apiuri}/evaluacionFinalCurricular/actualizar/${ idEvaluacionFinalCurricular}`, evaluacionFinalCurricular);
   }
   public getEvaluacionFinalCurricularPorDisenioById(id: number):Observable<EvaluacionFinalCurriculares[]>{
-    return this.http.get<EvaluacionFinalCurriculares[]>(environment.apiuri+'/evaluacionFinalporDisenioCurricular/findbyId/'+id);
+    return this.http.get<EvaluacionFinalCurriculares[]>(environment.apiuri+'/evaluacionFinalCurricular/evaluacionFinalporDisenioCurricular/findbyId/'+id);
   }
   
 }

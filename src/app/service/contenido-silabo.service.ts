@@ -26,7 +26,7 @@ export class ContenidoSilaboService {
 
   
   public getContenidoSilaboPorIdSilabo(id: number):Observable<Contenidosilabos[]>{
-    return this.http.get<Contenidosilabos[]>(environment.apiuri+'/contenidosilaboPorSilabo/findbyId/'+id);
+    return this.http.get<Contenidosilabos[]>(environment.apiuri+'/contenidosilabo/contenidosilaboPorSilabo/findbyId/'+id);
   }
 
   public updateContenidoSilabo(id:number, contenidosSilabo: Contenidosilabos):Observable<Contenidosilabos>{

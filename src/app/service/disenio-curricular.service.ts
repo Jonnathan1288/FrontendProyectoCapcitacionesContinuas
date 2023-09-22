@@ -26,7 +26,7 @@ export class DisenioCurricularService {
   }
 
   public updateDisenioCurricular(idDisenioCurricular: number, disenioCurricular: DisenioCurriculares): Observable<DisenioCurriculares> {
-    return this.http.put<DisenioCurriculares>(`${environment.apiuri}/disenioCurricular/update/${idDisenioCurricular}`, disenioCurricular);
+    return this.http.put<DisenioCurriculares>(`${environment.apiuri}/disenioCurricular/actualizar/${idDisenioCurricular}`, disenioCurricular);
   }
   
   public getDisenioCurricularValidacion(idSilabo:number){
