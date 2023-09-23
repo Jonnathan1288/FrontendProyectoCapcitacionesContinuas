@@ -1,11 +1,8 @@
-
 <!-- IMPLEMENTACION PARA LA EDICION  EN LA MISMA TABLA -->
 
 <div class="card">
     <p-toolbar styleClass="mb-0">
         <ng-template pTemplate="left">
-
-
             <p-dropdown [options]="listCursoCapacitador" placeholder="Seleccione curso" optionLabel="nombreCurso"
                 [showClear]="true" (onChange)="onCursoSelectionChange($event)">
                 <ng-template let-course pTemplate="item">
@@ -23,7 +20,7 @@
             <button pButton pRipple label="Senescyt" icon="pi pi-print" class="p-button-primary mr-2 inline-block"
                 (click)="getCodigosSenecytDownload()" [disabled]="listParticipantsApproved.length <= 0"></button>
 
-            
+
         </ng-template>
     </p-toolbar>
 
@@ -66,34 +63,16 @@
         <ng-template pTemplate="body" let-certificadosPar let-ri="rowIndex">
             <tr [pEditableRow]="certificadosPar">
                 <td>
-                    {{certificadosPar.partipantesMatriculados.inscrito.usuario.persona?.identificacion}}
+                    {{certificadosPar.identificacion}}
                 </td>
                 <td>
-
-                    {{certificadosPar.partipantesMatriculados.inscrito.usuario.persona?.nombre1}}
-                    {{certificadosPar.partipantesMatriculados.inscrito.usuario.persona?.nombre2}}
-
-                </td>
-                <td>
-                    {{certificadosPar.partipantesMatriculados.inscrito.usuario.persona?.apellido1}}
-                    {{certificadosPar.partipantesMatriculados.inscrito.usuario.persona?.apellido2}}
-
-
+                    {{certificadosPar.nombres}}
                 </td>
                 <td>
                     {{certificadosPar.apellidos}}
-
-
                 </td>
-
 
             </tr>
         </ng-template>
     </p-table>
 </div>
-
-
-
-
-
-
