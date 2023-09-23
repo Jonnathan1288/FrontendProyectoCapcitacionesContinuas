@@ -17,7 +17,7 @@ export class EstrategiaMetodologicaService {
   }
 
   public saveEstrategiasMetodologica(estrategiaMetodologica: EstrategiasMetodologica):Observable<EstrategiasMetodologica>{
-    return this.http.post<EstrategiasMetodologica>(environment.apiuri+'/strategiaMetodologica/save', estrategiaMetodologica);
+    return this.http.post<EstrategiasMetodologica>(environment.apiuri+'/estrategiaMetodologica/save', estrategiaMetodologica);
   }
 
   public getEstrategiasMetodologicaById(id: number):Observable<EstrategiasMetodologica>{
@@ -25,11 +25,11 @@ export class EstrategiaMetodologicaService {
   }
 
   public getEstrategiasMetodologicaPorIdSilabo(id: number):Observable<EstrategiasMetodologica[]>{
-    return this.http.get<EstrategiasMetodologica[]>(environment.apiuri+'/strategiaMetodologicaPorSilabo/findbyId/'+id);
+    return this.http.get<EstrategiasMetodologica[]>(environment.apiuri+'/estrategiaMetodologica/strategiaMetodologicaPorSilabo/findbyId/'+id);
   }
 
   public updateEstrategiasSilabo(id:number, estrategiaMetodologica: EstrategiasMetodologica):Observable<EstrategiasMetodologica>{
-    return this.http.put<EstrategiasMetodologica>(environment.apiuri+'/strategiaMetodologica/update/'+id, estrategiaMetodologica);
+    return this.http.put<EstrategiasMetodologica>(environment.apiuri+'/estrategiaMetodologica/actualizar/'+id, estrategiaMetodologica);
   }
   
 }

@@ -73,8 +73,7 @@
                 <th pSortableColumn="estadoPublicasionCurso"><strong>PUBLICACIÓN </strong><p-sortIcon
                         field="estadoPublicasionCurso"></p-sortIcon></th>
 
-                <th style="text-align: center;"><strong>GESTIÓN</strong> </th>
-
+            
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-data>
@@ -109,10 +108,10 @@
 
                 <td style="text-align: center;"> <button pButton pRipple icon="pi pi-send"
                         class="p-button-rounded p-button-secondary mr-2 mt-1" (click)="showModaLPublisedCourse(data)"></button></td>
-                <td style="text-align: center;">
+                <!-- <td style="text-align: center;">
                     <button pButton pRipple icon="pi pi-bars"
                         class="p-button-rounded p-button-secondary mr-2 mt-1" (click)="modalViewoption(data)"></button>
-                </td>
+                </td> -->
             </tr>
         </ng-template>
         <ng-template pTemplate="summary">
@@ -208,45 +207,3 @@
 
 
 
-<p-dialog header="OPCIONES DEL CURSO" [(visible)]="visiblePeriodoMensual"
-    [modal]="true" [style]="{ width: '25vw', height: '25' }" [draggable]="false" [resizable]="false">
-    <div class="grid p-fluid m-2">
-        
-
-        
-
-        <div class="col-12 md:col-12 ">
-            <div class=" mr-4 mx-4" style="text-align: center;">
-                <p-button label="Sílabo" icon="pi pi-book" styleClass="p-button-success" badge="1"
-                    badgeClass="p-badge-primary" (onClick)="generacionSilaboCurso()"></p-button>
-
-            </div>
-        </div>
-
-        <div class="col-12 md:col-12 ">
-            <div class=" mr-4 mx-4" style="text-align: center;">
-                <p-button label="Necesidad de Curso" icon="pi pi-file-pdf" styleClass="p-button-primary" badge="2"
-                    badgeClass="p-badge-secondary" (onClick)="necesidadCurso()"></p-button>
-
-            </div>
-        </div>
-
-        <div class="col-12 md:col-12 ">
-            <div class=" mr-4 mx-4" style="text-align: center;">
-                <p-button [disabled]="classNewCourse.estadoPublicasionCurso !== 'I' && classNewCourse.estadoPublicasionCurso !== 'F'" label="Registro fotográfico" icon="pi pi-camera" styleClass="p-button-secondary" badge="3"
-                    badgeClass="p-badge-success" (onClick)="reistroFotograficoCurso()"></p-button>
-
-            </div>
-        </div>
-
-        <div class="col-12 md:col-12 ">
-            <div class=" mr-4 mx-4" style="text-align: center;">
-                <p-button label="Editar curso" icon="pi pi-pencil" styleClass="p-button-success" badge="4"
-                    badgeClass="p-badge-primary" (onClick)="editarCurso()"></p-button>
-
-            </div>
-        </div>
-        
-    </div>
-
-</p-dialog>

@@ -33,4 +33,9 @@ export class AsistenciaService {
   public getAsistenciaAntiguasPorFecha(idCurso: number, fecha: String):Observable<Asistencia[]>{
     return this.http.get<Asistencia[]>(environment.apiuri+'/asistencia/obtenerAsistenciaAnteriores/'+idCurso+'/'+fecha);
   }
+
+  public generarAsistenciaPorFecha2(idCurso: number, fecha:String):Observable<Asistencia[]>{
+    return this.http.get<Asistencia[]>(environment.apiuri+'/asistencia/GenerarAsistencia2/'+idCurso+'/'+fecha);
+  }
+
 }

@@ -25,7 +25,7 @@ export class MaterialAudiovisualService {
   }
   
   public getMaterialAudiovisualesPorIdSilabo(id: number):Observable<MaterialAudiovisuales[]>{
-    return this.http.get<MaterialAudiovisuales[]>(environment.apiuri+'/materialAudiovisualPorSilabo/findbyId/'+id);
+    return this.http.get<MaterialAudiovisuales[]>(environment.apiuri+'/materialAudiovisual/materialAudiovisualPorSilabo/findbyId/'+id);
   }
 
   public updateEstadosMaterialAudio(id:number, materialesAudiovisuales: MaterialAudiovisuales):Observable<MaterialAudiovisuales>{

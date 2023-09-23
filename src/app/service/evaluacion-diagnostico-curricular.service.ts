@@ -26,14 +26,14 @@ export class EvaluacionDiagnosticoCurricularService {
   }
 
   public cambiarEstadosEvaluacioDiagnosticaDisenioCurricularId(id:number, evaluacionDiacnosticaCurricular: EvaluacionDiagnosticaCurriculares):Observable<EvaluacionDiagnosticaCurriculares>{
-    return this.http.put<EvaluacionDiagnosticaCurriculares>(environment.apiuri+'/evaluacionDiacnosticaCurricular/update/'+id, evaluacionDiacnosticaCurricular);
+    return this.http.put<EvaluacionDiagnosticaCurriculares>(environment.apiuri+'/evaluacionDiacnosticaCurricular/actualizar/'+id, evaluacionDiacnosticaCurricular);
   }
 
   public  updateEvaluacionDiagnosticaCurricular(id:number, evaluacionDiacnosticaCurricular: EvaluacionDiagnosticaCurriculares):Observable< EvaluacionDiagnosticaCurriculares>{
-    return this.http.put< EvaluacionDiagnosticaCurriculares>(environment.apiuri+'/evaluacionDiacnosticaCurricular/update/'+id,evaluacionDiacnosticaCurricular);
+    return this.http.put< EvaluacionDiagnosticaCurriculares>(environment.apiuri+'/evaluacionDiacnosticaCurricular/actualizar/'+id,evaluacionDiacnosticaCurricular);
   }
   public getEvaluacionDiagnosticaCurricularPorDisenioById(id: number):Observable<EvaluacionDiagnosticaCurriculares[]>{
-    return this.http.get<EvaluacionDiagnosticaCurriculares[]>(environment.apiuri+'/evaluacionDiagnosticaporDisenioCurricular/findbyId/'+id);
+    return this.http.get<EvaluacionDiagnosticaCurriculares[]>(environment.apiuri+'/evaluacionDiacnosticaCurricular/evaluacionDiagnosticaporDisenioCurricular/findbyId/'+id);
   }
   
 }

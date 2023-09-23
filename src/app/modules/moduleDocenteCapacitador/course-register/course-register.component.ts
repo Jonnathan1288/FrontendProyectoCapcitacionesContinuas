@@ -234,10 +234,10 @@ export class CourseRegisterComponent {
         }
         if (!data.especialidad) {
           data.especialidad = {
-            idEspecialidad: 1,
+            idEspecialidad: 200,
             nombreEspecialidad: '',
             area: {
-              idArea: 1,
+              idArea: 22,
               nombreArea: '',
             },
           };
@@ -245,18 +245,18 @@ export class CourseRegisterComponent {
 
         if (!data.parroquia?.canton) {
           data.parroquia = {
-            idParroquia: 1,
+            idParroquia: 2000,
             parroquia: '',
             canton: {
-              idCanton: 1,
-              provincia: { idProvincia: 1 },
+              idCanton: 225,
+              provincia: { idProvincia: 26 },
             },
           };
         }
       }
       if (this.curso) {
         this.horarioC = this.curso.horarioCurso!;
-        this.daysOfTheweekV = this.curso?.horarioCurso?.dias || '';
+       this.daysOfTheweekV = this.curso?.horarioCurso?.dias || '';
         this.molalidadId = this.curso.modalidadCurso?.idModalidadCurso;
         this.tipoCursoId = this.curso.tipoCurso?.idTipoCurso;
         this.nivelCursoId = this.curso.nivelCurso?.idNivelCurso;
@@ -573,7 +573,7 @@ export class CourseRegisterComponent {
 
   public createHorarioCurso() {
     if (this.curso.idCurso) {
-      // this.horarioC.dias = this.daysOfTheweekV;
+       this.horarioC.dias = this.daysOfTheweekV;
       this.horarioC.estadoHorarioCurso = true;
       console.log({ horarioEnvio: this.horarioC });
       this.horarioService
@@ -605,7 +605,7 @@ export class CourseRegisterComponent {
           }
         });
     } else {
-      // this.horarioC.dias = this.daysOfTheweekV;
+       this.horarioC.dias = this.daysOfTheweekV;
       this.horarioC.estadoHorarioCurso = true;
       this.horarioService.crearHorarioCurso(this.horarioC).subscribe((data) => {
         if (data != null) {
@@ -843,6 +843,7 @@ export class CourseRegisterComponent {
       if (this.curso) {
         this.horarioC = this.curso.horarioCurso!;
         this.daysOfTheweekV = this.curso?.horarioCurso?.dias || '';
+       
         this.molalidadId = this.curso.modalidadCurso?.idModalidadCurso;
         this.tipoCursoId = this.curso.tipoCurso?.idTipoCurso;
         this.nivelCursoId = this.curso.nivelCurso?.idNivelCurso;

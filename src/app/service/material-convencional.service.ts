@@ -25,7 +25,7 @@ export class MaterialConvencionalService {
   }
 
   public getMaterialConvencionalesPorIdSilabo(id: number):Observable<MaterialConvencionales[]>{
-    return this.http.get<MaterialConvencionales[]>(environment.apiuri+'/materialConvencionalPorSilabo/findbyId/'+id);
+    return this.http.get<MaterialConvencionales[]>(environment.apiuri+'/materialConvencional/materialConvencionalPorSilabo/findbyId/'+id);
   }
   
   public updateMaterialConvencionales(id:number, materialesConvecionales: MaterialConvencionales):Observable<MaterialConvencionales>{
