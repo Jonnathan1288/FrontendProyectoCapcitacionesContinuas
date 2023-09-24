@@ -6,185 +6,186 @@ import { HojaVidaCapacitador } from 'src/app/models/hoja-vida-capacitador';
 import { CapacitadorService } from 'src/app/service/capacitador.service';
 import { Capacitador } from 'src/app/models/capacitador';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FOLDER_DOCUMENTS_HOJA_VIDA, getFile, getFileDocument } from 'src/app/util/folder-upload';
+import { UploadService } from 'src/app/service/upload.service';
+import { HojaVida } from 'src/app/models/references/hoja-vida';
 
 @Component({
-  selector: 'app-hojavida',
-  templateUrl: './hojavida.component.html',
-  styleUrls: ['./hojavida.component.css']
+	selector: 'app-hojavida',
+	templateUrl: './hojavida.component.html',
+	styleUrls: ['./hojavida.component.css']
 })
 export class HojavidaComponent implements OnInit {
-  private sanitizer!: DomSanitizer;
+	private sanitizer!: DomSanitizer;
 
-  constructor(
-    private toastrService: ToastrService,
-    sanitizer: DomSanitizer,
-    private hojaVidaService: HojaVidaCapacitadorService,
-    private capcitadporService: CapacitadorService,
-    private activeRouter: ActivatedRoute,
-    private router: Router,
-  ) {
-    this.sanitizer = sanitizer;
-  }
+	public uriDocument: any;
+	public hojaVidaCap = new HojaVidaCapacitador();
 
-  idUsuarioLoggic!: any;
-  ngOnInit(): void {
-    this.idUsuarioLoggic = localStorage.getItem('id_username');
-    console.log("id usuario + " + this.idUsuarioLoggic)
-    this.validarExistenciaCV();
-  }
+	constructor(
+		private toastrService: ToastrService,
+		sanitizer: DomSanitizer,
+		private hojaVidaService: HojaVidaCapacitadorService,
+		private capcitadporService: CapacitadorService,
+		private activeRouter: ActivatedRoute,
+		private router: Router,
+		private uploadService: UploadService
+	) {
+		this.sanitizer = sanitizer;
+	}
 
-  idNewHojaVida?: boolean;
-  idUploadHojaVida?: boolean;
+	idUsuarioLoggic!: any;
+	ngOnInit(): void {
+		this.idUsuarioLoggic = localStorage.getItem('id_username');
+		this.obtenerDocentePorIdUsuario(this.idUsuarioLoggic);
+		this.obtenerHojaDeVidata(this.idUsuarioLoggic)
+	}
 
-  public SubirHojaVida() {
-    this.idNewHojaVida = false;
-    this.idUploadHojaVida = true;
-  }
+	public hojaVida = new HojaVida();
+	public obtenerHojaDeVidata(id: number) {
+		this.hojaVidaService.findDocumentByIdUsuario(id).subscribe({
+			next: (resp) => {
+				console.log(resp)
+				this.hojaVida = resp;
+				this.getFileResource()
 
-  public generarHojaVida() {
-    this.idNewHojaVida = true;
-    this.idUploadHojaVida = false;
-  }
+			}, error: (err) => {
+			}
+		})
+	}
 
-  // VALIDAR EXISTENCIA DE HOJA DE VIDA
-  idHojaVidaExsitente?: number;
-  isExiste!: boolean;
-  capacitador: Capacitador = new Capacitador();
-  idCapacitadorCap!: number;
-  public validarExistenciaCV(): void {
-    this.hojaVidaService.validarExstenciaHojaVida(this.idUsuarioLoggic).subscribe(
-      data => {
-        if (data == false) {
-          // alert('no tiene cv')
-          this.isExiste = false;
-          this.capcitadporService.getCapacitadorByUsuarioIdUsuario(this.idUsuarioLoggic).subscribe(
-            data => {
-              this.capacitador = data;
-              this.idCapacitadorCap = this.capacitador.idCapacitador!;
-              console.log("id -> " + this.idCapacitadorCap)
-            }
-          )
-        } else {
-          // alert('SI tiene cv')
-          this.hojaVidaService.getHojadeVidaByIdUsuarioLoggin(this.idUsuarioLoggic).subscribe(
-            data => {
-              //LEGANDO
-              this.isExiste = true;
-              this.mostrarPDF_BDA(data.documento);
+	public obtenerDocentePorIdUsuario(id: number) {
+		this.capcitadporService.getCapacitadorByUsuarioIdUsuario(id).subscribe({
+			next: (resp) => {
+				this.capacitador = resp;
 
-              this.idHojaVidaExsitente = this.hojaVidaCapacitador!.idHojaVida;
+			}, error: (err) => {
 
-              console.log("Datos -> " + this.idHojaVidaExsitente)
-              this.capcitadporService.getCapacitadorByUsuarioIdUsuario(this.idUsuarioLoggic).subscribe(
-                data => {
-                  this.capacitador = data;
-                  this.idCapacitadorCap = this.capacitador.idCapacitador!;
-                  console.log("id -> " + this.idCapacitadorCap)
-                }
-              )
-            }
-          )
-        }
-      }
-    )
-  }
+			},
+		})
+	}
 
-  // TRAER AL CAPACITADOR
-  hojaVidaCapacitador: HojaVidaCapacitador = new HojaVidaCapacitador();
 
-  // SUBIR HOJA DE VIDA
-  selectedFile!: File;
-  fileUrl!: SafeResourceUrl;
-  isTieneArchivo: boolean = false;
-  onFileSelected(event: any) {
-    this.selectedFile = event.target.files[0];
-    if (this.selectedFile && this.selectedFile.size > 300000) {
-      this.toastrService.warning(
-        'El archivo seleccionado es demasiado grande',
-        ' Por favor, seleccione un archivo menor a 300 KB.',
-        {
-          timeOut: 1000,
-        }
-      );
-      return;
-    }
-    this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
-      URL.createObjectURL(this.selectedFile)
-    );
-    this.isTieneArchivo = true;
-    //console.log("esto se subio -> " + this.fileUrl)
-  }
 
-  // SUBIR EL PDF
-  subirHojaVida(): void {
-    this.hojaVidaService.guardarHojadeVdaMasDocumento(this.selectedFile, this.idUsuarioLoggic).subscribe(
-      data => {
-        this.toastrService.success('Se guardo correctamente', 'Registro Exitoso');
-        this.validarExistenciaCV();
-      }
-    )
-  }
+	idNewHojaVida?: boolean;
+	idUploadHojaVida?: boolean;
 
-  // ACTUALIZAR LOS PDF
-  actualizarHojaVidaDocumento(): void {
+	public SubirHojaVida() {
+		this.idNewHojaVida = false;
+		this.idUploadHojaVida = true;
+	}
 
-    if (this.isTieneArchivo === false) {
-      this.toastrService.error('No ha seleccionado uno nuevo', 'Error');
+	// VALIDAR EXISTENCIA DE HOJA DE VIDA
+	idHojaVidaExsitente?: number;
+	isExiste!: boolean;
+	public capacitador: Capacitador = new Capacitador();
+	idCapacitadorCap!: number;
 
-    } else {
-      this.hojaVidaService.actualizarHojadeVdaMasDocumento(this.selectedFile, this.idUsuarioLoggic).subscribe(
-        data => {
-          this.toastrService.success('Se actualizo correctamente', 'Registro Actualizado');
-        }
-      )
-    }
 
-  }
+	// SUBIR HOJA DE VIDA
+	selectedFile!: File;
+	fileUrl!: SafeResourceUrl;
+	isTieneArchivo: boolean = false;
+	onFileSelected(event: any) {
+		this.selectedFile = event.target.files[0];
+		if (this.selectedFile && this.selectedFile.size > 300000) {
+			this.toastrService.warning(
+				'El archivo seleccionado es demasiado grande',
+				' Por favor, seleccione un archivo menor a 300 KB.',
+				{
+					timeOut: 1000,
+				}
+			);
+			return;
+		}
+		this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
+			URL.createObjectURL(this.selectedFile)
+		);
+		this.isTieneArchivo = true;
+	}
 
-  // ACTULIAZAR HOJA DE VIDA DE NOSOTROS
-  public actulizarHojaVida(): void {
-    this.hojaVidaService.updateHojaDeVida(this.idHojaVidaExsitente!, this.hojaVidaCapacitador).subscribe(
-      data => {
-        this.toastrService.success('Se actualizo correctamente', 'Registro Actualizado');
-        location.reload();
-      }
-    )
-  }
+	// SUBIR EL PDF
+	public async subirHojaVida() {
+		try {
+			this.hojaVidaCap.documento = await this.uploadDocument();
+			this.hojaVidaCap.status = true;
+			this.hojaVidaService.save(this.hojaVidaCap).subscribe({
+				next: (resp) => {
+					this.toastrService.success('SUBIDO');
 
-  public guardarHojaVida(): void {
-    this.hojaVidaCapacitador.capacitador = this.capacitador;
-    this.hojaVidaCapacitador.status = true;
-    this.hojaVidaService.saveHojaDeVida(this.hojaVidaCapacitador).subscribe(
-      data => {
-        this.toastrService.success('Se guardo correctamente', 'Registro Exitoso');
-        location.reload();
-      }
-    )
-  }
+				}, error: (err) => {
+					this.toastrService.success('ERROR AL SUBIR');
+				}
+			})
+		} catch (error) {
+			this.toastrService.error('Error, documento .pdf no se guardó intentar nuevamente...');
+		}
+	}
 
-  // TRAER EL PDF
-  //mETOO QUE ME MOSTRAR EN EL CASO DE LA VISTA
-  public mostrarPDF_BDA(documento: any): void {
-    const byteCharacters = atob(documento);
-    const byteNumbers = new Array(byteCharacters.length);
-    for (let i = 0; i < byteCharacters.length; i++) {
-      byteNumbers[i] = byteCharacters.charCodeAt(i);
-    }
-    const byteArray = new Uint8Array(byteNumbers);
-    const pdfBlob = new Blob([byteArray], { type: 'application/pdf' });
-    this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
-      window.URL.createObjectURL(pdfBlob)
-    );
-  }
 
-  // PASAR IDS
-  public verrHojaVida(): void {
-    this.router.navigate(['/ver/hojaVida/capacitador/', this.idCapacitadorCap]);
-  }
 
-  // AGREGAR IDIOMAS
-  listIdiomas: String[] = [];
-  idiomaCap!: String;
+	// ACTULIAZAR HOJA DE VIDA DE NOSOTROS
+	public async updateCV() {
+		try {
+			this.hojaVidaCap.idHojaVida = this.hojaVida.idHojaVida
+
+			this.hojaVidaCap.documento = await this.uploadDocument();
+
+			this.hojaVidaService.update(this.hojaVidaCap.idHojaVida!, this.hojaVidaCap).subscribe(
+				data => {
+					this.toastrService.success('Se actualizo correctamente', 'Registro Actualizado');
+					location.reload();
+				}
+			)
+		} catch (error) {
+			this.toastrService.error('Error, documento .pdf no se guardó intentar nuevamente...');
+		}
+
+	}
+
+
+	// TRAER EL PDF
+	//mETOO QUE ME MOSTRAR EN EL CASO DE LA VISTA
+	public mostrarPDF_BDA(documento: any): void {
+		const byteCharacters = atob(documento);
+		const byteNumbers = new Array(byteCharacters.length);
+		for (let i = 0; i < byteCharacters.length; i++) {
+			byteNumbers[i] = byteCharacters.charCodeAt(i);
+		}
+		const byteArray = new Uint8Array(byteNumbers);
+		const pdfBlob = new Blob([byteArray], { type: 'application/pdf' });
+		this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
+			window.URL.createObjectURL(pdfBlob)
+		);
+	}
+
+
+
+	// new 
+	public async uploadDocument() {
+		try {
+			const result = await this.uploadService.upload(this.selectedFile, FOLDER_DOCUMENTS_HOJA_VIDA)
+				.toPromise();
+			return result.key;
+		} catch (error) {
+			console.error('error al subir el documento')
+		}
+	}
+	pdfUrl!: SafeResourceUrl;
+	public getFileResource() {
+		const url = getFileDocument(this.hojaVida.uriDocument!, FOLDER_DOCUMENTS_HOJA_VIDA);
+		console.log(url)
+
+		this.mostrarPDF_BDA(url);
+		// this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+
+		// this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
+		// 	window.URL.createObjectURL(pdfBlob)
+		// );
+
+		console.log(this.pdfUrl)
+
+	}
+
 
 
 }

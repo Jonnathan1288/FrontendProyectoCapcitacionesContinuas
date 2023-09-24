@@ -20,33 +20,20 @@ export class HojaVidaCapacitadorService {
     return this.http.get<HojaVidaCapacitador>(environment.apiuri + '/hojaVidaCapcitador/findbyIdCapacitador/' + idCapacitador);
   }
 
-  public updateHojaDeVida(idHojadeVida: number, hojaVidaCapacitador: HojaVidaCapacitador): Observable<HojaVidaCapacitador> {
-    return this.http.put<HojaVidaCapacitador>(environment.apiuri + '/hojaVidaCapcitador/update/' + idHojadeVida, hojaVidaCapacitador);
+  public update(idHojadeVida: number, hojaVidaCapacitador: HojaVidaCapacitador): Observable<HojaVidaCapacitador> {
+    return this.http.put<HojaVidaCapacitador>(environment.apiuri + '/update/' + idHojadeVida, hojaVidaCapacitador);
   }
 
   public getHojadeVidaByIdUsuarioLoggin(idUsuario: number): Observable<HojaVidaCapacitador> {
     return this.http.get<HojaVidaCapacitador>(environment.apiuri + '/hojaVidaCapcitador/findbyCapacitdorUsuarioId/' + idUsuario);
   }
 
-  public validarExstenciaHojaVida(idUusarioCapacitador: number): Observable<boolean> {
-    return this.http.get<boolean>(environment.apiuri + '/hojaVidaCapcitadorValidar/findbyIdUsuario/' + idUusarioCapacitador);
+  public save(hojaVidaCapacitador: HojaVidaCapacitador): Observable<HojaVidaCapacitador> {
+    return this.http.post<HojaVidaCapacitador>(environment.apiuri + '/save', hojaVidaCapacitador);
   }
 
-  public guardarHojadeVdaMasDocumento(file: File, idUsuario: number): Observable<any> {
-    const formData = new FormData();
-    formData.append('file', file, file.name);
-    return this.http.post<any>(environment.apiUriSecurity + '/hojaVida/saveDocumento/' + idUsuario, formData);
-  }
-
-  public actualizarHojadeVdaMasDocumento(file: File, idUsuario: number): Observable<any> {
-    const formData = new FormData();
-    formData.append('file', file, file.name);
-    return this.http.post<any>(environment.apiUriSecurity + '/hojaVida/updateDocumento/' + idUsuario, formData);
-  }
-
-
-  public saveHojaDeVida(hojaVidaCapacitador: HojaVidaCapacitador): Observable<HojaVidaCapacitador> {
-    return this.http.post<HojaVidaCapacitador>(environment.apiuri + '/hojaVidaCapcitador/crear', hojaVidaCapacitador);
+  public findDocumentByIdUsuario(idUsuario: number): Observable<any> {
+    return this.http.get<any>(environment.apiuri + '/findDocumentByIdUsuario/' + idUsuario);
   }
 
 
