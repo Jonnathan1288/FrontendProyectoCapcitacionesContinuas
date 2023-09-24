@@ -5,8 +5,7 @@ import { HojaVidaCapacitadorService } from 'src/app/service/hoja-vida-capacitado
 import { HojaVidaCapacitador } from 'src/app/models/hoja-vida-capacitador';
 import { CapacitadorService } from 'src/app/service/capacitador.service';
 import { Capacitador } from 'src/app/models/capacitador';
-import { ActivatedRoute, Router } from '@angular/router';
-import { FOLDER_DOCUMENTS_HOJA_VIDA, getFile, getFileDocument } from 'src/app/util/folder-upload';
+import { FOLDER_DOCUMENTS_HOJA_VIDA, getFile } from 'src/app/util/folder-upload';
 import { UploadService } from 'src/app/service/upload.service';
 import { HojaVida } from 'src/app/models/references/hoja-vida';
 
@@ -16,21 +15,18 @@ import { HojaVida } from 'src/app/models/references/hoja-vida';
 	styleUrls: ['./hojavida.component.css']
 })
 export class HojavidaComponent implements OnInit {
-	private sanitizer!: DomSanitizer;
 
 	public uriDocument: any;
 	public hojaVidaCap = new HojaVidaCapacitador();
 
 	constructor(
 		private toastrService: ToastrService,
-		sanitizer: DomSanitizer,
+		private sanitizer: DomSanitizer,
 		private hojaVidaService: HojaVidaCapacitadorService,
 		private capcitadporService: CapacitadorService,
-		private activeRouter: ActivatedRoute,
-		private router: Router,
+
 		private uploadService: UploadService
 	) {
-		this.sanitizer = sanitizer;
 	}
 
 	idUsuarioLoggic!: any;
@@ -46,7 +42,6 @@ export class HojavidaComponent implements OnInit {
 			next: (resp) => {
 				console.log(resp)
 				this.hojaVida = resp;
-				this.getFileResource()
 
 			}, error: (err) => {
 			}
@@ -63,8 +58,6 @@ export class HojavidaComponent implements OnInit {
 			},
 		})
 	}
-
-
 
 	idNewHojaVida?: boolean;
 	idUploadHojaVida?: boolean;
@@ -105,12 +98,18 @@ export class HojavidaComponent implements OnInit {
 
 	// SUBIR EL PDF
 	public async subirHojaVida() {
+		if (!this.capacitador) {
+			this.toastrService.error('INTÉNTELO MÁS TARDE');
+			return
+		}
 		try {
+			this.hojaVidaCap.capacitador = this.capacitador;
 			this.hojaVidaCap.documento = await this.uploadDocument();
 			this.hojaVidaCap.status = true;
 			this.hojaVidaService.save(this.hojaVidaCap).subscribe({
 				next: (resp) => {
 					this.toastrService.success('SUBIDO');
+					location.reload();
 
 				}, error: (err) => {
 					this.toastrService.success('ERROR AL SUBIR');
@@ -122,14 +121,13 @@ export class HojavidaComponent implements OnInit {
 	}
 
 
-
-	// ACTULIAZAR HOJA DE VIDA DE NOSOTROS
 	public async updateCV() {
 		try {
 			this.hojaVidaCap.idHojaVida = this.hojaVida.idHojaVida
 
 			this.hojaVidaCap.documento = await this.uploadDocument();
-
+			this.hojaVidaCap.capacitador = this.capacitador;
+			this.hojaVidaCap.status = true;
 			this.hojaVidaService.update(this.hojaVidaCap.idHojaVida!, this.hojaVidaCap).subscribe(
 				data => {
 					this.toastrService.success('Se actualizo correctamente', 'Registro Actualizado');
@@ -142,9 +140,6 @@ export class HojavidaComponent implements OnInit {
 
 	}
 
-
-	// TRAER EL PDF
-	//mETOO QUE ME MOSTRAR EN EL CASO DE LA VISTA
 	public mostrarPDF_BDA(documento: any): void {
 		const byteCharacters = atob(documento);
 		const byteNumbers = new Array(byteCharacters.length);
@@ -158,9 +153,6 @@ export class HojavidaComponent implements OnInit {
 		);
 	}
 
-
-
-	// new 
 	public async uploadDocument() {
 		try {
 			const result = await this.uploadService.upload(this.selectedFile, FOLDER_DOCUMENTS_HOJA_VIDA)
@@ -170,22 +162,9 @@ export class HojavidaComponent implements OnInit {
 			console.error('error al subir el documento')
 		}
 	}
-	pdfUrl!: SafeResourceUrl;
-	public getFileResource() {
-		const url = getFileDocument(this.hojaVida.uriDocument!, FOLDER_DOCUMENTS_HOJA_VIDA);
-		console.log(url)
 
-		this.mostrarPDF_BDA(url);
-		// this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
-
-		// this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
-		// 	window.URL.createObjectURL(pdfBlob)
-		// );
-
-		console.log(this.pdfUrl)
-
+	public getFileResource(): string {
+		return getFile(this.hojaVida.uriDocument!, FOLDER_DOCUMENTS_HOJA_VIDA);
 	}
-
-
 
 }

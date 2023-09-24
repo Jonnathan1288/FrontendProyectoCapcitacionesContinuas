@@ -1,9 +1,19 @@
 <div class="m-2 flex justify-content-center">
-  <p-button label="Subir Hoja de Vida" style="margin: 5px;" (onClick)="SubirHojaVida()"></p-button>
-
+  <p-button icon="pi pi-cloud-upload"
+    [label]="((hojaVida && (hojaVida && hojaVida.uriDocument)) ? 'Actualizar ' : 'Subir ') + 'Hoja de Vida'"
+    style="margin: 5px;" (onClick)="SubirHojaVida()"></p-button>
 </div>
 
-<embed style="border-radius: 10px; " [src]="pdfUrl" type="application/pdf" width="100%" height="100%" />
+
+
+<div class="d-flex justify-content-center gap-2 mt-4">
+  <a [attr.href]="(hojaVida && (hojaVida && hojaVida.uriDocument)) ? getFileResource():null" class="p-link"
+    [attr.target]="(hojaVida && hojaVida.uriDocument) ? '_blank': '' ">
+    <p-message [severity]="(hojaVida && hojaVida.uriDocument) ? 'success' : 'error'"
+      [text]="(hojaVida && hojaVida.uriDocument) ? 'Haz clic aquí para ver tu hoja de vida' : 'No hay archivo disponible'"></p-message>
+  </a>
+</div>
+
 
 <p-card header="Subir Hoja de Vida" *ngIf="idUploadHojaVida" class="m-5" style="text-align: center;">
 
@@ -52,7 +62,8 @@
 <div class="card flex justify-content-center m-5" *ngIf="selectedFile">
 
   <div class="r m-4" style="text-align: center;">
-    <p-button label="Guardar Hoja de Vida" class="m-2" styleClass="p-button-success" (onClick)="updateCV()"></p-button>
+    <p-button icon="pi pi-save" label="Guardar Hoja de Vida" class="m-2" styleClass="p-button-success"
+      (onClick)="(hojaVida && hojaVida.uriDocument) ? updateCV(): subirHojaVida()"></p-button>
   </div>
 
 </div>
