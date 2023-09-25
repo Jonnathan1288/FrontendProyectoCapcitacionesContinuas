@@ -5,6 +5,7 @@ import { environment } from 'src/environment/enviroment';
 import { Observable } from 'rxjs';
 import { StorageService } from './storage.service';
 import { CourseFilter } from '../models/references/course-filter';
+import { CourseFilterDocente } from '../models/references/course-filter-by-docente';
 
 @Injectable({
   providedIn: 'root'
@@ -19,15 +20,15 @@ export class CursoService {
   }
 
   public listCursoDisponibles(): Observable<Curso[]> {
-    return this.http.get<Curso[]>(environment.apiuri + '/cursoDisponibles/list');
+    return this.http.get<Curso[]>(environment.apiuri + '/curso/cursoDisponibles/list');
   }
 
   public listCursoDelParticipante(idUsuarioParticipante: number): Observable<Curso[]> {
-    return this.http.get<Curso[]>(environment.apiuri + '/cursosDelParticipante/list/' + idUsuarioParticipante);
+    return this.http.get<Curso[]>(environment.apiuri + '/curso/cursosDelParticipante/list/' + idUsuarioParticipante);
   }
 
   public saveCurso(curso: Curso): Observable<Curso> {
-    return this.http.post<Curso>(environment.apiuri + '/curso/save', curso);
+    return this.http.post<Curso>(environment.apiuri + '/curso/save1', curso);
   }
 
   public getCursoById(id_curso: number): Observable<Curso> {
@@ -39,12 +40,16 @@ export class CursoService {
   }
 
   public updateCurso(id_curso: number, curso: Curso): Observable<Curso> {
-    return this.http.put<Curso>(environment.apiuri + '/curso/update/' + id_curso, curso);
+    return this.http.put<Curso>(environment.apiuri + '/curso/update1/' + id_curso, curso);
   }
 
   //Metodo para mostrar todos los programas
 
   public findByAllCurseFinally(): Observable<CourseFilter[]> {
-    return this.http.get<CourseFilter[]>(environment.apiuri + '/course/findAll/course/finally');
+    return this.http.get<CourseFilter[]>(environment.apiuri + '/curso/findAll/course/finally');
+  }
+
+  public findFilterCoursesByUsuarioDocente(idUser: number): Observable<CourseFilter[]> {
+    return this.http.get<CourseFilterDocente[]>(environment.apiuri + '/curso/findFilterCoursesByUsuarioDocente/' + idUser);
   }
 }

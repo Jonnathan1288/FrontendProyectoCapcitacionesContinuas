@@ -1,6 +1,4 @@
 
-
-
   .dropdown-with-icon i {
     margin-right: 10px; 
     font-size: 20px;
@@ -11,14 +9,14 @@
     height: auto; 
     min-height: 32px; 
   }
-/* 
+
   .grid {
     display: flex;
     justify-content: center;
     align-items: center; 
     height: 100%; 
     text-align: center; 
-  } */
+  }
   .card {
     border: 1px solid rgb(76, 141, 231); 
     padding: 10px; 
@@ -37,38 +35,11 @@
   
   .horizontal-line {
     border: none;
-    height: 1px;
-    background-color: rgb(76, 141, 231); 
-    margin: 0 auto; 
-    width: 50%; 
-    margin-top: 10px;
-    margin-bottom: 10px; 
+    height: 1px; /* Grosor de la línea */
+    background-color: rgb(76, 141, 231); /* Color de la línea */
+    margin: 0 auto; /* Centro horizontalmente la línea */
+    width: 50%; /* Ancho de la línea */
+    margin-top: 10px; /* Espacio superior de la línea */
+    margin-bottom: 10px; /* Espacio inferior de la línea */
   }
   
-
-  /* Estilos base para la cuadrícula de botones */
-.grid {
-  display: flex;
-  flex-wrap: wrap; 
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  gap: 10px; 
-}
-
-
-.p-button {
-  flex: 1; 
-  min-width: 100px; 
-}
-
-
-@media (max-width: 768px) {
-  .grid {
-    flex-direction: column; 
-    text-align: center;
-  }
-  .p-button {
-    min-width: auto; 
-  }
-}
