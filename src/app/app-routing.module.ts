@@ -35,6 +35,7 @@ import { RegistroFotograficoEvidenciasComponent } from './modules/moduleDocenteC
 import { StepsToApplyToTheCourseComponent } from './modules/genericAllAccess/steps-to-apply-to-the-course/steps-to-apply-to-the-course.component';
 import { GenerateExelVariosComponent } from './modules/administradormodule/generate-exel-varios/generate-exel-varios.component';
 import { GestionCursoComponent } from './modules/moduleDocenteCapacitador/gestionar-curso/gestion-curso/gestion-curso.component';
+import { CourseasitenciaComponent } from './modules/moduleDocenteCapacitador/courseasitencia/courseasitencia.component';
 
 
 const routes: Routes = [
@@ -111,6 +112,8 @@ const routes: Routes = [
   { path: 'register/course/:id', component: CourseRegisterComponent, canActivate: [AuthGaurdGuard], data: { expectedRoles: ['DocenteCapacitador'] } },
 
   { path: 'list/course', component: ListCourseComponent, canActivate: [AuthGaurdGuard], data: { titulo: 'Cursos', expectedRoles: ['DocenteCapacitador'] } },
+
+  { path: 'list/asistencia', component: CourseasitenciaComponent, canActivate: [AuthGaurdGuard], data: { titulo: 'Asistencia', expectedRoles: ['DocenteCapacitador'] } },
 
   { path: 'register/necesidad', component: RegistroNecesidadComponent, canActivate: [AuthGaurdGuard], data: { expectedRoles: ['DocenteCapacitador'] } },
 
