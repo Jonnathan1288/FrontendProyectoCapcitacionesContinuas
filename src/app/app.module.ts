@@ -60,6 +60,8 @@ import { HeadersbComponent } from './shared/headersb/headersb.component';
 import { GestionCursoComponent } from './modules/moduleDocenteCapacitador/gestionar-curso/gestion-curso/gestion-curso.component';
 
 
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -117,7 +119,7 @@ import { GestionCursoComponent } from './modules/moduleDocenteCapacitador/gestio
     CommonModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
-    NgxUiLoaderModule
+    NgxUiLoaderModule,
 
   ],
   //schemas: [

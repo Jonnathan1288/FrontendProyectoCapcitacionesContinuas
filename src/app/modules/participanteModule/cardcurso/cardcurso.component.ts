@@ -10,7 +10,7 @@ import { StorageService } from 'src/app/service/storage.service';
 @Component({
   selector: 'app-cardcurso',
   templateUrl: './cardcurso.component.html',
-  styleUrls: ['./cardcurso.component.css', './cardcurso.component.scss'],
+  styleUrls: ['./cardcurso.component.css'],
 })
 export class CardcursoComponent implements OnInit {
 
@@ -20,13 +20,13 @@ export class CardcursoComponent implements OnInit {
     private cursoService: CursoService,
     private toastrService: ToastrService,
     private localService: StorageService
-  ) {}
-  
+  ) { }
+
   ngOnInit(): void {
     this.obtenerCursosFull();
-    if(this.localService.isLoggedIn()){
+    if (this.localService.isLoggedIn()) {
       this.estadoMovimient = true;
-    }else{
+    } else {
       this.estadoMovimient = false;
     }
   }
@@ -38,18 +38,15 @@ export class CardcursoComponent implements OnInit {
     this.cursoService.listCursoDisponibles().subscribe((data: Curso[]) => {
       this.listCursos = data;
       this.listCursosOriginal = data;
-
       this.listCursos = this.listCursosOriginal;
-
       this.filterAreasPerCurser();
     });
   }
 
   public pasarInfoCurso(idCurso: any): void {
-
-    if(this.localService.isLoggedIn()){
+    if (this.localService.isLoggedIn()) {
       this.router.navigate(['/cardcu/detalle', idCurso]);
-    }else{
+    } else {
       this.router.navigate(['/login']);
     }
   }
@@ -125,10 +122,7 @@ export class CardcursoComponent implements OnInit {
   public wordNoFind?: any;
   public filterTableCursos(e: any) {
     let letter = e.target.value.toLowerCase();
-
     this.wordNoFind = letter;
-    console.log(this.wordNoFind);
-
     if (this.wordNoFind === '') {
       this.listCursos = this.listCursosOriginal;
     } else {
@@ -173,10 +167,8 @@ export class CardcursoComponent implements OnInit {
   //Filtro por fecha ya sea de inicio o de fin que esten en ese mes
   onDateSelect(event: any) {
     const selectedDate: Date = event;
-
     const year = selectedDate.getFullYear();
     const month = selectedDate.getMonth() + 1;
-
     this.listCursos = this.listCursosOriginal.filter((curso) => {
       const fechaInicioCurso = new Date(curso.fechaInicioCurso!);
       const fechaFin = new Date(curso.fechaFinalizacionCurso!);
@@ -189,7 +181,7 @@ export class CardcursoComponent implements OnInit {
     });
 
     if (this.listCursos.length > 0) {
-      this.toastrService.info('CURSOS ENCONTRADOS '+this.listCursos.length);
+      this.toastrService.info('CURSOS ENCONTRADOS ' + this.listCursos.length);
     } else {
       this.toastrService.error('NO HAY CURSOS EN ESTA FECHA');
     }
@@ -197,34 +189,15 @@ export class CardcursoComponent implements OnInit {
 
   //METODO PARA FILTRAR TODAS LAS AREAS..
   public listAreaFilter: Area[] = [];
-  // public filterAreasPerCurser() {
-  //   const areasUnicas = this.listCursos
-  //     .map((curso) => curso.especialidad!.area) // Obtener todas las áreas
-  //     .filter((area, index, self) => {
-  //       // Filtrar las áreas únicas
-  //       return (
-  //         index ===
-  //         self.findIndex(
-  //           (a) =>
-  //             a?.idArea === area?.idArea && a?.nombreArea === area?.nombreArea
-  //         )
-  //       );
-  //     });
-
-  //   console.log(areasUnicas);
-  // }
 
   public filterAreasPerCurser() {
     const areasUnicas: Area[] = [];
-  
     this.listCursos.forEach((curso) => {
       const area = curso.especialidad?.area;
       if (area && !areasUnicas.some((a) => a.idArea === area.idArea)) {
         areasUnicas.push(area);
       }
     });
-  
-    console.log(areasUnicas);
     this.listAreaFilter = areasUnicas;
   }
 
@@ -247,13 +220,13 @@ export class CardcursoComponent implements OnInit {
     );
 
     if (this.listCursos.length > 0) {
-      this.toastrService.info('CURSOS ENCONTRADOS POR ESTA ÁREA '+this.listCursos.length);
+      this.toastrService.info('CURSOS ENCONTRADOS POR ESTA ÁREA ' + this.listCursos.length);
     } else {
       this.toastrService.error('NO HAY CURSOS EN ESTA ÁREA');
     }
   }
 
-  public obtenernuevamenteLosCursosSinFiltros(){
+  public obtenernuevamenteLosCursosSinFiltros() {
     this.listCursos = this.listCursosOriginal;
   }
 }

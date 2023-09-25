@@ -2,11 +2,10 @@
 :root {
   --card-color: #007bff;
 }
-body {
-  font-family: 'Lato', sans-serif;
-}
+
+
 .container {
-  max-width: 1170px;
+  max-width: 80%;
   padding: 0 15px;
   margin: 0 auto;
 }
@@ -185,13 +184,6 @@ body {
 
 .button-group .button:first-child { border-radius: 4px 0 0 4px; }
 .button-group .button:last-child { border-radius: 0 4px 4px 0; }
-
-
-
-
-body {
-  font-size: 16px; 
-}
 
 .pricing__card {
   width: 100%; 
