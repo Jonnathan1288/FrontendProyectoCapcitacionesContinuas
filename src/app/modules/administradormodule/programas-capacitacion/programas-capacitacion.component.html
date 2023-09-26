@@ -1,4 +1,4 @@
-<div class="card">
+<div class="">
     <p-toolbar styleClass="mb-4">
         <ng-template pTemplate="left">
             <button pButton pRipple label="Nuevo" icon="pi pi-plus" class="p-button-success mr-2"
@@ -6,7 +6,7 @@
 
         </ng-template>
 
-       
+
     </p-toolbar>
 
     <p-table #dt [value]="listaProgramasFilter" dataKey="id" styleClass="p-datatable-customers" [rowHover]="true"
@@ -18,7 +18,7 @@
                 <h5 class="m-0"><strong>PROGRAMAS DE CAPACITACIÓN</strong></h5>
                 <span class="p-input-icon-left">
                     <i class="pi pi-search"></i>
-                    <input pInputText type="text" placeholder="Search..."
+                    <input pInputText type="text" placeholder="Buscar..."
                         (input)="filterTableProgramasCapacitacion($event)" />
                 </span>
             </div>

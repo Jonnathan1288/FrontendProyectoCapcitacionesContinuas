@@ -27,7 +27,7 @@ export class ListCourseComponent implements OnInit {
     private cursoService: CursoService,
     private router: Router,
     private toastrService: ToastrService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     // this.opcionesBotonesLista();
@@ -124,12 +124,6 @@ export class ListCourseComponent implements OnInit {
 
   public editCurso(idcurso: number) {
     this.router.navigate(['/register/course', idcurso]);
-  }
-
-  public VerCursoInicio(idCurso: number, estadoFinal: String) {
-    localStorage.setItem('status', String(estadoFinal));
-
-    this.router.navigate(['/verMatriculados/course/inicio', idCurso]);
   }
 
   public VerParticipantesInscritos(idCurso: number) {

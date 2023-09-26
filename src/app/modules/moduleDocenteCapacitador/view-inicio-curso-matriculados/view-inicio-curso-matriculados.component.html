@@ -18,9 +18,34 @@
 </p-dialog>
 
 
+
+<div class="grid p-fluid m-4">
+    <div class="col-12 md:col-10">
+        <div class="justify-content-center">
+            <p-dropdown [options]="listCourseFilter" placeholder="SELECCIONE CURSO APROBADO" optionLabel="nombreCurso"
+                [showClear]="false">
+                <ng-template let-course pTemplate="item">
+                    <div (click)="catchCourseSelected(course)"><i
+                            [style]="course.estadoAprovacionCurso !== 'A' ? {color : 'red'}:{color : 'blue'}"
+                            class="fa fa-book-open"></i>
+                        {{
+                        course.nombreCurso }}
+                        (ID:
+                        {{ course.idCurso }})
+                        {{course.estadoAprovacionCurso !== 'A' ? '- EL CURSO AÚN NO ESTA APROBADO':''}}
+                    </div>
+
+                </ng-template>
+            </p-dropdown>
+        </div>
+    </div>
+</div>
+
+
 <!-- otra parte -->
 
-<div class="container my-3">
+
+<div class="container my-3" *ngIf="participantsVisibleData">
     <div class="container ">
         <div class="container">
             <p-button [disabled]="listParticipantesMatriculados.length === 0"
@@ -97,5 +122,17 @@
                 </ng-template>
             </p-table>
         </div>
+    </div>
+</div>
+
+
+<!-- message -->
+
+<div class="container mt-1 p-5" *ngIf="!participantsVisibleData">
+    <div class="alert alert-primary" role="alert">
+        <h4 class="alert-heading">TENGA EN CUENTA</h4>
+        <hr>
+        <p>Seleccione el curso que ya fue aceptado, de lo contrario solo recibirá un mensaje de advertencia.</p>
+
     </div>
 </div>

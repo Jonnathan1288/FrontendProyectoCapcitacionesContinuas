@@ -52,4 +52,8 @@ export class CursoService {
   public findFilterCoursesByUsuarioDocente(idUser: number): Observable<CourseFilter[]> {
     return this.http.get<CourseFilterDocente[]>(environment.apiuri + '/curso/findFilterCoursesByUsuarioDocente/' + idUser);
   }
+
+  public findByIdUsuarioEstadoCursoFinalizado(idUser: number): Observable<CourseFilter[]> {
+    return this.http.get<CourseFilterDocente[]>(environment.apiuri + '/curso/findByIdUsuarioEstadoCursoFinalizado/' + idUser);
+  }
 }

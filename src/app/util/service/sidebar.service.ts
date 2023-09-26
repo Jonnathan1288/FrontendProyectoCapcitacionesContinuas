@@ -74,6 +74,16 @@ export class SidebarService {
 			{ titulo: 'Gestionar Curso', path: 'capacitador/gestioncurso', icono: 'fa fa-pencil' },
 		]
 	},
+
+	{
+		titulo: 'Asistencia',
+		icono: 'nav-icon fas fa-box-tissue',
+		rols: [ROLES.DOCENTE_CAPACITADOR],
+		submenu: [
+			{ titulo: 'Tomar Asistencia', path: 'verMatriculados/course/inicio', icono: 'fa fa-plus-circle' },
+		]
+	},
+
 	{
 		titulo: 'Hoja de vida',
 		icono: 'nav-icon fas fa-folder',

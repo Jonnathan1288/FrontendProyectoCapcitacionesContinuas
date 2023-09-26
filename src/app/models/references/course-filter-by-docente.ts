@@ -3,4 +3,5 @@ export class CourseFilterDocente {
     docente?: string
     nombreCurso?: string
     estadoPublicasionCurso?: string
+    estadoAprovacionCurso?: string
 }

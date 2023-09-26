@@ -43,7 +43,7 @@ export class AsignacionRolCapacitadorComponent implements OnInit {
   //IMPORT PARA EL OFF AND ON
   public stateOptions: any[] = [];
   public selectedState: any;
-  public estadoValidacionBusqueda: string = 'off';
+  public estadoValidacionBusqueda: string = 'Capacitador';
   constructor(
     private personaService: PersonaService,
     private usuarioService: UsuarioService,
@@ -57,8 +57,8 @@ export class AsignacionRolCapacitadorComponent implements OnInit {
   ) {
     this.sanitizer = sanitizer;
     this.stateOptions = [
-      { label: 'Off', value: 'off' },
-      { label: 'On', value: 'on' },
+      { label: 'Capacitador', value: 'Capacitador' },
+      { label: 'Fenix', value: 'Fenix' },
     ];
   }
   ngOnInit(): void {

@@ -5,7 +5,9 @@
         <p-dropdown [options]="listCursoCapacitador" placeholder="Seleccione curso" optionLabel="nombreCurso"
             [showClear]="true" (onChange)="onCursoSelectionChange($event)">
             <ng-template let-course pTemplate="item">
-                <div (click)="catchCourseSelected(course)">{{ course.nombreCurso }} (ID: {{ course.idCurso }})</div>
+                <div (click)="catchCourseSelected(course)"><i class="fa fa-book-open"></i> {{ course.nombreCurso }} (ID:
+                    {{ course.idCurso }})
+                </div>
             </ng-template>
         </p-dropdown>
 
@@ -25,7 +27,7 @@
 
 <p-table #dt2 [value]="listParticipantsApproved" dataKey="idCurso" [tableStyle]="{'min-width': '50rem'}" [rows]="5"
     [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,15]" [loading]="loading" [paginator]="true"
-    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    currentPageReportTemplate="Mostrando {first} to {last} of {totalRecords} participantes aprobados"
     [globalFilterFields]="['identificacion','nombres','apellidos']" [tableStyle]="{'min-width':'75rem'}">
 
     <ng-template pTemplate="caption">
