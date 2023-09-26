@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Curso } from '../models/curso';
 import { environment } from 'src/environment/enviroment';
@@ -43,7 +43,7 @@ export class CursoService {
     return this.http.put<Curso>(environment.apiuri + '/curso/update1/' + id_curso, curso);
   }
 
-  //Metodo para mostrar todos los programas
+  //Método para mostrar todos los programas -- new
 
   public findByAllCurseFinally(): Observable<CourseFilter[]> {
     return this.http.get<CourseFilter[]>(environment.apiuri + '/curso/findAll/course/finally');
@@ -55,5 +55,23 @@ export class CursoService {
 
   public findByIdUsuarioEstadoCursoFinalizado(idUser: number): Observable<CourseFilter[]> {
     return this.http.get<CourseFilterDocente[]>(environment.apiuri + '/curso/findByIdUsuarioEstadoCursoFinalizado/' + idUser);
+  }
+
+  public findByAllPaginator(page: number, size: number, sort: string[]): Observable<Curso[]> {
+    let params = new HttpParams()
+      .set('page', page)
+      .set('size', size)
+      .set('sort', sort.join(','))
+    console.log(params);
+    return this.http.get<Curso[]>(environment.apiuri + '/curso/pageable', { params });
+  }
+
+  public findByCapacitadorUsuarioIdUsuarioPageable(idUser: number, page: number, size: number, sort: string[]): Observable<Curso[]> {
+    let params = new HttpParams()
+      .set('page', page)
+      .set('size', size)
+      .set('sort', sort.join(','))
+    console.log(params);
+    return this.http.get<Curso[]>(environment.apiuri + '/curso/findByCapacitadorUsuarioIdUsuarioPageable/' + idUser, { params });
   }
 }

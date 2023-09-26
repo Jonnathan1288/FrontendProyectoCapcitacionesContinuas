@@ -6,8 +6,8 @@
 
 <div class="container mt-5"></div>
 <div class="card">
-    <p-table #dt [value]="listCursos" dataKey="id" styleClass="p-datatable-customers" [rowHover]="true" [rows]="10"
-        [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50 ? 'All':'']" [loading]="loading"
+    <p-table #dt [value]="listCursos" dataKey="id" styleClass="p-datatable-customers" [rowHover]="true" [rows]="5"
+        [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,15,50 ]" [loading]="loading"
         responsiveLayout="scroll" [paginator]="true"
         currentPageReportTemplate="Mostrando {first} to {last} of {totalRecords} cursos de capacitación continua."
         [filterDelay]="0"
@@ -16,8 +16,11 @@
         <ng-template pTemplate="caption">
             <div class="flex">
                 <!-- <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt1)"></button> -->
-                <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"
+                <button pButton label="Limpiar" class="p-button-outlined" icon="pi pi-filter-slash"
                     (click)="clear(dt)"></button>
+
+                <p-dropdown [options]="options" optionLabel="label" optionValue="value" [(ngModel)]="rows2"
+                    (ngModelChange)="getPaginatorValidateCoursesCapacitacion($event)" class="mx-2"></p-dropdown>
 
                 <span class="p-input-icon-left ml-auto">
                     <i class="pi pi-search"></i>
@@ -36,27 +39,7 @@
                     <div class="flex justify-content-between align-items-center">
                         <strong>PROGRAMA</strong>
                         <p-sortIcon field="programas.nombrePrograma"></p-sortIcon>
-                        <p-columnFilter field="nombrePrograma" matchMode="in" display="menu" [showMatchModes]="false"
-                            [showOperator]="false" [showAddButton]="false" class="ml-auto">
-                            <ng-template pTemplate="header">
-                                <div class="px-3 pt-3 pb-0">
-                                    <span class="font-bold">Programa</span>
-                                </div>
-                            </ng-template>
-                            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                                <p-multiSelect [ngModel]="value" [options]="listaProgramas" placeholder="Any"
-                                    (onChange)="filter($event.value)" optionLabel="nombrePrograma">
-                                    <!-- <p-multiSelect placeholder="Any" (onChange)="filter($event.value)" optionLabel="name"> -->
 
-                                    <ng-template let-option pTemplate="item">
-                                        <div class="p-multiselect-representative-option">
-
-                                            <span class="ml-1">{{option.nombrePrograma}}</span>
-                                        </div>
-                                    </ng-template>
-                                </p-multiSelect>
-                            </ng-template>
-                        </p-columnFilter>
                     </div>
                 </th>
 
@@ -65,32 +48,7 @@
                         <strong>CAPACITADOR</strong>
 
                         <p-sortIcon field="capacitador.usuario.username"></p-sortIcon>
-                        <p-columnFilter field="capacitador.usuario" matchMode="in" display="menu"
-                            [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" class="ml-auto">
-                            <ng-template pTemplate="header">
-                                <div class="px-3 pt-3 pb-0">
-                                    <span class="font-bold">Usuario</span>
-                                </div>
-                            </ng-template>
-                            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                                <p-multiSelect [ngModel]="value" [options]="listUsuario" placeholder="Any"
-                                    (onChange)="filter($event.value)" optionLabel="username">
-                                    <!-- <p-multiSelect placeholder="Any" (onChange)="filter($event.value)" optionLabel="name"> -->
 
-                                    <ng-template let-option pTemplate="item">
-                                        <div class="p-multiselect-representative-option">
-
-                                            <img [alt]=""
-                                                [src]="
-                                            option.fotoPerfil? 'data:image/jpeg;base64,' + option.fotoPerfil: '../../../../assets/img/istap.png'"
-                                                width="32" class="rounded-circle">
-
-                                            <span class="ml-1">{{option.username}}</span>
-                                        </div>
-                                    </ng-template>
-                                </p-multiSelect>
-                            </ng-template>
-                        </p-columnFilter>
                     </div>
                 </th>
 
