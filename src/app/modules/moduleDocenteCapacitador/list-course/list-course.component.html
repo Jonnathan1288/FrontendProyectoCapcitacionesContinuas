@@ -61,8 +61,6 @@
                 <th pSortableColumn="fechaFinalizacionCurso"><strong>FECHA FIN</strong> <p-sortIcon
                         field="fechaFinalizacionCurso"></p-sortIcon></th>
                 <th style="text-align: center;"><strong>FOTO</strong></th>
-                <th pSortableColumn="estadoPublicasionCurso"><strong>ASISTENCIA</strong><p-sortIcon
-                        field="estadoPublicasionCurso"></p-sortIcon></th>
                 <th pSortableColumn="estadoAprovacionCurso"><strong>INSCRITOS </strong><p-sortIcon
                         field="estadoAprovacionCurso"></p-sortIcon></th>
 
@@ -88,11 +86,6 @@
                 <td><img [src]="'http://localhost:8080/api/uploadUri/'+data.fotoCurso+'/images_course'"
                     width="100" class="shadow-4" /></td>
 
-                <td style="text-align: center;">
-
-                    <button [disabled]="data.estadoAprovacionCurso != 'A'" pButton pRipple icon="pi pi-book"
-                        class="p-button-rounded p-button-success mr-2 mt-1" (click)="VerCursoInicio(data.idCurso, data.estadoPublicasionCurso)"></button>
-                </td>
                 <td style="text-align: center;">
                     <button [disabled]="data.estadoAprovacionCurso != 'A'" pButton pRipple icon="pi pi-list"
                         class="p-button-rounded p-button-secondary mr-2 mt-1" (click)="VerParticipantesInscritos(data.idCurso)"></button>

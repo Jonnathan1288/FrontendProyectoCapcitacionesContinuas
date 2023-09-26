@@ -58,6 +58,7 @@ import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { InicioComponent } from './component/inicio/inicio.component';
 import { HeadersbComponent } from './shared/headersb/headersb.component';
 import { GestionCursoComponent } from './modules/moduleDocenteCapacitador/gestionar-curso/gestion-curso/gestion-curso.component';
+import { CourseasitenciaComponent } from './modules/moduleDocenteCapacitador/courseasitencia/courseasitencia.component';
 
 
 
@@ -107,6 +108,7 @@ import { GestionCursoComponent } from './modules/moduleDocenteCapacitador/gestio
     InicioComponent,
     HeadersbComponent,
     GestionCursoComponent,
+    CourseasitenciaComponent,
   ],
   imports: [
     BrowserModule,
