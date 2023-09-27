@@ -39,7 +39,7 @@
 			</div>
 
 			<div class="field">
-				<label for="email"><strong>email electrónico: *</strong></label>
+				<label for="email"><strong>Correo electrónico: *</strong></label>
 				<input type="email" pInputText id="email" name="email" placeholder="Ej: example@email.com"
 					formControlName="email"
 					[class.is-invalid]="userForm.get('email')!.invalid && userForm.get('email')!.touched"
@@ -47,11 +47,11 @@
 
 				<div
 					*ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched || userForm.get('email')?.dirty">
-					<small class="text-danger" *ngIf="userForm.get('email')?.errors?.['required']"><strong>email
+					<small class="text-danger" *ngIf="userForm.get('email')?.errors?.['required']"><strong>Correo
 							es
 							requerido.</strong></small>
 					<small class="text-danger" *ngIf="userForm.get('email')?.errors?.['pattern']"><strong>Dirección
-							de email
+							de correo
 							invalido.<br></strong> </small>
 					<small class="text-danger " *ngIf="userResponse && userResponse.email">
 						<strong> {{userResponse.email}}</strong></small>
@@ -63,8 +63,8 @@
 				<input type="username" pInputText id="username" name="username" placeholder="Nombre de usuario"
 					formControlName="username"
 					[class.is-invalid]="userForm.get('username')!.invalid && userForm.get('username')!.touched"
-					class="form-control" formcontrolname="username" [maxlength]="12"
-					onkeypress='return (event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 || event.charCode === 32)'
+					class="form-control" formcontrolname="username" [maxlength]="25"
+					onkeypress='return (event.charCode >= 65 && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 || event.charCode >= 48 && event.charCode <= 57)'
 					required />
 
 				<div
@@ -74,7 +74,7 @@
 							es
 							requerido.</strong></small>
 					<small class="text-danger" *ngIf="userForm.get('username')?.errors?.['minlength']"><strong>Mínimo
-							requerido es .<br></strong></small>
+							requerido es 8.<br></strong></small>
 					<small class="text-danger" *ngIf="userResponse && userResponse.username">
 						<strong>{{userResponse.username}}</strong></small>
 				</div>

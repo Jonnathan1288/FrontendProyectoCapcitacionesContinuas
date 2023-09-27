@@ -108,45 +108,31 @@
                 <td>
                     <span class="p-column-title">Status</span>
                     {{curso.programas.nombrePrograma}}
-                    <!-- <span [class]="'customer-badge status-' + curso.programas.nombrePrograma">{{curso.programas.nombrePrograma}}</span> -->
                 </td>
 
 
                 <td>
-                    <span class="p-column-title">Representative</span>
-                    <!-- style="vertical-align: midle rounded-circle" -->
-                    <!-- <img [alt]="" [src]="'data:image/jpeg;base64,' + curso.fotoCurso" width="32" class="rounded-circle"> -->
-                    <img [alt]=""
-                        [src]="
-                    curso.capacitador.usuario.fotoPerfil? 'data:image/jpeg;base64,' + curso.capacitador.usuario.fotoPerfil: '../../../../assets/img/istap.png'"
+                    <img [src]="
+                    curso.capacitador.usuario.fotoPerfil? getImage(curso.capacitador.usuario.fotoPerfil): '../../../../assets/img/istap.png'"
                         width="32" class="rounded-circle">
-
-                    <!-- <img [alt]="customer.representative.name" src="assets/showcase/images/demo/avatar/{{customer.representative.image}}" width="32" style="vertical-align: middle" /> -->
                     <span class="image-text"> {{curso.capacitador.usuario.username}}</span>
                 </td>
 
                 <td>
-                    <span class="p-column-title">Name</span>
                     {{curso.nombreCurso}}
                 </td>
                 <td>
-                    <span class="p-column-title">Date</span>
-                    <!-- {{curso.fechaInicioCurso}} -->
+
                     {{curso.fechaInicioCurso | date: 'MM/dd/yyyy'}}
                 </td>
                 <td>
                     {{curso.fechaFinalizacionCurso | date: 'MM/dd/yyyy'}}
-                    <!-- {{customer.balance | currency:'USD':'symbol'}} -->
                 </td>
                 <td style="text-align: center">
-                    <span class="p-column-title">Country</span>
-
 
                     <button class="custom-button" (click)="validarHojaDeVida(curso, 2)">
                         <i class="pi pi-file" [ngClass]="{'pi-button': true}"></i>
                     </button>
-
-
 
                 </td>
                 <td class="text-center">
@@ -262,4 +248,18 @@
         </div>
     </div>
 
+</p-dialog>
+
+
+<p-dialog [(visible)]="sendEmailVerification" [style]="{ width: '450px' }" header="Product Details" [modal]="true"
+    styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        hola
+
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text"></button>
+        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text"></button>
+    </ng-template>
 </p-dialog>

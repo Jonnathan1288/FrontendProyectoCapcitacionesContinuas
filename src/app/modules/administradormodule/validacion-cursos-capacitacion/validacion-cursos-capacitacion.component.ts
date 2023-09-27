@@ -16,6 +16,7 @@ import { ReportsCapacitacionesService } from 'src/app/service/reports-capacitaci
 import { UsuarioService } from 'src/app/service/usuario.service';
 import { ToastrService } from 'ngx-toastr';
 import { SilaboService } from 'src/app/service/silabo.service';
+import { FOLDER_IMAGE_USER, getFile } from 'src/app/util/folder-upload';
 
 @Component({
 	selector: 'app-validacion-cursos-capacitacion',
@@ -63,7 +64,6 @@ export class ValidacionCursosCapacitacionComponent implements OnInit {
 		this.obtenerTodosLosCursos();
 	}
 
-
 	clear(table: Table) {
 		table.clear();
 	}
@@ -100,53 +100,38 @@ export class ValidacionCursosCapacitacionComponent implements OnInit {
 	public classCursoValidanew = new Curso();
 	visibleCursoDeCapacitacion?: boolean;
 	public validarHojaDeVida(curso: Curso, caso: number) {
-		// alert(idCurso)
 		this.pdfSrc = null;
 		this.classCursoValidanew = { ...curso };
-		this.obtenerHojaVidaCapacitador(
-			this.classCursoValidanew.capacitador!.idCapacitador!
-		);
+
 		this.obtenerReportesValidacion(caso, curso.idCurso!);
 		this.visibleCursoDeCapacitacion = true;
 	}
 
 	public UpdateValidacionCurso(idCurso: number) {
-		if (idCurso == 1) {
-			this.classCursoValidanew.estadoAprovacionCurso = 'A';
-		} else {
-			this.classCursoValidanew.estadoAprovacionCurso = 'R';
-		}
-		this.cursoService
-			.updateCurso(this.classCursoValidanew.idCurso!, this.classCursoValidanew)
-			.subscribe((data) => {
-				if (data != null) {
-					// console.log({dataCurso: data})
-					if (data.estadoAprovacionCurso === 'A') {
-						this.toastrService.success('Curso aprovado', 'CURSO APROVADO');
-					} else {
-						this.toastrService.error(
-							'El curso a sido rechazado.',
-							'CURSO RECHAZADO'
-						);
-					}
-				}
-			});
-		setTimeout(() => {
-			location.reload();
-		}, 1300);
-	}
+		this.sendEmailVerification = true;
 
-	public classHojaVidaDocenteCapacitador = new HojaVidaCapacitador();
-	public obtenerHojaVidaCapacitador(idCapacitador: number) {
-		this.classHojaVidaDocenteCapacitador = new HojaVidaCapacitador();
-		this.hojaVidaService
-			.getHojaVidaCapacitadorByIdCapacitador(idCapacitador)
-			.subscribe((data) => {
-				if (data != null) {
-					// alert()
-					this.classHojaVidaDocenteCapacitador = data;
-				}
-			});
+		// if (idCurso === 1) {
+		// 	this.classCursoValidanew.estadoAprovacionCurso = 'A';
+		// } else {
+		// 	this.classCursoValidanew.estadoAprovacionCurso = 'R';
+		// }
+		// this.cursoService
+		// 	.updateCurso(this.classCursoValidanew.idCurso!, this.classCursoValidanew)
+		// 	.subscribe((data) => {
+		// 		if (data != null) {
+		// 			if (data.estadoAprovacionCurso === 'A') {
+		// 				this.toastrService.success('Curso aprovado', 'CURSO APROVADO');
+		// 			} else {
+		// 				this.toastrService.error(
+		// 					'El curso a sido rechazado.',
+		// 					'CURSO RECHAZADO'
+		// 				);
+		// 			}
+		// 		}
+		// 	});
+		// setTimeout(() => {
+		// 	location.reload();
+		// }, 1300);
 	}
 
 	public pdfSrc: any;
@@ -245,5 +230,13 @@ export class ValidacionCursosCapacitacionComponent implements OnInit {
 				this.toastrService.error('', 'INCONVENIENTE AL OBTENER CURSOS');
 			}
 		});
+	}
+
+	//------------------------------------------------------------------------------------
+	public sendEmailVerification: boolean = false;
+
+	//---------------------------------------------------
+	public getImage(key: string): string {
+		return getFile(key, FOLDER_IMAGE_USER);
 	}
 }
