@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LocalStorageKeys, clearLocalStorage, getRole, getUserData } from 'src/app/util/local-storage-manager';
 import { TimeOut } from 'src/app/util/model/time-out';
+import { Usuario } from 'src/app/models/usuario';
 import { TimeOutTokenService } from 'src/app/util/service/time-out-token.service';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-headersb',
   templateUrl: './headersb.component.html',
@@ -21,9 +23,11 @@ export class HeadersbComponent implements OnInit {
   public keyValue: string = '';
   public messageView: string = ''
 
+
   constructor(
     private router: Router,
     private TimeOutService: TimeOutTokenService,
+    private toastrService: ToastrService
   ) {
   }
   ngOnInit(): void {
@@ -32,6 +36,8 @@ export class HeadersbComponent implements OnInit {
     }, 1000);
 
     this.getDataUserLoggin();
+
+    
 
   }
 
@@ -103,4 +109,5 @@ export class HeadersbComponent implements OnInit {
     type === 3 ? this.logOut() : null;
   }
 
+  
 }
