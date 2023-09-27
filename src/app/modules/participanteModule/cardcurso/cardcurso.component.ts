@@ -6,6 +6,8 @@ import { Curso } from 'src/app/models/curso';
 import { LoadScript } from 'src/app/scripts/load-script';
 import { CursoService } from 'src/app/service/curso.service';
 import { StorageService } from 'src/app/service/storage.service';
+import { Table } from 'primeng/table';
+
 
 @Component({
   selector: 'app-cardcurso',
@@ -228,5 +230,8 @@ export class CardcursoComponent implements OnInit {
 
   public obtenernuevamenteLosCursosSinFiltros() {
     this.listCursos = this.listCursosOriginal;
+  }
+  clear(table: Table) {
+    table.clear();
   }
 }
