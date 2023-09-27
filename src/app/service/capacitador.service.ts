@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Capacitador } from '../models/capacitador';
 import { environment } from 'src/environment/enviroment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { StorageService } from './storage.service';
 
@@ -10,10 +10,19 @@ import { StorageService } from './storage.service';
 })
 export class CapacitadorService {
 
-  constructor(private http: HttpClient, private storageService: StorageService) {}
-  
+  constructor(private http: HttpClient, private storageService: StorageService) { }
+
   public getAllCapacitador(): Observable<Capacitador[]> {
     return this.http.get<Capacitador[]>(environment.apiuri + '/capacitador/list');
+  }
+
+  public findByAllPaginator(page: number, size: number, sort: string[]): Observable<Capacitador[]> {
+    let params = new HttpParams()
+      .set('page', page)
+      .set('size', size)
+      .set('sort', sort.join(','))
+    console.log(params);
+    return this.http.get<Capacitador[]>(environment.apiuri + '/capacitador/pageable', { params });
   }
 
   public getCapacitadorById(idCapacitador: number): Observable<Capacitador> {
@@ -24,16 +33,16 @@ export class CapacitadorService {
     return this.http.get<Capacitador>(environment.apiuri + '/capacitador/findbyIdUsuario/' + idUsuario);
   }
 
-  public saveCapacitador(capacitador: Capacitador):Observable<Capacitador>{
-    return this.http.post<Capacitador>(environment.apiuri+'/capacitador/save', capacitador);
+  public saveCapacitador(capacitador: Capacitador): Observable<Capacitador> {
+    return this.http.post<Capacitador>(environment.apiuri + '/capacitador/save', capacitador);
   }
 
-  public updateCapacitador(idCapacitador: number, capacitador: Capacitador):Observable<Capacitador>{
-    return this.http.put<Capacitador>(environment.apiuri+'/capacitador/actualizar/'+idCapacitador, capacitador);
+  public updateCapacitador(idCapacitador: number, capacitador: Capacitador): Observable<Capacitador> {
+    return this.http.put<Capacitador>(environment.apiuri + '/capacitador/actualizar/' + idCapacitador, capacitador);
   }
 
-  public existsCapacitadorByUsuarioIdUsuario(idUsuario: number):Observable<Boolean>{
-    return this.http.get<Boolean>(environment.apiuri+'/capacitador/exists/findbyIdUsuario/'+idUsuario);
+  public existsCapacitadorByUsuarioIdUsuario(idUsuario: number): Observable<Boolean> {
+    return this.http.get<Boolean>(environment.apiuri + '/capacitador/exists/findbyIdUsuario/' + idUsuario);
   }
 
   //PARA PETICIONES PUBLICAS DE VALIDACIONES--------------------------------------------------------------------------

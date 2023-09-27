@@ -1,8 +1,6 @@
-
-
 <!-- NUEVO DISEÑO PARA LA VISTA -->
 
-<div class="card">
+<div class="">
     <p-toolbar styleClass="mb-4">
         <ng-template pTemplate="left">
             <button pButton pRipple label="Nuevo" icon="pi pi-plus" class="p-button-success mr-2"
@@ -15,36 +13,67 @@
         <ng-template pTemplate="right">
             <div class="flex align-items-center justify-content-between">
                 <h5 class="m-0"><strong>MIS CURSOS DE CAPACITACIÓN</strong></h5>
-               
+
             </div>
         </ng-template>
     </p-toolbar>
+    <!-- <div class="flex align-items-center justify-content-end">
+
+
+
+    </div> -->
 
     <p-table #dt [value]="cursoList" dataKey="id" styleClass="p-datatable-customers" [rowHover]="true" [rows]="5"
         [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,15]" responsiveLayout="scroll" [paginator]="true"
-        currentPageReportTemplate="Mostrando {first} to {last} of {totalRecords} programas" [filterDelay]="0"
-        [showCurrentPageReport]="true" [globalFilterFields]="['nombreCurso','duracionCurso','fechaInicioCurso','fechaFinalizacionCurso']">
-        
+        currentPageReportTemplate="Mostrando {first} to {last} of {totalRecords} cursos" [filterDelay]="0"
+        [showCurrentPageReport]="true"
+        [globalFilterFields]="['nombreCurso','duracionCurso','fechaInicioCurso','fechaFinalizacionCurso']">
+
 
         <ng-template pTemplate="caption">
             <div class="flex">
-                <!-- <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt1)"></button> -->
-                <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"
-                (click)="clear(dt)"></button>
+                <button pButton label="Limpiar" class="p-button-outlined" icon="pi pi-filter-slash"
+                    (click)="clear(dt)"></button>
+
+                <p-dropdown [options]="options" optionLabel="label" optionValue="value" [(ngModel)]="rows2"
+                    (ngModelChange)="getPaginatorCourses($event)" class="mx-2"></p-dropdown>
 
                 <span class="p-input-icon-left ml-auto">
                     <i class="pi pi-search"></i>
-                    <!-- <input pInputText type="text" (input)="filterTableCourse($event)"
-                        placeholder="Search keyword" /> -->
 
-                        <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                    <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
                         placeholder="Buscar..." />
 
                 </span>
             </div>
+
+            <!-- <div class="grid p-fluid align-items-center">
+                <div class="col-12 md:col-2">
+                    <button pButton label="Limpiar" class="p-button-outlined" icon="pi pi-filter-slash"
+                        (click)="clear(dt)"></button>
+
+
+                </div>
+
+                <div class="col-12 md:col-1">
+                    <p-dropdown [options]="options" optionLabel="label" optionValue="value" [(ngModel)]="rows2"
+                        (ngModelChange)="first2 = 0" class="mx-2"></p-dropdown>
+                </div>
+                <div class="col-12 md:col-6"></div>
+
+                <div class="col-12 md:col-3">
+                    <span class="p-input-icon-left ml-auto">
+                        <i class="pi pi-search"></i>
+
+                        <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                            placeholder="Buscar..." />
+
+                    </span>
+                </div>
+            </div> -->
         </ng-template>
 
-        
+
         <ng-template pTemplate="header">
             <tr>
                 <!-- <th style="width: 3rem">
@@ -57,12 +86,12 @@
                         field="duracionCurso"></p-sortIcon>
                 </th>
                 <th pSortableColumn="fechaInicioCurso"><strong>FECHA INICIO</strong>
-                    <p-sortIcon field="fechaInicioCurso"></p-sortIcon></th>
+                    <p-sortIcon field="fechaInicioCurso"></p-sortIcon>
+                </th>
                 <th pSortableColumn="fechaFinalizacionCurso"><strong>FECHA FIN</strong> <p-sortIcon
                         field="fechaFinalizacionCurso"></p-sortIcon></th>
                 <th style="text-align: center;"><strong>FOTO</strong></th>
-                <th pSortableColumn="estadoPublicasionCurso"><strong>ASISTENCIA</strong><p-sortIcon
-                        field="estadoPublicasionCurso"></p-sortIcon></th>
+
                 <th pSortableColumn="estadoAprovacionCurso"><strong>INSCRITOS </strong><p-sortIcon
                         field="estadoAprovacionCurso"></p-sortIcon></th>
 
@@ -73,7 +102,7 @@
                 <th pSortableColumn="estadoPublicasionCurso"><strong>PUBLICACIÓN </strong><p-sortIcon
                         field="estadoPublicasionCurso"></p-sortIcon></th>
 
-            
+
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-data>
@@ -85,17 +114,14 @@
                 <td>{{data.duracionCurso}} horas/s </td>
                 <td>{{data.fechaInicioCurso}}</td>
                 <td>{{data.fechaFinalizacionCurso}}</td>
-                <td><img [src]="'http://localhost:8080/api/uploadUri/'+data.fotoCurso+'/images_course'"
-                    width="100" class="shadow-4" /></td>
+                <td><img [src]="'http://localhost:8080/api/uploadUri/'+data.fotoCurso+'/images_course'" width="100"
+                        class="shadow-4"   /></td>
 
-                <td style="text-align: center;">
 
-                    <button [disabled]="data.estadoAprovacionCurso != 'A'" pButton pRipple icon="pi pi-book"
-                        class="p-button-rounded p-button-success mr-2 mt-1" (click)="VerCursoInicio(data.idCurso, data.estadoPublicasionCurso)"></button>
-                </td>
                 <td style="text-align: center;">
                     <button [disabled]="data.estadoAprovacionCurso != 'A'" pButton pRipple icon="pi pi-list"
-                        class="p-button-rounded p-button-secondary mr-2 mt-1" (click)="VerParticipantesInscritos(data.idCurso)"></button>
+                        class="p-button-rounded p-button-secondary mr-2 mt-1"
+                        (click)="VerParticipantesInscritos(data.idCurso)"></button>
                 </td>
                 <td>
 
@@ -107,7 +133,8 @@
                 </td>
 
                 <td style="text-align: center;"> <button pButton pRipple icon="pi pi-send"
-                        class="p-button-rounded p-button-secondary mr-2 mt-1" (click)="showModaLPublisedCourse(data)"></button></td>
+                        class="p-button-rounded p-button-secondary mr-2 mt-1"
+                        (click)="showModaLPublisedCourse(data)"></button></td>
                 <!-- <td style="text-align: center;">
                     <button pButton pRipple icon="pi pi-bars"
                         class="p-button-rounded p-button-secondary mr-2 mt-1" (click)="modalViewoption(data)"></button>
@@ -204,6 +231,3 @@
     </div>
 
 </p-dialog>
-
-
-

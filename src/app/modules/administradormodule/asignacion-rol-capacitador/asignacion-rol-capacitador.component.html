@@ -1,4 +1,4 @@
-<div class="card">
+<div class="">
     <p-toolbar styleClass="mb-4">
         <ng-template pTemplate="left">
             <button pButton pRipple label="Nuevo" icon="pi pi-plus" class="p-button-success mr-2"
@@ -6,12 +6,10 @@
 
         </ng-template>
 
-        <!-- <ng-template pTemplate="right">
-            <button pButton pRipple label="Imprimir" icon="pi pi-print"
-                class="p-button-primary mr-2 inline-block"></button>
-
-            <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button>
-        </ng-template> -->
+        <ng-template pTemplate="right">
+            <p-dropdown [options]="options" optionLabel="label" optionValue="value" [(ngModel)]="rows2"
+                (ngModelChange)="getPaginatorCapacitadores($event)" class="mx-2"></p-dropdown>
+        </ng-template>
     </p-toolbar>
 
     <p-table #dt [value]="listDocentesCapacitadoresFilter" dataKey="id" styleClass="p-datatable-customers"
@@ -27,10 +25,10 @@
 
                 <span class="p-input-icon-left">
                     <i class="pi pi-search"></i>
-                    <input *ngIf="estadoValidacionBusqueda === 'off'" pInputText type="text"
+                    <input *ngIf="estadoValidacionBusqueda === 'Capacitador'" pInputText type="text"
                         placeholder="Docentes capacitadores..." (input)="filterEventDocentesCapacitadores($event)" />
 
-                    <input *ngIf="estadoValidacionBusqueda === 'on'" pInputText type="text"
+                    <input *ngIf="estadoValidacionBusqueda === 'Fenix'" pInputText type="text"
                         placeholder="Docente fenix..." (input)="filterGlobalDocenteFenix($event)" maxlength="10"
                         onkeypress='return event.charCode >= 48 && event.charCode <= 57' />
                 </span>

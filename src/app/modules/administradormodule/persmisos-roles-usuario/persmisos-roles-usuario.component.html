@@ -1,20 +1,26 @@
-<div class="card">
+<div class="">
     <p-toolbar styleClass="mb-4">
         <ng-template pTemplate="left">
-            <!-- <button pButton pRipple label="Nuevo" icon="pi pi-plus" class="p-button-success mr-2"
-                (click)="showModaL()"></button> -->
-                <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"
+
+            <button pButton label="Limpiar" class="p-button-outlined" icon="pi pi-filter-slash"
                 (click)="clear()"></button>
         </ng-template>
 
-       
+
+        <ng-template pTemplate="right">
+
+            <p-dropdown [options]="options" optionLabel="label" optionValue="value" [(ngModel)]="rows2"
+                (ngModelChange)="getPaginatorUserPermission($event)" class="mx-2"></p-dropdown>
+        </ng-template>
+
+
     </p-toolbar>
 
-    <p-table #dt [value]="listUsuariosFilter" dataKey="id" styleClass="p-datatable-customers" [rowHover]="true" [rows]="5"
-    [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,15]"  responsiveLayout="scroll"
-    [paginator]="true" currentPageReportTemplate="Mostrando {first} to {last} of {totalRecords} usuarios"
-    [filterDelay]="0" [globalFilterFields]="['identificacion','apellido1','nombre1','username']"
-    [showCurrentPageReport]="true" >
+    <p-table #dt [value]="listUsuariosFilter" dataKey="id" styleClass="p-datatable-customers" [rowHover]="true"
+        [rows]="5" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,15]" responsiveLayout="scroll"
+        [paginator]="true" currentPageReportTemplate="Mostrando {first} to {last} of {totalRecords} usuarios"
+        [filterDelay]="0" [globalFilterFields]="['identificacion','apellido1','nombre1','username']"
+        [showCurrentPageReport]="true">
         <ng-template pTemplate="caption">
             <div class="flex align-items-center justify-content-between">
                 <h5 class="m-0"><strong>ASIGNACIÓN DE PERMISOS A LOS USUARIOS</strong></h5>
@@ -24,21 +30,23 @@
                     <i class="pi pi-search"></i>
 
 
-                 <input pInputText type="text" 
-                      placeholder="Buscar usuario.." (input)="filterEventUsuarios($event)"  /> 
+                    <input pInputText type="text" placeholder="Buscar usuario.."
+                        (input)="filterEventUsuarios($event)" />
                 </span>
             </div>
         </ng-template>
         <ng-template pTemplate="header">
             <tr>
-                <th pSortableColumn="persona.identificacion">IDENTIFICACIÓN<p-sortIcon field="persona.identificacion"></p-sortIcon>
+                <th pSortableColumn="persona.identificacion">IDENTIFICACIÓN<p-sortIcon
+                        field="persona.identificacion"></p-sortIcon>
                 </th>
-                <th pSortableColumn="persona.apellido1">APELLIDOS <p-sortIcon field="persona.apellido1"></p-sortIcon></th>
+                <th pSortableColumn="persona.apellido1">APELLIDOS <p-sortIcon field="persona.apellido1"></p-sortIcon>
+                </th>
 
                 <th pSortableColumn="persona.nombre1">NOMBRES <p-sortIcon field="nombre1"></p-sortIcon></th>
-         
+
                 <th pSortableColumn="username">NOMBRE DE CUENTA<p-sortIcon field="username"></p-sortIcon></th>
-              
+
 
 
                 <th pSortableColumn="inventoryStatus">GESTIÓN <p-sortIcon field="inventoryStatus"></p-sortIcon></th>
@@ -50,18 +58,20 @@
                 <td>{{user.persona.identificacion}}</td>
                 <td>{{user.persona.apellido1}} {{user.persona.apellido2}}</td>
                 <td>{{user.persona.nombre1}} {{user.persona.apellido1}}</td>
-             
+
                 <td>{{user.username}}</td>
-                
-    
+
+
                 <td>
-                    <button [disabled]="user.username === 'admin'" pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2 mt-1"
+                    <button [disabled]="user.username === 'admin'" pButton pRipple icon="pi pi-pencil"
+                        class="p-button-rounded p-button-success mr-2 mt-1"
                         (click)="cargarDatosDocenteUser(user)"></button>
 
-                        <button [disabled]="user.username === 'admin'" pButton pRipple [icon]="user.estadoUsuarioActivo ? 'pi pi-check' : 'pi pi-trash'"
+                    <button [disabled]="user.username === 'admin'" pButton pRipple
+                        [icon]="user.estadoUsuarioActivo ? 'pi pi-check' : 'pi pi-trash'"
                         [class]="'p-button-rounded ' + (user.estadoUsuarioActivo ? 'p-button-primary' : 'p-button-warning') + ' mt-1'"
-                        (click)="eliminadoLogicoDelCapacitador(user)"> 
-                     </button> 
+                        (click)="eliminadoLogicoDelCapacitador(user)">
+                    </button>
                 </td>
             </tr>
         </ng-template>
@@ -85,22 +95,24 @@
 <p-dialog header="CREACIÓN DE CAPACITADORES CON SUS ROLES" [(visible)]="visible" [modal]="true"
     [style]="{ width: '50vw', height: '250' }" [draggable]="false" [resizable]="false">
 
-    <form (ngSubmit)="saveUpdateDocenteDocenteCapacitadorRol()" novalidate  style="padding: 15px;">
+    <form (ngSubmit)="saveUpdateDocenteDocenteCapacitadorRol()" novalidate style="padding: 15px;">
         <div class="grid p-fluid m-2">
 
             <div class="col-12 md:col-7 mt-1">
                 <div class="p-inputgroup">
-                  <p><strong>NOMBRES:</strong> {{classUsuario.persona?.nombre1}} {{classUsuario.persona?.nombre2}} </p>
-        
-        
+                    <p><strong>NOMBRES:</strong> {{classUsuario.persona?.nombre1}} {{classUsuario.persona?.nombre2}}
+                    </p>
+
+
                 </div>
-              </div>
-              <div class="col-12 md:col-5 mt-1">
+            </div>
+            <div class="col-12 md:col-5 mt-1">
                 <div class="p-inputgroup">
-                  <p><strong>APELLIDOS:</strong> {{classUsuario.persona?.apellido1}} {{classUsuario.persona?.apellido2}}</p>
-        
+                    <p><strong>APELLIDOS:</strong> {{classUsuario.persona?.apellido1}}
+                        {{classUsuario.persona?.apellido2}}</p>
+
                 </div>
-              </div>
+            </div>
 
             <!-- <div class="col-12 md:col-12 mt-2">
                 <div class="p-inputgroup">
@@ -140,11 +152,9 @@
 
             <!-- Fin del periodo porgrama -->
             <div class="col-md-12 mt-4" style="text-align: center; margin: 5px;">
-                <p-button type="ngSubmit"
-                    label="Actualizar permisos"
-                    icon="pi pi-save" styleClass="p-button-success  "></p-button>
+                <p-button type="ngSubmit" label="Actualizar permisos" icon="pi pi-save"
+                    styleClass="p-button-success  "></p-button>
             </div>
         </div>
     </form>
 </p-dialog>
-

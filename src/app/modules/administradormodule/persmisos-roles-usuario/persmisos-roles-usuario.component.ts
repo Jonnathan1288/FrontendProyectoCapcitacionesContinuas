@@ -9,211 +9,244 @@ import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
-  selector: 'app-persmisos-roles-usuario',
-  templateUrl: './persmisos-roles-usuario.component.html',
-  styleUrls: ['./persmisos-roles-usuario.component.css'],
+	selector: 'app-persmisos-roles-usuario',
+	templateUrl: './persmisos-roles-usuario.component.html',
+	styleUrls: ['./persmisos-roles-usuario.component.css'],
 })
 export class PersmisosRolesUsuarioComponent implements OnInit {
-  public classUsuario = new Usuario();
+	public classUsuario = new Usuario();
 
-  public classCapacitador = new Capacitador();
+	public classCapacitador = new Capacitador();
 
-  public listClassUsuario: Usuario[] = [];
+	public listClassUsuario: Usuario[] = [];
 
-  public listRole: Rol[] = [];
+	public listRole: Rol[] = [];
 
-  public listRoleAsignarUser: Rol[] = [];
+	public listRoleAsignarUser: Rol[] = [];
 
-  constructor(
-    private usuarioService: UsuarioService,
-    private rolService: RolService,
-    private capacitadorService: CapacitadorService,
+	constructor(
+		private usuarioService: UsuarioService,
+		private rolService: RolService,
+		private capacitadorService: CapacitadorService,
 
-    private toastrService: ToastrService
-  ) {
-   
-  }
-  ngOnInit(): void {
-    // this.listDocentesCapacitadores();
-    this.listUsusuariosCapacitacionesContinuas();
-    this.getAllRolesOfDataBase();
-  }
+		private toastrService: ToastrService
+	) {
 
-  clear() {
-    this.listUsuariosFilter = this.listClassUsuario;
-  }
+	}
+	ngOnInit(): void {
+		// this.listDocentesCapacitadores();
+		this.listUsusuariosCapacitacionesContinuas();
+		this.getAllRolesOfDataBase();
+	}
 
-  //PAR EL EVENTO DE BUSQUEDA
-  //Implementacion de los filtros
-  public wordNoFind?: any;
-  public filterEventUsuarios(e: any) {
-    let letter = e.target.value.toLowerCase();
+	clear() {
+		this.listUsuariosFilter = this.listClassUsuario;
+	}
 
-    this.wordNoFind = letter;
-    console.log(this.wordNoFind);
+	//PAR EL EVENTO DE BUSQUEDA
+	//Implementacion de los filtros
+	public wordNoFind?: any;
+	public filterEventUsuarios(e: any) {
+		let letter = e.target.value.toLowerCase();
 
-    if (this.wordNoFind === '') {
-      this.listUsuariosFilter = this.listClassUsuario;
-      // this.numerFoundCountAnimal = this.listALLAnimals.length;
-    } else {
-      let filterUsusariosRoles = this.listClassUsuario.filter(
-        (user) =>
-          user.persona?.nombre1?.toLowerCase().includes(this.wordNoFind) ||
-          user.persona?.nombre2?.toLowerCase().includes(this.wordNoFind) ||
-          user.persona?.apellido1?.toLowerCase().includes(this.wordNoFind) ||
-          user.persona?.apellido2?.toLowerCase().includes(this.wordNoFind) ||
-          user.persona?.identificacion
-            ?.toLowerCase()
-            .includes(this.wordNoFind) ||
-          user.username?.toLowerCase().includes(this.wordNoFind)
-      );
+		this.wordNoFind = letter;
+		console.log(this.wordNoFind);
 
-      this.listUsuariosFilter = filterUsusariosRoles;
-    }
-  }
-  //END-------------------------------------------------------------------
+		if (this.wordNoFind === '') {
+			this.listUsuariosFilter = this.listClassUsuario;
+			// this.numerFoundCountAnimal = this.listALLAnimals.length;
+		} else {
+			let filterUsusariosRoles = this.listClassUsuario.filter(
+				(user) =>
+					user.persona?.nombre1?.toLowerCase().includes(this.wordNoFind) ||
+					user.persona?.nombre2?.toLowerCase().includes(this.wordNoFind) ||
+					user.persona?.apellido1?.toLowerCase().includes(this.wordNoFind) ||
+					user.persona?.apellido2?.toLowerCase().includes(this.wordNoFind) ||
+					user.persona?.identificacion
+						?.toLowerCase()
+						.includes(this.wordNoFind) ||
+					user.username?.toLowerCase().includes(this.wordNoFind)
+			);
 
-  //OBTENER TODOS LOS ROLES DE LA BASE DE DATOS..
-  public getAllRolesOfDataBase() {
-    this.rolService.getAllRoleOfDataBase().subscribe((data) => {
-      if (data != null) {
-        this.listRole = data;
-      }
-    });
-  }
+			this.listUsuariosFilter = filterUsusariosRoles;
+		}
+	}
+	//END-------------------------------------------------------------------
 
-  public filterGlobalDocenteFenix(e: any) {
-    let letter = e.target.value;
-    if (letter.length == 10) {
-    }
-    console.log(letter);
-  }
+	//OBTENER TODOS LOS ROLES DE LA BASE DE DATOS..
+	public getAllRolesOfDataBase() {
+		this.rolService.getAllRoleOfDataBase().subscribe((data) => {
+			if (data != null) {
+				this.listRole = data;
+			}
+		});
+	}
 
-  public cargarDatosDocenteUser(user: Usuario) {
-    console.log(user);
-    this.classUsuario = { ...user };
-    // this.classUsuario = this.usuario!;
+	public filterGlobalDocenteFenix(e: any) {
+		let letter = e.target.value;
+		if (letter.length == 10) {
+		}
+		console.log(letter);
+	}
 
-    this.listRoleAsignarUser = [...this.classUsuario.roles!];
-    // this.listRoleAsignarUser = this.classUsuario.roles!;
-    console.log(this.classUsuario.roles);
-    this.visible = true;
-  }
+	public cargarDatosDocenteUser(user: Usuario) {
+		console.log(user);
+		this.classUsuario = { ...user };
+		// this.classUsuario = this.usuario!;
 
-  //Método para guardar todoslos datos de la persona con rol de capacitador..
-  public saveUpdateDocenteDocenteCapacitadorRol() {
-    if (this.listRoleAsignarUser.length === 0) {
-      // this.toastrService.warning('Verifique los campos obligatorios', 'Debe darle almenos un rol al usuario');
-      this.toastrService.error(
-        'Debe darle un rol al usuario.',
-        'Rol no asignado.'
-      );
-    } else {
-      if (this.classUsuario.idUsuario) {
-        this.updateUsuarioRoles();
-      }
-    }
-  }
+		this.listRoleAsignarUser = [...this.classUsuario.roles!];
+		// this.listRoleAsignarUser = this.classUsuario.roles!;
+		console.log(this.classUsuario.roles);
+		this.visible = true;
+	}
 
-  //ASIGNAR ROLES A USUARIO
-  public asignarRolesUsuario(rol: Rol) {
-    const index = this.listRoleAsignarUser.findIndex(
-      (item) => item.idRol === rol.idRol
-    );
+	//Método para guardar todoslos datos de la persona con rol de capacitador..
+	public saveUpdateDocenteDocenteCapacitadorRol() {
+		if (this.listRoleAsignarUser.length === 0) {
+			// this.toastrService.warning('Verifique los campos obligatorios', 'Debe darle almenos un rol al usuario');
+			this.toastrService.error(
+				'Debe darle un rol al usuario.',
+				'Rol no asignado.'
+			);
+		} else {
+			if (this.classUsuario.idUsuario) {
+				this.updateUsuarioRoles();
+			}
+		}
+	}
 
-    if (index !== -1) {
-      // Si el rol ya existe, lo eliminamos del arreglo
-      this.listRoleAsignarUser.splice(index, 1);
-    } else {
-      // Si el rol no existe, lo agregamos al arreglo
-      this.listRoleAsignarUser.push(rol);
-    }
+	//ASIGNAR ROLES A USUARIO
+	public asignarRolesUsuario(rol: Rol) {
+		const index = this.listRoleAsignarUser.findIndex(
+			(item) => item.idRol === rol.idRol
+		);
 
-    console.log(this.listRoleAsignarUser);
-  }
+		if (index !== -1) {
+			// Si el rol ya existe, lo eliminamos del arreglo
+			this.listRoleAsignarUser.splice(index, 1);
+		} else {
+			// Si el rol no existe, lo agregamos al arreglo
+			this.listRoleAsignarUser.push(rol);
+		}
 
-  isRoleAssigned(role: Rol): boolean {
-    return this.listRoleAsignarUser.some(
-      (assignedRole) => assignedRole.idRol === role.idRol
-    );
-  }
+		console.log(this.listRoleAsignarUser);
+	}
 
-  //Metodo para actualizar al docente Capacitador
-  public updateUsuarioRoles() {
-    this.classUsuario.roles = this.listRoleAsignarUser;
-    this.usuarioService
-      .updateUsuario(this.classUsuario.idUsuario!, this.classUsuario)
-      .subscribe((data) => {
-        if (data != null) {
-          this.capacitadorService
-            .existsCapacitadorByUsuarioIdUsuario(data.idUsuario!)
-            .subscribe((data1) => {
-              if (data1 != null) {
-                if (data1 === true) {
-                
-                  this.listUsusuariosCapacitacionesContinuas();
-                  this.toastrService.success(
-                    'Los permisos del usuario fueron actualizados correctamente',
-                    'PERMISOS ACTUALIZADOS.'
-                  );
-                  this.visible = false;
-                } else {
-                  this.classCapacitador.usuario = data;
-                  this.classCapacitador.estadoActivoCapacitador = true;
-                  this.capacitadorService
-                    .saveCapacitador(this.classCapacitador)
-                    .subscribe((data) => {
-                      if (data != null) {
-                        this.listUsusuariosCapacitacionesContinuas();
-                        this.toastrService.success(
-                          'Los permisos del usuario fueron actualizados correctamente.',
-                          'PERMISOS ACTUALIZADOS.'
-                        );
-                        this.visible = false;
-                      }
-                    });
-                }
-              }
-            });
-        }
-      });
-  }
+	isRoleAssigned(role: Rol): boolean {
+		return this.listRoleAsignarUser.some(
+			(assignedRole) => assignedRole.idRol === role.idRol
+		);
+	}
 
-  //OBETNER TODOS LOS USUARIOS EN EL SISTEMA;
-  public listUsuariosFilter: Usuario[] = [];
-  public listUsusuariosCapacitacionesContinuas() {
-    this.usuarioService.listUsuario().subscribe((data) => {
-      if (data != null) {
-        this.listClassUsuario = data;
-        this.listUsuariosFilter = this.listClassUsuario;
-        console.log(data);
-      }
-    });
-  }
+	//Metodo para actualizar al docente Capacitador
+	public updateUsuarioRoles() {
+		this.classUsuario.roles = this.listRoleAsignarUser;
+		this.usuarioService
+			.updateUsuario(this.classUsuario.idUsuario!, this.classUsuario)
+			.subscribe((data) => {
+				if (data != null) {
+					this.capacitadorService
+						.existsCapacitadorByUsuarioIdUsuario(data.idUsuario!)
+						.subscribe((data1) => {
+							if (data1 != null) {
+								if (data1 === true) {
 
-  //vISIVILIADA DEL MODAL
-  visible?: boolean;
+									this.listUsusuariosCapacitacionesContinuas();
+									this.toastrService.success(
+										'Los permisos del usuario fueron actualizados correctamente',
+										'PERMISOS ACTUALIZADOS.'
+									);
+									this.visible = false;
+								} else {
+									this.classCapacitador.usuario = data;
+									this.classCapacitador.estadoActivoCapacitador = true;
+									this.capacitadorService
+										.saveCapacitador(this.classCapacitador)
+										.subscribe((data) => {
+											if (data != null) {
+												this.listUsusuariosCapacitacionesContinuas();
+												this.toastrService.success(
+													'Los permisos del usuario fueron actualizados correctamente.',
+													'PERMISOS ACTUALIZADOS.'
+												);
+												this.visible = false;
+											}
+										});
+								}
+							}
+						});
+				}
+			});
+	}
 
-  public showModaL() {
-    this.classUsuario = new Usuario();
-    this.listRoleAsignarUser = [];
-    this.visible = true;
-  }
+	//OBETNER TODOS LOS USUARIOS EN EL SISTEMA;---------------------------------------------------------------------------------------------------
+	public listUsuariosFilter: Usuario[] = [];
+	public listUsusuariosCapacitacionesContinuas() {
 
-   //Eliminado logico del sistema
-   public eliminadoLogicoDelCapacitador(user: Usuario) {
+		this.usuarioService.findByAllPaginator(0, 5, ["idUsuario", "desc"]).subscribe({
+			next: (resp: any) => {
+				this.toastrService.info('', 'USUARIOS OBTENIDOS');
+				this.listClassUsuario = resp.content;
+				this.listUsuariosFilter = this.listClassUsuario;
+				this.dataSizeRequest(resp.totalElements);
+			}, error: (err) => {
+				this.toastrService.error('', 'INCONVENIENTE AL OBTENER USUARIOS');
+			}
+		});
 
-    user.estadoUsuarioActivo = !user.estadoUsuarioActivo; // Alternar el estado activo/desactivado
+	}
 
-      this.usuarioService.updateUsuario(user?.idUsuario!, user!).subscribe((data)=>{
-        if(data != null){
-          if (user.estadoUsuarioActivo) {
-            this.toastrService.success('Usuario a sido activado/a', 'Usuario activo');
-          } else {
-            this.toastrService.warning('Usuario a sido inactivado/a', 'Usuario Inactivo');
-          }
-          // this.listDocentesCapacitadores();
-        }
-      })
-  }
+	//vISIVILIADA DEL MODAL
+	visible?: boolean;
+
+	public showModaL() {
+		this.classUsuario = new Usuario();
+		this.listRoleAsignarUser = [];
+		this.visible = true;
+	}
+
+	//Eliminado logico del sistema
+	public eliminadoLogicoDelCapacitador(user: Usuario) {
+
+		user.estadoUsuarioActivo = !user.estadoUsuarioActivo; // Alternar el estado activo/desactivado
+
+		this.usuarioService.updateUsuario(user?.idUsuario!, user!).subscribe((data) => {
+			if (data != null) {
+				if (user.estadoUsuarioActivo) {
+					this.toastrService.success('Usuario a sido activado/a', 'Usuario activo');
+				} else {
+					this.toastrService.warning('Usuario a sido inactivado/a', 'Usuario Inactivo');
+				}
+				// this.listDocentesCapacitadores();
+			}
+		})
+	}
+
+	//OTROS METODOS----------------------------------------------------------------------------------------------------
+	public options = [
+		{ label: '5', value: 5 },
+	];
+
+	public dataSizeRequest(size: number) {
+		size >= 10 ? this.options.push({ label: '10', value: 10 }) : null;
+		size >= 20 ? this.options.push({ label: '20', value: 20 }) : null;
+		size >= 30 ? this.options.push({ label: '30', value: 30 }) : null;
+		size >= 50 ? this.options.push({ label: '50', value: 50 }) : null;
+		this.options.push({ label: 'TODO', value: size })
+	}
+
+	public rows2: number = 5;
+
+	public getPaginatorUserPermission(size: any) {
+
+		this.usuarioService.findByAllPaginator(0, size, ["idUsuario", "desc"]).subscribe({
+			next: (resp: any) => {
+				this.toastrService.info('', 'TAMAÑO DE USUARIOS SOLICITADOS: ' + size);
+				this.listClassUsuario = resp.content;
+				this.listUsuariosFilter = this.listClassUsuario;
+			}, error: (err) => {
+				this.toastrService.error('', 'INCONVENIENTE AL OBTENER USUARIOS');
+			}
+		});
+	}
 }

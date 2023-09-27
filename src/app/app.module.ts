@@ -57,7 +57,10 @@ import { BreadcrumbsComponent } from './shared/breadcrumbs/breadcrumbs.component
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { InicioComponent } from './component/inicio/inicio.component';
 import { HeadersbComponent } from './shared/headersb/headersb.component';
-import { GestionCursoComponent } from './modules/moduleDocenteCapacitador/gestionar-curso/gestion-curso/gestion-curso.component';
+import { GestionCursoComponent } from './modules/moduleDocenteCapacitador/gestion-curso/gestion-curso.component';
+import { PrincipalPanelAsistenciaCursoComponent } from './modules/moduleDocenteCapacitador/principal-panel-asistencia-curso/principal-panel-asistencia-curso.component';
+
+
 
 
 @NgModule({
@@ -105,6 +108,7 @@ import { GestionCursoComponent } from './modules/moduleDocenteCapacitador/gestio
     InicioComponent,
     HeadersbComponent,
     GestionCursoComponent,
+    PrincipalPanelAsistenciaCursoComponent,
   ],
   imports: [
     BrowserModule,
@@ -117,7 +121,7 @@ import { GestionCursoComponent } from './modules/moduleDocenteCapacitador/gestio
     CommonModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
-    NgxUiLoaderModule
+    NgxUiLoaderModule,
 
   ],
   //schemas: [

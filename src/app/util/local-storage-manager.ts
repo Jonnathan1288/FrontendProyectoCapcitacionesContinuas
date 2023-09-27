@@ -5,7 +5,8 @@ export enum LocalStorageKeys {
     TOKEN = "token",
     ROL = 'rol',
     USER_DATA = 'datauser',
-    TIME_TOKEN = 'token'
+    TIME_TOKEN = 'token',
+    ID_USUARIO = 'id_username'
 }
 
 export const getToken = (key: string) => {
@@ -36,4 +37,8 @@ export const getRole = (rol: string) => {
 export const getUserData = (key: string) => {
     const result = localStorage.getItem(key);
     return !!result && JSON.parse(result);
+};
+
+export const getAttributeStorage = (key: string) => {
+    return localStorage.getItem(key);
 };

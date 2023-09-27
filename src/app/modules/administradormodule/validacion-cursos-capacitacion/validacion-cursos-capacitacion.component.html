@@ -6,16 +6,21 @@
 
 <div class="container mt-5"></div>
 <div class="card">
-    <p-table #dt [value]="listCursos" dataKey="id" styleClass="p-datatable-customers" [rowHover]="true" [rows]="10"
-        [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading" responsiveLayout="scroll"
-        [paginator]="true" currentPageReportTemplate="Mostrando {first} to {last} of {totalRecords} cursos de capacitación continua."
-        [filterDelay]="0" [globalFilterFields]="['fechaFinalizacionCurso', 'fechaInicioCurso', 'programas.periodoPrograma.nombrePeriodoPrograma', 'programas.descripcionPrograma', 'programas.nombrePrograma','nombreCurso','capacitador.usuario.persona.nombre1', 'capacitador.usuario.persona.nombre2', 'capacitador.usuario.persona.apellido1', 'capacitador.usuario.persona.apellido2','capacitador.usuario.username','status']">
+    <p-table #dt [value]="listCursos" dataKey="id" styleClass="p-datatable-customers" [rowHover]="true" [rows]="5"
+        [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,15,50 ]" [loading]="loading"
+        responsiveLayout="scroll" [paginator]="true"
+        currentPageReportTemplate="Mostrando {first} to {last} of {totalRecords} cursos de capacitación continua."
+        [filterDelay]="0"
+        [globalFilterFields]="['fechaFinalizacionCurso', 'fechaInicioCurso', 'programas.periodoPrograma.nombrePeriodoPrograma', 'programas.descripcionPrograma', 'programas.nombrePrograma','nombreCurso','capacitador.usuario.persona.nombre1', 'capacitador.usuario.persona.nombre2', 'capacitador.usuario.persona.apellido1', 'capacitador.usuario.persona.apellido2','capacitador.usuario.username','status']">
 
         <ng-template pTemplate="caption">
             <div class="flex">
                 <!-- <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt1)"></button> -->
-                <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"
+                <button pButton label="Limpiar" class="p-button-outlined" icon="pi pi-filter-slash"
                     (click)="clear(dt)"></button>
+
+                <p-dropdown [options]="options" optionLabel="label" optionValue="value" [(ngModel)]="rows2"
+                    (ngModelChange)="getPaginatorValidateCoursesCapacitacion($event)" class="mx-2"></p-dropdown>
 
                 <span class="p-input-icon-left ml-auto">
                     <i class="pi pi-search"></i>
@@ -34,27 +39,7 @@
                     <div class="flex justify-content-between align-items-center">
                         <strong>PROGRAMA</strong>
                         <p-sortIcon field="programas.nombrePrograma"></p-sortIcon>
-                        <p-columnFilter field="nombrePrograma" matchMode="in" display="menu" [showMatchModes]="false"
-                            [showOperator]="false" [showAddButton]="false" class="ml-auto">
-                            <ng-template pTemplate="header">
-                                <div class="px-3 pt-3 pb-0">
-                                    <span class="font-bold">Programa</span>
-                                </div>
-                            </ng-template>
-                            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                                <p-multiSelect [ngModel]="value" [options]="listaProgramas" placeholder="Any"
-                                    (onChange)="filter($event.value)" optionLabel="nombrePrograma">
-                                    <!-- <p-multiSelect placeholder="Any" (onChange)="filter($event.value)" optionLabel="name"> -->
 
-                                    <ng-template let-option pTemplate="item">
-                                        <div class="p-multiselect-representative-option">
-
-                                            <span class="ml-1">{{option.nombrePrograma}}</span>
-                                        </div>
-                                    </ng-template>
-                                </p-multiSelect>
-                            </ng-template>
-                        </p-columnFilter>
                     </div>
                 </th>
 
@@ -63,30 +48,7 @@
                         <strong>CAPACITADOR</strong>
 
                         <p-sortIcon field="capacitador.usuario.username"></p-sortIcon>
-                        <p-columnFilter field="capacitador.usuario" matchMode="in" display="menu"
-                            [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" class="ml-auto">
-                            <ng-template pTemplate="header">
-                                <div class="px-3 pt-3 pb-0">
-                                    <span class="font-bold">Usuario</span>
-                                </div>
-                            </ng-template>
-                            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                                <p-multiSelect [ngModel]="value" [options]="listUsuario" placeholder="Any"
-                                    (onChange)="filter($event.value)" optionLabel="username">
-                                    <!-- <p-multiSelect placeholder="Any" (onChange)="filter($event.value)" optionLabel="name"> -->
 
-                                    <ng-template let-option pTemplate="item">
-                                        <div class="p-multiselect-representative-option">
-
-                                            <img [alt]="" [src]="
-                                            option.fotoPerfil? 'data:image/jpeg;base64,' + option.fotoPerfil: '../../../../assets/img/istap.png'" width="32" class="rounded-circle">
-
-                                            <span class="ml-1">{{option.username}}</span>
-                                        </div>
-                                    </ng-template>
-                                </p-multiSelect>
-                            </ng-template>
-                        </p-columnFilter>
                     </div>
                 </th>
 
@@ -154,8 +116,10 @@
                     <span class="p-column-title">Representative</span>
                     <!-- style="vertical-align: midle rounded-circle" -->
                     <!-- <img [alt]="" [src]="'data:image/jpeg;base64,' + curso.fotoCurso" width="32" class="rounded-circle"> -->
-                    <img [alt]="" [src]="
-                    curso.capacitador.usuario.fotoPerfil? 'data:image/jpeg;base64,' + curso.capacitador.usuario.fotoPerfil: '../../../../assets/img/istap.png'" width="32" class="rounded-circle">
+                    <img [alt]=""
+                        [src]="
+                    curso.capacitador.usuario.fotoPerfil? 'data:image/jpeg;base64,' + curso.capacitador.usuario.fotoPerfil: '../../../../assets/img/istap.png'"
+                        width="32" class="rounded-circle">
 
                     <!-- <img [alt]="customer.representative.name" src="assets/showcase/images/demo/avatar/{{customer.representative.image}}" width="32" style="vertical-align: middle" /> -->
                     <span class="image-text"> {{curso.capacitador.usuario.username}}</span>
@@ -242,7 +206,8 @@
             <div class="p-inputgroup">
                 <div class="col-md-12" style="text-align: center; margin: 5px;">
                     <p-button type="ngSubmit" [label]="'Diseño currcular'" icon="pi pi-save"
-                        styleClass="p-button-success  mb-2" (onClick)="obtenerReportesValidacion(3, classCursoValidanew.idCurso!)"></p-button>
+                        styleClass="p-button-success  mb-2"
+                        (onClick)="obtenerReportesValidacion(3, classCursoValidanew.idCurso!)"></p-button>
 
                 </div>
             </div>

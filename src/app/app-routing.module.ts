@@ -34,7 +34,8 @@ import { InfocursoComponent } from './modules/participanteModule/infocurso/infoc
 import { RegistroFotograficoEvidenciasComponent } from './modules/moduleDocenteCapacitador/registro-fotografico-evidencias/registro-fotografico-evidencias.component';
 import { StepsToApplyToTheCourseComponent } from './modules/genericAllAccess/steps-to-apply-to-the-course/steps-to-apply-to-the-course.component';
 import { GenerateExelVariosComponent } from './modules/administradormodule/generate-exel-varios/generate-exel-varios.component';
-import { GestionCursoComponent } from './modules/moduleDocenteCapacitador/gestionar-curso/gestion-curso/gestion-curso.component';
+import { GestionCursoComponent } from './modules/moduleDocenteCapacitador/gestion-curso/gestion-curso.component';
+import { PrincipalPanelAsistenciaCursoComponent } from './modules/moduleDocenteCapacitador/principal-panel-asistencia-curso/principal-panel-asistencia-curso.component';
 
 
 const routes: Routes = [
@@ -104,7 +105,7 @@ const routes: Routes = [
 
   { path: 'verInscritos/course/:id', component: ViewInscritosCursoComponent, canActivate: [AuthGaurdGuard], data: { expectedRoles: ['DocenteCapacitador'] } },
 
-  { path: 'verMatriculados/course/inicio/:id', component: ViewInicioCursoMatriculadosComponent, canActivate: [AuthGaurdGuard], data: { expectedRoles: ['DocenteCapacitador'] } },
+  { path: 'verMatriculados/course/inicio', component: ViewInicioCursoMatriculadosComponent, canActivate: [AuthGaurdGuard], data: { expectedRoles: ['DocenteCapacitador'] } },
 
   { path: 'registro/fotografico/curso/:id', component: ViewEvidenciasTableFotofraficasComponent, canActivate: [AuthGaurdGuard], data: { expectedRoles: ['DocenteCapacitador'] } },
 
@@ -118,9 +119,11 @@ const routes: Routes = [
 
   { path: 'hojaVida/capacitador', component: HojavidaComponent, canActivate: [AuthGaurdGuard], data: { titulo: 'Hoja de vida', expectedRoles: ['DocenteCapacitador'] } },
 
-
   { path: 'capacitador/participantes/aprovados', component: AsignacionCodigosCenecytComponent, canActivate: [AuthGaurdGuard], data: { expectedRoles: ['DocenteCapacitador'] } },
+
   { path: 'capacitador/gestioncurso', component: GestionCursoComponent, canActivate: [AuthGaurdGuard], data: { titulo: 'Gestion Curso', expectedRoles: ['DocenteCapacitador'] } },
+
+  { path: 'capacitador/principal/asistencia/curso', component: PrincipalPanelAsistenciaCursoComponent, canActivate: [AuthGaurdGuard], data: { titulo: 'Asistencia Curso', expectedRoles: ['DocenteCapacitador'] } },
 
   //FIN DOCENTES CAPACITADORES --------------------------------------------------------------------------
 
