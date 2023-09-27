@@ -18,6 +18,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CursoService } from 'src/app/service/curso.service';
 import { ReportsCapacitacionesService } from 'src/app/service/reports-capacitaciones.service';
 import { ToastrService } from 'ngx-toastr';
+import { UploadService } from 'src/app/service/upload.service';
 
 @Component({
   selector: 'app-view-evidencias-table-fotofraficas',
@@ -70,7 +71,8 @@ export class ViewEvidenciasTableFotofraficasComponent implements OnInit {
     private reportService: ReportsCapacitacionesService,
     private asi: UsuarioService,
     private regfService: RegistroFotograficoCursoService,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private uploadService: UploadService
   ) {}
 
   ngOnInit(): void {
@@ -103,7 +105,13 @@ export class ViewEvidenciasTableFotofraficasComponent implements OnInit {
     });
   }
 
-  public validacionRegistroFotografico() {
+  public async validacionRegistroFotografico() {
+
+    if(this.selectedFile){
+      const key = await this.uploadImagen();
+    this.registroFotografico.foto = key;
+    }
+
     if (
       !this.registroFotografico.fecha ||
       !this.registroFotografico.descripcionFoto ||
@@ -243,39 +251,34 @@ export class ViewEvidenciasTableFotofraficasComponent implements OnInit {
       });
     // this.getPdf()
   }
+  //PREVISUALIZACION LA IMAGEN SELECCIONADA
+  public selectedFile!: File;
+  public avatarURL: string = '';
+  public onFileSelected(event: any) {
+    console.log('File selected:', event);
 
-  //Almacenar en el objeto
-  async subirFoto(event: any) {
-    const file = event.target.files[0];
-    const fileSize = file.size; // tamaño en bytes
-    if (fileSize > 262144) {
-      this.toastrService.info(
-        '',
-        'La foto es muy pesada.'
-      );
-      // alert('La foto es muy pesada');
-      event.target.value = null;
-    } else {
-      try {
-        this.registroFotografico.foto = await this.convertToBase64(file);
-      } catch (error) {
-        console.error(error);
-      }
+    let data = event.target.files[0];
+
+    if (data.size >= 1000000) {
+      this.toastrService.error('', 'LA FOTO ES MUY GRANDE.', { timeOut: 2000 });
+      return;
+    }
+    this.selectedFile = data;
+    const imageURL = URL.createObjectURL(this.selectedFile);
+    this.avatarURL = imageURL;
+    console.log('Selected file:', this.selectedFile,this.avatarURL);
+  }
+
+  //GUARDAR IMAGEN EN EL BACK
+  public async uploadImagen() {
+    try {
+      const result = await this.uploadService
+        .upload(this.selectedFile, 'images_rfotografico')
+        .toPromise();
+      return result.key;
+    } catch (error) {
+      console.error('new income');
     }
   }
-
-  //Conversion de la imagen en base 64
-  async convertToBase64(file: File): Promise<string> {
-    const reader = new FileReader();
-    return new Promise<string>((resolve, reject) => {
-      reader.onload = () => {
-        const result = btoa(reader.result as string);
-        resolve(result);
-      };
-      reader.onerror = () => {
-        reject(reader.error);
-      };
-      reader.readAsBinaryString(file);
-    });
-  }
+ 
 }

@@ -13,7 +13,7 @@ export class SidebarService {
 		icono: 'nav-icon fas fa-tachometer-alt',
 		rols: [ROLES.ADMINISTRADOR],
 		submenu: [
-			{ titulo: 'Dashboard', path: 'usuarios', icono: 'fa fa-users' },
+			{ titulo: 'Dashboard', path: 'home', icono: 'fa fa-users' },
 
 
 		]

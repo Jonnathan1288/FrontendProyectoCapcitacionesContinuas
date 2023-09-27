@@ -61,6 +61,8 @@ import { GestionCursoComponent } from './modules/moduleDocenteCapacitador/gestio
 import { CourseasitenciaComponent } from './modules/moduleDocenteCapacitador/courseasitencia/courseasitencia.component';
 
 
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -119,7 +121,7 @@ import { CourseasitenciaComponent } from './modules/moduleDocenteCapacitador/cou
     CommonModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
-    NgxUiLoaderModule
+    NgxUiLoaderModule,
 
   ],
   //schemas: [

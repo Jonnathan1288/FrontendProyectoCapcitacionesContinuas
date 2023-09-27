@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Curso } from 'src/app/models/curso';
 import { PrerequisitoCurso } from 'src/app/models/prerequisito-curso';
 import { CursoService } from 'src/app/service/curso.service';
@@ -18,6 +19,7 @@ export class InfocursoComponent implements OnInit {
     private router: Router,
     private activateRoute: ActivatedRoute,
     private cursoService: CursoService,
+    private toastrService: ToastrService,
     private prerrequistosService: PrerrequisitosCursoService,
     private inscritosService: inscritosService
   ) {
@@ -29,19 +31,38 @@ export class InfocursoComponent implements OnInit {
 
   ngOnInit(): void {
     this.idUsuarioGlobal = localStorage.getItem('id_username');
-    this.activateRoute.params.subscribe( (param) =>{
+    this.activateRoute.params.subscribe((param) => {
       const idCursoROut = param['id'];
       this.idCursoGlobal = idCursoROut;
-      console.log("Idcurso => " + idCursoROut)
+      this.obtenerCursosParticipante();
       this.traerDatosCursoId();
     });
     this.ValidarSuIsncripcion();
   }
-  
-  
-  public traerDatosCursoId():void{
+
+  cursosListInscritos: Curso[] = [];
+  fechaFinCursoInscrito: Date[] = [];
+
+  validarCursoInscrito(fechaInicioCursoSeleccionada: Date): boolean {
+    return this.fechaFinCursoInscrito.every(fecha => fechaInicioCursoSeleccionada > fecha);
+  }
+
+  public obtenerCursosParticipante(): void {
+    this.cursoService.listCursoDelParticipante(this.idUsuarioGlobal).subscribe(
+      data => {
+        this.cursosListInscritos = data;
+        for (let cursos of this.cursosListInscritos) {
+          if (cursos.estadoPublicasionCurso == 'I') {
+            this.fechaFinCursoInscrito.push(cursos.fechaFinalizacionCurso!);
+          }
+        }
+      }
+    )
+  }
+
+  public traerDatosCursoId(): void {
     this.cursoService.getCursoById(this.idCursoGlobal).subscribe(
-      data =>{
+      data => {
         this.dataCurso = data;
         this.traerPrerequisitosCurso();
       }
@@ -50,27 +71,29 @@ export class InfocursoComponent implements OnInit {
 
   listPrerrequistos: PrerequisitoCurso[] = [];
 
-  public traerPrerequisitosCurso():void{
+  public traerPrerequisitosCurso(): void {
     this.prerrequistosService.getPrerequisitoPropiosCurso(this.idCursoGlobal).subscribe(
       data => {
         this.listPrerrequistos = data;
       })
   }
-  
-  public pasarInfoCursoIsncripcion(idCurso:any):void{
-    this.router.navigate(['/mat', idCurso ]);
+
+  public pasarInfoCursoIsncripcion(idCurso: any, fechaInicio: Date): void {
+    if (this.validarCursoInscrito(fechaInicio) != true) {
+      this.toastrService.error(' Tiene un curso por terminar!', 'Advertencia');
+    } else {
+      this.router.navigate(['/mat', idCurso]);
+    }
   }
 
   // validar si ya se inscribio en el curso
-  isInscritoInCourse!:boolean;
-  public ValidarSuIsncripcion():void{
-    this.inscritosService.getInscrioValidacion(this.idCursoGlobal,this.idUsuarioGlobal).subscribe(
+  isInscritoInCourse!: boolean;
+  public ValidarSuIsncripcion(): void {
+    this.inscritosService.getInscrioValidacion(this.idCursoGlobal, this.idUsuarioGlobal).subscribe(
       data => {
         if (data == true) {
-          // alert('Ya estas inscrito')
           this.isInscritoInCourse = true;
         } else {
-          console.log("NO esta inscrito en este curso")
           this.isInscritoInCourse = false;
         }
       }
