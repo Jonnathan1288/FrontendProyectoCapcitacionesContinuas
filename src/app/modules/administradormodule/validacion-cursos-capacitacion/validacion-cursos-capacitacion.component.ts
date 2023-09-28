@@ -2,21 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Table } from 'primeng/table';
 import { Curso } from 'src/app/models/curso';
-import { HojaVidaCapacitador } from 'src/app/models/hoja-vida-capacitador';
 import { Persona } from 'src/app/models/persona';
-import { Programas } from 'src/app/models/programa';
-import { Usuario } from 'src/app/models/usuario';
 import { CursoService } from 'src/app/service/curso.service';
 import { DisenioCurricularService } from 'src/app/service/disenio-curricular.service';
-import { HojaVidaCapacitadorService } from 'src/app/service/hoja-vida-capacitador.service';
-import { PeriodoProgramaService } from 'src/app/service/periodo-programa.service';
-import { PersonaService } from 'src/app/service/persona.service';
-import { ProgramasService } from 'src/app/service/programas.service';
 import { ReportsCapacitacionesService } from 'src/app/service/reports-capacitaciones.service';
-import { UsuarioService } from 'src/app/service/usuario.service';
 import { ToastrService } from 'ngx-toastr';
 import { SilaboService } from 'src/app/service/silabo.service';
 import { FOLDER_IMAGE_USER, getFile } from 'src/app/util/folder-upload';
+import { EmailCourseApproved } from 'src/app/util/model/email-course-approved';
 
 @Component({
 	selector: 'app-validacion-cursos-capacitacion',
@@ -28,7 +21,6 @@ import { FOLDER_IMAGE_USER, getFile } from 'src/app/util/folder-upload';
 })
 export class ValidacionCursosCapacitacionComponent implements OnInit {
 
-
 	//Declaracion de las clases que vamos a usar
 
 	public listP: Persona[] = [];
@@ -36,21 +28,16 @@ export class ValidacionCursosCapacitacionComponent implements OnInit {
 	public listCursos: Curso[] = [];
 
 	//Método que me va servir para impplementar los periodos de programas
-	statuses: any[] = [];
+	public statuses: any[] = [];
 
-	loading: boolean = false;
+	public loading: boolean = false;
 
-	activityValues: number[] = [0, 100];
+	public activityValues: number[] = [0, 100];
 
 	private sanitizer!: DomSanitizer;
 
 	constructor(
-		private periodoProgramaService: PeriodoProgramaService,
-		private programaService: ProgramasService,
-		private P: PersonaService,
 		private cursoService: CursoService,
-		private userService: UsuarioService,
-		private hojaVidaService: HojaVidaCapacitadorService,
 		sanitizer: DomSanitizer,
 		private reportService: ReportsCapacitacionesService,
 		private disenioService: DisenioCurricularService,
@@ -64,11 +51,9 @@ export class ValidacionCursosCapacitacionComponent implements OnInit {
 		this.obtenerTodosLosCursos();
 	}
 
-	clear(table: Table) {
+	public clear(table: Table) {
 		table.clear();
 	}
-
-	//Implementtacion de lso metodos para validar los cursos
 
 	public obtenerTodosLosCursos() {
 
@@ -107,31 +92,45 @@ export class ValidacionCursosCapacitacionComponent implements OnInit {
 		this.visibleCursoDeCapacitacion = true;
 	}
 
+	//-----------------------------------------------------------------------------------------------------------------------------------------------
+	public emailCourseApproved = new EmailCourseApproved();
+
+	//-----------------------------------------------------------------------------------------------------------------------------------------------
+
 	public UpdateValidacionCurso(idCurso: number) {
+		this.emailCourseApproved.receptor = this.classCursoValidanew.capacitador?.usuario?.persona?.correo as string;
+		this.emailCourseApproved.status = true;
+		this.emailCourseApproved.topic = 'Curso "' + this.classCursoValidanew.nombreCurso + (idCurso === 1 ? '" Aprobado' : '" No aceptado');
+		const fullName = this.classCursoValidanew.capacitador?.usuario?.persona?.nombre1 + ' ' + this.classCursoValidanew.capacitador?.usuario?.persona?.apellido1
+		this.emailCourseApproved.sumary = 'Estimado, ' + (fullName) + ' le informo que su curso "' + (this.classCursoValidanew.nombreCurso) + '"';
+		this.emailCourseApproved.status = idCurso === 1 ? true : false;
+
 		this.sendEmailVerification = true;
 
-		// if (idCurso === 1) {
-		// 	this.classCursoValidanew.estadoAprovacionCurso = 'A';
-		// } else {
-		// 	this.classCursoValidanew.estadoAprovacionCurso = 'R';
-		// }
-		// this.cursoService
-		// 	.updateCurso(this.classCursoValidanew.idCurso!, this.classCursoValidanew)
-		// 	.subscribe((data) => {
-		// 		if (data != null) {
-		// 			if (data.estadoAprovacionCurso === 'A') {
-		// 				this.toastrService.success('Curso aprovado', 'CURSO APROVADO');
-		// 			} else {
-		// 				this.toastrService.error(
-		// 					'El curso a sido rechazado.',
-		// 					'CURSO RECHAZADO'
-		// 				);
-		// 			}
-		// 		}
-		// 	});
-		// setTimeout(() => {
-		// 	location.reload();
-		// }, 1300);
+	}
+
+	public principalAcceptDataAndUpdate() {
+
+		this.classCursoValidanew.estadoAprovacionCurso = this.emailCourseApproved.status ? 'A' : 'R';
+
+		this.cursoService
+			.updateCurso(this.classCursoValidanew.idCurso!, this.classCursoValidanew)
+			.subscribe({
+				next: (resp) => {
+					if (resp.estadoAprovacionCurso === 'A') {
+						this.toastrService.success('Curso aprobado', 'CURSO APROBADO');
+					} else {
+						this.toastrService.error(
+							'El curso a sido rechazado.',
+							'CURSO RECHAZADO'
+						);
+					}
+					const index = this.listCursos.findIndex(i => i.idCurso === resp.idCurso);
+					this.listCursos[index] = resp; //update table
+				}, error: (err) => {
+					this.toastrService.error('', 'INCONVENIENTES');
+				}
+			});
 	}
 
 	public pdfSrc: any;
