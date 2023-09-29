@@ -10,6 +10,7 @@ import { ToastrService } from 'ngx-toastr';
 import { SilaboService } from 'src/app/service/silabo.service';
 import { FOLDER_IMAGE_USER, getFile } from 'src/app/util/folder-upload';
 import { EmailCourseApproved } from 'src/app/util/model/email-course-approved';
+import { EmailService } from 'src/app/service/email/email.service';
 
 @Component({
 	selector: 'app-validacion-cursos-capacitacion',
@@ -42,7 +43,8 @@ export class ValidacionCursosCapacitacionComponent implements OnInit {
 		private reportService: ReportsCapacitacionesService,
 		private disenioService: DisenioCurricularService,
 		private silaboService: SilaboService,
-		private toastrService: ToastrService
+		private toastrService: ToastrService,
+		private emailService: EmailService
 	) {
 		this.sanitizer = sanitizer;
 	}
@@ -98,8 +100,9 @@ export class ValidacionCursosCapacitacionComponent implements OnInit {
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
 
 	public UpdateValidacionCurso(idCurso: number) {
-		this.emailCourseApproved.receptor = this.classCursoValidanew.capacitador?.usuario?.persona?.correo as string;
-		this.emailCourseApproved.status = true;
+		// this.emailCourseApproved.receptor = this.classCursoValidanew.capacitador?.usuario?.persona?.correo as string;
+		this.emailCourseApproved.receptor = 'javiertimbe100@gmail.com';
+		this.emailCourseApproved.nameCourse = this.classCursoValidanew.nombreCurso;
 		this.emailCourseApproved.topic = 'Curso "' + this.classCursoValidanew.nombreCurso + (idCurso === 1 ? '" Aprobado' : '" No aceptado');
 		const fullName = this.classCursoValidanew.capacitador?.usuario?.persona?.nombre1 + ' ' + this.classCursoValidanew.capacitador?.usuario?.persona?.apellido1
 		this.emailCourseApproved.sumary = 'Estimado, ' + (fullName) + ' le informo que su curso "' + (this.classCursoValidanew.nombreCurso) + '"';
@@ -110,7 +113,6 @@ export class ValidacionCursosCapacitacionComponent implements OnInit {
 	}
 
 	public principalAcceptDataAndUpdate() {
-
 		this.classCursoValidanew.estadoAprovacionCurso = this.emailCourseApproved.status ? 'A' : 'R';
 
 		this.cursoService
@@ -118,20 +120,33 @@ export class ValidacionCursosCapacitacionComponent implements OnInit {
 			.subscribe({
 				next: (resp) => {
 					if (resp.estadoAprovacionCurso === 'A') {
-						this.toastrService.success('Curso aprobado', 'CURSO APROBADO');
+						this.toastrService.success('', 'CURSO APROBADO');
 					} else {
-						this.toastrService.error(
-							'El curso a sido rechazado.',
-							'CURSO RECHAZADO'
-						);
+						this.toastrService.error('', 'CURSO RECHAZADO');
 					}
 					const index = this.listCursos.findIndex(i => i.idCurso === resp.idCurso);
 					this.listCursos[index] = resp; //update table
-				}, error: (err) => {
-					this.toastrService.error('', 'INCONVENIENTES');
+
+					// Send email
+					this.emailService.sendEmailApprovedCourse(this.emailCourseApproved);
+					setTimeout(() => {
+						this.cleanDataSendEmailAndUpdate();
+					}, 1000);
+
+				},
+				error: (err) => {
+					this.toastrService.error('', 'INCONVENIENTE, INTÉNTELO MÁS TARDE');
 				}
 			});
 	}
+
+	public cleanDataSendEmailAndUpdate() {
+		this.sendEmailVerification = false;
+		this.visibleCursoDeCapacitacion = false;
+		this.emailCourseApproved = {} as EmailCourseApproved;
+
+	}
+
 
 	public pdfSrc: any;
 	public obtenerReportesValidacion(caso: number, idCurso: number) {
@@ -202,7 +217,10 @@ export class ValidacionCursosCapacitacionComponent implements OnInit {
 	public dataSizeRequest(size: number) {
 		size >= 10 ? this.options.push({ label: '10', value: 10 }) : null;
 		size >= 15 ? this.options.push({ label: '15', value: 15 }) : null;
-		size >= 20 ? this.options.push({ label: '20', value: 20 }) : null;
+		size >= 30 ? this.options.push({ label: '30', value: 30 }) : null;
+		size >= 50 ? this.options.push({ label: '50', value: 50 }) : null;
+		size >= 100 ? this.options.push({ label: '100', value: 100 }) : null;
+		size >= 200 ? this.options.push({ label: '200', value: 200 }) : null;
 		this.options.push({ label: 'TODO', value: size })
 	}
 
@@ -237,5 +255,9 @@ export class ValidacionCursosCapacitacionComponent implements OnInit {
 	//---------------------------------------------------
 	public getImage(key: string): string {
 		return getFile(key, FOLDER_IMAGE_USER);
+	}
+
+	public visibleEmailDataUpdate() {
+		this.sendEmailVerification = false;
 	}
 }
