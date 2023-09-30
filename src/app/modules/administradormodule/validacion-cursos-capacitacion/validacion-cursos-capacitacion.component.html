@@ -1,8 +1,4 @@
-<!-- <div class="con" *ngFor="let i of listP">{{i}}</div> -->
-
-
-<!-- Implementacion de nueva tabla------------------------------------------------------------------------------------- -->
-
+<!-- Implementación de nueva tabla------------------------------------------------------------------------------------- -->
 
 <div class="container mt-5"></div>
 <div class="card">
@@ -15,40 +11,35 @@
 
         <ng-template pTemplate="caption">
             <div class="flex">
-                <!-- <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt1)"></button> -->
-                <button pButton label="Limpiar" class="p-button-outlined" icon="pi pi-filter-slash"
-                    (click)="clear(dt)"></button>
+                <button pButton label="Limpiar" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt)"
+                    pTooltip="Limpiar todos los filtros de la tabla." tooltipPosition="bottom"></button>
 
                 <p-dropdown [options]="options" optionLabel="label" optionValue="value" [(ngModel)]="rows2"
-                    (ngModelChange)="getPaginatorValidateCoursesCapacitacion($event)" class="mx-2"></p-dropdown>
+                    (ngModelChange)="getPaginatorValidateCoursesCapacitacion($event)" class="mx-2"
+                    [pTooltip]="'Numero de cursos solicitados: '+(rows2)" tooltipPosition="bottom"></p-dropdown>
 
                 <span class="p-input-icon-left ml-auto">
                     <i class="pi pi-search"></i>
                     <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
-                        placeholder="Buscar..." />
-
+                        placeholder="Buscar..." pTooltip="Buscar por usuario, nombre curso, capacitador y programa"
+                        tooltipPosition="bottom" />
                 </span>
             </div>
         </ng-template>
 
         <ng-template pTemplate="header">
             <tr>
-
-
                 <th pSortableColumn="programas.nombrePrograma">
                     <div class="flex justify-content-between align-items-center">
                         <strong>PROGRAMA</strong>
                         <p-sortIcon field="programas.nombrePrograma"></p-sortIcon>
-
                     </div>
                 </th>
 
                 <th pSortableColumn="capacitador.usuario.username">
                     <div class="flex justify-content-between align-items-center">
                         <strong>CAPACITADOR</strong>
-
                         <p-sortIcon field="capacitador.usuario.username"></p-sortIcon>
-
                     </div>
                 </th>
 
@@ -60,7 +51,6 @@
                     </div>
                 </th>
 
-
                 <th pSortableColumn="fechaInicioCurso">
                     <div class="flex justify-content-between align-items-center">
                         <strong>INICIO</strong>
@@ -69,7 +59,6 @@
                             class="ml-auto"></p-columnFilter>
                     </div>
                 </th>
-
 
                 <th pSortableColumn="fechaFinalizacionCurso">
                     <div class="flex justify-content-between align-items-center">
@@ -89,10 +78,18 @@
                     </div>
                 </th>
 
+                <th pSortableColumn="estadoAprovacionCurso">
+                    <div class="flex justify-content-between align-items-center">
+                        <strong>ESTADO</strong>
+                        <p-sortIcon field="estadoAprovacionCurso"></p-sortIcon>
+                        <p-columnFilter type="text" field="estadoAprovacionCurso" display="menu"
+                            class="ml-auto"></p-columnFilter>
+                    </div>
+                </th>
 
                 <th pSortableColumn="activity">
                     <div class="flex justify-content-between align-items-center">
-                        <strong>ESTADO FINALIZACIÓN</strong>
+                        <strong>FINALIZADO</strong>
                         <p-sortIcon field="activity"></p-sortIcon>
 
                         <p-columnFilter type="boolean" field="estadoCurso" display="menu"></p-columnFilter>
@@ -106,60 +103,54 @@
             <tr class="p-selectable-row">
 
                 <td>
-                    <span class="p-column-title">Status</span>
                     {{curso.programas.nombrePrograma}}
-                    <!-- <span [class]="'customer-badge status-' + curso.programas.nombrePrograma">{{curso.programas.nombrePrograma}}</span> -->
                 </td>
 
 
                 <td>
-                    <span class="p-column-title">Representative</span>
-                    <!-- style="vertical-align: midle rounded-circle" -->
-                    <!-- <img [alt]="" [src]="'data:image/jpeg;base64,' + curso.fotoCurso" width="32" class="rounded-circle"> -->
-                    <img [alt]=""
-                        [src]="
-                    curso.capacitador.usuario.fotoPerfil? 'data:image/jpeg;base64,' + curso.capacitador.usuario.fotoPerfil: '../../../../assets/img/istap.png'"
+                    <img [src]="
+                    curso.capacitador.usuario.fotoPerfil? getImage(curso.capacitador.usuario.fotoPerfil): '../../../../assets/img/istap.png'"
                         width="32" class="rounded-circle">
-
-                    <!-- <img [alt]="customer.representative.name" src="assets/showcase/images/demo/avatar/{{customer.representative.image}}" width="32" style="vertical-align: middle" /> -->
                     <span class="image-text"> {{curso.capacitador.usuario.username}}</span>
                 </td>
 
                 <td>
-                    <span class="p-column-title">Name</span>
                     {{curso.nombreCurso}}
                 </td>
+
                 <td>
-                    <span class="p-column-title">Date</span>
-                    <!-- {{curso.fechaInicioCurso}} -->
                     {{curso.fechaInicioCurso | date: 'MM/dd/yyyy'}}
                 </td>
+
                 <td>
                     {{curso.fechaFinalizacionCurso | date: 'MM/dd/yyyy'}}
-                    <!-- {{customer.balance | currency:'USD':'symbol'}} -->
                 </td>
-                <td style="text-align: center">
-                    <span class="p-column-title">Country</span>
 
+                <td style="text-align: center"
+                    pTooltip="En este apartado usted encontrara los documentos NECESIDAD, SILABO Y DISEÑO CURRICULAR."
+                    tooltipPosition="bottom">
 
                     <button class="custom-button" (click)="validarHojaDeVida(curso, 2)">
                         <i class="pi pi-file" [ngClass]="{'pi-button': true}"></i>
                     </button>
 
-
-
                 </td>
-                <td class="text-center">
-                    <span class="p-column-title">Activity</span>
 
-                    <!-- <i class="pi" [ngClass]="{'true-icon pi-check-circle': curso.estadoCurso, 'false-icon pi-times-circle': !curso.estadoCurso}"></i> -->
+                <td class="text-center"
+                    [pTooltip]="'El curso esta: '+(curso.estadoAprovacionCurso === 'A'? 'APROBADO': curso.estadoAprovacionCurso === 'R'? 'RECHAZADO': 'PENDIENTE')"
+                    tooltipPosition="bottom">
+                    <p-message
+                        [severity]="curso.estadoAprovacionCurso === 'A'? 'success': curso.estadoAprovacionCurso === 'R'? 'error': 'info'"
+                        [text]="curso.estadoAprovacionCurso === 'A'? 'APROBADO': curso.estadoAprovacionCurso === 'R'? 'RECHAZADO': 'PENDIENTE'"
+                        styleClass="mr-2"></p-message>
+                </td>
+
+                <td class="text-center">
+
                     <i class="pi"
                         [ngClass]="{'true-icon pi-check-circle': curso.estadoCurso , 'false-icon pi-times-circle': !curso.estadoCurso}"
                         [ngStyle]="{'color': curso.estadoCurso ? 'green' : 'red'}"></i>
-
-
                 </td>
-
             </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage">
@@ -220,17 +211,15 @@
         <div class="alert alert-success" role="alert">
             <h4 class="alert-heading">Este curso ya ha sido aprobado</h4>
             <p>Este curso ha sido aprobado y no se puede editar.</p>
-            <!-- <hr> -->
-            <!-- <p class="mb-0">Si necesita hacer cambios en el curso, comuníquese con el administrador del sistema.</p> -->
+
         </div>
     </div>
 
     <div class="container mt-1" *ngIf="classCursoValidanew!.estadoAprovacionCurso === 'R'">
         <div class="alert alert-warning" role="alert">
-            <h4 class="alert-heading">Este curso no fue aprovado con anterioridad</h4>
+            <h4 class="alert-heading">Este curso no fue aprobado con anterioridad</h4>
             <p>Revise los contenidos y la información respectiva para su posterior aceptación.</p>
-            <!-- <hr> -->
-            <!-- <p class="mb-0">Si necesita hacer cambios en el curso, comuníquese con el administrador del sistema.</p> -->
+
         </div>
     </div>
 
@@ -241,7 +230,9 @@
     <div class="grid p-fluid m-2">
         <div class="col-12 md:col-6 mt-2">
             <div class="p-inputgroup">
-                <div class="col-md-12" style="text-align: center; margin: 5px;">
+                <div class="col-md-12" style="text-align: center; margin: 5px;"
+                    pTooltip="Le recomendamos verificar todos los documentos para que pueda aceptar el curso."
+                    tooltipPosition="bottom">
                     <p-button type="ngSubmit" [label]="'Aprobar'" icon="pi pi-check"
                         [styleClass]="classCursoValidanew!.estadoAprovacionCurso! === 'A' ? 'p-button-success mb-2' : 'p-button-primary mb-2'"
                         [disabled]="classCursoValidanew!.estadoAprovacionCurso! == 'A'"
@@ -252,7 +243,8 @@
         </div>
         <div class="col-12 md:col-6 mt-2">
             <div class="p-inputgroup">
-                <div class="col-md-12" style="text-align: center; margin: 5px;">
+                <div class="col-md-12" style="text-align: center; margin: 5px;"
+                    pTooltip="Le recomendamos verificar, para el rechazo del curso." tooltipPosition="bottom">
                     <p-button type="ngSubmit" [label]="'Rechazar'" icon="pi pi-times" styleClass="p-button-warning mb-2"
                         (onClick)="UpdateValidacionCurso(2)"
                         [disabled]="classCursoValidanew!.estadoAprovacionCurso! == 'A'"></p-button>
@@ -262,4 +254,33 @@
         </div>
     </div>
 
+</p-dialog>
+
+
+<p-dialog [(visible)]="sendEmailVerification" [style]="{ width: '500px' }" header="CURSO - DOCENTE" [modal]="true"
+    styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <div class="data mt-1">
+            <textarea rows="1" cols="30" pInputTextarea [(ngModel)]="emailCourseApproved.receptor" id="receptor"
+                name="receptor" [disabled]="true" placeholder="Destinatario" pTooltip="Destinatario"
+                tooltipPosition="bottom"></textarea>
+
+            <textarea rows="2" cols="30" pInputTextarea [(ngModel)]="emailCourseApproved.topic" id="topic" name="topic"
+                placeholder="Asunto" pTooltip="Asunto" tooltipPosition="bottom"></textarea>
+
+            <textarea rows="7" cols="30" pInputTextarea [(ngModel)]="emailCourseApproved.sumary" id="sumary"
+                name="sumary" placeholder="Resumen" pTooltip="Resumen" tooltipPosition="bottom"></textarea>
+
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <p-button label="Cancelar" icon="pi pi-times" styleClass="p-button-outlined p-button-danger"
+            pTooltip="Cancelar validación." tooltipPosition="bottom" (onClick)="visibleEmailDataUpdate()"></p-button>
+
+        <p-button label="Aceptar" icon="pi pi-check" styleClass="p-button-outlined"
+            (onClick)="principalAcceptDataAndUpdate()" pTooltip="Finalizar validación."
+            tooltipPosition="bottom"></p-button>
+
+    </ng-template>
 </p-dialog>
