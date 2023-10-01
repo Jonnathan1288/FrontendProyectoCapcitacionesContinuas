@@ -61,12 +61,10 @@ export class DocumentoSenecytComponent implements OnInit {
     public selectedFile!: File;
     public onFileSelected(event: any) {
         let data = event.target.files[0];
-
         if (data.size >= 1048576) {
             this.toastrService.error('', 'ARCHIVO MUY GRANDE.', { timeOut: 2000 });
             return;
         }
-
         this.selectedFile = data;
     }
 
@@ -130,6 +128,7 @@ export class DocumentoSenecytComponent implements OnInit {
                 next: (resp) => {
                     this.classDocumentoExel.documentoExel = resp.key;
                     this.classDocumentoExel.estadoDocumento = false;
+                    this.classDocumentoExel.usuario = this.classUsuario;
                     this.documentoSenecytService
                         .saveDocumentoSenecyt(this.classDocumentoExel)
                         .subscribe((data) => {

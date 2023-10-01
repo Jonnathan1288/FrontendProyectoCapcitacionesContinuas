@@ -149,20 +149,19 @@
                 <div class="p-inputgroup">
                     <span class="p-float-label">
                         <input type="text" id="inputtext" pInputText id="username" name="username"
-                            [(ngModel)]="classUsuario.username">
+                            [(ngModel)]="classUsuario.username" [readonly]="classCapacitador.idCapacitador ? true : false">
                         <label htmlFor="username">Nombre de Usuario<span class="red-asterisk"></span></label>
                     </span>
                 </div>
             </div>
 
-            <div class="col-12 md:col-12 mt-2">
+            <div class="col-12 md:col-12 mt-2" *ngIf="!classCapacitador.idCapacitador">
                 <div class="p-inputgroup">
                     <span class="p-float-label">
                         <input type="text" id="inputtext" pInputText id="password" name="password"
                             [(ngModel)]="classUsuario.password">
                         <label htmlFor="password">Contraseña<span class="red-asterisk"></span></label>
                     </span>
-
                 </div>
             </div>
 

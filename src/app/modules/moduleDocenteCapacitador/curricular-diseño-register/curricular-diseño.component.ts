@@ -1319,7 +1319,7 @@ actualizarFasePractica(fasePractica: FasePractica) {
     this.fasePracticaService.update(fasePractica, fasePractica.idFasePractica).subscribe(
       (response) => {
         // Maneja la respuesta exitosa aquí si es necesario
-        console.log('Fase Practica actualizada con éxito xxxxxx:', response);
+        console.log('Fase Practica actualizada con éxito xxxx xx:', response);
       },
       (error) => {
   
