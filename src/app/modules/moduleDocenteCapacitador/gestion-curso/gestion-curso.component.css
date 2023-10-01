@@ -1,45 +1,40 @@
+.dropdown-with-icon i {
+  margin-right: 10px;
+  font-size: 20px;
+  margin-left: 20px;
+}
 
-  .dropdown-with-icon i {
-    margin-right: 10px; 
-    font-size: 20px;
-    margin-left: 20px;
-  }
+.dropdown-with-icon p-dropdown .ui-dropdown-trigger {
+  height: auto;
+  min-height: 32px;
+}
 
-  .dropdown-with-icon p-dropdown .ui-dropdown-trigger {
-    height: auto; 
-    min-height: 32px; 
-  }
+.grid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  text-align: center;
+}
 
-  .grid {
-    display: flex;
-    justify-content: center;
-    align-items: center; 
-    height: 100%; 
-    text-align: center; 
-  }
-  .card {
-    border: 1px solid rgb(76, 141, 231); 
-    padding: 10px; 
-  }
-  
+.card {
+  border: 1px solid rgb(76, 141, 231);
+  padding: 10px;
+}
 
-  .card h5{
-    margin-top: 40px; 
-    margin-left: 20px;
-  }
-  .card h6{
-    margin-top: 40px; 
-    margin-left: 20px;
-  }
-  
-  
-  .horizontal-line {
-    border: none;
-    height: 1px; /* Grosor de la línea */
-    background-color: rgb(76, 141, 231); /* Color de la línea */
-    margin: 0 auto; /* Centro horizontalmente la línea */
-    width: 50%; /* Ancho de la línea */
-    margin-top: 10px; /* Espacio superior de la línea */
-    margin-bottom: 10px; /* Espacio inferior de la línea */
-  }
-  
+
+.horizontal-line {
+  border: none;
+  height: 1px;
+  /* Grosor de la línea */
+  background-color: rgb(76, 141, 231);
+  /* Color de la línea */
+  margin: 0 auto;
+  /* Centro horizontalmente la línea */
+  width: 50%;
+  /* Ancho de la línea */
+  margin-top: 10px;
+  /* Espacio superior de la línea */
+  margin-bottom: 10px;
+  /* Espacio inferior de la línea */
+}

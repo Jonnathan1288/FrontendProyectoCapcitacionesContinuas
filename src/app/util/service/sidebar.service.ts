@@ -80,7 +80,7 @@ export class SidebarService {
 		icono: 'nav-icon fas fa-box-tissue',
 		rols: [ROLES.DOCENTE_CAPACITADOR],
 		submenu: [
-			{ titulo: 'Tomar Asistencia', path: 'verMatriculados/course/inicio', icono: 'fa fa-plus-circle' },
+			{ titulo: 'Tomar Asistencia y Notas finales', path: 'verMatriculados/course/inicio', icono: 'fa fa-plus-circle' },
 		]
 	},
 

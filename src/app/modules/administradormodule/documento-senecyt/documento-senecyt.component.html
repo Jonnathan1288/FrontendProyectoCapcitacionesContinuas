@@ -109,19 +109,22 @@
             </div>
 
             <div class="col-12 md:col-12 mt-2 mb-2" style="display: flex; justify-content: center;">
-
                 <div style="max-width: 100%;">
-                    <label for="pdf" class="file-upload-label">
-                        <span class="file-upload-icon"><i class="pi pi-upload"></i></span>
-                        <span class="file-upload-text ">{{ classDocumentoExel.documentoExel ? 'Actualizar Documento' :
-                            'Seleccionar Códigos Senecyt' }}</span>
+                    <label for="pdf" class="file-upload-label" [ngStyle]="selectedFile ? {'background-color': '#91be95'} : {'background-color': '#2196f3'} ">
+                        <i class="pi pi-upload" style="font-size: 0.8rem" (click)="fileInput.click()"></i>
+                        <!-- <span class="file-upload-icon"><i class="pi pi-upload"></i></span>-->
+                        <span class="file-upload-text mx-1">{{ classDocumentoExel.documentoExel
+                            ? ' Actualizar Documento' :
+                            ' Seleccionar Códigos Senecyt' }} </span>
                     </label>
-                    <input type="file" id="pdf" name="pdf" accept=".xlsx, .xls" (change)="onFileSelected($event)">
+                    <input type="file" #fileInput style="display: none;" id="pdf" name="pdf" accept=".xlsx, .xls"
+                        (change)="onFileSelected($event)">
                 </div>
-
             </div>
 
-
+            <!-- <button type="button" class="boton-avatar" pTooltip="Foto de perfil" tooltipPosition="bottom">
+                <i class="fas fa-camera" style="font-size: 1.3rem" (click)="fileInput.click()"></i>
+            </button> -->
 
             <!-- Fin del periodo porgrama -->
             <div class="col-md-12 mt-2" style="text-align: center; margin: 5px;">

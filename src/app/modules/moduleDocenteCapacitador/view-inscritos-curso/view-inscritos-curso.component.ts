@@ -28,14 +28,13 @@ export class ViewInscritosCursoComponent implements OnInit {
     private participantesMatriculadosService: ParticipanteMatriculadoService,
     private confirmationService: ConfirmationService,
     private toastrService: ToastrService,
-  ) {}
+  ) { }
 
   idCursoGlobal?: number;
 
   ngOnInit(): void {
     this.activateRoute.params.subscribe((param) => {
       const idCursoRout = param['id'];
-      console.log('Idcurso => ' + idCursoRout);
       this.idCursoGlobal = idCursoRout;
       this.traerInscirtosPorCurso();
     });
@@ -50,7 +49,7 @@ export class ViewInscritosCursoComponent implements OnInit {
       rejectLabel: 'Cancelar',
       accept: () => {
         this.InicioCurso();
-        
+
       },
       reject: (type: any) => {
         switch (type) {
@@ -86,8 +85,6 @@ export class ViewInscritosCursoComponent implements OnInit {
       .getInscritosPorCurso(this.idCursoGlobal!)
       .subscribe((data) => {
         this.listaInscritos = data;
-        console.log('dd ' + this.listaInscritos);
-
         this.validarCuposDisponibles();
         // VER CUANTOS ESTAN APROBADOS
         let contador = 0;
@@ -96,15 +93,12 @@ export class ViewInscritosCursoComponent implements OnInit {
             contador++;
           }
         }
-        console.log('Número de inscritos en true -> ' + contador);
         this.participantesAceptado = contador;
-
         this.validarcursoCapacitacion(); // valida
         const primerEstadoCurso = this.listaInscritos.map(
           (inscrito) => inscrito.curso?.estadoPublicasionCurso
         );
         this.inicioCursoEstado = primerEstadoCurso[0] || '';
-        console.log('hola ->' + this.inicioCursoEstado);
       });
   }
 
@@ -194,35 +188,35 @@ export class ViewInscritosCursoComponent implements OnInit {
     const inscritoConFechaInicioCurso = this.listaInscritos.find(
       (inscrito) => inscrito.curso?.fechaInicioCurso
     );
-    
+
     if (inscritoConFechaInicioCurso) {
       const fechaInicioCurso = new Date(inscritoConFechaInicioCurso.curso!.fechaInicioCurso!);
       const fecha = new Date();
-    
+
       if (!isNaN(fechaInicioCurso.getTime())) {
         // Convertir las fechas en cadenas en formato ISO 8601
         const fechaInicioString = fechaInicioCurso.toISOString().split('T')[0];
         const fechaString = fecha.toISOString().split('T')[0];
-    
+
         if (fechaString < fechaInicioString) {
-       
+
           this.estadoCurso = 'FP';
         } else {
-   
+
           this.estadoCurso = 'LI';
           // this.saveEvidenciasRegistrofotografico();
           // console.log('La fecha está dentro del rango válido');
         }
       } else {
         // Manejar el caso en el que fechaInicioCurso no sea un objeto Date válido
-        alert('La fecha de inicio de curso no es válida.');
+        this.toastrService.warning('La fecha de inicio de curso no es válida.');
       }
     } else {
       // Manejar el caso en el que no se encuentre un inscrito con fecha de inicio de curso
-      alert('No se encontró un inscrito con fecha de inicio de curso.');
+      this.toastrService.warning('No se encontró un inscrito con fecha de inicio de curso.');
     }
-    
-  
+
+
   }
 
   // VALIDACION DECUPOS DISPONIBLES
@@ -234,15 +228,12 @@ export class ViewInscritosCursoComponent implements OnInit {
       this.curso = data;
       this.cuposDisponibles =
         this.curso.numeroCuposCurso! - this.participantesAceptado;
-      console.log('Numero de cupos -> ' + this.cuposDisponibles);
       this.mesajePantalla = 'Numero de Cupos: ' + this.cuposDisponibles;
-      //
-      console.log('Los que estan aceptado ->' + this.participantesAceptado);
       // VALIDACION
       if (this.participantesAceptado > this.cuposDisponibles) {
-        console.log('no hay mas cupos');
+
       } else {
-        console.log('si hay cupos');
+
       }
     });
   }

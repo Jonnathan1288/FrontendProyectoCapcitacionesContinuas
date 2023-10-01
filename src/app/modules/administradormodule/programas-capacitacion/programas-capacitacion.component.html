@@ -9,50 +9,42 @@
 
     </p-toolbar>
 
-    <p-table #dt [value]="listaProgramasFilter" dataKey="id" styleClass="p-datatable-customers" [rowHover]="true"
-        [rows]="5" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,15]" responsiveLayout="scroll"
-        [paginator]="true" currentPageReportTemplate="Mostrando {first} to {last} of {totalRecords} programas"
-        [filterDelay]="0" [showCurrentPageReport]="true">
+    <p-table #dt [value]="listaProgramas" dataKey="id" styleClass="p-datatable-customers" [rowHover]="true" [rows]="5"
+        [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,15]" responsiveLayout="scroll" [paginator]="true"
+        currentPageReportTemplate="Mostrando {first} to {last} of {totalRecords} programas" [filterDelay]="0"
+        [showCurrentPageReport]="true" [globalFilterFields]="['nombrePrograma','periodoPrograma.nombrePeriodoPrograma','descripcionPrograma']" >
         <ng-template pTemplate="caption">
             <div class="flex align-items-center justify-content-between">
                 <h5 class="m-0"><strong>PROGRAMAS DE CAPACITACIÓN</strong></h5>
                 <span class="p-input-icon-left">
                     <i class="pi pi-search"></i>
-                    <input pInputText type="text" placeholder="Buscar..."
-                        (input)="filterTableProgramasCapacitacion($event)" />
+                    <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                        placeholder="Buscar..." pTooltip="Filtro"
+                        tooltipPosition="bottom" />
                 </span>
             </div>
         </ng-template>
         <ng-template pTemplate="header">
             <tr>
-                <!-- <th style="width: 3rem">
-                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-                </th> -->
                 <th pSortableColumn="nombrePrograma"><strong>NOMBRE PROGRAMA</strong><p-sortIcon
                         field="nombrePrograma"></p-sortIcon>
                 </th>
-
                 <th pSortableColumn="periodoPrograma.nombrePeriodoPrograma"><strong>PERÍODO</strong><p-sortIcon
                         field="periodoPrograma.nombrePeriodoPrograma"></p-sortIcon></th>
                 <th pSortableColumn="descripcionPrograma"><strong>DESCRIPCIÓN </strong><p-sortIcon
                         field="descripcionPrograma"></p-sortIcon></th>
-                <!-- <th pSortableColumn="inventoryStatus">Estado <p-sortIcon field="inventoryStatus"></p-sortIcon></th> -->
                 <th pSortableColumn="estadoProgramaActivo">
                     <div class="flex justify-content-between align-items-center">
                         <strong>ESTADO</strong>
-
                         <p-columnFilter type="boolean" field="estadoProgramaActivo" display="menu"></p-columnFilter>
-
                     </div>
                 </th>
                 <th pSortableColumn="inventoryStatus"><strong>GESTIÓN</strong> <p-sortIcon
                         field="inventoryStatus"></p-sortIcon></th>
-
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-programa>
             <tr>
-
                 <td>{{programa.nombrePrograma}}</td>
                 <td>{{programa.periodoPrograma.nombrePeriodoPrograma}}</td>
                 <td>{{programa.descripcionPrograma}}</td>
@@ -60,7 +52,6 @@
                     <p-message [severity]="programa.estadoProgramaActivo == true? 'success': 'warn'"
                         [text]="programa.estadoProgramaActivo == true? 'Público': 'Oculto'"
                         styleClass="mr-2"></p-message>
-
                 </td>
                 <td>
                     <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2 mt-1"
@@ -69,7 +60,6 @@
                         [class]="'p-button-rounded ' + (programa.estadoProgramaActivo ? 'p-button-primary' : 'p-button-warning') + ' mt-1'"
                         (click)="updateProgramasEliminadoLogico(programa)">
                     </button>
-
                 </td>
             </tr>
         </ng-template>
@@ -82,90 +72,33 @@
 </div>
 
 
-
-<!-- IMPLEMENTACION DEL MODAL PARA EL INGRESO DE LOS CURSOS -->
-
-<p-dialog header="Programas de capacitación continua" [(visible)]="visible" [modal]="true"
-    [style]="{ width: '50vw', height: '250' }" [draggable]="false" [resizable]="false">
-    <form (ngSubmit)="validarDatosProgramaCapacitacionContinua()" novalidate style="padding: 15px;">
-        <div class="grid p-fluid m-2">
-
-            <div class="col-12 md:col-12 mt-2">
-                <div class="p-inputgroup">
-                    <span class="p-float-label">
-                        <input type="text" id="inputtext" pInputText id="nombrePeriodoPrograma"
-                            name="nombrePeriodoPrograma" [(ngModel)]="classPeriodoPrograma.nombrePeriodoPrograma"
-                            required>
-                        <label for="inputtext">Período del programa</label>
-                    </span>
-                </div>
-            </div>
-
-            <!-- Directamente del programa ya no del periodo program -->
-
-            <div class="col-12 md:col-12 mt-2">
-                <div class="p-inputgroup">
-                    <span class="p-float-label">
-                        <input type="text" pInputText id="nombrePrograma" name="nombrePrograma"
-                            [(ngModel)]="classPrograma.nombrePrograma" required>
-                        <label for="inputtext">Nombre del programa</label>
-                    </span>
-                </div>
-            </div>
-
-            <div class="col-12 md:col-12 mt-2" style="align-items: center;">
-                <div class="card flex justify-content-center">
-                    <span class="p-float-label m-4">
-                        <textarea id="float-input" rows="5" cols="30" pInputTextarea id="descripcionPrograma"
-                            name="descripcionPrograma" [(ngModel)]="classPrograma.descripcionPrograma"
-                            required></textarea>
-                        <label for="float-input">Descripción del programa</label>
-                    </span>
-                </div>
-            </div>
-            <!-- Fin del periodo porgrama -->
-            <div class="col-md-12" style="text-align: center; margin: 5px;">
-                <p-button type="ngSubmit"
-                    [label]="classPeriodoPrograma.idPeriodoPrograma? 'Actualizar Programa': 'Guardar Programa'"
-                    icon="pi pi-save" styleClass="p-button-success  mb-2"></p-button>
-            </div>
+<!-- IMPLEMENTACIÓN DEL MODAL PARA EL INGRESO DE LOS CURSOS -->
+<p-dialog [(visible)]="visible" [style]="{ width: '450px' }" header="PROGRAMAS" [modal]="true"
+    styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <div class="field">
+            <label for="name">Período del programa</label>
+            <input type="text" pInputText id="nombrePeriodoPrograma" name="nombrePeriodoPrograma"
+                [(ngModel)]="classPeriodoPrograma.nombrePeriodoPrograma" required autofocus />
+            <!-- <small class="p-error" *ngIf="submitted && !classPrograma.nombrePrograma">Name is required.</small> -->
         </div>
-    </form>
-</p-dialog>
-
-
-
-<!-- IMPLEMENTACION DEL MODAL PARA EL INGRESO DE LOS CURSOS -->
-
-<p-dialog header="Reporte de programación mensual" [(visible)]="visiblePeriodoMensual" [modal]="true"
-    [style]="{ width: '70vw', height: '250' }" [draggable]="false" [resizable]="false">
-    <div class="grid p-fluid m-2">
-        <div class="col-12 md:col-12 ">
-
-            <div class="ui-g-12 ui-md-4">
-
-                <p-calendar placeholder="Año y mes por el cual se mostrara el reporte" id="fechaEvidencia"
-                    name="fechaEvidencia" view="month" dateFormat="mm/yy" [yearNavigator]="true" yearRange="2000:2030"
-                    [readonlyInput]="true" [showIcon]="true" (onSelect)="onDateSelect($event)"></p-calendar>
-            </div>
+        <div class="field">
+            <label for="name">Nombre</label>
+            <input type="text" pInputText id="nombrePrograma" name="nombrePrograma"
+                [(ngModel)]="classPrograma.nombrePrograma" required autofocus />
+            <!-- <small class="p-error" *ngIf="submitted && !classPrograma.descripcionPrograma">Name is required.</small> -->
         </div>
-    </div>
-
-    <div class="container" *ngIf="!pdfSrc">
-
-        <img src="../../../../assets/img/istap.png" alt="">
-
-
-    </div>
-    <div class="mx-2" *ngIf="pdfSrc">
-        <embed style="border-radius: 10px; " [src]="pdfSrc" type="application/pdf" width="100%" height="500px" />
-    </div>
-
-    <div class="grid p-fluid m-1">
-        <!-- Fin del periodo porgrama -->
-        <div class="col-md-12" style="text-align: center; margin: 5px;">
-            <p-button type="ngSubmit" label="Aceptar" icon="pi pi-check" styleClass="p-button-success  mb-2"></p-button>
+        <div class="field">
+            <label for="description">Descripción</label>
+            <textarea pInputTextarea id="descripcionPrograma" name="descripcionPrograma"
+                [(ngModel)]="classPrograma.descripcionPrograma" required rows="3" cols="20"></textarea>
         </div>
-    </div>
-
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <p-button pRipple label="Cancelar" icon="pi pi-times" styleClass="p-button-outlined p-button-danger"
+            (click)="hideDialog()"></p-button>
+        <p-button pRipple [label]="classPeriodoPrograma.idPeriodoPrograma? 'Actualizar': 'Guardar'" icon="pi pi-check"
+            styleClass="p-button-outlined p-button-success"
+            (click)="validarDatosProgramaCapacitacionContinua()"></p-button>
+    </ng-template>
 </p-dialog>

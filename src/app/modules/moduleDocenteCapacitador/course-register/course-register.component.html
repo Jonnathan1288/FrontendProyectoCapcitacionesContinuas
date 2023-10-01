@@ -1,37 +1,20 @@
 <p-panel header="Registro de curso" class="m-5">
   <!-- RESTAURAR U SILABO Y SU DISENIO -->
-  <p-button
-    *ngIf="tieneIdEnLauta === false"
-    (click)="showDialog2()"
-    icon="pi pi-search"
-    label="Reutilizar Curso"
-    styleClass="p-button-rounded p-button-success p-button-outlined"
-  ></p-button>
+  <p-button *ngIf="tieneIdEnLauta === false" (click)="showDialog2()" icon="pi pi-search" label="Reutilizar Curso"
+    styleClass="p-button-rounded p-button-success p-button-outlined"></p-button>
 
-  <p-dialog
-    header="Cursos"
-    [(visible)]="visibleC"
-    [style]="{ width: '80vw', height: '100vw' }"
-  >
+  <p-dialog header="Cursos" [(visible)]="visibleC" [style]="{ width: '80vw', height: '100vw' }">
     <p-card *ngFor="let cursos of listadoCursosReutilizar" class="m-1">
       <div class="surface-section px-4 py-5 md:px-6 lg:px-8">
-        <div
-          class="flex align-items-start flex-column lg:justify-content-between lg:flex-row"
-        >
+        <div class="flex align-items-start flex-column lg:justify-content-between lg:flex-row">
           <div>
             <div class="flex align-items-center flex-wrap">
               <div class="mr-5 flex align-items-center mt-3">
-                <img
-                  [src]="
+                <img [src]="
                     'http://localhost:8080/api/uploadUri/' +
                     cursos.fotoCurso +
                     '/images_course'
-                  "
-                  alt=""
-                  width="80px"
-                  height="80px"
-                  class="rounded-circle"
-                />
+                  " alt="" width="80px" height="80px" class="rounded-circle" />
               </div>
               <div class="mr-5 flex align-items-center mt-3">
                 <div class="text-2xl">
@@ -41,12 +24,8 @@
             </div>
           </div>
           <div class="mt-3 lg:mt-0">
-            <p-button
-              (onClick)="copiarDatos(cursos.idCurso!)"
-              icon="pi pi-check"
-              label="Copiar"
-              styleClass="p-button-rounded p-button-success p-button-outlined"
-            ></p-button>
+            <p-button (onClick)="copiarDatos(cursos.idCurso!)" icon="pi pi-check" label="Copiar"
+              styleClass="p-button-rounded p-button-success p-button-outlined"></p-button>
           </div>
         </div>
       </div>
@@ -54,29 +33,18 @@
   </p-dialog>
   <!-- RESTAURAR U SILABO Y SU DISENIO -->
 
-  <form
-    (ngSubmit)="validarCursosCpacitacionContinua()"
-    novalidate
-    style="padding: 15px"
-  >
-    <div
-     
-    >
+  <form (ngSubmit)="validarCursosCpacitacionContinua()" novalidate style="padding: 15px">
+    <div>
       <p-card>
         <div class="centered-header">
           <h2>Informe para la creación del curso</h2>
         </div>
 
-        <div class="personal-image">
+        <div class="personal-image m-3">
           <label class="label" style="border: black">
-            <input
-              type="file"
-              accept="image/jpeg, image/jpg, image/png"
-              (change)="onFileSelected($event)"
-            />
+            <input type="file" accept="image/jpeg, image/jpg, image/png" (change)="onFileSelected($event)" />
             <figure class="personal-figure required-field">
-              <img
-                [src]="
+              <img [src]="
                   avatarURL
                     ? avatarURL
                     : curso.fotoCurso
@@ -84,29 +52,20 @@
                       curso.fotoCurso +
                       '/images_course'
                     : '../../../../assets/img/subir.png'
-                "
-                class="personal-avatar"
-                alt="img"
-              />
+                " class="personal-avatar" alt="img" />
               <figcaption class="personal-figcaption">
                 <img src="./assets/img/subir.png" />
               </figcaption>
             </figure>
           </label>
-                    
         </div>
 
         <!-- Primer contenedor -->
         <div class="grid p-fluid">
           <div class="field col-12 md:col-4">
             <div *ngIf="!curso.idCurso">
-              <select
-                pInputText
-                placeholder="tipo"
-                id="canton"
-                name="canton"
-                (change)="getEspecialidadesDependenceOfArea($event, null)"
-              >
+              <select pInputText placeholder="tipo" id="canton" name="canton"
+                (change)="getEspecialidadesDependenceOfArea($event, null)">
                 <option value="">Seleccione Área</option>
                 <option *ngFor="let areas of listAreaE" [value]="areas.idArea">
                   {{ areas.nombreArea }}
@@ -116,14 +75,8 @@
             </div>
 
             <div class="card flex justify-content-center" *ngIf="curso.idCurso">
-              <select
-                pInputText
-                [(ngModel)]="(curso.parroquia?.canton)!.idCanton"
-                id="canton"
-                name="canton"
-                (change)="getEspecialidadesDependenceOfArea($event, null)"
-                required
-              >
+              <select pInputText [(ngModel)]="(curso.parroquia?.canton)!.idCanton" id="canton" name="canton"
+                (change)="getEspecialidadesDependenceOfArea($event, null)" required>
                 <option (ngValue)="(undefined)">Seleccione el Cantón</option>
                 <option *ngFor="let areas of listAreaE" [value]="areas.idArea">
                   {{ areas.nombreArea }}
@@ -135,18 +88,10 @@
 
           <div class="field col-12 md:col-4">
             <div *ngIf="!curso.idCurso">
-              <select
-                pInputText
-                id="especialidad"
-                name="especialidad"
-                required
-                (change)="catchEspecialidadByEvent($event, null)"
-              >
+              <select pInputText id="especialidad" name="especialidad" required
+                (change)="catchEspecialidadByEvent($event, null)">
                 <option value="">Seleccione Especialidad</option>
-                <option
-                  *ngFor="let especialidad of listEspecialida"
-                  [value]="especialidad.idEspecialidad"
-                >
+                <option *ngFor="let especialidad of listEspecialida" [value]="especialidad.idEspecialidad">
                   {{ especialidad.nombreEspecialidad }}
                 </option>
               </select>
@@ -154,19 +99,10 @@
             </div>
 
             <div *ngIf="curso.idCurso">
-              <select
-                pInputText
-                id="especialidad"
-                name="especialidad"
-                [(ngModel)]="curso.especialidad!.idEspecialidad"
-                required
-                (change)="catchEspecialidadByEvent($event, null)"
-              >
+              <select pInputText id="especialidad" name="especialidad" [(ngModel)]="curso.especialidad!.idEspecialidad"
+                required (change)="catchEspecialidadByEvent($event, null)">
                 <option value="">Seleccione Especialidad</option>
-                <option
-                  *ngFor="let especialidad of listEspecialida"
-                  [value]="especialidad.idEspecialidad"
-                >
+                <option *ngFor="let especialidad of listEspecialida" [value]="especialidad.idEspecialidad">
                   {{ especialidad.nombreEspecialidad }}
                 </option>
               </select>
@@ -176,30 +112,17 @@
 
           <div class="field col-12 md:col-4">
             <div>
-              <select
-                pInputText
-                id="programas"
-                name="programas"
-                required
-                [(ngModel)]="
+              <select pInputText id="programas" name="programas" required [(ngModel)]="
                   curso.idCurso ? curso.programas?.idPrograma : emptyVa1
-                "
-                (ngModelChange)="catchProgramasByEvent($event)"
-              >
+                " (ngModelChange)="catchProgramasByEvent($event)">
                 <option (ngValue)="(undefined)">Programas diponibles</option>
-                <option
-                  *ngFor="let programas of listProgramas"
-                  [ngValue]="
+                <option *ngFor="let programas of listProgramas" [ngValue]="
                     programas.idPrograma ? programas?.idPrograma : programas
-                  "
-                >
+                  ">
                   {{ programas.nombrePrograma }}
                 </option>
               </select>
-              <span class="arrow-icon"
-                ><i class="pi pi-chevron-down"
-                  ><span class="red-asterisk"></span></i
-              ></span>
+              <span class="arrow-icon"><i class="pi pi-chevron-down"><span class="red-asterisk"></span></i></span>
             </div>
           </div>
         </div>
@@ -208,47 +131,25 @@
         <div class="grid p-fluid">
           <div class="field col-12 md:col-4 mt-4">
             <span class="p-float-label">
-              <input
-                type="text"
-                id="inputtext"
-                pInputText
-                id="nombreCurso"
-                name="nombreCurso"
-                [(ngModel)]="curso.nombreCurso"
-              />
-              <label for="inputtext"
-                >Nombre curso<span class="red-asterisk1"></span
-              ></label>
+              <input type="text" id="inputtext" pInputText id="nombreCurso" name="nombreCurso"
+                [(ngModel)]="curso.nombreCurso" />
+              <label for="inputtext">Nombre curso<span class="red-asterisk1"></span></label>
             </span>
           </div>
 
           <div class="field col-12 md:col-4 mt-4">
             <span class="p-float-label">
-              <input
-                type="text"
-                id="inputtext"
-                pInputText
-                id="codigoCurso"
-                name="codigoCurso"
-                [(ngModel)]="curso.codigoCurso"
-              />
+              <input type="text" id="inputtext" pInputText id="codigoCurso" name="codigoCurso"
+                [(ngModel)]="curso.codigoCurso" />
               <label for="inputtext">Código del curso</label>
             </span>
           </div>
 
           <div class="field col-12 md:col-4 mt-4">
             <span class="p-float-label">
-              <p-inputNumber
-                mode="decimal"
-                [showButtons]="true"
-                inputId="minmax-buttons"
-                [min]="0"
-                [max]="50"
-                placeholder="Duración curso en horas"
-                id="duracionCurso"
-                name="duracionCurso"
-                [(ngModel)]="curso.duracionCurso"
-              >
+              <p-inputNumber mode="decimal" [showButtons]="true" inputId="minmax-buttons" [min]="0" [max]="50"
+                placeholder="Duración curso en horas" id="duracionCurso" name="duracionCurso"
+                [(ngModel)]="curso.duracionCurso">
               </p-inputNumber>
               <label for="inputtext">Duración curso en horas</label>
             </span>
@@ -256,17 +157,9 @@
 
           <div class="field col-12 md:col-4 mt-4">
             <span class="p-float-label">
-              <p-inputNumber
-                mode="decimal"
-                [showButtons]="true"
-                inputId="minmax-buttons"
-                [min]="0"
-                [max]="50"
-                placeholder="Número de cupos"
-                id="numeroCuposCurso"
-                name="numeroCuposCurso"
-                [(ngModel)]="curso.numeroCuposCurso"
-              >
+              <p-inputNumber mode="decimal" [showButtons]="true" inputId="minmax-buttons" [min]="0" [max]="50"
+                placeholder="Número de cupos" id="numeroCuposCurso" name="numeroCuposCurso"
+                [(ngModel)]="curso.numeroCuposCurso">
               </p-inputNumber>
               <label for="inputtext">Número de cupos</label>
             </span>
@@ -274,29 +167,16 @@
 
           <div class="field col-12 md:col-4 mt-4">
             <div class="p-inputgroup">
-              <p-calendar
-                inputId="edad"
-                class="ng-dirty"
-                [showIcon]="true"
-                placeholder="Fecha inicio de curso"
-                id="fechaInicioCurso"
-                name="fechaInicioCurso"
-                [(ngModel)]="curso.fechaInicioCurso"
-              ></p-calendar>
+              <p-calendar inputId="edad" class="ng-dirty" [showIcon]="true" placeholder="Fecha inicio de curso"
+                id="fechaInicioCurso" name="fechaInicioCurso" [(ngModel)]="curso.fechaInicioCurso"></p-calendar>
             </div>
           </div>
 
           <div class="field col-12 md:col-4 mt-4">
             <div class="p-inputgroup">
-              <p-calendar
-                inputId="edad"
-                class="ng-dirty"
-                [showIcon]="true"
-                placeholder="Fecha fin de curso"
-                id="fechaFinalizacionCurso"
-                name="fechaFinalizacionCurso"
-                [(ngModel)]="curso.fechaFinalizacionCurso"
-              ></p-calendar>
+              <p-calendar inputId="edad" class="ng-dirty" [showIcon]="true" placeholder="Fecha fin de curso"
+                id="fechaFinalizacionCurso" name="fechaFinalizacionCurso"
+                [(ngModel)]="curso.fechaFinalizacionCurso"></p-calendar>
             </div>
           </div>
         </div>
@@ -307,19 +187,10 @@
         <div class="grid p-fluid">
           <div class="col-12 md:col-4">
             <div *ngIf="!curso.idCurso">
-              <select
-                pInputText
-                placeholder="tipo"
-                id="provincia"
-                name="provincia"
-                required
-                (change)="findCantonByProvinciaEvent($event, null)"
-              >
+              <select pInputText placeholder="tipo" id="provincia" name="provincia" required
+                (change)="findCantonByProvinciaEvent($event, null)">
                 <option value="">Seleccione la Provincia</option>
-                <option
-                  *ngFor="let pro of listProvincias"
-                  [value]="pro.idProvincia"
-                >
+                <option *ngFor="let pro of listProvincias" [value]="pro.idProvincia">
                   {{ pro.provincia }}
                 </option>
               </select>
@@ -327,20 +198,10 @@
             </div>
 
             <div *ngIf="curso.idCurso">
-              <select
-                pInputText
-                placeholder="tipo"
-                [(ngModel)]="(curso!.parroquia!.canton?.provincia)!.idProvincia"
-                id="razaAnimal"
-                name="razaAnimal"
-                (change)="findCantonByProvinciaEvent($event, null)"
-                required
-              >
+              <select pInputText placeholder="tipo" [(ngModel)]="(curso!.parroquia!.canton?.provincia)!.idProvincia"
+                id="razaAnimal" name="razaAnimal" (change)="findCantonByProvinciaEvent($event, null)" required>
                 <option (ngValue)="(undefined)">Seleccione la Categoría</option>
-                <option
-                  *ngFor="let pro of listProvincias"
-                  [value]="pro.idProvincia"
-                >
+                <option *ngFor="let pro of listProvincias" [value]="pro.idProvincia">
                   {{ pro.provincia }}
                 </option>
               </select>
@@ -350,19 +211,10 @@
 
           <div class="col-12 md:col-4">
             <div *ngIf="!curso.idCurso">
-              <select
-                pInputText
-                placeholder="tipo"
-                id="canton"
-                name="canton"
-                required
-                (change)="findParroquiaByCantonEvent($event, null)"
-              >
+              <select pInputText placeholder="tipo" id="canton" name="canton" required
+                (change)="findParroquiaByCantonEvent($event, null)">
                 <option value="">Seleccione el Cantón</option>
-                <option
-                  *ngFor="let canton of listCanton"
-                  [value]="canton.idCanton"
-                >
+                <option *ngFor="let canton of listCanton" [value]="canton.idCanton">
                   {{ canton.canton }}
                 </option>
               </select>
@@ -370,19 +222,10 @@
             </div>
 
             <div *ngIf="curso.idCurso">
-              <select
-                pInputText
-                [(ngModel)]="(curso.parroquia?.canton)!.idCanton"
-                id="canton"
-                name="canton"
-                (change)="findParroquiaByCantonEvent($event, null)"
-                required
-              >
+              <select pInputText [(ngModel)]="(curso.parroquia?.canton)!.idCanton" id="canton" name="canton"
+                (change)="findParroquiaByCantonEvent($event, null)" required>
                 <option (ngValue)="(undefined)">Seleccione el Cantón</option>
-                <option
-                  *ngFor="let canton of listCanton"
-                  [value]="canton.idCanton"
-                >
+                <option *ngFor="let canton of listCanton" [value]="canton.idCanton">
                   {{ canton.canton }}
                 </option>
               </select>
@@ -392,21 +235,12 @@
 
           <div class="col-12 md:col-4">
             <div>
-              <select
-                pInputText
-                id="parroquia"
-                name="parroquia"
-                required
-                [(ngModel)]="
+              <select pInputText id="parroquia" name="parroquia" required [(ngModel)]="
                   curso.idCurso ? curso.parroquia?.idParroquia : emptyVa
-                "
-                (ngModelChange)="catchParroquiaByCantonEvent($event)"
-              >
+                " (ngModelChange)="catchParroquiaByCantonEvent($event)">
                 <option (ngValue)="(undefined)">Seleccione la Parroquia</option>
-                <option
-                  *ngFor="let parroquia of listParroquia"
-                  [ngValue]="curso.idCurso ? parroquia?.idParroquia : parroquia"
-                >
+                <option *ngFor="let parroquia of listParroquia"
+                  [ngValue]="curso.idCurso ? parroquia?.idParroquia : parroquia">
                   {{ parroquia.parroquia }}
                 </option>
               </select>
@@ -451,28 +285,16 @@
             <div class="form-group">
               <div class="col-md-11">
                 <div class="radio-button">
-                  <input
-                    type="radio"
-                    class="radio-button__input"
-                    id="radioSi"
-                    name="cursoOcc"
-                    value="Si"
-                    [(ngModel)]="curso.cursoocc"
-                  />
+                  <input type="radio" class="radio-button__input" id="radioSi" name="cursoOcc" value="Si"
+                    [(ngModel)]="curso.cursoocc" />
                   <label class="radio-button__label" for="radioSi">
                     <span class="radio-button__custom"></span>
                     Si
                   </label>
                 </div>
                 <div class="radio-button ml-4">
-                  <input
-                    type="radio"
-                    class="radio-button__input"
-                    id="radioNo"
-                    name="cursoOcc"
-                    value="No"
-                    [(ngModel)]="curso.cursoocc"
-                  />
+                  <input type="radio" class="radio-button__input" id="radioNo" name="cursoOcc" value="No"
+                    [(ngModel)]="curso.cursoocc" />
                   <label class="radio-button__label" for="radioNo">
                     <span class="radio-button__custom"></span>
                     No
@@ -494,16 +316,11 @@
         </div>
         <div class="checkbox-group" style="padding-top: 5px">
           <div *ngFor="let modalidad of listModalidadCurso">
-            <p-radioButton
-              name="modalidadCurso"
-              [value]="modalidad.idModalidadCurso"
-              (ngModelChange)="getmodalidadCursoView(modalidad)"
-              class="mb-2"
-              [(ngModel)]="molalidadId"
-            ></p-radioButton>
+            <p-radioButton name="modalidadCurso" [value]="modalidad.idModalidadCurso"
+              (ngModelChange)="getmodalidadCursoView(modalidad)" class="mb-2" [(ngModel)]="molalidadId"></p-radioButton>
             <label for="modalidadCurso" class="ml-2">{{
               modalidad.nombreModalidadCurso
-            }}</label>
+              }}</label>
           </div>
         </div>
       </p-card>
@@ -517,16 +334,11 @@
         </div>
         <div class="checkbox-group" style="padding-top: 5px">
           <div *ngFor="let tipo of listTipo">
-            <p-radioButton
-              name="tipoCurso"
-              [value]="tipo.idTipoCurso"
-              class="mb-2"
-              [(ngModel)]="tipoCursoId"
-              (ngModelChange)="getTipoView(tipo)"
-            ></p-radioButton>
+            <p-radioButton name="tipoCurso" [value]="tipo.idTipoCurso" class="mb-2" [(ngModel)]="tipoCursoId"
+              (ngModelChange)="getTipoView(tipo)"></p-radioButton>
             <label for="tipoCurso" class="ml-2">{{
               tipo.nombreTipoCurso
-            }}</label>
+              }}</label>
           </div>
         </div>
       </p-card>
@@ -538,16 +350,11 @@
         </div>
         <div class="checkbox-group" style="padding-top: 5px">
           <div *ngFor="let nivel of listNivelCurso">
-            <p-radioButton
-              name="nivelCurso"
-              [value]="nivel.idNivelCurso"
-              class="mb-2"
-              [(ngModel)]="nivelCursoId"
-              (ngModelChange)="getnivelCursoView(nivel)"
-            ></p-radioButton>
+            <p-radioButton name="nivelCurso" [value]="nivel.idNivelCurso" class="mb-2" [(ngModel)]="nivelCursoId"
+              (ngModelChange)="getnivelCursoView(nivel)"></p-radioButton>
             <label for="nivelCurso" class="ml-2">{{
               nivel.nombreNivelCurso
-            }}</label>
+              }}</label>
           </div>
         </div>
       </p-card>
@@ -560,14 +367,8 @@
             <div class="ui-g-12 ui-md-4">
               <span class="p-float-label">
                 <!-- onkeypress='return event.charCode >= 48 && event.charCode <= 57' -->
-                <p-calendar
-                  id="horaInicio"
-                  name="horaInicio"
-                  [(ngModel)]="fechaInit"
-                  [timeOnly]="true"
-                  hourFormat="12"
-                  pInputNumberOnly
-                ></p-calendar>
+                <p-calendar id="horaInicio" name="horaInicio" [(ngModel)]="fechaInit" [timeOnly]="true" hourFormat="12"
+                  pInputNumberOnly></p-calendar>
                 <label for="horaInicio">Hora de Inicio</label>
               </span>
             </div>
@@ -576,14 +377,8 @@
           <div class="col-12 md:col-6 mt-2">
             <div class="ui-g-12 ui-md-4">
               <span class="p-float-label">
-                <p-calendar
-                  id="horaFin"
-                  name="horaFin"
-                  [(ngModel)]="fechaFin"
-                  [timeOnly]="true"
-                  hourFormat="12"
-                  pInputNumberOnly
-                ></p-calendar>
+                <p-calendar id="horaFin" name="horaFin" [(ngModel)]="fechaFin" [timeOnly]="true" hourFormat="12"
+                  pInputNumberOnly></p-calendar>
                 <label for="horaFin">Hora de Fin</label>
               </span>
             </div>
@@ -595,41 +390,23 @@
         </div>
         <div class="checkbox-group" style="padding-top: 5px">
           <div>
-            <p-radioButton
-              name="group1"
-              value="Lunes-Viernes"
-              class="mb-2"
-              [(ngModel)]="daysOfTheweekV"
-            ></p-radioButton>
+            <p-radioButton name="group1" value="Lunes-Viernes" class="mb-2"
+              [(ngModel)]="daysOfTheweekV"></p-radioButton>
             <label for="Lunes-Viernes" class="ml-2">Lunes-Viernes</label>
           </div>
           <div>
-            <p-radioButton
-              name="group1"
-              value="Sábados"
-              class="mb-2"
-              [(ngModel)]="daysOfTheweekV"
-            ></p-radioButton>
+            <p-radioButton name="group1" value="Sábados" class="mb-2" [(ngModel)]="daysOfTheweekV"></p-radioButton>
             <label for="Sábados" class="ml-2">Sábados</label>
           </div>
 
           <div>
-            <p-radioButton
-              name="group1"
-              value="Lunes-Domingo"
-              class="mb-2"
-              [(ngModel)]="daysOfTheweekV"
-            ></p-radioButton>
+            <p-radioButton name="group1" value="Lunes-Domingo" class="mb-2"
+              [(ngModel)]="daysOfTheweekV"></p-radioButton>
             <label for="Lunes-Domingo" class="ml-2">Lunes-Domingo</label>
           </div>
 
           <div>
-            <p-radioButton
-              name="group1"
-              value="Domingos"
-              class="mb-2"
-              [(ngModel)]="daysOfTheweekV"
-            ></p-radioButton>
+            <p-radioButton name="group1" value="Domingos" class="mb-2" [(ngModel)]="daysOfTheweekV"></p-radioButton>
             <label for="Domingos" class="ml-2">Domingos</label>
           </div>
         </div>
@@ -651,17 +428,9 @@
           </style>
 
           <span class="p-float-label">
-            <textarea
-              id="float-input"
-              rows="5"
-              cols="30"
-              pInputTextarea
-              id="descripcionCurso"
-              name="descripcionCurso"
-              [(ngModel)]="curso.descripcionCurso"
-              required
-              onblur="this.classList.toggle('required', !this.value)"
-            ></textarea>
+            <textarea id="float-input" rows="5" cols="30" pInputTextarea id="descripcionCurso" name="descripcionCurso"
+              [(ngModel)]="curso.descripcionCurso" required
+              onblur="this.classList.toggle('required', !this.value)"></textarea>
             <label for="float-input">Descripción del curso a impartir</label>
           </span>
         </div>
@@ -675,17 +444,9 @@
                     <label for="float-input">Objetivo general del curso<span class="red-asterisk1"></span></label>
                 </span> -->
           <span class="p-float-label">
-            <textarea
-              id="float-input"
-              rows="5"
-              cols="30"
-              pInputTextarea
-              id="objetivoGeneralesCurso"
-              name="objetivoGeneralesCurso"
-              [(ngModel)]="curso.objetivoGeneralesCurso"
-              required
-              onblur="this.classList.toggle('required', !this.value)"
-            ></textarea>
+            <textarea id="float-input" rows="5" cols="30" pInputTextarea id="objetivoGeneralesCurso"
+              name="objetivoGeneralesCurso" [(ngModel)]="curso.objetivoGeneralesCurso" required
+              onblur="this.classList.toggle('required', !this.value)"></textarea>
             <label for="float-input">Objetivo general del curso</label>
           </span>
         </div>
@@ -694,15 +455,8 @@
       <div class="grid p-fluid">
         <div class="col-12 md:col-12 mt-5" style="align-items: center">
           <span class="p-float-label">
-            <textarea
-              id="float-input"
-              rows="5"
-              cols="30"
-              pInputTextarea
-              id="observacionCurso"
-              name="observacionCurso"
-              [(ngModel)]="curso.observacionCurso"
-            ></textarea>
+            <textarea id="float-input" rows="5" cols="30" pInputTextarea id="observacionCurso" name="observacionCurso"
+              [(ngModel)]="curso.observacionCurso"></textarea>
             <label htmlFor="observacionCurso">Observación del curso</label>
           </span>
         </div>
@@ -713,37 +467,18 @@
           <div class="grid p-fluid" *ngIf="!idCursoUpdate">
             <div class="col-12 md:col-12 mt-5" style="align-items: center">
               <span class="p-float-label">
-                <input
-                  type="text"
-                  id="float-input"
-                  rows="5"
-                  cols="30"
-                  pInputTextarea
-                  id="nombrePrerequisitoCurso"
-                  name="nombrePrerequisitoCurso"
-                  [(ngModel)]="prerequisito.nombrePrerequisitoCurso"
-                  required
-                />
+                <input type="text" id="float-input" rows="5" cols="30" pInputTextarea id="nombrePrerequisitoCurso"
+                  name="nombrePrerequisitoCurso" [(ngModel)]="prerequisito.nombrePrerequisitoCurso" required />
                 <label htmlFor="username">Prerrequisitos para el curso</label>
               </span>
             </div>
           </div>
           <div class="col-md-12" style="text-align: center; margin: 5px">
-            <p-button
-              label="Agregar"
-              (click)="showDialog()"
-              icon="pi pi-plus"
-              styleClass="p-button-success  mb-2"
-              *ngIf="idCursoUpdate"
-            ></p-button>
+            <p-button label="Agregar" (click)="showDialog()" icon="pi pi-plus" styleClass="p-button-success  mb-2"
+              *ngIf="idCursoUpdate"></p-button>
 
-            <p-button
-              label="Agregar"
-              (click)="almacenarListaDeprerequisitos()"
-              icon="pi pi-plus"
-              styleClass="p-button-success  mb-2"
-              *ngIf="!idCursoUpdate"
-            ></p-button>
+            <p-button label="Agregar" (click)="almacenarListaDeprerequisitos()" icon="pi pi-plus"
+              styleClass="p-button-success  mb-2" *ngIf="!idCursoUpdate"></p-button>
           </div>
         </form>
 
@@ -756,40 +491,20 @@
                 <th style="width: 20%; text-align: center">Editar</th>
               </tr>
             </ng-template>
-            <ng-template
-              pTemplate="body"
-              let-data
-              let-i="index"
-              let-columns="columns"
-            >
+            <ng-template pTemplate="body" let-data let-i="index" let-columns="columns">
               <tr>
                 <td style="width: 70%; text-align: left">
                   {{ data.nombrePrerequisitoCurso }}
                 </td>
                 <td style="width: 20%; text-align: center">
-                  <p-button
-                    icon="pi pi-pencil"
-                    styleClass="p-button-secondary"
-                    (click)="editPrerequisito(data)"
-                    (click)="showDialog()"
-                    *ngIf="idCursoUpdate"
-                  ></p-button>
+                  <p-button icon="pi pi-pencil" styleClass="p-button-secondary" (click)="editPrerequisito(data)"
+                    (click)="showDialog()" *ngIf="idCursoUpdate"></p-button>
 
-                  <p-button
-                    class="mx-2"
-                    icon="pi pi-trash"
-                    styleClass="p-button-secondary"
-                    (click)="eliminadologicoDeprerequisito(data)"
-                    *ngIf="idCursoUpdate"
-                  ></p-button>
+                  <p-button class="mx-2" icon="pi pi-trash" styleClass="p-button-secondary"
+                    (click)="eliminadologicoDeprerequisito(data)" *ngIf="idCursoUpdate"></p-button>
 
-                  <p-button
-                    class="mx-2"
-                    icon="pi pi-trash"
-                    styleClass="p-button-secondary"
-                    (click)="quitarPrerequisitos(data.nombrePrerequisitoCurso)"
-                    *ngIf="!idCursoUpdate"
-                  ></p-button>
+                  <p-button class="mx-2" icon="pi pi-trash" styleClass="p-button-secondary"
+                    (click)="quitarPrerequisitos(data.nombrePrerequisitoCurso)" *ngIf="!idCursoUpdate"></p-button>
                 </td>
               </tr>
             </ng-template>
@@ -826,25 +541,15 @@
     <div class="col-12 md:col-12 mt-1">
       <div class="p-inputgroup">
         <span class="p-float-label">
-          <input
-            type="text"
-            pInputText
-            id="nombrePrerequisitoCurso"
-            name="nombrePrerequisitoCurso"
-            [(ngModel)]="prerequisito.nombrePrerequisitoCurso"
-            required
-          />
+          <input type="text" pInputText id="nombrePrerequisitoCurso" name="nombrePrerequisitoCurso"
+            [(ngModel)]="prerequisito.nombrePrerequisitoCurso" required />
           <label htmlFor="username">Prerrequisitos para el curso</label>
         </span>
       </div>
     </div>
     <div class="col-md-12" style="text-align: center; margin: 5px">
-      <p-button
-        [label]="this.prerequisito.idPrerequisitoCurso ? 'Actualizar' : 'Crear'"
-        icon="pi pi-check-square"
-        styleClass="p-button-success  mb-2"
-        (onClick)="createPrerequisitoCurso()"
-      ></p-button>
+      <p-button [label]="this.prerequisito.idPrerequisitoCurso ? 'Actualizar' : 'Crear'" icon="pi pi-check-square"
+        styleClass="p-button-success  mb-2" (onClick)="createPrerequisitoCurso()"></p-button>
     </div>
   </div>
 </p-dialog>
