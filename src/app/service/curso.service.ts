@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { StorageService } from './storage.service';
 import { CourseFilter } from '../models/references/course-filter';
 import { CourseFilterDocente } from '../models/references/course-filter-by-docente';
+import { ListCourseReduce } from '../models/references/list-course-reduce';
 
 @Injectable({
   providedIn: 'root'
@@ -73,5 +74,14 @@ export class CursoService {
       .set('sort', sort.join(','))
     console.log(params);
     return this.http.get<Curso[]>(environment.apiuri + '/curso/findByCapacitadorUsuarioIdUsuarioPageable/' + idUser, { params });
+  }
+
+  public findByAllCourseDataReducePageable(page: number, size: number, sort: string[]): Observable<ListCourseReduce[]> {
+    let params = new HttpParams()
+      .set('page', page)
+      .set('size', size)
+      .set('sort', sort.join(','))
+    console.log(params);
+    return this.http.get<ListCourseReduce[]>(environment.apiuri + '/curso/findByAllCourseDataReducePageable', { params });
   }
 }

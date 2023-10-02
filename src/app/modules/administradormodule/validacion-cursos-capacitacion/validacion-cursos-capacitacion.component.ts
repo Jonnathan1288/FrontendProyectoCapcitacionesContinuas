@@ -11,6 +11,7 @@ import { SilaboService } from 'src/app/service/silabo.service';
 import { FOLDER_IMAGE_USER, getFile } from 'src/app/util/folder-upload';
 import { EmailCourseApproved } from 'src/app/util/model/email-course-approved';
 import { EmailService } from 'src/app/service/email/email.service';
+import { ListCourseReduce } from 'src/app/models/references/list-course-reduce';
 
 @Component({
 	selector: 'app-validacion-cursos-capacitacion',
@@ -24,9 +25,7 @@ export class ValidacionCursosCapacitacionComponent implements OnInit {
 
 	//Declaracion de las clases que vamos a usar
 
-	public listP: Persona[] = [];
-
-	public listCursos: Curso[] = [];
+	public listCursos: ListCourseReduce[] = [];
 
 	//Método que me va servir para impplementar los periodos de programas
 	public statuses: any[] = [];
@@ -59,19 +58,19 @@ export class ValidacionCursosCapacitacionComponent implements OnInit {
 
 	public obtenerTodosLosCursos() {
 
-		this.cursoService.findByAllPaginator(0, 5, ["idCurso", "desc"]).subscribe({
+		this.cursoService.findByAllCourseDataReducePageable(0, 5, ["idCurso", "desc"]).subscribe({
 			next: (resp: any) => {
 				this.toastrService.info('', 'CURSOS OBTENIDOS');
 				this.listCursos = resp.content;
 
 				this.listCursos.forEach(
 					(curso) =>
-						(curso.fechaInicioCurso = new Date(curso.fechaInicioCurso!))
+						(curso.fechaInicio = new Date(curso.fechaInicio!))
 				);
 				this.listCursos.forEach(
 					(curso) =>
-					(curso.fechaFinalizacionCurso = new Date(
-						curso.fechaFinalizacionCurso!
+					(curso.fechaFin = new Date(
+						curso.fechaFin!
 					))
 				);
 
@@ -81,12 +80,14 @@ export class ValidacionCursosCapacitacionComponent implements OnInit {
 			}
 		});
 
+
+
 	}
 
 	//IMPLEMENTACION PARA HACER QUE EL CURSO SE ACEPTE
-	public classCursoValidanew = new Curso();
+	public classCursoValidanew = new ListCourseReduce();
 	visibleCursoDeCapacitacion?: boolean;
-	public validarHojaDeVida(curso: Curso, caso: number) {
+	public validarHojaDeVida(curso: ListCourseReduce, caso: number) {
 		this.pdfSrc = null;
 		this.classCursoValidanew = { ...curso };
 
@@ -102,10 +103,10 @@ export class ValidacionCursosCapacitacionComponent implements OnInit {
 	public UpdateValidacionCurso(idCurso: number) {
 		// this.emailCourseApproved.receptor = this.classCursoValidanew.capacitador?.usuario?.persona?.correo as string;
 		this.emailCourseApproved.receptor = 'javiertimbe100@gmail.com';
-		this.emailCourseApproved.nameCourse = this.classCursoValidanew.nombreCurso;
-		this.emailCourseApproved.topic = 'Curso "' + this.classCursoValidanew.nombreCurso + (idCurso === 1 ? '" Aprobado' : '" No aceptado');
-		const fullName = this.classCursoValidanew.capacitador?.usuario?.persona?.nombre1 + ' ' + this.classCursoValidanew.capacitador?.usuario?.persona?.apellido1
-		this.emailCourseApproved.sumary = 'Estimado, ' + (fullName) + ' le informo que su curso "' + (this.classCursoValidanew.nombreCurso) + '"';
+		this.emailCourseApproved.nameCourse = this.classCursoValidanew.nameCourse;
+		this.emailCourseApproved.topic = 'Curso "' + this.classCursoValidanew.nameCourse + (idCurso === 1 ? '" Aprobado' : '" No aceptado');
+		const fullName = this.classCursoValidanew.docente
+		this.emailCourseApproved.sumary = 'Estimado, ' + (fullName) + ' le informo que su curso "' + (this.classCursoValidanew.nameCourse) + '"';
 		this.emailCourseApproved.status = idCurso === 1 ? true : false;
 
 		this.sendEmailVerification = true;
@@ -113,7 +114,7 @@ export class ValidacionCursosCapacitacionComponent implements OnInit {
 	}
 
 	public principalAcceptDataAndUpdate() {
-		this.classCursoValidanew.estadoAprovacionCurso = this.emailCourseApproved.status ? 'A' : 'R';
+		this.classCursoValidanew.statusApproved = this.emailCourseApproved.status ? 'A' : 'R';
 
 		this.cursoService
 			.updateCurso(this.classCursoValidanew.idCurso!, this.classCursoValidanew)
@@ -125,9 +126,8 @@ export class ValidacionCursosCapacitacionComponent implements OnInit {
 						this.toastrService.error('', 'CURSO RECHAZADO');
 					}
 					const index = this.listCursos.findIndex(i => i.idCurso === resp.idCurso);
-					this.listCursos[index] = resp; //update table
+					this.listCursos[index] = resp;
 
-					// Send email
 					this.emailService.sendEmailApprovedCourse(this.emailCourseApproved);
 					setTimeout(() => {
 						this.cleanDataSendEmailAndUpdate();
@@ -228,19 +228,19 @@ export class ValidacionCursosCapacitacionComponent implements OnInit {
 
 	public getPaginatorValidateCoursesCapacitacion(size: any) {
 
-		this.cursoService.findByAllPaginator(0, size, ["idCurso", "desc"]).subscribe({
+		this.cursoService.findByAllCourseDataReducePageable(0, size, ["idCurso", "desc"]).subscribe({
 			next: (resp: any) => {
 				this.toastrService.info('', 'TAMAÑO DE CURSOS SOLICITADOS: ' + size);
 				this.listCursos = resp.content;
 
 				this.listCursos.forEach(
 					(curso) =>
-						(curso.fechaInicioCurso = new Date(curso.fechaInicioCurso!))
+						(curso.fechaInicio = new Date(curso.fechaInicio!))
 				);
 				this.listCursos.forEach(
 					(curso) =>
-					(curso.fechaFinalizacionCurso = new Date(
-						curso.fechaFinalizacionCurso!
+					(curso.fechaFin = new Date(
+						curso.fechaFin!
 					))
 				);
 			}, error: (err) => {
