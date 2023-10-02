@@ -84,4 +84,8 @@ export class CursoService {
     console.log(params);
     return this.http.get<ListCourseReduce[]>(environment.apiuri + '/curso/findByAllCourseDataReducePageable', { params });
   }
+
+  public updateStatusCourseAcepted(idCourse: number, status: string): Observable<any> {
+    return this.http.get<any>(environment.apiuri + '/curso/updateStatusCourseAcepted/' + idCourse + '/' + status);
+  }
 }

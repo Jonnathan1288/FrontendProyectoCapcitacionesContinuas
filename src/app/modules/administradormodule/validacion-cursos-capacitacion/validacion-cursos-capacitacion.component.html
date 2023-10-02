@@ -1,8 +1,16 @@
 <!-- Implementación de nueva tabla------------------------------------------------------------------------------------- -->
 
-<div class="container mt-5"></div>
+<div class=" mt-5"></div>
+<!-- <p-table #dt [value]="listUsuariosFilter" dataKey="id" styleClass="p-datatable-customers" [rowHover]="true" [rows]="5"
+    [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,15]" responsiveLayout="scroll" [paginator]="true"
+    currentPageReportTemplate="Mostrando {first} to {last} of {totalRecords} usuarios" [filterDelay]="0"
+    [globalFilterFields]="['identificacion','apellido1','nombre1','username']" [showCurrentPageReport]="true"> -->
+
+
 <div class="card">
-    <p-table #dt [value]="listCursos" dataKey="id" styleClass="p-datatable-customers" [rowHover]="true" [rows]="5"
+
+
+    <p-table #dt [value]="listCursos" dataKey="idCurso" styleClass="p-datatable-customers" [rowHover]="true" [rows]="5"
         [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,15,50 ]" [loading]="loading"
         responsiveLayout="scroll" [paginator]="true"
         currentPageReportTemplate="Mostrando {first} to {last} of {totalRecords} cursos de capacitación continua."
@@ -98,7 +106,7 @@
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-curso>
-            <tr class="p-selectable-row">
+            <tr>
 
                 <td>
                     {{curso.nameProgram}}

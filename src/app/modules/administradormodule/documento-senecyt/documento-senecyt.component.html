@@ -110,7 +110,8 @@
 
             <div class="col-12 md:col-12 mt-2 mb-2" style="display: flex; justify-content: center;">
                 <div style="max-width: 100%;">
-                    <label for="pdf" class="file-upload-label" [ngStyle]="selectedFile ? {'background-color': '#91be95'} : {'background-color': '#2196f3'} ">
+                    <label for="pdf" class="file-upload-label"
+                        [ngStyle]="selectedFile ? {'background-color': '#91be95'} : {'background-color': '#2196f3'} ">
                         <i class="pi pi-upload" style="font-size: 0.8rem" (click)="fileInput.click()"></i>
                         <!-- <span class="file-upload-icon"><i class="pi pi-upload"></i></span>-->
                         <span class="file-upload-text mx-1">{{ classDocumentoExel.documentoExel

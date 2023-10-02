@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Table } from 'primeng/table';
-import { Curso } from 'src/app/models/curso';
-import { Persona } from 'src/app/models/persona';
 import { CursoService } from 'src/app/service/curso.service';
 import { DisenioCurricularService } from 'src/app/service/disenio-curricular.service';
 import { ReportsCapacitacionesService } from 'src/app/service/reports-capacitaciones.service';
@@ -80,13 +78,11 @@ export class ValidacionCursosCapacitacionComponent implements OnInit {
 			}
 		});
 
-
-
 	}
 
 	//IMPLEMENTACION PARA HACER QUE EL CURSO SE ACEPTE
 	public classCursoValidanew = new ListCourseReduce();
-	visibleCursoDeCapacitacion?: boolean;
+	public visibleCursoDeCapacitacion?: boolean;
 	public validarHojaDeVida(curso: ListCourseReduce, caso: number) {
 		this.pdfSrc = null;
 		this.classCursoValidanew = { ...curso };
@@ -116,37 +112,27 @@ export class ValidacionCursosCapacitacionComponent implements OnInit {
 	public principalAcceptDataAndUpdate() {
 		this.classCursoValidanew.statusApproved = this.emailCourseApproved.status ? 'A' : 'R';
 
-		this.cursoService
-			.updateCurso(this.classCursoValidanew.idCurso!, this.classCursoValidanew)
-			.subscribe({
-				next: (resp) => {
-					if (resp.estadoAprovacionCurso === 'A') {
-						this.toastrService.success('', 'CURSO APROBADO');
-					} else {
-						this.toastrService.error('', 'CURSO RECHAZADO');
-					}
-					const index = this.listCursos.findIndex(i => i.idCurso === resp.idCurso);
-					this.listCursos[index] = resp;
+		this.cursoService.updateStatusCourseAcepted(this.classCursoValidanew.idCurso!, this.classCursoValidanew.statusApproved).subscribe({
+			next: (resp) => {
+				console.log(resp)
+				const index = this.listCursos.findIndex(i => i.idCurso === resp.idCurso);
+				this.listCursos[index] = this.classCursoValidanew;
 
-					this.emailService.sendEmailApprovedCourse(this.emailCourseApproved);
-					setTimeout(() => {
-						this.cleanDataSendEmailAndUpdate();
-					}, 1000);
-
-				},
-				error: (err) => {
-					this.toastrService.error('', 'INCONVENIENTE, INTÉNTELO MÁS TARDE');
-				}
-			});
+				this.emailService.sendEmailApprovedCourse(this.emailCourseApproved);
+				setTimeout(() => {
+					this.cleanDataSendEmailAndUpdate();
+				}, 1000);
+			}, error: (err) => {
+				this.toastrService.error('', 'INCONVENIENTE, INTÉNTELO MÁS TARDE');
+			}
+		});
 	}
 
 	public cleanDataSendEmailAndUpdate() {
 		this.sendEmailVerification = false;
 		this.visibleCursoDeCapacitacion = false;
 		this.emailCourseApproved = {} as EmailCourseApproved;
-
 	}
-
 
 	public pdfSrc: any;
 	public obtenerReportesValidacion(caso: number, idCurso: number) {
