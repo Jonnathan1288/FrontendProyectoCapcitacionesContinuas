@@ -1,13 +1,21 @@
 <!-- Implementación de nueva tabla------------------------------------------------------------------------------------- -->
 
-<div class="container mt-5"></div>
+<div class=" mt-5"></div>
+<!-- <p-table #dt [value]="listUsuariosFilter" dataKey="id" styleClass="p-datatable-customers" [rowHover]="true" [rows]="5"
+    [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,15]" responsiveLayout="scroll" [paginator]="true"
+    currentPageReportTemplate="Mostrando {first} to {last} of {totalRecords} usuarios" [filterDelay]="0"
+    [globalFilterFields]="['identificacion','apellido1','nombre1','username']" [showCurrentPageReport]="true"> -->
+
+
 <div class="card">
-    <p-table #dt [value]="listCursos" dataKey="id" styleClass="p-datatable-customers" [rowHover]="true" [rows]="5"
+
+
+    <p-table #dt [value]="listCursos" dataKey="idCurso" styleClass="p-datatable-customers" [rowHover]="true" [rows]="5"
         [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,15,50 ]" [loading]="loading"
         responsiveLayout="scroll" [paginator]="true"
         currentPageReportTemplate="Mostrando {first} to {last} of {totalRecords} cursos de capacitación continua."
         [filterDelay]="0"
-        [globalFilterFields]="['fechaFinalizacionCurso', 'fechaInicioCurso', 'programas.periodoPrograma.nombrePeriodoPrograma', 'programas.descripcionPrograma', 'programas.nombrePrograma','nombreCurso','capacitador.usuario.persona.nombre1', 'capacitador.usuario.persona.nombre2', 'capacitador.usuario.persona.apellido1', 'capacitador.usuario.persona.apellido2','capacitador.usuario.username','status']">
+        [globalFilterFields]="['nameCourse', 'fechaInicio', 'fechaFin', 'statusApproved', 'username','email','nameProgram', 'docente','statusFinalized']">
 
         <ng-template pTemplate="caption">
             <div class="flex">
@@ -29,43 +37,41 @@
 
         <ng-template pTemplate="header">
             <tr>
-                <th pSortableColumn="programas.nombrePrograma">
+                <th pSortableColumn="nameProgram">
                     <div class="flex justify-content-between align-items-center">
                         <strong>PROGRAMA</strong>
-                        <p-sortIcon field="programas.nombrePrograma"></p-sortIcon>
+                        <p-sortIcon field="nameProgram"></p-sortIcon>
                     </div>
                 </th>
 
-                <th pSortableColumn="capacitador.usuario.username">
+                <th pSortableColumn="username">
                     <div class="flex justify-content-between align-items-center">
                         <strong>CAPACITADOR</strong>
-                        <p-sortIcon field="capacitador.usuario.username"></p-sortIcon>
+                        <p-sortIcon field="username"></p-sortIcon>
                     </div>
                 </th>
 
-                <th pSortableColumn="nombreCurso">
+                <th pSortableColumn="nameCourse">
                     <div class="flex justify-content-between align-items-center">
                         <strong>NOMBRE CURSO</strong>
-                        <p-sortIcon field="nombreCurso"></p-sortIcon>
-                        <p-columnFilter type="text" field="nombreCurso" display="menu" class="ml-auto"></p-columnFilter>
+                        <p-sortIcon field="nameCourse"></p-sortIcon>
+                        <p-columnFilter type="text" field="nameCourse" display="menu" class="ml-auto"></p-columnFilter>
                     </div>
                 </th>
 
-                <th pSortableColumn="fechaInicioCurso">
+                <th pSortableColumn="fechaInicio">
                     <div class="flex justify-content-between align-items-center">
                         <strong>INICIO</strong>
-                        <p-sortIcon field="fechaInicioCurso"></p-sortIcon>
-                        <p-columnFilter type="date" field="fechaInicioCurso" display="menu"
-                            class="ml-auto"></p-columnFilter>
+                        <p-sortIcon field="fechaInicio"></p-sortIcon>
+                        <p-columnFilter type="date" field="fechaInicio" display="menu" class="ml-auto"></p-columnFilter>
                     </div>
                 </th>
 
-                <th pSortableColumn="fechaFinalizacionCurso">
+                <th pSortableColumn="fechaFin">
                     <div class="flex justify-content-between align-items-center">
                         <strong>FIN</strong>
-                        <p-sortIcon field="fechaFinalizacionCurso"></p-sortIcon>
-                        <p-columnFilter type="date" field="fechaFinalizacionCurso" display="menu"
-                            class="ml-auto"></p-columnFilter>
+                        <p-sortIcon field="fechaFin"></p-sortIcon>
+                        <p-columnFilter type="date" field="fechaFin" display="menu" class="ml-auto"></p-columnFilter>
                     </div>
                 </th>
 
@@ -78,21 +84,21 @@
                     </div>
                 </th>
 
-                <th pSortableColumn="estadoAprovacionCurso">
+                <th pSortableColumn="statusApproved">
                     <div class="flex justify-content-between align-items-center">
                         <strong>ESTADO</strong>
-                        <p-sortIcon field="estadoAprovacionCurso"></p-sortIcon>
-                        <p-columnFilter type="text" field="estadoAprovacionCurso" display="menu"
+                        <p-sortIcon field="statusApproved"></p-sortIcon>
+                        <p-columnFilter type="text" field="statusApproved" display="menu"
                             class="ml-auto"></p-columnFilter>
                     </div>
                 </th>
 
-                <th pSortableColumn="activity">
+                <th pSortableColumn="statusFinalized">
                     <div class="flex justify-content-between align-items-center">
                         <strong>FINALIZADO</strong>
-                        <p-sortIcon field="activity"></p-sortIcon>
+                        <p-sortIcon field="statusFinalized"></p-sortIcon>
 
-                        <p-columnFilter type="boolean" field="estadoCurso" display="menu"></p-columnFilter>
+                        <p-columnFilter type="boolean" field="statusFinalized" display="menu"></p-columnFilter>
 
                     </div>
                 </th>
@@ -100,30 +106,29 @@
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-curso>
-            <tr class="p-selectable-row">
+            <tr>
 
                 <td>
-                    {{curso.programas.nombrePrograma}}
+                    {{curso.nameProgram}}
                 </td>
-
 
                 <td>
                     <img [src]="
-                    curso.capacitador.usuario.fotoPerfil? getImage(curso.capacitador.usuario.fotoPerfil): '../../../../assets/img/istap.png'"
-                        width="32" class="rounded-circle">
-                    <span class="image-text"> {{curso.capacitador.usuario.username}}</span>
+                    curso.urlPhoto? getImage(curso.urlPhoto): '../../../../assets/img/istap.png'" width="32"
+                        class="rounded-circle">
+                    <span class="image-text"> {{curso.username}}</span>
                 </td>
 
                 <td>
-                    {{curso.nombreCurso}}
+                    {{curso.nameCourse}}
                 </td>
 
                 <td>
-                    {{curso.fechaInicioCurso | date: 'MM/dd/yyyy'}}
+                    {{curso.fechaInicio | date: 'MM/dd/yyyy'}}
                 </td>
 
                 <td>
-                    {{curso.fechaFinalizacionCurso | date: 'MM/dd/yyyy'}}
+                    {{curso.fechaFin | date: 'MM/dd/yyyy'}}
                 </td>
 
                 <td style="text-align: center"
@@ -137,19 +142,19 @@
                 </td>
 
                 <td class="text-center"
-                    [pTooltip]="'El curso esta: '+(curso.estadoAprovacionCurso === 'A'? 'APROBADO': curso.estadoAprovacionCurso === 'R'? 'RECHAZADO': 'PENDIENTE')"
+                    [pTooltip]="'El curso esta: '+(curso.statusApproved === 'A'? 'APROBADO': curso.statusApproved === 'R'? 'RECHAZADO': 'PENDIENTE')"
                     tooltipPosition="bottom">
                     <p-message
-                        [severity]="curso.estadoAprovacionCurso === 'A'? 'success': curso.estadoAprovacionCurso === 'R'? 'error': 'info'"
-                        [text]="curso.estadoAprovacionCurso === 'A'? 'APROBADO': curso.estadoAprovacionCurso === 'R'? 'RECHAZADO': 'PENDIENTE'"
+                        [severity]="curso.statusApproved === 'A'? 'success': curso.statusApproved === 'R'? 'error': 'info'"
+                        [text]="curso.statusApproved === 'A'? 'APROBADO': curso.statusApproved === 'R'? 'RECHAZADO': 'PENDIENTE'"
                         styleClass="mr-2"></p-message>
                 </td>
 
                 <td class="text-center">
 
                     <i class="pi"
-                        [ngClass]="{'true-icon pi-check-circle': curso.estadoCurso , 'false-icon pi-times-circle': !curso.estadoCurso}"
-                        [ngStyle]="{'color': curso.estadoCurso ? 'green' : 'red'}"></i>
+                        [ngClass]="{'true-icon pi-check-circle': curso.statusFinalized , 'false-icon pi-times-circle': !curso.statusFinalized}"
+                        [ngStyle]="{'color': curso.statusFinalized ? 'green' : 'red'}"></i>
                 </td>
             </tr>
         </ng-template>
@@ -166,10 +171,9 @@
 <!-- IMPLEMENTACION PARA QUE SEA VISIBLE EL CURSO -->
 
 <!-- IMPLEMENTACION DE HOJA DE VIDA PARA VISUALIZAR -->
-<p-dialog
-    [header]="classCursoValidanew!.nombreCurso! + ' - ' + classCursoValidanew?.capacitador?.tipoAbreviaturaTitulo +' '+ classCursoValidanew?.capacitador?.usuario?.persona?.nombre1 +' '+ classCursoValidanew?.capacitador?.usuario?.persona?.apellido1"
-    [(visible)]="visibleCursoDeCapacitacion" [modal]="true" [style]="{ width: '60vw', height: '250' }"
-    [draggable]="false" [resizable]="false">
+
+<p-dialog [header]="classCursoValidanew.docente!" [(visible)]="visibleCursoDeCapacitacion" [modal]="true"
+    [style]="{ width: '60vw', height: '250' }" [draggable]="false" [resizable]="false">
     <div class="grid p-fluid m-1">
 
         <div class="col-12 md:col-4 ">
@@ -207,7 +211,7 @@
     </div>
 
 
-    <div class="container mt-1" *ngIf="classCursoValidanew!.estadoAprovacionCurso === 'A'">
+    <div class="container mt-1" *ngIf="classCursoValidanew!.statusApproved === 'A'">
         <div class="alert alert-success" role="alert">
             <h4 class="alert-heading">Este curso ya ha sido aprobado</h4>
             <p>Este curso ha sido aprobado y no se puede editar.</p>
@@ -215,7 +219,7 @@
         </div>
     </div>
 
-    <div class="container mt-1" *ngIf="classCursoValidanew!.estadoAprovacionCurso === 'R'">
+    <div class="container mt-1" *ngIf="classCursoValidanew!.statusApproved === 'R'">
         <div class="alert alert-warning" role="alert">
             <h4 class="alert-heading">Este curso no fue aprobado con anterioridad</h4>
             <p>Revise los contenidos y la información respectiva para su posterior aceptación.</p>
@@ -234,8 +238,8 @@
                     pTooltip="Le recomendamos verificar todos los documentos para que pueda aceptar el curso."
                     tooltipPosition="bottom">
                     <p-button type="ngSubmit" [label]="'Aprobar'" icon="pi pi-check"
-                        [styleClass]="classCursoValidanew!.estadoAprovacionCurso! === 'A' ? 'p-button-success mb-2' : 'p-button-primary mb-2'"
-                        [disabled]="classCursoValidanew!.estadoAprovacionCurso! == 'A'"
+                        [styleClass]="classCursoValidanew!.statusApproved! === 'A' ? 'p-button-success mb-2' : 'p-button-primary mb-2'"
+                        [disabled]="classCursoValidanew!.statusApproved! == 'A'"
                         (onClick)="UpdateValidacionCurso(1)"></p-button>
 
                 </div>
@@ -247,7 +251,7 @@
                     pTooltip="Le recomendamos verificar, para el rechazo del curso." tooltipPosition="bottom">
                     <p-button type="ngSubmit" [label]="'Rechazar'" icon="pi pi-times" styleClass="p-button-warning mb-2"
                         (onClick)="UpdateValidacionCurso(2)"
-                        [disabled]="classCursoValidanew!.estadoAprovacionCurso! == 'A'"></p-button>
+                        [disabled]="classCursoValidanew!.statusApproved! == 'A'"></p-button>
 
                 </div>
             </div>
