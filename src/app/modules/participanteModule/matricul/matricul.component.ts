@@ -193,7 +193,7 @@ export class MatriculComponent implements OnInit {
       });
   }
 
-  onAuspiciadoChange() {
+  CambioAuspiciado() {
     if (this.detallefichaMatricula.pregunta6 === 'No') {
       this.detallefichaMatricula.pregunta7 = 'N/A';
       this.detallefichaMatricula.pregunta8 = 'N/A';
