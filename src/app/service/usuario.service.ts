@@ -43,4 +43,9 @@ export class UsuarioService {
     console.log(params);
     return this.http.get<Usuario[]>(environment.apiuri + '/usuario/pageable', { params });
   }
+
+  public updatePictureUser(id: number, picture: string): Observable<number> {
+    return this.http.put<number>(environment.apiuri + '/usuario/updatePictureUser/' + id + '/' + picture, {});
+
+  }
 }

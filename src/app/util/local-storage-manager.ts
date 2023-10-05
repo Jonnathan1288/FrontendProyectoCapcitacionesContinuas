@@ -6,7 +6,9 @@ export enum LocalStorageKeys {
     ROL = 'rol',
     USER_DATA = 'datauser',
     TIME_TOKEN = 'token',
-    ID_USUARIO = 'id_username'
+    ID_USUARIO = 'id_username',
+    URL_PHOTO = 'foto',
+    USER_NAME = 'username'
 }
 
 export const getToken = (key: string) => {

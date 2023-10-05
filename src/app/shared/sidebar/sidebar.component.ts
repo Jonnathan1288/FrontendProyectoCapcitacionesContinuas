@@ -3,8 +3,9 @@ import { Router } from '@angular/router';
 import { LoadScript } from 'src/app/scripts/load-script';
 import { StorageService } from 'src/app/service/storage.service';
 import { BadgeColor } from 'src/app/util/enums';
+import { FOLDER_IMAGE_USER, getFile } from 'src/app/util/folder-upload';
 
-import { LocalStorageKeys, clearLocalStorage, getRole, getUserData } from 'src/app/util/local-storage-manager';
+import { LocalStorageKeys, clearLocalStorage, getAttributeStorage, getRole, getUserData } from 'src/app/util/local-storage-manager';
 import { SharedService } from 'src/app/util/service/shared.service';
 import { SidebarService } from 'src/app/util/service/sidebar.service';
 
@@ -23,9 +24,9 @@ export class SidebarComponent implements OnInit {
 
   public listSidebar: any[] = [];
 
-  public nameUserLoggin: string = '';
-  public imageUserLoggin: string = '';
+  public nameUserLoggin: any = '';
 
+  public urlPhoto: any = '';
 
   constructor(
     private _CargarScript: LoadScript,
@@ -42,12 +43,12 @@ export class SidebarComponent implements OnInit {
       return !menuItem.rols || menuItem.rols.includes(getRole(LocalStorageKeys.ROL));
     });
 
-    this.rolLoggin = localStorage.getItem("rol")!;
+    this.rolLoggin = getRole(LocalStorageKeys.ROL)!;
 
-    const userData = getUserData(LocalStorageKeys.USER_DATA);
 
-    this.nameUserLoggin = userData.username;
-    this.imageUserLoggin = userData.foto;
+    this.nameUserLoggin = getAttributeStorage(LocalStorageKeys.USER_NAME);
+    this.urlPhoto = getAttributeStorage(LocalStorageKeys.URL_PHOTO);
+
   }
 
 
@@ -90,6 +91,11 @@ export class SidebarComponent implements OnInit {
 
     const colorIndex = submenuLength % badgeColors.length;
     return badgeColors[colorIndex];
+  }
+
+  //GET PROFILE PHOTO NEW METHOD
+  public getUriFile(fileName: string): string {
+    return getFile(fileName, FOLDER_IMAGE_USER);
   }
 
 }

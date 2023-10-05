@@ -6,6 +6,7 @@ import { OauthService } from 'src/app/service/oauth.service';
 import { ToastrService } from 'ngx-toastr';
 import { Rol } from 'src/app/models/rol';
 import { RecuperarService } from 'src/app/service/recuperar-password.service';
+import { clearLocalStorage } from 'src/app/util/local-storage-manager';
 
 @Component({
   selector: 'app-login',
@@ -51,11 +52,8 @@ export class LoginComponent implements OnInit {
               // console.log(data?.token?)
 
               this.roles = this.info.user.roles!;
-              localStorage.removeItem('id_username');
-              localStorage.removeItem('id_persona');
-              localStorage.removeItem('datauser');
-              localStorage.removeItem('rol');
-              localStorage.removeItem('token');
+              clearLocalStorage();
+
               if (this.info.user.estadoUsuarioActivo == false) {
                 this.toastrService.error(
                   'Lo sentimos su cuenta esta desactidada, contactate con los administradores.s',
@@ -66,19 +64,18 @@ export class LoginComponent implements OnInit {
                 );
               } else {
                 localStorage.setItem('token', String(this.info.token));
-                //Almacenar en el storage
                 localStorage.setItem('id_username', String(this.info.user.idUsuario));
                 localStorage.setItem(
                   'id_persona',
                   String(this.info.user.persona?.idPersona)
                 );
 
-                const dataUser = {
-                  username: this.info.user.username,
-                  foto: this.info.user.fotoPerfil
-                }
+                localStorage.setItem(
+                  'foto',
+                  String(this.info.user.fotoPerfil)
+                );
 
-                localStorage.setItem("datauser", JSON.stringify(dataUser));
+                localStorage.setItem("username", this.info.user.username);
 
                 if (this.info.user.roles?.length! > 1) {
                   this.modalView();
