@@ -6,8 +6,12 @@
   align-items: center;
   margin-top: 5px;
   max-width: 100%;
+}
 
-
+.profile-data ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
 }
 
 @keyframes fadeIn {

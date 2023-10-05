@@ -2,108 +2,81 @@
 
 	<section class="seccion-perfil-usuario">
 		<div class="perfil-usuario-header">
-
-
 			<div class="perfil-usuario-portada">
 				<div class="perfil-usuario-logo">
 					<img src="./assets/img/istap.png" alt="Logo">
 				</div>
-
-
 				<div class="perfil-usuario-avatar">
-
-
-
 					<img [src]="avatarURLProfile ? avatarURLProfile: urlPhoto ? getUriFile(urlPhoto) : 'assets/img/istap.png'"
 						alt="img-avatar" height="165px">
 					<input type="file" #fileInput style="display: none;" accept="image/jpeg, image/jpg, image/png"
 						(change)="onFileSelected($event)">
-
 					<button type="button" class="boton-avatar" pTooltip="Foto de perfil" tooltipPosition="bottom">
-
 						<i class="fas fa-camera" style="font-size: 1.3rem" (click)="fileInput.click()"></i>
 					</button>
-
 				</div>
-
 			</div>
 		</div>
 	</section>
 
 	<div class="perfil-usuario-body m-5">
+
 		<div class="perfil-usuario-bio">
-			<h3 class="titulo">{{ classPersona.nombre1 }} {{ classPersona.nombre2 }} {{ classPersona.apellido1 }} {{
-				classPersona.apellido2 }}</h3>
-			<h3 class="titulo"> {{ classCipyCapacitador.tipoAbreviaturaTitulo}} {{
-				classCipyCapacitador.tituloCapacitador }}
-			</h3>
-
-			<!-- <p class="texto">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                tempor incididunt ut labore et dolore magna aliqua.</p>-->
+			<h3 class="titulo">{{ classPersona.nombre1 }} {{ classPersona.nombre2 }} {{ classPersona.apellido1 }} {{classPersona.apellido2 }}</h3>
+			<h3 class="titulo"> {{ classCopyCapacitador.tipoAbreviaturaTitulo}} {{classCopyCapacitador.tituloCapacitador }}</h3>
 		</div>
 
-
-		<div class="perfil-usuario-footer">
-			<ul class="lista-datos">
-
-				<li><i class="icono fas fa-id-card"></i><strong>Identificación:
-					</strong>{{classPersona.identificacion}}</li>
-				<li><i class="icono fas fa-map-marker-alt"></i><strong>Dirección:
-					</strong>{{classPersona.direccion}}</li>
-				<li><i class="icono fas fa-phone-alt"></i><strong>Teléfono: </strong>{{classPersona.telefono}}</li>
-
-
-			</ul>
-			<ul class="lista-datos">
-				<li><i class="icono fas fa-envelope"></i><strong> Correo: </strong>{{classPersona.correo}}</li>
-				<li><i class="icono fas fa-venus-mars"></i> <strong>Genero: </strong>{{classPersona.genero === 'F'?
-					'Fenemino': 'Masculino' }}</li>
-				<li><i class="icono fas fa-calendar"></i> <strong>Fecha Nacimiento: </strong> {{
-					classPersona.fechaNacimiento
-					| date: 'yyyy/MM/dd' }}</li>
-
-			</ul>
+		<div class="profile-data">
+			<div class="profile-details">
+				<ul>
+					<li>
+						<i class="icon fas fa-id-card mx-2"></i>
+						<strong>Identificación:</strong> {{classPersona.identificacion}}
+					</li>
+					<li>
+						<i class="icon fas fa-map-marker-alt mx-2"></i>
+						<strong>Dirección:</strong> {{classPersona.direccion}}
+					</li>
+					<li>
+						<i class="icon fas fa-phone-alt mx-2"></i>
+						<strong>Teléfono:</strong> {{classPersona.telefono}}
+					</li>
+					<li>
+						<i class="icon fas fa-envelope mx-2"></i>
+						<strong>Correo:</strong> {{classPersona.correo}}
+					</li>
+					<li>
+						<i class="icon fas fa-venus-mars mx-2"></i>
+						<strong>Género:</strong> {{classPersona.genero === 'F' ? 'Femenino' : 'Masculino'}}
+					</li>
+					<li>
+						<i class="icon fas fa-calendar mx-2"></i>
+						<strong>Fecha de Nacimiento:</strong> {{classPersona.fechaNacimiento | date: 'yyyy/MM/dd'}}
+					</li>
+				</ul>
+			</div>
 		</div>
+
 
 		<div class="ventana-act m-5" style="display: none; margin-top: 30px;">
 			<div class="chao" style="width: 100%; display: block; text-align: center ; ">
 				<p class="TituloAct">ACTUALIZACION DE PERFIL</p>
 			</div>
 
-			<nav class="m-8" style="display: block; margin: 0.1rem !important; margin-top: 30px;">
-				<a onclick="OcultarPersonales()" href="javascript:void(0);">DATOS PERSONALES</a>
-				<a onclick="OcultarPersonales2()" href="javascript:void(0);">DATOS DE ACCESO</a>
 
-			</nav>
 			<form ngNativeValidate style="padding: 15px;">
-
-
-				<!-- <div style="margin: 80px; text-align: center; align-items: center;"> -->
-
-				<!--<div class="card p-4 shadow-sm rounded-lg w-full lg:flex-1"> -->
-
-
-
 				<p-card header="Datos Personales" class="m-4" style="display: none;">
 					<div class="grid p-fluid m-2">
 						<div class="col-12 md:col-4 mt-1">
-
-
 							<div class="p-inputgroup">
 								<span class="p-float-label">
-
-
-
 									<input type="text" pInputText id="identificacion" name="identificacion"
 										[(ngModel)]="classPersona.identificacion" [disabled]="true"
 										title="Este campo no se puede editar" />
 									<label htmlFor="identificacion" class="pi pi-id-card"> Identificación <span
 											class="red-asterisk"></span></label>
-
-
 								</span>
 							</div>
-
 						</div>
 
 						<div class="col-12 md:col-4 mt-1">
@@ -165,10 +138,6 @@
 							</div>
 						</div>
 					</div>
-
-
-
-
 					<!-- FILA 3-->
 
 					<div class="grid p-fluid m-2">
@@ -183,15 +152,12 @@
 							</div>
 						</div>
 
-
 						<div class="col-12 md:col-4 mt-1">
-
 							<div class="p-inputgroup">
 								<p-calendar inputId="edad" class="ng-dirty" [showIcon]="true"
 									placeholder="Fecha Nacimiento" id="fechaNacimiento" name="fechaNacimiento"
 									class="w-full mb-3" [(ngModel)]="classPersona.fechaNacimiento"></p-calendar>
 							</div>
-
 						</div>
 
 						<div class="col-12 md:col-4 mt-1">
@@ -204,8 +170,6 @@
 								</span>
 							</div>
 						</div>
-
-
 					</div>
 
 					<div class="grid p-fluid m-2">
@@ -293,53 +257,7 @@
 								<label class="form-check-label" for="inlineRadio2">Otros</label>
 							</div>
 						</div>
-
-
 					</div>
-
-					<!-- <div class="col-12 md:col-12 mt-1">
-    
-    
-    
-    
-    
-        <label class="p-inputgroup" for="nombre">Seleccione su etnia:</label>
-        <div class="col-md-6">
-          <div class="form-group">
-            <div class="col-md-11">
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="Mestizo" id="Mestizo" [value]="'Mestizo'"
-                  [(ngModel)]="classPersona.etnia" />
-                <label class="form-check-label" for="inlineRadio1">Mestizo</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="Blanco" id="Blanco" [value]="'Blanco'"
-                  [(ngModel)]="classPersona.etnia" />
-                <label class="form-check-label" for="inlineRadio2">Blanco</label>
-              </div>
-    
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="Indígena" id="Indígena" [value]="'Indigena'"
-                  [(ngModel)]="classPersona.etnia" />
-                <label class="form-check-label" for="inlineRadio2">Indígena</label>
-              </div>
-    
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="Afroecuatoriano" id="Afroecuatoriano"
-                  [value]="'Afroecuatoriano'" [(ngModel)]="classPersona.etnia" />
-                <label class="form-check-label" for="inlineRadio2">Afroecuatoriano</label>
-              </div>
-    
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="Otros" id="Otros" [value]="'Otros'"
-                  [(ngModel)]="classPersona.etnia" />
-                <label class="form-check-label" for="inlineRadio2">Otros</label>
-              </div>
-    
-            </div>
-          </div>
-        </div>
-      </div> -->
 				</p-card>
 
 				<p-card header="Nivel de Instrucción" class="m-7" style="display: none;">
@@ -370,12 +288,12 @@
 						</div>
 					</div>
 
-					<div class="p-card-body">
+					<!-- <div class="p-card-body">
 						<div class="text-center">
 							<button type="submit" (click)="editPersona()" pButton label="Actualizar Datos Personales"
 								icon="pi pi-user"></button>
 						</div>
-					</div>
+					</div> -->
 				</p-card>
 
 				<p-card header="Información Académica" class="m-9" style="display: none;"
@@ -403,67 +321,14 @@
 										[(ngModel)]="classCapacitador.tipoAbreviaturaTitulo" />
 									<label htmlFor="tipoAbreviaturaTitulo" class="pi pi-user"> Tipo Abreviatura
 										Título <span class="red-asterisk"></span></label>
-
 								</span>
 							</div>
 						</div>
 
 					</div>
 				</p-card>
-
-				<p-card header="Datos de Acceso" class="m-6" style="display: none;">
-					<div class="grid p-fluid m-2">
-						<div class="col-12 md:col-6 mt-1">
-							<div class="p-inputgroup">
-								<span class="p-float-label" [ngClass]="{'border-red': !classUsuario.username}">
-									<input [disabled]="true" type="text" pInputText id="username" name="username"
-										[(ngModel)]="classUsuario.username" readonly />
-									<label htmlFor="username" class="pi pi-user"> Usuario <span
-											class="red-asterisk"></span></label>
-
-								</span>
-							</div>
-						</div>
-
-						<div class="col-12 md:col-6 mt-1">
-							<div class="p-inputgroup">
-								<span class="p-float-label" [ngClass]="{'border-red': !classUsuario.password}">
-									<input type="text" pInputText id="password" name="password" type="password"
-										[(ngModel)]="classUsuario.password" />
-									<label htmlFor="password" class="pi pi-lock"> Contraseña <span
-											class="red-asterisk"></span></label>
-								</span>
-							</div>
-						</div>
-					</div>
-
-					<div class="p-card-body">
-						<div class="text-center">
-							<button type="submit" (click)="editarUsuario()" pButton label="Actualizar Datos de Acesso"
-								icon="pi pi-user"></button>
-						</div>
-					</div>
-				</p-card>
-
 			</form>
-
 		</div>
-
-
-
-
-		<div class="redes-sociales">
-			<a onclick="presentarVentanas()" href="javascript:void(0);" style="width: 1px">
-
-				<button pButton pRipple icon="pi pi-pencil" class="p-button-success mr-2" (click)="showModaL()"
-					[ngClass]="['boton-redondo']"></button>
-
-			</a>
-
-		</div>
-
 	</div>
-
-
 
 </div>
