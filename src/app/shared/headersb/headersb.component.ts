@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { LocalStorageKeys, clearLocalStorage, getRole, getUserData } from 'src/app/util/local-storage-manager';
+import { FOLDER_IMAGE_USER, getFile } from 'src/app/util/folder-upload';
+import { LocalStorageKeys, clearLocalStorage, getAttributeStorage, getRole, getUserData } from 'src/app/util/local-storage-manager';
 import { TimeOut } from 'src/app/util/model/time-out';
 import { TimeOutTokenService } from 'src/app/util/service/time-out-token.service';
 @Component({
@@ -12,7 +13,7 @@ import { TimeOutTokenService } from 'src/app/util/service/time-out-token.service
 export class HeadersbComponent implements OnInit {
 
   public rolUserLoggin: string = '';
-  public nameUserLoggin: string = '';
+  public nameUserLoggin: any = '';
   public imageUserLoggin: string = '';
 
   public timeOut = new TimeOut();
@@ -20,6 +21,8 @@ export class HeadersbComponent implements OnInit {
   public messageDialog: boolean = false;
   public keyValue: string = '';
   public messageView: string = ''
+
+  public urlPhoto: any = '';
 
   constructor(
     private router: Router,
@@ -38,10 +41,12 @@ export class HeadersbComponent implements OnInit {
   public getDataUserLoggin() {
     const userData = getUserData(LocalStorageKeys.USER_DATA);
 
-    this.nameUserLoggin = userData.username;
+    this.nameUserLoggin = getAttributeStorage(LocalStorageKeys.USER_NAME);
     this.imageUserLoggin = userData.foto;
 
     this.rolUserLoggin = getRole(LocalStorageKeys.ROL)!;
+
+    this.urlPhoto = getAttributeStorage(LocalStorageKeys.URL_PHOTO);
   }
 
   public timeSignOutAutmatically() {
@@ -102,5 +107,10 @@ export class HeadersbComponent implements OnInit {
     type === 2 ? this.keyValue === 'warning' ? null : this.logOut() : null;
     type === 3 ? this.logOut() : null;
   }
+
+  public getUriFile(fileName: string): string {
+    return getFile(fileName, FOLDER_IMAGE_USER);
+  }
+
 
 }

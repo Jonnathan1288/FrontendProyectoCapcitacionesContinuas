@@ -1,80 +1,14 @@
-
 .container {
   display: flex;
   max-width: 80%;
   max-height: 80%;
   justify-content: center;
   align-items: center;
-  /* height: 100vh; */
   margin-top: 5px;
   max-width: 100%;
 
 
 }
-
-.container .content {
-  max-width: 600px;
-  /* ajusta el ancho máximo según tus necesidades */
-}
-
-
-.personal-image {
-  text-align: center;
-  margin-top: 10px;
-}
-
-.personal-image input[type="file"] {
-  display: none;
-}
-
-.personal-figure {
-  position: relative;
-  width: 250px;
-  height: 170px;
-}
-
-.personal-avatar {
-  cursor: pointer;
-  width: 250px;
-  height: 170px;
-  box-sizing: border-box;
-  border: 2px solid transparent;
-  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.2);
-  transition: all ease-in-out .3s;
-}
-
-.personal-avatar:hover {
-  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.5);
-}
-
-.personal-figcaption {
-  cursor: pointer;
-  position: absolute;
-  top: 0px;
-  width: inherit;
-  height: inherit;
-  opacity: 0;
-  background-color: rgba(0, 0, 0, 0);
-  transition: all ease-in-out .3s;
-}
-
-.personal-figcaption:hover {
-  opacity: 1;
-  background-color: rgba(0, 0, 0, .5);
-}
-
-.personal-figcaption>img {
-  margin-top: 45px;
-  width: 50px;
-  height: 50px;
-}
-
-
-
-
-
-
-
 
 @keyframes fadeIn {
   from {
@@ -86,12 +20,10 @@
   }
 }
 
-/* Agregamos la clase para la animación */
 .animated-element {
   opacity: 0;
   animation: fadeIn 1s ease-in-out forwards;
 }
-
 
 .animated-text {
   animation: slide-left 2s linear infinite;
@@ -110,26 +42,10 @@
 
 .card {
   border: 6px;
-  /* Establece un borde sólido de 1 píxel */
   border-radius: 10px;
   animation: cambia-color 4s infinite;
-  /* Agrega una animación de cambio de color */
 
 }
-
-/*@keyframes cambia-color {
-  0% {
-    border-color: rgb(183, 218, 245);  Establece el color del borde al inicio de la animación (azul) 
-  }
-  50% {
-    border-color: rgb(180, 235, 223);  Establece el color del borde a la mitad de la animación (negro) 
-  }
-  100% {
-    border-color: rgb(86, 115, 131); /* Establece el color del borde al final de la animación (azul) 
-  }
-}*/
-
-
 
 
 .seccion-perfil-usuario .perfil-usuario-body,
@@ -177,9 +93,6 @@
 }
 
 
-
-
-
 .seccion-perfil-usuario .perfil-usuario-portada .boton-portada {
   position: relative;
   width: 90%;
@@ -223,8 +136,8 @@
 
 .seccion-perfil-usuario .perfil-usuario-avatar .boton-avatar {
   position: absolute;
-  left: -2px;
-  top: -2px;
+  left: 120px;
+  top: 115px;
   border: 0;
   background-color: #fff;
   box-shadow: 0 0 12px rgba(0, 0, 0, .2);
@@ -245,274 +158,4 @@
   width: 100%;
   font-size: 1.75em;
   margin-bottom: 0.5rem;
-}
-
-.seccion-perfil-usuario .perfil-usuario-body .texto {
-  color: #848484;
-  font-size: 0.95em;
-}
-
-.seccion-perfil-usuario .perfil-usuario-footer,
-.seccion-perfil-usuario .perfil-usuario-bio {
-  display: flex;
-  flex-wrap: wrap;
-  padding: 1.5rem 2rem;
-  box-shadow: 0 0 12px rgba(0, 0, 0, .2);
-  background-color: #fff;
-  border-radius: 15px;
-  width: 100%;
-}
-
- .ventana-act {
-  display: flex;
-  flex-wrap: wrap;
-  padding: 1.5rem 2rem;
-  box-shadow: 0 0 12px rgba(0, 0, 0, .2);
-  background-color: #fff;
-  border-radius: 15px;
-  width: 100%;
-}
-
-
-.TituloAct {
-
-  font-family: "Inter", sans-serif;
-  font-size: 1.5rem;
-  font-weight: bolder;
-}
-
-.seccion-perfil-usuario .perfil-usuario-bio {
-  margin-bottom: 1.25rem;
-  text-align: center;
-  background-color: rgb(252, 252, 252);
-}
-
-.seccion-perfil-usuario .lista-datos {
-  width: 50%;
-  list-style: none;
-}
-
-.seccion-perfil-usuario .lista-datos li {
-  padding: 5px 0;
-}
-
-.seccion-perfil-usuario .lista-datos li>.icono {
-  margin-right: 1rem;
-  font-size: 1.2rem;
-  vertical-align: middle;
-}
-
-.seccion-perfil-usuario .redes-sociales {
-  position: absolute;
-  right: calc(0px - 50px - 1rem);
-  top: 45%;
-  display: flex;
-  flex-direction: column;
-}
-
-.seccion-perfil-usuario .redes-sociales .boton-redes {
-  border: 0;
-  background-color: #fff;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  color: #fff;
-  box-shadow: 0 0 12px rgba(0, 0, 0, .2);
-  font-size: 1.3rem;
-}
-
-.seccion-perfil-usuario .redes-sociales .boton-redes+.boton-redes {
-  margin-top: .5rem;
-}
-
-.seccion-perfil-usuario .boton-redes.facebook {
-  background: linear-gradient(45deg, #FF2DFD, #40A7FF);
-}
-
-.seccion-perfil-usuario .boton-redes.twitter {
-  background: linear-gradient(45deg, #FF2DFD, #40A7FF);
-}
-
-.seccion-perfil-usuario .boton-redes.instagram {
-  background: linear-gradient(45deg, #FF2DFD, #40A7FF);
-}
-
-/* adactacion a dispositivos */
-@media (max-width: 750px) {
-  .seccion-perfil-usuario .lista-datos {
-    width: 100%;
-  }
-
-  .seccion-perfil-usuario .perfil-usuario-portada,
-  .seccion-perfil-usuario .perfil-usuario-body {
-    width: 95%;
-  }
-
-  .seccion-perfil-usuario .redes-sociales {
-    position: relative;
-    flex-direction: row;
-    width: 100%;
-    left: 0;
-    text-align: center;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    align-items: center;
-    justify-content: center
-  }
-
-  .seccion-perfil-usuario .redes-sociales .boton-redes+.boton-redes {
-    margin-left: 1rem;
-    margin-top: 0;
-  }
-
-}
-
-
-.boton-redondo {
-  border-radius: 50%;
-}
-
-.red-asterisk::after {
-  content: "*";
-  color: red;
-  margin-left: 5px;
-}
-
-/* iconos azul*/
-.icono {
-  color: #3b82f6;
-}
-
-.icono+strong {
-  color: black;
-}
-
-
-.card-color {
-  background-color: #dee2e6;
-}
-
-
-.border-red {
-  border: 1px solid red;
-  border-radius: 6px;
-}
-
-
-nav {
-  position: inherit;
-  right: 100%;
-  left: 0;
-  width: 100%;
-  display: table;
-  margin: 0 auto;
-  transform: translateY(-50%);
-}
-
-nav a {
-  position: relative;
-  width: 28.333%;
-  display: table-cell;
-  text-align: center;
-  color: #949494;
-  text-decoration: none;
-  font-weight: bold;
-  padding: 10px 20px;
-  transition: 0.2s ease color;
-}
-
-nav a:before,
-nav a:after {
-  content: "";
-  position: absolute;
-  border-radius: 50%;
-  transform: scale(0);
-  transition: 0.2s ease transform;
-}
-
-nav a:before {
-  top: 0;
-  left: 10px;
-  width: 6px;
-  height: 6px;
-}
-
-nav a:after {
-  top: 5px;
-  left: 18px;
-  width: 4px;
-  height: 4px;
-}
-
-nav a:nth-child(1):before {
-  background-color: rgb(0, 0, 0);
-  left: 10px;
-  top: 15px;
-}
-
-nav a:nth-child(1):after {
-  background-color: #3B82F6;
-  left: 20px;
-  top: 17px;
-
-}
-
-nav a:nth-child(2):before {
-  background-color: #000000;
-  left: 10px;
-  top: 15px;
-
-}
-
-nav a:nth-child(2):after {
-  background-color: #3B82F6;
-  left: 20px;
-  top: 15px;
-
-}
-
-nav a:nth-child(3):before {
-  background-color: purple;
-}
-
-nav a:nth-child(3):after {
-  background-color: palevioletred;
-}
-
-#indicator {
-  position: absolute;
-  left: 5%;
-  bottom: 0;
-  width: 30px;
-  height: 3px;
-  background-color: #fff;
-  border-radius: 5px;
-  transition: 0.2s ease left;
-}
-
-nav a:hover {
-  color: #3B82F6;
-}
-
-nav a:hover:before,
-nav a:hover:after {
-  transform: scale(1);
-}
-
-nav a:nth-child(1):hover~#indicator {
-  background: linear-gradient(130deg, #3B82F6, #133e85);
-}
-
-nav a:nth-child(2):hover~#indicator {
-  left: 34%;
-  background: linear-gradient(130deg, #3B82F6, #133e85);
-}
-
-nav a:nth-child(3):hover~#indicator {
-  left: 70%;
-  background: linear-gradient(130deg, #3B82F6, #133e85);
 }
