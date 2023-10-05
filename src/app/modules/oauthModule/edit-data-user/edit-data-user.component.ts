@@ -151,14 +151,14 @@ export class EditDataUserComponent implements OnInit {
 		const imageURL = URL.createObjectURL(this.selectedFile);
 		this.avatarURLProfile = imageURL;
 
-		await this.updatePerfilImage();
+		await this.updateProfileImage();
 	}
 
 	public getUriFile(fileName: string): string {
 		return getFile(fileName, FOLDER_IMAGE_USER);
 	}
 
-	public async updatePerfilImage() {
+	public async updateProfileImage() {
 		let uri = await this.uploadImage();
 		this.usuarioService.updatePictureUser(this.idUsuario, uri).subscribe({
 			next: (resp) => {
