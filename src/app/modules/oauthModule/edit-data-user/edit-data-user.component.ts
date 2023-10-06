@@ -54,6 +54,14 @@ export class EditDataUserComponent implements OnInit {
 		this.urlPhoto = getAttributeStorage(LocalStorageKeys.URL_PHOTO);
 	}
 
+	public handleDivClick() {
+		const pImageElement = document.querySelector('.p-image-preview-indicator') as any;
+
+		if (pImageElement) {
+			pImageElement.click();
+		}
+	}
+
 
 	public obtenerDatosUsusario(idUsusario: number) {
 		this.usuarioService.getUsuarioById(idUsusario).subscribe((data) => {

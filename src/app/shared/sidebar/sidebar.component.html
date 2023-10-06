@@ -2,8 +2,7 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a class="brand-link">
-        <img src="./assets/img/cc.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
-            style="opacity: .8">
+        <img src="./assets/img/cc.png" class="brand-image img-circle elevation-3" style="opacity: .8">
         <span class="brand-text font-weight-bold"><strong>CContinuas</strong></span>
     </a>
 
@@ -12,7 +11,8 @@
         <!-- Sidebar user (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img [src]="getUriFile(urlPhoto)" class="img-circle elevation-2" alt="User Image">
+                <img [src]="getUriFile(urlPhoto)" class="img-circle elevation-2" alt="User Image" width="50px"
+                    height="50px">
             </div>
             <div class="info">
                 <a class="d-block">{{this.nameUserLoggin.toUpperCase()}}</a>

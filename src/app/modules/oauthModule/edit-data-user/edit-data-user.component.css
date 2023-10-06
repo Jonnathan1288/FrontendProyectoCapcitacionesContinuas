@@ -143,13 +143,32 @@
   left: 120px;
   top: 115px;
   border: 0;
-  background-color: #fff;
   box-shadow: 0 0 12px rgba(0, 0, 0, .2);
   width: 45px;
   height: 45px;
   border-radius: 50%;
   cursor: pointer;
 }
+
+
+.seccion-perfil-usuario .perfil-usuario-avatar .image-avatar-preview {
+  position: absolute;
+  border: 0;
+  background-color: transparent;
+  cursor: pointer;
+  color: gray;
+}
+
+/* NEW */
+.image-avatar-preview i {
+  transition: transform 0.1s ease;
+}
+
+.image-avatar-preview:hover i {
+  transform: scale(1.2);
+}
+
+/* END */
 
 .seccion-perfil-usuario .perfil-usuario-body {
   width: 70%;
