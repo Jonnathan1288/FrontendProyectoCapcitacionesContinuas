@@ -55,6 +55,14 @@ export class EditDataUserComponent implements OnInit {
 		this.urlPhoto = getAttributeStorage(LocalStorageKeys.URL_PHOTO);
 	}
 
+	public handleDivClick() {
+		const pImageElement = document.querySelector('.p-image-preview-indicator') as any;
+
+		if (pImageElement) {
+			pImageElement.click();
+		}
+	}
+
 
 	public obtenerDatosUsusario(idUsusario: number) {
 		this.usuarioService.getUsuarioById(idUsusario).subscribe((data) => {
@@ -103,7 +111,7 @@ export class EditDataUserComponent implements OnInit {
 	public getPersonFenix(ci: string) {
 		this.personaFenixService.personaPorCI(ci).subscribe({
 			next: (resp) => {
-				this.classPersona = resp;
+				Object.assign(this.classPersona, { ...resp, idPersona: this.classPersona.idPersona });
 
 				this.classPersona.fechaNacimiento = this.returnNewDate(resp.fechaNacimiento ? resp.fechaNacimiento : new Date());
 				this.toastrService.success(

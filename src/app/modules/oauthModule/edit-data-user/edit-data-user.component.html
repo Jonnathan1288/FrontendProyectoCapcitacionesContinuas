@@ -1,19 +1,33 @@
-<div class="card">
+<p-image [src]="avatarURLProfile ? avatarURLProfile: urlPhoto ? getUriFile(urlPhoto) : 'assets/img/istap.png'" width="0"
+	height="0" [preview]="true">
+	<ng-template pTemplate="indicator">
+		<!-- <i class="pi pi-check"></i> -->
+	</ng-template>
+</p-image>
+
+<div class="card" style="margin-top: -1.5rem;">
 
 	<section class="seccion-perfil-usuario">
 		<div class="perfil-usuario-header">
 			<div class="perfil-usuario-portada">
+
 				<div class="perfil-usuario-logo">
 					<img src="./assets/img/istap.png" alt="Logo">
+
 				</div>
 				<div class="perfil-usuario-avatar">
 					<img [src]="avatarURLProfile ? avatarURLProfile: urlPhoto ? getUriFile(urlPhoto) : 'assets/img/istap.png'"
-						alt="img-avatar" height="165px">
+						alt="img-avatar" height="165px" (click)="handleDivClick()">
 					<input type="file" #fileInput style="display: none;" accept="image/jpeg, image/jpg, image/png"
 						(change)="onFileSelected($event)">
 					<button type="button" class="boton-avatar" pTooltip="Foto de perfil" tooltipPosition="bottom">
 						<i class="fas fa-camera" style="font-size: 1.3rem" (click)="fileInput.click()"></i>
 					</button>
+					<button type="button" class="image-avatar-preview" pTooltip="Maximizar" tooltipPosition="bottom"
+						(click)="handleDivClick()">
+						<i class="fa fa-eye" style="font-size: 1.2rem; "></i>
+					</button>
+
 				</div>
 			</div>
 		</div>
