@@ -111,7 +111,7 @@ export class EditDataUserComponent implements OnInit {
 	public getPersonFenix(ci: string) {
 		this.personaFenixService.personaPorCI(ci).subscribe({
 			next: (resp) => {
-				this.classPersona = resp;
+				Object.assign(this.classPersona, { ...resp, idPersona: this.classPersona.idPersona });
 
 				this.classPersona.fechaNacimiento = this.returnNewDate(resp.fechaNacimiento ? resp.fechaNacimiento : new Date());
 				this.toastrService.success(
