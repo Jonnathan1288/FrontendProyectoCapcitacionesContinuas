@@ -58,21 +58,19 @@
 				</ul>
 			</div>
 		</div>
-
-
 	</div>
-
 </div>
 
+<div class="card">
+	<p-tabView styleClass="tabview-custom">
+		<p style="font-size: 15px; color: red;" class="m-3 mb-5">Los campos marcados con * son de ingreso obligatorio.
+		</p>
 
-<div>
-	<div class="chao" style="width: 100%; display: block; text-align: center ; ">
-		<p class="TituloAct">ACTUALIZACION DE PERFIL</p>
-	</div>
-
-
-	<form ngNativeValidate style="padding: 15px;">
-		<p-card header="Datos Personales" class="m-4">
+		<p-tabPanel>
+			<ng-template pTemplate="header">
+				<i class="pi pi-user mx-1"></i>
+				<span>Datos Personales</span>
+			</ng-template>
 			<div class="grid p-fluid m-2">
 				<div class="col-12 md:col-4 mt-1">
 					<div class="p-inputgroup">
@@ -81,7 +79,7 @@
 								[(ngModel)]="classPersona.identificacion" [disabled]="true"
 								title="Este campo no se puede editar" />
 							<label htmlFor="identificacion" class="pi pi-id-card"> Identificación <span
-									class="red-asterisk"></span></label>
+									class="red-asterisk">*</span></label>
 						</span>
 					</div>
 				</div>
@@ -92,7 +90,7 @@
 							<input type="text" pInputText id="nombre1" name="nombre1"
 								[(ngModel)]="classPersona.nombre1" />
 							<label htmlFor="nombre1" class="pi pi-user"> Primer Nombre <span
-									class="red-asterisk"></span></label>
+									class="red-asterisk">*</span></label>
 						</span>
 					</div>
 				</div>
@@ -103,13 +101,12 @@
 							<input type="text" pInputText id="nombre2" name="nombre2"
 								[(ngModel)]="classPersona.nombre2" />
 							<label htmlFor="nombre2" class="pi pi-user"> Segundo Nombre <span
-									class="red-asterisk"></span></label>
+									class="red-asterisk">*</span></label>
 						</span>
 					</div>
 				</div>
 			</div>
 			<!-- FILA 2-->
-
 			<div class="grid p-fluid m-2">
 				<div class="col-12 md:col-4 mt-1">
 					<div class="p-inputgroup">
@@ -117,7 +114,7 @@
 							<input type="text" pInputText id="direccion" name="direccion"
 								[(ngModel)]="classPersona.direccion" />
 							<label htmlFor="direccion" class="pi pi-map-marker"> Dirección <span
-									class="red-asterisk"></span></label>
+									class="red-asterisk">*</span></label>
 						</span>
 					</div>
 
@@ -128,8 +125,8 @@
 						<span class="p-float-label" [ngClass]="{'border-red': !classPersona.apellido1}">
 							<input type="text" pInputText id="apellido1" name="apellido1"
 								[(ngModel)]="classPersona.apellido1" />
-							<label htmlFor="apellido1" class="pi pi-user"> Primer Apellido <span
-									class="red-asterisk"></span></label>
+							<label htmlFor="apellido1" class="pi pi-user">Primer Apellido <span
+									class="red-asterisk">*</span></label>
 						</span>
 					</div>
 				</div>
@@ -139,14 +136,13 @@
 						<span class="p-float-label" [ngClass]="{'border-red': !classPersona.apellido2}">
 							<input type="text" pInputText id="apellido2" name="apellido2"
 								[(ngModel)]="classPersona.apellido2" />
-							<label htmlFor="apellido2" class="pi pi-user"> Segundo Apellido<span
-									class="red-asterisk"></span></label>
+							<label htmlFor="apellido2" class="pi pi-user">Segundo Apellido<span
+									class="red-asterisk">*</span></label>
 						</span>
 					</div>
 				</div>
 			</div>
 			<!-- FILA 3-->
-
 			<div class="grid p-fluid m-2">
 				<div class="col-12 md:col-4 mt-1">
 					<div class="p-inputgroup">
@@ -154,7 +150,7 @@
 							<input type="text" pInputText id="telefono" name="telefono"
 								[(ngModel)]="classPersona.telefono" />
 							<label htmlFor="telefono" class="pi pi-phone"> Teléfono <span
-									class="red-asterisk"></span></label>
+									class="red-asterisk">*</span></label>
 						</span>
 					</div>
 				</div>
@@ -172,8 +168,8 @@
 						<span class="p-float-label" [ngClass]="{'border-red': !classPersona.celular}">
 							<input type="text" pInputText id="celular" name="celular"
 								[(ngModel)]="classPersona.celular" />
-							<label htmlFor="celular" class="pi pi-mobile"> Celular <span
-									class="red-asterisk"></span></label>
+							<label htmlFor="celular" class="pi pi-mobile">Celular<span
+									class="red-asterisk">*</span></label>
 						</span>
 					</div>
 				</div>
@@ -185,125 +181,81 @@
 						<span class="p-float-label" [ngClass]="{'border-red': !classPersona.correo}">
 							<input type="text" pInputText id="correo" name="correo" [(ngModel)]="classPersona.correo" />
 							<label htmlFor="correo" class="pi pi-envelope"> Email <span
-									class="red-asterisk"></span></label>
+									class="red-asterisk">*</span></label>
 						</span>
 					</div>
 				</div>
 			</div>
-		</p-card>
+		</p-tabPanel>
+		<p-tabPanel header="Header II">
+			<ng-template pTemplate="header">
+				<i class="pi pi-user-plus mx-1"></i>
+				<span>Datos Extra</span>
+			</ng-template>
 
-		<p-card header="Datos Físicos" class="m-3">
 			<div class="col-12 md:col-12 mt-1">
-				<label class="p-inputgroup" for="nombre"><strong>Seleccione su género:</strong></label>
-				<div class="col-md-6">
-					<div class="form-group" style="text-align: center;">
-						<div class="col-md-11">
-							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" name="Masculino" id="Masculino"
-									[value]="'M'" [(ngModel)]="classPersona.genero" />
-								<label class="form-check-label" for="inlineRadio1">Masculino</label>
-							</div>
-							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" name="Femenino" id="Femenino" [value]="'F'"
-									[(ngModel)]="classPersona.genero" />
-								<label class="form-check-label" for="inlineRadio2">Femenino</label>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<!-- Para la etnia -->
-
-
-			<div class="grid p-fluid m-2">
-				<label class="p-inputgroup" for="nombre" style="font-size: 16px;"><strong>Seleccione su
-						etnia:</strong>
+				<label class="p-inputgroup" for="nombre" style="font-size: 16px;">
+					<strong>Seleccione su etnia<span class="red-asterisk">*</span> :</strong>
 				</label>
-				<div class="col-12 md:col-2 mt-1">
-					<div class="p-inputgroup">
-
-						<input class="form-check-input" type="radio" name="Mestizo" id="Mestizo" [value]="'Mestizo'"
-							[(ngModel)]="classPersona.etnia" />
-						<label class="form-check-label" for="inlineRadio1">Mestizo</label>
+				<div class="flex flex-wrap gap-3">
+					<div class="flex align-items-center">
+						<p-radioButton name="etnia" value="Mestizo" [(ngModel)]="classPersona.etnia"
+							inputId="Mestizo"></p-radioButton>
+						<label for="Mestizo" class="form-check-label">Mestizo</label>
 					</div>
-				</div>
-
-
-				<div class="col-12 md:col-2 mt-1">
-					<div class="p-inputgroup">
-						<input class="form-check-input" type="radio" name="Blanco" id="Blanco" [value]="'Blanco'"
-							[(ngModel)]="classPersona.etnia" />
-						<label class="form-check-label" for="inlineRadio2">Blanco</label>
-
+					<div class="flex align-items-center">
+						<p-radioButton name="etnia" value="Blanco" [(ngModel)]="classPersona.etnia"
+							inputId="Blanco"></p-radioButton>
+						<label for="Blanco" class="form-check-label">Blanco</label>
 					</div>
-				</div>
-
-
-				<div class="col-12 md:col-2 mt-1">
-					<div class="p-inputgroup">
-						<input class="form-check-input" type="radio" name="Indígena" id="Indígena" [value]="'Indigena'"
-							[(ngModel)]="classPersona.etnia" />
-						<label class="form-check-label" for="inlineRadio2">Indígena</label>
+					<div class="flex align-items-center">
+						<p-radioButton name="etnia" value="Indigena" [(ngModel)]="classPersona.etnia"
+							inputId="Indigena"></p-radioButton>
+						<label for="Indigena" class="form-check-label">Indígena</label>
 					</div>
-				</div>
-				<div class="col-12 md:col-3 mt-1">
-					<div class="p-inputgroup">
-
-						<input class="form-check-input" type="radio" name="Afroecuatoriano" id="Afroecuatoriano"
-							[value]="'Afroecuatoriano'" [(ngModel)]="classPersona.etnia" />
-						<label class="form-check-label" for="inlineRadio2">Afroecuatoriano</label>
+					<div class="flex align-items-center">
+						<p-radioButton name="etnia" value="Afroecuatoriano" [(ngModel)]="classPersona.etnia"
+							inputId="Afroecuatoriano"></p-radioButton>
+						<label for="Afroecuatoriano" class="form-check-label">Afroecuatoriano</label>
 					</div>
-				</div>
-
-				<div class="col-12 md:col-3 mt-1">
-					<div class="p-inputgroup">
-						<input class="form-check-input" type="radio" name="Otros" id="Otros" [value]="'Otros'"
-							[(ngModel)]="classPersona.etnia" />
-						<label class="form-check-label" for="inlineRadio2">Otros</label>
+					<div class="flex align-items-center">
+						<p-radioButton name="etnia"  [value]="'Otros'" [(ngModel)]="classPersona.etnia"
+							inputId="Otros"></p-radioButton>
+						<label for="Otros" class="form-check-label">Otros</label>
 					</div>
 				</div>
 			</div>
-		</p-card>
 
-		<p-card header="Nivel de Instrucción" class="m-7">
 			<div class="col-12 md:col-12 mt-1">
 				<label class="p-inputgroup" for="nombre"><strong>Seleccione su nivel de
-						instrucción:</strong></label>
-				<div class="col-md-6">
-					<div class="form-group">
-						<div class="col-md-11">
-							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" name="Primaria" id="Primaria"
-									[value]="'Primaria'" [(ngModel)]="classPersona.nivelInstruccion" />
-								<label class="form-check-label" for="inlineRadio1">Primaria</label>
-							</div>
-							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" name="Secundaria" id="Secundaria"
-									[value]="'Secundaria'" [(ngModel)]="classPersona.nivelInstruccion" />
-								<label class="form-check-label" for="inlineRadio2">Secundaria</label>
-							</div>
+						instrucción <span class="red-asterisk">*</span> :</strong></label>
+				<div class="flex flex-wrap gap-3">
+					<div class="flex align-items-center">
+						<p-radioButton name="Primaria" [value]="'Primaria'" [(ngModel)]="classPersona.nivelInstruccion"
+							inputId="Primaria"></p-radioButton>
+						<label for="Primaria" class="form-check-label">Primaria</label>
+					</div>
 
-							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" name="Superior" id="Superior"
-									[value]="'Superior'" [(ngModel)]="classPersona.nivelInstruccion" />
-								<label class="form-check-label" for="inlineRadio2">Superior</label>
-							</div>
-						</div>
+					<div class="flex align-items-center">
+						<p-radioButton name="Secundaria" [value]="'Secundaria'"
+							[(ngModel)]="classPersona.nivelInstruccion" inputId="Secundaria"></p-radioButton>
+						<label for="Secundaria" class="form-check-label">Secundaria</label>
+					</div>
+
+					<div class="flex align-items-center">
+						<p-radioButton name="Superior" [value]="'Superior'" [(ngModel)]="classPersona.nivelInstruccion"
+							inputId="Superior"></p-radioButton>
+						<label for="Superior" class="form-check-label">Superior</label>
 					</div>
 				</div>
 			</div>
 
-			<!-- <div class="p-card-body">
-								<div class="text-center">
-									<button type="submit" (click)="editPersona()" pButton label="Actualizar Datos Personales"
-										icon="pi pi-user"></button>
-								</div>
-							</div> -->
-		</p-card>
-
-		<p-card header="Información Académica" class="m-9" style="display: none;"
-			*ngIf="usuLoginRol === 'DocenteCapacitador'">
+		</p-tabPanel>
+		<p-tabPanel header="Header III" *ngIf="userRol === 'DocenteCapacitador'">
+			<ng-template pTemplate="header">
+				<i class="pi pi-briefcase mx-1"></i>
+				<span>Datos Docente</span>
+			</ng-template>
 			<div class="grid p-fluid m-2">
 				<div class="col-12 md:col-6 mt-1">
 					<div class="p-inputgroup">
@@ -311,24 +263,27 @@
 							<input type="text" pInputText id="tituloCapacitador" name="tituloCapacitador"
 								[(ngModel)]="classCapacitador.tituloCapacitador" />
 							<label htmlFor="tituloCapacitador" class="pi pi-user"> Título <span
-									class="red-asterisk"></span></label>
-
+									class="red-asterisk">*</span></label>
 						</span>
 					</div>
 				</div>
-
 				<div class="col-12 md:col-6 mt-1">
 					<div class="p-inputgroup">
 						<span class="p-float-label" [ngClass]="{'border-red': !classCapacitador.tipoAbreviaturaTitulo}">
 							<input type="text" pInputText id="tipoAbreviaturaTitulo" name="tipoAbreviaturaTitulo"
 								[(ngModel)]="classCapacitador.tipoAbreviaturaTitulo" />
 							<label htmlFor="tipoAbreviaturaTitulo" class="pi pi-user"> Tipo Abreviatura
-								Título <span class="red-asterisk"></span></label>
+								Título <span class="red-asterisk">*</span></label>
 						</span>
 					</div>
 				</div>
-
 			</div>
-		</p-card>
-	</form>
+		</p-tabPanel>
+	</p-tabView>
+
+	<div class="d-flex justify-content-center mb-4">
+		<button pButton pRipple label="Actualizar" class="p-button-success" icon="pi pi-check"
+			(click)="UpdateUser()"></button>
+	</div>
+
 </div>
