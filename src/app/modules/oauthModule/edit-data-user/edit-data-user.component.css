@@ -24,33 +24,15 @@
   }
 }
 
-.animated-element {
-  opacity: 0;
-  animation: fadeIn 1s ease-in-out forwards;
-}
-
-.animated-text {
-  animation: slide-left 2s linear infinite;
-}
-
-@keyframes slide-left {
-  from {
-    transform: translateX(0);
-  }
-
-  to {
-    transform: translateX(-100%);
-  }
-}
-
 
 .card {
   border: 6px;
-  border-radius: 10px;
-  animation: cambia-color 4s infinite;
-
 }
 
+.red-asterisk {
+  color: red;
+  margin-left: 1px;
+}
 
 .seccion-perfil-usuario .perfil-usuario-body,
 .seccion-perfil-usuario {
@@ -93,7 +75,10 @@
   width: 100%;
   height: auto;
   background-position: center center;
+}
 
+.form-check-label{
+  margin-left: 0.3rem;
 }
 
 

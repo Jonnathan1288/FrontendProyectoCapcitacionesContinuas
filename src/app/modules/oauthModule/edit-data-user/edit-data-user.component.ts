@@ -14,6 +14,7 @@ import { LocalStorageKeys, getAttributeStorage } from 'src/app/util/local-storag
 import { UploadService } from 'src/app/service/upload.service';
 import { PersonaFenixService } from 'src/app/service/fenix/persona-fenix.service';
 import { INCLUDE_FIELDS } from 'src/app/util/exlude-data-person';
+import { forkJoin } from 'rxjs';
 
 @Component({
 	selector: 'app-edit-data-user',
@@ -27,7 +28,7 @@ export class EditDataUserComponent implements OnInit {
 	public classUsuario = new Usuario();
 	public classCapacitador = new Capacitador();
 	public idUsuario?: any;
-	public usuLoginRol?: any;
+	public userRol?: any;
 	public esDocenteCapacitador = false;
 	public urlPhoto: any = '';
 	public classCopyCapacitador = new Capacitador();
@@ -46,7 +47,7 @@ export class EditDataUserComponent implements OnInit {
 	ngOnInit(): void {
 
 		this.idUsuario = localStorage.getItem('id_username');
-		this.usuLoginRol = localStorage.getItem('rol');
+		this.userRol = localStorage.getItem('rol');
 		this.obtenerDatosUsusario(this.idUsuario);
 		if (localStorage.getItem('emp') === 'EMPTY') {
 			this.toastrService.info('', 'COMPLETE SU PERFIL DE USUARIO');
@@ -78,7 +79,7 @@ export class EditDataUserComponent implements OnInit {
 				this.validateKeysNotEmpty(this.classPersona)
 
 
-				if (this.usuLoginRol === 'DocenteCapacitador') {
+				if (this.userRol === 'DocenteCapacitador') {
 					this.capacitadorService
 						.getCapacitadorByUsuarioIdUsuario(
 							this.classUsuario.persona!.idPersona!
@@ -193,6 +194,22 @@ export class EditDataUserComponent implements OnInit {
 		} catch (error) {
 			throw new Error();
 		}
+	}
+
+	/// Update person or capacitador
+	public UpdateUser() {
+		const updatePersona$ = this.personaService.updatePersona(this.classPersona.idPersona!, this.classPersona);
+		let updateCapacitador$;
+
+		if (this.userRol == 'DocenteCapacitador') {
+			updateCapacitador$ = this.capacitadorService.updateCapacitador(this.classCapacitador.idCapacitador!, this.classCapacitador);
+		} else {
+			updateCapacitador$ = null;
+		}
+
+		forkJoin([updatePersona$, updateCapacitador$]).subscribe(([]) => {
+			this.toastrService.success('Excelente', 'Datos Actualizados');
+		});
 	}
 
 }
