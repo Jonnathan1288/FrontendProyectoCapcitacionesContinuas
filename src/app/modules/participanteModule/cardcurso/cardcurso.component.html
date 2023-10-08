@@ -22,8 +22,8 @@
         <div class="col-16 md:col-5">
           <span class="p-input-icon-left">
             <i class="pi pi-search"></i>
-            <input pInputText type="text" placeholder="Buscar cursos de capacitación.."
-              (input)="filterTableCursos($event)" />
+            <input pInputText type="text" placeholder="Buscar cursos de capacitación.." [(ngModel)]="searchTerm"
+              (input)="filterCourses()">
           </span>
         </div>
 
@@ -32,12 +32,13 @@
         <div class="col-12 md:col-7 ">
 
 
-          <p-dropdown [options]="listAreaFilter" placeholder="{{ placeholder }}" optionLabel="name" [showClear]="true"
-            (onChange)="updatePlaceholder($event)">
+          <p-dropdown [options]="listAreaFilter" placeholder="{{ placeholder }}" optionLabel="nombreEspecialidad"
+            [showClear]="true" (onChange)="updatePlaceholder($event)">
             <ng-template let-area pTemplate="item">
-              <div (click)="capturarIDAreFiltercourse(area.idArea)">{{ area.nombreArea }}</div>
+              <div>{{ area }}</div>
             </ng-template>
           </p-dropdown>
+
 
 
         </div>
@@ -80,12 +81,11 @@
             </div>
             <div class="pricing-card__plus">
               <div class="pricing-card__plus-icon"><i class="pi pi-book"></i></div>
-              <div class="pricing-card__plus-text">{{list.capacitador?.usuario?.persona?.nombre1+"
-                "+list.capacitador?.usuario?.persona?.apellido1}}</div>
+              <div class="pricing-card__plus-text">{{list.nombre}}</div>
             </div>
             <div class="pricing-card__plus">
               <div class="pricing-card__plus-icon"><i class="pi pi-video"></i></div>
-              <div class="pricing-card__plus-text">{{list.modalidadCurso!.nombreModalidadCurso}}</div>
+              <div class="pricing-card__plus-text">{{list.nombreModalidadCurso}}</div>
             </div>
             <div class="pricing-card__plus">
               <div class="pricing-card__plus-icon"><i class="pi pi-send"></i></div>
@@ -93,12 +93,12 @@
             </div>
             <div class="pricing-card__plus">
               <div class="pricing-card__plus-icon"><i class="pi pi-clock"></i></div>
-              <div class="pricing-card__plus-text">{{list.horarioCurso!.horaInicio}} a {{list.horarioCurso!.horaFin}}
+              <div class="pricing-card__plus-text">{{list!.horaInicio}} a {{list!.horaFin}}
               </div>
             </div>
             <div class="pricing-card__plus">
               <div class="pricing-card__plus-icon"><i class="pi pi-calendar"></i></div>
-              <div class="pricing-card__plus-text">{{list.horarioCurso!.dias}}</div>
+              <div class="pricing-card__plus-text">{{list.dias}}</div>
             </div>
 
             <div class="pricing-card__plus">
@@ -106,11 +106,23 @@
               <div class="pricing-card__plus-text">{{list.fechaInicioCurso}} - {{list.fechaFinalizacionCurso}}</div>
             </div>
           </div>
+
           <div class="pricing-card__button"><p-button label="Detalles"
               (click)="pasarInfoCurso(list.idCurso)"></p-button>
           </div>
         </div>
+
+
       </div>
+    </div>
+    <div class="m-5" style="text-align: center; align-items: center;">
+      <button *ngIf="isPage !== 0" type="button" (click)="anteriorPage()" class="btn btn-primary p-button-rounded">
+        <i class="pi pi-arrow-circle-left"></i> Anterior
+      </button>
+      <button *ngIf="isPage !== pageTotal - 1 && pageTotal >= 0" type="button" (click)="siguientePage()"
+        class="btn btn-primary p-button-rounded" style="margin-left: 50px;">
+        Siguiente <i class="pi pi-arrow-circle-right"></i>
+      </button>
     </div>
   </div>
 </div>
