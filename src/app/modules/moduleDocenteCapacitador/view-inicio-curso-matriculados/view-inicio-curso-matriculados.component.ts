@@ -5,6 +5,7 @@ import { Asistencia } from 'src/app/models/asistencia';
 import { Curso } from 'src/app/models/curso';
 import { ParticipantesMatriculados } from 'src/app/models/participantesMatriculados';
 import { CourseFilterDocente } from 'src/app/models/references/course-filter-by-docente';
+import { MatriculadoReduce } from 'src/app/models/references/matriculado.reduce';
 import { CursoService } from 'src/app/service/curso.service';
 import { NotasService } from 'src/app/service/notas.service';
 import { ParticipanteMatriculadoService } from 'src/app/service/participante-matriculado.service';
@@ -16,20 +17,22 @@ import { LocalStorageKeys, getAttributeStorage } from 'src/app/util/local-storag
 	styleUrls: ['./view-inicio-curso-matriculados.component.css'],
 })
 export class ViewInicioCursoMatriculadosComponent implements OnInit {
-	public listParticipantesMatriculados: ParticipantesMatriculados[] = [];
 	public idCursoMatricula?: number;
 
 	public asistenciaEstudiante = new Asistencia();
 
-	first = 0;
-	layout: string = 'list';
-	rows = 5;
+	public layout: string = 'list';
+	public first = 0;
+	public rows = 5;
 
 	public estadoFinal?: any;
 
 	public listCourseFilter: CourseFilterDocente[] = [];
 
 	public idUsuarioIsLogin: any;
+
+	//NUEVO
+	public listMatriculadoReduce: MatriculadoReduce[] = [];
 
 	constructor(
 		private participantesMatriculadosService: ParticipanteMatriculadoService,
@@ -38,6 +41,7 @@ export class ViewInicioCursoMatriculadosComponent implements OnInit {
 		private notasService: NotasService,
 		private toastrService: ToastrService
 	) { }
+
 	ngOnInit(): void {
 
 		this.idUsuarioIsLogin = getAttributeStorage(LocalStorageKeys.ID_USUARIO)!;
@@ -60,7 +64,7 @@ export class ViewInicioCursoMatriculadosComponent implements OnInit {
 	public catchCourseSelected(curso: CourseFilterDocente) {
 		if (curso.estadoAprovacionCurso !== 'A') {
 			this.toastrService.info("", "EL CURSO AÚN NO ESTA APROBADO");
-			this.listParticipantesMatriculados = []
+			this.listMatriculadoReduce = []
 			this.participantsVisibleData = false;
 			return;
 		}
@@ -74,10 +78,10 @@ export class ViewInicioCursoMatriculadosComponent implements OnInit {
 
 	//-------------------------------------------------------
 
-	curso: Curso = new Curso();
-	isFalstanTresDias!: boolean;
-	diasFaltantes!: any;
-	fechaActual = new Date();
+	public curso: Curso = new Curso();
+	public isFalstanTresDias!: boolean;
+	public diasFaltantes!: any;
+	public fechaActual = new Date();
 	public validarNotasFinales3Dias(): void {
 		this.cursoService
 			.getCursoById(this.idCursoMatricula!)
@@ -104,7 +108,7 @@ export class ViewInicioCursoMatriculadosComponent implements OnInit {
 			});
 	}
 
-	isValidateExistenciaNotas!: boolean;
+	public isValidateExistenciaNotas!: boolean;
 	public validarExistenciaDeRegistros(): void {
 		this.notasService
 			.validarExistenciaDatos(this.idCursoMatricula!)
@@ -120,12 +124,18 @@ export class ViewInicioCursoMatriculadosComponent implements OnInit {
 	}
 
 	public traerParticipantesMatriculados(idCurso: number) {
-		this.participantesMatriculadosService
-			.getParticipantesMatriculadosByIdCurso(idCurso)
-			.subscribe((data) => {
-				this.listParticipantesMatriculados = data;
+
+		this.participantesMatriculadosService.findByAllMatriculadoCursoDocenteCapacitador(idCurso).subscribe({
+			next: (resp) => {
+				console.table(resp)
+				this.listMatriculadoReduce = resp;
 				this.participantsVisibleData = true;
-			});
+				this.toastrService.info('', 'ESTUDIANTES RECUPERADOS');
+
+			}, error: (err) => {
+				this.toastrService.error('', 'INCONVENIENTE AL OBTENER');
+			}
+		})
 	}
 
 	public tomarAsistenciaCurso() {
@@ -139,40 +149,35 @@ export class ViewInicioCursoMatriculadosComponent implements OnInit {
 		this.router.navigate(['/notas/estudiantes/course', this.idCursoMatricula]);
 	}
 
-	//Control del modal para el registro de la informaicon visible
-	//PARA EL MODAL
+	public visible: boolean = false;
 
-	visible: boolean = false;
-
-	showDialog() {
+	public showDialog() {
 		this.visible = true;
 	}
 
-	//IMPLEMENTACIÓN DE LA TABLA DE PRIMENG
-	//Implementacion de la tabla de todo referente a primeng
-	next() {
+	public next() {
 		this.first = this.first + this.rows;
 	}
 
-	prev() {
+	public prev() {
 		this.first = this.first - this.rows;
 	}
 
-	reset() {
+	public reset() {
 		this.first = 0;
 	}
 
-	isLastPage(): boolean {
-		return this.listParticipantesMatriculados
-			? this.first === this.listParticipantesMatriculados.length - this.rows
+	public isLastPage(): boolean {
+		return this.listMatriculadoReduce
+			? this.first === this.listMatriculadoReduce.length - this.rows
 			: true;
 	}
 
-	isFirstPage(): boolean {
-		return this.listParticipantesMatriculados ? this.first === 0 : true;
+	public isFirstPage(): boolean {
+		return this.listMatriculadoReduce ? this.first === 0 : true;
 	}
 
-	calcularEdad(fechaNacimiento: string): number {
+	public calcularEdad(fechaNacimiento: string): number {
 		const fechaNacimientoDate = new Date(fechaNacimiento);
 		const fechaActual = new Date();
 		const diferenciaTiempo =

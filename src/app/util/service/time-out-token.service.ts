@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { LocalStorageKeys, getTokenTime } from '../local-storage-manager';
+import { LocalStorageKeys, clearLocalStorage, getTokenTime } from '../local-storage-manager';
 import { TimeOut } from '../model/time-out';
 import { TokenData } from 'src/app/interface/token-data';
 import jwt_decode from "jwt-decode";

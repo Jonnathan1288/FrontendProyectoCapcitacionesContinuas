@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { StorageService } from './storage.service';
 import { ListApproved } from '../models/references/list-approved';
+import { MatriculadoReduce } from '../models/references/matriculado.reduce';
 
 @Injectable({
   providedIn: 'root'
@@ -41,6 +42,10 @@ export class ParticipanteMatriculadoService {
   //Reportes que va tener el admin..
   public getReportParticipantsApproved(courses: number[]): Observable<Blob> {
     return this.http.post(environment.apiuri + '/generate/exportExcel', courses, { responseType: 'blob', headers: this.storageService.returnToken() });
+  }
+
+  public findByAllMatriculadoCursoDocenteCapacitador(idCurso: number): Observable<MatriculadoReduce[]> {
+    return this.http.get<MatriculadoReduce[]>(environment.apiuri + '/participantesMatriculados/findByAllMatriculadoCursoDocenteCapacitador/' + idCurso);
   }
 
 }

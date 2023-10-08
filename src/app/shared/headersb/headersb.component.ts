@@ -62,9 +62,12 @@ export class HeadersbComponent implements OnInit {
 
     const remainingSeconds = this.timeOut ? this.timeOut.totalSeconds : undefined;
 
-    const actionRequiered = timeOutSeconds[remainingSeconds || 'error']
-    if (actionRequiered) {
-      actionRequiered();
+    const evaluateSeconds = remainingSeconds ? remainingSeconds < 0 ? 3 : remainingSeconds : undefined
+
+    const actionRequired = timeOutSeconds[evaluateSeconds || 'error']
+
+    if (actionRequired) {
+      actionRequired();
     }
   }
 
