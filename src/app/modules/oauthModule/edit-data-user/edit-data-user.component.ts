@@ -14,7 +14,7 @@ import { LocalStorageKeys, getAttributeStorage } from 'src/app/util/local-storag
 import { UploadService } from 'src/app/service/upload.service';
 import { PersonaFenixService } from 'src/app/service/fenix/persona-fenix.service';
 import { INCLUDE_FIELDS } from 'src/app/util/exlude-data-person';
-import { forkJoin } from 'rxjs';
+
 
 @Component({
 	selector: 'app-edit-data-user',
@@ -198,18 +198,14 @@ export class EditDataUserComponent implements OnInit {
 
 	/// Update person or capacitador
 	public UpdateUser() {
-		const updatePersona$ = this.personaService.updatePersona(this.classPersona.idPersona!, this.classPersona);
-		let updateCapacitador$;
-
-		if (this.userRol == 'DocenteCapacitador') {
-			updateCapacitador$ = this.capacitadorService.updateCapacitador(this.classCapacitador.idCapacitador!, this.classCapacitador);
-		} else {
-			updateCapacitador$ = null;
-		}
-
-		forkJoin([updatePersona$, updateCapacitador$]).subscribe(([]) => {
+		this.personaService.updatePersona(this.classPersona.idPersona!, this.classPersona).subscribe(data => {
 			this.toastrService.success('Excelente', 'Datos Actualizados');
 		});
+		if (this.userRol == 'DocenteCapacitador') {
+			this.capacitadorService.updateCapacitador(this.classCapacitador.idCapacitador!, this.classCapacitador).subscribe(data => {
+				this.toastrService.success('Excelente', 'Datos Actualizados');
+			})
+		}
 	}
 
 }
