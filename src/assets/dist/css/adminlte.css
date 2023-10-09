@@ -17260,7 +17260,7 @@ body.text-sm .control-sidebar {
 }
 
 .navbar-dark {
-  background-color: #343a40;
+  background-color: #3B82F6;
   border-color: #4b545c;
 }
 
@@ -20154,7 +20154,7 @@ body.text-sm .control-sidebar {
 }
 
 .dark-mode .navbar-dark {
-  background-color: #343a40;
+  background-color: #3B82F6;
   border-color: #4b545c;
 }
 
@@ -50358,7 +50358,7 @@ a.text-muted:hover {
 }
 
 .accent-primary [class*="sidebar-dark-"] .sidebar a:not(.dropdown-item):not(.btn-app):not(.nav-link):not(.brand-link) {
-  color: #c2c7d0;
+  color: #3B82F6;
 }
 
 .accent-primary [class*="sidebar-dark-"] .sidebar a:not(.dropdown-item):not(.btn-app):not(.nav-link):not(.brand-link):hover {
