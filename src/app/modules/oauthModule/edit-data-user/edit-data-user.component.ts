@@ -97,9 +97,7 @@ export class EditDataUserComponent implements OnInit {
 
 	public validateKeysNotEmpty(person: Persona) {
 		if (
-			!Object.entries(person)
-				.filter(([key]) => Object.keys(person).includes(key))
-				.every(([_, value]) => value)
+			!Object.entries(person).every(value => value)
 		) {
 			const dominio = person.correo!.split('@')[1];
 			const resultado = dominio.includes('tecazuay.edu.ec');
@@ -112,7 +110,6 @@ export class EditDataUserComponent implements OnInit {
 		this.personaFenixService.personaPorCI(ci).subscribe({
 			next: (resp) => {
 				Object.assign(this.classPersona, { ...resp, idPersona: this.classPersona.idPersona });
-
 				this.classPersona.fechaNacimiento = this.returnNewDate(resp.fechaNacimiento ? resp.fechaNacimiento : new Date());
 				this.toastrService.success(
 					'',
@@ -198,16 +195,25 @@ export class EditDataUserComponent implements OnInit {
 
 	/// Update person or capacitador
 	public UpdateUser() {
-		this.personaService.updatePersona(this.classPersona.idPersona!, this.classPersona).subscribe(data => {
-			this.toastrService.success('Excelente', 'Datos Actualizados');
-		});
-		if (this.userRol == 'DocenteCapacitador') {
-			this.capacitadorService.updateCapacitador(this.classCapacitador.idCapacitador!, this.classCapacitador).subscribe(data => {
-				this.toastrService.success('Excelente', 'Datos Actualizados');
-			})
+		if (Object.values(this.classPersona).every(value => value)) {
+			this.personaService.updatePersona(this.classPersona.idPersona!, this.classPersona).subscribe(() => {
+				this.toastrService.success('Excelente', 'Datos de Persona Actualizados');
+				if (this.userRol == 'DocenteCapacitador') {
+					if (Object.values(this.classCapacitador).every(value => value)) {
+						// Verificar si los datos del docente han cambiado
+						if (JSON.stringify(this.classCapacitador) !== JSON.stringify(this.classCopyCapacitador)) {
+							this.capacitadorService.updateCapacitador(this.classCapacitador.idCapacitador!, this.classCapacitador).subscribe(() => {
+								this.toastrService.success('Excelente', 'Datos Docente Actualizados');
+							});
+						}
+					} else {
+						this.toastrService.warning('Advertencia', 'Datos docente incompletos');
+					}
+				}
+			});
+		} else {
+			this.toastrService.warning('Advertencia', 'Datos personales incompletos');
 		}
 	}
-
 }
-
 

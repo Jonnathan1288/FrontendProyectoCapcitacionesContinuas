@@ -23,11 +23,6 @@
 					<button type="button" class="boton-avatar" pTooltip="Foto de perfil" tooltipPosition="bottom">
 						<i class="fas fa-camera" style="font-size: 1.3rem" (click)="fileInput.click()"></i>
 					</button>
-					<button type="button" class="image-avatar-preview" pTooltip="Maximizar" tooltipPosition="bottom"
-						(click)="handleDivClick()">
-						<i class="fa fa-eye" style="font-size: 1.2rem; "></i>
-					</button>
-
 				</div>
 			</div>
 		</div>
@@ -233,7 +228,7 @@
 						<label for="Afroecuatoriano" class="form-check-label">Afroecuatoriano</label>
 					</div>
 					<div class="flex align-items-center">
-						<p-radioButton name="etnia"  [value]="'Otros'" [(ngModel)]="classPersona.etnia"
+						<p-radioButton name="etnia" [value]="'Otros'" [(ngModel)]="classPersona.etnia"
 							inputId="Otros"></p-radioButton>
 						<label for="Otros" class="form-check-label">Otros</label>
 					</div>
@@ -261,7 +256,7 @@
 							inputId="Superior"></p-radioButton>
 						<label for="Superior" class="form-check-label">Superior</label>
 					</div>
-				</div>
+				</div>(click)="changeState()"
 			</div>
 
 		</p-tabPanel>
