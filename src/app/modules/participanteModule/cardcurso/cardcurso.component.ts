@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Area } from 'src/app/models/area';
 import { Curso } from 'src/app/models/curso';
+import { CursoPaginacion } from 'src/app/models/cursopaginacion';
 import { LoadScript } from 'src/app/scripts/load-script';
 import { CursoService } from 'src/app/service/curso.service';
 import { StorageService } from 'src/app/service/storage.service';
@@ -31,16 +32,40 @@ export class CardcursoComponent implements OnInit {
     }
   }
 
-  listCursos: Curso[] = [];
-  listCursosOriginal: Curso[] = [];
+  listCursos: CursoPaginacion[] = [];
+  listCursosOriginal: CursoPaginacion[] = [];
+  isFirst: boolean = false;
+  isLast: boolean = false;
+  isPage: number = 0;
+  isSize: number = 6
+  valor: string = "";
+  isSosrt: string[] = [this.valor, 'asc']
+  public searchTerm: string = '';
+  pageTotal: number = 0;
 
   public obtenerCursosFull(): void {
-    this.cursoService.listCursoDisponibles().subscribe((data: Curso[]) => {
-      this.listCursos = data;
-      this.listCursosOriginal = data;
+    this.cursoService.listaCursoDisponiblesPaginacion(this.isPage, this.isSize, this.isSosrt).subscribe((data: any) => {
+      this.listCursos = data.content;
+      this.listCursosOriginal = data.content;
       this.listCursos = this.listCursosOriginal;
       this.filterAreasPerCurser();
     });
+  }
+
+  //Pagina Anterior
+  anteriorPage(): void {
+    if (!this.isFirst) {
+      this.isPage--;
+      this.obtenerCursosFull();
+    }
+  }
+
+  //Pagina Siguiente
+  siguientePage(): void {
+    if (!this.isLast) {
+      this.isPage++;
+      this.obtenerCursosFull();
+    }
   }
 
   public pasarInfoCurso(idCurso: any): void {
@@ -57,112 +82,53 @@ export class CardcursoComponent implements OnInit {
 
   // FILTROS
   filtrarPorModalidadVirtual() {
-    this.listCursos = this.listCursosOriginal.filter(
-      (curso) => curso.modalidadCurso!.nombreModalidadCurso === 'Virtual'
-    );
+    this.listCursos = this.listCursosOriginal.filter((curso: any) => curso.nombreModalidadCurso === "Virtual");
   }
 
   filtrarPorModalidadPresencial() {
-    this.listCursos = this.listCursosOriginal.filter(
-      (curso) => curso.modalidadCurso!.nombreModalidadCurso === 'Presencial'
-    );
+    this.listCursos = this.listCursosOriginal.filter((curso: any) => curso.nombreModalidadCurso === "Presencial");
   }
 
   filtrarPorModalidadTecnico() {
-    this.listCursos = this.listCursosOriginal.filter(
-      (curso) => curso.tipoCurso!.nombreTipoCurso === 'Técnico'
-    );
+    this.listCursos = this.listCursosOriginal.filter((curso: any) => curso.nombreTipoCurso === "Técnico");
   }
 
   filtrarPorModalidadAdministrativo() {
-    this.listCursos = this.listCursosOriginal.filter(
-      (curso) => curso.tipoCurso!.nombreTipoCurso === 'Administrativo'
-    );
+    this.listCursos = this.listCursosOriginal.filter((curso: any) => curso.nombreTipoCurso === "Administrativo");
   }
 
   filtrarPorModalidadBasicos() {
-    this.listCursos = this.listCursosOriginal.filter(
-      (curso) => curso.nivelCurso!.nombreNivelCurso === 'Básico'
-    );
+    this.listCursos = this.listCursosOriginal.filter((curso: any) => curso.nombreNivelCurso === "Básico");
   }
 
   filtrarPorModalidadSuperior() {
-    this.listCursos = this.listCursosOriginal.filter(
-      (curso) => curso.nivelCurso!.nombreNivelCurso === 'Superior'
-    );
+    this.listCursos = this.listCursosOriginal.filter((curso: any) => curso.nombreNivelCurso === "Superior");
   }
 
   filtrarPorModalidadIntermedios() {
-    this.listCursos = this.listCursosOriginal.filter(
-      (curso) => curso.nivelCurso!.nombreNivelCurso === 'Intermedio'
-    );
+    this.listCursos = this.listCursosOriginal.filter((curso: any) => curso.nombreNivelCurso === "Intermedio");
   }
 
   filtrarPorModalidadManana() {
-    this.listCursos = this.listCursosOriginal.filter((curso) => {
-      const horaInicio = parseInt(
-        curso.horarioCurso!.horaInicio!.split(':')[0]
-      );
-      const horaFin = parseInt(curso.horarioCurso!.horaFin!.split(':')[0]);
-      return horaInicio >= 7 && horaFin <= 12;
+    this.listCursos = this.listCursosOriginal.filter((curso: any) => {
+      const horaInicioComponents = curso.horaInicio.split(" ");
+      const horaInicio = horaInicioComponents[0];
+      const minutosInicio = horaInicioComponents[1];
+      const periodoCurso = horaInicioComponents[2];
+      return periodoCurso === "AM";
     });
   }
 
   filtrarPorModalidadTarde() {
-    this.listCursos = this.listCursosOriginal.filter((curso) => {
-      const horaInicio = parseInt(
-        curso.horarioCurso!.horaInicio!.split(':')[0]
-      );
-      const horaFin = parseInt(curso.horarioCurso!.horaFin!.split(':')[0]);
-      return horaInicio >= 12 && horaFin <= 23;
+    this.listCursos = this.listCursosOriginal.filter((curso: any) => {
+      const horaInicioComponents = curso.horaInicio.split(" ");
+      const horaInicio = horaInicioComponents[0];
+      const minutosInicio = horaInicioComponents[1];
+      const periodoCurso = horaInicioComponents[2];
+      return periodoCurso === "PM";
     });
   }
 
-  //filter l
-  public wordNoFind?: any;
-  public filterTableCursos(e: any) {
-    let letter = e.target.value.toLowerCase();
-    this.wordNoFind = letter;
-    if (this.wordNoFind === '') {
-      this.listCursos = this.listCursosOriginal;
-    } else {
-      let programaslist = this.listCursosOriginal.filter(
-        (p) =>
-          p.nombreCurso?.toLowerCase().includes(this.wordNoFind) ||
-          p.observacionCurso?.toLowerCase().includes(this.wordNoFind) ||
-          p.programas?.nombrePrograma
-            ?.toLowerCase()
-            .includes(this.wordNoFind) ||
-          p.programas?.periodoPrograma?.nombrePeriodoPrograma
-            ?.toLowerCase()
-            .includes(this.wordNoFind) ||
-          p.especialidad?.nombreEspecialidad
-            ?.toLowerCase()
-            .includes(this.wordNoFind) ||
-          p.especialidad?.area?.nombreArea
-            ?.toLowerCase()
-            .includes(this.wordNoFind) ||
-          p.modalidadCurso?.nombreModalidadCurso
-            ?.toLowerCase()
-            .includes(this.wordNoFind) ||
-          p.tipoCurso?.nombreTipoCurso
-            ?.toLowerCase()
-            .includes(this.wordNoFind) ||
-          p.nivelCurso?.nombreNivelCurso
-            ?.toLowerCase()
-            .includes(this.wordNoFind) ||
-          p.parroquia?.parroquia?.toLowerCase().includes(this.wordNoFind) ||
-          p.parroquia?.canton?.canton
-            ?.toLowerCase()
-            .includes(this.wordNoFind) ||
-          p.parroquia?.canton?.provincia?.provincia
-            ?.toLowerCase()
-            .includes(this.wordNoFind)
-      );
-
-      this.listCursos = programaslist;
-    }
-  }
 
   //Filtro por fecha ya sea de inicio o de fin que esten en ese mes
   onDateSelect(event: any) {
@@ -187,44 +153,83 @@ export class CardcursoComponent implements OnInit {
     }
   }
 
+
   //METODO PARA FILTRAR TODAS LAS AREAS..
-  public listAreaFilter: Area[] = [];
+  public listAreaFilter: string[] = [];
 
   public filterAreasPerCurser() {
-    const areasUnicas: Area[] = [];
-    this.listCursos.forEach((curso) => {
-      const area = curso.especialidad?.area;
-      if (area && !areasUnicas.some((a) => a.idArea === area.idArea)) {
-        areasUnicas.push(area);
-      }
+    const especialidadesUnicas = new Set<string>();
+
+    this.listCursos.forEach((curso: any) => {
+      especialidadesUnicas.add(curso.nombreEspecialidad);
     });
-    this.listAreaFilter = areasUnicas;
+    this.listAreaFilter = Array.from(especialidadesUnicas);
   }
+
 
   //Para el nombre ocn el filtro
   placeholder = 'Seleccione área';
   updatePlaceholder(event: any) {
     const selectedOption = event.value;
+
     if (selectedOption) {
-      this.placeholder = selectedOption.nombreArea;
+      this.listCursos = this.listCursosOriginal.filter((curso: CursoPaginacion) => {
+        return curso.nombreEspecialidad === selectedOption;
+      });
+
+      this.placeholder = selectedOption;
     } else {
       this.listCursos = this.listCursosOriginal;
       this.placeholder = 'Seleccione área';
     }
   }
 
-  public cedulaIdentificasion?: String = '';
-  public capturarIDAreFiltercourse(idArea: number) {
-    this.listCursos = this.listCursosOriginal.filter(
-      (curso) => curso.especialidad?.area?.idArea === idArea
-    );
 
-    if (this.listCursos.length > 0) {
-      this.toastrService.info('CURSOS ENCONTRADOS POR ESTA ÁREA ' + this.listCursos.length);
-    } else {
-      this.toastrService.error('NO HAY CURSOS EN ESTA ÁREA');
+
+  filterCourses() {
+    let filteredCourses = this.listCursosOriginal;
+
+    if (this.searchTerm) {
+      filteredCourses = filteredCourses.filter((curso: CursoPaginacion) => {
+        const searchTermLower = this.searchTerm.toLowerCase();
+
+        return (
+          (curso.nombreCurso && curso.nombreCurso.toLowerCase().includes(searchTermLower)) ||
+          (curso.nombre && curso.nombre.toLowerCase().includes(searchTermLower)) ||
+          (curso.duracionCurso && curso.duracionCurso.toString().includes(this.searchTerm)) ||
+          (curso.fechaInicioCurso && curso.fechaInicioCurso.toString().includes(this.searchTerm)) ||
+          (curso.fechaFinalizacionCurso && curso.fechaFinalizacionCurso.toString().includes(this.searchTerm)) ||
+          (curso.horaInicio && curso.horaInicio.toLowerCase().includes(searchTermLower)) ||
+          (curso.horaFin && curso.horaFin.toLowerCase().includes(searchTermLower)) ||
+          (curso.dias && curso.dias.toLowerCase().includes(searchTermLower)) ||
+          (curso.nombreModalidadCurso && curso.nombreModalidadCurso.toLowerCase().includes(searchTermLower)) ||
+          (curso.nombreTipoCurso && curso.nombreTipoCurso.toLowerCase().includes(searchTermLower)) ||
+          (curso.nombreNivelCurso && curso.nombreNivelCurso.toLowerCase().includes(searchTermLower)) ||
+          (curso.numeroCuposCurso && curso.numeroCuposCurso.includes(this.searchTerm)) ||
+          (curso.nombreEspecialidad && curso.nombreEspecialidad.toLowerCase().includes(searchTermLower))
+        );
+      });
+    }
+    this.listCursos = filteredCourses;
+    if (!this.searchTerm) {
+      this.listCursos = this.listCursosOriginal;
     }
   }
+
+
+
+  /*public cedulaIdentificasion?: String = '';
+  public capturarIDAreFiltercourse(idArea: number) {
+     this.listCursos = this.listCursosOriginal.filter(
+       (curso) => curso.especialidad?.area?.idArea === idArea
+     );
+ 
+     if (this.listCursos.length > 0) {
+       this.toastrService.info('CURSOS ENCONTRADOS POR ESTA ÁREA ' + this.listCursos.length);
+     } else {
+       this.toastrService.error('NO HAY CURSOS EN ESTA ÁREA');
+     }
+   }*/
 
   public obtenernuevamenteLosCursosSinFiltros() {
     this.listCursos = this.listCursosOriginal;
