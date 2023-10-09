@@ -193,26 +193,35 @@ export class EditDataUserComponent implements OnInit {
 		}
 	}
 
-	/// Update person or capacitador
 	public UpdateUser() {
-		if (Object.values(this.classPersona).every(value => value)) {
-			this.personaService.updatePersona(this.classPersona.idPersona!, this.classPersona).subscribe(() => {
-				this.toastrService.success('Excelente', 'Datos de Persona Actualizados');
-				if (this.userRol == 'DocenteCapacitador') {
-					if (Object.values(this.classCapacitador).every(value => value)) {
-						// Verificar si los datos del docente han cambiado
-						if (JSON.stringify(this.classCapacitador) !== JSON.stringify(this.classCopyCapacitador)) {
-							this.capacitadorService.updateCapacitador(this.classCapacitador.idCapacitador!, this.classCapacitador).subscribe(() => {
-								this.toastrService.success('Excelente', 'Datos Docente Actualizados');
-							});
-						}
-					} else {
-						this.toastrService.warning('Advertencia', 'Datos docente incompletos');
-					}
-				}
+		const indexFind = this.findIndex === '3' ? true : false;
+		if (indexFind) {
+			this.updateDocente();
+		} else {
+			if (Object.values(this.classPersona).every(value => value)) {
+				this.personaService.updatePersona(this.classPersona.idPersona!, this.classPersona).subscribe(() => {
+					this.toastrService.success('Excelente', 'Datos de Persona Actualizados');
+				});
+			} else {
+				this.toastrService.warning('Advertencia', 'Datos personales incompletos');
+			}
+		}
+	}
+
+	public updateDocente() {
+		if (Object.values(this.classCapacitador).every(value => value)) {
+			this.capacitadorService.updateCapacitador(this.classCapacitador.idCapacitador!, this.classCapacitador).subscribe(() => {
+				this.toastrService.success('Excelente', 'Datos Docente Actualizados');
 			});
 		} else {
-			this.toastrService.warning('Advertencia', 'Datos personales incompletos');
+			this.toastrService.warning('Advertencia', 'Datos docente incompletos');
+		}
+	}
+
+	public findIndex: string = '1';
+	public onTabChange(event: any) {
+		if (event.index === 2) {
+			this.findIndex = '3'
 		}
 	}
 }

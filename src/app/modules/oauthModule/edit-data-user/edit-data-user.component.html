@@ -71,7 +71,7 @@
 </div>
 
 <div class="card">
-	<p-tabView styleClass="tabview-custom">
+	<p-tabView styleClass="tabview-custom" (onChange)="onTabChange($event)">
 		<p style="font-size: 15px; color: red;" class="m-3 mb-5">Los campos marcados con * son de ingreso obligatorio.
 		</p>
 
@@ -256,7 +256,7 @@
 							inputId="Superior"></p-radioButton>
 						<label for="Superior" class="form-check-label">Superior</label>
 					</div>
-				</div>(click)="changeState()"
+				</div>
 			</div>
 
 		</p-tabPanel>
