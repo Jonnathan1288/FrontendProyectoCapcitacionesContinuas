@@ -129,13 +129,6 @@
   color: white; /* Texto blanco */
 }
 
-/* Botón de rol no asignado (rojo) 
-.unassigned-role {
-  background-color: red;
-  color: white; 
-}*/
-
-
 
 .custom-button {
   background-color: rgb(228, 107, 107);
