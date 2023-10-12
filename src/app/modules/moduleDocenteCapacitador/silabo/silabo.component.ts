@@ -58,6 +58,7 @@ export class SilaboComponent implements OnInit {
       // this.obtenerDatosCurso();
       this.validacionDeSilaboExistente();
     });
+    this.obtenerDatosCurso()
   }
 
   //IMPLEMENTACION DEL ROUTENIG PARA EL DISEÑO CURRICULAR

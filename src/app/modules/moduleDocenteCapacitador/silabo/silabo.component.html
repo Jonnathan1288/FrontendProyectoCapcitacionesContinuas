@@ -4,6 +4,16 @@
             <p-button label="Traer Datos" icon="pi pi-pencil" styleClass="p-button-success  mb-2"
                 (onClick)="traerDatos()"></p-button>
         </div> -->
+
+        <div *ngIf="(curso.estadoPublicasionCurso === 'I')" style="text-align: center;">
+			<br>
+			<div class="attendance-ms" style="display: inline-block;">El curso inició, no se puede editar el sílabo.</div>
+	  </div>
+      <div *ngIf="(curso.estadoPublicasionCurso === 'F' || curso.estadoPublicasionCurso === 'F')" style="text-align: center;">
+        <br>
+        <div class="attendance-ms" style="display: inline-block;">El curso finalizó, no se puede editar el sílabo.</div>
+    </div>
+
         <p-card header="Información General del Curso" style="margin: 5px;" *ngIf='validarIdSilabo == false'>
             <div class="grid">
                 <div class="col-5 flex justify-content-center">
@@ -250,7 +260,21 @@
                     </div>
                 </div>
                 
+                <div class="col-12 md:col-12 mt-1">
+                    <div class="p-inputgroup">
+                        <span class="p-float-label">
+                            <input type="text" pInputText id="horasTalleres" name="horasTalleres"
+                                [(ngModel)]="contenidosSilabo.horasTalleres"
+                                onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+                            <label htmlFor="horasTalleres">Horas de Talleres
+                               
+                            </label>
+                        </span>
+                    </div>
+                </div>
+                
 
+               
 
                 <div class="col-12 md:col-12 mt-1">
                     <div class="p-inputgroup">
@@ -265,19 +289,6 @@
                         </span>
                     </div>
                 </div>
-
-                <div class="col-12 md:col-12 mt-1">
-                    <div class="p-inputgroup">
-                        <span class="p-float-label">
-                            <input type="text" value="Horas de Talleres" pInputText id="Horas de Talleres" name="Horas de Talleres" disabled style="color: #000;">
-                        
-                            <p-inputNumber class="ml-2" style="max-width: 15%;"mode="decimal" [showButtons]="true" inputId="minmax-buttons"
-                            id="horasClaseContenido" name="horasClaseContenido" [min]="0" [max]="100"
-                            [(ngModel)]="contenidosSilabo.horasTalleres"> </p-inputNumber>
-                        </span>
-                    </div>
-                </div>
-                
 
 
                 <div class="col-12 md:col-12 mt-1">
@@ -402,6 +413,21 @@
                             </span>
                         </div>
                     </div>
+
+                    <div class="col-12 md:col-12 mt-1">
+                        <div class="p-inputgroup">
+                            <span class="p-float-label">
+                                <input type="text" pInputText id="horasTalleres" name="horasTalleres"
+                                    [(ngModel)]="contenidosSilabo.horasTalleres"
+                                    onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+                                <label htmlFor="horasTalleres">Horas de Talleres</label>
+                              
+                            </span>
+                        </div>
+                    </div>
+                    
+
+                    
                     <div class="col-12 md:col-12 mt-1">
                         <div class="p-inputgroup">
                             <span class="p-float-label">
@@ -416,17 +442,6 @@
                         </div>
                     </div>
                     
-                    <div class="col-12 md:col-12 mt-1">
-                        <div class="p-inputgroup">
-                            <span class="p-float-label">
-                                <input type="text" value="Horas de Talleres" pInputText id="Horas de Talleres" name="Horas de Talleres" disabled style="color: #000;">
-                            
-                                <p-inputNumber class="ml-5" mode="decimal" [showButtons]="true" inputId="minmax-buttons"
-                                id="horasTalleres" name="horasTalleres" [min]="0" [max]="100"
-                                [(ngModel)]="contenidosSilabo.horasTalleres"> </p-inputNumber>
-                            </span>
-                        </div>
-                    </div>
 
                     <div class="col-12 md:col-12 mt-1">
                         <div class="p-inputgroup">
@@ -779,7 +794,7 @@
 
                 <div *ngIf="validarIdSilabo === true" class="col-md-12" style="text-align: center; margin: 5px;">
                     <p-button label="Actualizar Silabo" icon="pi pi-book" styleClass="p-button-success  mb-2"
-                        (onClick)="actualizarSilabo()"></p-button>
+                        (onClick)="actualizarSilabo()"[disabled]="curso.estadoPublicasionCurso == 'I' || curso.estadoPublicasionCurso == 'F' "></p-button>
                 </div>
 
                 <div class="col-md-12" style="text-align: center; margin: 5px;">
