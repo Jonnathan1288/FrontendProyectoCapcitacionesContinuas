@@ -19,6 +19,8 @@ import { CursoService } from 'src/app/service/curso.service';
 import { ReportsCapacitacionesService } from 'src/app/service/reports-capacitaciones.service';
 import { ToastrService } from 'ngx-toastr';
 
+import { UploadService } from 'src/app/service/upload.service';
+import { environment } from 'src/environment/enviroment';
 @Component({
   selector: 'app-view-evidencias-table-fotofraficas',
   templateUrl: './view-evidencias-table-fotofraficas.component.html',
@@ -59,7 +61,14 @@ export class ViewEvidenciasTableFotofraficasComponent implements OnInit {
   public registroFotografico = new RegistroFotograficoCurso();
 
   public curso = new Curso();
+  public selectedFile!: File;
+ // public avatarURL: string = '';
+  public selectedImage: File | null = null; // Propiedad para almacenar la imagen seleccionada
+  public previewImageUrl: string | null = null; // Propiedad para mostrar la previsualización
+  private apiBaseURL = environment.apiuri + '/uploadUri';// Ruta para referenciar las imagenes 
+  private rutacarpeta = 'images_rfotografico';// Carpeta en donde se guarda en el Back 
 
+  
   //idCurso para el cual nos servira para hacer el guardado de la informacion.
   public idCursoRouter?: number;
 
@@ -70,7 +79,8 @@ export class ViewEvidenciasTableFotofraficasComponent implements OnInit {
     private reportService: ReportsCapacitacionesService,
     private asi: UsuarioService,
     private regfService: RegistroFotograficoCursoService,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private uploadService: UploadService
   ) {}
 
   ngOnInit(): void {
@@ -94,6 +104,18 @@ export class ViewEvidenciasTableFotofraficasComponent implements OnInit {
       });
     // getRegistroFotograficoCursoAllByIdCurso
   }
+
+
+
+  // Resto de tu código y lógica del componente aquí
+
+  public obtenerURLImagen(regFotografico: any): string {
+   
+    return `${this.apiBaseURL}/${regFotografico.foto}/${this.rutacarpeta}`;
+  }
+
+ 
+
   //Método para traer el curso por la id que ingresa
   public obtenerCursoPorId(idCurso: number) {
     this.cursoService.getCursoById(idCurso).subscribe((data) => {
@@ -107,48 +129,11 @@ export class ViewEvidenciasTableFotofraficasComponent implements OnInit {
     });
   }
 
-  public validacionRegistroFotografico() {
-    if (
-      !this.registroFotografico.fecha ||
-      !this.registroFotografico.descripcionFoto ||
-      !this.registroFotografico.foto
-    ) {
-      this.toastrService.error(
-        'Todos los campos deben estar llenos.',
-        'CAMPOS VACÍOS'
-      );
-    } else {
-      const fechaInicio = new Date(this.curso.fechaInicioCurso!);
-      const fechaFin = new Date(this.curso.fechaFinalizacionCurso!);
-      const fecha = new Date(this.registroFotografico.fecha);
 
-      // Convertir las fechas en cadenas en formato ISO 8601
-      const fechaInicioString = fechaInicio.toISOString().split('T')[0];
-      const fechaFinString = fechaFin.toISOString().split('T')[0];
-      const fechaString = fecha.toISOString().split('T')[0];
-
-      if (fechaString < fechaInicioString) {
-        this.toastrService.warning(
-          'No puede ingresar una fecha previa a la fecha de inicio del curso.',
-          'FECHA PREVIA'
-        );
-        // min
-      } else if (fechaString > fechaFinString) {
-        this.toastrService.warning(
-          'No puede ingresar una fecha posterior a la fecha de finalización del curso.',
-          'FECHA POSTERIOR'
-        );
-        //may
-      } else {
-         this.saveEvidenciasRegistrofotografico();
-        // console.log('La fecha está dentro del rango válido');
-      }
-
-      // this.saveEvidenciasRegistrofotografico();
-    }
-  }
 
   public saveEvidenciasRegistrofotografico() {
+
+    
     if (this.registroFotografico.idRegistroFotograficoCurso) {
       this.registroFotograficoService
         .updateRegistroFotografico(
@@ -186,6 +171,105 @@ export class ViewEvidenciasTableFotofraficasComponent implements OnInit {
     }
   }
 
+
+
+
+  
+ 
+ 
+
+  //GUARDAR IMAGEN EN EL BACK
+  public async uploadImagen() {
+    try {
+      const result = await this.uploadService
+        .upload(this.selectedFile, this.rutacarpeta)
+        .toPromise();
+      return result.key;
+    } catch (error) {
+      console.error('new income');
+    }
+  }
+
+
+  public onFileSelected(event: any) {
+    console.log('File selected:', event);
+  
+    let data = event.target.files[0];
+  
+    if (data.size >= 1000000) {
+      this.toastrService.error('', 'LA FOTO ES MUY GRANDE.', { timeOut: 2000 });
+      return;
+    }
+  
+    this.selectedFile = data;
+    const imageURL = URL.createObjectURL(this.selectedFile);
+    this.previewImageUrl = imageURL;
+    console.log('Selected file:', this.selectedFile, this.previewImageUrl);
+  }
+  
+
+
+
+  
+public async validacionRegistroFotografico() {
+  if (this.selectedFile) {
+    const key = await this.uploadImagen();
+    this.registroFotografico.foto = key;
+  }
+
+  if (
+    !this.registroFotografico.fecha ||
+    !this.registroFotografico.descripcionFoto ||
+    !this.registroFotografico.foto
+  ) {
+    this.toastrService.error(
+      'Todos los campos deben estar llenos.',
+      'CAMPOS VACÍOS'
+    );
+  } else {
+    const fechaInicio = new Date(this.curso.fechaInicioCurso!);
+    const fechaFin = new Date(this.curso.fechaFinalizacionCurso!);
+    const fecha = new Date(this.registroFotografico.fecha);
+
+    // Convertir las fechas en cadenas en formato ISO 8601
+    const fechaInicioString = fechaInicio.toISOString().split('T')[0];
+    const fechaFinString = fechaFin.toISOString().split('T')[0];
+    const fechaString = fecha.toISOString().split('T')[0];
+
+    if (fechaString < fechaInicioString) {
+      this.toastrService.warning(
+        'No puede ingresar una fecha previa a la fecha de inicio del curso.',
+        'FECHA PREVIA'
+      );
+      // min
+    } else if (fechaString > fechaFinString) {
+      this.toastrService.warning(
+        'No puede ingresar una fecha posterior a la fecha de finalización del curso.',
+        'FECHA POSTERIOR'
+      );
+      //may
+    } else {
+       this.saveEvidenciasRegistrofotografico();
+      // console.log('La fecha está dentro del rango válido');
+
+      
+    }
+
+  
+  }
+
+
+}
+
+ 
+  //VISIVILIADA DEL MODAL
+  visible?: boolean;
+
+  public showModaL() {
+    this.registroFotografico = new RegistroFotograficoCurso();
+    this.visible = true;
+  }
+  //FIN DE LA VISIVILIDAD DE DEL MODAL
   public eliminadoLogicoDelregistroFotografico(
     registroFotografico: RegistroFotograficoCurso
   ) {
@@ -215,27 +299,20 @@ export class ViewEvidenciasTableFotofraficasComponent implements OnInit {
       });
   }
 
-  //VISIVILIADA DEL MODAL
-  visible?: boolean;
+ 
 
-  public showModaL() {
-    this.registroFotografico = new RegistroFotograficoCurso();
-    this.visible = true;
-  }
-  //FIN DE LA VISIVILIDAD DE DEL MODAL
 
-  //IMPLEMENTACION DE LA EDICION DEL REGISTRO FOTOGRAFICO
-  public cargarDatosRegistrofotografico(
-    registroFofotrafico: RegistroFotograficoCurso
-  ) {
+  public cargarDatosRegistrofotografico(registroFofotrafico: RegistroFotograficoCurso) {
     this.registroFotografico = { ...registroFofotrafico };
     this.curso = this.registroFotografico.curso!;
-
+    this.previewImageUrl = this.obtenerURLImagen(registroFofotrafico);
+  
     if (this.registroFotografico.fecha) {
       this.registroFotografico.fecha = new Date(this.registroFotografico.fecha);
     }
     this.visible = true;
   }
+  
 
   //IMPLEMENTAR LA OPCIÓN PARA LA DESCARGA DEL PDF GENERADO DEL CURSO
   public getReportRegistroFotograficoCurso() {
@@ -248,38 +325,17 @@ export class ViewEvidenciasTableFotofraficasComponent implements OnInit {
     // this.getPdf()
   }
 
-  //Almacenar en el objeto
-  async subirFoto(event: any) {
-    const file = event.target.files[0];
-    const fileSize = file.size; // tamaño en bytes
-    if (fileSize > 262144) {
-      this.toastrService.info(
-        '',
-        'La foto es muy pesada.'
-      );
-      // alert('La foto es muy pesada');
-      event.target.value = null;
-    } else {
-      try {
-        this.registroFotografico.foto = await this.convertToBase64(file);
-      } catch (error) {
-        console.error(error);
-      }
-    }
+ 
+  public limpiarCampos() {
+    this.registroFotografico = new RegistroFotograficoCurso();
+    this.selectedImage = null;
+    this.previewImageUrl = null;
   }
+  
 
-  //Conversion de la imagen en base 64
-  async convertToBase64(file: File): Promise<string> {
-    const reader = new FileReader();
-    return new Promise<string>((resolve, reject) => {
-      reader.onload = () => {
-        const result = btoa(reader.result as string);
-        resolve(result);
-      };
-      reader.onerror = () => {
-        reject(reader.error);
-      };
-      reader.readAsBinaryString(file);
-    });
-  }
+
+  
 }
+
+
+

@@ -3,8 +3,12 @@
         <ng-template pTemplate="left">
             <!-- <button pButton pRipple label="Nuevo" icon="pi pi-plus" class="p-button-success mr-2"
                 (click)="showModaL()"></button> -->
-            <button pButton pRipple label="Nuevo" icon="pi pi-plus" class="p-button-success mr-2" (click)="showModaL()"
-                [disabled]="curso.estadoAprovacionCurso !== 'A'"></button>
+            <!-- <button pButton pRipple label="Nuevo" icon="pi pi-plus" class="p-button-success mr-2" (click)="showModaL()"
+                [disabled]="curso.estadoAprovacionCurso !== 'A'"></button> -->
+
+                <button pButton pRipple label="Nuevo" icon="pi pi-plus" class="p-button-success mr-2" (click)="limpiarCampos(); showModaL()"
+  [disabled]="curso.estadoAprovacionCurso !== 'A'"></button>
+
 
         </ng-template>
 
@@ -48,14 +52,28 @@
         </ng-template>
         <ng-template pTemplate="body" let-regFotografico>
             <tr>
+                
+            
 
-                <td><img [src]="regFotografico.foto ? 'data:image/jpeg;base64,' + regFotografico.foto : '../../../../assets/img/camer.png'"
-                        [alt]="regFotografico.name" width="100" class="shadow-4" /></td>
+                    <!-- <td>
+                        <img [src]="obtenerURLImagen(regFotografico)"
+                             [alt]="regFotografico.name" width="100" class="shadow-4" />
+                      </td> -->
+                      
+                
+                      <td>
+                        <img [src]="obtenerURLImagen(regFotografico) ? obtenerURLImagen(regFotografico) : '../../../../assets/img/subir.png'"
+                          [alt]="regFotografico.name" width="100" class="shadow-4" />
+                      </td>
+                      
                 <td>{{regFotografico.descripcionFoto}}</td>
                 <td>{{regFotografico.fecha}}</td>
                 <td>
-                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" pTooltip="Editar" tooltipPosition="top"
+                    <!-- <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" pTooltip="Editar" tooltipPosition="top"
                         (click)="cargarDatosRegistrofotografico(regFotografico)"
+                        [disabled]="curso.estadoAprovacionCurso !== 'A'"></button> -->
+                        <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" pTooltip="Editar"
+                        tooltipPosition="top" (click)="cargarDatosRegistrofotografico(regFotografico)"
                         [disabled]="curso.estadoAprovacionCurso !== 'A'"></button>
                     <button pButton pRipple [icon]="regFotografico.estado ? 'pi pi-trash' : 'pi pi-check'" tooltipPosition="top"
                         [pTooltip]="regFotografico.estado ? 'Desactivar' : 'Activar'"
@@ -77,7 +95,7 @@
 
 <!-- IMPLEMENTACION DEL MODAL PARA EL INGRESO DE REGISTRO FOTOGRAFICO -->
 <p-dialog header="Registro fotográfico del curso" [(visible)]="visible" [modal]="true"
-    [style]="{ width: '40vw', height: '280' }" [draggable]="false" [resizable]="false">
+    [style]="{ width: '50vw', height: '280' }" [draggable]="false" [resizable]="false">
     <form (ngSubmit)="validacionRegistroFotografico()" novalidate style="padding: 15px;">
 
         <!-- <p-card header="Registro fotográfico del curso"> -->
@@ -91,7 +109,7 @@
                         <span class="p-float-label">
                             <textarea id="float-input" rows="9" cols="30" pInputTextarea id="descripcionCurso"
                                 name="descripcionCurso" [(ngModel)]="registroFotografico.descripcionFoto"
-                                required></textarea>
+                                ></textarea>
                             <label for="float-input">Descripción de la foto</label>
                         </span>
                         <!-- </div> -->
@@ -102,9 +120,17 @@
                 <div class="grid p-fluid">
                     <div class="col-12 md:col-12" style="align-items: center;">
                         <div class="p-inputgroup">
-                            <p-calendar inputId="edad" class="ng-dirty" [showIcon]="true"
+                            <!-- <p-calendar inputId="edad" class="ng-dirty" [showIcon]="true"
                                 placeholder="Fecha de evidencia" id="fechaEvidencia" name="fechaEvidencia"
-                                [(ngModel)]="registroFotografico.fecha"></p-calendar>
+                                [(ngModel)]="registroFotografico.fecha"></p-calendar> -->
+                                <div class="p-inputgroup">
+                                    <p-calendar inputId="edad" class="ng-dirty" [showIcon]="true"
+                                        placeholder="Fecha de evidencia" id="fechaEvidencia" name="fechaEvidencia"
+                                        [(ngModel)]="registroFotografico.fecha" [appendTo]="'body'"></p-calendar>
+                                </div>
+                            
+                            
+  
 
                             <p-overlayPanel #op>
                                 <h6><b>Fecha de inicio y fin:</b></h6>
@@ -129,36 +155,38 @@
                     </div>
                 </div>
 
-                <div class="grid p-fluid">
-                    <div class="col-12 md:col-12" style="align-items: center;">
-                        <div class="personal-image">
-                            <label class="label" style="border: black;">
-                                <input type="file" accept="image/jpeg, image/jpg, image/png"
-                                    (change)="subirFoto($event)" />
-                                <figure class="personal-figure">
-                                    <img *ngIf="registroFotografico.foto"
-                                        [src]="registroFotografico.foto ? 'data:image/jpeg;base64,' + registroFotografico.foto : '../../../../assets/img/camer.png'"
-                                        class="personal-avatar" alt="logoFundacion" />
-                                    <img style="padding: 20px;" *ngIf="!registroFotografico.foto"
-                                        src="./assets/img/camer.png" class="personal-avatar" alt="Logo Fundación" />
-                                    <figcaption class="personal-figcaption">
-                                        <img src="./assets/img/camer.png" />
-                                    </figcaption>
-                                </figure>
-                            </label>
-                        </div>
-                    </div>
-                </div>
+            <div class="grid p-fluid">
+    <div class="col-12 md:col-12" style="align-items: center;">
+        <div class="personal-image">
+            <label class="label" style="border: black;">
+              <input type="file" accept="image/jpeg, image/jpg, image/png" (change)="onFileSelected($event)" />
+              <figure class="personal-figure">
+                <img *ngIf="previewImageUrl" [src]="previewImageUrl" class="personal-avatar" alt="Previsualización de imagen" />
+                <img *ngIf="!previewImageUrl" src="./assets/img/subir.png" class="personal-avatar" alt="Imagen de marcador de posición" />
+                <figcaption class="personal-figcaption">
+                  <img src="./assets/img/subir.png" />
+                </figcaption>
+              </figure>
+            </label>
+          </div>
+          
+    </div>
+</div>
+
+
             </div>
 
         </div>
-        <!-- </p-card> -->
+   
 
-        <!-- Fin del periodo porgrama -->
-        <div class="col-md-12 " style="text-align: center; margin: 5px;">
+           <div class="col-md-12 " style="text-align: center; margin: 5px;">
             <p-button type="ngSubmit" [label]="registroFotografico.idRegistroFotograficoCurso? 'Actualizar': 'Guardar'"
                 icon="pi pi-save" styleClass="p-button-success  mb-2 mt-4"></p-button>
         </div>
+   
 
     </form>
 </p-dialog>
+
+
+
