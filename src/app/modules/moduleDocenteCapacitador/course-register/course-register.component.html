@@ -428,9 +428,9 @@
           </style>
 
           <span class="p-float-label">
-            <textarea id="float-input" rows="5" cols="30" pInputTextarea id="descripcionCurso" name="descripcionCurso"
+            <textarea id="float-input"  rows="5" cols="30" pInputTextarea id="descripcionCurso" name="descripcionCurso" 
               [(ngModel)]="curso.descripcionCurso" required
-              onblur="this.classList.toggle('required', !this.value)"></textarea>
+              onblur="this.classList.toggle('required', !this.value)"  style="resize: none;" ></textarea>
             <label for="float-input">Descripción del curso a impartir</label>
           </span>
         </div>
@@ -446,7 +446,7 @@
           <span class="p-float-label">
             <textarea id="float-input" rows="5" cols="30" pInputTextarea id="objetivoGeneralesCurso"
               name="objetivoGeneralesCurso" [(ngModel)]="curso.objetivoGeneralesCurso" required
-              onblur="this.classList.toggle('required', !this.value)"></textarea>
+              onblur="this.classList.toggle('required', !this.value)"  style="resize: none;"></textarea>
             <label for="float-input">Objetivo general del curso</label>
           </span>
         </div>
@@ -456,8 +456,8 @@
         <div class="col-12 md:col-12 mt-5" style="align-items: center">
           <span class="p-float-label">
             <textarea id="float-input" rows="5" cols="30" pInputTextarea id="observacionCurso" name="observacionCurso"
-              [(ngModel)]="curso.observacionCurso"></textarea>
-            <label htmlFor="observacionCurso">Observación del curso</label>
+              [(ngModel)]="curso.observacionCurso"  style="resize: none;"></textarea>
+            <label htmlFor="observacionCurso" >Observación del curso</label>
           </span>
         </div>
       </div>

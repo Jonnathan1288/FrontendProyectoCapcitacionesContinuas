@@ -364,7 +364,27 @@ encabezados */
 
 }
 
+.personal-avatar {
+  border: 2px solid #ccc; /* Borde gris claro */
+  border-radius: 10px; /* Esquinas redondeadas */
+  overflow: hidden; /* Para ocultar cualquier parte de la imagen que sobresalga del contenedor */
+}
+.personal-figure {
+  border: 2px solid #ccc; /* Borde gris claro */
+  border-radius: 10px; /* Esquinas redondeadas */
+  overflow: hidden; /* Para ocultar cualquier parte de la imagen que sobresalga del contenedor */
+}
 
+
+.personal-figcaption {
+  text-align: center; /* Alineación del pie de foto al centro */
+  padding: 10px; /* Espaciado interno */
+}
+
+.personal-figcaption img {
+  width: 50px; /* Ancho de la imagen del pie de foto */
+  height: 50px; /* Alto de la imagen del pie de foto */
+}
 
 
 

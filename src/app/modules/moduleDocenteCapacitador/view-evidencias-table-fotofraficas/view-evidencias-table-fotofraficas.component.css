@@ -52,4 +52,9 @@
 .custom-text-center {
     text-align: center;
   }
-  
+ 
+  .my-custom-calendar.p-datepicker-open .p-datepicker-calendar {
+    transform: scale(0.4); /* Ajusta el valor según tus necesidades */
+    max-height: 30%; /* Limita la altura máxima para evitar que cubra el encabezado */
+    transform-origin: center;
+}
