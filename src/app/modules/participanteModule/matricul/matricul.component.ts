@@ -192,4 +192,17 @@ export class MatriculComponent implements OnInit {
         }
       });
   }
+
+  CambioAuspiciado() {
+    if (this.detallefichaMatricula.pregunta6 === 'No') {
+      this.detallefichaMatricula.pregunta7 = 'N/A';
+      this.detallefichaMatricula.pregunta8 = 'N/A';
+      this.detallefichaMatricula.pregunta9 = 'N/A';
+    } else {
+      this.detallefichaMatricula.pregunta7 = '';
+      this.detallefichaMatricula.pregunta8 = '';
+      this.detallefichaMatricula.pregunta9 = '';
+    }
+  }
+  
 }

@@ -97,7 +97,9 @@ export class EditDataUserComponent implements OnInit {
 
 	public validateKeysNotEmpty(person: Persona) {
 		if (
-			!Object.entries(person).every(value => value)
+			!Object.entries(person)
+				.filter(([key]) => Object.keys(person).includes(key))
+				.every(([_, value]) => value)
 		) {
 			const dominio = person.correo!.split('@')[1];
 			const resultado = dominio.includes('tecazuay.edu.ec');

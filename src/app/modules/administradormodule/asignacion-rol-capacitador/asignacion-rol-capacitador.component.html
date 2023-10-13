@@ -78,12 +78,14 @@
                 </td>
                 <td>
                     <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2 mt-1"
-                        (click)="cargarDatosDocenteCapacitador(capacit)"></button>
+                        (click)="cargarDatosDocenteCapacitador(capacit)" title="Editar"></button>
 
-                    <button pButton pRipple [icon]="capacit.usuario.estadoUsuarioActivo ? 'pi pi-check' : 'pi pi-trash'"
+                        <button pButton pRipple [icon]="capacit.usuario.estadoUsuarioActivo ? 'pi pi-check' : 'pi pi-times'"
                         [class]="'p-button-rounded ' + (capacit.usuario.estadoUsuarioActivo ? 'p-button-primary' : 'p-button-warning') + ' mt-1'"
+                        [title]="capacit.usuario.estadoUsuarioActivo ? 'Inhabilitar usuario' : 'Habilitar usuario'"
                         (click)="eliminadoLogicoDelCapacitador(capacit.usuario)">
-                    </button>
+                      </button>
+                      
                 </td>
             </tr>
         </ng-template>
@@ -188,19 +190,38 @@
                 </ng-template>
             </p-table>
 
+            <div class="col-md-12 mt-4">
+                <div class="d-flex justify-content-end align-items-center flex-wrap">
+                  <p-button type="ngSubmit"
+                    [label]="classCapacitador.idCapacitador ? 'Actualizar' : 'Crear'"
+                    icon="pi pi-save" styleClass="p-button-outlined p-button-success button-margin"></p-button>
+                    <div style="margin: 10px;"></div>
+                  <p-button pRipple label="Cancelar" icon="pi pi-times" styleClass="p-button-outlined p-button-danger button-margin"
+                    (click)="hideDialog()"></p-button>
+                </div>
+              </div>
+              
+              
 
-
-            <!-- Fin del periodo porgrama -->
+            <!-- Fin del periodo porgrama 
             <div class="col-md-12 mt-4" style="text-align: center; margin: 5px;">
                 <p-button type="ngSubmit"
                     [label]="classCapacitador.idCapacitador? 'Actualizar Capacitador': 'Crear Capacitador'"
-                    icon="pi pi-save" styleClass="p-button-success  "></p-button>
-            </div>
+                    icon="pi pi-save" styleClass="p-button-outlined p-button-success"></p-button>
+            </div>-->
         </div>
     </form>
 </p-dialog>
 
 
+
+<!--<p-dialog [(visible)]="visible" [modal]="true" [draggable]="false" [resizable]="false">
+    <form (ngSubmit)="saveUpdateDocenteDocenteCapacitadorRol()" novalidate style="padding: 15px;">
+        <div class="grid p-fluid m-2">
+
+        </div>
+    </form>
+</p-dialog>-->
 
 
 

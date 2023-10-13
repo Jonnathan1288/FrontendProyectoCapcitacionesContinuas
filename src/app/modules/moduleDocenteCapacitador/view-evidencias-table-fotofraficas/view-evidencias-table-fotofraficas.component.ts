@@ -99,6 +99,10 @@ export class ViewEvidenciasTableFotofraficasComponent implements OnInit {
     this.cursoService.getCursoById(idCurso).subscribe((data) => {
       if (data != null) {
         this.curso = data;
+        console.log("==========>>>>>>"+this.curso.estadoAprovacionCurso )
+        if (this.curso.estadoAprovacionCurso !== 'A') {
+          this.toastrService.info("Este curso aún no ha sido aprobado por el administrador. Por favor, espere la aprobación para acceder a las funciones del curso.");
+        }
       }
     });
   }
@@ -125,14 +129,14 @@ export class ViewEvidenciasTableFotofraficasComponent implements OnInit {
 
       if (fechaString < fechaInicioString) {
         this.toastrService.warning(
-          'No puede ingresar una fecha pasada a la fecha de inicio del curso.',
-          'FECHA PASADA'
+          'No puede ingresar una fecha previa a la fecha de inicio del curso.',
+          'FECHA PREVIA'
         );
         // min
       } else if (fechaString > fechaFinString) {
         this.toastrService.warning(
-          'No puede ingresar una fecha posterio a la fecha de finalización del curso.',
-          'FECHA MAYOR'
+          'No puede ingresar una fecha posterior a la fecha de finalización del curso.',
+          'FECHA POSTERIOR'
         );
         //may
       } else {
@@ -154,7 +158,7 @@ export class ViewEvidenciasTableFotofraficasComponent implements OnInit {
         .subscribe((data) => {
           if (data != null) {
             this.toastrService.success(
-              'El registro fotografico a sido actualizado.',
+              'El registro fotográfico ha sido actualizado.',
               'REGISTRO ACTUALIZADO'
             );
             // alert('succesful update');
@@ -171,7 +175,7 @@ export class ViewEvidenciasTableFotofraficasComponent implements OnInit {
           if (data != null) {
             // alert('fuccesful');
             this.toastrService.success(
-              'El registro fotografico ha sido guardado',
+              'El registro fotográfico ha sido guardado',
               'GUARDADO CON ÉXITO'
             );
             this.visible = false;
@@ -196,12 +200,12 @@ export class ViewEvidenciasTableFotofraficasComponent implements OnInit {
         if (data != null) {
           if (registroFotografico.estado) {
             this.toastrService.success(
-              'El registro fotografico esta visible',
+              'El registro fotográfico está visible',
               'Activación Exitosa'
             );
           } else {
             this.toastrService.warning(
-              'El registro fotografico ya no esta en el reporte',
+              'El registro fotográfico ya no está en el reporte',
               'Desactivación Exitosa'
             );
           }
