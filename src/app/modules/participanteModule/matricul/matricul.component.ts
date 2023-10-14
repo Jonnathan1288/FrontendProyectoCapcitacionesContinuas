@@ -12,6 +12,7 @@ import { inscritosService } from 'src/app/service/inscritos.service';
 import { ParticipanteMatriculadoService } from 'src/app/service/participante-matriculado.service';
 import { ReportsCapacitacionesService } from 'src/app/service/reports-capacitaciones.service';
 import { UsuarioService } from 'src/app/service/usuario.service';
+import { LocalStorageKeys, getAttributeStorage } from 'src/app/util/local-storage-manager';
 
 @Component({
   selector: 'app-matricul',
@@ -38,10 +39,10 @@ export class MatriculComponent implements OnInit {
     private detalleFichaMatriculaService: DetalleFichaService,
     private reportService: ReportsCapacitacionesService,
     private toastrService: ToastrService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
-    this.idUserLoggin = localStorage.getItem('id_username');
+    this.idUserLoggin = getAttributeStorage(LocalStorageKeys.ID_USUARIO);
     this.traerUsuarioLogin();
     this.activateRoute.params.subscribe((param) => {
       const idCursoROut = param['id'];
@@ -101,7 +102,7 @@ export class MatriculComponent implements OnInit {
           timeOut: 1300,
         }
       );
-    }else{
+    } else {
       this.guardarFichadeMatrircla();
     }
   }
@@ -163,7 +164,7 @@ export class MatriculComponent implements OnInit {
 
   //mATRICULAS
   public getReportNecesidadCurso() {
-   
+
     this.reportService
       .gedownloadFichaDeInscripcion(this.inscritos.curso?.idCurso!, this.inscritos.usuario?.idUsuario!)
       .subscribe((r) => {

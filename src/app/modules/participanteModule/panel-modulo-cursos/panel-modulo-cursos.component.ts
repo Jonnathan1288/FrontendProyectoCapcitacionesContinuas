@@ -8,11 +8,12 @@ import { CursoService } from 'src/app/service/curso.service';
 import { ParticipanteMatriculadoService } from 'src/app/service/participante-matriculado.service';
 import { ReportsCapacitacionesService } from 'src/app/service/reports-capacitaciones.service';
 import { UsuarioService } from 'src/app/service/usuario.service';
+import { LocalStorageKeys, getAttributeStorage } from 'src/app/util/local-storage-manager';
 
 @Component({
   selector: 'app-panel-modulo-cursos',
   templateUrl: './panel-modulo-cursos.component.html',
-  styleUrls: ['./panel-modulo-cursos.component.css','./panel-modulo-cursos.component .scss']
+  styleUrls: ['./panel-modulo-cursos.component.css', './panel-modulo-cursos.component .scss']
 })
 export class PanelModuloCursosComponent implements OnInit {
 
@@ -27,10 +28,10 @@ export class PanelModuloCursosComponent implements OnInit {
   ) {
   }
 
-  idCursoGlobal?:number;
-  idUsuarioIsLoggin?:any;
+  idCursoGlobal?: number;
+  idUsuarioIsLoggin?: any;
   ngOnInit(): void {
-    this.idUsuarioIsLoggin = localStorage.getItem('id_username');
+    this.idUsuarioIsLoggin = getAttributeStorage(LocalStorageKeys.ID_USUARIO);
     this.activateRoute.params.subscribe((param) => {
       const idCurso = param['id'];
       this.idCursoGlobal = idCurso;
@@ -41,9 +42,9 @@ export class PanelModuloCursosComponent implements OnInit {
   }
 
   usuario: Usuario = new Usuario();
-  public datosDelUsuario():void{
+  public datosDelUsuario(): void {
     this.usuarioService.getUsuarioById(this.idUsuarioIsLoggin).subscribe(
-      data=>{
+      data => {
         this.usuario = data;
       }
     )
@@ -51,18 +52,18 @@ export class PanelModuloCursosComponent implements OnInit {
 
   // VALIDACION SI APROBO O NO APROBO
   listaParticipantes: ParticipantesMatriculados[] = [];
-  public buscarAlUsuario():void{
+  public buscarAlUsuario(): void {
     this.participantesMatriulados.getParticipantesMatriculadosByIdCurso(this.idCursoGlobal!).subscribe(
-      data=>{
+      data => {
         this.listaParticipantes = data;
-        console.log(this.listaParticipantes); 
+        console.log(this.listaParticipantes);
         this.buscarEnLista();
       }
     )
   }
 
-  estadoAprobacionCurso!:String;
-  buscarEnLista(){
+  estadoAprobacionCurso!: String;
+  buscarEnLista() {
     for (let participantes of this.listaParticipantes) {
       console.log("esta buscado esta id de usuario " + this.idUsuarioIsLoggin)
       if (participantes.inscrito?.usuario?.idUsuario == this.idUsuarioIsLoggin) {
@@ -81,9 +82,9 @@ export class PanelModuloCursosComponent implements OnInit {
   diasTotal?: any;
   diasTranscurridos?: any;
   fechaActual = new Date();
-  public verProgreso():void{
+  public verProgreso(): void {
     this.cursoService.getCursoById(this.idCursoGlobal!).subscribe(
-      data=>{
+      data => {
         this.curso = data;
         const fechaInicio = new Date(this.curso.fechaInicioCurso!);
         const fechaFin = new Date(this.curso.fechaFinalizacionCurso!);
@@ -101,9 +102,9 @@ export class PanelModuloCursosComponent implements OnInit {
   //DESCARGAR CERTIFICADO DE CADAD ESTUDIANTE
 
   public downloadCertificadoEstudianteSenecytDownload() {
-    console.log("Datos enviar id -> "+ this.usuario.persona?.idPersona!  + " identi" + this.curso.idCurso! + " el numero dos -> " + this.usuario.persona?.identificacion! )
+    console.log("Datos enviar id -> " + this.usuario.persona?.idPersona! + " identi" + this.curso.idCurso! + " el numero dos -> " + this.usuario.persona?.identificacion!)
     this.reportService
-      .downloadCertificadoEstudiante( this.curso.idCurso! , this.usuario.persona?.identificacion!)
+      .downloadCertificadoEstudiante(this.curso.idCurso!, this.usuario.persona?.identificacion!)
       .subscribe((r) => {
         const url = URL.createObjectURL(r);
         window.open(url, '_blank');

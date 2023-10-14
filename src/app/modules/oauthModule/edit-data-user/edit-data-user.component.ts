@@ -10,10 +10,11 @@ import { UsuarioService } from 'src/app/service/usuario.service';
 import { ToastrService } from 'ngx-toastr';
 import { LoadScript } from 'src/app/scripts/load-script';
 import { FOLDER_IMAGE_USER, getFile } from 'src/app/util/folder-upload';
-import { LocalStorageKeys, getAttributeStorage } from 'src/app/util/local-storage-manager';
+import { LocalStorageKeys, getAttributeStorage, getRole } from 'src/app/util/local-storage-manager';
 import { UploadService } from 'src/app/service/upload.service';
 import { PersonaFenixService } from 'src/app/service/fenix/persona-fenix.service';
 import { INCLUDE_FIELDS } from 'src/app/util/exlude-data-person';
+import { SecurityService } from 'src/app/util/service/security.service';
 
 
 @Component({
@@ -42,12 +43,13 @@ export class EditDataUserComponent implements OnInit {
 		private toastrService: ToastrService,
 		private imagenService: UploadService,
 		private personaFenixService: PersonaFenixService,
+		private securityService: SecurityService
 	) { }
 
 	ngOnInit(): void {
 
-		this.idUsuario = localStorage.getItem('id_username');
-		this.userRol = localStorage.getItem('rol');
+		this.idUsuario = getAttributeStorage(LocalStorageKeys.ID_USUARIO);
+		this.userRol = getRole(LocalStorageKeys.ROL);
 		this.obtenerDatosUsusario(this.idUsuario);
 		if (localStorage.getItem('emp') === 'EMPTY') {
 			this.toastrService.info('', 'COMPLETE SU PERFIL DE USUARIO');
@@ -172,7 +174,7 @@ export class EditDataUserComponent implements OnInit {
 			next: (resp) => {
 				if (resp === 1) {
 					this.toastrService.success('', 'FOTO ACTUALIZADA');
-					localStorage.setItem('foto', String(uri));
+					localStorage.setItem('foto', String(this.securityService.encrypt(uri)));
 				} else {
 					this.toastrService.error('', 'INCONVENIENTE AL ACTUALIZAR FOTO');
 				}

@@ -11,7 +11,7 @@ export class SidebarService {
 	public dataMenu: any[] = [{
 		titulo: 'Dashboard',
 		icono: 'nav-icon fas fa-tachometer-alt',
-		rols: [ROLES.ADMINISTRADOR],
+		rols: PRINCIPAL_ROLS,
 		submenu: [
 			{ titulo: 'Dashboard', path: 'home', icono: 'fa fa-users' },
 

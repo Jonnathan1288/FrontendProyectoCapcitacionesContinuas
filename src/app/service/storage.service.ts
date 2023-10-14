@@ -1,7 +1,6 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
-const USER_KEY = 'rol';
+import { LocalStorageKeys, getAttributeStorage, getRole } from '../util/local-storage-manager';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +15,7 @@ export class StorageService {
   }
 
   public isLoggedIn(): boolean {
-    const user = localStorage.getItem(USER_KEY);
+    const user = getRole(LocalStorageKeys.ROL);
     console.log('En el strorage--> ' + user);
     if (user) {
       return true;
@@ -25,16 +24,16 @@ export class StorageService {
   }
 
   public getRole() {
-    return localStorage.getItem(USER_KEY);
+    return getRole(LocalStorageKeys.ROL);
   }
 
-  public returnToken(): HttpHeaders{
+  public returnToken(): HttpHeaders {
     let auth_token = localStorage.getItem("token");
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${auth_token}`
     });
 
-   return  headers;
+    return headers;
   }
 }

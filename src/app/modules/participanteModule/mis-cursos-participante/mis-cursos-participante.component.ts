@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Curso } from 'src/app/models/curso';
 import { CursoService } from 'src/app/service/curso.service';
+import { LocalStorageKeys, getAttributeStorage } from 'src/app/util/local-storage-manager';
 
 @Component({
   selector: 'app-mis-cursos-participante',
@@ -18,25 +19,25 @@ export class MisCursosParticipanteComponent implements OnInit {
   constructor(
     private cursosService: CursoService,
     private router: Router,
-  ){
+  ) {
   }
 
-  idUsuarioStorage!:any;
+  idUsuarioStorage!: any;
 
   ngOnInit(): void {
-    this.idUsuarioStorage = localStorage.getItem('id_username');
+    this.idUsuarioStorage = getAttributeStorage(LocalStorageKeys.ID_USUARIO);
     this.obtenerCursosParticiapnte();
   }
 
   cursosList: Curso[] = [];
-  public obtenerCursosParticiapnte():void{
+  public obtenerCursosParticiapnte(): void {
     this.cursosService.listCursoDelParticipante(this.idUsuarioStorage).subscribe(
-      data =>{
+      data => {
         this.cursosList = data;
       }
     )
   }
-  verDetallesCurso(idCurso:any){
+  verDetallesCurso(idCurso: any) {
     this.router.navigate(['panel/course/' + idCurso]).then(() => {
       // window.location.reload();
     });
