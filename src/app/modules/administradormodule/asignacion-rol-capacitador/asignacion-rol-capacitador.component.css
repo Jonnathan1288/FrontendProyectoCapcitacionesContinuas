@@ -123,6 +123,17 @@
 
 /* Estilos adicionales si es necesario */
 
+/* Botón de rol asignado (verde) */
+.assigned-role {
+  background-color: green; 
+  color: white; /* Texto blanco */
+}
+
+/* Botón de rol no asignado (rojo) 
+.unassigned-role {
+  background-color: red;
+  color: white; 
+}*/
 
 
 

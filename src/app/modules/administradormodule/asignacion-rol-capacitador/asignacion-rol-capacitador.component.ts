@@ -476,6 +476,7 @@ export class AsignacionRolCapacitadorComponent implements OnInit {
 
 	//vISIVILIADA DEL MODAL
 	visible?: boolean;
+	submitted: boolean = false;
 
 	public showModaL() {
 		this.classPersona = new Persona();
@@ -512,4 +513,9 @@ export class AsignacionRolCapacitadorComponent implements OnInit {
 			}
 		});
 	}
+
+	hideDialog() {
+		this.visible = false;
+		this.submitted = false;
+	  }
 }
