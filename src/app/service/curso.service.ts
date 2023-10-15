@@ -7,6 +7,7 @@ import { StorageService } from './storage.service';
 import { CourseFilter } from '../models/references/course-filter';
 import { CourseFilterDocente } from '../models/references/course-filter-by-docente';
 import { ListCourseReduce } from '../models/references/list-course-reduce';
+import { CursoPaginacion } from '../models/cursopaginacion';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,16 @@ export class CursoService {
   public listCursoDisponibles(): Observable<Curso[]> {
     return this.http.get<Curso[]>(environment.apiuri + '/curso/cursoDisponibles/list');
   }
+
+  public listaCursoDisponiblesPaginacion(page: number, size: number, sort: string[]): Observable<CursoPaginacion[]> {
+    let params = new HttpParams()
+      .set('page', page)
+      .set('size', size)
+
+    console.log(params);
+    return this.http.get<CursoPaginacion[]>(environment.apiuri + '/curso/cursoDisponibles/publicados', { params });
+  }
+
 
   public listCursoDelParticipante(idUsuarioParticipante: number): Observable<Curso[]> {
     return this.http.get<Curso[]>(environment.apiuri + '/curso/cursosDelParticipante/list/' + idUsuarioParticipante);

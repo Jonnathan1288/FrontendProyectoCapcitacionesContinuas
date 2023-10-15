@@ -17,8 +17,6 @@
     </div>
 </p-dialog>
 
-
-
 <div class="grid p-fluid m-4">
     <div class="col-12 md:col-10">
         <div class="justify-content-center">
@@ -41,14 +39,10 @@
     </div>
 </div>
 
-
-<!-- otra parte -->
-
-
 <div class="container my-3" *ngIf="participantsVisibleData">
     <div class="container ">
         <div class="container">
-            <p-button [disabled]="listParticipantesMatriculados.length === 0"
+            <p-button [disabled]="listMatriculadoReduce.length === 0"
                 [label]="estadoFinal === 'F'? 'VER HISTORIAL ASISTENCIA':'Tomar Asistencia'" icon="pi pi-calendar-minus"
                 styleClass="p-button-success  mb-2" (onClick)="tomarAsistenciaCurso()"></p-button>
 
@@ -61,21 +55,18 @@
                 styleClass="p-button-success  mb-2 m-5" (onClick)="tomarNotasFinalesCurso()"></p-button>
         </div>
 
-
-
         <div class="container mt-1" *ngIf="estadoFinal === 'F'">
             <div class="alert alert-danger" role="alert">
                 <h4 class="alert-heading">EL CURSO A FINALIZADO</h4>
                 <hr>
                 <p>Usted no puede hacer acciones solo puede revisar sus alumnos Matriculados.</p>
 
-                <!-- <p class="mb-0">Si necesita hacer cambios en el curso, comuníquese con el administrador del sistema.</p> -->
             </div>
         </div>
 
         <div class="card text-center mb-2 shadow-4 rounded-5">
-            <p-table [value]="listParticipantesMatriculados" [paginator]="true" [rows]="rows"
-                [showCurrentPageReport]="true" [(first)]="first" [tableStyle]="{'min-width': '50rem'}"
+            <p-table [value]="listMatriculadoReduce" [paginator]="true" [rows]="rows" [showCurrentPageReport]="true"
+                [(first)]="first" [tableStyle]="{'min-width': '50rem'}"
                 currentPageReportTemplate="Mostrando {first} to {last} of {totalRecords} estudiantes"
                 [rowsPerPageOptions]="[5,10,15]">
                 <ng-template pTemplate="header">
@@ -92,22 +83,19 @@
                             <div class="d-flex align-items-center">
 
                                 <div>
-                                    <p class="fw-bold mb-1">{{ list.inscrito!.usuario!.persona!.nombre1 }} {{
-                                        list.inscrito!.usuario!.persona!.nombre2 }} {{
-                                        list.inscrito!.usuario!.persona!.apellido1 }} {{
-                                        list.inscrito!.usuario!.persona!.apellido2 }}</p>
-                                    <p class="text-muted mb-0">{{ list.inscrito!.usuario!.persona!.correo }}</p>
+                                    <p class="fw-bold mb-1">{{list.nombres }}</p>
+                                    <p class="text-muted mb-0">{{ list.email }}</p>
                                 </div>
                             </div>
                         </td>
                         <td>
-                            <p class="text-muted mb-0">{{ list.inscrito!.usuario!.persona!.identificacion }}</p>
+                            <p class="text-muted mb-0">{{ list.identificacion }}</p>
                         </td>
                         <td>
-                            <p class="text-muted mb-0">{{ list.inscrito!.usuario!.persona!.celular }}</p>
+                            <p class="text-muted mb-0">{{ list.celular }}</p>
                         </td>
                         <td>
-                            <p class="text-muted mb-0">{{ list.inscrito!.usuario!.persona!.genero }}</p>
+                            <p class="text-muted mb-0">{{ list.genero === "M" ? 'MASCULINO':'FEMENINO' }}</p>
                         </td>
                     </tr>
                 </ng-template>

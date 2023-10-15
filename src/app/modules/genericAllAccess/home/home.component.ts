@@ -7,6 +7,7 @@ import { CapacitadorService } from 'src/app/service/capacitador.service';
 import { CursoService } from 'src/app/service/curso.service';
 import { PersonaService } from 'src/app/service/persona.service';
 import { UsuarioService } from 'src/app/service/usuario.service';
+import { LocalStorageKeys, getAttributeStorage, getRole } from 'src/app/util/local-storage-manager';
 
 @Component({
   selector: 'app-home',
@@ -28,9 +29,9 @@ export class HomeComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.idUsuarioIsLoggin = localStorage.getItem('id_username');
+    this.idUsuarioIsLoggin = getAttributeStorage(LocalStorageKeys.ID_USUARIO);
     this.obternerDatosUsuarioLoggin(this.idUsuarioIsLoggin);
-    this.rolNameUser = localStorage.getItem('rol');
+    this.rolNameUser = getRole(LocalStorageKeys.ROL);
     this.obternerDatosUsuarioLogginRoles(this.rolNameUser);
     this.listCourseporUsuarioLogin(this.idUsuarioIsLoggin);
 

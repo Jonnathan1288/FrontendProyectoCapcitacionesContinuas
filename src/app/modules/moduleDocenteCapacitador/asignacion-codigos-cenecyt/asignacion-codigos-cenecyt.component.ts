@@ -10,6 +10,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ParticipantesMatriculados } from 'src/app/models/participantesMatriculados';
 import { ParticipantsApproved } from 'src/app/models/references/participants-approved';
 import { CourseFilterDocente } from 'src/app/models/references/course-filter-by-docente';
+import { LocalStorageKeys, getAttributeStorage } from 'src/app/util/local-storage-manager';
 @Component({
 	selector: 'app-asignacion-codigos-cenecyt',
 	templateUrl: './asignacion-codigos-cenecyt.component.html',
@@ -43,7 +44,7 @@ export class AsignacionCodigosCenecytComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		this.idUsuarioIsLoggin = localStorage.getItem('id_username');
+		this.idUsuarioIsLoggin = getAttributeStorage(LocalStorageKeys.ID_USUARIO);
 		this.findByIdUsuarioEstadoCursoFinalizado(this.idUsuarioIsLoggin);
 	}
 

@@ -1,14 +1,9 @@
-<div class="card">
+<div class="">
     <p-toolbar styleClass="mb-4">
         <ng-template pTemplate="left">
-            <!-- <button pButton pRipple label="Nuevo" icon="pi pi-plus" class="p-button-success mr-2"
-                (click)="showModaL()"></button> -->
-            <!-- <button pButton pRipple label="Nuevo" icon="pi pi-plus" class="p-button-success mr-2" (click)="showModaL()"
-                [disabled]="curso.estadoAprovacionCurso !== 'A'"></button> -->
 
             <button pButton pRipple label="Nuevo" icon="pi pi-plus" class="p-button-success mr-2"
                 (click)="limpiarCampos(); showModaL()" [disabled]="curso.estadoAprovacionCurso !== 'A'"></button>
-
 
         </ng-template>
 
@@ -25,28 +20,17 @@
         currentPageReportTemplate="Mostrando {first} de {last} de {totalRecords} registros fotográficos"
         [showCurrentPageReport]="true">
         <ng-template pTemplate="caption">
-            <!-- <div class="flex align-items-center justify-content-between"> -->
+            <div class="flex align-items-center justify-content-between">
                 <!-- <h5 class="m-0"><strong>CURSO: </strong> {{curso.nombreCurso!}}</h5> -->
-                <div class="card">
-                    <div class="flex justify-content-between flex-wrap card-container purple-container">
-                        <div
-                            class="flex align-items-center justify-content-center w-16rem h-4rem font-bold text-white border-round m-2">
-                            <h5 class="m-0" style="color: black;"><strong>CURSO: </strong> {{ curso.nombreCurso! }}{{
-                                curso.estadoAprovacionCurso
-                                !== 'A'
-                                ? ' (No aprobado)' : '' }}</h5>
-                        </div>
-                        <div
-                            class="flex align-items-center justify-content-center w-16rem h-4rem font-bold text-white border-round m-2">
-                            <span class="p-input-icon-left">
-                                <i class="pi pi-search"></i>
-                                <input pInputText type="text" placeholder="Search..."
-                                    (input)="dt.filterGlobal($any($event.target).value, 'contains')" />
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            <!-- </div> -->
+                <h5 class="m-0"><strong>CURSO: </strong> {{ curso.nombreCurso! }}{{ curso.estadoAprovacionCurso !== 'A'
+                    ? ' (No aprobado)' : '' }}</h5>
+
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" placeholder="Search..."
+                        (input)="dt.filterGlobal($any($event.target).value, 'contains')" />
+                </span>
+            </div>
         </ng-template>
         <ng-template pTemplate="header">
             <tr>
@@ -64,25 +48,15 @@
         <ng-template pTemplate="body" let-regFotografico>
             <tr>
 
-
-
-                <!-- <td>
-                        <img [src]="obtenerURLImagen(regFotografico)"
-                             [alt]="regFotografico.name" width="100" class="shadow-4" />
-                      </td> -->
-
-
                 <td>
-                    <img [src]="obtenerURLImagen(regFotografico) ? obtenerURLImagen(regFotografico) : '../../../../assets/img/subir.png'"
+                    <img [src]="regFotografico.foto ? obtenerURLImagen(regFotografico.foto) : '../../../../assets/img/subir.png'"
                         [alt]="regFotografico.name" width="100" class="shadow-4" />
                 </td>
 
                 <td>{{regFotografico.descripcionFoto}}</td>
                 <td>{{regFotografico.fecha}}</td>
                 <td>
-                    <!-- <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" pTooltip="Editar" tooltipPosition="top"
-                        (click)="cargarDatosRegistrofotografico(regFotografico)"
-                        [disabled]="curso.estadoAprovacionCurso !== 'A'"></button> -->
+
                     <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
                         pTooltip="Editar" tooltipPosition="top" (click)="cargarDatosRegistrofotografico(regFotografico)"
                         [disabled]="curso.estadoAprovacionCurso !== 'A'"></button>
@@ -103,22 +77,17 @@
     </p-table>
 </div>
 
+<!-- IMPLEMENTACIÓN DEL MODAL PARA EL INGRESO DE LOS CURSOS -->
+<p-dialog [(visible)]="visible" [style]="{ width: '450px' }" header="REGISTRO FOTOGRÁFICO" [modal]="true"
+    styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <form (ngSubmit)="validacionRegistroFotografico()" novalidate>
 
-<!-- IMPLEMENTACION DEL MODAL PARA EL INGRESO DE REGISTRO FOTOGRAFICO -->
-<p-dialog header="Registro fotográfico del curso" [(visible)]="visible" [modal]="false" [style]="{ width: '50vw'}"
-    [draggable]="false" [resizable]="false">
-
-
-    <form (ngSubmit)="validacionRegistroFotografico()" novalidate style="padding: 15px;">
-        <!-- <div class="flex align-items-stretch justify-content-center flex-wrap" style="min-height: 200px">
-
-            <div class="flex align-items-center justify-content-center font-bold border-round m-2"
-                style="min-width: 200px; min-height: 50px">
-
-                <div class="overflow-visible">
+            <div class="grid p-fluid">
+                <div class="col-12 md:col-12">
                     <div class="flex-auto">
                         <div
-                            class="flex-1 flex align-items-center justify-content-center font-bold m-2 px-2 py-2 border-round">
+                            class="flex-1 flex align-items-center justify-content-center font-bold  px-2 py-2 border-round">
                             <div class="container custom-text-center" style="font-size: 20px;">
                                 <strong>Descripción evidencia</strong>
                             </div>
@@ -127,25 +96,23 @@
 
                     <div class="flex-auto">
                         <div
-                            class="flex-1 flex align-items-center justify-content-center font-bold m-2 px-2 py-2 border-round">
-                            <textarea id="float-input" rows="11" cols="40" pInputTextarea id="descripcionCurso"
-                                name="descripcionCurso" [(ngModel)]="registroFotografico.descripcionFoto"
-                                required></textarea>
+                            class="flex-1 flex align-items-center justify-content-center font-bold  px-2 py-2 border-round">
+                            <textarea id="float-input" rows="4" cols="30" pInputTextarea id="descripcionCurso"
+                                name="descripcionCurso" placeholder="Descripción"
+                                [(ngModel)]="registroFotografico.descripcionFoto" required></textarea>
                         </div>
                     </div>
 
-
+                    <!-- </div> -->
                 </div>
             </div>
 
 
-            <div class="flex align-items-center justify-content-center font-bold border-round m-2"
-                style="min-width: 200px; min-height: 50px">
-
-                <div class="overflow-visible">
+            <div class="grid p-fluid">
+                <div class="col-12 md:col-12">
                     <div class="flex-auto">
                         <div
-                            class="flex-1 flex align-items-center justify-content-center font-bold m-2 px-2 py-2 border-round">
+                            class="flex-1 flex align-items-center justify-content-center font-bold  px-2 py-2 border-round">
                             <div class="container custom-text-center" style="font-size: 20px;">
                                 <strong>Foto evidencia</strong>
                             </div>
@@ -154,7 +121,7 @@
 
                     <div class="flex-auto">
                         <div
-                            class="flex-1 flex align-items-center justify-content-center font-bold m-2 px-2 py-2 border-round">
+                            class="flex-1 flex align-items-center justify-content-center font-bold  px-2 py-2 border-round">
 
                             <div class="personal-image">
                                 <label class="label" style="border: black;">
@@ -163,8 +130,8 @@
                                     <figure class="personal-figure">
                                         <img *ngIf="previewImageUrl" [src]="previewImageUrl" class="personal-avatar"
                                             alt="Previsualización de imagen" />
-                                        <img *ngIf="!previewImageUrl" src="./assets/img/subir.png" class="personal-avatar"
-                                            alt="Imagen de marcador de posición" />
+                                        <img *ngIf="!previewImageUrl" src="./assets/img/subir.png"
+                                            class="personal-avatar" alt="Imagen de marcador de posición" />
                                         <figcaption class="personal-figcaption">
                                             <img src="./assets/img/subir.png" />
                                         </figcaption>
@@ -174,112 +141,40 @@
                         </div>
                     </div>
 
-                    <div class="flex-auto">
-                        <div
-                            class="flex-1 flex align-items-center justify-content-center font-bold m-2 px-2 py-2 border-round">
-
-                            <p-calendar inputId="edad" appendTo="body" class="ng-dirty" [showIcon]="true"
-                                placeholder="Fecha de evidencia" id="fechaEvidencia" name="fechaEvidencia"
-                                [(ngModel)]="registroFotografico.fecha">
-
-                                <ng-template pTemplate="header">
-
-                                    <h6><b>Fecha de inicio y fin:</b></h6>
-                                    <p-divider></p-divider>
-                                    <p><b>inicio:</b> {{curso.fechaInicioCurso}} </p>
-                                    <p><b>fin:</b> {{curso.fechaFinalizacionCurso}}</p>
-                                </ng-template>
-
-                            </p-calendar>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-        <div class="flex flex-column">
-            <div class="flex align-items-center justify-content-center h-4rem font-bold border-round m-2">
-                <p-button type="ngSubmit"
-                    [label]="registroFotografico.idRegistroFotograficoCurso? 'Actualizar': 'Guardar'" icon="pi pi-save"
-                    styleClass="p-button-success  mb-0 mt-0"></p-button>
-            </div>
-        </div> -->
-
-
-
-        <div class="grid">
-            <div class="sm:col-12 xl:col-6">
-                <div class="grid">
-                    <div class="col-12
-                    flex align-items-center justify-content-center font-bold border-round m-2">
-                        <div class="container custom-text-center" style="font-size: 20px;">
-                            <strong>Descripción evidencia</strong>
-                        </div>
-                    </div>
-                    <div class="col-12
-                    flex align-items-center justify-content-center font-bold border-round m-2">
-                        <div
-                            class="flex-1 flex align-items-center justify-content-center font-bold m-2 px-2 py-2 border-round">
-                            <textarea id="float-input" rows="11" cols="35" pInputTextarea id="descripcionCurso"
-                                name="descripcionCurso" [(ngModel)]="registroFotografico.descripcionFoto"
-                                required></textarea>
-                        </div>
-                    </div>
                 </div>
             </div>
-            <div class="sm:col-12 xl:col-6">
-                <div class="grid">
-                    <div class="col-12
-                    flex align-items-center justify-content-center font-bold border-round m-2">
-                        <div class="container custom-text-center" style="font-size: 20px;">
-                            <strong>Foto evidencia</strong>
-                        </div>
-                    </div>
-                    <div class="col-12
-                    flex align-items-center justify-content-center font-bold border-round m-2">
-                        <div class="personal-image">
-                            <label class="label" style="border: black;">
-                                <input type="file" accept="image/jpeg, image/jpg, image/png"
-                                    (change)="onFileSelected($event)" />
-                                <figure class="personal-figure">
-                                    <img *ngIf="previewImageUrl" [src]="previewImageUrl" class="personal-avatar"
-                                        alt="Previsualización de imagen" />
-                                    <img *ngIf="!previewImageUrl" src="./assets/img/subir.png" class="personal-avatar"
-                                        alt="Imagen de marcador de posición" />
-                                    <figcaption class="personal-figcaption">
-                                        <img src="./assets/img/subir.png" />
-                                    </figcaption>
-                                </figure>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col-12
-                    flex align-items-center justify-content-center font-bold border-round m-2">
-                        <p-calendar inputId="edad" appendTo="body" class="ng-dirty" [showIcon]="true"
-                            placeholder="Fecha de evidencia" id="fechaEvidencia" name="fechaEvidencia"
-                            [(ngModel)]="registroFotografico.fecha">
 
-                            <ng-template pTemplate="header">
 
-                                <h6><b>Fecha de inicio y fin:</b></h6>
-                                <p-divider></p-divider>
-                                <p><b>inicio:</b> {{curso.fechaInicioCurso}} </p>
-                                <p><b>fin:</b> {{curso.fechaFinalizacionCurso}}</p>
-                            </ng-template>
+            <div class="grid p-fluid">
+                <div class="col-12 md:col-12">
+                    <p-calendar inputId="edad" appendTo="body" class="ng-dirty" [showIcon]="true"
+                        placeholder="Fecha de evidencia" id="fechaEvidencia" name="fechaEvidencia"
+                        [(ngModel)]="registroFotografico.fecha">
 
-                        </p-calendar>
-                    </div>
+                        <ng-template pTemplate="header">
+
+                            <h6><b>Fecha de inicio y fin:</b></h6>
+                            <p-divider></p-divider>
+                            <p><b>inicio:</b> {{curso.fechaInicioCurso}} </p>
+                            <p><b>fin:</b> {{curso.fechaFinalizacionCurso}}</p>
+                        </ng-template>
+
+                    </p-calendar>
                 </div>
             </div>
-            <div class="col-12 
-                    flex align-items-center justify-content-center font-bold border-round m-2">
-                <p-button type="ngSubmit"
-                    [label]="registroFotografico.idRegistroFotograficoCurso? 'Actualizar': 'Guardar'" icon="pi pi-save"
-                    styleClass="p-button-success  mb-0 mt-0"></p-button>
-            </div>
-        </div>
 
 
-    </form>
+            <p-button type="ngSubmit" [label]="registroFotografico.idRegistroFotograficoCurso? 'Actualizar': 'Guardar'"
+                icon="pi pi-save"
+                [styleClass]="'p-button-'+(registroFotografico.idRegistroFotograficoCurso ? 'success':'primary')+ ' mt-4'"></p-button>
+
+        </form>
+    </ng-template>
+    <!-- <ng-template pTemplate="footer">
+        <p-button pRipple label="Cancelar" icon="pi pi-times" styleClass="p-button-outlined p-button-danger"
+            (click)="hideDialog()"></p-button>
+        <p-button pRipple [label]="classPeriodoPrograma.idPeriodoPrograma? 'Actualizar': 'Guardar'" icon="pi pi-check"
+            styleClass="p-button-outlined p-button-success"
+            (click)="validarDatosProgramaCapacitacionContinua()"></p-button>
+    </ng-template> -->
 </p-dialog>

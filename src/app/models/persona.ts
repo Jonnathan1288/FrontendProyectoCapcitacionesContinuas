@@ -1,6 +1,6 @@
 export class Persona {
     idPersona?: number;
-    identificacion?: String;
+    identificacion?: string;
     nombre1?: String;
     nombre2?: String;
     apellido1?: String;

@@ -5,6 +5,7 @@ import { Table } from 'primeng/table';
 import { Capacitador } from 'src/app/models/capacitador';
 import { Curso } from 'src/app/models/curso';
 import { CursoService } from 'src/app/service/curso.service';
+import { LocalStorageKeys, getAttributeStorage } from 'src/app/util/local-storage-manager';
 
 @Component({
 	selector: 'app-list-course',
@@ -30,7 +31,7 @@ export class ListCourseComponent implements OnInit {
 	) { }
 
 	ngOnInit(): void {
-		this.idUsuarioIsLoggin = localStorage.getItem('id_username');
+		this.idUsuarioIsLoggin = getAttributeStorage(LocalStorageKeys.ID_USUARIO);
 		this.listCourseporUsuarioLogin();
 	}
 

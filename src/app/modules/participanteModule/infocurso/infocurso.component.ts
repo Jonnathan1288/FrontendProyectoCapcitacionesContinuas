@@ -6,6 +6,7 @@ import { PrerequisitoCurso } from 'src/app/models/prerequisito-curso';
 import { CursoService } from 'src/app/service/curso.service';
 import { inscritosService } from 'src/app/service/inscritos.service';
 import { PrerrequisitosCursoService } from 'src/app/service/prerrequisitosCurso.service';
+import { LocalStorageKeys, getAttributeStorage } from 'src/app/util/local-storage-manager';
 
 @Component({
   selector: 'app-infocurso',
@@ -30,7 +31,7 @@ export class InfocursoComponent implements OnInit {
   dataCurso: Curso = new Curso();
 
   ngOnInit(): void {
-    this.idUsuarioGlobal = localStorage.getItem('id_username');
+    this.idUsuarioGlobal = getAttributeStorage(LocalStorageKeys.ID_USUARIO);
     this.activateRoute.params.subscribe((param) => {
       const idCursoROut = param['id'];
       this.idCursoGlobal = idCursoROut;

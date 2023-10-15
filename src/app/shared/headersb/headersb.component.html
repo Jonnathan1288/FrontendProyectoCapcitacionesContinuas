@@ -31,8 +31,9 @@
 
                 <div class=" dropdown-header">
 
-                    <img src="./assets/dist/img/user3-128x128.jpg" alt="User Avatar"
-                        class="img-size-50 img-circle mb-1 ">
+
+                    <img [src]="urlPhoto ? getUriFile(urlPhoto) : 'assets/img/istap.png'" alt="User Avatar"
+                        class=" image-circular mb-1 ">
                     <p class="fw-bold fs-4"><strong>{{nameUserLoggin.toUpperCase()}}</strong></p>
                     <p class="fw-bold fs-4">{{rolUserLoggin.toUpperCase()}}</p>
 
