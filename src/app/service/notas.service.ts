@@ -4,6 +4,7 @@ import { Notas } from '../models/notas';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environment/enviroment';
 import { StorageService } from './storage.service';
+import { NotasFinalesFilter } from '../models/references/notasFinales-filter';
 
 @Injectable({
   providedIn: 'root'
@@ -34,6 +35,11 @@ export class NotasService {
 
   public validarExistenciaDatos(idCurso: number){
     return this.http.get<boolean>(environment.apiuri+'/validarExistenciNotas/findbyIdCurso/'+idCurso, { headers: this.storageService.returnToken()});
+  }
+
+
+  public getfindAllNotasFinalesByIdCurso(idCurso: number): Observable<NotasFinalesFilter[]> {
+    return this.http.get<Notas[]>(environment.apiuri + '/notas/findAllNotasFinalesByIdCurso/' + idCurso);
   }
 
 }
