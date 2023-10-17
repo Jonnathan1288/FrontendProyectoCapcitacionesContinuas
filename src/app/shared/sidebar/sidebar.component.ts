@@ -5,7 +5,7 @@ import { StorageService } from 'src/app/service/storage.service';
 import { BadgeColor } from 'src/app/util/enums';
 import { FOLDER_IMAGE_USER, getFile } from 'src/app/util/folder-upload';
 
-import { LocalStorageKeys, clearLocalStorage, getAttributeStorage, getRole, getUserData } from 'src/app/util/local-storage-manager';
+import { LocalStorageKeys, clearLocalStorage, getAttributeStorage, getRole } from 'src/app/util/local-storage-manager';
 import { SharedService } from 'src/app/util/service/shared.service';
 import { SidebarService } from 'src/app/util/service/sidebar.service';
 
@@ -31,8 +31,6 @@ export class SidebarComponent implements OnInit {
   constructor(
     private _CargarScript: LoadScript,
     private router: Router,
-    private storageService: StorageService,
-    private sharedService: SharedService,
     private sidebarService: SidebarService
   ) {
 

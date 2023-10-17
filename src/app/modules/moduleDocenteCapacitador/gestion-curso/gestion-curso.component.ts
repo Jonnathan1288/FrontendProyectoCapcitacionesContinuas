@@ -5,6 +5,7 @@ import { Curso } from 'src/app/models/curso';
 import { CourseFilter } from 'src/app/models/references/course-filter';
 import { CourseFilterDocente } from 'src/app/models/references/course-filter-by-docente';
 import { CursoService } from 'src/app/service/curso.service';
+import { LocalStorageKeys, getAttributeStorage } from 'src/app/util/local-storage-manager';
 
 @Component({
 	selector: 'app-gestion-curso',
@@ -21,7 +22,7 @@ export class GestionCursoComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		this.idUsuarioIsLogin = localStorage.getItem('id_username');
+		this.idUsuarioIsLogin = getAttributeStorage(LocalStorageKeys.ID_USUARIO);
 
 		this.findFilterCoursesByUsuarioDocente(this.idUsuarioIsLogin);
 	}

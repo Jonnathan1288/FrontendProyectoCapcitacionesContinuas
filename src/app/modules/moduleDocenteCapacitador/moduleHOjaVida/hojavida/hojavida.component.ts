@@ -8,6 +8,7 @@ import { Capacitador } from 'src/app/models/capacitador';
 import { FOLDER_DOCUMENTS_HOJA_VIDA, getFile } from 'src/app/util/folder-upload';
 import { UploadService } from 'src/app/service/upload.service';
 import { HojaVida } from 'src/app/models/references/hoja-vida';
+import { LocalStorageKeys, getAttributeStorage } from 'src/app/util/local-storage-manager';
 
 @Component({
 	selector: 'app-hojavida',
@@ -31,7 +32,7 @@ export class HojavidaComponent implements OnInit {
 
 	idUsuarioLoggic!: any;
 	ngOnInit(): void {
-		this.idUsuarioLoggic = localStorage.getItem('id_username');
+		this.idUsuarioLoggic = getAttributeStorage(LocalStorageKeys.ID_USUARIO);
 		this.obtenerDocentePorIdUsuario(this.idUsuarioLoggic);
 		this.obtenerHojaDeVidata(this.idUsuarioLoggic)
 	}

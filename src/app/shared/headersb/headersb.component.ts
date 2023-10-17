@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FOLDER_IMAGE_USER, getFile } from 'src/app/util/folder-upload';
-import { LocalStorageKeys, clearLocalStorage, getAttributeStorage, getRole, getUserData } from 'src/app/util/local-storage-manager';
+import { LocalStorageKeys, clearLocalStorage, getAttributeStorage, getRole } from 'src/app/util/local-storage-manager';
 import { TimeOut } from 'src/app/util/model/time-out';
 import { TimeOutTokenService } from 'src/app/util/service/time-out-token.service';
 @Component({
@@ -39,10 +39,8 @@ export class HeadersbComponent implements OnInit {
   }
 
   public getDataUserLoggin() {
-    const userData = getUserData(LocalStorageKeys.USER_DATA);
 
     this.nameUserLoggin = getAttributeStorage(LocalStorageKeys.USER_NAME);
-    this.imageUserLoggin = userData.foto;
 
     this.rolUserLoggin = getRole(LocalStorageKeys.ROL)!;
 

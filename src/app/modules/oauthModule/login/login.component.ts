@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Rol } from 'src/app/models/rol';
 import { RecuperarService } from 'src/app/service/recuperar-password.service';
 import { clearLocalStorage } from 'src/app/util/local-storage-manager';
+import { SecurityService } from 'src/app/util/service/security.service';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +25,8 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private oauthService: OauthService,
     private toastrService: ToastrService,
-    private recuperarService: RecuperarService
+    private recuperarService: RecuperarService,
+    private securityService: SecurityService
   ) { }
   ngOnInit(): void {
   }
@@ -64,7 +66,8 @@ export class LoginComponent implements OnInit {
                 );
               } else {
                 localStorage.setItem('token', String(this.info.token));
-                localStorage.setItem('id_username', String(this.info.user.idUsuario));
+                const idUsuario = this.securityService.encrypt(String(this.info.user.idUsuario));
+                localStorage.setItem('id_username', String(idUsuario));
                 localStorage.setItem(
                   'id_persona',
                   String(this.info.user.persona?.idPersona)
@@ -72,16 +75,17 @@ export class LoginComponent implements OnInit {
 
                 localStorage.setItem(
                   'foto',
-                  String(this.info.user.fotoPerfil)
+                  String(this.securityService.encrypt(this.info.user.fotoPerfil))
                 );
 
-                localStorage.setItem("username", this.info.user.username);
+                localStorage.setItem("username", this.securityService.encrypt(this.info.user.username));
 
                 if (this.info.user.roles?.length! > 1) {
                   this.modalView();
                 } else {
                   for (let rol of this.info.user.roles!) {
-                    localStorage.setItem('rol', String(rol.nombreRol));
+                    localStorage.setItem('rol', String(this.securityService.encrypt(rol.nombreRol)));
+
                   }
 
                   setTimeout(() => {
@@ -150,7 +154,7 @@ export class LoginComponent implements OnInit {
       progressAnimation: 'increasing',
     });
 
-    localStorage.setItem('rol', String(nombre));
+    localStorage.setItem('rol', String(this.securityService.encrypt(nombre)));
     setTimeout(() => {
       this.showSpinner = false;
       window.location.reload();

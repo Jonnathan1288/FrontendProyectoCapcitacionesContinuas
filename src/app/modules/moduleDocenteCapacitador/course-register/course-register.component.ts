@@ -31,6 +31,7 @@ import { TipoCursoService } from 'src/app/service/tipo-curso.service';
 import { NgZone } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { UploadService } from 'src/app/service/upload.service';
+import { LocalStorageKeys, getAttributeStorage } from 'src/app/util/local-storage-manager';
 
 @Component({
   selector: 'app-course-register',
@@ -96,10 +97,10 @@ export class CourseRegisterComponent {
     private ngZone: NgZone,
     private toastrService: ToastrService,
     private uploadService: UploadService
-  ) {}
+  ) { }
 
   ngOnInit() {
-    this.idUserLoggin = localStorage.getItem('id_username');
+    this.idUserLoggin = getAttributeStorage(LocalStorageKeys.ID_USUARIO);
     this.primengConfig.ripple = true;
     this.actiRouter.params.subscribe((params) => {
       const idCurso = params['id'];
@@ -256,7 +257,7 @@ export class CourseRegisterComponent {
       }
       if (this.curso) {
         this.horarioC = this.curso.horarioCurso!;
-       this.daysOfTheweekV = this.curso?.horarioCurso?.dias || '';
+        this.daysOfTheweekV = this.curso?.horarioCurso?.dias || '';
         this.molalidadId = this.curso.modalidadCurso?.idModalidadCurso;
         this.tipoCursoId = this.curso.tipoCurso?.idTipoCurso;
         this.nivelCursoId = this.curso.nivelCurso?.idNivelCurso;
@@ -429,7 +430,7 @@ export class CourseRegisterComponent {
     this.selectedFile = data;
     const imageURL = URL.createObjectURL(this.selectedFile);
     this.avatarURL = imageURL;
-    console.log('Selected file:', this.selectedFile,this.avatarURL);
+    console.log('Selected file:', this.selectedFile, this.avatarURL);
   }
 
   //GUARDAR IMAGEN EN EL BACK
@@ -451,11 +452,11 @@ export class CourseRegisterComponent {
 
   public async validarCursosCpacitacionContinua() {
 
-    if(this.selectedFile){
+    if (this.selectedFile) {
       const key = await this.uploadImagen();
-    this.curso.fotoCurso = key;
+      this.curso.fotoCurso = key;
     }
-    
+
     if (
       !this.curso?.nombreCurso ||
       !this.curso?.fotoCurso ||
@@ -573,7 +574,7 @@ export class CourseRegisterComponent {
 
   public createHorarioCurso() {
     if (this.curso.idCurso) {
-       this.horarioC.dias = this.daysOfTheweekV;
+      this.horarioC.dias = this.daysOfTheweekV;
       this.horarioC.estadoHorarioCurso = true;
       console.log({ horarioEnvio: this.horarioC });
       this.horarioService
@@ -605,7 +606,7 @@ export class CourseRegisterComponent {
           }
         });
     } else {
-       this.horarioC.dias = this.daysOfTheweekV;
+      this.horarioC.dias = this.daysOfTheweekV;
       this.horarioC.estadoHorarioCurso = true;
       this.horarioService.crearHorarioCurso(this.horarioC).subscribe((data) => {
         if (data != null) {
@@ -843,7 +844,7 @@ export class CourseRegisterComponent {
       if (this.curso) {
         this.horarioC = this.curso.horarioCurso!;
         this.daysOfTheweekV = this.curso?.horarioCurso?.dias || '';
-       
+
         this.molalidadId = this.curso.modalidadCurso?.idModalidadCurso;
         this.tipoCursoId = this.curso.tipoCurso?.idTipoCurso;
         this.nivelCursoId = this.curso.nivelCurso?.idNivelCurso;
