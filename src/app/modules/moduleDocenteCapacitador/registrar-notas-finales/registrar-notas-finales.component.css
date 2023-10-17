@@ -8,16 +8,14 @@
 
 
 .container {
-  margin: 20px auto;
   max-width: 900%;
-  padding: 20px;
   background-color: #f5f5f5;
   border-radius: 5px;
 }
 
 .attendance-section {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 8px;
 }
 
 .section-title {
@@ -32,15 +30,6 @@
   margin-top: 10px;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-gap: 10px;
-}
-
-.col-12 {
-  width: 100%;
-}
 
 .p-inputgroup {
   display: flex;
@@ -49,27 +38,6 @@
 .p-calendar {
   flex: 1;
 }
-
-/* Estilos opcionales para resaltar el calendario */
-.p-calendar .p-calendar-input-container input {
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 8px;
-  font-size: 14px;
-  color: #333;
-}
-
-.p-calendar .p-inputgroup-addon .pi {
-  font-size: 18px;
-  color: #777;
-}
-
-
-
-
-
-
 
 /* NUEVOS CAMBIOS PARA LA OTRA TABLA */
 
