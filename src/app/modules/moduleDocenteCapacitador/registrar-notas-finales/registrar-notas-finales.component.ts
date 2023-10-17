@@ -63,8 +63,6 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 
 			}
 		});
-
-
 	}
 
 	public finalizarCursoCapacitacionContinua() {
@@ -130,20 +128,13 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 		});
 	}
 
-	public isValidateExistenciaNotas!: boolean;
 	public validarExistenciaDeRegistros(): void {
 		this.notasService
 			.validarExistenciaDatos(this.idCursoGlobal!)
 			.subscribe((data) => {
 				if (data == false) {
-					// SI HAY DATOS
-					// alert('si hay');
-					this.isValidateExistenciaNotas = false;
 					this.obtenerParticipantesFinales();
 				} else {
-					// NO HAY DATOS
-					// alert('no hay');
-					this.isValidateExistenciaNotas = true;
 					this.traerParticipantesMatriculados();
 				}
 			});
@@ -160,7 +151,7 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 			});
 	}
 	// FIN //
-	notas: Notas = new Notas();
+	public notas: Notas = new Notas();
 	// MANDAR LOS DATOS A LA TABLA
 	public guardarDatosVacios(): void {
 		for (let participante of this.listaParticipantesMatriculados) {
@@ -438,13 +429,11 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 							}
 						);
 						location.reload();
-						// alert('succesful update');
 						this.visibleModalFormFinalCourse = false;
 					}
 				});
 		} else {
 			this.classInformeFinalC.curso = this.classCursoFinalizaEstado;
-			// this.classInformeFinalC.curso = data;
 			this.informeFinalCorseService
 				.saveInformeFinalCurso(this.classInformeFinalC)
 				.subscribe((data) => {
@@ -464,9 +453,8 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 		}
 	}
 
-	//implemeentacion
 
-	//Implementacion de la tabla de todo referente a primeng
+	//PRIME PAGINATOR------------------------------------------------------------------------------------
 	public next() {
 		this.first = this.first + this.rows;
 	}
@@ -488,8 +476,7 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 	public isFirstPage(): boolean {
 		return this.listNotas ? this.first === 0 : true;
 	}
-
-	public lastValidParcial: string = ''; // Variable para almacenar el último valor válido del campo
+	//END PRIME PAGINATOR------------------------------------------------------------------------------------
 
 	public validarParcialAndFinalNota(event: any) {
 		const valor = parseInt(event.target.value, 10);
@@ -568,12 +555,14 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 			plugins: {
 				legend: {
 					labels: {
-						usePointStyle: true,
+						usePointStyle: false,
 						color: textColor
 					}
+
 				},
 
-			}
+			},
+
 		};
 	}
 
