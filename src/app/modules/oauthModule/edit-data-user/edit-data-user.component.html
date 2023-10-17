@@ -17,7 +17,8 @@
 				</div>
 				<div class="perfil-usuario-avatar">
 					<img [src]="avatarURLProfile ? avatarURLProfile: urlPhoto ? getUriFile(urlPhoto) : 'assets/img/istap.png'"
-						alt="img-avatar" height="165px" (click)="handleDivClick()">
+						alt="img-avatar" height="165px" (click)="handleDivClick()" pTooltip="Maximizar Foto"
+						tooltipPosition="bottom">
 					<input type="file" #fileInput style="display: none;" accept="image/jpeg, image/jpg, image/png"
 						(change)="onFileSelected($event)">
 					<button type="button" class="boton-avatar" pTooltip="Foto de perfil" tooltipPosition="bottom">

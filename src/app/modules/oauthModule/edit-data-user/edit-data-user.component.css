@@ -171,3 +171,8 @@
 .p-inputgroup {
   margin-top: 12px;
 }
+
+
+.perfil-usuario-avatar {
+  cursor: pointer;
+}
