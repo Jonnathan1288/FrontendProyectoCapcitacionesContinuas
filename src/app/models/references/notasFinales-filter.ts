@@ -6,6 +6,7 @@ export class NotasFinalesFilter{
     informe3?:number
     examenFinal?:number
     observacion?: string
+    nombres?: string
     identificacion?: string
     idCurso?: number
     nombreCurso?: string
