@@ -14,6 +14,7 @@ import { ReportsCapacitacionesService } from 'src/app/service/reports-capacitaci
 //other
 import { ConfirmationService, ConfirmEventType } from 'primeng/api';
 import { ParticipanteAprobadoService } from 'src/app/service/participante-aprobado.service';
+import { NotaFinalReduce } from 'src/app/models/references/nota-final-reduce';
 @Component({
 	selector: 'app-registrar-notas-finales',
 	templateUrl: './registrar-notas-finales.component.html',
@@ -133,7 +134,7 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 			.validarExistenciaDatos(this.idCursoGlobal!)
 			.subscribe((data) => {
 				if (data == false) {
-					this.obtenerParticipantesFinales();
+					this.getParticipantsFinallyGrade();
 				} else {
 					this.traerParticipantesMatriculados();
 				}
@@ -173,18 +174,31 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 	//
 
 	// TAER TODOS LOS ESTUDIANTES YA GUARDADOS
-	public listNotas: Notas[] = [];
 
 	public obtenerParticipantesFinales(): void {
 		this.notasService
 			.getParticipantesFinales(this.idCursoGlobal!)
 			.subscribe((data) => {
-				this.listNotas = data;
-				this.chartParticipantes();
+
 			});
 	}
 
-	// CREAR NOTAS POR ESTUDIANTE
+
+
+	public notasFinalesReduce: NotaFinalReduce[] = [];
+	public getParticipantsFinallyGrade() {
+		this.notasService.findAllNotasFinalesByIdCurso(this.idCursoGlobal!).subscribe({
+			next: (resp) => {
+				this.notasFinalesReduce = resp;
+				this.chartParticipantes();
+			}, error: (err) => {
+
+			}
+		})
+	}
+
+
+
 
 	/* MODAL */
 	public visible?: boolean;
@@ -213,7 +227,13 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 				.updateNotas(this.idCapModelEdit!, this.notas)
 				.subscribe((data) => {
 					this.notas = data;
-					this.obtenerParticipantesFinales();
+					const { idNota, informe1, informe2, informe3, examenFinal, observacion, fechaNota, partipantesMatriculados } = data;
+					const idParticipanteMatriculado = partipantesMatriculados?.idParticipanteMatriculado
+					const result = { idNota, informe1, informe2, informe3, examenFinal, observacion, fechaNota, idParticipanteMatriculado }
+
+					const index = this.notasFinalesReduce.findIndex(i => i.idNota === result.idNota);
+					this.notasFinalesReduce[index] = result;
+
 					this.toastrService.success(
 						'Nota ingresada del alumno correctamente.',
 						'NOTAS INGRESADAS.',
@@ -239,7 +259,7 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 		let informe3CeroVacio = false;
 		let examenFinalCeroOVacio = false;
 
-		this.listNotas.forEach((nota) => {
+		this.notasFinalesReduce.forEach((nota) => {
 			if (nota.informe1 === 0 || nota.informe1 === undefined) {
 				informe1CeroVacio = true;
 			}
@@ -262,16 +282,15 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 			return;
 		}
 		console.log('CLICk');
-		for (let participante of this.listNotas) {
+		for (let participante of this.notasFinalesReduce) {
 
 			const info1 = participante.informe1!;
 			const info2 = participante.informe2!;
 			const info3 = participante.informe3!;
 			const examen = participante.examenFinal!;
 			this.idParticpanteNota =
-				participante.partipantesMatriculados!.idParticipanteMatriculado!;
+				participante!.idParticipanteMatriculado!;
 			const notaFinal = (info1 / 30) * 30 + (info2 / 30) * 30 + (info3 / 15) * 15 + (examen / 25) * 25;
-			console.log(' Esta es su nota final -> ' + notaFinal);
 
 			this.participantesMatriculadosService
 				.getParticipantesMatriculadosById(this.idParticpanteNota)
@@ -468,13 +487,13 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 	}
 
 	public isLastPage(): boolean {
-		return this.listNotas
-			? this.first === this.listNotas.length - this.rows
+		return this.notasFinalesReduce
+			? this.first === this.notasFinalesReduce.length - this.rows
 			: true;
 	}
 
 	public isFirstPage(): boolean {
-		return this.listNotas ? this.first === 0 : true;
+		return this.notasFinalesReduce ? this.first === 0 : true;
 	}
 	//END PRIME PAGINATOR------------------------------------------------------------------------------------
 
@@ -519,7 +538,7 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 	public data: any;
 	public options: any;
 	public chartParticipantes() {
-		const notas = this.listNotas.map(i => {
+		const notas = this.notasFinalesReduce.map(i => {
 			const informe1 = i.informe1 || 0;
 			const informe2 = i.informe2 || 0;
 			const informe3 = i.informe3 || 0;

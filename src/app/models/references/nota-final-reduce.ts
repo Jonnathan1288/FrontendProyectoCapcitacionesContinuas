@@ -1,10 +1,10 @@
-export class NotasFinalesFilter{
+export class NotaFinalReduce {
 
-    idNota?:number
-    informe1?:number
-    informe2?:number
-    informe3?:number
-    examenFinal?:number
+    idNota?: number
+    informe1?: number
+    informe2?: number
+    informe3?: number
+    examenFinal?: number
     observacion?: string
     nombres?: string
     identificacion?: string

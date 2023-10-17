@@ -14,9 +14,7 @@
 
     </div>
 
-
-
-    <div class="grid p-fluid">
+    <!-- <div class="grid p-fluid">
         <div class="col-12 md:col-4">
         </div>
         <div class="col-12 md:col-4">
@@ -27,12 +25,11 @@
             </div>
         </div>
         <div class="col-12 md:col-4"></div>
-    </div>
-
+    </div> -->
 
     <div class="container ">
         <div class="card text-center mb-2 shadow-4 rounded-5">
-            <p-table [value]="listNotas" [paginator]="true" [rows]="rows" [showCurrentPageReport]="true"
+            <p-table [value]="notasFinalesReduce" [paginator]="true" [rows]="rows" [showCurrentPageReport]="true"
                 [(first)]="first" [tableStyle]="{'min-width': '50rem'}"
                 currentPageReportTemplate="Mostrando {first} to {last} of {totalRecords} estudiantes"
                 [rowsPerPageOptions]="[5,10,15]">
@@ -52,11 +49,8 @@
                 <ng-template pTemplate="body" let-data>
                     <tr>
 
-                        <td>{{data.partipantesMatriculados!.inscrito!.usuario!.persona.nombre1}}
-                            {{data.partipantesMatriculados!.inscrito!.usuario!.persona.nombre2}}
-                            {{data.partipantesMatriculados!.inscrito!.usuario!.persona!.apellido1}}
-                            {{data.partipantesMatriculados!.inscrito!.usuario!.persona!.apellido2}}</td>
-                        <td>{{data.partipantesMatriculados!.inscrito!.usuario!.persona!.identificacion}} </td>
+                        <td>{{data.nombres}} </td>
+                        <td>{{data.identificacion}} </td>
 
                         <td>{{data.informe1}}</td>
                         <td>{{data.informe2}}</td>
