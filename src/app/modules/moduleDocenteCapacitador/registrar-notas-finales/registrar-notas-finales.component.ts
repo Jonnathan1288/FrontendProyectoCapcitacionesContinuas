@@ -204,15 +204,14 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 		})
 	}
 
-
-
-
 	/* MODAL */
 	public visible?: boolean;
 	public idCapModelEdit?: number;
 
 	// EDIT AND CREATE RESULTADOS //
-	public showModalNotas(idParticpanteNota: number) {
+	public notaFinalReduceCopy = new NotaFinalReduce();
+	public showModalNotas(idParticpanteNota: number, notasFinalesReduce: NotaFinalReduce) {
+		this.notaFinalReduceCopy = notasFinalesReduce;
 		this.visible = true;
 		this.notasService.getNotasById(idParticpanteNota).subscribe((data) => {
 			this.notas = data;
@@ -233,13 +232,17 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 			this.notasService
 				.updateNotas(this.idCapModelEdit!, this.notas)
 				.subscribe((data) => {
-					this.notas = data;
+					// this.notas = data;
 					const { idNota, informe1, informe2, informe3, examenFinal, observacion, fechaNota, partipantesMatriculados } = data;
 					const idParticipanteMatriculado = partipantesMatriculados?.idParticipanteMatriculado
-					const result = { idNota, informe1, informe2, informe3, examenFinal, observacion, fechaNota, idParticipanteMatriculado }
+					const result = { ...this.notaFinalReduceCopy, idNota, informe1, informe2, informe3, examenFinal, observacion, fechaNota, idParticipanteMatriculado }
 
 					const index = this.notasFinalesReduce.findIndex(i => i.idNota === result.idNota);
 					this.notasFinalesReduce[index] = result;
+
+					this.chartParticipantes();
+
+					this.notaFinalReduceCopy = {} as NotaFinalReduce;
 
 					this.toastrService.success(
 						'Nota ingresada del alumno correctamente.',
@@ -553,17 +556,15 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 		});
 
 		const inform = notas.reduce((conteo, nota) => {
-			if (nota > 70) {
-				conteo[0].y++;
-			} else {
-				conteo[1].y++;
-			}
-			conteo[2].y++;
+
+			nota >= 70 ? conteo[0].y++ : nota === 0 ? conteo[2].y++ : conteo[1].y++;
+			conteo[3].y++;
 
 			return conteo;
 		}, [
 			{ name: 'Aprobados', y: 0 },
 			{ name: 'Reprobados', y: 0 },
+			{ name: 'Pendiente', y: 0 },
 			{ name: 'Total', y: 0 }
 		]);
 
@@ -603,7 +604,7 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 					data: inform as []
 				}
 			],
-			colors: ['#22C55E', '#F59E0B', '#1919FF', '#FFA500']
+			colors: ['#22C55E', '#F59E0B', '#1919FF', '#828E8C']
 		};
 
 	}
