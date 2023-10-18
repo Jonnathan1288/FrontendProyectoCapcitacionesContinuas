@@ -9,18 +9,25 @@
 
     </p-toolbar>
 
+    <div class="p-grid p-fluid" *ngIf="listaProgramas.length > 0 && listChartProgramCourse.length >0">
+        <div class="p-col-12 p-md-12 p-text-center mb-3">
+            <highcharts-chart [Highcharts]="Highcharts" [options]="chartOptions" [runOutsideAngular]="true"
+                style="width: 100%; height: 400px; display: block;"></highcharts-chart>
+        </div>
+    </div>
+
     <p-table #dt [value]="listaProgramas" dataKey="id" styleClass="p-datatable-customers" [rowHover]="true" [rows]="5"
         [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,15]" responsiveLayout="scroll" [paginator]="true"
         currentPageReportTemplate="Mostrando {first} to {last} of {totalRecords} programas" [filterDelay]="0"
-        [showCurrentPageReport]="true" [globalFilterFields]="['nombrePrograma','periodoPrograma.nombrePeriodoPrograma','descripcionPrograma']" >
+        [showCurrentPageReport]="true"
+        [globalFilterFields]="['nombrePrograma','periodoPrograma.nombrePeriodoPrograma','descripcionPrograma']">
         <ng-template pTemplate="caption">
             <div class="flex align-items-center justify-content-between">
                 <h5 class="m-0"><strong>PROGRAMAS DE CAPACITACIÓN</strong></h5>
                 <span class="p-input-icon-left">
                     <i class="pi pi-search"></i>
                     <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
-                        placeholder="Buscar..." pTooltip="Filtro"
-                        tooltipPosition="bottom" />
+                        placeholder="Buscar..." pTooltip="Filtro" tooltipPosition="bottom" />
                 </span>
             </div>
         </ng-template>
@@ -73,8 +80,7 @@
 
 
 <!-- IMPLEMENTACIÓN DEL MODAL PARA EL INGRESO DE LOS CURSOS -->
-<p-dialog [(visible)]="visible" [style]="{ width: '450px' }" header="PROGRAMAS" [modal]="true"
-    styleClass="p-fluid">
+<p-dialog [(visible)]="visible" [style]="{ width: '450px' }" header="PROGRAMAS" [modal]="true" styleClass="p-fluid">
     <ng-template pTemplate="content">
         <div class="field">
             <label for="name">Período del programa</label>

@@ -1,16 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { ParticipantesAprobados } from 'src/app/models/participantes-aprobados';
 import { ParticipanteAprobadoService } from 'src/app/service/participante-aprobado.service';
 import { CursoService } from 'src/app/service/curso.service';
 import { ReportsCapacitacionesService } from 'src/app/service/reports-capacitaciones.service';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { Curso } from 'src/app/models/curso';
-import { Message, MessageService } from 'primeng/api';
 import { ToastrService } from 'ngx-toastr';
 import { ParticipantesMatriculados } from 'src/app/models/participantesMatriculados';
 import { ParticipantsApproved } from 'src/app/models/references/participants-approved';
 import { CourseFilterDocente } from 'src/app/models/references/course-filter-by-docente';
 import { LocalStorageKeys, getAttributeStorage } from 'src/app/util/local-storage-manager';
+
+import * as Highcharts from 'highcharts';
+
+import HC_exporting from 'highcharts/modules/exporting';
+
+HC_exporting(Highcharts);
+
 @Component({
 	selector: 'app-asignacion-codigos-cenecyt',
 	templateUrl: './asignacion-codigos-cenecyt.component.html',
@@ -88,6 +91,7 @@ export class AsignacionCodigosCenecytComponent implements OnInit {
 			.subscribe((data) => {
 				this.listParticipantsApproved = data
 				this.loading = false;
+				this.chartParticipantes();
 			});
 
 		this.participantesAprovadoService.getParticipantesAprobadosByDocenteIdCurso(idCurso).subscribe({
@@ -133,6 +137,56 @@ export class AsignacionCodigosCenecytComponent implements OnInit {
 			});
 	}
 
+	//IMPLEMENTS CHART
+	public chartParticipantes() {
+		const notas = this.listParticipantsApproved.map((i) => (i.genero));
 
-	// downloadCertificadoEstudiante}
+		const inform = notas.reduce((conteo, gender) => {
+			gender === 'M' ? conteo[0].y++ : gender === 'F' ? conteo[1].y++ : conteo[2].y++
+			return conteo;
+		}, [
+			{ name: 'HOMBRES', y: 0 },
+			{ name: 'MUJERES', y: 0 },
+			{ name: 'OTRO', y: 0 },
+		]);
+
+		this.rendererGenderChart(inform);
+	}
+
+
+	Highcharts: typeof Highcharts = Highcharts;
+	chartOptions!: Highcharts.Options;
+
+	public rendererGenderChart(inform: any) {
+		this.chartOptions = {
+			chart: {
+				type: 'pie'
+			},
+			title: {
+				text: 'REPORTE DE GENERO DE ESTUDIANTES'
+			},
+
+			plotOptions: {
+				pie: {
+					allowPointSelect: true,
+					cursor: 'pointer',
+					dataLabels: {
+						enabled: true,
+						format: '<b>{point.name}</b>: {point.y} estudiante/s'
+					},
+					showInLegend: true,
+				}
+			},
+			series: [
+				{
+					name: 'Equivalente',
+					type: 'pie',
+
+					data: inform as []
+				}
+			],
+			colors: ['#22C55E', '#F59E0B', '#1919FF', '#828E8C']
+		};
+
+	}
 }
