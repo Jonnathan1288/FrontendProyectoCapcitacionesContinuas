@@ -18,6 +18,9 @@ import { NotaFinalReduce } from 'src/app/models/references/nota-final-reduce';
 
 import * as Highcharts from 'highcharts';
 
+import HC_exporting from 'highcharts/modules/exporting';
+
+HC_exporting(Highcharts);
 
 @Component({
 	selector: 'app-registrar-notas-finales',
