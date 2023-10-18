@@ -1,64 +1,73 @@
+<!-- HEADER -->
+<img [src]="'http://localhost:8080/api/uploadUri/' +curso.fotoCurso+ '/images_course'" class="job-bg" alt="">
+<div class="job-logos">
+</div>
 
-    <!-- HEADER -->
-    <img [src]="'http://localhost:8080/api/uploadUri/' +curso.fotoCurso+ '/images_course'" class="job-bg" alt="" >
-    <div class="job-logos">
+<!-- DETAIL -->
+<div class="job-explain-content">
+    <div class="job-title-wrapper">
+        <div class="job-card-title">{{curso.nombreCurso}}</div>
+    </div>
+    <div class="job-subtitle-wrapper">
+        <div class="company-name">
+            Desde el <strong>{{curso.fechaInicioCurso}}</strong> al <strong>{{curso.fechaFinalizacionCurso}}</strong>
+        </div>
+    </div>
+    <div class="explain-bar">
+        <div class="explain-contents">
+            <div class="explain-title">Modalidad</div>
+            <div class="explain-subtitle">{{curso.modalidadCurso?.nombreModalidadCurso}}</div>
+        </div>
+        <div class="explain-contents">
+            <div class="explain-title">Nivel Curso</div>
+            <div class="explain-subtitle">{{curso.nivelCurso?.nombreNivelCurso}}</div>
+        </div>
+        <div class="explain-contents">
+            <div class="explain-title">Horarios</div>
+            <div class="explain-subtitle">{{curso.horarioCurso?.horaInicio}} a {{curso.horarioCurso?.horaFin}}</div>
+        </div>
+        <div class="explain-contents">
+            <div class="explain-title">Días</div>
+            <div class="explain-subtitle">{{curso.horarioCurso?.dias}}</div>
+        </div>
+        <div class="explain-contents">
+            <div class="explain-title">Docente Capacitador</div>
+            <div class="explain-subtitle">
+                {{curso.capacitador?.tipoAbreviaturaTitulo}}.{{curso.capacitador?.usuario?.persona?.nombre1}}
+                {{curso.capacitador?.usuario?.persona?.nombre2}} {{curso.capacitador?.usuario?.persona?.apellido1}}
+                {{curso.capacitador?.usuario?.persona?.apellido2}}</div>
+        </div>
+    </div>
+    <div class="overview-text">
+        <div class="overview-text-header">Descripción</div>
+        <div class="overview-text-subheader">{{curso.descripcionCurso}}</div>
     </div>
 
-    <!-- DETAIL -->
-    <div class="job-explain-content">
-        <div class="job-title-wrapper">
-            <div class="job-card-title">{{curso.nombreCurso}}</div>
-        </div>
-        <div class="job-subtitle-wrapper">
-            <div class="company-name">
-                Desde el <strong>{{curso.fechaInicioCurso}}</strong> al <strong>{{curso.fechaFinalizacionCurso}}</strong> 
-            </div>
-        </div>
-        <div class="explain-bar">
-            <div class="explain-contents">
-                <div class="explain-title">Modalidad</div>
-                <div class="explain-subtitle">{{curso.modalidadCurso?.nombreModalidadCurso}}</div>
-            </div>
-            <div class="explain-contents">
-                <div class="explain-title">Nivel Curso</div>
-                <div class="explain-subtitle">{{curso.nivelCurso?.nombreNivelCurso}}</div>
-            </div>
-            <div class="explain-contents">
-                <div class="explain-title">Horarios</div>
-                <div class="explain-subtitle">{{curso.horarioCurso?.horaInicio}} a {{curso.horarioCurso?.horaFin}}</div>
-            </div>
-            <div class="explain-contents">
-                <div class="explain-title">Días</div>
-                <div class="explain-subtitle">{{curso.horarioCurso?.dias}}</div>
-            </div>
-            <div class="explain-contents">
-                <div class="explain-title">Docente Capacitador</div>
-                <div class="explain-subtitle">{{curso.capacitador?.tipoAbreviaturaTitulo}}.{{curso.capacitador?.usuario?.persona?.nombre1}} {{curso.capacitador?.usuario?.persona?.nombre2}} {{curso.capacitador?.usuario?.persona?.apellido1}} {{curso.capacitador?.usuario?.persona?.apellido2}}</div>
-            </div>
-        </div>
-        <div class="overview-text">
-            <div class="overview-text-header">Descripción</div>
-            <div class="overview-text-subheader">{{curso.descripcionCurso}}</div>
-        </div>
-
-        <div class="p m-5" style="text-align: center">
-            <div class="container">
-                <p style="text-align: center;" *ngIf='progreso <= 99' >Progreso del curso</p>
-                <p-progressBar *ngIf='progreso <= 99' [value]="progreso.toFixed(0)"></p-progressBar>
-                <p-progressBar *ngIf='progreso >= 99' [value]="100" color="yellow" styleClass="mi-clase-css"></p-progressBar>
-                <img *ngIf='progreso >= 100 && estadoAprobacionCurso == "A"' src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/169963/Screenshot_2015-10-11_21.43.12.png" alt="" class="m-1">
-                <div>
-                    <span style="text-align: center; color: rgb(189, 193, 0);"  *ngIf='progreso >= 100 && estadoAprobacionCurso == "A"'><strong>
+    <div class="p m-5" style="text-align: center">
+        <div class="container">
+            <p style="text-align: center;" *ngIf='progreso <= 99'>Progreso del curso</p>
+            <img *ngIf='progreso >= 100 && estadoAprobacionCurso == "A"'
+                src="https://www.ligaprofesional.ar/wp-content/uploads/2022/04/copa-png.png" alt="" class="m-1"
+                height="100px">
+            <div>
+                <span style="text-align: center; color: rgb(7, 209, 0);"
+                    *ngIf='progreso >= 100 && estadoAprobacionCurso == "A"'><strong style="font-size: 1.5rem;">
                         <i class="fas fa-star"></i>Felicitaciones</strong></span>
-                </div>
-                <img *ngIf='progreso >= 100 && estadoAprobacionCurso == "R"' src="https://cdn.pixabay.com/photo/2021/07/22/17/55/sad-6485840_1280.png" width="180px" height="180px" alt="" class="m-4">
-                <div>
-                    <span style="text-align: center; color: rgb(193, 39, 0);"  *ngIf='progreso >= 100 && estadoAprobacionCurso == "R"'><strong>
-                        <i class="fas fa-solid fa-ghost" style="padding-right: 5px;"></i>Lo siento no has Aprobado</strong></span>
-                </div>
+            </div>
+            <img *ngIf='progreso >= 100 && estadoAprobacionCurso == "R"'
+                src="https://cdn.pixabay.com/photo/2021/07/22/17/55/sad-6485840_1280.png" width="180px" height="180px"
+                alt="" class="m-4">
+            <div>
+                <p-progressBar *ngIf='progreso <= 99' [value]="progreso.toFixed(0)"></p-progressBar>
+                <p-progressBar *ngIf='progreso >= 99' [value]="100" color="green"
+                    styleClass="mi-clase-css"></p-progressBar>
+                <span style="text-align: center; color: rgb(193, 39, 0);"
+                    *ngIf='progreso >= 100 && estadoAprobacionCurso == "R"'><strong>
+                        <i class="fas fa-solid fa-ghost" style="padding-right: 5px;"></i>Lo siento no has
+                        Aprobado</strong></span>
             </div>
         </div>
-        <!-- <canvas id="confetti"></canvas> -->
-
     </div>
+    <!-- <canvas id="confetti"></canvas> -->
 
+</div>

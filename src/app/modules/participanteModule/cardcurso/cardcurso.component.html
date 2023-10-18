@@ -1,6 +1,6 @@
-<div class="container mb-5">
+<div class="container mb-5 mt-6">
   <div>
-    <div class="p-buttonset" style="text-align: center;">
+    <div class="p-buttonset" style="text-align: center;" *ngIf="estadoMovimient">
       <button pButton pRipple (click)="obtenerCursosFull()" class="small-button third">Todos</button>
       <button pButton pRipple (click)="filtrarPorModalidadTarde()" class="small-button third">En la Tarde</button>
       <button pButton pRipple (click)="filtrarPorModalidadManana()" class="small-button third">Por la Mañana</button>
@@ -17,7 +17,7 @@
     </div>
 
     <br>
-    <div class="container">
+    <div class="container" *ngIf="estadoMovimient">
       <div class="grid p-fluid">
         <div class="col-16 md:col-5">
           <span class="p-input-icon-left">
@@ -62,12 +62,12 @@
 
     <div class="container" style="text-align: center;" *ngIf="!estadoMovimient">
       <p-message severity="info" text="INICIE SESIÓN PARA MÁS INFORMACIÓN DE LOS CURSOS DE CAPACITACIÓN CONTINUA"
-        styleClass="mr-2"></p-message>
+        styleClass="mr-2 m-4"></p-message>
     </div>
     <div class="pricing__title m-5">Cursos</div>
     <div class="" style="height: 100px;" *ngIf="listCursos.length === 0">
     </div>
-    <div class="pricing__grid">
+    <div class="pricing__grid m-2">
       <div class="pricing__card pricing-card pricing-card_free" *ngFor="let list of listCursos">
         <div class="pricing-card__top">
           <div class="pricing-card__title">Disponible <i class="pi pi-verified"></i></div>
@@ -115,7 +115,7 @@
 
       </div>
     </div>
-    <div class="m-5" style="text-align: center; align-items: center;">
+    <div class="m-6" style="text-align: center; align-items: center;">
       <button *ngIf="isPage !== 0" type="button" (click)="anteriorPage()" class="btn btn-primary p-button-rounded">
         <i class="pi pi-arrow-circle-left"></i> Anterior
       </button>
@@ -123,6 +123,10 @@
         class="btn btn-primary p-button-rounded" style="margin-left: 50px;">
         Siguiente <i class="pi pi-arrow-circle-right"></i>
       </button>
+    </div>
+    <div class="container" style="text-align: center;" *ngIf="!estadoMovimient">
+      <p-message severity="info" text="INICIE SESIÓN PARA MÁS INFORMACIÓN DE LOS CURSOS DE CAPACITACIÓN CONTINUA"
+        styleClass="mr-2 m-6"></p-message>
     </div>
   </div>
 </div>
