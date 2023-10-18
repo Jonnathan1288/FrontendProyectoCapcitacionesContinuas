@@ -15,6 +15,10 @@ import { ReportsCapacitacionesService } from 'src/app/service/reports-capacitaci
 import { ConfirmationService, ConfirmEventType } from 'primeng/api';
 import { ParticipanteAprobadoService } from 'src/app/service/participante-aprobado.service';
 import { NotaFinalReduce } from 'src/app/models/references/nota-final-reduce';
+
+import * as Highcharts from 'highcharts';
+
+
 @Component({
 	selector: 'app-registrar-notas-finales',
 	templateUrl: './registrar-notas-finales.component.html',
@@ -535,8 +539,6 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 	}
 
 	//IMPLEMENTS CHART
-	public data: any;
-	public options: any;
 	public chartParticipantes() {
 		const notas = this.notasFinalesReduce.map(i => {
 			const informe1 = i.informe1 || 0;
@@ -547,42 +549,59 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 			return ((informe1 / 30) * 30 + (informe2 / 30) * 30 + (informe3 / 15) * 15 + (examenFinal / 25) * 25);
 		});
 
-		const conteoNotas = notas.reduce((conteo, nota) => {
-
-			nota > 70 ? conteo[0]++ : conteo[1]++;
-			conteo[2]++;
+		const inform = notas.reduce((conteo, nota) => {
+			if (nota > 70) {
+				conteo[0].y++;
+			} else {
+				conteo[1].y++;
+			}
+			conteo[2].y++;
 
 			return conteo;
-		}, [0, 0, 0]);
+		}, [
+			{ name: 'Aprobados', y: 0 },
+			{ name: 'Reprobados', y: 0 },
+			{ name: 'Total', y: 0 }
+		]);
 
+		this.rendererChart(inform);
 
-		const documentStyle = getComputedStyle(document.documentElement);
-		const textColor = documentStyle.getPropertyValue('--text-color');
-
-		this.data = {
-			labels: ['APROBADOS', 'REPROBADOS', 'TOTAL'],
-			datasets: [
-				{
-					data: conteoNotas,
-					backgroundColor: [documentStyle.getPropertyValue('--green-600'), documentStyle.getPropertyValue('--yellow-600'), documentStyle.getPropertyValue('--blue-500')],
-					hoverBackgroundColor: [documentStyle.getPropertyValue('--green-500'), documentStyle.getPropertyValue('--yellow-500'), documentStyle.getPropertyValue('--blue-400')]
-				}
-			]
-		};
-
-		this.options = {
-			plugins: {
-				legend: {
-					labels: {
-						usePointStyle: false,
-						color: textColor
-					}
-
-				},
-
-			},
-
-		};
 	}
 
+
+	Highcharts: typeof Highcharts = Highcharts;
+	chartOptions!: Highcharts.Options;
+
+	public rendererChart(inform: any) {
+		this.chartOptions = {
+			chart: {
+				type: 'pie'
+			},
+			title: {
+				text: 'REPORTE DE ESTUDIANTES'
+			},
+
+			plotOptions: {
+				pie: {
+					allowPointSelect: true,
+					cursor: 'pointer',
+					dataLabels: {
+						enabled: true,
+						format: '<b>{point.name}</b>: {point.y} estudiante/s'
+					},
+					showInLegend: true,
+				}
+			},
+			series: [
+				{
+					name: 'Equivalente',
+					type: 'pie',
+
+					data: inform as []
+				}
+			],
+			colors: ['#22C55E', '#F59E0B', '#1919FF', '#FFA500']
+		};
+
+	}
 }
