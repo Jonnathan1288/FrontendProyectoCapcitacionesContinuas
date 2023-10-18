@@ -97,7 +97,7 @@ export class ValidacionCursosCapacitacionComponent implements OnInit {
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
 
 	public UpdateValidacionCurso(idCurso: number) {
-		// this.emailCourseApproved.receptor = this.classCursoValidanew.capacitador?.usuario?.persona?.correo as string;
+		// this.emailCourseApproved.receptor = this.classCursoValidanew.email;
 		this.emailCourseApproved.receptor = 'javiertimbe100@gmail.com';
 		this.emailCourseApproved.nameCourse = this.classCursoValidanew.nameCourse;
 		this.emailCourseApproved.topic = 'Curso "' + this.classCursoValidanew.nameCourse + (idCurso === 1 ? '" Aprobado' : '" No aceptado');
