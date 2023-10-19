@@ -3,4 +3,5 @@ export class ParticipantsApproved {
     apellidos?: string
     identificacion?: string
     nombres?: string
+    genero?: string
 }

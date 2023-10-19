@@ -48,9 +48,9 @@ export class TomarAsistenciaEstudianteComponent implements OnInit {
     this.activateRoute.params.subscribe((param) => {
       const idEstudiantesM = param['id'];
       this.idCursoEstudiantesMatriculados = idEstudiantesM;
-      this.traerListadoEstudiantesMatriculadosAsistencia(
-        this.idCursoEstudiantesMatriculados!
-      );
+      //this.traerListadoEstudiantesMatriculadosAsistencia(
+       // this.idCursoEstudiantesMatriculados!
+     // );
     });
     this.getCurso();
   }
@@ -151,81 +151,102 @@ export class TomarAsistenciaEstudianteComponent implements OnInit {
     const selectedDate: Date = event;
 
     const formattedDate = selectedDate.toISOString().substring(0, 10); // Obtener la fecha en formato 'yyyy-MM-dd'
-    console.log(formattedDate, this.curso.fechaInicioCurso);
 
+    const diaSemana = selectedDate.toLocaleDateString('en-US', {
+      weekday: 'long',
+    });
+    const isDiaPermitido = this.isDiaPermitido(diaSemana);
+
+    if (!isDiaPermitido) {
+      this.toastrService.error(
+        'El día seleccionado no está permitido en el horario del curso.',
+        'DÍA NO PERMITIDO'
+      );
+      this.listAsistenciasAntiguas = [];
+      return;
+    }
     // Compara las fechas formateadas
 
-    if (
-      this.curso.fechaFinalizacionCurso &&
-      this.curso.fechaInicioCurso
-    ) {
-      console.log(this.curso.fechaInicioCurso,this.curso.fechaFinalizacionCurso );
+    if (this.curso.fechaFinalizacionCurso && this.curso.fechaInicioCurso) {
       this.curso.fechaInicioCurso = new Date(this.curso.fechaInicioCurso);
       this.curso.fechaFinalizacionCurso = new Date(this.curso.fechaFinalizacionCurso);
 
-      const fechaInicioCurso = new Date(this.curso.fechaInicioCurso.getUTCFullYear(), this.curso.fechaInicioCurso.getUTCMonth(), this.curso.fechaInicioCurso.getUTCDate());
-      const fechaFinCurso = new Date(this.curso.fechaFinalizacionCurso.getUTCFullYear(), this.curso.fechaFinalizacionCurso.getUTCMonth(), this.curso.fechaFinalizacionCurso.getUTCDate());
-      console.log(fechaInicioCurso,'                 ',fechaFinCurso);
+      const fechaInicioCurso = new Date(this.curso.fechaInicioCurso.getUTCFullYear(),this.curso.fechaInicioCurso.getUTCMonth(),this.curso.fechaInicioCurso.getUTCDate());
+      const fechaFinCurso = new Date(this.curso.fechaFinalizacionCurso.getUTCFullYear(),this.curso.fechaFinalizacionCurso.getUTCMonth(),this.curso.fechaFinalizacionCurso.getUTCDate());
 
-      console.log('FECHA INICIO: ',this.curso.fechaInicioCurso,'  FECHA FIN :',this.curso.fechaFinalizacionCurso)
-
-      if (
-        selectedDate >= fechaInicioCurso &&
-        selectedDate <= fechaFinCurso
-      ) {
-        
+      if (selectedDate >= fechaInicioCurso && selectedDate <= fechaFinCurso) {
         this.asistenciaService
-        .getAsistenciaAntiguasPorFecha(
-          this.idCursoEstudiantesMatriculados!,
-          formattedDate
-        )
-        .subscribe(
-          (data) => {
-            if (data != null) {
-              console.log(data);
+          .getAsistenciaAntiguasPorFecha(
+            this.idCursoEstudiantesMatriculados!,
+            formattedDate
+          )
+          .subscribe(
+            (data) => {
+              if (data != null) {
+                console.log(data);
 
-              if (data.length > 0) {
-                this.toastrService.success(
-                  'Historial de asistencia encontrada.',
-                  'ASISTENCIA RECUPERADA.'
-                );
-
-                this.listAsistenciasAntiguas = data;
-              } else {
-                this.toastrService.error(
-                  'En la fecha ingresada no se tomó asistencia!',
-                  'ASISTENCIA NO REGISTRADA EN ESA FECHA!'
-                );
-                this.listAsistenciasAntiguas = data;
-                this.asistenciaService
-               .generarAsistenciaPorFecha2(this.idCursoEstudiantesMatriculados!,formattedDate)
-               .subscribe((data) => {
-                 if (data != null) {
-                   this.listaAsistenciaE = data;
-                   this.listAsistenciasAntiguas = this.listaAsistenciaE;
-                   this.banderaParaControlAsistencia = true;
-                 }
-               });
+                if (data.length > 0) {
+                  this.toastrService.success(
+                    'Historial de asistencia encontrada.',
+                    'ASISTENCIA RECUPERADA.'
+                  );
+                  this.listAsistenciasAntiguas = data;
+                } else {
+                  this.toastrService.error(
+                    'En la fecha ingresada no se tomó asistencia!',
+                    'ASISTENCIA NO REGISTRADA EN ESA FECHA!'
+                  );
+                  this.listAsistenciasAntiguas = data;
+                  this.asistenciaService
+                    .generarAsistenciaPorFecha2(
+                      this.idCursoEstudiantesMatriculados!,
+                      formattedDate
+                    )
+                    .subscribe((data) => {
+                      if (data != null) {
+                        this.listaAsistenciaE = data;
+                        this.listAsistenciasAntiguas = this.listaAsistenciaE;
+                        this.banderaParaControlAsistencia = true;
+                      }
+                    });
+                }
               }
+            },
+            (err) => {
+              this.listAsistenciasAntiguas = [];
+              console.log(err);
             }
-          },
-          (err) => {
-            this.listAsistenciasAntiguas = [];
-            console.log(err);
-          }
+          );
+      } else {
+        this.toastrService.error(
+          'Esta fuera del rango de la fecha de inicio o fin del curso.',
+          'FUERA DE RANGO'
         );
-      }else{
-        this.toastrService.error('Esta fuera del rango de la fecha de inicio o fin del curso.', 'FUERA DE RANGO');
         console.log(this.curso.fechaInicioCurso);
         this.listAsistenciasAntiguas = [];
       }
-
-      
     } else {
-      this.toastrService.success('Fecha de curso no definida', 'ERROR DE FECHAS');
+      this.toastrService.success(
+        'Fecha de curso no definida',
+        'ERROR DE FECHAS'
+      );
       console.log(this.curso.fechaInicioCurso);
       this.listAsistenciasAntiguas = [];
     }
+  }
+
+  public isDiaPermitido(dia: string): boolean {
+    //determinar si el día está en el rango permitido
+    if (this.curso.horarioCurso?.dias === 'Lunes-Viernes') {
+      return dia !== 'Saturday' && dia !== 'Sunday';
+    } else if (this.curso.horarioCurso?.dias === 'Sábados') {
+      return dia === 'Saturday';
+    } else if (this.curso.horarioCurso?.dias === 'Domingos') {
+      return dia === 'Sunday';
+    }else if(this.curso.horarioCurso?.dias === 'Lunes-Domingo'){
+      return true;
+    }
+    return true;
   }
 
   public getCurso() {

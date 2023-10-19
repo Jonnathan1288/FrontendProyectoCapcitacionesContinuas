@@ -205,6 +205,24 @@
 
 			<div class="col-12 md:col-12 mt-1">
 				<label class="p-inputgroup" for="nombre" style="font-size: 16px;">
+					<strong>Seleccione su Genero: <span class="red-asterisk">*</span> :</strong>
+				</label>
+				<div class="flex flex-wrap gap-3">
+					<div class="flex align-items-center">
+						<p-radioButton name="genero" value="M" [(ngModel)]="classPersona.genero"
+							inputId="genero"></p-radioButton>
+						<label for="genero" class="form-check-label">MASCULINO</label>
+					</div>
+					<div class="flex align-items-center">
+						<p-radioButton name="genero" value="F" [(ngModel)]="classPersona.genero"
+							inputId="genero"></p-radioButton>
+						<label for="genero" class="form-check-label">FEMENINO</label>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-12 md:col-12 mt-1">
+				<label class="p-inputgroup" for="nombre" style="font-size: 16px;">
 					<strong>Seleccione su etnia<span class="red-asterisk">*</span> :</strong>
 				</label>
 				<div class="flex flex-wrap gap-3">
