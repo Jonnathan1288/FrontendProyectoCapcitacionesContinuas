@@ -192,12 +192,14 @@
 
     </ng-template>
     <ng-template pTemplate="footer">
+        <div class="mt-2">
+            <p-button pRipple [label]="'Cancelar'" icon="pi pi-times" styleClass="p-button-outlined p-button-secondary"
+                (click)="cancelNotaSave()"></p-button>
 
-        <p-button pRipple [label]="'Cancelar'" icon="pi pi-times" styleClass="p-button-outlined p-button-secondary"
-            (click)="cancelNotaSave()"></p-button>
+            <p-button pRipple label="Guardar Notas" icon="pi pi-check-square"
+                styleClass="p-button-outlined p-button-success" (click)="guardarNotaPorEstudiante()"></p-button>
+        </div>
 
-        <p-button pRipple label="Guardar Notas" icon="pi pi-check-square"
-            styleClass="p-button-outlined p-button-success" (click)="guardarNotaPorEstudiante()"></p-button>
     </ng-template>
 </p-dialog>
 
@@ -212,9 +214,12 @@
             <div class="col-12 md:col-12 mt-3">
                 <div class="p-inputgroup">
                     <span class="p-float-label">
-                        <input type="text" pInputText id="observacionesInformeFinalCurso"
-                            name="observacionesInformeFinalCurso"
-                            [(ngModel)]="classInformeFinalC.observacionesInformeFinalCurso">
+
+                        <textarea placeholder="Observaciones del curso" rows="3" cols="30" pInputTextarea
+                            id="observacionesInformeFinalCurso" name="observacionesInformeFinalCurso"
+                            [(ngModel)]="classInformeFinalC.observacionesInformeFinalCurso"
+                            [maxlength]="200"></textarea>
+
                         <label htmlFor="username">Observaciones del curso<span class="red-asterisk"></span></label>
                     </span>
                 </div>
@@ -223,7 +228,7 @@
                 <div class="p-inputgroup">
                     <span class="p-float-label">
                         <input type="text" pInputText id="lugarInformeFinalCurso" name="lugarInformeFinalCurso"
-                            [(ngModel)]="classInformeFinalC.lugarInformeFinalCurso">
+                            [(ngModel)]="classInformeFinalC.lugarInformeFinalCurso" [maxlength]="50">
                         <label htmlFor="username">Lugar informe final curso<span class="red-asterisk"></span></label>
                     </span>
                 </div>
@@ -233,7 +238,7 @@
                     <span class="p-float-label">
                         <input type="text" pInputText id="nombreCantonInformeFinalCurso"
                             name="nombreCantonInformeFinalCurso"
-                            [(ngModel)]="classInformeFinalC.nombreCantonInformeFinalCurso">
+                            [(ngModel)]="classInformeFinalC.nombreCantonInformeFinalCurso" [maxlength]="50">
                         <label htmlFor="username">Cantón informe final curso<span class="red-asterisk"></span></label>
                     </span>
                 </div>

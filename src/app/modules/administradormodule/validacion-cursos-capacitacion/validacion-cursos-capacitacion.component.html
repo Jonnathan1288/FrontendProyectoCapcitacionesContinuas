@@ -1,10 +1,6 @@
 <!-- Implementación de nueva tabla------------------------------------------------------------------------------------- -->
 
 <div class=" mt-5"></div>
-<!-- <p-table #dt [value]="listUsuariosFilter" dataKey="id" styleClass="p-datatable-customers" [rowHover]="true" [rows]="5"
-    [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,15]" responsiveLayout="scroll" [paginator]="true"
-    currentPageReportTemplate="Mostrando {first} to {last} of {totalRecords} usuarios" [filterDelay]="0"
-    [globalFilterFields]="['identificacion','apellido1','nombre1','username']" [showCurrentPageReport]="true"> -->
 
 
 <div class="card">
@@ -93,15 +89,7 @@
                     </div>
                 </th>
 
-                <th pSortableColumn="statusFinalized">
-                    <div class="flex justify-content-between align-items-center">
-                        <strong>FINALIZADO</strong>
-                        <p-sortIcon field="statusFinalized"></p-sortIcon>
 
-                        <p-columnFilter type="boolean" field="statusFinalized" display="menu"></p-columnFilter>
-
-                    </div>
-                </th>
 
             </tr>
         </ng-template>
@@ -150,12 +138,7 @@
                         styleClass="mr-2"></p-message>
                 </td>
 
-                <td class="text-center">
 
-                    <i class="pi"
-                        [ngClass]="{'true-icon pi-check-circle': curso.statusFinalized , 'false-icon pi-times-circle': !curso.statusFinalized}"
-                        [ngStyle]="{'color': curso.statusFinalized ? 'green' : 'red'}"></i>
-                </td>
             </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage">

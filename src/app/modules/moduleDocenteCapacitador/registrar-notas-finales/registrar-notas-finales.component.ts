@@ -68,12 +68,26 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 		this.cursoService.getCursoById(idCurso!).subscribe((data) => {
 			if (data != null) {
 				this.classCursoFinalizaEstado = data;
-
 			}
 		});
 	}
 
 	public finalizarCursoCapacitacionContinua() {
+		const fechaActual = new Date();
+		if (this.classCursoFinalizaEstado.fechaFinalizacionCurso) {
+			if (new Date(fechaActual) <= new Date(this.classCursoFinalizaEstado.fechaFinalizacionCurso)) {
+				this.toastrService.info(
+					'',
+					'NO PUEDE FINALIZAR CURSO, FECHA DE FINALIZACIÓN: ' + this.classCursoFinalizaEstado.fechaFinalizacionCurso,
+					{
+						timeOut: 2500,
+					}
+				);
+				return;
+			}
+
+		}
+
 		this.confirmationService.confirm({
 			message: 'Esta seguro en finalizar el curso?',
 			header: 'Confirmación, una vez finalizado no podra hacer cambios.',
@@ -81,25 +95,21 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 			acceptLabel: 'Aceptar',
 			rejectLabel: 'Cancelar',
 			accept: () => {
-				// alert()
 				this.participantesAprovadosService
 					.saveParticipantesAprobadosParacodigoSenecyt(this.idCursoGlobal!)
-					.subscribe(
-						(data) => {
-							if (data != null) {
-								this.toastrService.success(
-									'El curso a finalizado y sus datos han sido guardados.',
-									'CURSO FINALIZADO.',
-									{
-										timeOut: 2500,
-									}
-								);
+					.subscribe({
+						next: (resp) => {
+							this.toastrService.success(
+								'El curso a finalizado y sus datos han sido guardados.',
+								'CURSO FINALIZADO.',
+								{
+									timeOut: 2500,
+								}
+							);
+							this.classCursoFinalizaEstado.estadoPublicasionCurso = 'F';
+							// this.router.navigate(['/capacitador/codigos/cenecyt']);
 
-								// this.router.navigate(['/capacitador/codigos/cenecyt']);
-							}
-							// alert(2)
-						},
-						(err) => {
+						}, error: (err) => {
 							this.toastrService.error(
 								'Intentalo más en la tarde.',
 								'INCONVENIENTES.',
@@ -108,7 +118,7 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 								}
 							);
 						}
-					);
+					});
 			},
 			reject: (type: any) => {
 				switch (type) {
@@ -172,24 +182,16 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 				notas.informe2 = 0;
 				notas.informe3 = 0;
 				this.notasService.saveNotas(notas).subscribe((data) => {
-					// alert('se registró el participante ');
-					this.obtenerParticipantesFinales();
+					//todo bien
+					this.getParticipantsFinallyGrade();
+
 				});
 			}
 		}
+
 	}
-	//
 
 	// TAER TODOS LOS ESTUDIANTES YA GUARDADOS
-
-	public obtenerParticipantesFinales(): void {
-		this.notasService
-			.getParticipantesFinales(this.idCursoGlobal!)
-			.subscribe((data) => {
-
-			});
-	}
-
 	public notasFinalesReduce: NotaFinalReduce[] = [];
 	public getParticipantsFinallyGrade() {
 		this.notasService.findAllNotasFinalesByIdCurso(this.idCursoGlobal!).subscribe({
