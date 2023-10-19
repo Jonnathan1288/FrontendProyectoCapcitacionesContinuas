@@ -67,7 +67,7 @@
     <div class="pricing__title m-5">Cursos</div>
     <div class="" style="height: 100px;" *ngIf="listCursos.length === 0">
     </div>
-    <div class="pricing__grid m-2">
+    <div class="pricing__grid m-2" *ngIf="estadoMovimient">
       <div class="pricing__card pricing-card pricing-card_free" *ngFor="let list of listCursos">
         <div class="pricing-card__top">
           <div class="pricing-card__title">Disponible <i class="pi pi-verified"></i></div>
@@ -115,6 +115,45 @@
 
       </div>
     </div>
+
+    <div class="m-2" *ngIf="!estadoMovimient">
+      <div class=" flex justify-content-center" *ngIf="!estadoMovimient">
+        <p-card header="{{list.nombreCurso}}" subheader="Docente: {{list.nombre}}" [style]="{ width: '360px' }"
+          *ngFor="let list of listCursos">
+          <ng-template pTemplate="header">
+            <img [src]="list.fotoCurso ? getUriFile(list.fotoCurso) : 'assets/img/istap.png'" [alt]="list.fotoCurso"
+              width="100" class="shadow-4" />
+          </ng-template>
+          <div class="pricing-card__body">
+            <div class="pricing-card__pluses">
+              <div class="pricing-card__plus">
+                <div class="pricing-card__plus-icon"><i class="pi pi-video"></i></div>
+                <div class="pricing-card__plus-text">{{list.nombreModalidadCurso}}</div>
+              </div>
+              <div class="pricing-card__plus">
+                <div class="pricing-card__plus-icon"><i class="pi pi-send"></i></div>
+                <div class="pricing-card__plus-text">{{list.duracionCurso}}h</div>
+              </div>
+              <div class="pricing-card__plus">
+                <div class="pricing-card__plus-icon"><i class="pi pi-clock"></i></div>
+                <div class="pricing-card__plus-text">{{list!.horaInicio}} a {{list!.horaFin}}
+                </div>
+              </div>
+              <div class="pricing-card__plus">
+                <div class="pricing-card__plus-icon"><i class="pi pi-calendar"></i></div>
+                <div class="pricing-card__plus-text">{{list.dias}}</div>
+              </div>
+
+              <div class="pricing-card__plus">
+                <div class="pricing-card__plus-icon"><i class="pi pi-calendar-minus"></i></div>
+                <div class="pricing-card__plus-text">{{list.fechaInicioCurso}} - {{list.fechaFinalizacionCurso}}</div>
+              </div>
+            </div>
+          </div>
+        </p-card>
+      </div>
+    </div>
+
     <div class="m-6" style="text-align: center; align-items: center;">
       <button *ngIf="isPage !== 0" type="button" (click)="anteriorPage()" class="btn btn-primary p-button-rounded">
         <i class="pi pi-arrow-circle-left"></i> Anterior
@@ -123,10 +162,6 @@
         class="btn btn-primary p-button-rounded" style="margin-left: 50px;">
         Siguiente <i class="pi pi-arrow-circle-right"></i>
       </button>
-    </div>
-    <div class="container" style="text-align: center;" *ngIf="!estadoMovimient">
-      <p-message severity="info" text="INICIE SESIÓN PARA MÁS INFORMACIÓN DE LOS CURSOS DE CAPACITACIÓN CONTINUA"
-        styleClass="mr-2 m-6"></p-message>
     </div>
   </div>
 </div>

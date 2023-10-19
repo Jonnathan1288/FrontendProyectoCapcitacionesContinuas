@@ -82,6 +82,8 @@
     styleClass="p-fluid">
     <ng-template pTemplate="content">
         <form (ngSubmit)="validacionRegistroFotografico()" novalidate>
+            <p style="font-size: 15px; color: red;" class="m-3 mb-5">Los campos marcados con * son de ingreso
+                obligatorio.
 
             <div class="grid p-fluid">
                 <div class="col-12 md:col-12">
@@ -89,11 +91,33 @@
                         <div
                             class="flex-1 flex align-items-center justify-content-center font-bold  px-2 py-2 border-round">
                             <div class="container custom-text-center" style="font-size: 20px;">
-                                <strong>Descripción evidencia</strong>
+                                <strong>Foto evidencia<span class="red-asterisk ml-1">*</span></strong>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex-auto">
+                        <div class="align-items-center justify-content-center border-round">
+                            <div class="personal-image">
+                                <label class="label" style="border: black; border-radius: 15%;">
+                                    <input type="file" accept="image/jpeg, image/jpg, image/png"
+                                        (change)="onFileSelected($event)" />
+                                    <figure class="personal-figure">
+                                        <img [src]="previewImageUrl ? previewImageUrl : '../assets/img/subir.png'"
+                                            class="personal-avatar" alt="Previsualización de imagen" />
+                                    </figure>
+                                </label>
                             </div>
                         </div>
                     </div>
 
+                </div>
+            </div>
+
+            <div class="grid p-fluid">
+                <div class="col-12 md:col-12">
+                    <div class="container" style="font-size: 1rem;">
+                        <strong>Descripción evidencia<span class="red-asterisk ml-1">*</span></strong>
+                    </div>
                     <div class="flex-auto">
                         <div
                             class="flex-1 flex align-items-center justify-content-center font-bold  px-2 py-2 border-round">
@@ -107,46 +131,11 @@
                 </div>
             </div>
 
-
             <div class="grid p-fluid">
                 <div class="col-12 md:col-12">
-                    <div class="flex-auto">
-                        <div
-                            class="flex-1 flex align-items-center justify-content-center font-bold  px-2 py-2 border-round">
-                            <div class="container custom-text-center" style="font-size: 20px;">
-                                <strong>Foto evidencia</strong>
-                            </div>
-                        </div>
+                    <div class="container" style="font-size: 1rem;">
+                        <strong>Fecha<span class="red-asterisk ml-1">*</span></strong>
                     </div>
-
-                    <div class="flex-auto">
-                        <div
-                            class="flex-1 flex align-items-center justify-content-center font-bold  px-2 py-2 border-round">
-
-                            <div class="personal-image">
-                                <label class="label" style="border: black;">
-                                    <input type="file" accept="image/jpeg, image/jpg, image/png"
-                                        (change)="onFileSelected($event)" />
-                                    <figure class="personal-figure">
-                                        <img *ngIf="previewImageUrl" [src]="previewImageUrl" class="personal-avatar"
-                                            alt="Previsualización de imagen" />
-                                        <img *ngIf="!previewImageUrl" src="./assets/img/subir.png"
-                                            class="personal-avatar" alt="Imagen de marcador de posición" />
-                                        <figcaption class="personal-figcaption">
-                                            <img src="./assets/img/subir.png" />
-                                        </figcaption>
-                                    </figure>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-
-            <div class="grid p-fluid">
-                <div class="col-12 md:col-12">
                     <p-calendar inputId="edad" appendTo="body" class="ng-dirty" [showIcon]="true"
                         placeholder="Fecha de evidencia" id="fechaEvidencia" name="fechaEvidencia"
                         [(ngModel)]="registroFotografico.fecha">
