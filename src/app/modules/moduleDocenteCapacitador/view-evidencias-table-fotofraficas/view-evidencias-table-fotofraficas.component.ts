@@ -265,13 +265,22 @@ export class ViewEvidenciasTableFotofraficasComponent implements OnInit {
 
 	//IMPLEMENTAR LA OPCIÓN PARA LA DESCARGA DEL PDF GENERADO DEL CURSO
 	public getReportRegistroFotograficoCurso() {
-		this.reportService
+		const todosInactivos = this.listRegistroFotografico.every(
+		  (registro) => !registro.estado
+		);
+	  
+		if (todosInactivos) {
+		  this.toastrService.info('No hay registros activos o no existen.', 'Sin Registros');
+		} else {
+		  this.reportService
 			.gedownloadRegistroFotograficoCurso(this.idCursoRouter!)
 			.subscribe((r) => {
-				const url = URL.createObjectURL(r);
-				window.open(url, '_blank');
+			  const url = URL.createObjectURL(r);
+			  window.open(url, '_blank');
 			});
-	}
+		}
+	  }
+	  
 
 	public limpiarCampos() {
 		this.registroFotografico = new RegistroFotograficoCurso();
