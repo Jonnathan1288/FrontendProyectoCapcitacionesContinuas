@@ -20,17 +20,34 @@
         currentPageReportTemplate="Mostrando {first} de {last} de {totalRecords} registros fotográficos"
         [showCurrentPageReport]="true">
         <ng-template pTemplate="caption">
-            <div class="flex align-items-center justify-content-between">
-                <!-- <h5 class="m-0"><strong>CURSO: </strong> {{curso.nombreCurso!}}</h5> -->
-                <h5 class="m-0"><strong>CURSO: </strong> {{ curso.nombreCurso! }}{{ curso.estadoAprovacionCurso !== 'A'
-                    ? ' (No aprobado)' : '' }}</h5>
-
-                <span class="p-input-icon-left">
-                    <i class="pi pi-search"></i>
-                    <input pInputText type="text" placeholder="Search..."
-                        (input)="dt.filterGlobal($any($event.target).value, 'contains')" />
-                </span>
+            <div class="flex justify-content-between flex-wrap card-container purple-container">
+                <div
+                    class="flex align-items-center justify-content-center w-16rem h-4rem font-bold text-white border-round m-2">
+                    <h5 class="m-0" style="color: black;"><strong>CURSO: </strong> {{ curso.nombreCurso! }}{{
+                        curso.estadoAprovacionCurso
+                        !== 'A'
+                        ? ' (No aprobado)' : '' }}</h5>
+                </div>
+                <div
+                    class="flex align-items-center justify-content-center w-16rem h-4rem font-bold text-white border-round m-2">
+                    <span class="p-input-icon-left">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text" placeholder="Search..."
+                            (input)="dt.filterGlobal($any($event.target).value, 'contains')" />
+                    </span>
+                </div>
             </div>
+            <!-- <div class="flex align-items-center justify-content-between"> -->
+            <!-- <h5 class="m-0"><strong>CURSO: </strong> {{curso.nombreCurso!}}</h5> -->
+            <!-- <h5 class="m-0"><strong>CURSO: </strong> {{ curso.nombreCurso! }}{{ curso.estadoAprovacionCurso !== 'A'
+                     ? ' (No aprobado)' : '' }}</h5>
+ 
+                 <span class="p-input-icon-left">
+                     <i class="pi pi-search"></i>
+                     <input pInputText type="text" placeholder="Search..."
+                         (input)="dt.filterGlobal($any($event.target).value, 'contains')" />
+                 </span>
+             </div> -->
         </ng-template>
         <ng-template pTemplate="header">
             <tr>

@@ -9,14 +9,14 @@
 
 .personal-figure {
     position: relative;
-    width: 320px;
-    height: 270px;
+    width: 300px;
+    height: 190px;
 }
 
 .personal-avatar {
     cursor: pointer;
-    width: 320px;
-    height: 270px;
+    width: 300px;
+    height: 190px;
     box-sizing: border-box;
     border: 2px solid transparent;
     box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.2);
