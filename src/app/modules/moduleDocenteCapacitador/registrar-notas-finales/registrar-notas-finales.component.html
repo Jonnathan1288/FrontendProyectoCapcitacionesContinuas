@@ -91,20 +91,14 @@
 
 
         </div>
-        <p-button [disabled]="classCursoFinalizaEstado.estadoPublicasionCurso === 'F'" label="Validar Notas"
-            icon="pi pi-calendar-minus" styleClass="p-button-success  mb-2 m-2" style="text-align: center;"
-            (onClick)="vaidarNotasEstudiantesFinales()"></p-button>
-        <!-- <p-button label="Generar Reporte" icon="pi pi-calendar-minus" styleClass="p-button-success  mb-2 m-5" style="text-align: center;" (click)="generarReporteAsitenciaEvaluacion()" ></p-button> -->
+
         <p-button label="Generar Reporte" icon="pi pi-print" styleClass="p-button-primary  mb-2 m-2"
             style="text-align: center;" (onClick)="showModalFinalInformationCorse()"></p-button>
 
-
-
-        <!-- [disabled]="this.classInformeFinalC.idInformeFinalCurso == null" -->
         <p-button
             [disabled]="classCursoFinalizaEstado.estadoPublicasionCurso === 'F' || this.classInformeFinalC.idInformeFinalCurso == null"
             label="Finalizar curso" icon="pi pi-calendar-minus" styleClass="p-button-secondary  mb-2 m-2"
-            style="text-align: center;" (onClick)="finalizarCursoCapacitacionContinua()"></p-button>
+            style="text-align: center;" (onClick)="vaidarNotasEstudiantesFinales()"></p-button>
 
 
         <p-button label="NOTAS FINALES" icon="pi pi-file-pdf" styleClass="p-button-danger mb-2 m-2"
@@ -121,116 +115,143 @@
 
 
 
-<!-- MODAL -->
+<!-- DIALOGO DE INGRESO DE NOTAS -->
+<p-dialog [(visible)]="visible" [style]="{ width: '600px' }" header="INGRESO DE NOTAS FINALES" [modal]="true"
+    styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <p style="font-size: 15px; color: red;" class=" mb-3">Los campos marcados con * son de ingreso obligatorio.
+        </p>
 
-<p-dialog header="INGRESO DE NOTAS FINALES" [(visible)]="visible" [modal]="true"
-    [style]="{ width: '50vw', height: '450' }" [draggable]="false" [resizable]="false">
-    <div class="grid p-fluid m-5">
-        <div class="col-12 md:col-12 mt-1">
-            <div class="p-inputgroup">
-                <span class="p-float-label">
-                    <input type="text" pInputText id="informe1" name="informe1" [(ngModel)]="notas.informe1"
-                        (input)="validarParcialAndFinalNota($event)" maxlength="2" (keydown)="validarEntrada($event)" />
-                    <label htmlFor="informe1">Informe 1<span class="red-asterisk"></span></label>
-                </span>
+
+        <div class="grid p-fluid ">
+            <div class="col-12 md:col-6 ">
+                <div class="field" pTooltip="La nota debe estar entre (1 - 30)" tooltipPosition="bottom">
+                    <label for="name">Informe 1 <span class="red-asterisk"></span></label> (1-30)
+                    <input type="text" placeholder="(1-30)" pInputText pInputText id="informe1" name="informe1"
+                        [(ngModel)]="notas.informe1" (input)="validarParcialAndFinalNota($event)" maxlength="2"
+                        (keydown)="validarEntrada($event)" required autofocus
+                        onkeypress='return event.charCode >= 48 && event.charCode <= 57' />
+                </div>
+
             </div>
-        </div>
-        <div class="col-12 md:col-12 mt-1">
-            <div class="p-inputgroup">
-                <span class="p-float-label">
-                    <input type="text" pInputText id="informe2" name="informe2" [(ngModel)]="notas.informe2"
-                        (input)="validarParcialAndFinalNota($event)" maxlength="2" (keydown)="validarEntrada($event)" />
-                    <label htmlFor="informe2">Informe 2<span class="red-asterisk"></span></label>
-                </span>
-            </div>
-        </div>
-        <div class="col-12 md:col-12 mt-1">
-            <div class="p-inputgroup">
-                <span class="p-float-label">
-                    <input type="text" pInputText id="informe3" name="informe3" [(ngModel)]="notas.informe3"
-                        (input)="validarParcialAndFinalNota($event)" maxlength="2" (keydown)="validarEntrada($event)" />
-                    <label htmlFor="informe3">Informe 3<span class="red-asterisk"></span></label>
-                </span>
+            <div class="col-12 md:col-6 ">
+                <div class="field" pTooltip="La nota debe estar entre (1 - 30)" tooltipPosition="bottom">
+                    <label for="name">Informe 2 <span class="red-asterisk"></span></label> (1-30)
+                    <input type="text" placeholder="(1-30)" pInputText id="informe2" name="informe2"
+                        [(ngModel)]="notas.informe2" (input)="validarParcialAndFinalNota($event)" maxlength="2"
+                        (keydown)="validarEntrada($event)" required
+                        onkeypress='return event.charCode >= 48 && event.charCode <= 57' />
+                </div>
+
             </div>
         </div>
 
-        <div class="col-12 md:col-12 mt-3">
-            <div class="p-inputgroup">
-                <span class="p-float-label">
-                    <input type="text" pInputText id="examenFinal" name="examenFinal" [(ngModel)]="notas.examenFinal"
-                        (input)="validarParcialAndFinalNota($event)" maxlength="2">
-                    <label htmlFor="examenFinal">Nota Exámen Final<span class="red-asterisk"></span></label>
-                </span>
+
+        <div class="grid p-fluid ">
+
+            <div class="col-12 md:col-6 ">
+
+                <div class="field" pTooltip="La nota debe estar entre (1 - 15)" tooltipPosition="bottom">
+                    <label for="name">Informe 3 <span class="red-asterisk"></span></label> (1-15)
+                    <input type="text" placeholder="(1-15)" pInputText pInputText id="informe3" name="informe3"
+                        [(ngModel)]="notas.informe3" (input)="validarParcialAndFinalNota($event)" maxlength="2"
+                        (keydown)="validarEntrada($event)" required
+                        onkeypress='return event.charCode >= 48 && event.charCode <= 57' />
+                </div>
+
             </div>
-        </div>
-        <div class="col-12 md:col-12 mt-3">
-            <div class="p-inputgroup">
-                <span class="p-float-label">
-                    <input type="text" pInputText id="observacion" name="observacion" [(ngModel)]="notas.observacion">
-                    <label htmlFor="observacion">Observación</label>
-                </span>
+
+            <div class="col-12 md:col-6 ">
+
+                <div class="field" pTooltip="La nota debe estar entre (1 - 25)" tooltipPosition="bottom">
+                    <label for="name">Examen Final <span class="red-asterisk"></span></label> (1-25)
+                    <input type="text" placeholder="(1-25)" pInputText pInputText id="examenFinal" name="examenFinal"
+                        [(ngModel)]="notas.examenFinal" (input)="validarParcialAndFinalNota($event)" maxlength="2"
+                        required onkeypress='return event.charCode >= 48 && event.charCode <= 57' />
+                </div>
+
             </div>
+
+
         </div>
-        <div class="col-md-12" style="text-align: center; margin: 5px;">
-            <p-button label="Guardar Nota" icon="pi pi-check-square" styleClass="p-button-success  mb-2"
-                (click)="guardarNotaPorEstudiante()"></p-button>
+
+        <div class="grid p-fluid ">
+            <div class="col-12 md:col-12">
+                <div class="field" pTooltip="Observación para el estudiante" ltipPosition="bottom">
+                    <label for="name">Observación </label>
+
+                    <textarea placeholder="Observación para el estudiante" rows="3" cols="30" pInputTextarea
+                        id="observacion" name="observacion" [autoResize]="true"
+                        [(ngModel)]="notas.observacion"></textarea>
+
+                </div>
+
+            </div>
+
         </div>
-    </div>
+
+    </ng-template>
+    <ng-template pTemplate="footer">
+
+        <p-button pRipple [label]="'Cancelar'" icon="pi pi-times" styleClass="p-button-outlined p-button-secondary"
+            (click)="cancelNotaSave()"></p-button>
+
+        <p-button pRipple label="Guardar Notas" icon="pi pi-check-square"
+            styleClass="p-button-outlined p-button-success" (click)="guardarNotaPorEstudiante()"></p-button>
+    </ng-template>
 </p-dialog>
-
-
 
 
 <!-- FORMULARIO FIN DE CURSO PARA GENERAR EL PDF-->
-<p-dialog header="Informe final del curso" [(visible)]="visibleModalFormFinalCourse" [modal]="true"
-    [style]="{ width: '50vw', height: '450' }" [draggable]="false" [resizable]="false">
-    <div class="grid p-fluid m-5">
-        <div class="col-12 md:col-12 mt-3">
-            <div class="p-inputgroup">
-                <span class="p-float-label">
-                    <input type="text" pInputText id="observacionesInformeFinalCurso"
-                        name="observacionesInformeFinalCurso"
-                        [(ngModel)]="classInformeFinalC.observacionesInformeFinalCurso">
-                    <label htmlFor="username">Observaciones del curso<span class="red-asterisk"></span></label>
-                </span>
+<p-dialog [(visible)]="visibleModalFormFinalCourse" [style]="{ width: '650px' }" header="Informe final del curso"
+    [modal]="true" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <p style="font-size: 15px; color: red;" class=" mb-3">Los campos marcados con * son de ingreso obligatorio.
+        </p>
+        <div class="grid p-fluid ">
+            <div class="col-12 md:col-12 mt-3">
+                <div class="p-inputgroup">
+                    <span class="p-float-label">
+                        <input type="text" pInputText id="observacionesInformeFinalCurso"
+                            name="observacionesInformeFinalCurso"
+                            [(ngModel)]="classInformeFinalC.observacionesInformeFinalCurso">
+                        <label htmlFor="username">Observaciones del curso<span class="red-asterisk"></span></label>
+                    </span>
+                </div>
+            </div>
+            <div class="col-12 md:col-12 mt-3">
+                <div class="p-inputgroup">
+                    <span class="p-float-label">
+                        <input type="text" pInputText id="lugarInformeFinalCurso" name="lugarInformeFinalCurso"
+                            [(ngModel)]="classInformeFinalC.lugarInformeFinalCurso">
+                        <label htmlFor="username">Lugar informe final curso<span class="red-asterisk"></span></label>
+                    </span>
+                </div>
+            </div>
+            <div class="col-12 md:col-12 mt-3">
+                <div class="p-inputgroup">
+                    <span class="p-float-label">
+                        <input type="text" pInputText id="nombreCantonInformeFinalCurso"
+                            name="nombreCantonInformeFinalCurso"
+                            [(ngModel)]="classInformeFinalC.nombreCantonInformeFinalCurso">
+                        <label htmlFor="username">Cantón informe final curso<span class="red-asterisk"></span></label>
+                    </span>
+                </div>
             </div>
         </div>
-        <div class="col-12 md:col-12 mt-3">
-            <div class="p-inputgroup">
-                <span class="p-float-label">
-                    <input type="text" pInputText id="lugarInformeFinalCurso" name="lugarInformeFinalCurso"
-                        [(ngModel)]="classInformeFinalC.lugarInformeFinalCurso">
-                    <label htmlFor="username">Lugar informe final curso<span class="red-asterisk"></span></label>
-                </span>
-            </div>
-        </div>
-        <div class="col-12 md:col-12 mt-3">
-            <div class="p-inputgroup">
-                <span class="p-float-label">
-                    <input type="text" pInputText id="nombreCantonInformeFinalCurso"
-                        name="nombreCantonInformeFinalCurso"
-                        [(ngModel)]="classInformeFinalC.nombreCantonInformeFinalCurso">
-                    <label htmlFor="username">Cantón informe final curso<span class="red-asterisk"></span></label>
-                </span>
-            </div>
-        </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
 
+        <p-button pRipple [label]="this.classInformeFinalC.idInformeFinalCurso? 'Actualizar':'Guardar'"
+            icon="pi pi-pencil" styleClass="p-button-outlined p-button-secondary"
+            (onClick)="validarCamposVaciosInformeFinal()"
+            [disabled]="classCursoFinalizaEstado.estadoPublicasionCurso === 'F'"></p-button>
 
-        <div class="p-grid p-justify-end">
-            <p-button [label]="this.classInformeFinalC.idInformeFinalCurso? 'Actualizar':'Guardar'" icon="pi pi-pencil"
-                styleClass="p-button-secondary mb-2" (onClick)="validarCamposVaciosInformeFinal()"
-                [disabled]="classCursoFinalizaEstado.estadoPublicasionCurso === 'F'"></p-button>
-
-            <p-button label="Informe final" icon="pi pi-file-pdf" styleClass="p-button-danger mb-2"
-                [disabled]="this.classInformeFinalC.idInformeFinalCurso == null"
-                (onClick)="generarReporteInformeFinalCurso()"></p-button>
-
-        </div>
-
-    </div>
+        <p-button pRipple [disabled]="this.classInformeFinalC.idInformeFinalCurso == null" label="Informe final"
+            icon="pi pi-file-pdf" styleClass="p-button-outlined p-button-danger"
+            (onClick)="generarReporteInformeFinalCurso()"></p-button>
+    </ng-template>
 </p-dialog>
-
-
 
 
 <p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000"

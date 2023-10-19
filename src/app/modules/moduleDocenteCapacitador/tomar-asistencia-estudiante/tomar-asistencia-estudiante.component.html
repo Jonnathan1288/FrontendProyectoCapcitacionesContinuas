@@ -23,7 +23,8 @@
     </div>
 
     <div style="text-align: center;" *ngIf="estadoFinal === 'F'">
-        <p-tag icon="pi pi-times" severity="danger" value="CURSO FINALIZADO, SOLO PUEDE REVISAR EL HISTORIAL DE ASISTENCIAS DE SUS ALUMNOS."></p-tag>
+        <p-tag icon="pi pi-times" severity="danger"
+            value="CURSO FINALIZADO, SOLO PUEDE REVISAR EL HISTORIAL DE ASISTENCIAS DE SUS ALUMNOS."></p-tag>
 
     </div>
 
@@ -81,7 +82,8 @@
                             </div>
                         </td>
                         <td>
-                            <p-button icon="pi pi-eye" (onClick)="showDialog(data)" [disabled]="data.partipantesMatriculados?.inscrito?.curso?.estadoPublicasionCurso === 'F'"></p-button>
+                            <p-button icon="pi pi-eye" (onClick)="showDialog(data)"
+                                [disabled]="data.partipantesMatriculados?.inscrito?.curso?.estadoPublicasionCurso === 'F'"></p-button>
                         </td>
                     </tr>
                 </ng-template>

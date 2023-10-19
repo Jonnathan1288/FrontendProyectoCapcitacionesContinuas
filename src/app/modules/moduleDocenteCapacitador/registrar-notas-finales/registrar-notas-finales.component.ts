@@ -190,8 +190,6 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 			});
 	}
 
-
-
 	public notasFinalesReduce: NotaFinalReduce[] = [];
 	public getParticipantsFinallyGrade() {
 		this.notasService.findAllNotasFinalesByIdCurso(this.idCursoGlobal!).subscribe({
@@ -232,7 +230,7 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 			this.notasService
 				.updateNotas(this.idCapModelEdit!, this.notas)
 				.subscribe((data) => {
-					// this.notas = data;
+
 					const { idNota, informe1, informe2, informe3, examenFinal, observacion, fechaNota, partipantesMatriculados } = data;
 					const idParticipanteMatriculado = partipantesMatriculados?.idParticipanteMatriculado
 					const result = { ...this.notaFinalReduceCopy, idNota, informe1, informe2, informe3, examenFinal, observacion, fechaNota, idParticipanteMatriculado }
@@ -253,8 +251,18 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 					);
 
 					this.visible = false;
+					this.updateStatusAproved(idParticipanteMatriculado!, informe1!, informe2!, informe3!, examenFinal!);
 				});
 		}
+	}
+
+	public updateStatusAproved(id: number, nota1: number, nota2: number, nota3: number, nota4: number) {
+		const notaFinal = this.validarNotasFinalesView(nota1, nota2, nota3, nota4);
+		this.participantesMatriculadosService.updateEstadoAprobacionParticipanteMatriculado(id, notaFinal >= 70 ? 'A' : 'R').subscribe({
+			next: (resp) => {
+
+			}
+		})
 	}
 
 	// VALIDAR LAS NOTAS FINALES
@@ -263,23 +271,23 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 		new ParticipantesMatriculados();
 
 	public idParticpanteNota!: number;
-	public vaidarNotasEstudiantesFinales(): void {
+	public vaidarNotasEstudiantesFinales() {
 		let informe1CeroVacio = false;
 		let informe2CeroVacio = false;
 		let informe3CeroVacio = false;
 		let examenFinalCeroOVacio = false;
 
 		this.notasFinalesReduce.forEach((nota) => {
-			if (nota.informe1 === 0 || nota.informe1 === undefined) {
+			if (!nota.informe1) {
 				informe1CeroVacio = true;
 			}
-			if (nota.informe2 === 0 || nota.informe2 === undefined) {
+			if (!nota.informe2) {
 				informe2CeroVacio = true;
 			}
-			if (nota.informe3 === 0 || nota.informe3 === undefined) {
+			if (!nota.informe3) {
 				informe3CeroVacio = true;
 			}
-			if (nota.examenFinal === 0 || nota.examenFinal === undefined) {
+			if (!nota.examenFinal) {
 				examenFinalCeroOVacio = true;
 			}
 		});
@@ -291,46 +299,8 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 			);
 			return;
 		}
-		console.log('CLICk');
-		for (let participante of this.notasFinalesReduce) {
 
-			const info1 = participante.informe1!;
-			const info2 = participante.informe2!;
-			const info3 = participante.informe3!;
-			const examen = participante.examenFinal!;
-			this.idParticpanteNota =
-				participante!.idParticipanteMatriculado!;
-			const notaFinal = (info1 / 30) * 30 + (info2 / 30) * 30 + (info3 / 15) * 15 + (examen / 25) * 25;
-
-			this.participantesMatriculadosService
-				.getParticipantesMatriculadosById(this.idParticpanteNota)
-				.subscribe((data) => {
-					this.participantesMatriculado = data;
-					if (notaFinal >= 70) {
-						console.log('APROBADO');
-						this.participantesMatriculado.estadoParticipanteAprobacion = 'A';
-					} else {
-						console.log('NO APROBADO');
-						this.participantesMatriculado.estadoParticipanteAprobacion = 'R';
-					}
-					this.participantesMatriculadosService
-						.updateParticipantesMatriculados(
-							this.idParticpanteNota,
-							this.participantesMatriculado
-						)
-						.subscribe((data) => {
-							console.log('Se actulizo su estado APROBACION');
-						});
-				});
-		}
-
-		this.toastrService.success(
-			'Las notas se encuentran validadas.',
-			'NOTAS VALIDADAS.',
-			{
-				timeOut: 2000,
-			}
-		);
+		this.finalizarCursoCapacitacionContinua();
 	}
 
 	public validarNotasFinalesView(nota1: number, nota2: number, nota3: number, notafinal: number) {
@@ -457,8 +427,7 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 								timeOut: 2000,
 							}
 						);
-						location.reload();
-						this.visibleModalFormFinalCourse = false;
+						this.classInformeFinalC = data;
 					}
 				});
 		} else {
@@ -475,8 +444,7 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 								timeOut: 2000,
 							}
 						);
-						location.reload();
-						console.log({ cf: data });
+						this.classInformeFinalC = data;
 					}
 				});
 		}
@@ -544,6 +512,10 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 		}
 	}
 
+	public cancelNotaSave() {
+		this.visible = false
+	}
+
 	//IMPLEMENTS CHART
 	public chartParticipantes() {
 		const notas = this.notasFinalesReduce.map(i => {
@@ -569,9 +541,7 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 		]);
 
 		this.rendererChart(inform);
-
 	}
-
 
 	Highcharts: typeof Highcharts = Highcharts;
 	chartOptions!: Highcharts.Options;
