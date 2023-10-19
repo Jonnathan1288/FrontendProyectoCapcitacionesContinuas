@@ -133,3 +133,14 @@ tr:hover {
 #bntRegistrar:hover {
     background-color: rgb(21, 125, 60);
 }
+
+.attendance-date1 {
+  /* background-color: #34a450;  */
+  background-color: #2b8bda; 
+  color: #ffffff;
+  padding: 5px;
+  border-radius: 5px;
+  display: inline-block;
+  font-weight: bold;
+  margin-bottom: 10px;
+}

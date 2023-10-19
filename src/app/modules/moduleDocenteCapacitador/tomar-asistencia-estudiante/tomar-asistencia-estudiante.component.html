@@ -9,7 +9,10 @@
 
 
     <div class="grid p-fluid m-2">
-        <div class="col-12 md:col-12 ">
+        <div class="col-12 md:col-12">
+            <div class="attendance-section">
+                <label class="attendance-date1">Seleccione la fecha para registrar la asistencia:</label>
+            </div>
             <div class="p-inputgroup">
                 <p-calendar inputId="edad" class="ng-dirty" [showIcon]="true" placeholder="Fecha de asistencia"
                     id="fechaEvidencia" name="fechaEvidencia" (onSelect)="onDateSelect($event)"
