@@ -85,6 +85,7 @@ export class CurricularDiseñoComponent implements OnInit {
           this.toastr.success('Editar diseño curricular.');
           // alert('Ya tiene disenio Curricular' + data)
           this.traerDatos(this.idSilaboCap);
+          this.getSilabo();
         } else {
           this.toastr.info('Listo para crear diseño curricular.');
           // alert(" no tien Disenio Curricular")
@@ -96,7 +97,13 @@ export class CurricularDiseñoComponent implements OnInit {
   /* TRAER DATOS DEL SILABO*/
 
   public getSilabo() {
+    this.silaboService.getSilaboById(this.idSilaboCap).subscribe({
+      next: (resp) => {
+        this.silabo = resp;
+      }, error: (err) => {
 
+      }
+    })
   }
 
 

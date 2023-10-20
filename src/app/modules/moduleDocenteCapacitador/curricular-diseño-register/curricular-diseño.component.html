@@ -1,4 +1,12 @@
-<div class="card flex justify-content-center" id="miDiv">
+<!-- <p-blockUI [target]="pnl" [blocked]="blockButtonCourse()">
+    <i class="pi pi-lock" style="font-size: 3rem"></i>
+</p-blockUI>
+ -->
+
+
+<div class=" flex justify-content-center" id="miDiv">
+
+
 
     <p-panel header="DISEÑO CURRICULAR">
         <!-- <div class="col-md-12" style="text-align: right; margin: 5px;">
@@ -56,11 +64,16 @@
             </p>
         </p-card>
 
+        <div style="text-align: center;" *ngIf="blockButtonCourse()" class="">
+            <p-tag icon="pi pi-times" severity="danger"
+                [value]="'LOS DATOS DE ESTE DISEÑO CURRICULAR YA NO SE PUEDEN MODIFICAR'"></p-tag>
+        </div>
+
         <p-card header="Temas Transversales" class="m-5">
 
             <form novalidate>
                 <div class="grid p-fluid m-5">
-                    <div class="col-10 md:col-10">
+                    <div class="col-12 md:col-12">
                         <div class="p-inputgroup">
                             <span class="p-inputgroup-addon"><i class="icono  fas fa-pencil-alt"></i></span>
                             <textarea rows="5" cols="30" pInputTextarea id="temasTransversales"
@@ -73,7 +86,7 @@
             <h5>Estrategias de Enseñanza</h5>
             <form novalidate>
                 <div class="grid p-fluid m-5">
-                    <div class="col-10 md:col-10">
+                    <div class="col-12 md:col-12">
                         <div class="p-inputgroup">
                             <span class="p-inputgroup-addon"><i class="icono fas fa-duotone fa-file"></i></span>
                             <textarea rows="5" cols="30" pInputTextarea id="estrategiasAprendizaje"
@@ -87,7 +100,7 @@
             </form>
             <div class="col-md-12" style="text-align: center; margin: 5px;" *ngIf='validarIdDisenioCurricular == true'>
                 <p-button label="Actualizar" icon="pi pi-check-square" styleClass="p-button-success  mb-2"
-                    (click)="actualizarDisenioCurricular()"></p-button>
+                    (onClick)="actualizarDisenioCurricular()" [disabled]="blockButtonCourse()"></p-button>
             </div>
         </p-card>
 
@@ -129,7 +142,7 @@
 
             <div class="col-md-12" style="text-align: center; margin: 5px;" *ngIf='validarIdDisenioCurricular == true'>
                 <p-button label="Agregar" icon="pi pi-plus" styleClass="p-button-success  mb-2"
-                    (onClick)="blockButtonCourse()"></p-button>
+                    (onClick)="showModalCreateEvaluacionDiagnostica()" [disabled]="blockButtonCourse()"></p-button>
             </div>
             <!-- </form> -->
             <div class="card">
@@ -155,15 +168,17 @@
                                 <button *ngIf='data.estadoEvaluacionDiagnostica == true' pButton type="button"
                                     class="p-button-rounded p-button-success" icon="pi pi-check-circle"
                                     style="margin-right: 5px;"
-                                    (click)="cambiarEvaluacionDiagnosticaCurricularFalse(data.idEvaluacionDiagnosticaCurricular)"></button>
+                                    (click)="cambiarEvaluacionDiagnosticaCurricularFalse(data.idEvaluacionDiagnosticaCurricular)"
+                                    [disabled]="blockButtonCourse()"></button>
                                 <button *ngIf='data.estadoEvaluacionDiagnostica == false' pButton type="button"
                                     class="p-button-rounded p-button-danger" style="margin-right: 5px;"
                                     icon="pi pi-power-off"
-                                    (click)="cambiarEvaluacionDiagnosticaCurriculartrue(data.idEvaluacionDiagnosticaCurricular)"></button>
+                                    (click)="cambiarEvaluacionDiagnosticaCurriculartrue(data.idEvaluacionDiagnosticaCurricular)"
+                                    [disabled]="blockButtonCourse()"></button>
                                 <button pButton type="button"
                                     (click)="showModalEditEvaluacionDiagnostica(data.idEvaluacionDiagnosticaCurricular)"
                                     class="p-button-rounded p-button-info" icon="pi pi-pencil"
-                                    style="margin-right: 5px;"></button>
+                                    style="margin-right: 5px;" [disabled]="blockButtonCourse()"></button>
 
                             </td>
                         </tr>
@@ -243,7 +258,7 @@
             </div>
             <div class="col-md-12" style="text-align: center; margin: 5px;" *ngIf='validarIdDisenioCurricular == true'>
                 <p-button label="Agregar" icon="pi pi-plus" styleClass="p-button-success  mb-2"
-                    (click)="showModalCreateEvaluacionFormativa()"></p-button>
+                    (onClick)="showModalCreateEvaluacionFormativa()" [disabled]="blockButtonCourse()"></p-button>
             </div>
 
             <!-- </form> -->
@@ -270,15 +285,17 @@
                                 <button *ngIf='data.estadoEvaluacionFormativa == true' pButton type="button"
                                     class="p-button-rounded p-button-success" icon="pi pi-check-circle"
                                     style="margin-right: 5px;"
-                                    (click)="cambiarEstadosEvaluacionFormativaFalse(data.idEvalucionFormativaCurricular)"></button>
+                                    (click)="cambiarEstadosEvaluacionFormativaFalse(data.idEvalucionFormativaCurricular)"
+                                    [disabled]="blockButtonCourse()"></button>
                                 <button *ngIf='data.estadoEvaluacionFormativa == false' pButton type="button"
                                     class="p-button-rounded p-button-danger" style="margin-right: 5px;"
                                     icon="pi pi-power-off"
-                                    (click)="cambiarEstadosEvaluacionFormativaTrue(data.idEvalucionFormativaCurricular)"></button>
+                                    (click)="cambiarEstadosEvaluacionFormativaTrue(data.idEvalucionFormativaCurricular)"
+                                    [disabled]="blockButtonCourse()"></button>
                                 <button pButton type="button"
                                     (click)="showModalEditEvaluacionFormativa(data.idEvalucionFormativaCurricular)"
                                     class="p-button-rounded p-button-info" icon="pi pi-pencil"
-                                    style="margin-right: 5px;"></button>
+                                    style="margin-right: 5px;" [disabled]="blockButtonCourse()"></button>
                             </td>
                         </tr>
                     </ng-template>
@@ -355,7 +372,7 @@
             </div>
             <div class="col-md-12" style="text-align: center; margin: 5px;" *ngIf='validarIdDisenioCurricular == true'>
                 <p-button label="Agregar" icon="pi pi-plus" styleClass="p-button-success  mb-2"
-                    (click)="showModalCreateEvaluacionFinal()"></p-button>
+                    (onClick)="showModalCreateEvaluacionFinal()" [disabled]="blockButtonCourse()"></p-button>
             </div>
             <!-- </form> -->
             <div class="card">
@@ -380,15 +397,17 @@
                                 <button *ngIf='data.estadoEvaluacionFinal == true' pButton type="button"
                                     class="p-button-rounded p-button-success" icon="pi pi-check-circle"
                                     style="margin-right: 5px;"
-                                    (click)="cambiarEstadosEvaluacionFinalFalse(data.idEvaluacionFinal)"></button>
+                                    (click)="cambiarEstadosEvaluacionFinalFalse(data.idEvaluacionFinal)"
+                                    [disabled]="blockButtonCourse()"></button>
                                 <button *ngIf='data.estadoEvaluacionFinal == false' pButton type="button"
                                     class="p-button-rounded p-button-danger" style="margin-right: 5px;"
                                     icon="pi pi-power-off"
-                                    (click)="cambiarEstadosEvaluacionFinalTrue(data.idEvaluacionFinal)"></button>
-                                <button pButton type="button"
+                                    (click)="cambiarEstadosEvaluacionFinalTrue(data.idEvaluacionFinal)"
+                                    [disabled]="blockButtonCourse()"></button>
+                                <button pButton type="button "
                                     (click)="showModalEditEvaluacionFinal(data.idEvaluacionFinal)"
                                     class="p-button-rounded p-button-info" icon="pi pi-pencil"
-                                    style="margin-right: 5px;"></button>
+                                    style="margin-right: 5px;" [disabled]="blockButtonCourse()"></button>
                             </td>
                         </tr>
                     </ng-template>
@@ -518,11 +537,19 @@
                             </tr>
                         </tbody>
                     </table>
-                    <div class="col-md-12" style="text-align: center; margin: 5px;">
-                        <p-button label="Generar Diseño Curricular" icon="icono fas fa-duotone fa-save"
-                            styleClass="p-button-success  mb-2" type="submit"></p-button>
+                    <div class="col-md-12 mt-3" style="text-align: center; margin: 5px;">
+                        <p-button
+                            [label]="(disenioCurricular.idDisenioCurricular?'Actualizar':'Generar')+' Diseño Curricular'"
+                            icon="icono fas fa-duotone fa-save" styleClass="p-button-success  mb-2" type="submit"
+                            [disabled]="blockButtonCourse()"></p-button>
                     </div>
+
                 </form>
+                <div class="col-md-12" style="text-align: center; margin: 5px;">
+                    <p-button [label]="'Generar PDF'" icon="pi pi-file-pdf" styleClass="p-button-danger  mb-2"
+                        [disabled]="!disenioCurricular.idDisenioCurricular"
+                        (onClick)="getReportDisenioCurricular()"></p-button>
+                </div>
             </div>
 
 
@@ -532,9 +559,6 @@
 
 
     </p-panel>
-    <div class="col-md-12" style="text-align: center; margin: 5px;">
-        <p-button label="Generar PDF" icon="pi pi-file-pdf" styleClass="p-button-danger  mb-2"
-            [disabled]="!disenioCurricular.idDisenioCurricular" (onClick)="getReportDisenioCurricular()"></p-button>
-    </div>
+
 
 </div>
