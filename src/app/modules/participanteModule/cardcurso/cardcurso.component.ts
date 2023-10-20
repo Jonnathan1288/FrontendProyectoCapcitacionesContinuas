@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Area } from 'src/app/models/area';
-import { Curso } from 'src/app/models/curso';
 import { CursoPaginacion } from 'src/app/models/cursopaginacion';
-import { LoadScript } from 'src/app/scripts/load-script';
 import { CursoService } from 'src/app/service/curso.service';
 import { StorageService } from 'src/app/service/storage.service';
+import { UploadService } from 'src/app/service/upload.service';
+import { FOLDER_IMAGE_COURSE, getFile } from 'src/app/util/folder-upload';
 
 @Component({
   selector: 'app-cardcurso',
@@ -20,8 +19,14 @@ export class CardcursoComponent implements OnInit {
     private router: Router,
     private cursoService: CursoService,
     private toastrService: ToastrService,
-    private localService: StorageService
+    private localService: StorageService,
+    private imagenService: UploadService,
   ) { }
+
+  public getUriFile(fileName: string): string {
+    return getFile(fileName, FOLDER_IMAGE_COURSE);
+  }
+
 
   ngOnInit(): void {
     this.obtenerCursosFull();
