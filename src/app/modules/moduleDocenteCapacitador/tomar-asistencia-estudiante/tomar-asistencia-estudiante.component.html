@@ -2,17 +2,30 @@
 
 
     <div class="attendance-section">
-        <h2 class="section-title"><strong>Asistencia de Estudiantes</strong> </h2>
-        <div class="attendance-date">{{ today | date:'mediumDate' }}</div>
+        <h2 class="section-title"><strong>Asistencia de Estudiantes : {{ today | date:'dd-MMMM-yyyy' }}</strong> </h2>
+    </div>
+
+    <div class="attendance-section">
+        <div class="attendance-date">
+            <label class="attendance-date2"><strong>Información del curso:</strong></label>
+        </div>
+        <div class="attendance-date">
+            <label class="attendance-date"><b>Fecha de inicio curso:</b> {{this.curso.fechaInicioCurso! | date:
+                'dd-MMMM-yyyy'}} | </label>&nbsp;
+            <label class="attendance-date"><b>Fecha de finalización:</b>
+                {{ this.curso.fechaFinalizacionCurso! | date:'dd-MMMM-yyyy' }} </label><br>
+            <label class="attendance-date"><b>Horario:</b> {{this.curso?.horarioCurso?.dias!}} </label>
+        </div>
+        <br>
+        <label class="attendance-date1">Seleccione la fecha para registrar la asistencia:</label>
+            
     </div>
 
 
 
     <div class="grid p-fluid m-2">
         <div class="col-12 md:col-12">
-            <div class="attendance-section">
-                <label class="attendance-date1">Seleccione la fecha para registrar la asistencia:</label>
-            </div>
+
             <div class="p-inputgroup">
                 <p-calendar inputId="edad" class="ng-dirty" [showIcon]="true" placeholder="Fecha de asistencia"
                     id="fechaEvidencia" name="fechaEvidencia" (onSelect)="onDateSelect($event)"

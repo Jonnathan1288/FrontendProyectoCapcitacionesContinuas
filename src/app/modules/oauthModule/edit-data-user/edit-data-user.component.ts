@@ -204,7 +204,9 @@ export class EditDataUserComponent implements OnInit {
 				this.personaService.updatePersona(this.classPersona.idPersona!, this.classPersona).subscribe(() => {
 					this.toastrService.success('Excelente', 'Datos de Persona Actualizados');
 					// localStorage.removeItem('emp');
-					this.router.navigate(['/home']);
+					this.router.navigate(['/home']).then(() => {
+						window.location.reload();
+					});
 				});
 			} else {
 				this.toastrService.warning('Advertencia', 'Datos personales incompletos');
@@ -216,7 +218,10 @@ export class EditDataUserComponent implements OnInit {
 		if (Object.values(this.classCapacitador).every(value => value)) {
 			this.capacitadorService.updateCapacitador(this.classCapacitador.idCapacitador!, this.classCapacitador).subscribe(() => {
 				this.toastrService.success('Excelente', 'Datos Docente Actualizados');
-				this.router.navigate(['/home']);
+				// this.router.navigate(['/home']);
+				this.router.navigate(['/home']).then(() => {
+					window.location.reload();
+				});
 			});
 		} else {
 			this.toastrService.warning('Advertencia', 'Datos docente incompletos');
