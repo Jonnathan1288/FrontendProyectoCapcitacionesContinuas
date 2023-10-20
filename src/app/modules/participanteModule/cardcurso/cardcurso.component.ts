@@ -54,6 +54,8 @@ export class CardcursoComponent implements OnInit {
       this.listCursosOriginal = data.content;
       this.listCursos = this.listCursosOriginal;
       this.filterAreasPerCurser();
+
+      this.pageTotal = Math.ceil(data.totalElements / this.isSize);
     });
   }
 

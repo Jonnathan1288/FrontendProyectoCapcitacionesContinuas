@@ -52,6 +52,13 @@
         <div class="overview-text-header">Descripción</div>
         <div class="overview-text-subheader">{{dataCurso.descripcionCurso}}</div>
     </div>
+    <div class="d-flex justify-content-center gap-2 mt-4">
+        <a [attr.href]="(hojaVida && (hojaVida && hojaVida.uriDocument)) ? getFileResource():null" class="p-link"
+          [attr.target]="(hojaVida && hojaVida.uriDocument) ? '_blank': '' ">
+          <p-message [severity]="(hojaVida && hojaVida.uriDocument) ? 'success' : 'error'"
+            [text]="(hojaVida && hojaVida.uriDocument) ? 'Haz clic aquí para ver la hoja de vida' : 'No hay archivo disponible'"></p-message>
+        </a>
+      </div>
     <div class="overview-text">
         <div class="overview-text-header">Prerrequisitos</div>
         <div class="overview-text-item" *ngFor="let listPrerrequistos of listPrerrequistos">
