@@ -52,6 +52,7 @@ export class InfocursoComponent implements OnInit {
     this.cursoService.listCursoDelParticipante(this.idUsuarioGlobal).subscribe(
       data => {
         this.cursosListInscritos = data;
+        console.log(data);
         for (let cursos of this.cursosListInscritos) {
           if (cursos.estadoPublicasionCurso == 'I') {
             this.fechaFinCursoInscrito.push(cursos.fechaFinalizacionCurso!);
@@ -65,6 +66,7 @@ export class InfocursoComponent implements OnInit {
     this.cursoService.getCursoById(this.idCursoGlobal).subscribe(
       data => {
         this.dataCurso = data;
+        console.log(data);
         this.traerPrerequisitosCurso();
       }
     )
