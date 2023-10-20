@@ -8,7 +8,8 @@ export enum LocalStorageKeys {
     TIME_TOKEN = 'token',
     ID_USUARIO = 'id_username',
     URL_PHOTO = 'foto',
-    USER_NAME = 'username'
+    USER_NAME = 'username',
+    EMPTY = 'emp'
 }
 
 const securityService = new SecurityService();
