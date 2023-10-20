@@ -135,30 +135,6 @@ content: attr(aria-label);
   margin-top: 20px;
 }
 
-textarea {
-  width: 98%;
-  background: white;
-  border: none;
-  padding: 15px 20px;
-  border-radius: 20px;
-  margin-top: 15px;
-  box-shadow: #317a9c 0px 10px 10px -5px;
-  border-inline: 6px solid transparent;
-}
-
-textarea ::-moz-placeholder {
-  color: rgb(170, 170, 170);
-}
-
-textarea ::placeholder {
-  color: rgb(170, 170, 170);
-}
-
-textarea:focus {
-  outline: none;
-  border-inline: 3px solid #12B1D1;
-}
-
 
 .botones {
   max-width: 500px;

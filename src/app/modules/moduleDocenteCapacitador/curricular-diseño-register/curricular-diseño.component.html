@@ -480,7 +480,6 @@
                                 <td data-label="FASE PRÁCTICA">
                                     <textarea name="fasePractica_1_3" rows="5" cols="30"
                                         pInputTextarea>{{ obtenerNombreFasePractico(1, 3) }}</textarea>
-                                    </textarea>
                                 </td>
                             </tr>
                             <tr>
@@ -493,7 +492,6 @@
                                 <td data-label="FASE PRÁCTICA">
                                     <textarea name="fasePractica_2_4" rows="5" cols="30"
                                         pInputTextarea>{{ obtenerNombreFasePractico(2, 4) }}</textarea>
-                                    </textarea>
                                 </td>
                             </tr>
                             <tr>
@@ -521,9 +519,8 @@
                         </tbody>
                     </table>
                     <div class="col-md-12" style="text-align: center; margin: 5px;">
-                        <p-button *ngIf='validarIdDisenioCurricular == false' label="Generar Diseño Curricular"
-                            icon="icono fas fa-duotone fa-save" styleClass="p-button-success  mb-2"
-                            (onClick)="generarDisenioCurricular()" type="submit"></p-button>
+                        <p-button label="Generar Diseño Curricular" icon="icono fas fa-duotone fa-save"
+                            styleClass="p-button-success  mb-2" type="submit"></p-button>
                     </div>
                 </form>
             </div>
