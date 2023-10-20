@@ -27,7 +27,7 @@ export class SidebarComponent implements OnInit {
 	public urlPhoto: any = '';
 
 	public status?: any;
-	public isDisabled: boolean = true;
+	public isDisabled: boolean = false;
 
 	constructor(
 		private _CargarScript: LoadScript,
