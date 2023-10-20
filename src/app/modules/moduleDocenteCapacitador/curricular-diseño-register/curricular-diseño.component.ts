@@ -95,6 +95,10 @@ export class CurricularDiseñoComponent implements OnInit {
   }
   /* TRAER DATOS DEL SILABO*/
 
+  public getSilabo() {
+
+  }
+
 
   idSilaboCap?: any;
   public obtenerDatosSilabo(): void {
@@ -1290,6 +1294,11 @@ export class CurricularDiseñoComponent implements OnInit {
     } else {
       console.error('ID de fase practica no válido:', fasePractica.idFasePractica);
     }
+  }
+
+
+  public blockButtonCourse(): boolean {
+    return this.silabo.curso!.estadoPublicasionCurso === 'F' || this.silabo.curso!.estadoPublicasionCurso === 'I';
   }
 
 }
