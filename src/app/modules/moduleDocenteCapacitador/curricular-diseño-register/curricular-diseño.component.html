@@ -451,60 +451,79 @@
                             <tr>
                                 <td data-label="INSTALACIÓN" rowspan="3">Aula</td>
                                 <td>1.Equipos</td>
-                                <td data-label="FASE TEÓRICA"><textarea name="faseTeorica_1_1">
-                                    {{obtenerNombreFaseTeorico(1, 1)}}</textarea></td>
-                                <td data-label="FASE PRÁCTICA"><textarea name="fasePractica_1_1">
-                                    {{obtenerNombreFasePractico(1, 1)}}</textarea></td>
+                                <td data-label="FASE TEÓRICA">
+                                    <textarea name="faseTeorica_1_1" rows="5" cols="30"
+                                        pInputTextarea>{{ obtenerNombreFaseTeorico(1, 1) }}</textarea>
+                                </td>
+                                <td data-label="FASE PRÁCTICA">
+                                    <textarea name="fasePractica_1_1" rows="5" cols="30"
+                                        pInputTextarea>{{ obtenerNombreFasePractico(1, 1) }}</textarea>
+                                </td>
                             </tr>
                             <tr>
                                 <td scope="row">2.Materiales, insumos y recursos didácticos</td>
-                                <td data-label="FASE TEÓRICA"><textarea
-                                        name="faseTeorica_1_2">{{ obtenerNombreFaseTeorico(1, 2) }}</textarea></td>
-                                <td data-label="FASE PRÁCTICA"><textarea name="fasePractica_1_2">
-                                    {{obtenerNombreFasePractico(1, 2) }}</textarea></td>
+                                <td data-label="FASE TEÓRICA">
+                                    <textarea name="faseTeorica_1_2" rows="5" cols="30"
+                                        pInputTextarea>{{ obtenerNombreFaseTeorico(1, 2) }}</textarea>
+                                </td>
+                                <td data-label="FASE PRÁCTICA">
+                                    <textarea name="fasePractica_1_2" rows="5" cols="30"
+                                        pInputTextarea>{{ obtenerNombreFasePractico(1, 2) }}</textarea>
+                                </td>
                             </tr>
                             <tr>
                                 <td scope="row">3.Recursos didácticos y de consumo</td>
-                                <td data-label="FASE TEÓRICA"><textarea
-                                        name="faseTeorica_1_3">{{ obtenerNombreFaseTeorico(1, 3) }}</textarea></td>
-                                <td data-label="FASE PRÁCTICA"><textarea name="fasePractica_1_3">
-                                    {{obtenerNombreFasePractico(1, 3) }}
-                                </textarea></td>
+                                <td data-label="FASE TEÓRICA">
+                                    <textarea name="faseTeorica_1_3" rows="5" cols="30"
+                                        pInputTextarea>{{ obtenerNombreFaseTeorico(1, 3) }}</textarea>
+                                </td>
+                                <td data-label="FASE PRÁCTICA">
+                                    <textarea name="fasePractica_1_3" rows="5" cols="30"
+                                        pInputTextarea>{{ obtenerNombreFasePractico(1, 3) }}</textarea>
+                                    </textarea>
+                                </td>
                             </tr>
                             <tr>
                                 <td scope="row" rowspan="3" data-label="INSTALACIÓN">Taller o laboratorio</td>
                                 <td>1.Máquinas, equipos y herramientas</td>
-                                <td data-label="FASE TEÓRICA"><textarea
-                                        name="faseTeorica_2_4">{{ obtenerNombreFaseTeorico(2, 4) }}</textarea>
+                                <td data-label="FASE TEÓRICA">
+                                    <textarea name="faseTeorica_2_4" rows="5" cols="30"
+                                        pInputTextarea>{{ obtenerNombreFaseTeorico(2, 4) }}</textarea>
                                 </td>
-                                <td data-label="FASE PRÁCTICA"><textarea name="fasePractica_2_4">
-                                    {{obtenerNombreFasePractico(2,4) }}
-                                </textarea></td>
+                                <td data-label="FASE PRÁCTICA">
+                                    <textarea name="fasePractica_2_4" rows="5" cols="30"
+                                        pInputTextarea>{{ obtenerNombreFasePractico(2, 4) }}</textarea>
+                                    </textarea>
+                                </td>
                             </tr>
                             <tr>
                                 <td>2.Materiales, insumos y recursos didácticos</td>
-                                <td data-label="FASE TEÓRICA"><textarea
-                                        name="faseTeorica_2_2">{{ obtenerNombreFaseTeorico(2, 2) }}</textarea>
+                                <td data-label="FASE TEÓRICA">
+                                    <textarea name="faseTeorica_2_2" rows="5" cols="30"
+                                        pInputTextarea>{{ obtenerNombreFaseTeorico(2, 2) }}</textarea>
                                 </td>
-                                <td data-label="FASE PRÁCTICA"><textarea name="fasePractica_2_2">
-                                    {{obtenerNombreFasePractico(2, 2) }}</textarea>
+                                <td data-label="FASE PRÁCTICA">
+                                    <textarea name="fasePractica_2_2" rows="5" cols="30"
+                                        pInputTextarea>{{ obtenerNombreFasePractico(2, 2) }}</textarea>
                                 </td>
                             </tr>
                             <tr>
                                 <td>3.Recursos didácticos y de consumo</td>
-                                <td data-label="FASE TEÓRICA"><textarea
-                                        name="faseTeorica_2_3">{{ obtenerNombreFaseTeorico(2, 3) }}</textarea>
+                                <td data-label="FASE TEÓRICA">
+                                    <textarea name="faseTeorica_2_3" rows="5" cols="30"
+                                        pInputTextarea>{{ obtenerNombreFaseTeorico(2, 3) }}</textarea>
                                 </td>
-                                <td data-label="FASE PRÁCTICA"><textarea name="fasePractica_2_3">
-                                    {{ obtenerNombreFasePractico(2, 3) }}
-                                </textarea>
+                                <td data-label="FASE PRÁCTICA">
+                                    <textarea name="fasePractica_2_3" rows="5" cols="30"
+                                        pInputTextarea>{{ obtenerNombreFasePractico(2, 3) }}</textarea>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                     <div class="col-md-12" style="text-align: center; margin: 5px;">
-                        <p-button label="Guardar Entorno de Aprendizaje" icon="icono fas fa-duotone fa-save"
-                            styleClass="p-button-success  mb-2" type="submit"></p-button>
+                        <p-button *ngIf='validarIdDisenioCurricular == false' label="Generar Diseño Curricular"
+                            icon="icono fas fa-duotone fa-save" styleClass="p-button-success  mb-2"
+                            (onClick)="generarDisenioCurricular()" type="submit"></p-button>
                     </div>
                 </form>
             </div>
