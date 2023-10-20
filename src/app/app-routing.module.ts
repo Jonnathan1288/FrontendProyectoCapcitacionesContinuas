@@ -167,7 +167,7 @@ const routes: Routes = [
     path: 'asistencia/estudiantes/course/:id',
     component: TomarAsistenciaEstudianteComponent,
     canActivate: [AuthGaurdGuard],
-    data: { titulo: '', expectedRoles: ['DocenteCapacitador'] },
+    data: { titulo: 'Asistencia De Estudiantes', expectedRoles: ['DocenteCapacitador'] },
   },
 
   {
