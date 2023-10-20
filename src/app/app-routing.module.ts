@@ -167,7 +167,10 @@ const routes: Routes = [
     path: 'asistencia/estudiantes/course/:id',
     component: TomarAsistenciaEstudianteComponent,
     canActivate: [AuthGaurdGuard],
-    data: { titulo: 'Asistencia De Estudiantes', expectedRoles: ['DocenteCapacitador'] },
+    data: {
+      titulo: 'Asistencia De Estudiantes',
+      expectedRoles: ['DocenteCapacitador'],
+    },
   },
 
   {
@@ -294,7 +297,11 @@ const routes: Routes = [
     data: { titulo: 'Matriculas', expectedRoles: ['Participante'] },
   },
 
-  { path: 'cards/course', component: CardcursoComponent },
+  {
+    path: 'cards/course',
+    component: CardcursoComponent,
+    data: { titulo: 'Ver Cursos' },
+  },
 
   {
     path: 'info',
