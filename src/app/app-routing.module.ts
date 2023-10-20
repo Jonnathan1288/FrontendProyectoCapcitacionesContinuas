@@ -73,6 +73,7 @@ const routes: Routes = [
     component: HomeComponent,
     canActivate: [AuthGaurdGuard],
     data: {
+      titulo: 'Home',
       expectedRoles: ['Administrador', 'DocenteCapacitador', 'Participante'],
     },
   },
@@ -290,7 +291,7 @@ const routes: Routes = [
     path: 'mat',
     component: MatriculComponent,
     canActivate: [AuthGaurdGuard],
-    data: { expectedRoles: ['Participante'] },
+    data: { titulo: 'Matriculas', expectedRoles: ['Participante'] },
   },
 
   { path: 'cards/course', component: CardcursoComponent },
@@ -299,7 +300,7 @@ const routes: Routes = [
     path: 'info',
     component: InfocursoComponent,
     canActivate: [AuthGaurdGuard],
-    data: { expectedRoles: ['Participante'] },
+    data: { titulo: 'Información', expectedRoles: ['Participante'] },
   },
 
   {
@@ -313,7 +314,7 @@ const routes: Routes = [
     path: 'cardcu/detalle/:id',
     component: InfocursoComponent,
     canActivate: [AuthGaurdGuard],
-    data: { expectedRoles: ['Participante'] },
+    data: { titulo: 'Matriculas', expectedRoles: ['Participante'] },
   },
 
   //FIN ESTUDIANTES --------------------------------------------------------------------------
