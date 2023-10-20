@@ -62,6 +62,9 @@ export class HomeComponent implements OnInit {
 								this.toastrService.info('', 'INGRESE SUS DATOS');
 							}, 500);
 							location.replace('/user/edit/data');
+						} else {
+							localStorage.removeItem('emp');
+
 						}
 					}
 				});
@@ -102,6 +105,8 @@ export class HomeComponent implements OnInit {
 						this.toastrService.info('', 'DATOS INCOMPLETOS');
 					}, 500);
 					location.replace('/user/edit/data');
+				} else {
+					localStorage.removeItem('emp');
 				}
 			}
 		});
