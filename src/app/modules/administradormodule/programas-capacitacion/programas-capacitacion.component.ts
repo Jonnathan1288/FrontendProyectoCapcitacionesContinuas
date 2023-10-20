@@ -144,6 +144,7 @@ export class ProgramasCapacitacionComponent implements OnInit {
 		this.programaService.chartProgramaC().subscribe({
 			next: (resp) => {
 				this.listChartProgramCourse = resp;
+				this.callChartProgramas();
 			}, error: (err) => {
 
 			}

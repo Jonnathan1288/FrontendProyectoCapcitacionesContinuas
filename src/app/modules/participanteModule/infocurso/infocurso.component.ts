@@ -44,9 +44,9 @@ export class InfocursoComponent implements OnInit {
   cursosListInscritos: Curso[] = [];
   fechaFinCursoInscrito: Date[] = [];
 
-  validarCursoInscrito(fechaInicioCursoSeleccionada: Date): boolean {
-    return this.fechaFinCursoInscrito.every(fecha => fechaInicioCursoSeleccionada > fecha);
-  }
+  // validarCursoInscrito(fechaInicioCursoSeleccionada: Date): boolean {
+  //   return this.fechaFinCursoInscrito.every(fecha => fechaInicioCursoSeleccionada > fecha);
+  // }
 
   public obtenerCursosParticipante(): void {
     this.cursoService.listCursoDelParticipante(this.idUsuarioGlobal).subscribe(
@@ -80,11 +80,11 @@ export class InfocursoComponent implements OnInit {
   }
 
   public pasarInfoCursoIsncripcion(idCurso: any, fechaInicio: Date): void {
-    if (this.validarCursoInscrito(fechaInicio) != true) {
-      this.toastrService.error(' Tiene un curso por terminar!', 'Advertencia');
-    } else {
-      this.router.navigate(['/mat', idCurso]);
-    }
+    // if (this.validarCursoInscrito(fechaInicio) != true) {
+    //   this.toastrService.error(' Tiene un curso por terminar!', 'Advertencia');
+    // } else {
+    this.router.navigate(['/mat', idCurso]);
+    // }
   }
 
   // validar si ya se inscribio en el curso

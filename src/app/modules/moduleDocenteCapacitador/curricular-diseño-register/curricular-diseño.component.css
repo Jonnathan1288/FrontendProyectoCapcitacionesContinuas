@@ -1,87 +1,126 @@
 /* Aplicar sombra */
 p-table {
-    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 /* Efecto de profundidad */
 p-table th {
-    background-color: #EEE;
-    border-bottom: 1px solid #DDD;
-    border-right: 1px solid #DDD;
-    box-shadow: inset -1px -1px 0 #FFF, inset 1px 1px 0 #CCC;
+  background-color: #EEE;
+  border-bottom: 1px solid #DDD;
+  border-right: 1px solid #DDD;
+  box-shadow: inset -1px -1px 0 #FFF, inset 1px 1px 0 #CCC;
 }
 
 p-table td {
-    border-bottom: 1px solid #DDD;
-    border-right: 1px solid #DDD;
-    box-shadow: inset -1px -1px 0 #FFF, inset 1px 1px 0 #CCC;
+  border-bottom: 1px solid #DDD;
+  border-right: 1px solid #DDD;
+  box-shadow: inset -1px -1px 0 #FFF, inset 1px 1px 0 #CCC;
 }
+
 h5 {
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
 }
+
 h4 {
-    font-size: 1.3rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
 }
+
 .no-resize {
-    resize: none;
+  resize: none;
 }
 
 
 /* tabla Entorno de Aprendizaje */
 
 .container {
-    max-width: 100%;
-    margin: 0 auto;
-    padding: 20px;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 20px;
 }
+
 h2 {
-    text-align: center;
+  text-align: center;
 }
+
 table {
-  
-    font-family: Arial, sans-serif;
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-
-    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    
-
+  border: 1px solid #ccc;
+  border-collapse: collapse;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  table-layout: fixed;
 }
 
-th{
-
-  background-color: #EEE;
-  border-bottom: 1px solid #DDD;
-  border-right: 1px solid #DDD;
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-
-}
-table, th, td {
-    border: 1.5px solid #969393;
-}
-th, td {
-    padding: 6px;
-    text-align: left;
-}
-textarea {
-    width: 100%;
-    height: 100px; /* Aumenta la altura de las áreas de texto */
+table caption {
+  font-size: 1.5em;
+  margin: .5em 0 .75em;
 }
 
-
-
-td.instalaciones {
-  width: 10%; /* Puedes ajustar el valor según tus necesidades */
+table tr {
+  background-color: #f8f8f8;
+  border: 1px solid #ddd;
+  padding: .35em;
 }
 
-/* Ancho para la columna "Recursos" */
-td.recursos {
-  width: 21%; /* Puedes ajustar el valor según tus necesidades */
+table th,
+table td {
+  padding: .625em;
+  text-align: center;
+}
+
+table th {
+  font-size: .85em;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+@media screen and (max-width: 600px) {
+  table {
+    border: 0;
+  }
+
+  table thead {
+    border: none;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+  }
+
+  table tr {
+    border-bottom: 3px solid #ddd;
+    display: block;
+    margin-bottom: .625em;
+  }
+
+  table td {
+    border-bottom: 1px solid #ddd;
+    display: block;
+    font-size: .8em;
+    text-align: right;
+  }
+
+  table td::before {
+    /*
+* aria-label has no advantage, it won't be read inside a table
+content: attr(aria-label);
+*/
+    content: attr(data-label);
+    float: left;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  table td:last-child {
+    border-bottom: 0;
+  }
 }
 
 
@@ -93,53 +132,51 @@ td.recursos {
 
 /* textarea */
 .form {
-    margin-top: 20px;
-  }
-  
-  .select textarea{
-    width: 98%;
-    background: white;
-    border: none;
-    padding: 15px 20px;
-    border-radius: 20px;
-    margin-top: 15px;
-    box-shadow: #317a9c 0px 10px 10px -5px;
-    border-inline: 6px solid transparent;
-  }
-  
-  .select textarea ::-moz-placeholder {
-    color: rgb(170, 170, 170);
-  }
-  
-  .select textarea ::placeholder {
-    color: rgb(170, 170, 170);
-  }
-  
-  .select textarea:focus {
-    outline: none;
-    border-inline: 3px solid #12B1D1;
-  }
-  
+  margin-top: 20px;
+}
 
-  .botones{
-    max-width: 500px;
-    margin: 0 auto;
-  }
-  
-  .boton{
-    display: block;
-    background-color: #168d48;
-    border-radius: 20px;
-    padding: 10px;
-    color: white;
-    text-decoration: none;
-    margin: 10px 0;
-  }
-  
-  .boton:hover{
-    background-color: #09be55;
-    text-decoration: none;
-    color: white;
-  }
- 
+textarea {
+  width: 98%;
+  background: white;
+  border: none;
+  padding: 15px 20px;
+  border-radius: 20px;
+  margin-top: 15px;
+  box-shadow: #317a9c 0px 10px 10px -5px;
+  border-inline: 6px solid transparent;
+}
 
+textarea ::-moz-placeholder {
+  color: rgb(170, 170, 170);
+}
+
+textarea ::placeholder {
+  color: rgb(170, 170, 170);
+}
+
+textarea:focus {
+  outline: none;
+  border-inline: 3px solid #12B1D1;
+}
+
+
+.botones {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.boton {
+  display: block;
+  background-color: #168d48;
+  border-radius: 20px;
+  padding: 10px;
+  color: white;
+  text-decoration: none;
+  margin: 10px 0;
+}
+
+.boton:hover {
+  background-color: #09be55;
+  text-decoration: none;
+  color: white;
+}

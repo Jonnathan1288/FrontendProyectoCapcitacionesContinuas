@@ -48,5 +48,10 @@ export class ParticipanteMatriculadoService {
     return this.http.get<MatriculadoReduce[]>(environment.apiuri + '/participantesMatriculados/findByAllMatriculadoCursoDocenteCapacitador/' + idCurso);
   }
 
+  //----------------------------------
+  public updateEstadoAprobacionParticipanteMatriculado(id: number, status: string): Observable<any> {
+    return this.http.get<any>(environment.apiuri + '/participantesMatriculados/updateEstadoAprobacionParticipanteMatriculado/' + id + '/' + status);
+  }
+
 }
 
