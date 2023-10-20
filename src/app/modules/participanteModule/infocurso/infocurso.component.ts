@@ -3,9 +3,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Curso } from 'src/app/models/curso';
 import { PrerequisitoCurso } from 'src/app/models/prerequisito-curso';
+import { HojaVida } from 'src/app/models/references/hoja-vida';
 import { CursoService } from 'src/app/service/curso.service';
+import { HojaVidaCapacitadorService } from 'src/app/service/hoja-vida-capacitador.service';
 import { inscritosService } from 'src/app/service/inscritos.service';
 import { PrerrequisitosCursoService } from 'src/app/service/prerrequisitosCurso.service';
+import { FOLDER_DOCUMENTS_HOJA_VIDA, getFile } from 'src/app/util/folder-upload';
 import { LocalStorageKeys, getAttributeStorage } from 'src/app/util/local-storage-manager';
 
 @Component({
@@ -22,13 +25,16 @@ export class InfocursoComponent implements OnInit {
     private cursoService: CursoService,
     private toastrService: ToastrService,
     private prerrequistosService: PrerrequisitosCursoService,
+    private hojaVidaService: HojaVidaCapacitadorService,
     private inscritosService: inscritosService
   ) {
   }
 
   idCursoGlobal!: number;
   idUsuarioGlobal!: any;
+  idUsuarioTraido!:any;
   dataCurso: Curso = new Curso();
+  public hojaVida = new HojaVida();
 
   ngOnInit(): void {
     this.idUsuarioGlobal = getAttributeStorage(LocalStorageKeys.ID_USUARIO);
@@ -52,7 +58,6 @@ export class InfocursoComponent implements OnInit {
     this.cursoService.listCursoDelParticipante(this.idUsuarioGlobal).subscribe(
       data => {
         this.cursosListInscritos = data;
-        console.log(data);
         for (let cursos of this.cursosListInscritos) {
           if (cursos.estadoPublicasionCurso == 'I') {
             this.fechaFinCursoInscrito.push(cursos.fechaFinalizacionCurso!);
@@ -66,7 +71,8 @@ export class InfocursoComponent implements OnInit {
     this.cursoService.getCursoById(this.idCursoGlobal).subscribe(
       data => {
         this.dataCurso = data;
-        console.log(data);
+        this.idUsuarioTraido =data.capacitador?.usuario?.idUsuario;
+        this.obtenerHojaDeVidata(this.idUsuarioTraido);
         this.traerPrerequisitosCurso();
       }
     )
@@ -88,6 +94,20 @@ export class InfocursoComponent implements OnInit {
     this.router.navigate(['/mat', idCurso]);
     // }
   }
+
+  public getFileResource(): string {
+		return getFile(this.hojaVida.uriDocument!, FOLDER_DOCUMENTS_HOJA_VIDA);
+	}
+
+  public obtenerHojaDeVidata(id: number) {
+		this.hojaVidaService.findDocumentByIdUsuario(id).subscribe({
+			next: (resp) => {
+				this.hojaVida = resp;
+
+			}, error: (err) => {
+			}
+		})
+	}
 
   // validar si ya se inscribio en el curso
   isInscritoInCourse!: boolean;
