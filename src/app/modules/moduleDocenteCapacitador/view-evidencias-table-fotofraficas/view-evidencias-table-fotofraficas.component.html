@@ -2,8 +2,8 @@
     <p-toolbar styleClass="mb-4">
         <ng-template pTemplate="left">
 
-            <button pButton pRipple label="Nuevo" icon="pi pi-plus" class="p-button-success mr-2"
-                (click)="limpiarCampos(); showModaL()" [disabled]="curso.estadoAprovacionCurso !== 'A'"></button>
+            <button pButton pRipple label="Nuevo" icon="pi pi-plus" class="p-button-success mr-2" (click)="showModaL()"
+                [disabled]="curso.estadoAprovacionCurso !== 'A'"></button>
 
         </ng-template>
 
@@ -37,17 +37,7 @@
                     </span>
                 </div>
             </div>
-            <!-- <div class="flex align-items-center justify-content-between"> -->
-            <!-- <h5 class="m-0"><strong>CURSO: </strong> {{curso.nombreCurso!}}</h5> -->
-            <!-- <h5 class="m-0"><strong>CURSO: </strong> {{ curso.nombreCurso! }}{{ curso.estadoAprovacionCurso !== 'A'
-                     ? ' (No aprobado)' : '' }}</h5>
- 
-                 <span class="p-input-icon-left">
-                     <i class="pi pi-search"></i>
-                     <input pInputText type="text" placeholder="Search..."
-                         (input)="dt.filterGlobal($any($event.target).value, 'contains')" />
-                 </span>
-             </div> -->
+
         </ng-template>
         <ng-template pTemplate="header">
             <tr>
@@ -99,7 +89,7 @@
     styleClass="p-fluid">
     <ng-template pTemplate="content">
         <form (ngSubmit)="validacionRegistroFotografico()" novalidate>
-            <p style="font-size: 15px; color: red;" class="m-3 mb-5">Los campos marcados con * son de ingreso
+            <p style="font-size: 15px; color: red;" class=" mb-3">Los campos marcados con * son de ingreso
                 obligatorio.
 
             <div class="grid p-fluid">
@@ -176,11 +166,5 @@
 
         </form>
     </ng-template>
-    <!-- <ng-template pTemplate="footer">
-        <p-button pRipple label="Cancelar" icon="pi pi-times" styleClass="p-button-outlined p-button-danger"
-            (click)="hideDialog()"></p-button>
-        <p-button pRipple [label]="classPeriodoPrograma.idPeriodoPrograma? 'Actualizar': 'Guardar'" icon="pi pi-check"
-            styleClass="p-button-outlined p-button-success"
-            (click)="validarDatosProgramaCapacitacionContinua()"></p-button>
-    </ng-template> -->
+
 </p-dialog>
