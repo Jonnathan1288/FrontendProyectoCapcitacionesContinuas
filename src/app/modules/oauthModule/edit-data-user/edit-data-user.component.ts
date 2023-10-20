@@ -5,15 +5,13 @@ import { Persona } from 'src/app/models/persona';
 import { Usuario } from 'src/app/models/usuario';
 import { CapacitadorService } from 'src/app/service/capacitador.service';
 import { PersonaService } from 'src/app/service/persona.service';
-import { RolService } from 'src/app/service/rol.service';
 import { UsuarioService } from 'src/app/service/usuario.service';
 import { ToastrService } from 'ngx-toastr';
-import { LoadScript } from 'src/app/scripts/load-script';
 import { FOLDER_IMAGE_USER, getFile } from 'src/app/util/folder-upload';
-import { LocalStorageKeys, getAttributeStorage } from 'src/app/util/local-storage-manager';
+import { LocalStorageKeys, getAttributeStorage, getRole } from 'src/app/util/local-storage-manager';
 import { UploadService } from 'src/app/service/upload.service';
 import { PersonaFenixService } from 'src/app/service/fenix/persona-fenix.service';
-import { INCLUDE_FIELDS } from 'src/app/util/exlude-data-person';
+import { SecurityService } from 'src/app/util/service/security.service';
 
 
 @Component({
@@ -42,12 +40,13 @@ export class EditDataUserComponent implements OnInit {
 		private toastrService: ToastrService,
 		private imagenService: UploadService,
 		private personaFenixService: PersonaFenixService,
+		private securityService: SecurityService
 	) { }
 
 	ngOnInit(): void {
 
-		this.idUsuario = localStorage.getItem('id_username');
-		this.userRol = localStorage.getItem('rol');
+		this.idUsuario = getAttributeStorage(LocalStorageKeys.ID_USUARIO);
+		this.userRol = getRole(LocalStorageKeys.ROL);
 		this.obtenerDatosUsusario(this.idUsuario);
 		if (localStorage.getItem('emp') === 'EMPTY') {
 			this.toastrService.info('', 'COMPLETE SU PERFIL DE USUARIO');
@@ -62,7 +61,6 @@ export class EditDataUserComponent implements OnInit {
 			pImageElement.click();
 		}
 	}
-
 
 	public obtenerDatosUsusario(idUsusario: number) {
 		this.usuarioService.getUsuarioById(idUsusario).subscribe((data) => {
@@ -101,9 +99,11 @@ export class EditDataUserComponent implements OnInit {
 				.filter(([key]) => Object.keys(person).includes(key))
 				.every(([_, value]) => value)
 		) {
-			const dominio = person.correo!.split('@')[1];
-			const resultado = dominio.includes('tecazuay.edu.ec');
-			resultado ? this.getPersonFenix(person.identificacion!) : null;
+			// const dominio = person.correo!.split('@')[1];
+			// const resultado = dominio.includes('tecazuay.edu.ec');
+			// resultado ? this.getPersonFenix(person.identificacion!) : null;
+
+			this.getPersonFenix(person.identificacion!);
 		}
 	}
 
@@ -172,7 +172,7 @@ export class EditDataUserComponent implements OnInit {
 			next: (resp) => {
 				if (resp === 1) {
 					this.toastrService.success('', 'FOTO ACTUALIZADA');
-					localStorage.setItem('foto', String(uri));
+					localStorage.setItem('foto', String(this.securityService.encrypt(uri)));
 				} else {
 					this.toastrService.error('', 'INCONVENIENTE AL ACTUALIZAR FOTO');
 				}
@@ -203,6 +203,8 @@ export class EditDataUserComponent implements OnInit {
 			if (Object.values(this.classPersona).every(value => value)) {
 				this.personaService.updatePersona(this.classPersona.idPersona!, this.classPersona).subscribe(() => {
 					this.toastrService.success('Excelente', 'Datos de Persona Actualizados');
+					// localStorage.removeItem('emp');
+					this.router.navigate(['/home']);
 				});
 			} else {
 				this.toastrService.warning('Advertencia', 'Datos personales incompletos');
@@ -214,6 +216,7 @@ export class EditDataUserComponent implements OnInit {
 		if (Object.values(this.classCapacitador).every(value => value)) {
 			this.capacitadorService.updateCapacitador(this.classCapacitador.idCapacitador!, this.classCapacitador).subscribe(() => {
 				this.toastrService.success('Excelente', 'Datos Docente Actualizados');
+				this.router.navigate(['/home']);
 			});
 		} else {
 			this.toastrService.warning('Advertencia', 'Datos docente incompletos');
@@ -224,7 +227,7 @@ export class EditDataUserComponent implements OnInit {
 	public onTabChange(event: any) {
 		if (event.index === 2) {
 			this.findIndex = '3'
-		}
+		} else { this.findIndex = '1' }
 	}
 }
 

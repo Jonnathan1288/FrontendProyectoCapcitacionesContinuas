@@ -11,9 +11,9 @@ export class SidebarService {
 	public dataMenu: any[] = [{
 		titulo: 'Dashboard',
 		icono: 'nav-icon fas fa-tachometer-alt',
-		rols: [ROLES.ADMINISTRADOR],
+		rols: PRINCIPAL_ROLS,
 		submenu: [
-			{ titulo: 'Dashboard', path: 'home', icono: 'fa fa-users' },
+			{ titulo: 'Dashboard', path: 'home', icono: 'fas fa-tachometer-alt' },
 
 
 		]
@@ -80,7 +80,7 @@ export class SidebarService {
 		icono: 'nav-icon fas fa-box-tissue',
 		rols: [ROLES.DOCENTE_CAPACITADOR],
 		submenu: [
-			{ titulo: 'Tomar Asistencia y Notas finales', path: 'verMatriculados/course/inicio', icono: 'fa fa-plus-circle' },
+			{ titulo: 'Asistencia y Notas finales', path: 'verMatriculados/course/inicio', icono: 'fa fa-plus-circle' },
 		]
 	},
 
@@ -107,20 +107,20 @@ export class SidebarService {
 
 	{
 		titulo: 'Cursos',
-		icono: 'nav-icon fas fa-tachometer-alt',
+		icono: 'nav-icon fa-solid fa-book',
 		rols: [ROLES.PARTICIPANTE],
 		submenu: [
-			{ titulo: 'Ver cursos', path: 'cards/course', icono: 'fa fa-users' },
+			{ titulo: 'Ver cursos', path: 'cards/course', icono: 'fa fa-solid fa-book-open-reader' },
 
 		]
 	},
 
 	{
 		titulo: 'Mis cursos',
-		icono: 'nav-icon fas fa-tachometer-alt',
+		icono: 'nav-icon fa-solid fa-chalkboard',
 		rols: [ROLES.PARTICIPANTE],
 		submenu: [
-			{ titulo: 'Ver mis cursos', path: 'verMisCursos/course', icono: 'fa fa-users' },
+			{ titulo: 'Ver mis cursos', path: 'verMisCursos/course', icono: 'fa fa-solid fa-chalkboard-user' },
 
 		]
 	},

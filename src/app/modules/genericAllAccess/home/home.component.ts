@@ -5,154 +5,184 @@ import { Curso } from 'src/app/models/curso';
 import { Usuario } from 'src/app/models/usuario';
 import { CapacitadorService } from 'src/app/service/capacitador.service';
 import { CursoService } from 'src/app/service/curso.service';
-import { PersonaService } from 'src/app/service/persona.service';
 import { UsuarioService } from 'src/app/service/usuario.service';
+import { LocalStorageKeys, getAttributeStorage, getRole } from 'src/app/util/local-storage-manager';
+import * as Highcharts from 'highcharts';
+
+import HC_exporting from 'highcharts/modules/exporting';
+import { CourseFilterDocente } from 'src/app/models/references/course-filter-by-docente';
+import { SecurityService } from 'src/app/util/service/security.service';
+
+HC_exporting(Highcharts);
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css'],
+	selector: 'app-home',
+	templateUrl: './home.component.html',
+	styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  public idUsuarioIsLoggin: any;
-  public rolNameUser?: any;
+	public idUsuarioIsLoggin: any;
+	public rolNameUser?: any;
 
-  public cursoList: Curso[] = [];
+	// public cursoList: Curso[] = [];
 
-  constructor(
-    private usuarioService: UsuarioService,
-    private cursoService: CursoService,
-    private capacitadorService: CapacitadorService,
-    private router: Router,
-    private toastrService: ToastrService
-  ) { }
+	constructor(
+		private usuarioService: UsuarioService,
+		private cursoService: CursoService,
+		private capacitadorService: CapacitadorService,
+		private router: Router,
+		private toastrService: ToastrService,
+		private securityService: SecurityService
+	) { }
 
-  ngOnInit(): void {
-    this.idUsuarioIsLoggin = localStorage.getItem('id_username');
-    this.obternerDatosUsuarioLoggin(this.idUsuarioIsLoggin);
-    this.rolNameUser = localStorage.getItem('rol');
-    this.obternerDatosUsuarioLogginRoles(this.rolNameUser);
-    this.listCourseporUsuarioLogin(this.idUsuarioIsLoggin);
+	ngOnInit(): void {
+		this.idUsuarioIsLoggin = getAttributeStorage(LocalStorageKeys.ID_USUARIO);
+		this.obternerDatosUsuarioLoggin(this.idUsuarioIsLoggin);
+		this.rolNameUser = getRole(LocalStorageKeys.ROL);
+		this.listCourseporUsuarioLogin(this.idUsuarioIsLoggin);
 
-    if (this.rolNameUser === 'DocenteCapacitador') {
-      this.capacitadorService
-        .getCapacitadorByUsuarioIdUsuario(this.idUsuarioIsLoggin)
-        .subscribe((data) => {
-          if (data != null) {
-            console.log(data);
-            if (
-              !data.tituloCapacitador ||
-              !data.tipoAbreviaturaTitulo ||
-              // Ususuario
-              !data.usuario?.persona?.apellido1 ||
-              !data.usuario?.persona?.apellido2 ||
-              !data.usuario?.persona?.nombre2 ||
-              !data.usuario?.persona?.nombre1
-            ) {
-              localStorage.setItem('emp', String('EMPTY'));
-              setTimeout(() => {
-                this.toastrService.info('', 'INGRESE SUS DATOS');
-              }, 500);
-              location.replace('/user/edit/data');
-            } else {
-              localStorage.setItem('emp', String('CHECK'));
-            }
-          }
-        });
-    }
-  }
+		if (this.rolNameUser === 'DocenteCapacitador') {
+			this.capacitadorService
+				.getCapacitadorByUsuarioIdUsuario(this.idUsuarioIsLoggin)
+				.subscribe((data) => {
+					if (data != null) {
+						console.log(data);
+						if (
+							!data.tituloCapacitador ||
+							// Ususuario
+							!data.usuario?.persona?.apellido1
+						) {
+							// localStorage.setItem("emp", 'EMPTY');
+							const empty = 'EMPTY'
+							localStorage.setItem(
+								'emp',
+								String(this.securityService.encrypt(empty))
+							);
+							setTimeout(() => {
+								this.toastrService.info('', 'INGRESE SUS DATOS');
+							}, 500);
+							location.replace('/user/edit/data');
+						}
+					}
+				});
+		}
+	}
 
-  public numeroCursos?: number;
-  public numeroCursosIniciados?: number;
-  public numeroCursosPublicados?: number;
-  public numeroCursosFinalizados?: number;
+	public cursoList: CourseFilterDocente[] = []
+	public listCourseporUsuarioLogin(idUsuario: number) {
 
-  public listCourseporUsuarioLogin(idUsuario: number) {
-    this.cursoService
-      .obtenerTodoslosCursosPorIdUsuario(idUsuario)
-      .subscribe((data) => {
-        this.cursoList = data;
+		this.cursoService
+			.findFilterCoursesByUsuarioDocente(idUsuario)
+			.subscribe((data) => {
+				this.cursoList = data;
 
-        this.numeroCursos = this.cursoList.length;
-        this.numeroCursosIniciados = this.cursoList.filter(
-          (c) => c.estadoPublicasionCurso === 'I'
-        ).length;
-        this.numeroCursosPublicados = this.cursoList.filter(
-          (c) => c.estadoPublicasionCurso === 'P'
-        ).length;
-        this.numeroCursosFinalizados = this.cursoList.filter(
-          (c) => c.estadoPublicasionCurso === 'F'
-        ).length;
+				this.chartParticipantes()
+				// const l = cursoList.
+			});
+	}
 
-        // const l = cursoList.
-      });
-  }
+	usuario: Usuario = new Usuario();
 
-  usuario: Usuario = new Usuario();
+	public obternerDatosUsuarioLoggin(idUsuarioLogin: number): void {
+		this.usuarioService.getUsuarioById(idUsuarioLogin).subscribe((data) => {
+			this.usuario = data;
 
-  public obternerDatosUsuarioLoggin(idUsuarioLogin: number): void {
-    this.usuarioService.getUsuarioById(idUsuarioLogin).subscribe((data) => {
-      this.usuario = data;
+			// en el caso para el participante
+			if (this.rolNameUser === 'Participante') {
+				if (
+					// Ususuario
+					!this.usuario?.persona?.apellido1
+				) {
+					const empty = 'EMPTY'
+					localStorage.setItem(
+						'emp',
+						String(this.securityService.encrypt(empty))
+					);
+					setTimeout(() => {
+						this.toastrService.info('', 'DATOS INCOMPLETOS');
+					}, 500);
+					location.replace('/user/edit/data');
+				}
+			}
+		});
+	}
 
-      // en el caso para el participante
-      if (this.rolNameUser === 'Participante') {
-        if (
-          // Ususuario
-          !this.usuario?.persona?.apellido1 ||
-          !this.usuario?.persona?.apellido2 ||
-          !this.usuario?.persona?.nombre2 ||
-          !this.usuario?.persona?.nombre1 ||
-          !this.usuario?.persona?.correo ||
-          !this.usuario?.persona?.genero ||
-          !this.usuario?.persona?.etnia ||
-          !this.usuario?.persona?.fechaNacimiento ||
-          !this.usuario?.persona?.direccion ||
-          !this.usuario?.persona?.telefono ||
-          !this.usuario?.persona?.celular ||
-          !this.usuario?.persona?.nivelInstruccion
-        ) {
-          localStorage.setItem('emp', String('EMPTY'));
-          setTimeout(() => {
-            this.toastrService.info('', 'DATOS INCOMPLETOS');
-          }, 500);
-          location.replace('/user/edit/data');
-        } else {
-          localStorage.setItem('emp', String('CHECK'));
-        }
-      }
-    });
-  }
+	verCursos() {
+		this.router.navigate(['cards/course']).then(() => {
+			// window.location.reload();
+		});
+	}
 
-  verCursos() {
-    this.router.navigate(['cards/course']).then(() => {
-      // window.location.reload();
-    });
-  }
+	//IMPLEMENTS CHART
+	public chartParticipantes() {
 
-  isAdministrador: boolean = false;
-  isCapacitador: boolean = false;
-  isParticipante: boolean = false;
+		const reduce = this.cursoList.reduce((reduce, i) => {
 
-  public obternerDatosUsuarioLogginRoles(nombreRol: any): void {
-    switch (nombreRol) {
-      case 'Administrador':
-        this.isAdministrador = true;
-        this.isCapacitador = false;
-        this.isParticipante = false;
-        break;
-      case 'DocenteCapacitador':
-        this.isAdministrador = false;
-        this.isCapacitador = true;
-        this.isParticipante = false;
-        break;
-      case 'Participante':
-        this.isAdministrador = false;
-        this.isCapacitador = false;
-        this.isParticipante = true;
-        break;
-      default:
-        // alert('ROL DESCONOCIDO');
-        break;
-    }
-  }
+			if (i.estadoPublicasionCurso === 'I') {
+				reduce[1].y++;
+			} else if (i.estadoPublicasionCurso === 'V') {
+				reduce[2].y++;
+			} else if (i.estadoPublicasionCurso === 'F') {
+				reduce[3].y++;
+			}
+			if (i.estadoAprovacionCurso === 'A') {
+				reduce[4].y++;
+			}
+			if (i.estadoAprovacionCurso === 'P') {
+				reduce[5].y++;
+			}
+			if (i.estadoAprovacionCurso === 'R') {
+				reduce[6].y++;
+			}
+			reduce[0].y++;
+
+			return reduce;
+		}, [{ name: 'Total', y: 0 },
+		{ name: 'Iniciados', y: 0 },
+		{ name: 'Publicados', y: 0 },
+		{ name: 'Finalizados', y: 0 },
+		{ name: 'Aprobados', y: 0 },
+		{ name: 'Pendientes en aprobar', y: 0 },
+		{ name: 'Rechazados', y: 0 },
+		])
+
+		this.rendererGenderChart(reduce);
+	}
+
+
+	Highcharts: typeof Highcharts = Highcharts;
+	chartOptions!: Highcharts.Options;
+
+	public rendererGenderChart(inform: any) {
+		this.chartOptions = {
+			chart: {
+				type: 'pie'
+			},
+			title: {
+				text: 'GRÁFICA DE MIS ESTADOS DE CURSO'
+			},
+
+			plotOptions: {
+				pie: {
+					allowPointSelect: true,
+					cursor: 'pointer',
+					dataLabels: {
+						enabled: true,
+						format: '<b>{point.name}</b>: {point.y} curso/s'
+					},
+					showInLegend: true,
+				}
+			},
+			series: [
+				{
+					name: 'Equivalente',
+					type: 'pie',
+
+					data: inform
+				}
+			],
+			colors: ['#E8289A ', '#F59E0B', '#1919FF', '#828E8C', '#22C55E', '#29AEB4', '#DC3030']
+		};
+
+	}
 }

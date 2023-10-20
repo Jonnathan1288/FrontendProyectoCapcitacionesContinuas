@@ -21,10 +21,9 @@
     <div class="col-12 md:col-10">
         <div class="justify-content-center">
             <p-dropdown [options]="listCourseFilter" placeholder="SELECCIONE CURSO APROBADO" optionLabel="nombreCurso"
-                [showClear]="false">
+                [showClear]="false" (onChange)="catchCourseSelected($event)">
                 <ng-template let-course pTemplate="item">
-                    <div (click)="catchCourseSelected(course)"><i
-                            [style]="course.estadoAprovacionCurso !== 'A' ? {color : 'red'}:{color : 'blue'}"
+                    <div><i [style]="course.estadoAprovacionCurso !== 'A' ? {color : 'red'}:{color : 'blue'}"
                             class="fa fa-book-open"></i>
                         {{
                         course.nombreCurso }}
@@ -39,6 +38,8 @@
     </div>
 </div>
 
+
+
 <div class="container my-3" *ngIf="participantsVisibleData">
     <div class="container ">
         <div class="container">
@@ -46,11 +47,11 @@
                 [label]="estadoFinal === 'F'? 'VER HISTORIAL ASISTENCIA':'Tomar Asistencia'" icon="pi pi-calendar-minus"
                 styleClass="p-button-success  mb-2" (onClick)="tomarAsistenciaCurso()"></p-button>
 
-            <p-button *ngIf="isFalstanTresDias && isValidateExistenciaNotas == true" Regístrate="Generar Notas Finales"
+            <p-button *ngIf="isFalstanTresDias && isValidateExistenciaNotas === true" label="Generar Notas Finales"
                 icon="pi pi-plus" styleClass="p-button-success  mb-2 m-5"
                 (onClick)="tomarNotasFinalesCurso()"></p-button>
 
-            <p-button *ngIf="isValidateExistenciaNotas == false"
+            <p-button *ngIf="isValidateExistenciaNotas === false"
                 [label]="estadoFinal === 'F'? 'VER HISTORIAL NOTAS': 'Modificar Notas Finales'" icon="pi pi-plus"
                 styleClass="p-button-success  mb-2 m-5" (onClick)="tomarNotasFinalesCurso()"></p-button>
         </div>

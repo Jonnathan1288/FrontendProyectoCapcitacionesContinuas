@@ -6,6 +6,7 @@ import { PrerequisitoCurso } from 'src/app/models/prerequisito-curso';
 import { CursoService } from 'src/app/service/curso.service';
 import { inscritosService } from 'src/app/service/inscritos.service';
 import { PrerrequisitosCursoService } from 'src/app/service/prerrequisitosCurso.service';
+import { LocalStorageKeys, getAttributeStorage } from 'src/app/util/local-storage-manager';
 
 @Component({
   selector: 'app-infocurso',
@@ -30,7 +31,7 @@ export class InfocursoComponent implements OnInit {
   dataCurso: Curso = new Curso();
 
   ngOnInit(): void {
-    this.idUsuarioGlobal = localStorage.getItem('id_username');
+    this.idUsuarioGlobal = getAttributeStorage(LocalStorageKeys.ID_USUARIO);
     this.activateRoute.params.subscribe((param) => {
       const idCursoROut = param['id'];
       this.idCursoGlobal = idCursoROut;
@@ -43,9 +44,9 @@ export class InfocursoComponent implements OnInit {
   cursosListInscritos: Curso[] = [];
   fechaFinCursoInscrito: Date[] = [];
 
-  validarCursoInscrito(fechaInicioCursoSeleccionada: Date): boolean {
-    return this.fechaFinCursoInscrito.every(fecha => fechaInicioCursoSeleccionada > fecha);
-  }
+  // validarCursoInscrito(fechaInicioCursoSeleccionada: Date): boolean {
+  //   return this.fechaFinCursoInscrito.every(fecha => fechaInicioCursoSeleccionada > fecha);
+  // }
 
   public obtenerCursosParticipante(): void {
     this.cursoService.listCursoDelParticipante(this.idUsuarioGlobal).subscribe(
@@ -79,11 +80,11 @@ export class InfocursoComponent implements OnInit {
   }
 
   public pasarInfoCursoIsncripcion(idCurso: any, fechaInicio: Date): void {
-    if (this.validarCursoInscrito(fechaInicio) != true) {
-      this.toastrService.error(' Tiene un curso por terminar!', 'Advertencia');
-    } else {
-      this.router.navigate(['/mat', idCurso]);
-    }
+    // if (this.validarCursoInscrito(fechaInicio) != true) {
+    //   this.toastrService.error(' Tiene un curso por terminar!', 'Advertencia');
+    // } else {
+    this.router.navigate(['/mat', idCurso]);
+    // }
   }
 
   // validar si ya se inscribio en el curso

@@ -80,6 +80,8 @@ import { SkeletonModule } from 'primeng/skeleton';
 // Fin de primeNG
 import { FieldsetModule } from 'primeng/fieldset';
 
+import { ChartModule } from 'primeng/chart';
+
 
 
 @NgModule({
@@ -161,9 +163,9 @@ import { FieldsetModule } from 'primeng/fieldset';
     StyleClassModule,
     AutoFocusModule,
     SkeletonModule,
+    InplaceModule,
 
-
-    InplaceModule
+    ChartModule
   ]
 })
 export class PrimengModule { }

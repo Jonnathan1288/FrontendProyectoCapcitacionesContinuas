@@ -1,126 +1,66 @@
+<!-- Main -->
+<main class="main-container" *ngIf="this.rolNameUser === 'DocenteCapacitador'">
 
-    <!-- Main -->
-    <main class="main-container" *ngIf="this.rolNameUser === 'DocenteCapacitador'">
-     
 
-      <div class="main-cards">
-
-        <div class="card">
-          <div class="card-inner">
-            <p class="text-primary">NÚMERO CURSOS</p>
-            <span class="material-icons-outlined text-blue">
-                assignment
-                </span>
-            <!-- <span class="material-icons-outlined text-blue">inventory_2</span> -->
-          </div>
-          <span class="text-primary font-weight-bold">{{numeroCursos}}</span>
+    <div class="p-grid p-fluid">
+        <div class="p-col-12 p-md-12 p-text-center mb-3">
+            <highcharts-chart [Highcharts]="Highcharts" [options]="chartOptions" [runOutsideAngular]="true"
+                style="width: 100%; height: 400px; display: block;"></highcharts-chart>
         </div>
+    </div>
 
-        <div class="card">
-          <div class="card-inner">
-            <p class="text-primary">INICIADOS</p>
-            <span class="material-icons-outlined text-orange">
-                verified
-                </span>
-            <!-- <span class="material-icons-outlined text-orange">add_shopping_cart</span> -->
-          </div>
-          <span class="text-primary font-weight-bold">{{numeroCursosIniciados}}</span>
-        </div>
-
-        <div class="card">
-          <div class="card-inner">
-            <p class="text-primary">PUPLICADOS</p>
-            <span class="material-icons-outlined text-pink" style="color: rgb(252, 132, 152);">
-                thumb_up_off_alt
-                </span>
-          </div>
-          <span class="text-primary font-weight-bold">{{numeroCursosPublicados}}</span>
-        </div>
-
-        <div class="card">
-          <div class="card-inner">
-            <p class="text-primary">FINALIZADOS</p>
-            <span class="material-icons-outlined text-green">
-                check_circle
-                </span>
-            <!-- <span class="material-icons-outlined text-red">notification_important</span> -->
-          </div>
-          <span class="text-primary font-weight-bold">{{numeroCursosFinalizados}}</span>
-        </div>
-
-      </div>
-
-      <div class="charts">
+    <div class="charts">
 
         <div class="charts-card">
-          <p class="chart-title">Resumen</p>
+            <p class="chart-title">Resumen</p>
 
-          <ul class="list-none p-0 m-0 flex-grow-1">
-            <li class="flex align-items-center mb-3">
-                <i class="pi pi-check-circle text-green-500 mr-2"></i>
-                <span class="text-900">Obtener resumenes de cursos</span>
-            </li>
-       
-        </ul>
-         
+            <ul class="list-none p-0 m-0 flex-grow-1">
+                <li class="flex align-items-center mb-3">
+                    <i class="pi pi-check-circle text-green-500 mr-2"></i>
+                    <span class="text-900">Obtener resumenes de cursos</span>
+                </li>
+
+            </ul>
+
         </div>
 
         <div class="charts-card">
-          <p class="chart-title">Estados</p>
-      
+            <p class="chart-title">Estados</p>
 
 
-          <ul class="list-none p-0 m-0 flex-grow-1">
-            <li class="flex align-items-center mb-3">
-                <i class="pi pi-check-circle text-green-500 mr-2"></i>
-                <span class="text-900">Estados de tus cursos, para una mejor experiencia.</span>
-            </li></ul>
+
+            <ul class="list-none p-0 m-0 flex-grow-1">
+                <li class="flex align-items-center mb-3">
+                    <i class="pi pi-check-circle text-green-500 mr-2"></i>
+                    <span class="text-900">Estados de tus cursos, para una mejor experiencia.</span>
+                </li>
+            </ul>
 
         </div>
 
-      </div>
-    </main>
-    <!-- End Main -->
+    </div>
+</main>
+<!-- End Main -->
 
 
-  <!-- Scripts -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<!-- Scripts -->
 
 
 
 <div class="grid grid-nogutter surface-section text-800">
     <div class="col-12 md:col-6 overflow-hidden">
-        <section>
+        <section class="m-2">
             <span class="block text-6xl font-bold mb-1"> Bienvenido {{rolNameUser}}</span>
             <div class="text-6xl text-primary font-bold mb-3" *ngIf="this.rolNameUser === 'Participante'">Cursos</div>
-            <p class="mt-0 mb-4 text-700 line-height-3" *ngIf="this.rolNameUser === 'Participante'">El Instituto Tecnológico Universitario del Azuay, oferta cursos
+            <p class="mt-0 mb-4 text-700 line-height-3" *ngIf="this.rolNameUser === 'Participante'">El Instituto
+                Tecnológico Universitario del Azuay, oferta cursos
                 de capacitación buscando los siguientes objetivos: </p>
 
-            <div class="flex align-items-center" *ngIf="this.rolNameUser === 'DocenteCapacitador' || this.rolNameUser === 'Administrador'">
-                    <span class="font-bold text-2xl text-900">Lo que puedes hacer</span>
-          
-                </div>
+            <div class="flex align-items-center"
+                *ngIf="this.rolNameUser === 'DocenteCapacitador' || this.rolNameUser === 'Administrador'">
+                <span class="font-bold text-2xl text-900">Lo que puedes hacer</span>
+
+            </div>
             <hr class="my-3 mx-0 border-top-1 border-none surface-border" />
             <ul class="list-none p-0 m-0 flex-grow-1" *ngIf="this.rolNameUser === 'Participante'">
                 <li class="flex align-items-center mb-3">
@@ -159,11 +99,14 @@
             <ul class="list-none p-0 m-0 flex-grow-1" *ngIf="this.rolNameUser === 'DocenteCapacitador'">
                 <li class="flex align-items-center mb-3">
                     <i class="pi pi-check-circle text-green-500 mr-2"></i>
-                    <span class="text-900">Puede crear y diseñar cursos de capacitación de forma intuitiva, agregando contenido multimedia, evaluaciones y recursos educativos.</span>
+                    <span class="text-900">Puede crear y diseñar cursos de capacitación de forma intuitiva, agregando
+                        contenido multimedia, evaluaciones y recursos educativos.</span>
                 </li>
                 <li class="flex align-items-center mb-3">
                     <i class="pi pi-check-circle text-green-500 mr-2"></i>
-                    <span class="text-900">Tomar asistencia: La plataforma permite al docente registrar y realizar el seguimiento de la asistencia de los estudiantes en cada sesión o clase, ya sea de forma manual o mediante un sistema de registro automatizado.</span>
+                    <span class="text-900">Tomar asistencia: La plataforma permite al docente registrar y realizar el
+                        seguimiento de la asistencia de los estudiantes en cada sesión o clase, ya sea de forma manual o
+                        mediante un sistema de registro automatizado.</span>
                 </li>
 
                 <li class="flex align-items-center mb-3">
@@ -190,22 +133,24 @@
 
                 <li class="flex align-items-center mb-3">
                     <i class="pi pi-check-circle text-green-500 mr-2"></i>
-                    <span class="text-900">Evaluación de la calidad del contenido: Puedes validar la calidad del contenido del curso mediante la revisión y evaluación de los materiales didácticos, los objetivos de aprendizaje, el plan de estudios y la experiencia del instructor. Esto puede ser realizado por expertos en el campo o por comités de revisión.</span>
+                    <span class="text-900">Evaluación de la calidad del contenido: Puedes validar la calidad del
+                        contenido del curso mediante la revisión y evaluación de los materiales didácticos, los
+                        objetivos de aprendizaje, el plan de estudios y la experiencia del instructor. Esto puede ser
+                        realizado por expertos en el campo o por comités de revisión.</span>
                 </li>
 
 
                 <li class="flex align-items-center mb-3">
                     <i class="pi pi-check-circle text-green-500 mr-2"></i>
-                    <span class="text-900">Requisitos y criterios: Identificar los requisitos y criterios que un docente debe cumplir para convertirse en un capacitador. Esto puede incluir tener un título o experiencia relevante en el área de conocimiento en la que se impartirá la capacitación, habilidades de comunicación efectiva, capacidad para facilitar el aprendizaje de otros y experiencia laboral relacionada.</span>
+                    <span class="text-900">Requisitos y criterios: Identificar los requisitos y criterios que un docente
+                        debe cumplir para convertirse en un capacitador. Esto puede incluir tener un título o
+                        experiencia relevante en el área de conocimiento en la que se impartirá la capacitación,
+                        habilidades de comunicación efectiva, capacidad para facilitar el aprendizaje de otros y
+                        experiencia laboral relacionada.</span>
                 </li>
-                
+
 
             </ul>
-
-            
-
-
-
 
             <button pButton pRipple label="Ver cursos" type="button" class="p-button-outlined mb-3"
                 (click)="verCursos()" *ngIf="this.rolNameUser === 'Participante'"></button>
@@ -219,8 +164,7 @@
 
 
 
-
-<div class="surface-section px-4 py-8 md:px-6 lg:px-8 text-center" *ngIf="isParticipante">
+<div class="surface-section px-4 py-8 md:px-6 lg:px-8 text-center" *ngIf="this.rolNameUser === 'Participante'">
     <div class="mb-3 font-bold text-3xl">
         <span class="text-900">Desarrollando Habilidades para el Éxito Profesional</span>
     </div>

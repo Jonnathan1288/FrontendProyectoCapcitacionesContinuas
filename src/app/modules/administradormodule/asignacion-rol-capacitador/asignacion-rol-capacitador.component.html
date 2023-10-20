@@ -1,29 +1,50 @@
 <div class="">
-    <p-toolbar styleClass="mb-4">
+   <p-toolbar styleClass="mb-4">
         <ng-template pTemplate="left">
-            <button pButton pRipple label="Nuevo" icon="pi pi-plus" class="p-button-success mr-2"
+            <button pButton pRipple label="Agregar docente capacitador" icon="pi pi-plus" class="p-button-success mr-2"
                 (click)="showModaL()"></button>
-
+        </ng-template>
+                <ng-template pTemplate="right">
+                <p-dropdown [options]="options" optionLabel="label" optionValue="value" [(ngModel)]="rows2"
+                (ngModelChange)="getPaginatorCapacitadores($event)" class="mx-2">
+                </p-dropdown>
         </ng-template>
 
-        <ng-template pTemplate="right">
-            <p-dropdown [options]="options" optionLabel="label" optionValue="value" [(ngModel)]="rows2"
-                (ngModelChange)="getPaginatorCapacitadores($event)" class="mx-2"></p-dropdown>
+    </p-toolbar>
+
+     <p-toolbar styleClass="mb-4">
+        <ng-template pTemplate="left">
+            <span class="p-input-icon-right" style="display: flex; align-items: center;">
+                <label for="docenteId" style="margin-right: 30px;">Si el nuevo docente pertenece al ISTA: </label>
+                <i class="pi pi-search"></i>
+                <input id="docenteId" pInputText type="text" (input)="filterGlobalDocenteFenix($event)" maxlength="10"
+                placeholder="Ingrese la cedula" onkeypress='return event.charCode >= 48 && event.charCode <= 57' />
+                
+            </span>
         </ng-template>
     </p-toolbar>
+    
 
     <p-table #dt [value]="listDocentesCapacitadoresFilter" dataKey="id" styleClass="p-datatable-customers"
         [rowHover]="true" [rows]="5" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,15]"
         responsiveLayout="scroll" [paginator]="true"
         currentPageReportTemplate="Mostrando {first} to {last} of {totalRecords} capacitadores" [filterDelay]="0"
         [showCurrentPageReport]="true">
+
+
         <ng-template pTemplate="caption">
             <div class="flex align-items-center justify-content-between">
-                <h5 class="m-0"><strong>DOCENTES CAPACITADORES</strong></h5>
-                <p-selectButton [options]="stateOptions" [(ngModel)]="estadoValidacionBusqueda" optionLabel="label"
-                    optionValue="value"></p-selectButton>
+                <h5 class="m-0"><strong>DOCENTES CAPACITADORES: </strong></h5>
+                <!--<p-selectButton [options]="stateOptions" [(ngModel)]="estadoValidacionBusqueda" optionLabel="label"
+                    optionValue="value"></p-selectButton>-->
 
-                <span class="p-input-icon-left">
+                    <span class="p-input-icon-left">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                            placeholder="Buscar..." pTooltip="Filtro" (input)="filterEventDocentesCapacitadores($event)"
+                            tooltipPosition="bottom" />
+                    </span>
+                <!--<span class="p-input-icon-left">
                     <i class="pi pi-search"></i>
                     <input *ngIf="estadoValidacionBusqueda === 'Capacitador'" pInputText type="text"
                         placeholder="Docentes capacitadores..." (input)="filterEventDocentesCapacitadores($event)" />
@@ -31,7 +52,7 @@
                     <input *ngIf="estadoValidacionBusqueda === 'Fenix'" pInputText type="text"
                         placeholder="Docente fenix..." (input)="filterGlobalDocenteFenix($event)" maxlength="10"
                         onkeypress='return event.charCode >= 48 && event.charCode <= 57' />
-                </span>
+                </span>-->
             </div>
         </ng-template>
         <ng-template pTemplate="header">
@@ -92,7 +113,7 @@
         <ng-template pTemplate="summary">
             <div class="flex align-items-center justify-content-between">
                 En total hay {{listDocentesCapacitadoresFilter ? listDocentesCapacitadoresFilter.length : 0 }}
-                Capacitadores.
+                Docentes Capacitadores.
             </div>
         </ng-template>
     </p-table>
@@ -107,9 +128,108 @@
 <!-- IMPLEMENTACION DEL MODAL PARA EL INGRESO DE LOS CURSOS -->
 
 <p-dialog header="CREACIÓN DE CAPACITADORES CON SUS ROLES" [(visible)]="visible" [modal]="true"
-    [style]="{ width: '50vw', height: '250' }" [draggable]="false" [resizable]="false">
+styleClass="p-fluid" >
 
-    <form (ngSubmit)="saveUpdateDocenteDocenteCapacitadorRol()" novalidate style="padding: 15px;">
+    <ng-template pTemplate="content">
+        
+
+            <div class="col-12 md:col-12 mt-2">
+                <div class="p-inputgroup">
+                    <span class="p-float-label">
+                        <input type="text" id="inputtext" pInputText id="identificacion" name="identificacion"
+                            [(ngModel)]="classPersona.identificacion" required [maxlength]="10"
+                            onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+
+                        <label htmlFor="identificacion">Identificación<span class="red-asterisk"></span></label>
+
+                    </span>
+                </div>
+            </div>
+
+            <div class="col-12 md:col-12 mt-2">
+                <div class="p-inputgroup">
+                    <span class="p-float-label">
+                        <input type="text" id="inputtext" pInputText id="nombre1" name="nombre1"
+                            [(ngModel)]="classPersona.nombre1" required>
+                        <label htmlFor="nombre1">Nombre<span class="red-asterisk"></span></label>
+                    </span>
+                </div>
+            </div>
+
+            <div class="col-12 md:col-12 mt-2">
+                <div class="p-inputgroup">
+                    <span class="p-float-label">
+                        <input type="text" id="inputtext" pInputText id="apellido1" name="apellido1"
+                            [(ngModel)]="classPersona.apellido1">
+                        <label htmlFor="apellido1">Apellido<span class="red-asterisk"></span></label>
+                    </span>
+                </div>
+            </div>
+
+            
+
+            <div class="col-12 md:col-12 mt-2">
+                <div class="p-inputgroup">
+                    <span class="p-float-label">
+                        <input type="text" id="inputtext" pInputText id="username" name="username"
+                            [(ngModel)]="classUsuario.username" [readonly]="classCapacitador.idCapacitador ? true : false">
+                        <label htmlFor="username">Nombre de Usuario<span class="red-asterisk"></span></label>
+                    </span>
+                </div>
+            </div>
+
+            <div class="col-12 md:col-12 mt-2" *ngIf="!classCapacitador.idCapacitador">
+                <div class="p-inputgroup">
+                    <span class="p-float-label">
+                        <input type="text" id="inputtext" pInputText id="password" name="password"
+                            [(ngModel)]="classUsuario.password">
+                        <label htmlFor="password">Contraseña<span class="red-asterisk"></span></label>
+                    </span>
+                </div>
+            </div>
+
+            <p-table [value]="listRole" class="role-table" [style]="{width: '100%'}">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th class="header-cell"><strong>NOMBRE ROL</strong></th>
+                        <th class="header-cell"><strong>ROL ASIGNADO</strong></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-role>
+                    <tr>
+                        <td class="data-cell"><strong>{{ role.nombreRol }}</strong></td>
+                        <td class="data-cell">
+                            <button *ngIf="isRoleAssigned(role)" pButton label="Asignado" icon="pi pi-check"
+                                class="assign-button assigned-role" type="button"
+                                (click)="asignarRolesUsuario(role)"></button>
+
+                            <button *ngIf="!isRoleAssigned(role)" type="button" pButton pRipple label="No asignado"
+                                icon="pi pi-times" class="w-full custom-button"
+                                (click)="asignarRolesUsuario(role)"></button>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <p-button pRipple label="Cancelar" icon="pi pi-times" styleClass="p-button-outlined p-button-danger"
+        (click)="hideDialog()"></p-button>
+        <p-button pRipple [label]="classCapacitador.idCapacitador?'Actualizar': 'Guardar'" icon="pi pi-check"
+            styleClass="p-button-outlined p-button-success"
+            (click)="saveUpdateDocenteDocenteCapacitadorRol()"></p-button>
+        <!--<div class="col-md-12 mt-4">
+            <div class="d-flex justify-content-end align-items-center flex-wrap">
+              <p-button type="ngSubmit"
+                [label]="classCapacitador.idCapacitador ? 'Actualizar' : 'Crear'"
+                icon="pi pi-save" styleClass="p-button-outlined p-button-success button-margin"></p-button>
+                <div style="margin: 10px;"></div>
+              <p-button pRipple label="Cancelar" icon="pi pi-times" styleClass="p-button-outlined p-button-danger button-margin"
+                (click)="hideDialog()"></p-button>
+            </div>
+          </div>-->
+    </ng-template>
+    <!--<form (ngSubmit)="saveUpdateDocenteDocenteCapacitadorRol()" novalidate style="padding: 15px;">
         <div class="grid p-fluid m-2">
 
             <div class="col-12 md:col-12 mt-2">
@@ -145,7 +265,7 @@
                 </div>
             </div>
 
-            <!-- Directamente del programa ya no del periodo program -->
+            
 
             <div class="col-12 md:col-12 mt-2">
                 <div class="p-inputgroup">
@@ -201,16 +321,8 @@
                 </div>
               </div>
               
-              
-
-            <!-- Fin del periodo porgrama 
-            <div class="col-md-12 mt-4" style="text-align: center; margin: 5px;">
-                <p-button type="ngSubmit"
-                    [label]="classCapacitador.idCapacitador? 'Actualizar Capacitador': 'Crear Capacitador'"
-                    icon="pi pi-save" styleClass="p-button-outlined p-button-success"></p-button>
-            </div>-->
         </div>
-    </form>
+    </form>-->
 </p-dialog>
 
 

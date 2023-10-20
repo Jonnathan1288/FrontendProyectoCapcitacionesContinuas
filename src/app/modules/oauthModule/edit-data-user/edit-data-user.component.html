@@ -17,7 +17,8 @@
 				</div>
 				<div class="perfil-usuario-avatar">
 					<img [src]="avatarURLProfile ? avatarURLProfile: urlPhoto ? getUriFile(urlPhoto) : 'assets/img/istap.png'"
-						alt="img-avatar" height="165px" (click)="handleDivClick()">
+						alt="img-avatar" height="165px" (click)="handleDivClick()" pTooltip="Maximizar Foto"
+						tooltipPosition="bottom">
 					<input type="file" #fileInput style="display: none;" accept="image/jpeg, image/jpg, image/png"
 						(change)="onFileSelected($event)">
 					<button type="button" class="boton-avatar" pTooltip="Foto de perfil" tooltipPosition="bottom">
@@ -201,6 +202,24 @@
 				<i class="pi pi-user-plus mx-1"></i>
 				<span>Datos Extra</span>
 			</ng-template>
+
+			<div class="col-12 md:col-12 mt-1">
+				<label class="p-inputgroup" for="nombre" style="font-size: 16px;">
+					<strong>Seleccione su Genero: <span class="red-asterisk">*</span> :</strong>
+				</label>
+				<div class="flex flex-wrap gap-3">
+					<div class="flex align-items-center">
+						<p-radioButton name="genero" value="M" [(ngModel)]="classPersona.genero"
+							inputId="genero"></p-radioButton>
+						<label for="genero" class="form-check-label">Masculino</label>
+					</div>
+					<div class="flex align-items-center">
+						<p-radioButton name="genero" value="F" [(ngModel)]="classPersona.genero"
+							inputId="genero"></p-radioButton>
+						<label for="genero" class="form-check-label">Femenino</label>
+					</div>
+				</div>
+			</div>
 
 			<div class="col-12 md:col-12 mt-1">
 				<label class="p-inputgroup" for="nombre" style="font-size: 16px;">

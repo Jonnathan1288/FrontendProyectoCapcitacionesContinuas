@@ -1,18 +1,16 @@
-<div class="card flex justify-content-center">
-    <p-panel header="Silabo">
-        <!-- <div class="col-md-12" style="text-align: right; margin: 5px;">
-            <p-button label="Traer Datos" icon="pi pi-pencil" styleClass="p-button-success  mb-2"
-                (onClick)="traerDatos()"></p-button>
-        </div> -->
+<!-- <p-blockUI [target]="pnl" [blocked]="blockButtonCourse()">
+    <i class="pi pi-lock" style="font-size: 3rem"></i>
+</p-blockUI> -->
 
-        <div *ngIf="(curso.estadoPublicasionCurso === 'I')" style="text-align: center;">
-			<br>
-			<div class="attendance-ms" style="display: inline-block;">El curso inició, no se puede editar el sílabo.</div>
-	  </div>
-      <div *ngIf="(curso.estadoPublicasionCurso === 'F' || curso.estadoPublicasionCurso === 'F')" style="text-align: center;">
-        <br>
-        <div class="attendance-ms" style="display: inline-block;">El curso finalizó, no se puede editar el sílabo.</div>
-    </div>
+
+<div class="card flex justify-content-center">
+    <p-panel #pnl header="Silabo">
+
+        <div style="text-align: center;" *ngIf="blockButtonCourse()" class="">
+            <p-tag icon="pi pi-times" severity="danger"
+                [value]="'LOS DATOS DE ESTE SILABO YA NO SE PUEDEN MODIFICAR, YA QUE EL CURSO FUE '+ (curso.estadoPublicasionCurso ==='I'?'INICIADO':'FINALIZADO')"></p-tag>
+        </div>
+
 
         <p-card header="Información General del Curso" style="margin: 5px;" *ngIf='validarIdSilabo == false'>
             <div class="grid">
@@ -77,9 +75,9 @@
                             <span class="p-float-label">
                                 <input type="text" pInputText id="elementosCompetenciaSilabo"
                                     name="elementosCompetenciaSilabo"
-                                    [(ngModel)]="resultadoAprendizajeSilabo.elementosCompetenciaSilabo" >
+                                    [(ngModel)]="resultadoAprendizajeSilabo.elementosCompetenciaSilabo">
                                 <label htmlFor="username">Elementos de Competencia
-                                 </label>
+                                </label>
                             </span>
                         </div>
                     </div>
@@ -121,7 +119,7 @@
                 </div>
                 <div class="col-md-12" style="text-align: center; margin: 5px;" *ngIf='validarIdSilabo == true'>
                     <p-button label="Agregar" icon="pi pi-plus" styleClass="p-button-success  mb-2"
-                        (click)="showModalCreate()"></p-button>
+                        (onClick)="showModalCreate()" [disabled]="blockButtonCourse()"></p-button>
                 </div>
             </form>
             <!-- TERMINA EL PRIMER FORM -->
@@ -153,14 +151,18 @@
                                 <button *ngIf='data.estadoUnidadActivo == true' pButton type="button"
                                     class="p-button-rounded p-button-success" icon="pi pi-check-circle"
                                     style="margin-right: 5px;"
-                                    (click)="cambiarEstadoResultadosAprensizajeFalse(data.idResultadoAprendizajeSilabo)"></button>
+                                    (click)="cambiarEstadoResultadosAprensizajeFalse(data.idResultadoAprendizajeSilabo)"
+                                    [disabled]="blockButtonCourse()"></button>
+
                                 <button *ngIf='data.estadoUnidadActivo == false' pButton type="button"
                                     class="p-button-rounded p-button-danger" style="margin-right: 5px;"
                                     icon="pi pi-power-off"
-                                    (click)="cambiarEstadoResultadosAprensizajeTrue(data.idResultadoAprendizajeSilabo)"></button>
+                                    (click)="cambiarEstadoResultadosAprensizajeTrue(data.idResultadoAprendizajeSilabo)"
+                                    [disabled]="blockButtonCourse()"></button>
+
                                 <button pButton type="button" (click)="showModalEdit(data.idResultadoAprendizajeSilabo)"
                                     class="p-button-rounded p-button-info" icon="pi pi-pencil"
-                                    style="margin-right: 5px;"></button>
+                                    style="margin-right: 5px;" [disabled]="blockButtonCourse()"></button>
                             </td>
                         </tr>
                     </ng-template>
@@ -248,7 +250,7 @@
                     </div>
                 </div>
 
-                
+
                 <div class="col-12 md:col-12 mt-1">
                     <div class="p-inputgroup">
                         <span class="p-float-label">
@@ -259,7 +261,7 @@
                         </span>
                     </div>
                 </div>
-                
+
                 <div class="col-12 md:col-12 mt-1">
                     <div class="p-inputgroup">
                         <span class="p-float-label">
@@ -267,14 +269,14 @@
                                 [(ngModel)]="contenidosSilabo.horasTalleres"
                                 onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
                             <label htmlFor="horasTalleres">Horas de Talleres
-                               
+
                             </label>
                         </span>
                     </div>
                 </div>
-                
 
-               
+
+
 
                 <div class="col-12 md:col-12 mt-1">
                     <div class="p-inputgroup">
@@ -318,7 +320,7 @@
                         </span>
                     </div>
                 </div>
-                
+
                 <div class="col-12 md:col-12 mt-1">
                     <div class="p-inputgroup">
                         <span class="p-float-label">
@@ -329,7 +331,7 @@
                     </div>
                 </div>
 
-                
+
             </div>
             <div class="col-md-12" style="text-align: center; margin: 5px;" *ngIf='validarIdSilabo == false'>
                 <p-button label="Agregar" icon="pi pi-plus" styleClass="p-button-success  mb-2"
@@ -337,7 +339,7 @@
             </div>
             <div class="col-md-12" style="text-align: center; margin: 5px;" *ngIf='validarIdSilabo == true'>
                 <p-button label="Agregar" icon="pi pi-plus" styleClass="p-button-success  mb-2"
-                    (click)="showModalCreateContenidos()"></p-button>
+                    (onClick)="showModalCreateContenidos()" [disabled]="blockButtonCourse()"></p-button>
             </div>
             <div class="card">
                 <p-table [value]="listContenidosSilabo">
@@ -372,15 +374,17 @@
                                 <button *ngIf='rowData.estadoContenido == true' pButton type="button"
                                     class="p-button-rounded p-button-success" icon="pi pi-check-circle"
                                     style="margin-right: 5px;"
-                                    (click)="cambiarEstadosContenidosFalse(rowData.idContenidoSilabo)"></button>
+                                    (click)="cambiarEstadosContenidosFalse(rowData.idContenidoSilabo)"
+                                    [disabled]="blockButtonCourse()"></button>
                                 <button *ngIf='rowData.estadoContenido == false' pButton type="button"
                                     class="p-button-rounded p-button-danger" style="margin-right: 5px;"
                                     icon="pi pi-power-off"
-                                    (click)="cambiarEstadosContenidosTrue(rowData.idContenidoSilabo)"></button>
+                                    (click)="cambiarEstadosContenidosTrue(rowData.idContenidoSilabo)"
+                                    [disabled]="blockButtonCourse()"></button>
                                 <button pButton type="button"
                                     (click)="showModalEditContenidos(rowData.idContenidoSilabo)"
                                     class="p-button-rounded p-button-info" icon="pi pi-pencil"
-                                    style="margin-right: 5px;"></button>
+                                    style="margin-right: 5px;" [disabled]="blockButtonCourse()"></button>
                             </td>
                         </tr>
                     </ng-template>
@@ -421,13 +425,13 @@
                                     [(ngModel)]="contenidosSilabo.horasTalleres"
                                     onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
                                 <label htmlFor="horasTalleres">Horas de Talleres</label>
-                              
+
                             </span>
                         </div>
                     </div>
-                    
 
-                    
+
+
                     <div class="col-12 md:col-12 mt-1">
                         <div class="p-inputgroup">
                             <span class="p-float-label">
@@ -441,7 +445,7 @@
                             </span>
                         </div>
                     </div>
-                    
+
 
                     <div class="col-12 md:col-12 mt-1">
                         <div class="p-inputgroup">
@@ -479,7 +483,7 @@
                         </div>
                     </div>
 
-                    
+
                 </div>
                 <div class="col-md-12" style="text-align: center; margin: 5px;">
                     <p-button [label]="opcionDelContenido === 'C'? 'Crear':'Actualizar'" icon="pi pi-check-square"
@@ -523,7 +527,7 @@
                 </div>
                 <div class="col-md-12" style="text-align: center; margin: 5px;" *ngIf='validarIdSilabo == true'>
                     <p-button label="Agregar" icon="pi pi-plus" styleClass="p-button-success  mb-2"
-                        (onClick)="showModalCreateEstretegias()"></p-button>
+                        (onClick)="showModalCreateEstretegias()" [disabled]="blockButtonCourse()"></p-button>
                 </div>
             </form>
             <div class="card">
@@ -548,15 +552,17 @@
                                 <button *ngIf='rowData.estadoEstrategiaMetodologicaActivo == true' pButton type="button"
                                     class="p-button-rounded p-button-success" icon="pi pi-check-circle"
                                     style="margin-right: 5px;"
-                                    (click)="cambiarEstadosEstrategiasFalse(rowData.idEstrategiaMetodologica)"></button>
+                                    (click)="cambiarEstadosEstrategiasFalse(rowData.idEstrategiaMetodologica)"
+                                    [disabled]="blockButtonCourse()"></button>
                                 <button *ngIf='rowData.estadoEstrategiaMetodologicaActivo == false' pButton
                                     type="button" class="p-button-rounded p-button-danger" style="margin-right: 5px;"
                                     icon="pi pi-power-off"
-                                    (click)="cambiarEstadosEstrategiasTrue(rowData.idEstrategiaMetodologica)"></button>
+                                    (click)="cambiarEstadosEstrategiasTrue(rowData.idEstrategiaMetodologica)"
+                                    [disabled]="blockButtonCourse()"></button>
                                 <button pButton type="button"
                                     (click)="showModalEditEstretegias(rowData.idEstrategiaMetodologica)"
                                     class="p-button-rounded p-button-info" icon="pi pi-pencil"
-                                    style="margin-right: 5px;"></button>
+                                    style="margin-right: 5px;" [disabled]="blockButtonCourse()"></button>
                             </td>
                         </tr>
                     </ng-template>
@@ -621,16 +627,18 @@
                                 <button *ngIf='validarIdSilabo == true' pButton type="button"
                                     class="p-button-rounded p-button-info" style="height: 10px; width: 25px;"
                                     (click)="showModalEditConvencionales(lista.idMaterialConvencional!)"
-                                    icon="pi pi-pencil"></button>
+                                    icon="pi pi-pencil" [disabled]="blockButtonCourse()"></button>
                                 <div *ngIf='validarIdSilabo == true'>
                                     <button *ngIf='lista.estadoMaterialConvencional == true' pButton type="button"
                                         class="p-button-rounded p-button-success" icon="pi pi-check-circle"
                                         style="margin-right: 5px; height: 10px; width: 25px;"
-                                        (click)="cambiarEstadosConvencionalFalse(lista.idMaterialConvencional)"></button>
+                                        (click)="cambiarEstadosConvencionalFalse(lista.idMaterialConvencional)"
+                                        [disabled]="blockButtonCourse()"></button>
                                     <button *ngIf='lista.estadoMaterialConvencional == false' pButton type="button"
                                         class="p-button-rounded p-button-danger"
                                         style="margin-right: 5px; height: 10px; width: 25px;" icon="pi pi-power-off"
-                                        (click)="cambiarEstadosConvencionalTrue(lista.idMaterialConvencional)"></button>
+                                        (click)="cambiarEstadosConvencionalTrue(lista.idMaterialConvencional)"
+                                        [disabled]="blockButtonCourse()"></button>
                                 </div>
                             </li>
                         </ul>
@@ -642,7 +650,7 @@
 
                     <div class="col-md-12" style="text-align: center; margin: 8px;" *ngIf='validarIdSilabo == true'>
                         <p-button label="Agregar" icon="pi pi-plus" styleClass="p-button-success  mb-2"
-                            (onClick)="showModalCreateConvencionales()"></p-button>
+                            (onClick)="showModalCreateConvencionales()" [disabled]="blockButtonCourse()"></p-button>
                     </div>
                 </form>
             </p-card>
@@ -688,17 +696,19 @@
                                 icon="pi pi-times"></button>
                             <button *ngIf='validarIdSilabo == true' pButton type="button"
                                 class="p-button-rounded p-button-info" style="height: 10px; width: 25px;"
-                                (click)="showModalEditAudivisuales(lista.idMaterialAudiovisual!)"
-                                icon="pi pi-pencil"></button>
+                                (click)="showModalEditAudivisuales(lista.idMaterialAudiovisual!)" icon="pi pi-pencil"
+                                [disabled]="blockButtonCourse()"></button>
                             <div *ngIf='validarIdSilabo == true'>
                                 <button *ngIf='lista.estadoMaterialAudiovisual == true' pButton type="button"
                                     class="p-button-rounded p-button-success" icon="pi pi-check-circle"
                                     style="margin-right: 5px; height: 10px; width: 25px;"
-                                    (click)="cambiarEstadosAudiovisualesFalse(lista.idMaterialAudiovisual)"></button>
+                                    (click)="cambiarEstadosAudiovisualesFalse(lista.idMaterialAudiovisual)"
+                                    [disabled]="blockButtonCourse()"></button>
                                 <button *ngIf='lista.estadoMaterialAudiovisual == false' pButton type="button"
                                     class="p-button-rounded p-button-danger"
                                     style="margin-right: 5px; height: 10px; width: 25px;" icon="pi pi-power-off"
-                                    (click)="cambiarEstadosAudiovisualesTrue(lista.idMaterialAudiovisual)"></button>
+                                    (click)="cambiarEstadosAudiovisualesTrue(lista.idMaterialAudiovisual)"
+                                    [disabled]="blockButtonCourse()"></button>
                             </div>
                         </li>
                     </ul>
@@ -710,7 +720,7 @@
 
                 <div class="col-md-12" style="text-align: center; margin: 5px;" *ngIf='validarIdSilabo == true'>
                     <p-button label="Agregar" icon="pi pi-plus" styleClass="p-button-success  mb-2"
-                        (onClick)="showModalCreateAudivisuales()"></p-button>
+                        (onClick)="showModalCreateAudivisuales()" [disabled]="blockButtonCourse()"></p-button>
                 </div>
             </p-card>
         </p-card>
@@ -794,12 +804,12 @@
 
                 <div *ngIf="validarIdSilabo === true" class="col-md-12" style="text-align: center; margin: 5px;">
                     <p-button label="Actualizar Silabo" icon="pi pi-book" styleClass="p-button-success  mb-2"
-                        (onClick)="actualizarSilabo()"[disabled]="curso.estadoPublicasionCurso == 'I' || curso.estadoPublicasionCurso == 'F' "></p-button>
+                        (onClick)="actualizarSilabo()" [disabled]="blockButtonCourse()"></p-button>
                 </div>
 
                 <div class="col-md-12" style="text-align: center; margin: 5px;">
-                    <p-button [disabled]="validarIdSilabo === false" label="Diseño curricular" icon="pi pi-file-pdf" styleClass="p-button-primary  mb-2"
-                        (onClick)="verDisenioCurricular()"></p-button>
+                    <p-button [disabled]="validarIdSilabo === false" label="Diseño curricular" icon="pi pi-file-pdf"
+                        styleClass="p-button-primary  mb-2" (onClick)="verDisenioCurricular()"></p-button>
                 </div>
             </form>
         </p-card>

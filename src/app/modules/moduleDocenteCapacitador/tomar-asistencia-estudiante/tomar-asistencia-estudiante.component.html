@@ -9,7 +9,10 @@
 
 
     <div class="grid p-fluid m-2">
-        <div class="col-12 md:col-12 ">
+        <div class="col-12 md:col-12">
+            <div class="attendance-section">
+                <label class="attendance-date1">Seleccione la fecha para registrar la asistencia:</label>
+            </div>
             <div class="p-inputgroup">
                 <p-calendar inputId="edad" class="ng-dirty" [showIcon]="true" placeholder="Fecha de asistencia"
                     id="fechaEvidencia" name="fechaEvidencia" (onSelect)="onDateSelect($event)"
@@ -20,7 +23,8 @@
     </div>
 
     <div style="text-align: center;" *ngIf="estadoFinal === 'F'">
-        <p-tag icon="pi pi-times" severity="danger" value="CURSO FINALIZADO, SOLO PUEDE REVISAR EL HISTORIAL DE ASISTENCIAS DE SUS ALUMNOS."></p-tag>
+        <p-tag icon="pi pi-times" severity="danger"
+            value="CURSO FINALIZADO, SOLO PUEDE REVISAR EL HISTORIAL DE ASISTENCIAS DE SUS ALUMNOS."></p-tag>
 
     </div>
 
@@ -78,7 +82,8 @@
                             </div>
                         </td>
                         <td>
-                            <p-button icon="pi pi-eye" (onClick)="showDialog(data)" [disabled]="data.partipantesMatriculados?.inscrito?.curso?.estadoPublicasionCurso === 'F'"></p-button>
+                            <p-button icon="pi pi-eye" (onClick)="showDialog(data)"
+                                [disabled]="data.partipantesMatriculados?.inscrito?.curso?.estadoPublicasionCurso === 'F'"></p-button>
                         </td>
                     </tr>
                 </ng-template>

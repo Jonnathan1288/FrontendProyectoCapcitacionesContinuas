@@ -1,15 +1,18 @@
 import jwt_decode from "jwt-decode";
 import { TokenData } from "../interface/token-data";
+import { SecurityService } from "./service/security.service";
 
 export enum LocalStorageKeys {
     TOKEN = "token",
     ROL = 'rol',
-    USER_DATA = 'datauser',
     TIME_TOKEN = 'token',
     ID_USUARIO = 'id_username',
     URL_PHOTO = 'foto',
-    USER_NAME = 'username'
+    USER_NAME = 'username',
+    EMPTY = 'emp'
 }
+
+const securityService = new SecurityService();
 
 export const getToken = (key: string) => {
     const result = localStorage.getItem(key);
@@ -33,14 +36,14 @@ export const clearLocalStorage = () => {
 };
 
 export const getRole = (rol: string) => {
-    return localStorage.getItem(rol);
+    const keyDecrypt = securityService.decrypt(localStorage.getItem(rol)!);
+    return keyDecrypt;
 }
 
-export const getUserData = (key: string) => {
-    const result = localStorage.getItem(key);
-    return !!result && JSON.parse(result);
-};
+
 
 export const getAttributeStorage = (key: string) => {
-    return localStorage.getItem(key);
+    const keyDecrypt = securityService.decrypt(localStorage.getItem(key)!);
+    return keyDecrypt;
+    // return localStorage.getItem(key);
 };

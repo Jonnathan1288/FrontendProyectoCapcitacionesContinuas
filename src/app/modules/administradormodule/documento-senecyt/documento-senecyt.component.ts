@@ -9,7 +9,7 @@ import { UsuarioService } from 'src/app/service/usuario.service';
 import { ConfirmationService } from 'primeng/api';
 import { UploadService } from 'src/app/service/upload.service';
 import { HttpHeaders } from '@angular/common/http';
-import { LocalStorageKeys, getToken } from 'src/app/util/local-storage-manager';
+import { LocalStorageKeys, getAttributeStorage, getToken } from 'src/app/util/local-storage-manager';
 
 @Component({
     selector: 'app-documento-senecyt',
@@ -31,10 +31,10 @@ export class DocumentoSenecytComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
-        this.idUsuarioLocal = localStorage.getItem('id_username');
+        this.idUsuarioLocal = getAttributeStorage(LocalStorageKeys.ID_USUARIO);
         this.obtenerTodosLosDocumentosExel();
         try {
-            this.classUsuario.idUsuario = parseInt(localStorage.getItem('id_username')!);
+            this.classUsuario.idUsuario = parseInt(getAttributeStorage(LocalStorageKeys.ID_USUARIO));
         } catch (error) {
             this.obtenerUsuario(this.idUsuarioLocal);
         }

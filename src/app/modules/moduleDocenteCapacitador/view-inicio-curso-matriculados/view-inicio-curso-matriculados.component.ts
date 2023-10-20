@@ -61,7 +61,10 @@ export class ViewInicioCursoMatriculadosComponent implements OnInit {
 	}
 
 	public participantsVisibleData: boolean = false;
-	public catchCourseSelected(curso: CourseFilterDocente) {
+	public catchCourseSelected(event: any) {
+		const selectedOption = event.value;
+		const curso: CourseFilterDocente = selectedOption;
+
 		if (curso.estadoAprovacionCurso !== 'A') {
 			this.toastrService.info("", "EL CURSO AÚN NO ESTA APROBADO");
 			this.listMatriculadoReduce = []

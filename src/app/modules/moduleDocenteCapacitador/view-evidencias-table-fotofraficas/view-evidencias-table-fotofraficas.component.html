@@ -1,10 +1,9 @@
-<div class="card">
+<div class="">
     <p-toolbar styleClass="mb-4">
         <ng-template pTemplate="left">
-            <!-- <button pButton pRipple label="Nuevo" icon="pi pi-plus" class="p-button-success mr-2"
-                (click)="showModaL()"></button> -->
-            <button pButton pRipple label="Nuevo" icon="pi pi-plus" class="p-button-success mr-2" (click)="showModaL()"
-                [disabled]="curso.estadoAprovacionCurso !== 'A'"></button>
+
+            <button pButton pRipple label="Nuevo" icon="pi pi-plus" class="p-button-success mr-2"
+                (click)="limpiarCampos(); showModaL()" [disabled]="curso.estadoAprovacionCurso !== 'A'"></button>
 
         </ng-template>
 
@@ -21,17 +20,34 @@
         currentPageReportTemplate="Mostrando {first} de {last} de {totalRecords} registros fotográficos"
         [showCurrentPageReport]="true">
         <ng-template pTemplate="caption">
-            <div class="flex align-items-center justify-content-between">
-                <!-- <h5 class="m-0"><strong>CURSO: </strong> {{curso.nombreCurso!}}</h5> -->
-                <h5 class="m-0"><strong>CURSO: </strong> {{ curso.nombreCurso! }}{{ curso.estadoAprovacionCurso !== 'A'
-                    ? ' (No aprobado)' : '' }}</h5>
-
-                <span class="p-input-icon-left">
-                    <i class="pi pi-search"></i>
-                    <input pInputText type="text" placeholder="Search..."
-                        (input)="dt.filterGlobal($any($event.target).value, 'contains')" />
-                </span>
+            <div class="flex justify-content-between flex-wrap card-container purple-container">
+                <div
+                    class="flex align-items-center justify-content-center w-16rem h-4rem font-bold text-white border-round m-2">
+                    <h5 class="m-0" style="color: black;"><strong>CURSO: </strong> {{ curso.nombreCurso! }}{{
+                        curso.estadoAprovacionCurso
+                        !== 'A'
+                        ? ' (No aprobado)' : '' }}</h5>
+                </div>
+                <div
+                    class="flex align-items-center justify-content-center w-16rem h-4rem font-bold text-white border-round m-2">
+                    <span class="p-input-icon-left">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text" placeholder="Search..."
+                            (input)="dt.filterGlobal($any($event.target).value, 'contains')" />
+                    </span>
+                </div>
             </div>
+            <!-- <div class="flex align-items-center justify-content-between"> -->
+            <!-- <h5 class="m-0"><strong>CURSO: </strong> {{curso.nombreCurso!}}</h5> -->
+            <!-- <h5 class="m-0"><strong>CURSO: </strong> {{ curso.nombreCurso! }}{{ curso.estadoAprovacionCurso !== 'A'
+                     ? ' (No aprobado)' : '' }}</h5>
+ 
+                 <span class="p-input-icon-left">
+                     <i class="pi pi-search"></i>
+                     <input pInputText type="text" placeholder="Search..."
+                         (input)="dt.filterGlobal($any($event.target).value, 'contains')" />
+                 </span>
+             </div> -->
         </ng-template>
         <ng-template pTemplate="header">
             <tr>
@@ -49,16 +65,20 @@
         <ng-template pTemplate="body" let-regFotografico>
             <tr>
 
-                <td><img [src]="regFotografico.foto ? 'data:image/jpeg;base64,' + regFotografico.foto : '../../../../assets/img/camer.png'"
-                        [alt]="regFotografico.name" width="100" class="shadow-4" /></td>
+                <td>
+                    <img [src]="regFotografico.foto ? obtenerURLImagen(regFotografico.foto) : '../../../../assets/img/subir.png'"
+                        [alt]="regFotografico.name" width="100" class="shadow-4" />
+                </td>
+
                 <td>{{regFotografico.descripcionFoto}}</td>
                 <td>{{regFotografico.fecha}}</td>
                 <td>
-                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" pTooltip="Editar" tooltipPosition="top"
-                        (click)="cargarDatosRegistrofotografico(regFotografico)"
+
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
+                        pTooltip="Editar" tooltipPosition="top" (click)="cargarDatosRegistrofotografico(regFotografico)"
                         [disabled]="curso.estadoAprovacionCurso !== 'A'"></button>
-                    <button pButton pRipple [icon]="regFotografico.estado ? 'pi pi-trash' : 'pi pi-check'" tooltipPosition="top"
-                        [pTooltip]="regFotografico.estado ? 'Desactivar' : 'Activar'"
+                    <button pButton pRipple [icon]="regFotografico.estado ? 'pi pi-trash' : 'pi pi-check'"
+                        tooltipPosition="top" [pTooltip]="regFotografico.estado ? 'Desactivar' : 'Activar'"
                         [class]="'p-button-rounded ' + (regFotografico.estado ? 'p-button-warning' : 'p-button-primary') + ' mt-1'"
                         (click)="eliminadoLogicoDelregistroFotografico(regFotografico)"
                         [disabled]="curso.estadoAprovacionCurso !== 'A'">
@@ -74,100 +94,93 @@
     </p-table>
 </div>
 
+<!-- IMPLEMENTACIÓN DEL MODAL PARA EL INGRESO DE LOS CURSOS -->
+<p-dialog [(visible)]="visible" [style]="{ width: '450px' }" header="REGISTRO FOTOGRÁFICO" [modal]="true"
+    styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <form (ngSubmit)="validacionRegistroFotografico()" novalidate>
+            <p style="font-size: 15px; color: red;" class="m-3 mb-5">Los campos marcados con * son de ingreso
+                obligatorio.
 
-<!-- IMPLEMENTACION DEL MODAL PARA EL INGRESO DE REGISTRO FOTOGRAFICO -->
-<p-dialog header="Registro fotográfico del curso" [(visible)]="visible" [modal]="true"
-    [style]="{ width: '50vw', height: '280' }" [draggable]="false" [resizable]="false">
-    <form (ngSubmit)="validacionRegistroFotografico()" novalidate style="padding: 15px;">
-
-        <!-- <p-card header="Registro fotográfico del curso"> -->
-        <div class="row rounded mb-1">
-
-            <div class="col-md-6">
-                <div class="grid p-fluid">
-                    <div class="col-12 md:col-12" style="align-items: center;">
-
-                        <!-- <div class="card flex justify-content-center"> -->
-                        <span class="p-float-label">
-                            <textarea id="float-input" rows="9" cols="30" pInputTextarea id="descripcionCurso"
-                                name="descripcionCurso" [(ngModel)]="registroFotografico.descripcionFoto"
-                                required></textarea>
-                            <label for="float-input">Descripción de la foto</label>
-                        </span>
-                        <!-- </div> -->
-
-                    </div>
-                </div>
-
-                <div class="grid p-fluid">
-                    <div class="col-12 md:col-12" style="align-items: center;">
-                        <div class="p-inputgroup">
-                            <!-- <p-calendar inputId="edad" class="ng-dirty" [showIcon]="true"
-                                placeholder="Fecha de evidencia" id="fechaEvidencia" name="fechaEvidencia"
-                                [(ngModel)]="registroFotografico.fecha"></p-calendar> -->
-                                <div class="p-inputgroup">
-                                    <p-calendar inputId="edad" class="ng-dirty" [showIcon]="true"
-                                        placeholder="Fecha de evidencia" id="fechaEvidencia" name="fechaEvidencia"
-                                        [(ngModel)]="registroFotografico.fecha" [appendTo]="'body'"></p-calendar>
-                                </div>
-                            
-                            
-  
-
-                            <p-overlayPanel #op>
-                                <h6><b>Fecha de inicio y fin:</b></h6>
-                                <p-divider></p-divider>
-                                <p><b>inicio:</b> {{curso.fechaInicioCurso}} </p>
-                                <p><b>fin:</b> {{curso.fechaFinalizacionCurso}}</p>
-                            </p-overlayPanel>
-                            <p-button icon="pi pi-question" styleClass="p-button-secondary p-button-text"
-                                (click)="op.toggle($event)"></p-button>
+            <div class="grid p-fluid">
+                <div class="col-12 md:col-12">
+                    <div class="flex-auto">
+                        <div
+                            class="flex-1 flex align-items-center justify-content-center font-bold  px-2 py-2 border-round">
+                            <div class="container custom-text-center" style="font-size: 20px;">
+                                <strong>Foto evidencia<span class="red-asterisk ml-1">*</span></strong>
+                            </div>
                         </div>
                     </div>
+                    <div class="flex-auto">
+                        <div class="align-items-center justify-content-center border-round">
+                            <div class="personal-image">
+                                <label class="label" style="border: black; border-radius: 15%;">
+                                    <input type="file" accept="image/jpeg, image/jpg, image/png"
+                                        (change)="onFileSelected($event)" />
+                                    <figure class="personal-figure">
+                                        <img [src]="previewImageUrl ? previewImageUrl : '../assets/img/subir.png'"
+                                            class="personal-avatar" alt="Previsualización de imagen" />
+                                    </figure>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
-            <div class="col-md-6">
-
-                <div class="grid p-fluid">
-                    <div class="col-12 md:col-12" style="align-items: center;">
-                        <div class="container custom-text-center" style="font-size: 20px;">
-                            <strong>Foto evidencia</strong>
+            <div class="grid p-fluid">
+                <div class="col-12 md:col-12">
+                    <div class="container" style="font-size: 1rem;">
+                        <strong>Descripción evidencia<span class="red-asterisk ml-1">*</span></strong>
+                    </div>
+                    <div class="flex-auto">
+                        <div
+                            class="flex-1 flex align-items-center justify-content-center font-bold  px-2 py-2 border-round">
+                            <textarea id="float-input" rows="4" cols="30" pInputTextarea id="descripcionCurso"
+                                name="descripcionCurso" placeholder="Descripción"
+                                [(ngModel)]="registroFotografico.descripcionFoto" required></textarea>
                         </div>
                     </div>
-                </div>
 
-                <div class="grid p-fluid">
-                    <div class="col-12 md:col-12" style="align-items: center;">
-                        <div class="personal-image">
-                            <label class="label" style="border: black;">
-                                <input type="file" accept="image/jpeg, image/jpg, image/png"
-                                    (change)="subirFoto($event)" />
-                                <figure class="personal-figure">
-                                    <img *ngIf="registroFotografico.foto"
-                                        [src]="registroFotografico.foto ? 'data:image/jpeg;base64,' + registroFotografico.foto : '../../../../assets/img/camer.png'"
-                                        class="personal-avatar" alt="logoFundacion" />
-                                    <img style="padding: 20px;" *ngIf="!registroFotografico.foto"
-                                        src="./assets/img/camer.png" class="personal-avatar" alt="Logo Fundación" />
-                                    <figcaption class="personal-figcaption">
-                                        <img src="./assets/img/camer.png" />
-                                    </figcaption>
-                                </figure>
-                            </label>
-                        </div>
-                    </div>
+                    <!-- </div> -->
                 </div>
             </div>
 
-        </div>
-        <!-- </p-card> -->
+            <div class="grid p-fluid">
+                <div class="col-12 md:col-12">
+                    <div class="container" style="font-size: 1rem;">
+                        <strong>Fecha<span class="red-asterisk ml-1">*</span></strong>
+                    </div>
+                    <p-calendar inputId="edad" appendTo="body" class="ng-dirty" [showIcon]="true"
+                        placeholder="Fecha de evidencia" id="fechaEvidencia" name="fechaEvidencia"
+                        [(ngModel)]="registroFotografico.fecha">
 
-        <!-- Fin del periodo porgrama -->
-        <div class="col-md-12 " style="text-align: center; margin: 5px;">
+                        <ng-template pTemplate="header">
+
+                            <h6><b>Fecha de inicio y fin:</b></h6>
+                            <p-divider></p-divider>
+                            <p><b>inicio:</b> {{curso.fechaInicioCurso}} </p>
+                            <p><b>fin:</b> {{curso.fechaFinalizacionCurso}}</p>
+                        </ng-template>
+
+                    </p-calendar>
+                </div>
+            </div>
+
+
             <p-button type="ngSubmit" [label]="registroFotografico.idRegistroFotograficoCurso? 'Actualizar': 'Guardar'"
-                icon="pi pi-save" styleClass="p-button-success  mb-2 mt-4"></p-button>
-        </div>
+                icon="pi pi-save"
+                [styleClass]="'p-button-'+(registroFotografico.idRegistroFotograficoCurso ? 'success':'primary')+ ' mt-4'"></p-button>
 
-    </form>
+        </form>
+    </ng-template>
+    <!-- <ng-template pTemplate="footer">
+        <p-button pRipple label="Cancelar" icon="pi pi-times" styleClass="p-button-outlined p-button-danger"
+            (click)="hideDialog()"></p-button>
+        <p-button pRipple [label]="classPeriodoPrograma.idPeriodoPrograma? 'Actualizar': 'Guardar'" icon="pi pi-check"
+            styleClass="p-button-outlined p-button-success"
+            (click)="validarDatosProgramaCapacitacionContinua()"></p-button>
+    </ng-template> -->
 </p-dialog>
-
