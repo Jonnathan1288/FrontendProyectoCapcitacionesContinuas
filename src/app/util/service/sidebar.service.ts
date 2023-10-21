@@ -59,7 +59,7 @@ export class SidebarService {
 		rols: [ROLES.ADMINISTRADOR],
 		submenu: [
 			{ titulo: 'Subir documentos', path: 'gestion/upload/documentos/exel', icono: 'fa fa-users' },
-			{ titulo: 'Generar Aprovados', path: 'gestion/generate/documento/exel', icono: 'fa fa-users' },
+			{ titulo: 'Generar Aprobados', path: 'gestion/generate/documento/exel', icono: 'fa fa-users' },
 		]
 	},
 

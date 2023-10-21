@@ -15,6 +15,8 @@ import { FOLDER_IMAGE_COURSE, getFile } from 'src/app/util/folder-upload';
 export class CardcursoComponent implements OnInit {
 
   public estadoMovimient?: boolean = false;
+
+  public initLoader: boolean = false;
   constructor(
     private router: Router,
     private cursoService: CursoService,
@@ -30,11 +32,7 @@ export class CardcursoComponent implements OnInit {
 
   ngOnInit(): void {
     this.obtenerCursosFull();
-    if (this.localService.isLoggedIn()) {
-      this.estadoMovimient = true;
-    } else {
-      this.estadoMovimient = false;
-    }
+
   }
 
   listCursos: CursoPaginacion[] = [];
@@ -49,11 +47,19 @@ export class CardcursoComponent implements OnInit {
   pageTotal: number = 0;
 
   public obtenerCursosFull(): void {
+    this.initLoader = true
     this.cursoService.listaCursoDisponiblesPaginacion(this.isPage, this.isSize, this.isSosrt).subscribe((data: any) => {
+
+
       this.listCursos = data.content;
       this.listCursosOriginal = data.content;
       this.listCursos = this.listCursosOriginal;
       this.filterAreasPerCurser();
+
+      this.pageTotal = Math.ceil(data.totalElements / this.isSize);
+
+      this.initLoader = false
+
     });
   }
 

@@ -104,10 +104,20 @@ export class ViewEvidenciasTableFotofraficasComponent implements OnInit {
 		});
 	}
 
-	public saveEvidenciasRegistrofotografico() {
-
+	public async saveEvidenciasRegistrofotografico() {
 
 		if (this.registroFotografico.idRegistroFotograficoCurso) {
+
+			if (this.selectedFile) {
+				try {
+					const key = await this.uploadImagen();
+					this.registroFotografico.foto = key;
+				} catch (error) {
+					console.error('Peoblem')
+				}
+
+			}
+
 			this.registroFotograficoService
 				.updateRegistroFotografico(
 					this.registroFotografico.idRegistroFotograficoCurso!,
@@ -126,6 +136,12 @@ export class ViewEvidenciasTableFotofraficasComponent implements OnInit {
 					}
 				});
 		} else {
+			try {
+				const key = await this.uploadImagen();
+				this.registroFotografico.foto = key;
+			} catch (error) {
+				console.error('Peoblem')
+			}
 			this.registroFotografico.curso = this.curso;
 			this.registroFotograficoService
 				.saveRegistroFotograficoCurso(this.registroFotografico)
@@ -170,16 +186,12 @@ export class ViewEvidenciasTableFotofraficasComponent implements OnInit {
 		console.log('Selected file:', this.selectedFile, this.previewImageUrl);
 	}
 
-	public async validacionRegistroFotografico() {
-		if (this.selectedFile) {
-			const key = await this.uploadImagen();
-			this.registroFotografico.foto = key;
-		}
+	public validacionRegistroFotografico() {
 
 		if (
 			!this.registroFotografico.fecha ||
 			!this.registroFotografico.descripcionFoto ||
-			!this.registroFotografico.foto
+			!this.selectedFile
 		) {
 			this.toastrService.error(
 				'Todos los campos deben estar llenos.',
@@ -214,10 +226,13 @@ export class ViewEvidenciasTableFotofraficasComponent implements OnInit {
 		}
 	}
 
+	// limpiarCampos(); 
+
 	//VISIVILIADA DEL MODAL
 	public visible?: boolean;
 
 	public showModaL() {
+		this.limpiarCampos();
 		this.registroFotografico = new RegistroFotograficoCurso();
 		this.visible = true;
 	}
@@ -266,26 +281,27 @@ export class ViewEvidenciasTableFotofraficasComponent implements OnInit {
 	//IMPLEMENTAR LA OPCIÓN PARA LA DESCARGA DEL PDF GENERADO DEL CURSO
 	public getReportRegistroFotograficoCurso() {
 		const todosInactivos = this.listRegistroFotografico.every(
-		  (registro) => !registro.estado
+			(registro) => !registro.estado
 		);
-	  
+
 		if (todosInactivos) {
-		  this.toastrService.info('No hay registros activos o no existen.', 'Sin Registros');
+			this.toastrService.info('No hay registros activos o no existen.', 'Sin Registros');
 		} else {
-		  this.reportService
-			.gedownloadRegistroFotograficoCurso(this.idCursoRouter!)
-			.subscribe((r) => {
-			  const url = URL.createObjectURL(r);
-			  window.open(url, '_blank');
-			});
+			this.reportService
+				.gedownloadRegistroFotograficoCurso(this.idCursoRouter!)
+				.subscribe((r) => {
+					const url = URL.createObjectURL(r);
+					window.open(url, '_blank');
+				});
 		}
-	  }
-	  
+	}
+
 
 	public limpiarCampos() {
 		this.registroFotografico = new RegistroFotograficoCurso();
 		this.selectedFile = {} as File;
 		this.previewImageUrl = null;
+		this.previewImageUrl = '';
 	}
 
 }

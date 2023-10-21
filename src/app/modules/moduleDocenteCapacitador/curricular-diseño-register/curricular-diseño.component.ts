@@ -32,7 +32,7 @@ import { FasePracticaService } from 'src/app/service/fase-practica.service';
 })
 export class CurricularDiseñoComponent implements OnInit {
 
-  
+
   constructor(
     private router: Router,
     private silaboService: SilaboService,
@@ -59,10 +59,10 @@ export class CurricularDiseñoComponent implements OnInit {
   entornoAprendizajeCurricular: EntornoAprendizajeCurricular = new EntornoAprendizajeCurricular();
   prerrequisitosCurso: PrerequisitoCurso = new PrerequisitoCurso();
   fasesTeoricas: FaseTeorica[] = [];
-  fasesPracticas:FasePractica[]=[];
+  fasesPracticas: FasePractica[] = [];
 
 
-  instalacion : Instalacion = new Instalacion();
+  instalacion: Instalacion = new Instalacion();
 
 
   ngOnInit() {
@@ -71,8 +71,8 @@ export class CurricularDiseñoComponent implements OnInit {
       this.idSilaboCap = id_silabo;
       // this.obtenerDatosCurso();
       this.validacionDeDisenioExistente();
-      
-    
+
+
     });
 
 
@@ -85,6 +85,7 @@ export class CurricularDiseñoComponent implements OnInit {
           this.toastr.success('Editar diseño curricular.');
           // alert('Ya tiene disenio Curricular' + data)
           this.traerDatos(this.idSilaboCap);
+          this.getSilabo();
         } else {
           this.toastr.info('Listo para crear diseño curricular.');
           // alert(" no tien Disenio Curricular")
@@ -94,6 +95,16 @@ export class CurricularDiseñoComponent implements OnInit {
     )
   }
   /* TRAER DATOS DEL SILABO*/
+
+  public getSilabo() {
+    this.silaboService.getSilaboById(this.idSilaboCap).subscribe({
+      next: (resp) => {
+        this.silabo = resp;
+      }, error: (err) => {
+
+      }
+    })
+  }
 
 
   idSilaboCap?: any;
@@ -163,11 +174,11 @@ export class CurricularDiseñoComponent implements OnInit {
     //   this.toastr.error('Campos vacios');
 
     // } else {
-      this.listEvaluacionFormativaCurricular.push(this.evaluacionFormativaCurricular);
-      this.evaluacionFormativaCurricular = new EvalucionFormativaCurriculares();
-      this.evaluacionFormativaCurricular.instrumnetoFormativa = '';
-      this.evaluacionFormativaCurricular.tecnicaFormativa = '';
-   // }
+    this.listEvaluacionFormativaCurricular.push(this.evaluacionFormativaCurricular);
+    this.evaluacionFormativaCurricular = new EvalucionFormativaCurriculares();
+    this.evaluacionFormativaCurricular.instrumnetoFormativa = '';
+    this.evaluacionFormativaCurricular.tecnicaFormativa = '';
+    // }
   }
 
   public quitarElementoEvaluacionFormativa(index: number): void {
@@ -187,10 +198,10 @@ export class CurricularDiseñoComponent implements OnInit {
     //   this.toastr.error('Campos vacios');
 
     // } else {
-      this.listEvaluacionFinalCurricular.push(this.evaluacionFinalCurricular);
-      this.evaluacionFinalCurricular = new EvaluacionFinalCurriculares();
-      this.evaluacionFinalCurricular.instrumnetoFormativaFinal = '';
-      this.evaluacionFinalCurricular.tecnicaFormativaFinal = '';
+    this.listEvaluacionFinalCurricular.push(this.evaluacionFinalCurricular);
+    this.evaluacionFinalCurricular = new EvaluacionFinalCurriculares();
+    this.evaluacionFinalCurricular.instrumnetoFormativaFinal = '';
+    this.evaluacionFinalCurricular.tecnicaFormativaFinal = '';
     //}
   }
 
@@ -211,11 +222,11 @@ export class CurricularDiseñoComponent implements OnInit {
     //   // alert("Campos Vacios")
     //   this.toastr.error('Campos vacios');
     // } else {
-      this.listEntornoAprendizaje.push(this.entornoAprendizajeCurricular);
-      this.entornoAprendizajeCurricular = new EntornoAprendizajeCurricular();
-      this.entornoAprendizajeCurricular.instalaciones = '';
-      this.entornoAprendizajeCurricular.faseTeorica = '';
-      this.entornoAprendizajeCurricular.fasePractica = '';
+    this.listEntornoAprendizaje.push(this.entornoAprendizajeCurricular);
+    this.entornoAprendizajeCurricular = new EntornoAprendizajeCurricular();
+    this.entornoAprendizajeCurricular.instalaciones = '';
+    this.entornoAprendizajeCurricular.faseTeorica = '';
+    this.entornoAprendizajeCurricular.fasePractica = '';
     //}
   }
 
@@ -230,66 +241,26 @@ export class CurricularDiseñoComponent implements OnInit {
 
   public generarDisenioCurricular(): void {
     this.disenioCurricular.silabo = this.silabo;
-    // if (!this.disenioCurricular?.temasTransversales || !this.disenioCurricular?.estrategiasAprendizaje) {
-
-    //   this.toastr.warning(
-    //     'Se encontraron campos vacios, por favor complete el formulario', 'CAMPOS VACIOS'
-
-    //   );
-    // } else {
-
-      //ID
-      // if (this.listEvaluacionDiagnosticaCurricular.length < 1) {
-      //   this.toastr.warning(
-      //     'CAMPOS VACIOS', '*LISTA VACIA'
-
-      //   );
-      //   return;
-      // }
-      // //ID
-      // if (this.listEvaluacionFormativaCurricular.length < 1) {
-      //   this.toastr.warning(
-      //     'CAMPOS VACIOS', '*LISTA VACIA'
-
-      //   );
-      //   return;
-      // }
-      // //ID
-      // if (this.listEvaluacionFinalCurricular.length < 1) {
-      //   this.toastr.warning(
-      //     'CAMPOS VACIOS', '*LISTA VACIA'
-
-      //   );
-      //   return;
-      // }
-      // //ID
-      // if (this.listEntornoAprendizaje.length < 1) {
-      //   this.toastr.warning(
-      //     'CAMPOS VACIOS', '*LISTA VACIA'
-
-      //   );
-      //   return;
-      // }
 
 
-      this.disenioCurricular.estadoDisenioCurricular = true;
+    this.disenioCurricular.estadoDisenioCurricular = true;
 
-      this.disenioCurricularService.saveDisenioCurricular(this.disenioCurricular).subscribe(disenioData => {
-        this.disenioCurricular = disenioData;
-        this.idDisenioCurricularCap = this.disenioCurricular.idDisenioCurricular;
-        console.log("Data + " + disenioData)
-        /* TABLAS */
-        this.generarEvaliacionDiagnostica();
-        this.generarEvaluacionFormativa();
-        this.generarEvaluacionFinal();
-        this.generarEntornoAprendizaje();
-        // alert('Guardado exitoso');
-        this.toastr.success('Registro Exitoso');
-        setTimeout(() => {
-          location.reload();
-        }, 1200);
-        /* */
-      })
+    this.disenioCurricularService.saveDisenioCurricular(this.disenioCurricular).subscribe(disenioData => {
+      this.disenioCurricular = disenioData;
+      this.idDisenioCurricularCap = this.disenioCurricular.idDisenioCurricular;
+      console.log("Data + " + disenioData)
+      /* TABLAS */
+      this.generarEvaliacionDiagnostica();
+      this.generarEvaluacionFormativa();
+      this.generarEvaluacionFinal();
+      this.generarEntornoAprendizaje();
+      // alert('Guardado exitoso');
+      this.toastr.success('Registro Exitoso');
+      setTimeout(() => {
+        location.reload();
+      }, 1200);
+      /* */
+    })
     //}
   }
   /* */
@@ -361,12 +332,12 @@ export class CurricularDiseñoComponent implements OnInit {
         this.validarIdDisenioCurricular = true;
         this.cargarFasesPorIdDisenoCurricular(this.idDelDisenio);
 
-     
-      
+
+
       }
     )
 
-    
+
   }
 
   // TRAER TODOS LOS DATOS DEL SILABO
@@ -602,17 +573,17 @@ export class CurricularDiseñoComponent implements OnInit {
 
     //   );
     // } else {
-      this.disenioCurricularService.updateDisenioCurricular(this.idDelDisenio!, nuevoDisenioCurricular).subscribe(
-        data => {
-          this.traerDatos(this.idDelDisenio!);
-          this.toastr.success('Actualización exitosa ', '¡Bien hecho!');
+    this.disenioCurricularService.updateDisenioCurricular(this.idDelDisenio!, nuevoDisenioCurricular).subscribe(
+      data => {
+        this.traerDatos(this.idDelDisenio!);
+        this.toastr.success('Actualización exitosa ', '¡Bien hecho!');
 
-          setTimeout(() => {
-            location.reload();
-          }, 1200);
-          // console.log("Se actualizó el Diseño Curricular");
-        }
-      );
+        setTimeout(() => {
+          location.reload();
+        }, 1200);
+        // console.log("Se actualizó el Diseño Curricular");
+      }
+    );
     //}
   }
 
@@ -627,25 +598,25 @@ export class CurricularDiseñoComponent implements OnInit {
 
     //   );
     // } else {
-      if (this.opcionCapEntornoAprendizaje == "C") {
-        this.entornoAprendizajeCurricular.disenioCurricular = this.disenioCurricular;
-        this.entornoAprendizajeCurricular.estadoEntornoAprendizaje = true;
-        this.entornoAprendizajeService.saveEntornoAprendizajeCurricular(this.entornoAprendizajeCurricular).subscribe(
-          dataTwo => {
-            this.traerDatosEntornoAprendizajeFull(this.idDelDisenio!);
-            this.toastr.success('Registro Exitoso');
-            console.log("Se creo uno nuevo EA")
-          }
-        )
-      } else {
-        this.entornoAprendizajeService.updateEntornoAprendizajeCurricular(this.idCapModelEdit!, this.entornoAprendizajeCurricular).subscribe(
-          dataTwo => {
-            this.traerDatosEntornoAprendizajeFull(this.idDelDisenio!);
-            this.toastr.success('Actualización exitosa ', '¡Bien hecho!');
-            console.log("Se actualizo EA")
-          }
-        )
-      }
+    if (this.opcionCapEntornoAprendizaje == "C") {
+      this.entornoAprendizajeCurricular.disenioCurricular = this.disenioCurricular;
+      this.entornoAprendizajeCurricular.estadoEntornoAprendizaje = true;
+      this.entornoAprendizajeService.saveEntornoAprendizajeCurricular(this.entornoAprendizajeCurricular).subscribe(
+        dataTwo => {
+          this.traerDatosEntornoAprendizajeFull(this.idDelDisenio!);
+          this.toastr.success('Registro Exitoso');
+          console.log("Se creo uno nuevo EA")
+        }
+      )
+    } else {
+      this.entornoAprendizajeService.updateEntornoAprendizajeCurricular(this.idCapModelEdit!, this.entornoAprendizajeCurricular).subscribe(
+        dataTwo => {
+          this.traerDatosEntornoAprendizajeFull(this.idDelDisenio!);
+          this.toastr.success('Actualización exitosa ', '¡Bien hecho!');
+          console.log("Se actualizo EA")
+        }
+      )
+    }
     //}
   }
   // FIN 
@@ -683,25 +654,25 @@ export class CurricularDiseñoComponent implements OnInit {
     //   );
     // } else {
 
-      if (this.opcionElegida == "C") {
-        this.evaluacionDiagnosticoCurricular.disenioCurricular = this.disenioCurricular;
-        this.evaluacionDiagnosticoCurricular.estadoEvaluacionDiagnostica = true;
-        this.evaluacionDiagnosticoCurricularService.saveEvaluacionDiagnosticoCurricular(this.evaluacionDiagnosticoCurricular).subscribe(
-          dataTwo => {
-            this.traerDatosEvaluacionDiagnosticaFull(this.idDelDisenio!);
-            this.toastr.success('Registro Exitoso');
-            console.log("Se creo uno nuevo ED")
-          }
-        )
-      } else {
-        this.evaluacionDiagnosticoCurricularService.updateEvaluacionDiagnosticaCurricular(this.idCapModelEditEvaluacionDiagnostica!, this.evaluacionDiagnosticoCurricular).subscribe(
-          dataTwo => {
-            this.traerDatosEvaluacionDiagnosticaFull(this.idDelDisenio!);
-            this.toastr.success('Actualización exitosa ', '¡Bien hecho!');
-            console.log("Se actualizo ED")
-          }
-        )
-      }
+    if (this.opcionElegida == "C") {
+      this.evaluacionDiagnosticoCurricular.disenioCurricular = this.disenioCurricular;
+      this.evaluacionDiagnosticoCurricular.estadoEvaluacionDiagnostica = true;
+      this.evaluacionDiagnosticoCurricularService.saveEvaluacionDiagnosticoCurricular(this.evaluacionDiagnosticoCurricular).subscribe(
+        dataTwo => {
+          this.traerDatosEvaluacionDiagnosticaFull(this.idDelDisenio!);
+          this.toastr.success('Registro Exitoso');
+          console.log("Se creo uno nuevo ED")
+        }
+      )
+    } else {
+      this.evaluacionDiagnosticoCurricularService.updateEvaluacionDiagnosticaCurricular(this.idCapModelEditEvaluacionDiagnostica!, this.evaluacionDiagnosticoCurricular).subscribe(
+        dataTwo => {
+          this.traerDatosEvaluacionDiagnosticaFull(this.idDelDisenio!);
+          this.toastr.success('Actualización exitosa ', '¡Bien hecho!');
+          console.log("Se actualizo ED")
+        }
+      )
+    }
     //}
   }
   // CREATE AND UPDATE EVALUACION FORMATIVA
@@ -735,25 +706,25 @@ export class CurricularDiseñoComponent implements OnInit {
 
     //   );
     // } else {
-      if (this.opcionElegidaEvaluacionFormativa == "C") {
-        this.evaluacionFormativaCurricular.disenioCurricular = this.disenioCurricular;
-        this.evaluacionFormativaCurricular.estadoEvaluacionFormativa = true;
-        this.evaluacionFormativaCurricularService.saveEvaluacionFormativaCurricular(this.evaluacionFormativaCurricular).subscribe(
-          dataTwo => {
-            this.traerDatosEvaluacionFormativaFull(this.idDelDisenio!);
-            this.toastr.success('Registro Exitoso');
-            console.log("Se creo uno nuevo EFC")
-          }
-        )
-      } else {
-        this.evaluacionFormativaCurricularService.updateEvaluacionFormativaCurricular(this.idCapModelEditEvaluacionFormativa!, this.evaluacionFormativaCurricular).subscribe(
-          dataTwo => {
-            this.traerDatosEvaluacionFormativaFull(this.idDelDisenio!);
-            this.toastr.success('Actualización exitosa ', '¡Bien hecho!');
-            console.log("Se actualizo EFC")
-          }
-        )
-      }
+    if (this.opcionElegidaEvaluacionFormativa == "C") {
+      this.evaluacionFormativaCurricular.disenioCurricular = this.disenioCurricular;
+      this.evaluacionFormativaCurricular.estadoEvaluacionFormativa = true;
+      this.evaluacionFormativaCurricularService.saveEvaluacionFormativaCurricular(this.evaluacionFormativaCurricular).subscribe(
+        dataTwo => {
+          this.traerDatosEvaluacionFormativaFull(this.idDelDisenio!);
+          this.toastr.success('Registro Exitoso');
+          console.log("Se creo uno nuevo EFC")
+        }
+      )
+    } else {
+      this.evaluacionFormativaCurricularService.updateEvaluacionFormativaCurricular(this.idCapModelEditEvaluacionFormativa!, this.evaluacionFormativaCurricular).subscribe(
+        dataTwo => {
+          this.traerDatosEvaluacionFormativaFull(this.idDelDisenio!);
+          this.toastr.success('Actualización exitosa ', '¡Bien hecho!');
+          console.log("Se actualizo EFC")
+        }
+      )
+    }
     //}
   }
 
@@ -789,25 +760,25 @@ export class CurricularDiseñoComponent implements OnInit {
 
     //   );
     // } else {
-      if (this.opcionElegidaEvaluacionFinal == "C") {
-        this.evaluacionFinalCurricular.disenioCurricular = this.disenioCurricular;
-        this.evaluacionFinalCurricular.estadoEvaluacionFinal = true;
-        this.evaluacionFinalCurricularService.saveEvaluacionFinalCurricular(this.evaluacionFinalCurricular).subscribe(
-          dataTwo => {
-            this.traerDatosEvaluacionFinalFull(this.idDelDisenio!);
-            this.toastr.success('Registro Exitoso');
-            console.log("Se creo uno nuevo EFINAL")
-          }
-        )
-      } else {
-        this.evaluacionFinalCurricularService.updateEvaluacionFinalCurricular(this.idCapModelEditEvaluacionFinal!, this.evaluacionFinalCurricular).subscribe(
-          dataTwo => {
-            this.traerDatosEvaluacionFinalFull(this.idDelDisenio!);
-            this.toastr.success('Actualización exitosa ', '¡Bien hecho!');
-            console.log("Se actualizo EFINAL")
-          }
-        )
-      }
+    if (this.opcionElegidaEvaluacionFinal == "C") {
+      this.evaluacionFinalCurricular.disenioCurricular = this.disenioCurricular;
+      this.evaluacionFinalCurricular.estadoEvaluacionFinal = true;
+      this.evaluacionFinalCurricularService.saveEvaluacionFinalCurricular(this.evaluacionFinalCurricular).subscribe(
+        dataTwo => {
+          this.traerDatosEvaluacionFinalFull(this.idDelDisenio!);
+          this.toastr.success('Registro Exitoso');
+          console.log("Se creo uno nuevo EFINAL")
+        }
+      )
+    } else {
+      this.evaluacionFinalCurricularService.updateEvaluacionFinalCurricular(this.idCapModelEditEvaluacionFinal!, this.evaluacionFinalCurricular).subscribe(
+        dataTwo => {
+          this.traerDatosEvaluacionFinalFull(this.idDelDisenio!);
+          this.toastr.success('Actualización exitosa ', '¡Bien hecho!');
+          console.log("Se actualizo EFINAL")
+        }
+      )
+    }
     //}
   }
 
@@ -877,8 +848,8 @@ export class CurricularDiseñoComponent implements OnInit {
   //     faseTeorica.instalacion = instalacion;
   //     faseTeorica.recurso = recurso;
   //     faseTeorica.disenioCurricular = disenioCurricular;
-      
-   
+
+
 
   //     faseTeoricas.push(faseTeorica);
   //   }
@@ -927,7 +898,7 @@ export class CurricularDiseñoComponent implements OnInit {
   //     fasePractica.instalacion = instalacion;
   //     fasePractica.recurso = recurso;
   //     fasePractica.disenioCurricular = disenioCurricular;
-      
+
 
   //     fasePracticas.push(fasePractica);
   //   }
@@ -985,60 +956,60 @@ export class CurricularDiseñoComponent implements OnInit {
   //   );
   // }
   // Cambiamos el nombre del método y lo modificamos para llenar tanto fasesTeoricas como fasesPracticas
-cargarFasesPorIdDisenoCurricular(idDisenioCurricular: number): void {
-  this.faseTeoricaService.findAllByDisenioCurricularId(idDisenioCurricular).subscribe(
+  cargarFasesPorIdDisenoCurricular(idDisenioCurricular: number): void {
+    this.faseTeoricaService.findAllByDisenioCurricularId(idDisenioCurricular).subscribe(
       (fasesTeoricas: FaseTeorica[]) => {
-          // Verificar si la lista de fases teóricas está vacía
-          if (fasesTeoricas && fasesTeoricas.length > 0) {
-              // La lista no está vacía, asignamos los resultados a la variable de componente
-              this.fasesTeoricas = fasesTeoricas;
-              // Imprimir las fases teóricas en la consola
-              console.log('Fases Teóricas:', this.fasesTeoricas);
-          } else {
-              // La lista está vacía o es nula, puedes manejar esto según tus necesidades
-              console.log('No se encontraron fases teóricas.');
-              // Puedes asignar un valor por defecto o realizar otras acciones aquí
-              // Por ejemplo:
-              this.fasesTeoricas = []; // Asignar una lista vacía
-              // O mostrar un mensaje al usuario
-              // this.mostrarMensaje('No se encontraron fases teóricas.');
-          }
+        // Verificar si la lista de fases teóricas está vacía
+        if (fasesTeoricas && fasesTeoricas.length > 0) {
+          // La lista no está vacía, asignamos los resultados a la variable de componente
+          this.fasesTeoricas = fasesTeoricas;
+          // Imprimir las fases teóricas en la consola
+          console.log('Fases Teóricas:', this.fasesTeoricas);
+        } else {
+          // La lista está vacía o es nula, puedes manejar esto según tus necesidades
+          console.log('No se encontraron fases teóricas.');
+          // Puedes asignar un valor por defecto o realizar otras acciones aquí
+          // Por ejemplo:
+          this.fasesTeoricas = []; // Asignar una lista vacía
+          // O mostrar un mensaje al usuario
+          // this.mostrarMensaje('No se encontraron fases teóricas.');
+        }
       },
       (error) => {
-          // Maneja cualquier error que ocurra durante la solicitud HTTP
-          console.error('Error al obtener las fases teóricas:', error);
-          // Puedes mostrar un mensaje de error al usuario si lo deseas
-          // this.mostrarMensaje('Error al obtener las fases teóricas. Intente nuevamente más tarde.');
+        // Maneja cualquier error que ocurra durante la solicitud HTTP
+        console.error('Error al obtener las fases teóricas:', error);
+        // Puedes mostrar un mensaje de error al usuario si lo deseas
+        // this.mostrarMensaje('Error al obtener las fases teóricas. Intente nuevamente más tarde.');
       }
-  );
+    );
 
-  // Ahora cargamos las fases prácticas
-  this.fasePracticaService.findAllByDisenioCurricularId(idDisenioCurricular).subscribe(
+    // Ahora cargamos las fases prácticas
+    this.fasePracticaService.findAllByDisenioCurricularId(idDisenioCurricular).subscribe(
       (fasesPracticas: FasePractica[]) => {
-          // Verificar si la lista de fases prácticas está vacía
-          if (fasesPracticas && fasesPracticas.length > 0) {
-              // La lista no está vacía, asignamos los resultados a la variable de componente
-              this.fasesPracticas = fasesPracticas;
-              // Imprimir las fases prácticas en la consola
-              console.log('Fases Prácticas:', this.fasesPracticas);
-          } else {
-              // La lista está vacía o es nula, puedes manejar esto según tus necesidades
-              console.log('No se encontraron fases prácticas.');
-              // Puedes asignar un valor por defecto o realizar otras acciones aquí
-              // Por ejemplo:
-              this.fasesPracticas = []; // Asignar una lista vacía
-              // O mostrar un mensaje al usuario
-              // this.mostrarMensaje('No se encontraron fases prácticas.');
-          }
+        // Verificar si la lista de fases prácticas está vacía
+        if (fasesPracticas && fasesPracticas.length > 0) {
+          // La lista no está vacía, asignamos los resultados a la variable de componente
+          this.fasesPracticas = fasesPracticas;
+          // Imprimir las fases prácticas en la consola
+          console.log('Fases Prácticas:', this.fasesPracticas);
+        } else {
+          // La lista está vacía o es nula, puedes manejar esto según tus necesidades
+          console.log('No se encontraron fases prácticas.');
+          // Puedes asignar un valor por defecto o realizar otras acciones aquí
+          // Por ejemplo:
+          this.fasesPracticas = []; // Asignar una lista vacía
+          // O mostrar un mensaje al usuario
+          // this.mostrarMensaje('No se encontraron fases prácticas.');
+        }
       },
       (error) => {
-          // Maneja cualquier error que ocurra durante la solicitud HTTP
-          console.error('Error al obtener las fases prácticas:', error);
-          // Puedes mostrar un mensaje de error al usuario si lo deseas
-          // this.mostrarMensaje('Error al obtener las fases prácticas. Intente nuevamente más tarde.');
+        // Maneja cualquier error que ocurra durante la solicitud HTTP
+        console.error('Error al obtener las fases prácticas:', error);
+        // Puedes mostrar un mensaje de error al usuario si lo deseas
+        // this.mostrarMensaje('Error al obtener las fases prácticas. Intente nuevamente más tarde.');
       }
-  );
-}
+    );
+  }
 
 
   obtenerNombreFaseTeorico(instalacionId: number, recursoId: number): string {
@@ -1057,18 +1028,18 @@ cargarFasesPorIdDisenoCurricular(idDisenioCurricular: number): void {
     );
     return faseEncontrada ? faseEncontrada.nombreFase || '' : '';
   }
-  
+
 
 
 
 
   crearfasesteorica() {
-    
- 
+
+
     //let idFaseTeorica = 1;
-   // const faseTeoricas: FaseTeorica[] = [];
-   const fasePracticas: FasePractica[] = [];
-  
+    // const faseTeoricas: FaseTeorica[] = [];
+    const fasePracticas: FasePractica[] = [];
+
     // Recopila los datos de las fases teóricas
     const nombresFasesTeoricas = [
       'faseTeorica_1_1',
@@ -1078,57 +1049,57 @@ cargarFasesPorIdDisenoCurricular(idDisenioCurricular: number): void {
       'faseTeorica_2_2',
       'faseTeorica_2_3'
     ];
-  
+
     for (const nombreTextarea of nombresFasesTeoricas) {
       const [idInstalacion, idRecurso] = nombreTextarea.split('_').slice(1).map(Number);
       const textarea = <HTMLTextAreaElement>document.querySelector(`textarea[name="${nombreTextarea}"]`);
-     // const valorTextarea = textarea.value;
-     // const valorTextarea = textarea ? textarea.value : ''; 
-          // Verifica si se encontró el textarea y si tiene un valor
-    if (textarea ) {
-    
-    
-      const valorTextarea = textarea.value;
-    
-      const faseTeorica = new FaseTeorica();
-      faseTeorica.nombreFase = valorTextarea;
-      faseTeorica.estado = true;
-  
-      const instalacion = new Instalacion();
-      const recurso = new Recurso();
-      const disenioCurricular = new DisenioCurriculares();
-      disenioCurricular.idDisenioCurricular = this.idDelDisenio;
-  
-      instalacion.idInstalacion = idInstalacion;
-      recurso.idRecurso = idRecurso;
-  
-      faseTeorica.instalacion = instalacion;
-      faseTeorica.recurso = recurso;
-      faseTeorica.disenioCurricular = disenioCurricular;
+      // const valorTextarea = textarea.value;
+      // const valorTextarea = textarea ? textarea.value : ''; 
+      // Verifica si se encontró el textarea y si tiene un valor
+      if (textarea) {
 
-      console.log('idistalacion +++++++++++++++'+ idInstalacion+ '       idrecurso ++++++++++++++++++++=++'+idRecurso)
-      console.log('nombreFase: ' + faseTeorica.nombreFase);
-      this.fasesTeoricas.push(faseTeorica);
-    } else {
-      console.error(`No se encontró el textarea para ${nombreTextarea}`);
+
+        const valorTextarea = textarea.value;
+
+        const faseTeorica = new FaseTeorica();
+        faseTeorica.nombreFase = valorTextarea;
+        faseTeorica.estado = true;
+
+        const instalacion = new Instalacion();
+        const recurso = new Recurso();
+        const disenioCurricular = new DisenioCurriculares();
+        disenioCurricular.idDisenioCurricular = this.idDelDisenio;
+
+        instalacion.idInstalacion = idInstalacion;
+        recurso.idRecurso = idRecurso;
+
+        faseTeorica.instalacion = instalacion;
+        faseTeorica.recurso = recurso;
+        faseTeorica.disenioCurricular = disenioCurricular;
+
+        console.log('idistalacion +++++++++++++++' + idInstalacion + '       idrecurso ++++++++++++++++++++=++' + idRecurso)
+        console.log('nombreFase: ' + faseTeorica.nombreFase);
+        this.fasesTeoricas.push(faseTeorica);
+      } else {
+        console.error(`No se encontró el textarea para ${nombreTextarea}`);
+      }
+
+
     }
 
-    
-    }
-  
-  
 
 
- 
- 
+
+
+
   }
 
   crearfasesPractica() {
-    
- 
-   
-  
-  //  Recopila los datos de las fases prácticas
+
+
+
+
+    //  Recopila los datos de las fases prácticas
     const nombresFasesPracticas = [
       'fasePractica_1_1',
       'fasePractica_1_2',
@@ -1137,78 +1108,78 @@ cargarFasesPorIdDisenoCurricular(idDisenioCurricular: number): void {
       'fasePractica_2_2',
       'fasePractica_2_3'
     ];
-  
+
     for (const nombreTextarea of nombresFasesPracticas) {
-     // const textarea = (<HTMLTextAreaElement>document.querySelector(`textarea[name="${nombreTextarea}"]`));
+      // const textarea = (<HTMLTextAreaElement>document.querySelector(`textarea[name="${nombreTextarea}"]`));
 
       const [idInstalacion, idRecurso] = nombreTextarea.split('_').slice(1).map(Number);
       const textarea = <HTMLTextAreaElement>document.querySelector(`textarea[name="${nombreTextarea}"]`);
 
 
-      if (textarea ) {
-    
-    
+      if (textarea) {
+
+
         const valorTextarea = textarea.value;
-      
+
         const fasePractica = new FaseTeorica();
         fasePractica.nombreFase = valorTextarea;
         fasePractica.estado = true;
-    
+
         const instalacion = new Instalacion();
         const recurso = new Recurso();
         const disenioCurricular = new DisenioCurriculares();
         disenioCurricular.idDisenioCurricular = this.idDelDisenio;
-    
+
         instalacion.idInstalacion = idInstalacion;
         recurso.idRecurso = idRecurso;
-    
+
         fasePractica.instalacion = instalacion;
         fasePractica.recurso = recurso;
         fasePractica.disenioCurricular = disenioCurricular;
-  
-        console.log('idistalacion +++++++++++++++'+ idInstalacion+ '       idrecurso ++++++++++++++++++++=++'+idRecurso)
+
+        console.log('idistalacion +++++++++++++++' + idInstalacion + '       idrecurso ++++++++++++++++++++=++' + idRecurso)
         console.log('nombreFase: ' + fasePractica.nombreFase);
         this.fasesPracticas.push(fasePractica);
       } else {
         console.error(`No se encontró el textarea para ${nombreTextarea}`);
       }
-  
+
     }
 
 
- 
- 
+
+
   }
 
 
 
   guardarEntornoAprendizaje() {
-    if (!this.fasesTeoricas || this.fasesTeoricas.length === 0 ) {
+    if (!this.fasesTeoricas || this.fasesTeoricas.length === 0) {
       // Si `this.fasesTeoricas` está vacía, crea las fases utilizando `crearfasesteorica`
       this.crearfasesteorica();
       // Llama al servicio para guardar las fases teóricas en el backend
       for (const faseTeorica of this.fasesTeoricas) {
         this.guardarFaseTeorica(faseTeorica);
       }
-    
+
     } else {
       for (const faseTeorica of this.fasesTeoricas) {
         // Verifica si la fase teórica ya tiene un ID asignado
         if (faseTeorica.idFaseTeorica) {
           // Si ya tiene un ID, significa que existe y debes actualizarla
-      
+
           // Encuentra el textarea correspondiente utilizando el nombre del textarea
           const nombreTextarea = `faseTeorica_${faseTeorica.instalacion?.idInstalacion}_${faseTeorica.recurso?.idRecurso}`;
           const textarea = <HTMLTextAreaElement>document.querySelector(`textarea[name="${nombreTextarea}"]`);
-      
+
           // Verifica si se encontró el textarea
           if (textarea) {
             // Asigna el valor del textarea al objeto faseTeorica
             faseTeorica.nombreFase = textarea.value;
-      
+
             // Llama a la función para actualizar la fase teórica
             this.actualizarFaseTeorica(faseTeorica);
-         
+
           } else {
             console.error(`No se encontró el textarea para ${nombreTextarea}`);
           }
@@ -1216,37 +1187,37 @@ cargarFasesPorIdDisenoCurricular(idDisenioCurricular: number): void {
           // Si la fase teórica no tiene un ID asignado, puedes manejarlo como quieras, ya sea ignorarla o mostrar un mensaje de error
         }
       }
-   
-      
+      this.generarDisenioCurricular();
+
     }
 
-    if (!this.fasesPracticas || this.fasesPracticas.length === 0 ) {
+    if (!this.fasesPracticas || this.fasesPracticas.length === 0) {
       // Si `this.fasesTeoricas` está vacía, crea las fases utilizando `crearfasesteorica`
       this.crearfasesPractica();
       // Llama al servicio para guardar las fases teóricas en el backend
-    
+
       for (const fasePractica of this.fasesPracticas) {
         this.guardarFasePractica(fasePractica);
       }
     } else {
-   
+
       for (const fasePractica of this.fasesPracticas) {
         // Verifica si la fase teórica ya tiene un ID asignado
         if (fasePractica.idFasePractica) {
           // Si ya tiene un ID, significa que existe y debes actualizarla
-      
+
           // Encuentra el textarea correspondiente utilizando el nombre del textarea
           const nombreTextarea = `fasePractica_${fasePractica.instalacion?.idInstalacion}_${fasePractica.recurso?.idRecurso}`;
           const textarea = <HTMLTextAreaElement>document.querySelector(`textarea[name="${nombreTextarea}"]`);
-      
+
           // Verifica si se encontró el textarea
           if (textarea) {
             // Asigna el valor del textarea al objeto fasep
             fasePractica.nombreFase = textarea.value;
-      
+
             // Llama a la función para actualizar la fase 
             this.actualizarFasePractica(fasePractica);
-         
+
           } else {
             console.error(`No se encontró el textarea para ${nombreTextarea}`);
           }
@@ -1254,14 +1225,14 @@ cargarFasesPorIdDisenoCurricular(idDisenioCurricular: number): void {
           // Si la fase teórica no tiene un ID asignado, puedes manejarlo como quieras, ya sea ignorarla o mostrar un mensaje de error
         }
       }
-      
+
     }
 
-    
+
   }
 
-  
-  
+
+
   // Función para guardar una fase  en el backend
   guardarFaseTeorica(faseTeorica: FaseTeorica) {
     this.faseTeoricaService.save(faseTeorica).subscribe(
@@ -1278,94 +1249,65 @@ cargarFasesPorIdDisenoCurricular(idDisenioCurricular: number): void {
   }
 
 
-    guardarFasePractica(fasePractica: FasePractica) {
-      this.fasePracticaService.save(fasePractica).subscribe(
-        (response) => {
-          // Maneja la respuesta exitosa aquí si es necesario
-          console.log('Fase Practica guardada con éxito: ', response);
-        },
-        (error) => {
-          // Maneja cualquier error que ocurra durante la solicitud HTTP
-          console.error('Error al guardar la fase Practica:', error);
-        }
-      );
-      this.cargarFasesPorIdDisenoCurricular(this.idDelDisenio)
-    }
-    
-  
-// Función para actualizar una fase teórica en el backend
-actualizarFaseTeorica(faseTeorica: FaseTeorica) {
-  // Verifica si idFaseTeorica es un número válido antes de llamar a update
-  if (typeof faseTeorica.idFaseTeorica === 'number') {
-    this.faseTeoricaService.update(faseTeorica, faseTeorica.idFaseTeorica).subscribe(
+  guardarFasePractica(fasePractica: FasePractica) {
+    this.fasePracticaService.save(fasePractica).subscribe(
       (response) => {
         // Maneja la respuesta exitosa aquí si es necesario
-        console.log('Fase teórica actualizada con éxito xxxxxx:', response);
+        console.log('Fase Practica guardada con éxito: ', response);
       },
       (error) => {
         // Maneja cualquier error que ocurra durante la solicitud HTTP
-        console.error('Error al actualizar la fase teórica:', error);
+        console.error('Error al guardar la fase Practica:', error);
       }
     );
     this.cargarFasesPorIdDisenoCurricular(this.idDelDisenio)
-  } else {
-    console.error('ID de fase teórica no válido:', faseTeorica.idFaseTeorica);
   }
-}
 
-actualizarFasePractica(fasePractica: FasePractica) {
-  // Verifica si idFaseTeorica es un número válido antes de llamar a update
-  if (typeof fasePractica.idFasePractica=== 'number') {
-    this.fasePracticaService.update(fasePractica, fasePractica.idFasePractica).subscribe(
-      (response) => {
-        // Maneja la respuesta exitosa aquí si es necesario
-        console.log('Fase Practica actualizada con éxito xxxx xx:', response);
-      },
-      (error) => {
-  
-        console.error('Error al actualizar la fase Practica:', error);
-      }
-    );
-    this.cargarFasesPorIdDisenoCurricular(this.idDelDisenio)
-  } else {
-    console.error('ID de fase practica no válido:', fasePractica.idFasePractica);
+
+  // Función para actualizar una fase teórica en el backend
+  actualizarFaseTeorica(faseTeorica: FaseTeorica) {
+    // Verifica si idFaseTeorica es un número válido antes de llamar a update
+    if (typeof faseTeorica.idFaseTeorica === 'number') {
+      this.faseTeoricaService.update(faseTeorica, faseTeorica.idFaseTeorica).subscribe(
+        (response) => {
+          // Maneja la respuesta exitosa aquí si es necesario
+          console.log('Fase teórica actualizada con éxito xxxxxx:', response);
+        },
+        (error) => {
+          // Maneja cualquier error que ocurra durante la solicitud HTTP
+          console.error('Error al actualizar la fase teórica:', error);
+        }
+      );
+      this.cargarFasesPorIdDisenoCurricular(this.idDelDisenio)
+    } else {
+      console.error('ID de fase teórica no válido:', faseTeorica.idFaseTeorica);
+    }
   }
+
+  actualizarFasePractica(fasePractica: FasePractica) {
+    // Verifica si idFaseTeorica es un número válido antes de llamar a update
+    if (typeof fasePractica.idFasePractica === 'number') {
+      this.fasePracticaService.update(fasePractica, fasePractica.idFasePractica).subscribe(
+        (response) => {
+          // Maneja la respuesta exitosa aquí si es necesario
+          console.log('Fase Practica actualizada con éxito xxxx xx:', response);
+        },
+        (error) => {
+
+          console.error('Error al actualizar la fase Practica:', error);
+        }
+      );
+      this.cargarFasesPorIdDisenoCurricular(this.idDelDisenio)
+    } else {
+      console.error('ID de fase practica no válido:', fasePractica.idFasePractica);
+    }
+  }
+
+
+  public blockButtonCourse(): boolean {
+    return this.silabo.curso!.estadoPublicasionCurso === 'F' || this.silabo.curso!.estadoPublicasionCurso === 'I';
+  }
+
 }
 
- 
-  
 
-  
-
-  
-
-}
-
-
-
-  // guardarEntornoAprendizaje() {
-  //   if (!this.fasesTeoricas || this.fasesTeoricas.length === 0) {
-  //     // Si `this.fasesTeoricas` está vacía, crea las fases utilizando `crearfasesteorica`
-  //     this.crearfasesteorica();
-  //       // Llama al servicio para guardar las fases teóricas en el backend
-  //   for (const faseTeorica of this.fasesTeoricas) {
-  //     this.faseTeoricaService.save(faseTeorica).subscribe(
-  //       (response) => {
-  //         // Maneja la respuesta exitosa aquí si es necesario
-  //         console.log('Fase teórica guardada con éxito:', response);
-  //       },
-  //       (error) => {
-  //         // Maneja cualquier error que ocurra durante la solicitud HTTP
-  //         console.error('Error al guardar la fase teórica:', error);
-  //       }
-  //     );
-  //   }
-  //   }else{
-
-  //     /// chatgpt aqui  poner  para actualizar  fasesteoricas 
-
-
-  //   }
-
-  // }
-                             
