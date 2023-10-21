@@ -3,7 +3,7 @@
 <div class="">
   <div class="container mb-5 mt-6">
     <div>
-      <div class="p-buttonset" style="text-align: center;" *ngIf="estadoMovimient">
+      <div class="p-buttonset" style="text-align: center;">
         <button pButton pRipple (click)="obtenerCursosFull()" class="small-button third">Todos</button>
         <button pButton pRipple (click)="filtrarPorModalidadTarde()" class="small-button third">En la Tarde</button>
         <button pButton pRipple (click)="filtrarPorModalidadManana()" class="small-button third">Por la Mañana</button>
@@ -21,7 +21,7 @@
       </div>
 
       <br>
-      <div class="container" *ngIf="estadoMovimient">
+      <div class="container">
         <div class="grid p-fluid">
           <div class="col-16 md:col-5">
             <span class="p-input-icon-left">
@@ -64,14 +64,11 @@
         </div>
       </div>
 
-      <div class="container" style="text-align: center;" *ngIf="!estadoMovimient">
-        <p-message severity="info" text="INICIE SESIÓN PARA MÁS INFORMACIÓN DE LOS CURSOS DE CAPACITACIÓN CONTINUA"
-          styleClass="mr-2 m-4"></p-message>
-      </div>
+
       <div class="pricing__title m-5">Cursos</div>
       <div class="" style="height: 100px;" *ngIf="listCursos.length === 0">
       </div>
-      <div class="pricing__grid m-2" *ngIf="estadoMovimient">
+      <div class="pricing__grid m-2">
         <div class="pricing__card pricing-card pricing-card_free" *ngFor="let list of listCursos">
           <div class="pricing-card__top">
             <div class="pricing-card__title">Disponible <i class="pi pi-verified"></i></div>
@@ -119,123 +116,6 @@
 
 
         </div>
-      </div>
-
-      <div class="m-2" *ngIf="!estadoMovimient">
-
-
-
-
-        <div class="centered-container" *ngIf="initLoader">
-          <div class="loader">
-            <p-progressSpinner styleClass="w-4rem h-4rem" strokeWidth="8" fill="var(--surface-ground)"
-              animationDuration=".5s"></p-progressSpinner>
-          </div>
-          <div class="text">
-            <p class="loading-text" style="font-size: 20px; color: #000;">
-              <strong>Cargando</strong><span id="loading-dots"></span>
-            </p>
-          </div>
-        </div>
-
-
-        <!-- 
-        <div *ngIf="!initLoader">
-          <div class="grid flex justify-content-center" *ngIf="!estadoMovimient">
-            <p-card header="{{list.nombreCurso}}" subheader="Docente: {{list.nombre}}"
-              [style]="{ width: '360px', margin: '20px' }" *ngFor="let list of listCursos">
-              <ng-template pTemplate="header">
-                <img [src]="list.fotoCurso ? getUriFile(list.fotoCurso) : 'assets/img/istap.png'" [alt]="list.fotoCurso"
-                  width="100" class="shadow-4" />
-              </ng-template>
-              <div class="pricing-card__body">
-                <div class="pricing-card__pluses">
-                  <div class="pricing-card__plus">
-                    <div class="pricing-card__plus-icon"><i class="pi pi-video"></i></div>
-                    <div class="pricing-card__plus-text">{{list.nombreModalidadCurso}}</div>
-                  </div>
-                  <div class="pricing-card__plus">
-                    <div class="pricing-card__plus-icon"><i class="pi pi-send"></i></div>
-                    <div class="pricing-card__plus-text">{{list.duracionCurso}}h</div>
-                  </div>
-                  <div class="pricing-card__plus">
-                    <div class="pricing-card__plus-icon"><i class="pi pi-clock"></i></div>
-                    <div class="pricing-card__plus-text">{{list!.horaInicio}} a {{list!.horaFin}}
-                    </div>
-                  </div>
-                  <div class="pricing-card__plus">
-                    <div class="pricing-card__plus-icon"><i class="pi pi-calendar"></i></div>
-                    <div class="pricing-card__plus-text">{{list.dias}}</div>
-                  </div>
-
-                  <div class="pricing-card__plus">
-                    <div class="pricing-card__plus-icon"><i class="pi pi-calendar-minus"></i></div>
-                    <div class="pricing-card__plus-text">{{list.fechaInicioCurso}} - {{list.fechaFinalizacionCurso}}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </p-card>
-          </div>
-        </div> -->
-
-
-
-        <div class="" *ngIf="!initLoader">
-
-
-          <div class="grid" *ngIf="!estadoMovimient">
-            <div class="col-12 lg:col-4" *ngFor="let list of listCursos">
-              <div class="p-3 h-full">
-                <div class="shadow-2 p-3 h-full flex flex-column surface-card" style="border-radius: 6px">
-                  <div class="text-900 font-medium text-xl mb-2"></div>
-                  <div class="text-600">
-                    <img [src]="list.fotoCurso ? getUriFile(list.fotoCurso) : 'assets/img/istap.png'" alt=""
-                      class="custom-image-class" />
-
-                  </div>
-
-                  <div class="text-600 mt-2">Docente: {{list.nombre}}</div>
-                  <hr class="my-3 mx-0 border-top-1 border-none surface-border" />
-                  <div class="flex align-items-center">
-                    <span class="font-bold text-2xl text-900">{{list.nombreCurso}}</span>
-                    <!-- <span class="ml-2 font-medium text-600">per month</span> -->
-                  </div>
-                  <hr class="my-3 mx-0 border-top-1 border-none surface-border" />
-                  <ul class="list-none p-0 m-0 flex-grow-1">
-                    <li class="flex align-items-center mb-3">
-                      <i class="pi pi-check-circle text-green-500 mr-2"></i>
-                      <span class="text-900">{{list.nombreModalidadCurso}}</span>
-                    </li>
-                    <li class="flex align-items-center mb-3">
-                      <i class="pi pi-check-circle text-green-500 mr-2"></i>
-                      <span class="text-900">{{list.duracionCurso}}h</span>
-                    </li>
-                    <li class="flex align-items-center mb-3">
-                      <i class="pi pi-check-circle text-green-500 mr-2"></i>
-                      <span class="text-900">{{list!.horaInicio}} a {{list!.horaFin}}</span>
-                    </li>
-
-                    <li class="flex align-items-center mb-3">
-                      <i class="pi pi-check-circle text-green-500 mr-2"></i>
-                      <span class="text-900">{{list.dias}}</span>
-                    </li>
-
-                    <li class="flex align-items-center mb-3">
-                      <i class="pi pi-check-circle text-green-500 mr-2"></i>
-                      <span class="text-900">{{list.fechaInicioCurso}} - {{list.fechaFinalizacionCurso}}</span>
-                    </li>
-                  </ul>
-                  <hr class="mb-3 mx-0 border-top-1 border-none surface-border mt-auto" />
-                </div>
-              </div>
-            </div>
-
-
-          </div>
-        </div>
-
-
       </div>
 
       <div style="text-align: center;" *ngIf="listCursos.length === 0" class="">

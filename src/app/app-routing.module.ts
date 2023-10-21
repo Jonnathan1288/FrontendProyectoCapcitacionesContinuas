@@ -36,6 +36,7 @@ import { StepsToApplyToTheCourseComponent } from './modules/genericAllAccess/ste
 import { GenerateExelVariosComponent } from './modules/administradormodule/generate-exel-varios/generate-exel-varios.component';
 import { GestionCursoComponent } from './modules/moduleDocenteCapacitador/gestion-curso/gestion-curso.component';
 import { PrincipalPanelAsistenciaCursoComponent } from './modules/moduleDocenteCapacitador/principal-panel-asistencia-curso/principal-panel-asistencia-curso.component';
+import { CardVisibleCoursesComponent } from './modules/genericAllAccess/card-visible-courses/card-visible-courses.component';
 
 const routes: Routes = [
   //PÚBLICOS PARA TODOS -> -------------------------------------------------------------
@@ -54,6 +55,8 @@ const routes: Routes = [
   },
 
   { path: 'steps/apply/course', component: StepsToApplyToTheCourseComponent },
+
+  { path: 'view/courses', component: CardVisibleCoursesComponent },
 
   //FIN PUBLICOS PARA TODOS-------------------------------------------------------------
 
@@ -336,4 +339,4 @@ const routes: Routes = [
   // imports: [RouterModule.forRoot(routes, { useHash: true })],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

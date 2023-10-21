@@ -60,6 +60,7 @@ import { HeadersbComponent } from './shared/headersb/headersb.component';
 import { GestionCursoComponent } from './modules/moduleDocenteCapacitador/gestion-curso/gestion-curso.component';
 import { PrincipalPanelAsistenciaCursoComponent } from './modules/moduleDocenteCapacitador/principal-panel-asistencia-curso/principal-panel-asistencia-curso.component';
 import { HighchartsChartModule } from 'highcharts-angular';
+import { CardVisibleCoursesComponent } from './modules/genericAllAccess/card-visible-courses/card-visible-courses.component';
 
 
 
@@ -110,6 +111,7 @@ import { HighchartsChartModule } from 'highcharts-angular';
     HeadersbComponent,
     GestionCursoComponent,
     PrincipalPanelAsistenciaCursoComponent,
+    CardVisibleCoursesComponent,
   ],
   imports: [
     BrowserModule,
