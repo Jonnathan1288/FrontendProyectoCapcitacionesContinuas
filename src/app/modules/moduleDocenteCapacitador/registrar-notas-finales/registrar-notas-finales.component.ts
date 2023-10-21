@@ -19,8 +19,17 @@ import { NotaFinalReduce } from 'src/app/models/references/nota-final-reduce';
 import * as Highcharts from 'highcharts';
 
 import HC_exporting from 'highcharts/modules/exporting';
+import { AsistenciaService } from 'src/app/service/asistencia.service';
 
 HC_exporting(Highcharts);
+
+//view
+import * as pdfMake from 'pdfmake/build/pdfmake';
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+import { DATA_STYLES_PDF } from 'src/app/util/styles-pdf-report';
+import { ImageService } from 'src/app/service/image.service';
+import { generateCustomContent } from 'src/app/util/data-reutilizable';
+(<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
 	selector: 'app-registrar-notas-finales',
@@ -47,7 +56,9 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 		private cursoService: CursoService,
 		private toastrService: ToastrService,
 		private confirmationService: ConfirmationService,
-		private participantesAprovadosService: ParticipanteAprobadoService
+		private participantesAprovadosService: ParticipanteAprobadoService,
+		private asistenciaService: AsistenciaService,
+		private imageService: ImageService
 	) { }
 
 	public idCursoGlobal?: number;
@@ -62,6 +73,7 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 			this.valida();
 		});
 
+		this.notasFinales();
 	}
 
 	public getCursoPorIdAlmacenado(idCurso: number) {
@@ -578,6 +590,131 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 			],
 			colors: ['#22C55E', '#F59E0B', '#1919FF', '#828E8C']
 		};
+
+	}
+
+	public listDataAsistencia: any[] = [];
+	public listAllDaysCourse: any[] = [];
+	public notasFinales() {
+		this.asistenciaService.obtenerAsistenciaFinal(1).subscribe({
+			next: (resp) => {
+				console.table(resp)
+
+				const todosLosDias = Array.from(
+					new Set(resp.map(resultado => resultado.dias).join(',').split(','))
+				);
+				this.listAllDaysCourse = todosLosDias;
+
+				const resultadosHorizontales: any[] = resp.map((resultado: any, i: any) => {
+					const asistenciaPorDia: string[] = resultado.asistencia.split(',');
+
+					return {
+						num: i + 1,
+						estudiante: resultado.estudiante,
+						identificacion: resultado.identificacion,
+
+						...todosLosDias.reduce((acumulador: any, dia: any, index: number) => {
+							acumulador[dia] = asistenciaPorDia[index];
+							return acumulador;
+						}, {}),
+						informe1: resultado.informe1,
+						informe2: resultado.informe2,
+						informe3: resultado.informe3,
+						examen_final: resultado.examen_final,
+						total: resultado.total,
+						estado_aprobacion: resultado.estado_aprobacion
+					};
+				});
+				this.listDataAsistencia = resultadosHorizontales;
+
+				console.log(resultadosHorizontales)
+
+			}, error: (err) => {
+
+			}
+		});
+
+	}
+
+
+	//EXPORT PDF-------------------------------------------------------------
+	public async generatePdfAllTips() {
+
+
+
+		const verticalTextStyle = {
+
+			alignment: 'center',
+			angle: 90
+		};
+
+
+		const data = this.listDataAsistencia.map((resultado) => {
+			const rowData = [resultado.num, resultado.estudiante, resultado.identificacion];
+
+			// Agregar los valores de los días según las columnas
+			this.listAllDaysCourse.forEach((dia) => {
+				rowData.push(resultado[dia] || '');
+			});
+
+			rowData.push(resultado.informe1, resultado.informe2, resultado.informe3, resultado.examen_final, resultado.total, resultado.estado_aprobacion);
+			return rowData;
+		});
+
+		// const columns = ['N°', 'Apellidos y Nombres', 'Cédula', ...this.listAllDaysCourse, 'Informe 1 /30', 'Informe 2 /30', 'Informe 3 /15', 'Exámen /25', 'TOTAL /100', 'Observaciones',]
+		const columns = ['N°', 'Apellidos y Nombres', 'Cédula',
+			...this.listAllDaysCourse.map(day => ({ text: day, style: verticalTextStyle })),
+
+			'Informe 1 /30', 'Informe 2 /30', 'Informe 3 /15', 'Exámen /25', 'TOTAL /100', 'Observaciones',]
+
+		const anchos = columns.map(() => 'auto');
+
+		const imageDataUrl = await this.imageService.getImageDataUrl('assets/img/istap.png');
+		// console.log(this.listAllDaysCourse, ...data.map((rowData) => rowData.map((value) => ({ text: value, ...verticalTextStyle }))))
+
+		const docDefinition = {
+			content:
+				[
+					generateCustomContent(imageDataUrl, imageDataUrl),
+					{
+						columns: [
+							{
+								columns: [
+									{
+										text: 'Texto columna 1',
+										width: 'auto', // Ancho de la columna 1
+									},
+									{
+										text: 'Texto columna 2',
+										width: 'auto', // Ancho de la columna 2
+										margin: [20, 0, 0, 0], // Margen superior: 20 unidades, Margen derecho: 0, Margen inferior: 0, Margen izquierdo: 0
+
+									},],
+							},
+							{
+								text: 'Segunda parte del texto largo. Esto aparecerá en la segunda columna.',
+								width: 'auto', // O ajusta el ancho de la columna según tus necesidades
+							},
+						],
+					},
+					{
+						table: {
+							headerRows: 1,
+							widths: anchos,  // Ajusta esto según el número de columnas y tus necesidades
+
+							body: [columns, ...data]
+
+						},
+						style: 'table',
+
+					},
+				]
+			,
+			pageOrientation: 'landscape', // Configura la orientación horizontal
+
+
+		};
+		pdfMake.createPdf(docDefinition as any).open();
 
 	}
 }
