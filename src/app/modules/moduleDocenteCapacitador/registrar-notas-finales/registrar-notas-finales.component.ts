@@ -662,11 +662,12 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 		});
 
 		// const columns = ['N°', 'Apellidos y Nombres', 'Cédula', ...this.listAllDaysCourse, 'Informe 1 /30', 'Informe 2 /30', 'Informe 3 /15', 'Exámen /25', 'TOTAL /100', 'Observaciones',]
-		const columns = ['N°', 'Apellidos y Nombres', 'Cédula',
+		const columns = ['N°', 'APELLIDOS', 'CÉDULA',
 			...this.listAllDaysCourse.map(day => ({ text: day, style: verticalTextStyle })),
 
-			'Informe 1 /30', 'Informe 2 /30', 'Informe 3 /15', 'Exámen /25', 'TOTAL /100', 'Observaciones',]
+			'Informe 1 /30', 'Informe 2 /30', 'Informe 3 /15', 'Exámen /25', 'TOTAL /100', 'OBSERVACIONES',]
 
+		// const anchos = columns.map(() => 'auto');
 		const anchos = columns.map(() => 'auto');
 
 		const imageDataUrl = await this.imageService.getImageDataUrl('assets/img/istap.png');
@@ -681,32 +682,157 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 							{
 								columns: [
 									{
-										text: 'Texto columna 1',
-										width: 'auto', // Ancho de la columna 1
+										text: 'CÓDIGO DEL CURSO:',
+										bold: true,
+										width: 150,
 									},
 									{
 										text: 'Texto columna 2',
-										width: 'auto', // Ancho de la columna 2
-										margin: [20, 0, 0, 0], // Margen superior: 20 unidades, Margen derecho: 0, Margen inferior: 0, Margen izquierdo: 0
+										width: 150,
 
-									},],
+									},
+								],
 							},
 							{
-								text: 'Segunda parte del texto largo. Esto aparecerá en la segunda columna.',
-								width: 'auto', // O ajusta el ancho de la columna según tus necesidades
+								columns: [
+									{
+										text: 'LOCAL DONDE SE DICTA:',
+										bold: true,
+										width: 200,
+									},
+									{
+										text: 'Texto columna 2',
+										width: 150,
+
+									},
+								],
 							},
+
+
 						],
 					},
+
+					{
+						columns: [
+							{
+								columns: [
+									{
+										text: 'HORARIO DEL CURSO:',
+										bold: true,
+										width: 150,
+									},
+									{
+										text: 'Texto columna 2',
+										width: 150,
+
+									},
+								],
+							},
+							{
+								columns: [
+									{
+										text: 'DURACIÓN DEL CURSO:',
+										bold: true,
+										width: 200,
+									},
+									{
+										text: 'Texto columna 2',
+										width: 150,
+
+									},
+								],
+							},
+
+
+						],
+					},
+
+					{
+						columns: [
+							{
+								columns: [
+									{
+										text: 'FECHA DE INICIO:',
+										bold: true,
+										width: 150,
+									},
+									{
+										text: 'Texto columna 2',
+										width: 150,
+
+									},
+								],
+							},
+							{
+								columns: [
+									{
+										text: 'FECHA REAL DE FINALIZACIÓN:',
+										bold: true,
+										width: 200,
+									},
+									{
+										text: 'Texto columna 2',
+										width: 150,
+
+									},
+								],
+							},
+
+
+						],
+					},
+
+					{
+						columns: [
+							{
+								columns: [
+									{
+										text: 'MODALIDAD DE CURSO:',
+										bold: true,
+										width: 150,
+									},
+									{
+										stack: [
+											'Texto columna 2',
+											{
+												columns: [
+													'Presencial',
+													'Virtual',
+												],
+											},
+										],
+										width: '*',
+
+									},
+								],
+							},
+							{
+								columns: [
+									{
+										text: 'MES/ES INFORMAL:',
+										bold: true,
+										width: 200,
+									},
+									{
+										text: 'Texto columna 2',
+										width: 150,
+
+									},
+								],
+							},
+
+
+						],
+					},
+
+
 					{
 						table: {
 							headerRows: 1,
-							widths: anchos,  // Ajusta esto según el número de columnas y tus necesidades
-
+							widths: anchos,
 							body: [columns, ...data]
-
 						},
 						style: 'table',
-
 					},
 				]
 			,
