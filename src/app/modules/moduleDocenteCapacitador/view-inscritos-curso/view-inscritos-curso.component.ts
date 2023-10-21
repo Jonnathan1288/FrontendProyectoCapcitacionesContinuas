@@ -8,6 +8,7 @@ import { ParticipanteMatriculadoService } from 'src/app/service/participante-mat
 import { UsuarioService } from 'src/app/service/usuario.service';
 import { ConfirmationService, ConfirmEventType } from 'primeng/api';
 import { ToastrService } from 'ngx-toastr';
+import { FOLDER_IMAGE_USER, getFile } from 'src/app/util/folder-upload';
 
 @Component({
   selector: 'app-view-inscritos-curso',
@@ -261,4 +262,9 @@ export class ViewInscritosCursoComponent implements OnInit {
   isFirstPage(): boolean {
     return this.listaInscritos ? this.first === 0 : true;
   }
+
+  public getUriFile(fileName: string): string {
+    return getFile(fileName, FOLDER_IMAGE_USER);
+  }
+
 }
