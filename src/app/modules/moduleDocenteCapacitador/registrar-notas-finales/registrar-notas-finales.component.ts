@@ -901,7 +901,7 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 										text: 'hoy',
 										alignment: 'center',
 										fontSize: 10,
-										margin: [0, -5], // Valor negativo para eliminar el espacio por debajo
+										margin: [0, -5],
 
 									},
 									{
