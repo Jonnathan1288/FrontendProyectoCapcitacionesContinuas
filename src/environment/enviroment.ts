@@ -1,6 +1,6 @@
 export const environment = {
 
-  apiuri: 'http://localhost:5000/api',
+  apiuri: 'http://localhost:8080/api',
   apiUriSecurity: 'http://localhost:8080/auth',
 
   // apiuri: 'http://localhost:10084/api',

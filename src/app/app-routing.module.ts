@@ -180,14 +180,14 @@ const routes: Routes = [
     path: 'notas/estudiantes/course/:id',
     component: RegistrarNotasFinalesComponent,
     canActivate: [AuthGaurdGuard],
-    data: { expectedRoles: ['DocenteCapacitador'] },
+    data: { titulo: 'Notas finales', expectedRoles: ['DocenteCapacitador'] },
   },
 
   {
     path: 'verInscritos/course/:id',
     component: ViewInscritosCursoComponent,
     canActivate: [AuthGaurdGuard],
-    data: { expectedRoles: ['DocenteCapacitador'] },
+    data: { titulo: 'Inscritos curso', expectedRoles: ['DocenteCapacitador'] },
   },
 
   {
@@ -204,14 +204,14 @@ const routes: Routes = [
     path: 'registro/fotografico/curso/:id',
     component: ViewEvidenciasTableFotofraficasComponent,
     canActivate: [AuthGaurdGuard],
-    data: { expectedRoles: ['DocenteCapacitador'] },
+    data: { titulo: 'Registro fotográfico', expectedRoles: ['DocenteCapacitador'] },
   },
 
   {
     path: 'register/course/:id',
     component: CourseRegisterComponent,
     canActivate: [AuthGaurdGuard],
-    data: { expectedRoles: ['DocenteCapacitador'] },
+    data: { titulo: 'Registro curso', expectedRoles: ['DocenteCapacitador'] },
   },
 
   {
@@ -228,14 +228,14 @@ const routes: Routes = [
     path: 'register/necesidad',
     component: RegistroNecesidadComponent,
     canActivate: [AuthGaurdGuard],
-    data: { expectedRoles: ['DocenteCapacitador'] },
+    data: { titulo: 'Necesidad de curso', expectedRoles: ['DocenteCapacitador'] },
   },
 
   {
     path: 'register/necesidad/:id',
     component: RegistroNecesidadComponent,
     canActivate: [AuthGaurdGuard],
-    data: { expectedRoles: ['DocenteCapacitador'] },
+    data: { titulo: 'Necesidad de curso', expectedRoles: ['DocenteCapacitador'] },
   },
 
   {

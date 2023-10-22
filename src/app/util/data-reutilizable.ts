@@ -10,19 +10,21 @@ export function generateCustomContent(imageDataUrl: string, image2: string) {
             alignment: 'center',
         },
         {
-            absolutePosition: { x: -610, y: 10 },
+            absolutePosition: { x: -560, y: 10 },
             image: image2,
-            width: 70,
+            width: 150,
             height: 40,
             alignment: 'center',
         },
         {
             text: 'INSTITUTO SUPERIOR UNIVERSITARIO',
+            bold: true,
             size: 20,
             alignment: 'center',
         },
         {
             text: 'TECNOLÓGICO "DEL AZUAY"',
+            bold: true,
             style: 'header',
             alignment: 'center',
 
@@ -45,12 +47,8 @@ export function generateCustomContent(imageDataUrl: string, image2: string) {
             text: '',
             margin: [0, 5],
         },
-        // {
-        //     text: `Fecha de Exportación: ${EXPORT_DATE_NOW}`,
-        //     style: 'subheader',
-        //     alignment: 'left',
-        //     margin: [0, 3],
-        // },
 
     ];
 }
+
+export const EXPORT_DATE_NOW = new Date().toLocaleDateString();
