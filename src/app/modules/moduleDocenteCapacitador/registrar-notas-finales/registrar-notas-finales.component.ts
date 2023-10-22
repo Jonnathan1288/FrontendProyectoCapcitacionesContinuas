@@ -29,6 +29,7 @@ import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { DATA_STYLES_PDF } from 'src/app/util/styles-pdf-report';
 import { ImageService } from 'src/app/service/image.service';
 import { generateCustomContent } from 'src/app/util/data-reutilizable';
+import { EncabezadoNotasFinales } from 'src/app/interface/encabezadoNotasFinales';
 (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -70,6 +71,7 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 			this.idCursoGlobal = idCursoRout;
 			this.validarExistenciaDeRegistros();
 			this.getCursoPorIdAlmacenado(idCursoRout);
+			this.getEncabezadoNotasFinales(idCursoRout);
 			this.valida();
 		});
 
@@ -600,10 +602,12 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 			next: (resp) => {
 				console.table(resp)
 
-				const todosLosDias = Array.from(
-					new Set(resp.map(resultado => resultado.dias).join(',').split(','))
-				);
-				this.listAllDaysCourse = todosLosDias;
+				const indiceRegistro = 0;
+				const registro = resp[indiceRegistro];
+				const todosLosDiasDelRegistro = registro?.dias ? registro.dias.split(',') : [];
+				console.log(todosLosDiasDelRegistro);
+
+				this.listAllDaysCourse = todosLosDiasDelRegistro;
 
 				const resultadosHorizontales: any[] = resp.map((resultado: any, i: any) => {
 					const asistenciaPorDia: string[] = resultado.asistencia.split(',');
@@ -613,7 +617,7 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 						estudiante: resultado.estudiante,
 						identificacion: resultado.identificacion,
 
-						...todosLosDias.reduce((acumulador: any, dia: any, index: number) => {
+						...todosLosDiasDelRegistro.reduce((acumulador: any, dia: any, index: number) => {
 							acumulador[dia] = asistenciaPorDia[index];
 							return acumulador;
 						}, {}),
@@ -636,6 +640,16 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 
 	}
 
+	// ENCABEZADO
+	encabezadoNotasFinales = new EncabezadoNotasFinales();
+
+	public getEncabezadoNotasFinales(idCurso: number) {
+		this.cursoService.getEncabezadoNotasFinales(idCurso!).subscribe((data) => {
+			if (data != null) {
+				this.encabezadoNotasFinales = data;
+			}
+		});
+	}
 
 	//EXPORT PDF-------------------------------------------------------------
 	public async generatePdfAllTips() {
@@ -650,23 +664,41 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 
 
 		const data = this.listDataAsistencia.map((resultado) => {
-			const rowData = [resultado.num, resultado.estudiante, resultado.identificacion];
+			const rowData = [
+				resultado.num,
+				resultado.estudiante,
+				resultado.identificacion
+			];
 
-			// Agregar los valores de los días según las columnas
-			this.listAllDaysCourse.forEach((dia) => {
-				rowData.push(resultado[dia] || '');
+			this.listAllDaysCourse.forEach((day) => {
+				rowData.push(resultado[day] || '');
 			});
 
-			rowData.push(resultado.informe1, resultado.informe2, resultado.informe3, resultado.examen_final, resultado.total, resultado.estado_aprobacion);
+			rowData.push(
+				resultado.informe1,
+				resultado.informe2,
+				resultado.informe3,
+				resultado.examen_final,
+				resultado.total,
+				resultado.estado_aprobacion
+			);
 			return rowData;
 		});
 
+
 		// const columns = ['N°', 'Apellidos y Nombres', 'Cédula', ...this.listAllDaysCourse, 'Informe 1 /30', 'Informe 2 /30', 'Informe 3 /15', 'Exámen /25', 'TOTAL /100', 'Observaciones',]
-		const columns = ['N°', 'APELLIDOS', 'CÉDULA',
-			...this.listAllDaysCourse.map(day => ({ text: day, style: verticalTextStyle })),
-
-			'Informe 1 /30', 'Informe 2 /30', 'Informe 3 /15', 'Exámen /25', 'TOTAL /100', 'OBSERVACIONES',]
-
+		const columns = [
+			'N°',
+			'APELLIDOS',
+			'CÉDULA',
+			...this.listAllDaysCourse.map((day) => ({ text: day, style: verticalTextStyle })),
+			'Informe 1 /30',
+			'Informe 2 /30',
+			'Informe 3 /15',
+			'Exámen /25',
+			'TOTAL /100',
+			'OBSERVACIONES'
+		];
 		// const anchos = columns.map(() => 'auto');
 		const anchos = columns.map(() => 'auto');
 
@@ -700,7 +732,7 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 								style: 'nameDataTitle'
 							},
 							{
-								text: 'Tecnologias de la informacion y comunicacion',
+								text: this.encabezadoNotasFinales.nombreCurso,
 								width: 'auto',
 								style: 'nameDataTitleResult'
 							},
