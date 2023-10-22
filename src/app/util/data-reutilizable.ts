@@ -18,9 +18,8 @@ export function generateCustomContent(imageDataUrl: string, image2: string) {
         },
         {
             text: 'INSTITUTO SUPERIOR UNIVERSITARIO',
-            style: 'header',
+            size: 20,
             alignment: 'center',
-
         },
         {
             text: 'TECNOLÓGICO "DEL AZUAY"',
@@ -42,23 +41,16 @@ export function generateCustomContent(imageDataUrl: string, image2: string) {
             bold: true,
             margin: [0, 3],
         },
+        {
+            text: '',
+            margin: [0, 5],
+        },
         // {
         //     text: `Fecha de Exportación: ${EXPORT_DATE_NOW}`,
         //     style: 'subheader',
         //     alignment: 'left',
         //     margin: [0, 3],
         // },
-        // {
-        //     text: `Exportado por: ${getUserName(LocalStorageKeys.USER_NAME)}`,
-        //     style: 'subheader',
-        //     alignment: 'left',
-        //     margin: [0, 3],
-        // },
-        // {
-        //     text: nameReport,
-        //     style: 'header',
-        //     alignment: 'center',
-        //     margin: [0, 10],
-        // },
+
     ];
 }

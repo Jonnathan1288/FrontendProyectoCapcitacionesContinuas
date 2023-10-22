@@ -673,11 +673,43 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 		const imageDataUrl = await this.imageService.getImageDataUrl('assets/img/istap.png');
 		// console.log(this.listAllDaysCourse, ...data.map((rowData) => rowData.map((value) => ({ text: value, ...verticalTextStyle }))))
 
+		const estiloTabla = {
+			fontSize: 9,
+		};
+
+		const estiloNamePrincipal = {
+			fontSize: 5,
+		};
+
+		const estiloNamePrincipalResult = {
+			fontSize: 9,
+		};
+
 		const docDefinition = {
 			content:
 				[
 					generateCustomContent(imageDataUrl, imageDataUrl),
+
 					{
+						margin: [0, 5],
+						columns: [
+							{
+								text: 'NOMBRE DEL CURSO:',
+								bold: true,
+								width: 150,
+								style: 'nameDataTitle'
+							},
+							{
+								text: 'Tecnologias de la informacion y comunicacion',
+								width: 'auto',
+								style: 'nameDataTitleResult'
+							},
+
+						],
+					},
+
+					{
+						margin: [0, 5],
 						columns: [
 							{
 								columns: [
@@ -685,11 +717,12 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 										text: 'CÓDIGO DEL CURSO:',
 										bold: true,
 										width: 150,
+										style: 'nameDataTitle'
 									},
 									{
-										text: 'Texto columna 2',
+										text: '239339',
 										width: 150,
-
+										style: 'nameDataTitleResult'
 									},
 								],
 							},
@@ -699,20 +732,20 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 										text: 'LOCAL DONDE SE DICTA:',
 										bold: true,
 										width: 200,
+										style: 'nameDataTitle'
 									},
 									{
-										text: 'Texto columna 2',
+										text: 'ISTA TECazuay',
 										width: 150,
-
+										style: 'nameDataTitleResult'
 									},
 								],
 							},
-
-
 						],
 					},
 
 					{
+						margin: [0, 5],
 						columns: [
 							{
 								columns: [
@@ -720,11 +753,12 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 										text: 'HORARIO DEL CURSO:',
 										bold: true,
 										width: 150,
+										style: 'nameDataTitle'
 									},
 									{
-										text: 'Texto columna 2',
+										text: '19:00 a 12:00',
 										width: 150,
-
+										style: 'nameDataTitleResult'
 									},
 								],
 							},
@@ -734,20 +768,20 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 										text: 'DURACIÓN DEL CURSO:',
 										bold: true,
 										width: 200,
+										style: 'nameDataTitle'
 									},
 									{
-										text: 'Texto columna 2',
+										text: '40 Horas',
 										width: 150,
-
+										style: 'nameDataTitleResult'
 									},
 								],
 							},
-
-
 						],
 					},
 
 					{
+						margin: [0, 5],
 						columns: [
 							{
 								columns: [
@@ -755,11 +789,12 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 										text: 'FECHA DE INICIO:',
 										bold: true,
 										width: 150,
+										style: 'nameDataTitle'
 									},
 									{
-										text: 'Texto columna 2',
+										text: '12/12/2022',
 										width: 150,
-
+										style: 'nameDataTitleResult'
 									},
 								],
 							},
@@ -769,20 +804,20 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 										text: 'FECHA REAL DE FINALIZACIÓN:',
 										bold: true,
 										width: 200,
+										style: 'nameDataTitle'
 									},
 									{
-										text: 'Texto columna 2',
+										text: 'T2/12/2022',
 										width: 150,
-
+										style: 'nameDataTitleResult'
 									},
 								],
 							},
-
-
 						],
 					},
 
 					{
+						margin: [0, 5],
 						columns: [
 							{
 								columns: [
@@ -790,18 +825,20 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 										text: 'MODALIDAD DE CURSO:',
 										bold: true,
 										width: 150,
+										style: 'nameDataTitle'
 									},
 									{
 										stack: [
-											'Texto columna 2',
+
 											{
 												columns: [
-													'Presencial',
-													'Virtual',
+													'Presencial       ' + 'X',
+													'Virtual       ' + 'X',
 												],
 											},
 										],
 										width: '*',
+										style: 'nameDataTitleResult'
 
 									},
 								],
@@ -812,11 +849,12 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 										text: 'MES/ES INFORMAL:',
 										bold: true,
 										width: 200,
+										style: 'nameDataTitle'
 									},
 									{
-										text: 'Texto columna 2',
+										text: 'OCTUBRE',
 										width: 150,
-
+										style: 'nameDataTitleResult'
 									},
 								],
 							},
@@ -832,11 +870,93 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 							widths: anchos,
 							body: [columns, ...data]
 						},
-						style: 'table',
+						style: estiloTabla,
+						layout: {
+							fillColor: (rowI: number, node: any, columI: number) => {
+								return rowI === 0 ? '#65b2cc' : ''
+							},
+							hLineWidth: () => 0.2,
+							vLineWidth: () => 0.2,
+						}
 					},
-				]
-			,
+				],
+			footer: function (currentPage: number, pageCount: number) {
+				// return {
+				// 	text: `Pagina ${currentPage.toString()} de ${pageCount}`,
+				// 	style: 'footer',
+				// 	alignment: 'center',
+				// 	margin: [0, 10],
+				// 	fontSize: 14,
+				// 	color: '#3498db',
+				// };
+
+				if (currentPage === pageCount) {
+					return {
+
+						columns: [
+							{
+
+								stack: [
+									{
+										text: 'hoy',
+										alignment: 'center',
+										fontSize: 10,
+										margin: [0, -5], // Valor negativo para eliminar el espacio por debajo
+
+									},
+									{
+										text: '______________________________________', // Línea separadora
+										alignment: 'center',
+										fontSize: 10,
+									},
+									{
+										text: 'FECHA DE ELABORACIÓN',
+										alignment: 'center',
+										fontSize: 10,
+									},
+								],
+							},
+
+							{
+								stack: [
+									{
+										text: '',
+										alignment: 'center',
+										fontSize: 10,
+									},
+									{
+										text: '______________________________________', // Línea separadora
+										alignment: 'center',
+										fontSize: 10,
+									},
+									{
+										text: 'FIRMA DOCENTE',
+										alignment: 'center',
+										fontSize: 10,
+									},
+								],
+							},
+						],
+					};
+				}
+				return {};
+			},
+			styles: DATA_STYLES_PDF,
 			pageOrientation: 'landscape', // Configura la orientación horizontal
+			// footer: function (currentPage: number, pageCount: number) {
+			// 	if (currentPage === pageCount) {
+			// 		return {
+			// 			columns: [
+			// 				{
+			// 					text: 'Este es el contenido al final del documento',
+			// 					alignment: 'center',
+			// 					fontSize: 10,
+			// 				},
+			// 			],
+			// 		};
+			// 	}
+			// },
+
 
 
 		};
