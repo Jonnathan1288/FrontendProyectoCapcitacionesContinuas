@@ -8,6 +8,7 @@ import { CourseFilter } from '../models/references/course-filter';
 import { CourseFilterDocente } from '../models/references/course-filter-by-docente';
 import { ListCourseReduce } from '../models/references/list-course-reduce';
 import { CursoPaginacion } from '../models/cursopaginacion';
+import { EncabezadoNotasFinales } from '../interface/encabezadoNotasFinales';
 
 @Injectable({
   providedIn: 'root'
@@ -98,5 +99,9 @@ export class CursoService {
 
   public updateStatusCourseAcepted(idCourse: number, status: string): Observable<any> {
     return this.http.get<any>(environment.apiuri + '/curso/updateStatusCourseAcepted/' + idCourse + '/' + status);
+  }
+
+  public getEncabezadoNotasFinales(idCurso: number): Observable<EncabezadoNotasFinales> {
+    return this.http.get<EncabezadoNotasFinales>(environment.apiuri + '/curso/getEncabezadoNotasFinales/' + idCurso);
   }
 }

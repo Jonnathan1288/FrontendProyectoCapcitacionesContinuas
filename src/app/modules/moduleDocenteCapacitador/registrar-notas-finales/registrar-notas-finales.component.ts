@@ -29,6 +29,7 @@ import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { DATA_STYLES_PDF } from 'src/app/util/styles-pdf-report';
 import { ImageService } from 'src/app/service/image.service';
 import { generateCustomContent } from 'src/app/util/data-reutilizable';
+import { EncabezadoNotasFinales } from 'src/app/interface/encabezadoNotasFinales';
 (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -70,6 +71,7 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 			this.idCursoGlobal = idCursoRout;
 			this.validarExistenciaDeRegistros();
 			this.getCursoPorIdAlmacenado(idCursoRout);
+			this.getEncabezadoNotasFinales(idCursoRout);
 			this.valida();
 		});
 
@@ -636,6 +638,16 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 
 	}
 
+	// ENCABEZADO
+	encabezadoNotasFinales = new EncabezadoNotasFinales();
+
+	public getEncabezadoNotasFinales(idCurso: number) {
+		this.cursoService.getEncabezadoNotasFinales(idCurso!).subscribe((data) => {
+			if (data != null) {
+				this.encabezadoNotasFinales = data;
+			}
+		});
+	}
 
 	//EXPORT PDF-------------------------------------------------------------
 	public async generatePdfAllTips() {
