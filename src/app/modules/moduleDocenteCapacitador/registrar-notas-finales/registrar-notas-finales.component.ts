@@ -601,11 +601,18 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 		this.asistenciaService.obtenerAsistenciaFinal(1).subscribe({
 			next: (resp) => {
 				console.table(resp)
+				const todosLosDiasDelRegistro = resp[0].dias!.split(',');
+				console.table(todosLosDiasDelRegistro)
 
-				const indiceRegistro = 0;
-				const registro = resp[indiceRegistro];
-				const todosLosDiasDelRegistro = registro?.dias ? registro.dias.split(',') : [];
-				console.log(todosLosDiasDelRegistro);
+				const listaDias: string[] = [];
+				const contador: Record<string, number> = {};
+
+				todosLosDiasDelRegistro.forEach((dia) => {
+					contador[dia] = (contador[dia] || 0) + 1;
+					listaDias.push(contador[dia] > 1 ? `${dia}${contador[dia]}` : dia);
+				});
+				console.table(listaDias)
+
 
 				this.listAllDaysCourse = todosLosDiasDelRegistro;
 
@@ -617,7 +624,7 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 						estudiante: resultado.estudiante,
 						identificacion: resultado.identificacion,
 
-						...todosLosDiasDelRegistro.reduce((acumulador: any, dia: any, index: number) => {
+						...listaDias.reduce((acumulador: any, dia: any, index: number) => {
 							acumulador[dia] = asistenciaPorDia[index];
 							return acumulador;
 						}, {}),
@@ -685,18 +692,32 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 			return rowData;
 		});
 
+		const dayMappings: { [key: string]: string } = {
+			'Lunes': 'LU',
+			'Martes': 'MA',
+			'Miércoles': 'MIE',
+			'Jueves': 'JU',
+			'Viernes': 'VI',
+			'Sábado': 'SA',
+			'Domingo': 'DO',
+		};
+
+		const formattedDays = this.listAllDaysCourse.map((day) => {
+			return dayMappings[day] || day;
+		});
+
 
 		// const columns = ['N°', 'Apellidos y Nombres', 'Cédula', ...this.listAllDaysCourse, 'Informe 1 /30', 'Informe 2 /30', 'Informe 3 /15', 'Exámen /25', 'TOTAL /100', 'Observaciones',]
 		const columns = [
 			'N°',
 			'APELLIDOS',
 			'CÉDULA',
-			...this.listAllDaysCourse.map((day) => ({ text: day, style: verticalTextStyle })),
+			...formattedDays,
 			'Informe 1 /30',
 			'Informe 2 /30',
 			'Informe 3 /15',
 			'Exámen /25',
-			'TOTAL /100',
+			'Total /100',
 			'OBSERVACIONES'
 		];
 		// const anchos = columns.map(() => 'auto');
@@ -706,15 +727,7 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 		// console.log(this.listAllDaysCourse, ...data.map((rowData) => rowData.map((value) => ({ text: value, ...verticalTextStyle }))))
 
 		const estiloTabla = {
-			fontSize: 9,
-		};
-
-		const estiloNamePrincipal = {
-			fontSize: 5,
-		};
-
-		const estiloNamePrincipalResult = {
-			fontSize: 9,
+			fontSize: 8,
 		};
 
 		const docDefinition = {
@@ -913,14 +926,7 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 					},
 				],
 			footer: function (currentPage: number, pageCount: number) {
-				// return {
-				// 	text: `Pagina ${currentPage.toString()} de ${pageCount}`,
-				// 	style: 'footer',
-				// 	alignment: 'center',
-				// 	margin: [0, 10],
-				// 	fontSize: 14,
-				// 	color: '#3498db',
-				// };
+
 
 				if (currentPage === pageCount) {
 					return {
@@ -975,19 +981,6 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 			},
 			styles: DATA_STYLES_PDF,
 			pageOrientation: 'landscape', // Configura la orientación horizontal
-			// footer: function (currentPage: number, pageCount: number) {
-			// 	if (currentPage === pageCount) {
-			// 		return {
-			// 			columns: [
-			// 				{
-			// 					text: 'Este es el contenido al final del documento',
-			// 					alignment: 'center',
-			// 					fontSize: 10,
-			// 				},
-			// 			],
-			// 		};
-			// 	}
-			// },
 
 
 
