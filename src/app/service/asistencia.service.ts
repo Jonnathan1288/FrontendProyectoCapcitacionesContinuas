@@ -7,6 +7,7 @@ import { Area } from '../models/area';
 import { Asistencia } from '../models/asistencia';
 import { StorageService } from './storage.service';
 import { AsistenciaReduce } from '../models/references/asistencia-reduce';
+import { EncabezadoNotasFinales } from '../interface/encabezadoNotasFinales';
 
 @Injectable({
   providedIn: 'root'

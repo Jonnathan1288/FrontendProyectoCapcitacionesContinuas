@@ -101,9 +101,12 @@
             style="text-align: center;" (onClick)="vaidarNotasEstudiantesFinales()"></p-button>
 
 
-        <p-button label="NOTAS FINALES" icon="pi pi-file-pdf" styleClass="p-button-danger mb-2 m-2"
+        <!-- <p-button label="NOTAS FINALES" icon="pi pi-file-pdf" styleClass="p-button-danger mb-2 m-2"
             [disabled]="this.classInformeFinalC.idInformeFinalCurso == null"
-            (onClick)="generarReporteAsitenciaEvaluacion()"></p-button>
+            (onClick)="generarReporteAsitenciaEvaluacion()"></p-button> -->
+
+        <p-button label="NOTAS FINALES" icon="pi pi-file-pdf" styleClass="p-button-danger mb-2 m-2"
+            [disabled]="this.classInformeFinalC.idInformeFinalCurso == null" (onClick)="notasFinales()"></p-button>
 
         <p-button label="Reporte de Participantes" icon="pi pi-file-pdf" styleClass="p-button-danger mb-2"
             [disabled]="this.classInformeFinalC.idInformeFinalCurso == null"
@@ -261,6 +264,3 @@
 
 <p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000"
     rejectButtonStyleClass="p-button-text"></p-confirmDialog>
-
-
-<button (click)="generatePdfAllTips()">Print</button>

@@ -28,15 +28,17 @@ import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { DATA_STYLES_PDF } from 'src/app/util/styles-pdf-report';
 import { ImageService } from 'src/app/service/image.service';
-import { generateCustomContent } from 'src/app/util/data-reutilizable';
+import { EXPORT_DATE_NOW, generateCustomContent } from 'src/app/util/data-reutilizable';
 import { EncabezadoNotasFinales } from 'src/app/interface/encabezadoNotasFinales';
 (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
 
+import { DatePipe } from '@angular/common';
+import { formatDate } from '@angular/common';
 @Component({
 	selector: 'app-registrar-notas-finales',
 	templateUrl: './registrar-notas-finales.component.html',
 	styleUrls: ['./registrar-notas-finales.component.css'],
-	providers: [ConfirmationService],
+	providers: [ConfirmationService, DatePipe],
 })
 export class RegistrarNotasFinalesComponent implements OnInit {
 	first = 0;
@@ -59,7 +61,8 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 		private confirmationService: ConfirmationService,
 		private participantesAprovadosService: ParticipanteAprobadoService,
 		private asistenciaService: AsistenciaService,
-		private imageService: ImageService
+		private imageService: ImageService,
+		private miDatePipe: DatePipe
 	) { }
 
 	public idCursoGlobal?: number;
@@ -75,7 +78,7 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 			this.valida();
 		});
 
-		this.notasFinales();
+
 	}
 
 	public getCursoPorIdAlmacenado(idCurso: number) {
@@ -597,12 +600,12 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 
 	public listDataAsistencia: any[] = [];
 	public listAllDaysCourse: any[] = [];
-	public notasFinales() {
+
+
+	public async notasFinales() {
 		this.asistenciaService.obtenerAsistenciaFinal(1).subscribe({
-			next: (resp) => {
-				console.table(resp)
+			next: async (resp) => {
 				const todosLosDiasDelRegistro = resp[0].dias!.split(',');
-				console.table(todosLosDiasDelRegistro)
 
 				const listaDias: string[] = [];
 				const contador: Record<string, number> = {};
@@ -611,8 +614,6 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 					contador[dia] = (contador[dia] || 0) + 1;
 					listaDias.push(contador[dia] > 1 ? `${dia}${contador[dia]}` : dia);
 				});
-				console.table(listaDias)
-
 
 				this.listAllDaysCourse = todosLosDiasDelRegistro;
 
@@ -638,354 +639,372 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 				});
 				this.listDataAsistencia = resultadosHorizontales;
 
-				console.log(resultadosHorizontales)
+				await this.generatePdfAllTips();
 
 			}, error: (err) => {
-
+				this.toastrService.error(
+					'',
+					'INCONVENIENTES AL GENERAR LAS NOTAS',
+					{
+						timeOut: 2500,
+					}
+				);
 			}
 		});
 
 	}
 
 	// ENCABEZADO
-	encabezadoNotasFinales = new EncabezadoNotasFinales();
+	public encabezadoNotasFinales = new EncabezadoNotasFinales();
 
 	public getEncabezadoNotasFinales(idCurso: number) {
-		this.cursoService.getEncabezadoNotasFinales(idCurso!).subscribe((data) => {
-			if (data != null) {
-				this.encabezadoNotasFinales = data;
+		this.cursoService.getEncabezadoNotasFinales(idCurso!).subscribe({
+			next: (resp) => {
+				this.encabezadoNotasFinales = resp;
+			}, error: (err) => {
+
 			}
 		});
 	}
 
 	//EXPORT PDF-------------------------------------------------------------
 	public async generatePdfAllTips() {
+		try {
 
 
 
-		const verticalTextStyle = {
-
-			alignment: 'center',
-			angle: 90
-		};
+			const fechaInicio = this.miDatePipe.transform(this.encabezadoNotasFinales.fechaInicioCurso, 'M/d/yy');
+			const fechafin = this.miDatePipe.transform(this.encabezadoNotasFinales.fechaFinalizacionCurso, 'M/d/yy');
 
 
-		const data = this.listDataAsistencia.map((resultado) => {
-			const rowData = [
-				resultado.num,
-				resultado.estudiante,
-				resultado.identificacion
-			];
+			const mesFecha = this.miDatePipe.transform(this.encabezadoNotasFinales.fechaFinalizacionCurso, 'MMMM');
 
-			this.listAllDaysCourse.forEach((day) => {
-				rowData.push(resultado[day] || '');
+			const data = this.listDataAsistencia.map((resultado) => {
+				const rowData = [
+					resultado.num,
+					resultado.estudiante,
+					resultado.identificacion
+				];
+
+				this.listAllDaysCourse.forEach((day) => {
+					rowData.push(resultado[day] || '');
+				});
+
+				rowData.push(
+					resultado.informe1,
+					resultado.informe2,
+					resultado.informe3,
+					resultado.examen_final,
+					resultado.total,
+					resultado.estado_aprobacion
+				);
+				return rowData;
 			});
 
-			rowData.push(
-				resultado.informe1,
-				resultado.informe2,
-				resultado.informe3,
-				resultado.examen_final,
-				resultado.total,
-				resultado.estado_aprobacion
-			);
-			return rowData;
-		});
+			const dayMappings: { [key: string]: string } = {
+				'Lunes': 'LU',
+				'Martes': 'MA',
+				'Miércoles': 'MIE',
+				'Jueves': 'JU',
+				'Viernes': 'VI',
+				'Sábado': 'SA',
+				'Domingo': 'DO',
+			};
 
-		const dayMappings: { [key: string]: string } = {
-			'Lunes': 'LU',
-			'Martes': 'MA',
-			'Miércoles': 'MIE',
-			'Jueves': 'JU',
-			'Viernes': 'VI',
-			'Sábado': 'SA',
-			'Domingo': 'DO',
-		};
-
-		const formattedDays = this.listAllDaysCourse.map((day) => {
-			return dayMappings[day] || day;
-		});
+			const formattedDays = this.listAllDaysCourse.map((day) => {
+				return dayMappings[day] || day;
+			});
 
 
-		// const columns = ['N°', 'Apellidos y Nombres', 'Cédula', ...this.listAllDaysCourse, 'Informe 1 /30', 'Informe 2 /30', 'Informe 3 /15', 'Exámen /25', 'TOTAL /100', 'Observaciones',]
-		const columns = [
-			'N°',
-			'APELLIDOS',
-			'CÉDULA',
-			...formattedDays,
-			'Informe 1 /30',
-			'Informe 2 /30',
-			'Informe 3 /15',
-			'Exámen /25',
-			'Total /100',
-			'OBSERVACIONES'
-		];
-		// const anchos = columns.map(() => 'auto');
-		const anchos = columns.map(() => 'auto');
+			// const columns = ['N°', 'Apellidos y Nombres', 'Cédula', ...this.listAllDaysCourse, 'Informe 1 /30', 'Informe 2 /30', 'Informe 3 /15', 'Exámen /25', 'TOTAL /100', 'Observaciones',]
+			const columns = [
+				'N°',
+				'APELLIDOS',
+				'CÉDULA',
+				...formattedDays,
+				'Informe 1 /30',
+				'Informe 2 /30',
+				'Informe 3 /15',
+				'Exámen /25',
+				'Total /100',
+				'OBSERVACIONES'
+			];
 
-		const imageDataUrl = await this.imageService.getImageDataUrl('assets/img/istap.png');
-		// console.log(this.listAllDaysCourse, ...data.map((rowData) => rowData.map((value) => ({ text: value, ...verticalTextStyle }))))
+			const anchos = columns.map(() => 'auto');
 
-		const estiloTabla = {
-			fontSize: 8,
-		};
+			const imageDataUrl = await this.imageService.getImageDataUrl('assets/img/ista/cenep.jpg');
+			const imageDataUrl2 = await this.imageService.getImageDataUrl('assets/img/ista/ista.jpg');
 
-		const docDefinition = {
-			content:
-				[
-					generateCustomContent(imageDataUrl, imageDataUrl),
+			const estiloTabla = {
+				fontSize: 8,
+			};
 
-					{
-						margin: [0, 5],
-						columns: [
-							{
-								text: 'NOMBRE DEL CURSO:',
-								bold: true,
-								width: 150,
-								style: 'nameDataTitle'
-							},
-							{
-								text: this.encabezadoNotasFinales.nombreCurso,
-								width: 'auto',
-								style: 'nameDataTitleResult'
-							},
+			const docDefinition = {
+				content:
+					[
+						generateCustomContent(imageDataUrl2, imageDataUrl),
 
-						],
-					},
+						{
+							margin: [0, 5],
+							columns: [
+								{
+									text: 'NOMBRE DEL CURSO:',
+									bold: true,
+									width: 150,
+									style: 'nameDataTitle'
+								},
+								{
+									text: this.encabezadoNotasFinales.nombreCurso,
+									width: 'auto',
+									style: 'nameDataTitleResult'
+								},
 
-					{
-						margin: [0, 5],
-						columns: [
-							{
-								columns: [
-									{
-										text: 'CÓDIGO DEL CURSO:',
-										bold: true,
-										width: 150,
-										style: 'nameDataTitle'
-									},
-									{
-										text: '239339',
-										width: 150,
-										style: 'nameDataTitleResult'
-									},
-								],
-							},
-							{
-								columns: [
-									{
-										text: 'LOCAL DONDE SE DICTA:',
-										bold: true,
-										width: 200,
-										style: 'nameDataTitle'
-									},
-									{
-										text: 'ISTA TECazuay',
-										width: 150,
-										style: 'nameDataTitleResult'
-									},
-								],
-							},
-						],
-					},
-
-					{
-						margin: [0, 5],
-						columns: [
-							{
-								columns: [
-									{
-										text: 'HORARIO DEL CURSO:',
-										bold: true,
-										width: 150,
-										style: 'nameDataTitle'
-									},
-									{
-										text: '19:00 a 12:00',
-										width: 150,
-										style: 'nameDataTitleResult'
-									},
-								],
-							},
-							{
-								columns: [
-									{
-										text: 'DURACIÓN DEL CURSO:',
-										bold: true,
-										width: 200,
-										style: 'nameDataTitle'
-									},
-									{
-										text: '40 Horas',
-										width: 150,
-										style: 'nameDataTitleResult'
-									},
-								],
-							},
-						],
-					},
-
-					{
-						margin: [0, 5],
-						columns: [
-							{
-								columns: [
-									{
-										text: 'FECHA DE INICIO:',
-										bold: true,
-										width: 150,
-										style: 'nameDataTitle'
-									},
-									{
-										text: '12/12/2022',
-										width: 150,
-										style: 'nameDataTitleResult'
-									},
-								],
-							},
-							{
-								columns: [
-									{
-										text: 'FECHA REAL DE FINALIZACIÓN:',
-										bold: true,
-										width: 200,
-										style: 'nameDataTitle'
-									},
-									{
-										text: 'T2/12/2022',
-										width: 150,
-										style: 'nameDataTitleResult'
-									},
-								],
-							},
-						],
-					},
-
-					{
-						margin: [0, 5],
-						columns: [
-							{
-								columns: [
-									{
-										text: 'MODALIDAD DE CURSO:',
-										bold: true,
-										width: 150,
-										style: 'nameDataTitle'
-									},
-									{
-										stack: [
-
-											{
-												columns: [
-													'Presencial       ' + 'X',
-													'Virtual       ' + 'X',
-												],
-											},
-										],
-										width: '*',
-										style: 'nameDataTitleResult'
-
-									},
-								],
-							},
-							{
-								columns: [
-									{
-										text: 'MES/ES INFORMAL:',
-										bold: true,
-										width: 200,
-										style: 'nameDataTitle'
-									},
-									{
-										text: 'OCTUBRE',
-										width: 150,
-										style: 'nameDataTitleResult'
-									},
-								],
-							},
-
-
-						],
-					},
-
-
-					{
-						table: {
-							headerRows: 1,
-							widths: anchos,
-							body: [columns, ...data]
+							],
 						},
-						style: estiloTabla,
-						layout: {
-							fillColor: (rowI: number, node: any, columI: number) => {
-								return rowI === 0 ? '#65b2cc' : ''
+
+						{
+							margin: [0, 5],
+							columns: [
+								{
+									columns: [
+										{
+											text: 'CÓDIGO DEL CURSO:',
+											bold: true,
+											width: 150,
+											style: 'nameDataTitle'
+										},
+										{
+											text: '' + this.encabezadoNotasFinales.codigoCurso,
+											width: 150,
+											style: 'nameDataTitleResult'
+										},
+									],
+								},
+								{
+									columns: [
+										{
+											text: 'LOCAL DONDE SE DICTA:',
+											bold: true,
+											width: 200,
+											style: 'nameDataTitle'
+										},
+										{
+											text: '' + this.encabezadoNotasFinales.cantonInformeFinalCurso,
+											width: 150,
+											style: 'nameDataTitleResult'
+										},
+									],
+								},
+							],
+						},
+
+						{
+							margin: [0, 5],
+							columns: [
+								{
+									columns: [
+										{
+											text: 'HORARIO DEL CURSO:',
+											bold: true,
+											width: 150,
+											style: 'nameDataTitle'
+										},
+										{
+											text: '' + this.encabezadoNotasFinales.horaInicio + ' a ' + this.encabezadoNotasFinales.horaFin,
+											width: 150,
+											style: 'nameDataTitleResult'
+										},
+									],
+								},
+								{
+									columns: [
+										{
+											text: 'DURACIÓN DEL CURSO:',
+											bold: true,
+											width: 200,
+											style: 'nameDataTitle'
+										},
+										{
+											text: '' + this.encabezadoNotasFinales.duracionCurso + ' Horas',
+											width: 150,
+											style: 'nameDataTitleResult'
+										},
+									],
+								},
+							],
+						},
+
+						{
+							margin: [0, 5],
+							columns: [
+								{
+									columns: [
+										{
+											text: 'FECHA DE INICIO:',
+											bold: true,
+											width: 150,
+											style: 'nameDataTitle'
+										},
+										{
+											text: '' + fechaInicio,
+											width: 150,
+											style: 'nameDataTitleResult'
+										},
+									],
+								},
+								{
+									columns: [
+										{
+											text: 'FECHA REAL DE FINALIZACIÓN:',
+											bold: true,
+											width: 200,
+											style: 'nameDataTitle'
+										},
+										{
+											text: '' + fechafin,
+											width: 150,
+											style: 'nameDataTitleResult'
+										},
+									],
+								},
+							],
+						},
+
+						{
+							margin: [0, 5],
+							columns: [
+								{
+									columns: [
+										{
+											text: 'MODALIDAD DE CURSO:',
+											bold: true,
+											width: 150,
+											style: 'nameDataTitle'
+										},
+										{
+											stack: [
+
+												{
+													columns: [
+														'Presencial   ' + (this.encabezadoNotasFinales.nombreModalidadCurso === 'Presencial' ? '__X__' : '_____'),
+														'Virtual   ' + (this.encabezadoNotasFinales.nombreModalidadCurso === 'Virtual' ? '__X__' : '_____'),
+													],
+												},
+											],
+											width: '*',
+											style: 'nameDataTitleResult'
+
+										},
+									],
+								},
+								{
+									columns: [
+										{
+											text: 'MES/ES INFORMAL:',
+											bold: true,
+											width: 200,
+											style: 'nameDataTitle'
+										},
+										{
+											text: '' + mesFecha,
+											width: 150,
+											style: 'nameDataTitleResult'
+										},
+									],
+								},
+
+
+							],
+						},
+
+
+						{
+							table: {
+								headerRows: 1,
+								widths: anchos,
+								layout: 'fullwidth', // Hace que la tabla ocupe todo el ancho de la página
+
+								body: [columns, ...data]
 							},
-							hLineWidth: () => 0.2,
-							vLineWidth: () => 0.2,
-						}
-					},
-				],
-			footer: function (currentPage: number, pageCount: number) {
+							style: estiloTabla,
+							layout: {
+								fillColor: (rowI: number, node: any, columI: number) => {
+									return rowI === 0 ? '#65b2cc' : ''
+								},
+								hLineWidth: () => 0.2,
+								vLineWidth: () => 0.2,
+							}
+						},
+					],
+				footer: function (currentPage: number, pageCount: number) {
 
 
-				if (currentPage === pageCount) {
-					return {
+					if (currentPage === pageCount) {
+						return {
 
-						columns: [
-							{
+							columns: [
+								{
 
-								stack: [
-									{
-										text: 'hoy',
-										alignment: 'center',
-										fontSize: 10,
-										margin: [0, -5],
+									stack: [
+										{
+											text: '' + EXPORT_DATE_NOW,
+											alignment: 'center',
+											fontSize: 10,
+											margin: [0, -5],
 
-									},
-									{
-										text: '______________________________________', // Línea separadora
-										alignment: 'center',
-										fontSize: 10,
-									},
-									{
-										text: 'FECHA DE ELABORACIÓN',
-										alignment: 'center',
-										fontSize: 10,
-									},
-								],
-							},
+										},
+										{
+											text: '______________________________________', // Línea separadora
+											alignment: 'center',
+											fontSize: 10,
+										},
+										{
+											text: 'FECHA DE ELABORACIÓN',
+											alignment: 'center',
+											fontSize: 10,
+										},
+									],
+								},
 
-							{
-								stack: [
-									{
-										text: '',
-										alignment: 'center',
-										fontSize: 10,
-									},
-									{
-										text: '______________________________________', // Línea separadora
-										alignment: 'center',
-										fontSize: 10,
-									},
-									{
-										text: 'FIRMA DOCENTE',
-										alignment: 'center',
-										fontSize: 10,
-									},
-								],
-							},
-						],
-					};
+								{
+									stack: [
+										{
+											text: '',
+											alignment: 'center',
+											fontSize: 10,
+										},
+										{
+											text: '______________________________________', // Línea separadora
+											alignment: 'center',
+											fontSize: 10,
+										},
+										{
+											text: 'FIRMA DOCENTE',
+											alignment: 'center',
+											fontSize: 10,
+										},
+									],
+								},
+							],
+						};
+					}
+					return {};
+				},
+				styles: DATA_STYLES_PDF,
+				pageOrientation: 'landscape', // Configura la orientación horizontal
+
+
+
+			};
+			pdfMake.createPdf(docDefinition as any).open();
+		} catch (error) {
+			this.toastrService.error(
+				'',
+				'INCONVENIENTES AL GENERAR LAS NOTAS',
+				{
+					timeOut: 2500,
 				}
-				return {};
-			},
-			styles: DATA_STYLES_PDF,
-			pageOrientation: 'landscape', // Configura la orientación horizontal
-
-
-
-		};
-		pdfMake.createPdf(docDefinition as any).open();
-
+			);
+		}
 	}
 }

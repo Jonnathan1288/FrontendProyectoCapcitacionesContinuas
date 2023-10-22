@@ -1,13 +1,14 @@
 export class EncabezadoNotasFinales {
-    idCurso?: number;
     nombreCurso?: string;
-    horaInicio?: string;
+    duracionCurso?: number;
     horaFin?: string;
-    duracionCurso?: string; 
-    fechaInicioCurso?: Date;
+    horaInicio?: string;
     fechaFinalizacionCurso?: Date;
-    nombreModalidadCurso?: string;
-    nombreDocente?: string;
     observacionCurso?: string;
     cantonInformeFinalCurso?: string;
+    nombreModalidadCurso?: string;
+    fechaInicioCurso?: Date;
+    nombreDocente?: string;
+    codigoCurso?: string;
+    idCurso?: number;
 }
