@@ -32,11 +32,7 @@ export class CardcursoComponent implements OnInit {
 
   ngOnInit(): void {
     this.obtenerCursosFull();
-    if (this.localService.isLoggedIn()) {
-      this.estadoMovimient = true;
-    } else {
-      this.estadoMovimient = false;
-    }
+
   }
 
   listCursos: CursoPaginacion[] = [];

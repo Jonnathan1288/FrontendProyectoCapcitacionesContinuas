@@ -187,7 +187,7 @@ export class PersmisosRolesUsuarioComponent implements OnInit {
 			next: (resp: any) => {
 				this.toastrService.info('', 'USUARIOS OBTENIDOS');
 				this.listClassUsuario = resp.content;
-				this.listUsuariosFilter = this.listClassUsuario;
+				this.listUsuariosFilter = this.listClassUsuario.filter(d => d.username !== 'ADMIN');
 				this.dataSizeRequest(resp.totalElements);
 			}, error: (err) => {
 				this.toastrService.error('', 'INCONVENIENTE AL OBTENER USUARIOS');

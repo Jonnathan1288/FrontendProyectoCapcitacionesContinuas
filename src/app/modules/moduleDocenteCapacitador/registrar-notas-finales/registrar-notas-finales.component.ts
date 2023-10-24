@@ -19,14 +19,26 @@ import { NotaFinalReduce } from 'src/app/models/references/nota-final-reduce';
 import * as Highcharts from 'highcharts';
 
 import HC_exporting from 'highcharts/modules/exporting';
+import { AsistenciaService } from 'src/app/service/asistencia.service';
 
 HC_exporting(Highcharts);
 
+//view
+import * as pdfMake from 'pdfmake/build/pdfmake';
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+import { DATA_STYLES_PDF } from 'src/app/util/styles-pdf-report';
+import { ImageService } from 'src/app/service/image.service';
+import { EXPORT_DATE_NOW, generateCustomContent } from 'src/app/util/data-reutilizable';
+import { EncabezadoNotasFinales } from 'src/app/interface/encabezadoNotasFinales';
+(<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
+
+import { DatePipe } from '@angular/common';
+import { formatDate } from '@angular/common';
 @Component({
 	selector: 'app-registrar-notas-finales',
 	templateUrl: './registrar-notas-finales.component.html',
 	styleUrls: ['./registrar-notas-finales.component.css'],
-	providers: [ConfirmationService],
+	providers: [ConfirmationService, DatePipe],
 })
 export class RegistrarNotasFinalesComponent implements OnInit {
 	first = 0;
@@ -47,7 +59,10 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 		private cursoService: CursoService,
 		private toastrService: ToastrService,
 		private confirmationService: ConfirmationService,
-		private participantesAprovadosService: ParticipanteAprobadoService
+		private participantesAprovadosService: ParticipanteAprobadoService,
+		private asistenciaService: AsistenciaService,
+		private imageService: ImageService,
+		private miDatePipe: DatePipe
 	) { }
 
 	public idCursoGlobal?: number;
@@ -59,8 +74,10 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 			this.idCursoGlobal = idCursoRout;
 			this.validarExistenciaDeRegistros();
 			this.getCursoPorIdAlmacenado(idCursoRout);
+			this.getEncabezadoNotasFinales(idCursoRout);
 			this.valida();
 		});
+
 
 	}
 
@@ -579,5 +596,415 @@ export class RegistrarNotasFinalesComponent implements OnInit {
 			colors: ['#22C55E', '#F59E0B', '#1919FF', '#828E8C']
 		};
 
+	}
+
+	public listDataAsistencia: any[] = [];
+	public listAllDaysCourse: any[] = [];
+
+
+	public async notasFinales() {
+		this.asistenciaService.obtenerAsistenciaFinal(1).subscribe({
+			next: async (resp) => {
+				const todosLosDiasDelRegistro = resp[0].dias!.split(',');
+
+				const listaDias: string[] = [];
+				const contador: Record<string, number> = {};
+
+				todosLosDiasDelRegistro.forEach((dia) => {
+					contador[dia] = (contador[dia] || 0) + 1;
+					listaDias.push(contador[dia] > 1 ? `${dia}${contador[dia]}` : dia);
+				});
+
+				this.listAllDaysCourse = todosLosDiasDelRegistro;
+
+				const resultadosHorizontales: any[] = resp.map((resultado: any, i: any) => {
+					const asistenciaPorDia: string[] = resultado.asistencia.split(',');
+
+					return {
+						num: i + 1,
+						estudiante: resultado.estudiante,
+						identificacion: resultado.identificacion,
+
+						...listaDias.reduce((acumulador: any, dia: any, index: number) => {
+							acumulador[dia] = asistenciaPorDia[index];
+							return acumulador;
+						}, {}),
+						informe1: resultado.informe1,
+						informe2: resultado.informe2,
+						informe3: resultado.informe3,
+						examen_final: resultado.examen_final,
+						total: resultado.total,
+						estado_aprobacion: resultado.estado_aprobacion
+					};
+				});
+				this.listDataAsistencia = resultadosHorizontales;
+
+				await this.generatePdfAllTips();
+
+			}, error: (err) => {
+				this.toastrService.error(
+					'',
+					'INCONVENIENTES AL GENERAR LAS NOTAS',
+					{
+						timeOut: 2500,
+					}
+				);
+			}
+		});
+
+	}
+
+	// ENCABEZADO
+	public encabezadoNotasFinales = new EncabezadoNotasFinales();
+
+	public getEncabezadoNotasFinales(idCurso: number) {
+		this.cursoService.getEncabezadoNotasFinales(idCurso!).subscribe({
+			next: (resp) => {
+				this.encabezadoNotasFinales = resp;
+			}, error: (err) => {
+
+			}
+		});
+	}
+
+	//EXPORT PDF-------------------------------------------------------------
+	public async generatePdfAllTips() {
+		try {
+
+
+
+			const fechaInicio = this.miDatePipe.transform(this.encabezadoNotasFinales.fechaInicioCurso, 'M/d/yy');
+			const fechafin = this.miDatePipe.transform(this.encabezadoNotasFinales.fechaFinalizacionCurso, 'M/d/yy');
+
+
+			const mesFecha = this.miDatePipe.transform(this.encabezadoNotasFinales.fechaFinalizacionCurso, 'MMMM');
+
+			const data = this.listDataAsistencia.map((resultado) => {
+				const rowData = [
+					resultado.num,
+					resultado.estudiante,
+					resultado.identificacion
+				];
+
+				this.listAllDaysCourse.forEach((day) => {
+					rowData.push(resultado[day] || '');
+				});
+
+				rowData.push(
+					resultado.informe1,
+					resultado.informe2,
+					resultado.informe3,
+					resultado.examen_final,
+					resultado.total,
+					resultado.estado_aprobacion
+				);
+				return rowData;
+			});
+
+			const dayMappings: { [key: string]: string } = {
+				'Lunes': 'LU',
+				'Martes': 'MA',
+				'Miércoles': 'MIE',
+				'Jueves': 'JU',
+				'Viernes': 'VI',
+				'Sábado': 'SA',
+				'Domingo': 'DO',
+			};
+
+			const formattedDays = this.listAllDaysCourse.map((day) => {
+				return dayMappings[day] || day;
+			});
+
+
+			// const columns = ['N°', 'Apellidos y Nombres', 'Cédula', ...this.listAllDaysCourse, 'Informe 1 /30', 'Informe 2 /30', 'Informe 3 /15', 'Exámen /25', 'TOTAL /100', 'Observaciones',]
+			const columns = [
+				'N°',
+				'APELLIDOS',
+				'CÉDULA',
+				...formattedDays,
+				'Informe 1 /30',
+				'Informe 2 /30',
+				'Informe 3 /15',
+				'Exámen /25',
+				'Total /100',
+				'OBSERVACIONES'
+			];
+
+			const anchos = columns.map(() => 'auto');
+
+			const imageDataUrl = await this.imageService.getImageDataUrl('assets/img/ista/cenep.jpg');
+			const imageDataUrl2 = await this.imageService.getImageDataUrl('assets/img/ista/ista.jpg');
+
+			const estiloTabla = {
+				fontSize: 8,
+			};
+
+			const docDefinition = {
+				content:
+					[
+						generateCustomContent(imageDataUrl2, imageDataUrl),
+
+						{
+							margin: [0, 5],
+							columns: [
+								{
+									text: 'NOMBRE DEL CURSO:',
+									bold: true,
+									width: 150,
+									style: 'nameDataTitle'
+								},
+								{
+									text: this.encabezadoNotasFinales.nombreCurso,
+									width: 'auto',
+									style: 'nameDataTitleResult'
+								},
+
+							],
+						},
+
+						{
+							margin: [0, 5],
+							columns: [
+								{
+									columns: [
+										{
+											text: 'CÓDIGO DEL CURSO:',
+											bold: true,
+											width: 150,
+											style: 'nameDataTitle'
+										},
+										{
+											text: '' + this.encabezadoNotasFinales.codigoCurso,
+											width: 150,
+											style: 'nameDataTitleResult'
+										},
+									],
+								},
+								{
+									columns: [
+										{
+											text: 'LOCAL DONDE SE DICTA:',
+											bold: true,
+											width: 200,
+											style: 'nameDataTitle'
+										},
+										{
+											text: '' + this.encabezadoNotasFinales.cantonInformeFinalCurso,
+											width: 150,
+											style: 'nameDataTitleResult'
+										},
+									],
+								},
+							],
+						},
+
+						{
+							margin: [0, 5],
+							columns: [
+								{
+									columns: [
+										{
+											text: 'HORARIO DEL CURSO:',
+											bold: true,
+											width: 150,
+											style: 'nameDataTitle'
+										},
+										{
+											text: '' + this.encabezadoNotasFinales.horaInicio + ' a ' + this.encabezadoNotasFinales.horaFin,
+											width: 150,
+											style: 'nameDataTitleResult'
+										},
+									],
+								},
+								{
+									columns: [
+										{
+											text: 'DURACIÓN DEL CURSO:',
+											bold: true,
+											width: 200,
+											style: 'nameDataTitle'
+										},
+										{
+											text: '' + this.encabezadoNotasFinales.duracionCurso + ' Horas',
+											width: 150,
+											style: 'nameDataTitleResult'
+										},
+									],
+								},
+							],
+						},
+
+						{
+							margin: [0, 5],
+							columns: [
+								{
+									columns: [
+										{
+											text: 'FECHA DE INICIO:',
+											bold: true,
+											width: 150,
+											style: 'nameDataTitle'
+										},
+										{
+											text: '' + fechaInicio,
+											width: 150,
+											style: 'nameDataTitleResult'
+										},
+									],
+								},
+								{
+									columns: [
+										{
+											text: 'FECHA REAL DE FINALIZACIÓN:',
+											bold: true,
+											width: 200,
+											style: 'nameDataTitle'
+										},
+										{
+											text: '' + fechafin,
+											width: 150,
+											style: 'nameDataTitleResult'
+										},
+									],
+								},
+							],
+						},
+
+						{
+							margin: [0, 5],
+							columns: [
+								{
+									columns: [
+										{
+											text: 'MODALIDAD DE CURSO:',
+											bold: true,
+											width: 150,
+											style: 'nameDataTitle'
+										},
+										{
+											stack: [
+
+												{
+													columns: [
+														'Presencial   ' + (this.encabezadoNotasFinales.nombreModalidadCurso === 'Presencial' ? '__X__' : '_____'),
+														'Virtual   ' + (this.encabezadoNotasFinales.nombreModalidadCurso === 'Virtual' ? '__X__' : '_____'),
+													],
+												},
+											],
+											width: '*',
+											style: 'nameDataTitleResult'
+
+										},
+									],
+								},
+								{
+									columns: [
+										{
+											text: 'MES/ES INFORMAL:',
+											bold: true,
+											width: 200,
+											style: 'nameDataTitle'
+										},
+										{
+											text: '' + mesFecha,
+											width: 150,
+											style: 'nameDataTitleResult'
+										},
+									],
+								},
+
+
+							],
+						},
+
+
+						{
+							table: {
+								headerRows: 1,
+								widths: anchos,
+								layout: 'fullwidth', // Hace que la tabla ocupe todo el ancho de la página
+
+								body: [columns, ...data]
+							},
+							style: estiloTabla,
+							layout: {
+								fillColor: (rowI: number, node: any, columI: number) => {
+									return rowI === 0 ? '#65b2cc' : ''
+								},
+								hLineWidth: () => 0.2,
+								vLineWidth: () => 0.2,
+							}
+						},
+					],
+				footer: function (currentPage: number, pageCount: number) {
+
+
+					if (currentPage === pageCount) {
+						return {
+
+							columns: [
+								{
+
+									stack: [
+										{
+											text: '' + EXPORT_DATE_NOW,
+											alignment: 'center',
+											fontSize: 10,
+											margin: [0, -5],
+
+										},
+										{
+											text: '______________________________________', // Línea separadora
+											alignment: 'center',
+											fontSize: 10,
+										},
+										{
+											text: 'FECHA DE ELABORACIÓN',
+											alignment: 'center',
+											fontSize: 10,
+										},
+									],
+								},
+
+								{
+									stack: [
+										{
+											text: '',
+											alignment: 'center',
+											fontSize: 10,
+										},
+										{
+											text: '______________________________________', // Línea separadora
+											alignment: 'center',
+											fontSize: 10,
+										},
+										{
+											text: 'FIRMA DOCENTE',
+											alignment: 'center',
+											fontSize: 10,
+										},
+									],
+								},
+							],
+						};
+					}
+					return {};
+				},
+				styles: DATA_STYLES_PDF,
+				pageOrientation: 'landscape', // Configura la orientación horizontal
+
+
+
+			};
+			pdfMake.createPdf(docDefinition as any).open();
+		} catch (error) {
+			this.toastrService.error(
+				'',
+				'INCONVENIENTES AL GENERAR LAS NOTAS',
+				{
+					timeOut: 2500,
+				}
+			);
+		}
 	}
 }

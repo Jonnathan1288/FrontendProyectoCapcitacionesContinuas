@@ -36,6 +36,7 @@ import { StepsToApplyToTheCourseComponent } from './modules/genericAllAccess/ste
 import { GenerateExelVariosComponent } from './modules/administradormodule/generate-exel-varios/generate-exel-varios.component';
 import { GestionCursoComponent } from './modules/moduleDocenteCapacitador/gestion-curso/gestion-curso.component';
 import { PrincipalPanelAsistenciaCursoComponent } from './modules/moduleDocenteCapacitador/principal-panel-asistencia-curso/principal-panel-asistencia-curso.component';
+import { CardVisibleCoursesComponent } from './modules/genericAllAccess/card-visible-courses/card-visible-courses.component';
 
 const routes: Routes = [
   //PÚBLICOS PARA TODOS -> -------------------------------------------------------------
@@ -54,6 +55,8 @@ const routes: Routes = [
   },
 
   { path: 'steps/apply/course', component: StepsToApplyToTheCourseComponent },
+
+  { path: 'view/courses', component: CardVisibleCoursesComponent },
 
   //FIN PUBLICOS PARA TODOS-------------------------------------------------------------
 
@@ -177,14 +180,14 @@ const routes: Routes = [
     path: 'notas/estudiantes/course/:id',
     component: RegistrarNotasFinalesComponent,
     canActivate: [AuthGaurdGuard],
-    data: { expectedRoles: ['DocenteCapacitador'] },
+    data: { titulo: 'Notas finales', expectedRoles: ['DocenteCapacitador'] },
   },
 
   {
     path: 'verInscritos/course/:id',
     component: ViewInscritosCursoComponent,
     canActivate: [AuthGaurdGuard],
-    data: { expectedRoles: ['DocenteCapacitador'] },
+    data: { titulo: 'Inscritos curso', expectedRoles: ['DocenteCapacitador'] },
   },
 
   {
@@ -201,14 +204,14 @@ const routes: Routes = [
     path: 'registro/fotografico/curso/:id',
     component: ViewEvidenciasTableFotofraficasComponent,
     canActivate: [AuthGaurdGuard],
-    data: { expectedRoles: ['DocenteCapacitador'] },
+    data: { titulo: 'Registro fotográfico', expectedRoles: ['DocenteCapacitador'] },
   },
 
   {
     path: 'register/course/:id',
     component: CourseRegisterComponent,
     canActivate: [AuthGaurdGuard],
-    data: { expectedRoles: ['DocenteCapacitador'] },
+    data: { titulo: 'Registro curso', expectedRoles: ['DocenteCapacitador'] },
   },
 
   {
@@ -225,14 +228,14 @@ const routes: Routes = [
     path: 'register/necesidad',
     component: RegistroNecesidadComponent,
     canActivate: [AuthGaurdGuard],
-    data: { expectedRoles: ['DocenteCapacitador'] },
+    data: { titulo: 'Necesidad de curso', expectedRoles: ['DocenteCapacitador'] },
   },
 
   {
     path: 'register/necesidad/:id',
     component: RegistroNecesidadComponent,
     canActivate: [AuthGaurdGuard],
-    data: { expectedRoles: ['DocenteCapacitador'] },
+    data: { titulo: 'Necesidad de curso', expectedRoles: ['DocenteCapacitador'] },
   },
 
   {
@@ -336,4 +339,4 @@ const routes: Routes = [
   // imports: [RouterModule.forRoot(routes, { useHash: true })],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

@@ -1,0 +1,97 @@
+<p-progressBar mode="indeterminate" [style]="{'height': '6px'}" *ngIf="initLoader"></p-progressBar>
+
+<div class="container text-center mt-5">
+    <h4 style="font-weight: bold; font-size: 30px; color: #007bff;">CURSOS DE CAPACITACIÓN</h4>
+    <p-message severity="info" text="INICIE SESIÓN PARA MÁS INFORMACIÓN DE LOS CURSOS DE CAPACITACIÓN CONTINUA"
+        styleClass="mr-2 mt-3" *ngIf="listCursos.length > 0"></p-message>
+</div>
+
+
+
+
+<div class="centered-container" *ngIf="initLoader">
+    <div class="loader">
+        <p-progressSpinner styleClass="w-4rem h-4rem" strokeWidth="8" fill="var(--surface-ground)"
+            animationDuration=".5s"></p-progressSpinner>
+    </div>
+    <div class="text">
+        <p class="loading-text" style="font-size: 20px; color: #000;">
+            <strong>Cargando</strong><span id="loading-dots"></span>
+        </p>
+    </div>
+</div>
+
+<div class="" *ngIf="!initLoader">
+
+    <div class="mx-4 ml-4">
+
+        <div class="grid">
+            <div class="col-12 lg:col-3" *ngFor="let list of listCursos">
+                <div class="p-3 h-full">
+                    <div class="shadow-2 p-3 h-full flex flex-column hover surface-card" style="border-radius: 6px">
+                        <div class="text-900 font-medium text-xl mb-2"></div>
+                        <div class="text-600">
+                            <img [src]="list.fotoCurso ? getUriFile(list.fotoCurso) : 'assets/img/istap.png'" alt=""
+                                class="custom-image-class" />
+
+                        </div>
+
+                        <div class="text-600 mt-2">Docente: {{list.nombre}}</div>
+                        <hr class="my-3 mx-0 border-top-1 border-none surface-border" />
+                        <div class="flex align-items-center">
+                            <span class="font-bold text-2xl text-900">{{list.nombreCurso}}</span>
+                            <!-- <span class="ml-2 font-medium text-600">per month</span> -->
+                        </div>
+                        <hr class="my-3 mx-0 border-top-1 border-none surface-border" />
+                        <ul class="list-none p-0 m-0 flex-grow-1">
+                            <li class="flex align-items-center mb-3">
+                                <i class="pi pi-check-circle text-green-500 mr-2"></i>
+                                <span class="text-900">{{list.nombreModalidadCurso}}</span>
+                            </li>
+                            <li class="flex align-items-center mb-3">
+                                <i class="pi pi-check-circle text-green-500 mr-2"></i>
+                                <span class="text-900">{{list.duracionCurso}}h</span>
+                            </li>
+                            <li class="flex align-items-center mb-3">
+                                <i class="pi pi-check-circle text-green-500 mr-2"></i>
+                                <span class="text-900">{{list!.horaInicio}} a {{list!.horaFin}}</span>
+                            </li>
+
+                            <li class="flex align-items-center mb-3">
+                                <i class="pi pi-check-circle text-green-500 mr-2"></i>
+                                <span class="text-900">{{list.dias}}</span>
+                            </li>
+
+                            <li class="flex align-items-center mb-3">
+                                <i class="pi pi-check-circle text-green-500 mr-2"></i>
+                                <span class="text-900">{{list.fechaInicioCurso}} -
+                                    {{list.fechaFinalizacionCurso}}</span>
+                            </li>
+                        </ul>
+                        <hr class="mb-3 mx-0 border-top-1 border-none surface-border mt-auto" />
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <div class="m-6" style="text-align: center; align-items: center;" *ngIf="listCursos.length > 0">
+        <button *ngIf="isPage !== 0" type="button" (click)="anteriorPage()" class="btn btn-primary p-button-rounded">
+            <i class="pi pi-arrow-circle-left"></i> Anterior
+        </button>
+        <button *ngIf="isPage !== pageTotal - 1 && pageTotal >= 0" type="button" (click)="siguientePage()"
+            class="btn btn-primary p-button-rounded" style="margin-left: 50px;">
+            Siguiente <i class="pi pi-arrow-circle-right"></i>
+        </button>
+    </div>
+</div>
+
+<div style="text-align: center;" *ngIf="!initLoader && listCursos.length === 0">
+    <div class="principal mt-4">
+        <p-tag icon="pi pi-times" severity="primary"
+            [value]="'EN ESTE MOMENTO LE INFORMAMOS QUE NO HAY CURSOS DE CAPACITACIÓN CONTINUA'"></p-tag>
+    </div>
+
+</div>
