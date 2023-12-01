@@ -1,10 +1,11 @@
 export const environment = {
 
-  apiuri: 'http://localhost:8080/api',
-  apiUriSecurity: 'http://localhost:8080/auth',
+  apiuri: 'https://dsbackend.tecazuay.edu.ec/edc/api',
+  apiUriSecurity: 'https://dsbackend.tecazuay.edu.ec/edc/auth',
 
-  // apiuri: 'http://localhost:10084/api',
-  // apiUriSecurity: 'http://localhost:10084/auth',
+  //apiuri: 'http://localhost:8080/api',
+  //apiUriSecurity: 'http://localhost:8080/auth',
+  production: false,
 
 
 };
